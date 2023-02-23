@@ -30,28 +30,37 @@ jobs:
           echo "BC_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
       - name: Generate .d.ts
-        continue-on-error: true
         run: |
           cd Bondage-College/BondageClub
           cp ../../tsconfig.json tsconfig.json
+
           npm install typescript
+          set +e
           npx -p typescript tsc
+          set -e
+
+          cp Scripts/Typedef.d.ts dist/Typedef.d.ts
+          cp Assets/Female3DCG/Female3DCG_Types.d.ts dist/Female3DCG_Types.d.ts
+          rm -rf ../../artifacts
+          mv dist ../../artifacts
 
       - name: Apply patches
         run: |
-          cd Bondage-College/BondageClub
-          for filename in ../../patches/*.patch; do
+          for filename in patches/*.patch; do
             [ -e "$filename" ] || continue
-            echo "Applying patch $filename"
-            git apply ../../patches/"$filename"
+            echo "Applying $filename"
+            git apply "$filename"
           done
 
       - name: Push artifacts
         run: |
-          git config --global user.name "GitHub Action"
+          git config --global user.name "GitHub Action [bot]"
           git config --local user.email "action@github.com"
-          rm -rf artifacts
-          mv Bondage-College/BondageClub/dist artifacts
-          git add artifacts
-          git commit --allow-empty -m "CI: Updating stub files" -m "repo: $BC_URL" -m "branch: $BC_BRANCH" -m "commit: $BC_HASH"
-          git push
+          git add artifacts/*
+          if [[ $(git ls-files -m) ]]; then
+            git status
+            git commit -m "CI: Updating stub files" -m "repo: $BC_URL" -m "branch: $BC_BRANCH" -m "commit: $BC_HASH"
+            git push
+          else
+            echo "nothing to commit"
+          fi
