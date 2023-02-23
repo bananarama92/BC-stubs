@@ -1,0 +1,2 @@
+declare function AssetsItemNeckRestraintsCollarLeashBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;
+declare function AssetsItemNeckRestraintsChainLeashBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;

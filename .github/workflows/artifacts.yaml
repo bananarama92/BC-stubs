@@ -1,0 +1,57 @@
+name: Generate stubs
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  BC_URL: https://gitgud.io/bananarama92/Bondage-College
+  BC_BRANCH: literals
+
+# Allow one concurrent deployment
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Clone BC
+        run: |
+          git clone $BC_URL --depth=1 --branch=$BC_BRANCH
+          cd Bondage-College
+          echo "BC_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+      - name: Generate .d.ts
+        continue-on-error: true
+        run: |
+          cd Bondage-College/BondageClub
+          cp ../../tsconfig.json tsconfig.json
+          npm install typescript
+          npx -p typescript tsc
+
+      - name: Apply patches
+        run: |
+          cd Bondage-College/BondageClub
+          for filename in ../../patches/*.patch; do
+            [ -e "$filename" ] || continue
+            echo "Applying patch $filename"
+            git apply ../../patches/"$filename"
+          done
+
+      - name: Push artifacts
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          rm -rf artifacts
+          mv Bondage-College/BondageClub/dist artifacts
+          git add artifacts
+          git commit --allow-empty -m "CI: Updating stub files" -m "repo: $BC_URL" -m "branch: $BC_BRANCH" -m "commit: $BC_HASH"
+          git push

@@ -1,0 +1,1 @@
+declare function AssetsItemNipplesLactationPumpBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;

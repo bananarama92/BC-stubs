@@ -1,0 +1,1 @@
+declare function AssetsItemFeetHempRopeBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;
