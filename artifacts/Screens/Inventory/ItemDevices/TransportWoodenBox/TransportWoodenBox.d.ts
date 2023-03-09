@@ -1,1 +1,2 @@
-declare function AssetsItemDevicesTransportWoodenBoxAfterDraw(data: DynamicDrawingData): void;
+/** @type {DynamicAfterDrawCallback} */
+declare function AssetsItemDevicesTransportWoodenBoxAfterDraw(options: DynamicDrawingData): void;

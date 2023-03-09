@@ -11,9 +11,7 @@ declare function InventoryItemNeckAccessoriesCollarShockUnitDrawFunc(OriginalFun
  */
 declare function InventoryItemNeckAccessoriesCollarShockUnitClickFunc(OriginalFunction: () => void): void;
 declare function InventoryItemNeckAccessoriesCollarShockUnitResetCount(): void;
+/** @type {DynamicBeforeDrawCallback} */
 declare function AssetsItemNeckAccessoriesCollarShockUnitBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;
-declare function AssetsItemNeckAccessoriesCollarShockUnitScriptDraw(data: {
-    C: Character;
-    Item: Item;
-    PersistentData: <T>() => T;
-}): void;
+/** @type {DynamicScriptDrawCallback} */
+declare function AssetsItemNeckAccessoriesCollarShockUnitScriptDraw(data: DynamicScriptCallbackData): void;

@@ -1,5 +1,8 @@
+/** @type {ExtendedItemInitCallback} */
+declare function InventoryItemMiscWoodenSignInit(Item: Item, C: Character, Refresh?: boolean): void;
 declare function InventoryItemMiscWoodenSignLoad(): void;
 declare function InventoryItemMiscWoodenSignDraw(): void;
 declare function InventoryItemMiscWoodenSignClick(): void;
 declare function InventoryItemMiscWoodenSignExit(): void;
-declare function AssetsItemMiscWoodenSignAfterDraw(data: DynamicDrawingData): void;
+/** @type {DynamicAfterDrawCallback} */
+declare function AssetsItemMiscWoodenSignAfterDraw({ C, A, X, Y, L, Property, drawCanvas, drawCanvasBlink, AlphaMasks, Color }: DynamicDrawingData): void;

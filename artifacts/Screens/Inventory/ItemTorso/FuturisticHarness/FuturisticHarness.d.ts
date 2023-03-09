@@ -10,5 +10,7 @@ declare function InventoryItemTorsoFuturisticHarnessDraw(OriginalFunction: () =>
  * @returns {void} - Nothing
  */
 declare function InventoryItemTorsoFuturisticHarnessClick(OriginalFunction: () => void): void;
+/** @type {() => boolean} */
 declare function InventoryItemTorsoFuturisticHarnessIsColorable(): boolean;
+/** @type {() => void} */
 declare function InventoryItemTorsoFuturisticHarnessColor(): void;

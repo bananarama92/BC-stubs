@@ -4,4 +4,5 @@
  * @returns {void} - Nothing
  */
 declare function InventoryItemArmsTransportJacketDraw(OriginalFunction: () => void): void;
-declare function AssetsItemArmsTransportJacketAfterDraw(data: DynamicDrawingData): void;
+/** @type {DynamicAfterDrawCallback} */
+declare function AssetsItemArmsTransportJacketAfterDraw({ C, A, X, Y, L, Property, drawCanvas, drawCanvasBlink, AlphaMasks, Color }: DynamicDrawingData): void;

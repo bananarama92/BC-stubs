@@ -13,10 +13,9 @@ declare function InventoryItemBreastFuturisticBraUpdate(C: Character): {
  * @returns {void} - Nothing
  */
 declare function InventoryItemBreastFuturisticBraDraw(OriginalFunction: () => void): void;
+/** @type {DynamicBeforeDrawCallback} */
 declare function AssetsItemBreastFuturisticBraBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;
-declare function AssetsItemBreastFuturisticBraAfterDraw(data: DynamicDrawingData): void;
-declare function AssetsItemBreastFuturisticBraScriptDraw(data: {
-    C: Character;
-    Item: Item;
-    PersistentData: <T>() => T;
-}): void;
+/** @type {DynamicAfterDrawCallback} */
+declare function AssetsItemBreastFuturisticBraAfterDraw({ C, A, X, Y, Property, drawCanvas, drawCanvasBlink, AlphaMasks, L, G, Color }: DynamicDrawingData): void;
+/** @type {DynamicScriptDrawCallback} */
+declare function AssetsItemBreastFuturisticBraScriptDraw(data: DynamicScriptCallbackData): void;

@@ -11,4 +11,5 @@ declare function InventoryItemPelvisSciFiPleasurePantiesDraw(OriginalFunction: (
  * @returns {void} - Nothing
  */
 declare function InventoryItemPelvisSciFiPleasurePantiesClickHook(OriginalFunction: () => void, Futuristic?: boolean): void;
-declare function InventoryItemPelvisSciFiPleasurePantiesChatPrefix(chatData: ExtendedItemChatData<ModularItemOption>): string;
+/** @type {ExtendedItemChatCallback<ModularItemOption>} */
+declare function InventoryItemPelvisSciFiPleasurePantiesChatPrefix({ previousOption, newOption }: ExtendedItemChatData<ModularItemOption>): string;

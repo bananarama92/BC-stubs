@@ -214,7 +214,7 @@ declare function KinkyDungeonIsSlowed(enemy: entity): boolean;
  */
 declare function KinkyDungeonCanCastSpells(enemy: entity): boolean;
 declare function KDCanBind(enemy: any): boolean;
-declare function KDBoundEffects(enemy: any): 0 | 1 | 2 | 3 | 4;
+declare function KDBoundEffects(enemy: any): 1 | 0 | 2 | 3 | 4;
 declare function KinkyDungeonUpdateEnemies(delta: any, Allied: any): void;
 declare function KDMakeHostile(enemy: any, timer: any): void;
 /**

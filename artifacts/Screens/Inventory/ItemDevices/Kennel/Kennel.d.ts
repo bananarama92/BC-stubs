@@ -1,9 +1,7 @@
-declare function AssetsItemDevicesKennelBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;
-declare function AssetsItemDevicesKennelScriptDraw(data: {
-    C: Character;
-    Item: Item;
-    PersistentData: <T>() => T;
-}): void;
+/** @type {DynamicBeforeDrawCallback} */
+declare function AssetsItemDevicesKennelBeforeDraw({ PersistentData, L, Property }: DynamicDrawingData): DynamicBeforeDrawOverrides;
+/** @type {DynamicScriptDrawCallback} */
+declare function AssetsItemDevicesKennelScriptDraw({ C, PersistentData, Item }: DynamicScriptCallbackData): void;
 /**
  * @param {Character} C
  * @returns {string}

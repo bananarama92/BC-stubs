@@ -1,6 +1,4 @@
-declare function AssetsWingsSteampunkWingsBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;
-declare function AssetsWingsSteampunkWingsScriptDraw(data: {
-    C: Character;
-    Item: Item;
-    PersistentData: <T>() => T;
-}): void;
+/** @type {DynamicBeforeDrawCallback} */
+declare function AssetsWingsSteampunkWingsBeforeDraw({ PersistentData, L, LayerType: lt }: DynamicDrawingData): DynamicBeforeDrawOverrides;
+/** @type {DynamicScriptDrawCallback} */
+declare function AssetsWingsSteampunkWingsScriptDraw({ C, Item, PersistentData }: DynamicScriptCallbackData): void;

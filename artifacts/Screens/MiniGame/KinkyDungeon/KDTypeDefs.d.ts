@@ -1,5 +1,5 @@
 /** Kinky Dungeon Typedefs*/
-type item = {
+declare type item = {
     linkCache?: string[];
     /** If the item has a different curse from the base curse */
     curse?: string;
@@ -96,7 +96,7 @@ interface consumable {
     noConsumeOnUse?: boolean;
     useQuantity?: number;
 }
-type KDHasTags = {
+declare type KDHasTags = {
     tags: any;
 };
 interface KDRestraintProps {
@@ -360,8 +360,8 @@ interface restraint extends KDRestraintProps {
     playerTags: Record<string, number>;
     shrine: string[];
 }
-type outfitKey = string;
-type mapKey = string;
+declare type outfitKey = string;
+declare type mapKey = string;
 interface floorParams {
     /** This code is run after a worldgen */
     worldGenCode?: () => void;
@@ -1100,7 +1100,7 @@ interface entity {
     NextJailLeashTourWaypointY?: number;
     KinkyDungeonJailTourInfractions?: number;
 }
-type KinkyDungeonDress = {
+declare type KinkyDungeonDress = {
     Item: string;
     Group: string;
     Color: string | string[];
@@ -1169,7 +1169,7 @@ interface effectTileRef {
     skin?: string;
     statuses?: Record<string, number>;
 }
-type KDPerk = {
+declare type KDPerk = {
     /** Determines if this one goes in the debuffs tree */
     debuff?: boolean;
     category: string;
@@ -1637,7 +1637,7 @@ interface KinkyDungeonSave {
         y: number;
     };
 }
-type MapMod = {
+declare type MapMod = {
     name: string;
     roomType: string;
     jailType?: string;
@@ -1657,7 +1657,7 @@ type MapMod = {
     }[];
     altRoom: string;
 };
-type AIType = {
+declare type AIType = {
     /** The AI will only wander to visible points */
     strictwander?: boolean;
     /** This enemy is stealthy until the ambush is triggered */
@@ -1695,7 +1695,7 @@ type AIType = {
     /** Returns the current wander short delay.*/
     wanderDelay_short?: (enemy: any, aidata: any) => number;
 };
-type EnemyEvent = {
+declare type EnemyEvent = {
     forceattack?: boolean;
     aggressive?: boolean;
     nonaggressive?: boolean;
@@ -1718,7 +1718,7 @@ type EnemyEvent = {
     /** Run before the spell loop */
     beforeSpell?: (enemy: entity, AIData: any, delta: number) => boolean;
 };
-type KDLockType = {
+declare type KDLockType = {
     lockmult: number;
     penalty?: Record<string, number>;
     pickable: boolean;
@@ -1744,7 +1744,7 @@ type KDLockType = {
     loot_special: boolean;
     loot_locked: boolean;
 };
-type KDMapTile = {
+declare type KDMapTile = {
     name: string;
     w: number;
     h: number;

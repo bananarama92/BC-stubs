@@ -1,3 +1,5 @@
+/** @type {ExtendedItemInitCallback} */
+declare function InventoryItemVulvaFuturisticVibratorInit(Item: Item, C: Character, Refresh: boolean): void;
 declare function InventoryItemVulvaFuturisticVibratorLoad(): void;
 declare function InventoryItemVulvaFuturisticVibratorDraw(): void;
 declare function InventoryItemVulvaFuturisticVibratorPreviousAccessMode(current: any): "" | "ProhibitSelf" | "LockMember";
@@ -36,11 +38,8 @@ declare function InventoryItemVulvaFuturisticVibratorSetMode(C: Character, Item:
  * @param {number} LastTime
  */
 declare function InventoryItemVulvaFuturisticVibratorHandleChat(C: Character, Item: Item, LastTime: number): void;
-declare function AssetsItemVulvaFuturisticVibratorScriptDraw(data: {
-    C: Character;
-    Item: Item;
-    PersistentData: <T>() => T;
-}): void;
+/** @type {DynamicScriptDrawCallback} */
+declare function AssetsItemVulvaFuturisticVibratorScriptDraw(data: DynamicScriptCallbackData): void;
 declare var ItemVulvaFuturisticVibratorTriggers: string[];
 /** @type {string[]} */
 declare var ItemVulvaFuturisticVibratorTriggerValues: string[];

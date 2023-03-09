@@ -15,4 +15,8 @@ declare function InventoryItemDevicesWoodenBoxDraw(OriginalFunction: () => void)
  * @returns {void} - Nothing
  */
 declare function InventoryItemDevicesWoodenBoxExit(): void;
-declare function AssetsItemDevicesWoodenBoxAfterDraw(data: DynamicDrawingData): void;
+/**
+ * Dynamic AfterDraw function. Draws text onto the box.
+ * @type {DynamicAfterDrawCallback}
+ */
+declare function AssetsItemDevicesWoodenBoxAfterDraw({ C, A, X, Y, L, Property, drawCanvas, drawCanvasBlink, AlphaMasks, Color, Opacity }: DynamicDrawingData): void;

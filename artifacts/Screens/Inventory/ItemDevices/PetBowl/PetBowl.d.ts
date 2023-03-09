@@ -1,3 +1,5 @@
+/** @type {ExtendedItemInitCallback} */
+declare function InventoryItemDevicesPetBowlInit(Item: Item, C: Character, Refresh: boolean): void;
 /**
  * Loads the extended item properties
  * @returns {void} - Nothing
@@ -18,4 +20,9 @@ declare function InventoryItemDevicesPetBowlClick(): void;
  * @returns {void} - Nothing
  */
 declare function InventoryItemDevicesPetBowlExit(): void;
-declare function AssetsItemDevicesPetBowlAfterDraw(data: DynamicDrawingData): void;
+/**
+ * Post-render drawing function. Draws custom text in a slight arc to mimic the
+ * curvature of the bowl.
+ * @type {DynamicAfterDrawCallback}
+ */
+declare function AssetsItemDevicesPetBowlAfterDraw({ C, A, X, Y, L, Property, drawCanvas, drawCanvasBlink, AlphaMasks, Color }: DynamicDrawingData): void;

@@ -36,14 +36,9 @@ declare function InventoryItemMouthFuturisticPanelGagTriggerGetOptions(C: Charac
  * @return {void}
  */
 declare function InventoryItemMouthFuturisticPanelGagTrigger(C: Character, Item: Item, Deflate: boolean): void;
-declare function AssetsItemMouthFuturisticPanelGagScriptUpdatePlayer(data: {
-    C: Character;
-    Item: Item;
-    PersistentData: <T>() => T;
-}): void;
-declare function AssetsItemMouthFuturisticPanelGagScriptDraw(data: {
-    C: Character;
-    Item: Item;
-    PersistentData: <T>() => T;
-}): void;
+/**  @type {DynamicScriptDrawCallback} */
+declare function AssetsItemMouthFuturisticPanelGagScriptUpdatePlayer(data: DynamicScriptCallbackData): void;
+/** @type {DynamicScriptDrawCallback} */
+declare function AssetsItemMouthFuturisticPanelGagScriptDraw(data: DynamicScriptCallbackData): void;
+/** @type {DynamicBeforeDrawCallback} */
 declare function AssetsItemMouthFuturisticPanelGagBeforeDraw(data: DynamicDrawingData): DynamicBeforeDrawOverrides;

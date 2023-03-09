@@ -19,6 +19,7 @@ declare function InventoryItemPelvisLoveChastityBeltClick(OriginalFunction: () =
  * @see {@link ModularItemSetType}
  */
 declare function InventoryItemPelvisLoveChastityBeltSetType(module: ModularItemModule, index: number, data: ModularItemData): void;
-declare function InventoryItemPelvisLoveChastityBeltValidate(next: ExtendedItemValidateCallback<ModularItemOption>, C: Character, Item: Item, Option: ModularItemOption, CurrentOption: ModularItemOption): string;
+/** @type {ExtendedItemValidateScriptHookCallback<ModularItemOption>} */
+declare function InventoryItemPelvisLoveChastityBeltValidate(OriginalFunction: ExtendedItemValidateCallback<ModularItemOption>, C: Character, Item: Item, Option: ModularItemOption, CurrentOption: ModularItemOption): string;
 /** Map the names of the love chastity belt front + black shield options to its scifi pleasure panties equivalent. */
 declare const InventoryItemPelvisLoveChastityBeltCrotchShield: Map<string, string>;

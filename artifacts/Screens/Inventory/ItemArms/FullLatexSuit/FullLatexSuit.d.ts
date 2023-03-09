@@ -10,4 +10,5 @@ declare function InventoryItemArmsFullLatexSuitDraw(OriginalFunction: () => void
  * @returns {void} - Nothing
  */
 declare function InventoryItemArmsFullLatexSuitClick(OriginalFunction: () => void): void;
+/** @type {(C: Character) => void} */
 declare function InventoryItemArmsFullLatexSuitSetWand(C: Character): void;
