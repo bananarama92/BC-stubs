@@ -37,7 +37,7 @@ jobs:
         run: |
           cd Bondage-College/BondageClub
           npm install
-          cp ../../tsconfig.json tsconfig.json
+          cp ../../.github/tsconfig.json tsconfig.json
 
           set +e
           npx -p typescript tsc
@@ -45,8 +45,8 @@ jobs:
 
           cp Scripts/Typedef.d.ts dist/Typedef.d.ts
           cp Assets/Female3DCG/Female3DCG_Types.d.ts dist/Female3DCG_Types.d.ts
-          rm -rf ../../artifacts
-          mv dist ../../artifacts
+          rm -rf ../../bc
+          mv dist ../../bc
 
       - name: List NPM packages
         run: |
