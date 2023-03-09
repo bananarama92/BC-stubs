@@ -11,7 +11,7 @@ permissions:
 
 env:
   BC_URL: https://gitgud.io/bananarama92/Bondage-College
-  BC_BRANCH: literals
+  BC_BRANCH: typtyptyp
 
 # Allow one concurrent deployment
 concurrency:
@@ -29,12 +29,16 @@ jobs:
           cd Bondage-College
           echo "BC_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: Generate .d.ts
         run: |
           cd Bondage-College/BondageClub
+          npm install
           cp ../../tsconfig.json tsconfig.json
 
-          npm install typescript
           set +e
           npx -p typescript tsc
           set -e
@@ -43,6 +47,11 @@ jobs:
           cp Assets/Female3DCG/Female3DCG_Types.d.ts dist/Female3DCG_Types.d.ts
           rm -rf ../../artifacts
           mv dist ../../artifacts
+
+      - name: List NPM packages
+        run: |
+          cd Bondage-College/BondageClub
+          npm list
 
       - name: Apply patches
         run: |
@@ -57,8 +66,8 @@ jobs:
           git config --global user.name "GitHub Action [bot]"
           git config --local user.email "action@github.com"
           git add artifacts/*
-          if [[ $(git ls-files -m) ]]; then
-            git status
+          git status
+          if [[ "$(git status --porcelain)" ]]; then
             git commit -m "CI: Updating stub files" -m "repo: $BC_URL" -m "branch: $BC_BRANCH" -m "commit: $BC_HASH"
             git push
           else
