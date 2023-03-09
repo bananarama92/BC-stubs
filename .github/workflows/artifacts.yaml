@@ -65,7 +65,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Action [bot]"
           git config --local user.email "action@github.com"
-          git add artifacts/*
+          git add bc/*
           git status
           if [[ "$(git status --porcelain)" ]]; then
             git commit -m "CI: Updating stub files" -m "repo: $BC_URL" -m "branch: $BC_BRANCH" -m "commit: $BC_HASH"
