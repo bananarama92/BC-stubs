@@ -66,6 +66,7 @@ jobs:
           git config --global user.name "GitHub Action [bot]"
           git config --local user.email "action@github.com"
           git add bc/*
+          rm -rf Bondage-College
           git status
           if [[ "$(git status --porcelain)" ]]; then
             git commit -m "CI: Updating stub files" -m "repo: $BC_URL" -m "branch: $BC_BRANCH" -m "commit: $BC_HASH"
