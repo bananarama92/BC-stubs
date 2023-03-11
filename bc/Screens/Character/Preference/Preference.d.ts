@@ -490,25 +490,25 @@ declare function PreferencePageChangeClick(Left: number, Top: number, TotalPages
  * @param {number} Top - The top offset of the button
  * @param {number} Width - The width of the button
  * @param {number} Height - The height of the button
- * @param {string[]} List - The preference list that the button should be associated with
+ * @param {readonly string[]} List - The preference list that the button should be associated with
  * @param {number} Index - The current preference index for the given preference list
  * @returns {void} - Nothing
  */
-declare function PreferenceDrawBackNextButton(Left: number, Top: number, Width: number, Height: number, List: string[], Index: number): void;
+declare function PreferenceDrawBackNextButton(Left: number, Top: number, Width: number, Height: number, List: readonly string[], Index: number): void;
 /**
  * Returns the index of the previous preference list item (and wraps back to the end of the list if currently at 0)
- * @param {readonly any[]} List - The preference list
+ * @param {readonly unknown[]} List - The preference list
  * @param {number} Index - The current preference index for the given list
  * @returns {number} - The index of the previous item in the array, or the last item in the array if currently at 0
  */
-declare function PreferenceGetPreviousIndex(List: readonly any[], Index: number): number;
+declare function PreferenceGetPreviousIndex(List: readonly unknown[], Index: number): number;
 /**
  * Returns the index of the next preference list item (and wraps back to the start of the list if currently at the end)
- * @param {readonly any[]} List - The preference list
+ * @param {readonly unknown[]} List - The preference list
  * @param {number} Index - The current preference index for the given list
  * @returns {number} - The index of the next item in the array, or 0 if the array is currently at the last item
  */
-declare function PreferenceGetNextIndex(List: readonly any[], Index: number): number;
+declare function PreferenceGetNextIndex(List: readonly unknown[], Index: number): number;
 declare var PreferenceBackground: string;
 declare var PreferenceMessage: string;
 declare var PreferenceSafewordConfirm: boolean;

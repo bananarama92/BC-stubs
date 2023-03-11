@@ -364,6 +364,11 @@ type AnimationDataTypes = "AssetGroup" | "" | "DynamicPlayerCanvas" | "Persisten
 
 type ModuleType = "Character" | "Cutscene" | "MiniGame" | "Online" | "Room";
 
+type BackgroundTag =
+	"Filter by tag" | "Indoor" | "Outdoor" | "Aquatic" | "Special Events" | "SciFi & Fantasy" |
+	"Club & College" | "Regular house" | "Dungeon" | "Asylum"
+	;
+
 //#endregion
 
 //#region index.html
@@ -3305,6 +3310,36 @@ interface WheelFortuneOptionType {
     Color: WheelFortuneColor;
     /** An optional script that will be executed whenever the option is picked */
     Script?: () => void;
+}
+
+// #end region
+
+// #region drawing
+
+/** Drawing options for an item's preview box */
+interface PreviewDrawOptions {
+	/** The character using the item (used to calculate dynamic item descriptions/previews) */
+	C?: Character;
+	/** The preview box description. */
+	Description?: string;
+	/** The background color to draw the preview box in - defaults to white */
+	Background?: string;
+	/** The foreground (text) color to draw the description in - defaults to black */
+	Foreground?: string;
+	/** Whether or not to add vibration effects to the item - defaults to false */
+	Vibrating?: boolean;
+	/** Whether or not to draw a border around the preview box */
+	Border?: boolean;
+	/** Whether or not the button should enable hover behavior (background color change) */
+	Hover?: boolean;
+	/** The background color that should be used on mouse hover, if any */
+	HoverBackground?: string;
+	/** Whether or not the element is disabled (prevents hover functionality) */
+	Disabled?: boolean;
+	/** A list of images to draw in the top-left of the preview box */
+	Icons?: readonly InventoryIcon[];
+	/** The crafted properties of the item */
+	Craft?: CraftingItem;
 }
 
 // #end region
