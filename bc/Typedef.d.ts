@@ -631,7 +631,7 @@ interface FocusGroupDictionaryEntry {
 	 */
 	Tag?: "FocusAssetGroup";
 	/** The group name representing focused group for the purposes of the sent message */
-	FocusGroupName: AssetItemGroupName;
+	FocusGroupName: AssetGroupItemName;
 }
 
 /**
@@ -761,7 +761,7 @@ interface ActivityCounterDictionaryEntry {
  */
 interface AssetGroupNameDictionaryEntry {
 	Tag?: "FocusAssetGroup";
-	AssetGroupName: AssetItemGroupName;
+	AssetGroupName: AssetGroupItemName;
 }
 
 /**
