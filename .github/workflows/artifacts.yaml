@@ -23,6 +23,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - name: Clone BC
         run: |
           git clone $BC_URL --depth=1 --branch=$BC_BRANCH
@@ -63,13 +69,14 @@ jobs:
 
       - name: Push artifacts
         run: |
+          BC_VERSION=$(python get_bc_version.py Bondage-College/BondageClub/index.html)
           git config --global user.name "GitHub Action [bot]"
           git config --local user.email "action@github.com"
           git add bc/*
           rm -rf Bondage-College
           git status
           if [[ "$(git status --porcelain)" ]]; then
-            git commit -m "CI: Update stub files" -m "repo: $BC_URL" -m "branch: $BC_BRANCH" -m "commit: $BC_HASH"
+            git commit -m "BC Version: $BC_VERSION" -m "CI: Update stub files" -m "Repo: $BC_URL" -m "Branch: \`$BC_BRANCH\`" -m "Commit: \`$BC_HASH\`"
             git push
           else
             echo "nothing to commit"
