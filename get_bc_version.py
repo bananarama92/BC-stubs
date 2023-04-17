@@ -11,7 +11,8 @@ def main(filename: str) -> str:
             match = PATTERN.search(i)
             if (match is not None):
                 group_dict = match.groupdict()
-                return f"{group_dict['version']}{group_dict['suffix']}"
+                suffix = group_dict['suffix'] if group_dict['suffix'] is not None else ""
+                return f"{group_dict['version']}{suffix}"
     return "UNKNOWN"
 
 if __name__ == "__main__":
