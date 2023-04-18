@@ -3,6 +3,8 @@ declare function InventoryItemDevicesFuturisticCrateDevice1Init(C: Character, It
 declare function InventoryItemDevicesFuturisticCrateDevice1Load(): void;
 declare function InventoryItemDevicesFuturisticCrateDevice1Draw(): void;
 declare function InventoryItemDevicesFuturisticCrateDevice1Click(): void;
+/** @type {ExtendedItemCallbacks.PublishAction<VibratingItemOption>} */
+declare function InventoryItemDevicesFuturisticCrateDevice1PublishAction(C: Character, item: Item, newOption: VibratingItemOption, previousOption: VibratingItemOption): void;
 declare function InventoryItemDevicesFuturisticCrateDevice1Exit(): void;
 /**
  * @typedef {FuckMachinePersistentData} FuturisticCratePersistentData
