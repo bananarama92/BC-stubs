@@ -1126,7 +1126,7 @@ interface ResolvedTintDefinition extends TintDefinition {
 
 interface ExpressionTriggerBase<GroupName extends ExpressionGroupName> {
 	Group: GroupName;
-	Name: ExpressionNameMap[GroupName];
+	Name: null | ExpressionNameMap[GroupName];
 	Timer: number;
 }
 type ExpressionTriggerMap<T> = T extends ExpressionGroupName ? ExpressionTriggerBase<T> : never;
