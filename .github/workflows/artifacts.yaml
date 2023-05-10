@@ -69,7 +69,7 @@ jobs:
 
       - name: Push artifacts
         run: |
-          BC_VERSION=$(python get_bc_version.py Bondage-College/BondageClub/index.html)
+          BC_VERSION=$(python get_bc_version.py Bondage-College/BondageClub/Scripts/Game.js)
           git config --global user.name "GitHub Action [bot]"
           git config --local user.email "action@github.com"
           git add bc/*

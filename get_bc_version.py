@@ -8,15 +8,14 @@ PATTERN = re.compile(r'GameVersion = "(?P<version>R[0-9]+)(?P<suffix>(Alpha|Beta
 def main(filename: str) -> str:
     with open(filename, "r", encoding="utf8") as f:
         for i in f:
-            match = PATTERN.search(i)
-            if (match is not None):
+            if match := PATTERN.search(i):
                 group_dict = match.groupdict()
                 suffix = group_dict['suffix'] if group_dict['suffix'] is not None else ""
                 return f"{group_dict['version']}{suffix}"
     return "UNKNOWN"
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(usage="python ./get_bc_version.py index.html", description=__doc__)
+    parser = argparse.ArgumentParser(usage="python ./get_bc_version.py Scripts/Game.js", description=__doc__)
     parser.add_argument("path", help="Path to the BC index.html file")
     args = parser.parse_args()
     print(main(args.path))
