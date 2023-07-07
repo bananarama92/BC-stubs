@@ -11,7 +11,8 @@ declare let KDMusicLoopTracksChance: {
     "AREA5-UNDERGROUNDJUNGLE.ogg": number;
     "AREA6-CRYSTALCAVE.ogg": number;
     "AREA7-LOSTTEMPLE.ogg": number;
-    "AREA8-BELLOWS.ogg": number;
+    "AREA8-ORRERY.ogg": number;
+    "AREA9-BELLOWS.ogg": number;
 };
 declare let KDCurrentSong: string;
 declare let KDNewSong: string;

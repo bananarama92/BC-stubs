@@ -1,4 +1,10 @@
 /**
+ *
+ * @param {boolean} [override] - Override jailing requirement
+ * @returns {boolean}
+ */
+declare function KDCanSpawnShopkeeper(override?: boolean): boolean;
+/**
  * @type {Record<string, {weight: (guard: any, xx: any, yy: any) => number, trigger: (guard: any, xx: any, yy: any) => void}>}
  */
 declare let KDJailEvents: Record<string, {
@@ -61,7 +67,7 @@ declare namespace KDGuardActions {
         export { handle_6 as handle };
     }
     namespace jailLeashTour {
-        export function weight_7(guard: any, xx: any, yy: any): 0 | 5;
+        export function weight_7(guard: any, xx: any, yy: any): number;
         export { weight_7 as weight };
         export function assign_7(guard: any, xx: any, yy: any): void;
         export { assign_7 as assign };

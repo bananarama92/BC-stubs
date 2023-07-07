@@ -85,7 +85,12 @@ declare function KinkyDungeonAllOutfit(): item[];
  * @return {item[]}
  */
 declare function KinkyDungeonAllWeapon(): item[];
-declare function KDGetItemPreview(item: any): {
+/**
+ *
+ * @param {item} item
+ * @returns {{name: any; item: any; preview: string;}}
+ */
+declare function KDGetItemPreview(item: item): {
     name: any;
     item: any;
     preview: string;
@@ -95,21 +100,27 @@ declare function KDGetItemPreview(item: any): {
  * @param {string} Filter
  * @param {boolean} [enchanted]
  * @param {boolean} [ignoreHidden]
- * @returns {any[]}
+ * @param {boolean} [ignoreFilters]
+ * @returns {{name: any; item: any; preview: string;}[]}
  */
-declare function KinkyDungeonFilterInventory(Filter: string, enchanted?: boolean, ignoreHidden?: boolean): any[];
+declare function KinkyDungeonFilterInventory(Filter: string, enchanted?: boolean, ignoreHidden?: boolean, ignoreFilters?: boolean): {
+    name: any;
+    item: any;
+    preview: string;
+}[];
 /**
  *
  * @param {{name: any, item: item, preview: string}} item
  * @param {boolean} [noscroll]
  * @param {boolean} [treatAsHover]
+ * @param {number} xOffset
  * @returns {boolean}
  */
 declare function KinkyDungeonDrawInventorySelected(item: {
     name: any;
     item: item;
     preview: string;
-}, noscroll?: boolean, treatAsHover?: boolean): boolean;
+}, noscroll?: boolean, treatAsHover?: boolean, xOffset?: number): boolean;
 declare function KinkyDungeonDrawInventory(): void;
 declare function KinkyDungeonSendInventoryEvent(Event: any, data: any): void;
 declare function KinkyDungeonQuickGrid(I: any, Width: any, Height: any, Xcount: any): {
@@ -118,9 +129,30 @@ declare function KinkyDungeonQuickGrid(I: any, Width: any, Height: any, Xcount: 
 };
 declare function KinkyDungeonDrawQuickInv(): void;
 declare function KinkyDungeonhandleQuickInv(NoUse: any): boolean;
-declare var KinkyDungeonFilters: string[];
-declare var KinkyDungeonCurrentFilter: string;
-declare var KinkyDungeonCurrentPageInventory: number;
+/**
+ *
+ * @param {string} name
+ * @param {entity} [player]
+ * @param {boolean} playerDropped
+ */
+declare function KDDropItemInv(name: string, player?: entity, playerDropped?: boolean): void;
+/**
+ *
+ * @param {entity} player
+ */
+declare function KDSortInventory(player: entity): void;
+declare let KinkyDungeonFilters: string[];
+/**
+ * @type {Record<string, boolean>}
+ */
+declare let KDInventoryUseIconConfig: Record<string, boolean>;
+/** List of current filters for each filter type */
+/**
+ * @type {Record<string, Record<string, boolean>>}
+ */
+declare let KDFilterFilters: Record<string, Record<string, boolean>>;
+declare let KinkyDungeonCurrentFilter: string;
+declare let KinkyDungeonCurrentPageInventory: number;
 declare let KinkyDungeonShowInventory: boolean;
 declare let KinkyDungeonInventoryOffset: number;
 declare let KinkyDungeonInvDraw: any[];
@@ -138,4 +170,9 @@ declare namespace KDItemsPerScreen {
     export { Weapon_1 as Weapon };
 }
 declare let KDScrollAmount: number;
-declare let KDHideQuickInv: boolean;
+declare namespace KDInventoryStatus {
+    const HideQuickInv: boolean;
+    const DropQuickInv: boolean;
+    const SortQuickInv: boolean;
+    const FilterQuickInv: boolean;
+}

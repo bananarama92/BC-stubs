@@ -48,6 +48,9 @@ declare function KinkyDungeonDrawOrb(): void;
 declare function KinkyDungeonHandleOrb(): boolean;
 declare function KinkyDungeonTakePerk(Amount: any, X: any, Y: any): void;
 declare function KinkyDungeonDrawPerkOrb(): void;
+declare function KDGetPosNegColor(value: any): string;
+declare function KDGetGoddessBonus(shrine: any): number;
+declare function KDDrawRestraintBonus(shrine: any, x: any, y: any, width: number, FontSize: any, align: any, zIndex: any, alpha: any, forceColor: any): void;
 /**
  * Base costs for all the shrines. Starts at this value, increases thereafter
  * @type {Record<string, number>}
@@ -56,6 +59,8 @@ declare let KinkyDungeonShrineBaseCosts: Record<string, number>;
 declare let KDWillShrineWill: number;
 declare let KinkyDungeonOrbAmount: number;
 declare let KDShrineRemoveCount: number;
+declare let KDMaxGoddessBonus: number;
+declare let KDMinGoddessBonus: number;
 /**
  * Cost growth, overrides the default amount
  * @type {Record<string, number>}

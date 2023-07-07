@@ -1,5 +1,5 @@
 declare function KinkyDungeonCheckProjectileClearance(xx: any, yy: any, x2: any, y2: any): boolean;
-declare function KinkyDungeonCheckPath(x1: any, y1: any, x2: any, y2: any, allowBars: any, blockEnemies: any, maxFails: any): boolean;
+declare function KinkyDungeonCheckPath(x1: any, y1: any, x2: any, y2: any, allowBars: any, blockEnemies: any, maxFails: any, blockOnlyLOSBlock: any): boolean;
 declare function KinkyDungeonResetFog(): void;
 declare function KinkyDungeonMakeBrightnessMap(width: any, height: any, mapBrightness: any, Lights: any, delta: any): void;
 /** Averages two hex colors according to weights w1 and w2
@@ -12,10 +12,13 @@ declare function KinkyDungeonMakeBrightnessMap(width: any, height: any, mapBrigh
 declare function KDAvgColor(color1: number, color2: number, w1: number, w2: number): number;
 declare function KinkyDungeonMakeVisionMap(width: any, height: any, Viewports: any, Lights: any, delta: any, mapBrightness: any): void;
 declare function KDDrawFog(CamX: any, CamY: any, CamX_offset: any, CamY_offset: any): void;
+/**
+ * Allows fog of war to be rendered
+ */
+declare function KDAllowFog(): boolean;
 declare let KinkyDungeonSeeAll: boolean;
 declare let KDVisionBlockers: Map<any, any>;
 declare let KDLightBlockers: Map<any, any>;
 declare let KDPlayerLight: number;
 declare let KDMapBrightnessMult: number;
-declare let KDFogTexture: any;
 declare let KDLightCropValue: number;

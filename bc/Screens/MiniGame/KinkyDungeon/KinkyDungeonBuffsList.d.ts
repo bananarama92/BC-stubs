@@ -3,6 +3,7 @@ declare namespace KDConduction {
     const id: string;
     const type: string;
     const aura: string;
+    const noAuraColor: boolean;
     const aurasprite: string;
     const power: number;
     const player: boolean;
@@ -42,11 +43,17 @@ declare namespace KDDrenched {
     export { duration_1 as duration };
     const enemies_1: boolean;
     export { enemies_1 as enemies };
-    const events_1: {
+    const events_1: ({
         type: string;
         duration: number;
         trigger: string;
-    }[];
+        kind?: undefined;
+    } | {
+        type: string;
+        duration: number;
+        trigger: string;
+        kind: string;
+    })[];
     export { events_1 as events };
 }
 declare namespace KDBurning {
@@ -58,7 +65,8 @@ declare namespace KDBurning {
     export { aura_2 as aura };
     const aurasprite_2: string;
     export { aurasprite_2 as aurasprite };
-    export const noAuraColor: boolean;
+    const noAuraColor_1: boolean;
+    export { noAuraColor_1 as noAuraColor };
     const power_2: number;
     export { power_2 as power };
     const player_2: boolean;
@@ -171,16 +179,40 @@ declare namespace KDDrenched3 {
     const enemies_7: boolean;
     export { enemies_7 as enemies };
 }
-declare namespace KDEager {
+declare namespace KDBoundByFate {
     const id_8: string;
     export { id_8 as id };
     const type_8: string;
     export { type_8 as type };
     const power_8: number;
     export { power_8 as power };
+    const player_8: boolean;
+    export { player_8 as player };
     const duration_8: number;
     export { duration_8 as duration };
-    const events_4: ({
+    const enemies_8: boolean;
+    export { enemies_8 as enemies };
+    const aura_6: string;
+    export { aura_6 as aura };
+    const events_4: {
+        type: string;
+        kind: string;
+        count: number;
+        trigger: string;
+        power: number;
+    }[];
+    export { events_4 as events };
+}
+declare namespace KDEager {
+    const id_9: string;
+    export { id_9 as id };
+    const type_9: string;
+    export { type_9 as type };
+    const power_9: number;
+    export { power_9 as power };
+    const duration_9: number;
+    export { duration_9 as duration };
+    const events_5: ({
         type: string;
         duration: number;
         trigger: string;
@@ -191,43 +223,23 @@ declare namespace KDEager {
         power: number;
         trigger: string;
     })[];
-    export { events_4 as events };
+    export { events_5 as events };
 }
 declare namespace KDMasochist {
-    const id_9: string;
-    export { id_9 as id };
-    const type_9: string;
-    export { type_9 as type };
-    const power_9: number;
-    export { power_9 as power };
-    const duration_9: number;
-    export { duration_9 as duration };
-}
-declare namespace KDChilled {
     const id_10: string;
     export { id_10 as id };
-    const aura_6: string;
-    export { aura_6 as aura };
     const type_10: string;
     export { type_10 as type };
     const power_10: number;
     export { power_10 as power };
-    const player_8: boolean;
-    export { player_8 as player };
-    const enemies_8: boolean;
-    export { enemies_8 as enemies };
     const duration_10: number;
     export { duration_10 as duration };
 }
-declare namespace KDSlimed {
+declare namespace KDChilled {
     const id_11: string;
     export { id_11 as id };
     const aura_7: string;
     export { aura_7 as aura };
-    const aurasprite_3: string;
-    export { aurasprite_3 as aurasprite };
-    const noAuraColor_1: boolean;
-    export { noAuraColor_1 as noAuraColor };
     const type_11: string;
     export { type_11 as type };
     const power_11: number;
@@ -238,31 +250,16 @@ declare namespace KDSlimed {
     export { enemies_9 as enemies };
     const duration_11: number;
     export { duration_11 as duration };
-    const range_1: number;
-    export { range_1 as range };
-    export const hideHelpless: boolean;
-    export const tags: string[];
-    const events_5: ({
-        type: string;
-        duration: number;
-        trigger: string;
-        power?: undefined;
-    } | {
-        type: string;
-        trigger: string;
-        duration?: undefined;
-        power?: undefined;
-    } | {
-        type: string;
-        duration: number;
-        power: number;
-        trigger: string;
-    })[];
-    export { events_5 as events };
 }
-declare namespace KDEncased {
+declare namespace KDSlimed {
     const id_12: string;
     export { id_12 as id };
+    const aura_8: string;
+    export { aura_8 as aura };
+    const aurasprite_3: string;
+    export { aurasprite_3 as aurasprite };
+    const noAuraColor_2: boolean;
+    export { noAuraColor_2 as noAuraColor };
     const type_12: string;
     export { type_12 as type };
     const power_12: number;
@@ -273,11 +270,10 @@ declare namespace KDEncased {
     export { enemies_10 as enemies };
     const duration_12: number;
     export { duration_12 as duration };
-    const range_2: number;
-    export { range_2 as range };
-    export const replaceSprite: string;
-    const tags_1: string[];
-    export { tags_1 as tags };
+    const range_1: number;
+    export { range_1 as range };
+    export const hideHelpless: boolean;
+    export const tags: string[];
     const events_6: ({
         type: string;
         duration: number;
@@ -296,170 +292,209 @@ declare namespace KDEncased {
     })[];
     export { events_6 as events };
 }
-declare namespace KDChastity {
+declare namespace KDEncased {
     const id_13: string;
     export { id_13 as id };
     const type_13: string;
     export { type_13 as type };
     const power_13: number;
     export { power_13 as power };
-    const aura_8: string;
-    export { aura_8 as aura };
-    const aurasprite_4: string;
-    export { aurasprite_4 as aurasprite };
     const player_11: boolean;
     export { player_11 as player };
     const enemies_11: boolean;
     export { enemies_11 as enemies };
     const duration_13: number;
     export { duration_13 as duration };
-    const range_3: number;
-    export { range_3 as range };
-    const tags_2: string[];
-    export { tags_2 as tags };
-    const events_7: {
+    const range_2: number;
+    export { range_2 as range };
+    export const replaceSprite: string;
+    const tags_1: string[];
+    export { tags_1 as tags };
+    const events_7: ({
         type: string;
+        duration: number;
+        trigger: string;
+        power?: undefined;
+    } | {
+        type: string;
+        trigger: string;
+        duration?: undefined;
+        power?: undefined;
+    } | {
+        type: string;
+        duration: number;
         power: number;
         trigger: string;
-        prereq: string;
-    }[];
+    })[];
     export { events_7 as events };
 }
-declare namespace KDVibrate1 {
+declare namespace KDEncasedDoll {
     const id_14: string;
     export { id_14 as id };
     const type_14: string;
     export { type_14 as type };
     const power_14: number;
     export { power_14 as power };
-    const aura_9: string;
-    export { aura_9 as aura };
+    const player_12: boolean;
+    export { player_12 as player };
+    const enemies_12: boolean;
+    export { enemies_12 as enemies };
     const duration_14: number;
     export { duration_14 as duration };
-    const tags_3: string[];
-    export { tags_3 as tags };
-    const events_8: {
+    const range_3: number;
+    export { range_3 as range };
+    const replaceSprite_1: string;
+    export { replaceSprite_1 as replaceSprite };
+    const tags_2: string[];
+    export { tags_2 as tags };
+    const events_8: ({
+        type: string;
+        duration: number;
+        trigger: string;
+        power?: undefined;
+    } | {
         type: string;
         trigger: string;
-    }[];
+        duration?: undefined;
+        power?: undefined;
+    } | {
+        type: string;
+        duration: number;
+        power: number;
+        trigger: string;
+    })[];
     export { events_8 as events };
 }
-declare namespace KDVibrate2 {
+declare namespace KDChastity {
     const id_15: string;
     export { id_15 as id };
     const type_15: string;
     export { type_15 as type };
     const power_15: number;
     export { power_15 as power };
-    const aura_10: string;
-    export { aura_10 as aura };
+    const aura_9: string;
+    export { aura_9 as aura };
+    const aurasprite_4: string;
+    export { aurasprite_4 as aurasprite };
+    const player_13: boolean;
+    export { player_13 as player };
+    const enemies_13: boolean;
+    export { enemies_13 as enemies };
     const duration_15: number;
     export { duration_15 as duration };
-    const tags_4: string[];
-    export { tags_4 as tags };
+    const range_4: number;
+    export { range_4 as range };
+    const tags_3: string[];
+    export { tags_3 as tags };
     const events_9: {
         type: string;
+        power: number;
         trigger: string;
+        prereq: string;
     }[];
     export { events_9 as events };
 }
-declare namespace KDVibrate3 {
+declare namespace KDVibrate1 {
     const id_16: string;
     export { id_16 as id };
     const type_16: string;
     export { type_16 as type };
     const power_16: number;
     export { power_16 as power };
-    const aura_11: string;
-    export { aura_11 as aura };
+    const aura_10: string;
+    export { aura_10 as aura };
     const duration_16: number;
     export { duration_16 as duration };
-    const tags_5: string[];
-    export { tags_5 as tags };
+    const tags_4: string[];
+    export { tags_4 as tags };
     const events_10: {
         type: string;
         trigger: string;
     }[];
     export { events_10 as events };
 }
-declare namespace KDToy {
+declare namespace KDVibrate2 {
     const id_17: string;
     export { id_17 as id };
     const type_17: string;
     export { type_17 as type };
     const power_17: number;
     export { power_17 as power };
-    const aura_12: string;
-    export { aura_12 as aura };
-    const aurasprite_5: string;
-    export { aurasprite_5 as aurasprite };
-    const player_12: boolean;
-    export { player_12 as player };
-    const enemies_12: boolean;
-    export { enemies_12 as enemies };
+    const aura_11: string;
+    export { aura_11 as aura };
     const duration_17: number;
     export { duration_17 as duration };
-    const range_4: number;
-    export { range_4 as range };
-    const tags_6: string[];
-    export { tags_6 as tags };
+    const tags_5: string[];
+    export { tags_5 as tags };
+    const events_11: {
+        type: string;
+        trigger: string;
+    }[];
+    export { events_11 as events };
 }
-declare namespace KDPlugged {
+declare namespace KDVibrate3 {
     const id_18: string;
     export { id_18 as id };
     const type_18: string;
     export { type_18 as type };
     const power_18: number;
     export { power_18 as power };
-    const aura_13: string;
-    export { aura_13 as aura };
-    const aurasprite_6: string;
-    export { aurasprite_6 as aurasprite };
-    const player_13: boolean;
-    export { player_13 as player };
-    const enemies_13: boolean;
-    export { enemies_13 as enemies };
+    const aura_12: string;
+    export { aura_12 as aura };
     const duration_18: number;
     export { duration_18 as duration };
-    const range_5: number;
-    export { range_5 as range };
-    const tags_7: string[];
-    export { tags_7 as tags };
-    const events_11: ({
-        type: string;
-        power: number;
-        trigger: string;
-        prereq?: undefined;
-    } | {
+    const tags_6: string[];
+    export { tags_6 as tags };
+    const events_12: {
         type: string;
         trigger: string;
-        prereq: string;
-        power?: undefined;
-    })[];
-    export { events_11 as events };
+    }[];
+    export { events_12 as events };
 }
-declare namespace KDDoublePlugged {
+declare namespace KDToy {
     const id_19: string;
     export { id_19 as id };
     const type_19: string;
     export { type_19 as type };
     const power_19: number;
     export { power_19 as power };
-    const aura_14: string;
-    export { aura_14 as aura };
-    const aurasprite_7: string;
-    export { aurasprite_7 as aurasprite };
+    const aura_13: string;
+    export { aura_13 as aura };
+    const aurasprite_5: string;
+    export { aurasprite_5 as aurasprite };
     const player_14: boolean;
     export { player_14 as player };
     const enemies_14: boolean;
     export { enemies_14 as enemies };
     const duration_19: number;
     export { duration_19 as duration };
+    const range_5: number;
+    export { range_5 as range };
+    const tags_7: string[];
+    export { tags_7 as tags };
+}
+declare namespace KDPlugged {
+    const id_20: string;
+    export { id_20 as id };
+    const type_20: string;
+    export { type_20 as type };
+    const power_20: number;
+    export { power_20 as power };
+    const aura_14: string;
+    export { aura_14 as aura };
+    const aurasprite_6: string;
+    export { aurasprite_6 as aurasprite };
+    const player_15: boolean;
+    export { player_15 as player };
+    const enemies_15: boolean;
+    export { enemies_15 as enemies };
+    const duration_20: number;
+    export { duration_20 as duration };
     const range_6: number;
     export { range_6 as range };
     const tags_8: string[];
     export { tags_8 as tags };
-    const events_12: ({
+    const events_13: ({
         type: string;
         power: number;
         trigger: string;
@@ -470,37 +505,43 @@ declare namespace KDDoublePlugged {
         prereq: string;
         power?: undefined;
     })[];
-    export { events_12 as events };
+    export { events_13 as events };
 }
-declare namespace KDGlueVulnLow {
-    const id_20: string;
-    export { id_20 as id };
-    const type_20: string;
-    export { type_20 as type };
-    const power_20: number;
-    export { power_20 as power };
-    const player_15: boolean;
-    export { player_15 as player };
-    const enemies_15: boolean;
-    export { enemies_15 as enemies };
-    const duration_20: number;
-    export { duration_20 as duration };
-}
-declare namespace KDGlueResist {
+declare namespace KDDoublePlugged {
     const id_21: string;
     export { id_21 as id };
     const type_21: string;
     export { type_21 as type };
     const power_21: number;
     export { power_21 as power };
+    const aura_15: string;
+    export { aura_15 as aura };
+    const aurasprite_7: string;
+    export { aurasprite_7 as aurasprite };
     const player_16: boolean;
     export { player_16 as player };
     const enemies_16: boolean;
     export { enemies_16 as enemies };
     const duration_21: number;
     export { duration_21 as duration };
+    const range_7: number;
+    export { range_7 as range };
+    const tags_9: string[];
+    export { tags_9 as tags };
+    const events_14: ({
+        type: string;
+        power: number;
+        trigger: string;
+        prereq?: undefined;
+    } | {
+        type: string;
+        trigger: string;
+        prereq: string;
+        power?: undefined;
+    })[];
+    export { events_14 as events };
 }
-declare namespace KDDollDebuff {
+declare namespace KDGlueVulnLow {
     const id_22: string;
     export { id_22 as id };
     const type_22: string;
@@ -513,10 +554,8 @@ declare namespace KDDollDebuff {
     export { enemies_17 as enemies };
     const duration_22: number;
     export { duration_22 as duration };
-    const aura_15: string;
-    export { aura_15 as aura };
 }
-declare namespace KDDollDebuff2 {
+declare namespace KDGlueResist {
     const id_23: string;
     export { id_23 as id };
     const type_23: string;
@@ -530,7 +569,7 @@ declare namespace KDDollDebuff2 {
     const duration_23: number;
     export { duration_23 as duration };
 }
-declare namespace KDSlowed {
+declare namespace KDDollDebuff {
     const id_24: string;
     export { id_24 as id };
     const type_24: string;
@@ -543,8 +582,10 @@ declare namespace KDSlowed {
     export { enemies_19 as enemies };
     const duration_24: number;
     export { duration_24 as duration };
+    const aura_16: string;
+    export { aura_16 as aura };
 }
-declare namespace KDAttackSlow {
+declare namespace KDDollDebuff2 {
     const id_25: string;
     export { id_25 as id };
     const type_25: string;
@@ -558,11 +599,9 @@ declare namespace KDAttackSlow {
     const duration_25: number;
     export { duration_25 as duration };
 }
-declare namespace KDUnsteady {
+declare namespace KDSlowed {
     const id_26: string;
     export { id_26 as id };
-    const aura_16: string;
-    export { aura_16 as aura };
     const type_26: string;
     export { type_26 as type };
     const power_26: number;
@@ -574,11 +613,9 @@ declare namespace KDUnsteady {
     const duration_26: number;
     export { duration_26 as duration };
 }
-declare namespace KDUnsteady2 {
+declare namespace KDAttackSlow {
     const id_27: string;
     export { id_27 as id };
-    const aura_17: string;
-    export { aura_17 as aura };
     const type_27: string;
     export { type_27 as type };
     const power_27: number;
@@ -590,9 +627,11 @@ declare namespace KDUnsteady2 {
     const duration_27: number;
     export { duration_27 as duration };
 }
-declare namespace KDUnsteady3 {
+declare namespace KDUnsteady {
     const id_28: string;
     export { id_28 as id };
+    const aura_17: string;
+    export { aura_17 as aura };
     const type_28: string;
     export { type_28 as type };
     const power_28: number;
@@ -604,7 +643,7 @@ declare namespace KDUnsteady3 {
     const duration_28: number;
     export { duration_28 as duration };
 }
-declare namespace KDNoChill {
+declare namespace KDUnsteady2 {
     const id_29: string;
     export { id_29 as id };
     const aura_18: string;
@@ -620,7 +659,7 @@ declare namespace KDNoChill {
     const duration_29: number;
     export { duration_29 as duration };
 }
-declare namespace KDNoChillNoAura {
+declare namespace KDUnsteady3 {
     const id_30: string;
     export { id_30 as id };
     const type_30: string;
@@ -634,7 +673,7 @@ declare namespace KDNoChillNoAura {
     const duration_30: number;
     export { duration_30 as duration };
 }
-declare namespace KDRestraintDisarmLight {
+declare namespace KDNoChill {
     const id_31: string;
     export { id_31 as id };
     const aura_19: string;
@@ -649,11 +688,41 @@ declare namespace KDRestraintDisarmLight {
     export { enemies_26 as enemies };
     const duration_31: number;
     export { duration_31 as duration };
-    const events_13: {
+}
+declare namespace KDNoChillNoAura {
+    const id_32: string;
+    export { id_32 as id };
+    const type_32: string;
+    export { type_32 as type };
+    const power_32: number;
+    export { power_32 as power };
+    const player_27: boolean;
+    export { player_27 as player };
+    const enemies_27: boolean;
+    export { enemies_27 as enemies };
+    const duration_32: number;
+    export { duration_32 as duration };
+}
+declare namespace KDRestraintDisarmLight {
+    const id_33: string;
+    export { id_33 as id };
+    const aura_20: string;
+    export { aura_20 as aura };
+    const type_33: string;
+    export { type_33 as type };
+    const power_33: number;
+    export { power_33 as power };
+    const player_28: boolean;
+    export { player_28 as player };
+    const enemies_28: boolean;
+    export { enemies_28 as enemies };
+    const duration_33: number;
+    export { duration_33 as duration };
+    const events_15: {
         type: string;
         trigger: string;
     }[];
-    export { events_13 as events };
+    export { events_15 as events };
 }
 declare namespace KDBuffReference {
     const RestraintDisarmLight: {
@@ -779,18 +848,18 @@ declare namespace KDBuffReference {
     }[];
 }
 declare namespace KDDisenchantSelf {
-    const id_32: string;
-    export { id_32 as id };
-    const aura_20: string;
-    export { aura_20 as aura };
-    const type_32: string;
-    export { type_32 as type };
-    const power_32: number;
-    export { power_32 as power };
-    const player_27: boolean;
-    export { player_27 as player };
-    const enemies_27: boolean;
-    export { enemies_27 as enemies };
-    const duration_32: number;
-    export { duration_32 as duration };
+    const id_34: string;
+    export { id_34 as id };
+    const aura_21: string;
+    export { aura_21 as aura };
+    const type_34: string;
+    export { type_34 as type };
+    const power_34: number;
+    export { power_34 as power };
+    const player_29: boolean;
+    export { player_29 as player };
+    const enemies_29: boolean;
+    export { enemies_29 as enemies };
+    const duration_34: number;
+    export { duration_34 as duration };
 }

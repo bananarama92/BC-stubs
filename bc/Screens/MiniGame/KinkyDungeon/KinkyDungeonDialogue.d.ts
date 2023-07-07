@@ -40,6 +40,16 @@ declare function KDOffensiveDialogueSuccessChance(checkResult: any): number;
  * @param {entity} [enemy]
  */
 declare function KDStartDialog(Dialogue: string, Speaker?: string, Click?: boolean, Personality?: string, enemy?: entity): void;
+declare function KDDoDialogue(data: any): void;
+/**
+ *
+ * @param {string} Dialogue
+ * @param {string} [Speaker]
+ * @param {boolean} [Click]
+ * @param {string} [Personality]
+ * @param {entity} [enemy]
+ */
+declare function KDStartDialogInput(Dialogue: string, Speaker?: string, Click?: boolean, Personality?: string, enemy?: entity): void;
 declare function KDDialogueGagged(): boolean;
 declare function KDHandleDialogue(): boolean;
 /**
@@ -139,6 +149,11 @@ declare function KDAddOffer(Amount: number): void;
  * @returns {number}
  */
 declare function KDGetOfferLevelMod(): number;
+/**
+ *
+ * @param {entity} player
+ */
+declare function KDRunChefChance(player: entity): void;
 declare namespace KDDialogueData {
     const CurrentDialogueIndex: number;
 }

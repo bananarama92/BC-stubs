@@ -90,13 +90,15 @@ declare function KinkyDungeonUpdateAngel(delta: number): void;
 declare function KinkyDungeonCreateAngel(x: number, y: number): void;
 declare const KDANGER: -19;
 declare const KDRAGE: -31;
+declare const KDPLEASED: 15;
+declare const KDFRIENDLY: 35;
 declare namespace KDFactionGoddess {
     namespace Metal {
         const Angel: number;
         const Demon: number;
         const Nevermere: number;
         const AncientRobot: number;
-        const Alchemist: number;
+        const Elemental: number;
     }
     namespace Rope {
         const Angel_1: number;
@@ -107,6 +109,8 @@ declare namespace KDFactionGoddess {
         export const Dressmaker: number;
         export const Bountyhunter: number;
         export const Bast: number;
+        const AncientRobot_1: number;
+        export { AncientRobot_1 as AncientRobot };
     }
     namespace Elements {
         const Angel_2: number;
@@ -115,7 +119,10 @@ declare namespace KDFactionGoddess {
         export { Demon_2 as Demon };
         export const Witch: number;
         export const Apprentice: number;
-        export const Elemental: number;
+        const Elemental_1: number;
+        export { Elemental_1 as Elemental };
+        const AncientRobot_2: number;
+        export { AncientRobot_2 as AncientRobot };
     }
     namespace Leather {
         const Angel_3: number;
@@ -125,8 +132,10 @@ declare namespace KDFactionGoddess {
         export const Elf: number;
         export const Dragon: number;
         export const Bandit: number;
-        const Elemental_1: number;
-        export { Elemental_1 as Elemental };
+        const Elemental_2: number;
+        export { Elemental_2 as Elemental };
+        const AncientRobot_3: number;
+        export { AncientRobot_3 as AncientRobot };
     }
     namespace Latex {
         const Angel_4: number;
@@ -134,12 +143,11 @@ declare namespace KDFactionGoddess {
         const Demon_4: number;
         export { Demon_4 as Demon };
         export const Maidforce: number;
-        const Alchemist_1: number;
-        export { Alchemist_1 as Alchemist };
+        export const Alchemist: number;
         const Nevermere_1: number;
         export { Nevermere_1 as Nevermere };
-        const Elemental_2: number;
-        export { Elemental_2 as Elemental };
+        const AncientRobot_4: number;
+        export { AncientRobot_4 as AncientRobot };
     }
     namespace Will {
         const Angel_5: number;
@@ -148,25 +156,28 @@ declare namespace KDFactionGoddess {
         export { Demon_5 as Demon };
         const Elf_1: number;
         export { Elf_1 as Elf };
-        export const Mushy: number;
         const Bast_1: number;
         export { Bast_1 as Bast };
         const Apprentice_1: number;
         export { Apprentice_1 as Apprentice };
+        const AncientRobot_5: number;
+        export { AncientRobot_5 as AncientRobot };
     }
     namespace Conjure {
         const Angel_6: number;
         export { Angel_6 as Angel };
         const Demon_6: number;
         export { Demon_6 as Demon };
-        const Alchemist_2: number;
-        export { Alchemist_2 as Alchemist };
+        const Alchemist_1: number;
+        export { Alchemist_1 as Alchemist };
         const Witch_1: number;
         export { Witch_1 as Witch };
         const Apprentice_2: number;
         export { Apprentice_2 as Apprentice };
         const Dressmaker_1: number;
         export { Dressmaker_1 as Dressmaker };
+        const AncientRobot_6: number;
+        export { AncientRobot_6 as AncientRobot };
     }
     namespace Illusion {
         const Angel_7: number;
@@ -181,6 +192,8 @@ declare namespace KDFactionGoddess {
         export { Maidforce_1 as Maidforce };
         const Bountyhunter_1: number;
         export { Bountyhunter_1 as Bountyhunter };
+        const AncientRobot_7: number;
+        export { AncientRobot_7 as AncientRobot };
     }
 }
 /**

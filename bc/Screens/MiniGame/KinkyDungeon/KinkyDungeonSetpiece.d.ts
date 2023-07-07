@@ -15,9 +15,11 @@ declare function KinkyDungeonGenerateSetpiece(POI: any, Piece: any, InJail: any,
 declare function KDUnblock(x: number, y: number): boolean;
 declare function SetpieceSpawnPrisoner(x: any, y: any): void;
 declare function KDTorch(X: any, Y: any, altType: any, MapParams: any): void;
+declare function KDTorchUnlit(X: any, Y: any, altType: any, MapParams: any): void;
 declare function KDChest(X: any, Y: any, loot?: string, faction?: string): void;
 declare function KDCreateDoors(Left: any, Top: any, Width: any, Height: any, openChance?: number, convertDoodads?: boolean): void;
 declare function KDPlaceChest(cornerX: any, cornerY: any, radius: any, chestlist: any, spawnPoints: any, NoAddToChestList: any): string;
+declare function KDAddPipes(pipechance: any, pipelatexchance: any, thinlatexchance: any, heavylatexspreadchance: any): void;
 declare let KDSetpieceAttempts: number;
 declare let KDSetPieces: ({
     Name: string;

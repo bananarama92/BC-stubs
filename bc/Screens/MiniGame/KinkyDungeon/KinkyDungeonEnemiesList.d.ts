@@ -7,6 +7,7 @@ declare namespace KDOndeath {
     function dialogue(enemy: any, o: any): void;
     function spellOnSelf(enemy: any, o: any): void;
     function removeQuest(enemy: any, o: any): void;
+    function dollID(enemy: any, o: any): void;
     function addQuest(enemy: any, o: any): void;
 }
 /**
@@ -17,3 +18,5 @@ declare let KDAIType: Record<string, AIType>;
  * @type {Record<string, KDLoadout>}
  */
 declare let KDLoadouts: Record<string, KDLoadout>;
+/** @type {Record<string, SpecialCondition>} */
+declare let KDSpecialConditions: Record<string, SpecialCondition>;

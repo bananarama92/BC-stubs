@@ -19,24 +19,7 @@ declare namespace KDCommandWord {
 /**
  * These are starting spells
  */
-declare let KinkyDungeonSpellsStart: {
-    name: string;
-    tags: string[];
-    sfx: string;
-    school: string;
-    manacost: number;
-    components: string[];
-    level: number;
-    type: string;
-    special: string;
-    noMiscast: boolean;
-    onhit: string;
-    time: number;
-    power: number;
-    range: number;
-    size: number;
-    damage: string;
-}[];
+declare let KinkyDungeonSpellsStart: any[];
 declare let filters: string[];
 /** Extra filters, indexed according to the learnable spells menu */
 declare let filtersExtra: string[][];
@@ -65,6 +48,15 @@ declare namespace KDMagicDefs {
     const RopeKraken_TentacleThreshold: number;
     const RopeKraken_TentacleCountMin: number;
     const RopeKraken_TentacleCountShare: number;
+    const SarcoKraken_TentacleCost: number;
+    const SarcoKraken_TentacleThreshold: number;
+    const SarcoKraken_TentacleCountMin: number;
+    const SarcoKraken_TentacleCountMax: number;
+    const SarcoKraken_TentacleCountShare: number;
+    const SlimeKraken_TentacleCost: number;
+    const SlimeKraken_TentacleThreshold: number;
+    const SlimeKraken_TentacleCountMin: number;
+    const SlimeKraken_TentacleCountShare: number;
 }
-/** @type {Record<string, (enemy: entity, target: entity) => boolean>} */
-declare let KDCastConditions: Record<string, (enemy: entity, target: entity) => boolean>;
+/** @type {Record<string, (enemy: entity, target: entity, spell?: spell) => boolean>} */
+declare let KDCastConditions: Record<string, (enemy: entity, target: entity, spell?: spell) => boolean>;

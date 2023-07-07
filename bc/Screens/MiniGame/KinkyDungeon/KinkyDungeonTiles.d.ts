@@ -73,6 +73,20 @@ declare function KDCreateAoEEffectTiles(x: number, y: number, tile: effectTileRe
     y: number;
 }, density?: number, mod?: string): void;
 /**
+ *
+ * @param {number} x
+ * @param {number} y
+ * @param {string[]} tagsToRemove
+ * @param {number} [rad]
+ * @param {{x: number, y: number}} [avoidPoint]
+ * @param {number} [density]
+ * @param {string} mod - explosion modifier
+ */
+declare function KDRemoveAoEEffectTiles(x: number, y: number, tagsToRemove: string[], rad?: number, avoidPoint?: {
+    x: number;
+    y: number;
+}, density?: number, mod?: string): void;
+/**
  * Current alpha vs fade type
  * @param {string} id
  * @param {number} alpha
@@ -115,8 +129,10 @@ declare function KDEffectTileInteractions(x: any, y: any, b: any, d: any): void;
  * @param {number} x
  * @param {number} y
  * @param {boolean} willing
+ * @param {boolean} [ignoreBlocked] - Ignore if the target is blocked--important if swapping
  */
-declare function KDMoveEntity(enemy: entity, x: number, y: number, willing: boolean, dash: any, forceHitBullets: any): boolean;
+declare function KDMoveEntity(enemy: entity, x: number, y: number, willing: boolean, dash: any, forceHitBullets: any, ignoreBlocked?: boolean): boolean;
+declare function KDStaggerEnemy(enemy: any): void;
 declare function KDMovePlayer(moveX: any, moveY: any, willing: any, sprint: any, forceHitBullets: any): boolean;
 declare function KDSlip(dir: any): boolean;
 /**
@@ -130,6 +146,13 @@ declare function KDInferno(existingTile: any, newTile: any, duration: any): void
  * @param {*} d
  */
 declare function KDIgnition(b: any, tile: effectTile, d: any): void;
+/**
+ * Code for a conveyor tile. DY and DX enable this functionality
+ * @param {number} delta
+ * @param {number} X
+ * @param {number} Y
+ */
+declare function KDConveyor(delta: number, X: number, Y: number): void;
 declare let KinkyDungeonChestConfirm: boolean;
 declare let KinkyDungeonConfirmStairs: boolean;
 /** @type {Record<string, boolean>} */

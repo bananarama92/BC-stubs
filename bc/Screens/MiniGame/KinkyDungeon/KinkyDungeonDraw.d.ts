@@ -37,6 +37,8 @@ declare function KDWallHorizTunnel(x: number, y: number): boolean;
  */
 declare function KDWallVertTunnel(x: number, y: number): boolean;
 declare function KinkyDungeonGetSprite(code: any, x: any, y: any, Fog: any, noReplace: any): string;
+/** For multilayer sprites */
+declare function KinkyDungeonGetSpriteOverlay2(code: any, x: any, y: any, Fog: any, noReplace: any): string;
 declare function KinkyDungeonGetSpriteOverlay(code: any, x: any, y: any, Fog: any, noReplace: any): any;
 declare function KinkyDungeonDrawGame(): void;
 /**
@@ -86,6 +88,20 @@ declare function KinkyDungeonSetMoveDirection(): void;
  */
 declare function DrawBoxKD(Left: number, Top: number, Width: number, Height: number, Color: string, NoBorder?: boolean, Alpha?: number, zIndex?: number): void;
 /**
+ * Draws a box component
+ * @param {any} Container - Container to draw to
+ * @param {number} Left - Position of the component from the left of the canvas
+ * @param {number} Top - Position of the component from the top of the canvas
+ * @param {number} Width - Width of the component
+ * @param {number} Height - Height of the component
+ * @param {string} Color - Color of the component
+ * @param {boolean} [NoBorder] - Color of the component
+ * @param {number} [Alpha] - Transparency of the box
+ * @param {number} [zIndex] - z Index
+ *  @returns {void} - Nothing
+ */
+declare function DrawBoxKDTo(Container: any, Left: number, Top: number, Width: number, Height: number, Color: string, NoBorder?: boolean, Alpha?: number, zIndex?: number): void;
+/**
  *
  * @param {*} Text
  * @param {*} X
@@ -98,8 +114,26 @@ declare function DrawBoxKD(Left: number, Top: number, Width: number, Height: num
  * @param {*} [zIndex]
  * @param {*} [alpha]
  * @param {*} [border]
+ * @param {boolean} [unique] - This button is not differentiated by position
  */
-declare function DrawTextFitKD(Text: any, X: any, Y: any, Width: any, Color: any, BackColor?: any, FontSize?: any, Align?: any, zIndex?: any, alpha?: any, border?: any): void;
+declare function DrawTextFitKD(Text: any, X: any, Y: any, Width: any, Color: any, BackColor?: any, FontSize?: any, Align?: any, zIndex?: any, alpha?: any, border?: any, unique?: boolean): void;
+/**
+ *
+ * @param {any} Container
+ * @param {*} Text
+ * @param {*} X
+ * @param {*} Y
+ * @param {*} Width
+ * @param {*} Color
+ * @param {*} [BackColor]
+ * @param {*} [FontSize]
+ * @param {*} [Align]
+ * @param {*} [zIndex]
+ * @param {*} [alpha]
+ * @param {*} [border]
+ * @param {boolean} [unique] - This button is not differentiated by position
+ */
+declare function DrawTextFitKDTo(Container: any, Text: any, X: any, Y: any, Width: any, Color: any, BackColor?: any, FontSize?: any, Align?: any, zIndex?: any, alpha?: any, border?: any, unique?: boolean): void;
 /**
  *
  * @param {*} Text
@@ -115,7 +149,7 @@ declare function DrawTextFitKD(Text: any, X: any, Y: any, Width: any, Color: any
 declare function DrawTextKD(Text: any, X: any, Y: any, Color: any, BackColor?: any, FontSize?: any, Align?: any, zIndex?: any, alpha?: any, border?: any): void;
 /**
  *
- * @param {{Text: string, X: number, Y: number, Width?: number, Color: string, BackColor: string, FontSize?: number, align?: string, zIndex?: number, alpha?: number, border?: number}} Params
+ * @param {{Text: string, X: number, Y: number, Width?: number, Color: string, BackColor: string, FontSize?: number, align?: string, zIndex?: number, alpha?: number, border?: number, unique?: boolean}} Params
  * @returns {boolean} - If it worked
  */
 declare function DrawTextVisKD(Container: any, Map: any, id: any, Params: {
@@ -130,6 +164,7 @@ declare function DrawTextVisKD(Container: any, Map: any, id: any, Params: {
     zIndex?: number;
     alpha?: number;
     border?: number;
+    unique?: boolean;
 }): boolean;
 /**
  * Draws a basic rectangle filled with a given color
@@ -186,12 +221,47 @@ declare function FillRectKD(Container: any, Map: Map<string, any>, id: any, Para
  * @param {boolean} [options.noTextBG] - Dont show text backgrounds
  * @param {number} [options.alpha]
  * @param {number} [options.zIndex] - zIndex
+ * @param {boolean} [options.scaleImage] - zIndex
  * @returns {void} - Nothing
  */
 declare function DrawButtonVis(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: string, HoveringText?: string, Disabled?: boolean, NoBorder?: boolean, FillColor?: string, FontSize?: number, ShiftText?: boolean, Stretch?: boolean, zIndex?: number, options?: {
     noTextBG?: boolean;
     alpha?: number;
     zIndex?: number;
+    scaleImage?: boolean;
+}): void;
+/**
+ * Draws a button component
+ * @param {any} Container - Container to draw to
+ * @param {number} Left - Position of the component from the left of the canvas
+ * @param {number} Top - Position of the component from the top of the canvas
+ * @param {number} Width - Width of the component
+ * @param {number} Height - Height of the component
+ * @param {string} Label - Text to display in the button
+ * @param {string} Color - Color of the component
+ * @param {string} [Image] - URL of the image to draw inside the button, if applicable
+ * @param {string} [HoveringText] - Text of the tooltip, if applicable
+ * @param {boolean} [Disabled] - Disables the hovering options if set to true
+ * @param {boolean} [NoBorder] - Disables the button border and only draws the image and selection halo
+ * @param {string} [FillColor] - Color of the background
+ * @param {number} [FontSize] - Color of the background
+ * @param {boolean} [ShiftText] - Shift text to make room for the button
+ * @param {boolean} [Stretch] - Stretch the image to fit
+ * @param {number} [zIndex] - Stretch the image to fit
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.noTextBG] - Dont show text backgrounds
+ * @param {number} [options.alpha]
+ * @param {number} [options.zIndex] - zIndex
+ * @param {boolean} [options.unique] - This button is not differentiated by position
+ * @param {boolean} [options.scaleImage] - zIndex
+ * @returns {void} - Nothing
+ */
+declare function DrawButtonVisTo(Container: any, Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: string, HoveringText?: string, Disabled?: boolean, NoBorder?: boolean, FillColor?: string, FontSize?: number, ShiftText?: boolean, Stretch?: boolean, zIndex?: number, options?: {
+    noTextBG?: boolean;
+    alpha?: number;
+    zIndex?: number;
+    unique?: boolean;
+    scaleImage?: boolean;
 }): void;
 /**
  * Draws a checkbox component
@@ -213,6 +283,32 @@ declare function DrawCheckboxVis(Left: number, Top: number, Width: number, Heigh
     noTextBG?: boolean;
     alpha?: number;
     zIndex?: number;
+}): void;
+/**
+ * Draws a checkbox component
+ * @param {string} name - Name of the button element
+ * @param {(bdata: any) => boolean} func - Whether or not you can click on it
+ * @param {boolean} enabled - Whether or not you can click on it
+ * @param {number} Left - Position of the component from the left of the canvas
+ * @param {number} Top - Position of the component from the top of the canvas
+ * @param {number} Width - Width of the component
+ * @param {number} Height - Height of the component
+ * @param {string} Text - Label associated with the checkbox
+ * @param {boolean} IsChecked - Whether or not the checkbox is checked
+ * @param {boolean} [Disabled] - Disables the hovering options if set to true
+ * @param {string} [TextColor] - Color of the text
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.noTextBG] - Dont show text backgrounds
+ * @param {number} [options.alpha]
+ * @param {number} [options.zIndex] - zIndex
+ * @param {number} [options.maxWidth] - Max width
+ * @returns {void} - Nothing
+ */
+declare function DrawCheckboxKDEx(name: string, func: (bdata: any) => boolean, enabled: boolean, Left: number, Top: number, Width: number, Height: number, Text: string, IsChecked: boolean, Disabled?: boolean, TextColor?: string, CheckImage?: string, options?: {
+    noTextBG?: boolean;
+    alpha?: number;
+    zIndex?: number;
+    maxWidth?: number;
 }): void;
 /**
  * Draw a back & next button component
@@ -259,9 +355,11 @@ declare function KDDrawMap(CamX: number, CamY: number, CamX_offset: number, CamY
  * @param {number} [Rotation]
  * @param {any} [options]
  * @param {boolean} [Centered]
+ * @param {Map<string, boolean>} [SpritesDrawn]
+ * @param {number} [Scale]
  * @returns {boolean}
  */
-declare function KDDraw(Container: any, Map: Map<string, any>, id: any, Image: string, Left: number, Top: number, Width: number, Height: number, Rotation?: number, options?: any, Centered?: boolean): boolean;
+declare function KDDraw(Container: any, Map: Map<string, any>, id: any, Image: string, Left: number, Top: number, Width: number, Height: number, Rotation?: number, options?: any, Centered?: boolean, SpritesDrawn?: Map<string, boolean>, Scale?: number): boolean;
 /**
  * Returns a PIXI.Texture, or null if there isnt one
  * @param {string} Image
@@ -273,13 +371,13 @@ declare function KDTex(Image: string): any;
  * @param {string} str
  * @returns
  */
-declare function string2hex(str: string): any;
+declare function string2hex(str: string): number;
 declare function GetAdjacentList(list: any, index: any, width: any): {
     left: any;
     right: any;
 };
 declare function KDUpdateVision(): void;
-declare function KDDrawTileTooltip(maptile: any, x: any, y: any, offset: any): any;
+declare function KDDrawTileTooltip(maptile: any, x: any, y: any, offset: any): number;
 /**
  *
  * @param {effectTile} tile
@@ -290,26 +388,99 @@ declare function KDDrawTileTooltip(maptile: any, x: any, y: any, offset: any): a
  * @param {string} [extraColor]
  */
 declare function KDETileTooltipSimple(tile: effectTile, TooltipList: any[], color: string, extra?: string, descColor?: string, extraColor?: string): void;
-declare function KDDrawEffectTileTooltip(tile: any, x: any, y: any, offset: any): any;
-declare function KDDrawTooltip(TooltipList: any, offset: any): any;
+/**
+ *
+ * @param {effectTile} tile
+ * @param {number} x
+ * @param {number} y
+ * @param {number} offset
+ * @returns {number}
+ */
+declare function KDDrawEffectTileTooltip(tile: effectTile, x: number, y: number, offset: number): number;
+/**
+ *
+ * @param {any[]} TooltipList
+ * @param {number} offset
+ * @returns {number}
+ */
+declare function KDDrawTooltip(TooltipList: any[], offset: number): number;
+/**
+ * Creates a text field with the specified params
+ * @param {string} Name
+ * @param {number} Left
+ * @param {number} Top
+ * @param {number} Width
+ * @param {number} Height
+ */
+declare function KDTextArea(Name: string, Left: number, Top: number, Width: number, Height: number): {
+    Element: any;
+    Created: boolean;
+};
+/**
+ * Creates a text field with the specified params
+ * @param {string} Name
+ * @param {number} Left
+ * @param {number} Top
+ * @param {number} Width
+ * @param {number} Height
+ * @param {string} Type
+ * @param {string} Value
+ * @param {string} MaxLength
+ */
+declare function KDTextField(Name: string, Left: number, Top: number, Width: number, Height: number, Type?: string, Value?: string, MaxLength?: string): {
+    Element: any;
+    Created: boolean;
+};
+/**
+ * Culls the text fields and other DOM elements created
+ */
+declare function KDCullTempElements(): void;
+/**
+ * Draws an existing HTML element at a specific position within the document. The element is "centered" on the given coordinates by dividing its height and width by two.
+ * @param {string} ElementID - The id of the input tag to (re-)position.
+ * @param {number} X - Center point of the element on the X axis.
+ * @param {number} Y - Center point of the element on the Y axis.
+ * @param {number} W - Width of the element.
+ * @param {number} [H] - Height of the element.
+ * @returns {void} - Nothing
+ */
+declare function KDElementPosition(ElementID: string, X: number, Y: number, W: number, H?: number): void;
+/** Whether or not to show the quick inv
+ * @returns {boolean}
+*/
+declare function KDShowQuickInv(): boolean;
+declare function KDPlayerDrawPoseButtons(C: any): void;
 declare let KDRecentRepIndex: number;
 declare let ShowBoringness: boolean;
 declare let KDWallReplacers: string;
 declare let KinkyDungeonSuppressSprint: boolean;
 declare let KDReturnButtonXX: number;
-declare let pixiview: HTMLElement;
+declare let KDIntenseFilter: any;
+/** @type HTMLCanvasElement */
+declare let pixiview: HTMLCanvasElement;
 declare let pixirenderer: any;
 declare let pixirendererKD: any;
-declare let kdgamefog: any;
-declare let kdgameboard: any;
-declare let kdui: any;
-declare let kdcanvas: any;
+declare let kdgamefog: import("pixi.js").Graphics;
+declare let kdmapboard: import("pixi.js").Container;
+declare let kdenemyboard: import("pixi.js").Container;
+declare let kdenemystatusboard: import("pixi.js").Container;
+declare let kdbulletboard: import("pixi.js").Container;
+declare let kdeffecttileboard: import("pixi.js").Container;
+declare let kdUItext: import("pixi.js").Container;
+declare let kdstatusboard: import("pixi.js").Container;
+declare let kdgameboard: import("pixi.js").Container;
+declare let kdui: import("pixi.js").Graphics;
+declare let kdcanvas: import("pixi.js").Container;
+declare let statusOffset: number;
+declare let kdparticles: import("pixi.js").Container;
 declare let KDTextWhite: string;
 declare let KDTextGray3: string;
 declare let KDTextTan: string;
 declare let KDTextGray2: string;
 declare let KDTextGray1: string;
 declare let KDTextGray0: string;
+declare let KDCurseColor: string;
+declare let KDGoodColor: string;
 /**
  * @type {Map<string, boolean>}
  */
@@ -327,65 +498,12 @@ declare let kdprimitiveparams: Map<string, any>;
   */
 declare let kdpixitex: Map<string, any>;
 declare let KDChainablePillar: string;
-declare let KDSprites: {
-    "1": (x: any, y: any, Fog: any, noReplace: any) => "WallVert" | "Wall";
-    "2": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "3": (x: any, y: any, Fog: any, noReplace: any) => "Doodad" | "MimicBlock";
-    b: (x: any, y: any, Fog: any, noReplace: any) => "Bars" | "BarsVertCont" | "BarsVert";
-    X: (x: any, y: any, Fog: any, noReplace: any) => string;
-    "4": (x: any, y: any, Fog: any, noReplace: any) => "WallVert" | "Wall";
-    L: (x: any, y: any, Fog: any, noReplace: any) => any;
-    F: (x: any, y: any, Fog: any, noReplace: any) => string;
-    "?": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "/": (x: any, y: any, Fog: any, noReplace: any) => string;
-    ",": (x: any, y: any, Fog: any, noReplace: any) => "WallVert" | "Wall";
-    D: (x: any, y: any, Fog: any, noReplace: any) => any;
-    d: (x: any, y: any, Fog: any, noReplace: any) => any;
-    a: (x: any, y: any, Fog: any, noReplace: any) => string;
-    A: (x: any, y: any, Fog: any, noReplace: any) => "Shrine" | "ShrineC" | "ShrineEmpty";
-    H: (x: any, y: any, Fog: any, noReplace: any) => string;
-    s: (x: any, y: any, Fog: any, noReplace: any) => string;
-    S: (x: any, y: any, Fog: any, noReplace: any) => string;
-    g: (x: any, y: any, Fog: any, noReplace: any) => "GrateHoriz" | "Grate" | "GrateVert";
-    r: (x: any, y: any, Fog: any, noReplace: any) => string;
-    t: (x: any, y: any, Fog: any, noReplace: any) => string;
-    T: (x: any, y: any, Fog: any, noReplace: any) => "Trap" | "Floor";
-    Y: (x: any, y: any, Fog: any, noReplace: any) => string;
-    R: (x: any, y: any, Fog: any, noReplace: any) => string;
-    m: (x: any, y: any, Fog: any, noReplace: any) => string;
-    M: (x: any, y: any, Fog: any, noReplace: any) => string;
-    O: (x: any, y: any, Fog: any, noReplace: any) => string;
-    P: (x: any, y: any, Fog: any, noReplace: any) => string;
-    p: (x: any, y: any, Fog: any, noReplace: any) => string;
-    o: (x: any, y: any, Fog: any, noReplace: any) => string;
-    w: (x: any, y: any, Fog: any, noReplace: any) => string;
-    "]": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "[": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "=": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "+": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "-": (x: any, y: any, Fog: any, noReplace: any) => string;
-    l: (x: any, y: any, Fog: any, noReplace: any) => string;
-};
-declare let KDOverlays: {
-    "-": (x: any, y: any, Fog: any, noReplace: any) => string;
-    l: (x: any, y: any, Fog: any, noReplace: any) => string;
-    "+": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "=": (x: any, y: any, Fog: any, noReplace: any) => string;
-    Y: (x: any, y: any, Fog: any, noReplace: any) => string;
-    "/": (x: any, y: any, Fog: any, noReplace: any) => string;
-    R: (x: any, y: any, Fog: any, noReplace: any) => string;
-    $: (x: any, y: any, Fog: any, noReplace: any) => string;
-    m: (x: any, y: any, Fog: any, noReplace: any) => string;
-    M: (x: any, y: any, Fog: any, noReplace: any) => string;
-    "[": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "]": (x: any, y: any, Fog: any, noReplace: any) => string;
-    w: (x: any, y: any, Fog: any, noReplace: any) => "" | "Water";
-    O: (x: any, y: any, Fog: any, noReplace: any) => string;
-    P: (x: any, y: any, Fog: any, noReplace: any) => string;
-    ",": (x: any, y: any, Fog: any, noReplace: any) => string;
-    "?": (x: any, y: any, Fog: any, noReplace: any) => string;
-    B: (x: any, y: any, Fog: any, noReplace: any) => string;
-};
+/** @type KDSprites */
+declare const KDSprites: KDSprites;
+/** @type KDSprites */
+declare const KDOverlays: KDSprites;
+/** @type KDSprites */
+declare const KDOverlays2: KDSprites;
 declare namespace KDSpecialChests {
     const silver: string;
     const shadow: string;
@@ -410,6 +528,7 @@ declare let KDLogTopPad: number;
 declare let KDLogIndex: number;
 declare let KDLogIndexInc: number;
 declare let KDMsgWidth: number;
+declare let KDMsgWidthMin: number;
 declare let KDMsgX: number;
 declare let KDMsgFadeTime: number;
 declare let KDMaxConsoleMsg: number;
@@ -435,14 +554,22 @@ declare let KDTileTooltips: {
     };
     R: () => {
         color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    Y: () => {
+        color: string;
+        noInspect: boolean;
         text: string;
     };
     L: () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     A: () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     a: () => {
@@ -459,6 +586,7 @@ declare let KDTileTooltips: {
     };
     C: () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     c: () => {
@@ -471,6 +599,7 @@ declare let KDTileTooltips: {
     };
     '4': () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     X: () => {
@@ -479,34 +608,97 @@ declare let KDTileTooltips: {
     };
     '?': () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     ',': () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     S: () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     s: () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     H: () => {
         color: string;
+        noInspect: boolean;
         text: string;
     };
     G: () => {
         color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    B: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    '@': () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    b: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    D: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    d: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    Z: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    z: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    t: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    u: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    V: () => {
+        color: string;
+        noInspect: boolean;
+        text: string;
+    };
+    N: () => {
+        color: string;
+        noInspect: boolean;
         text: string;
     };
 };
 declare namespace KDEffectTileTooltips {
     function Runes(tile: any, x: any, y: any, TooltipList: any): void;
+    function RunesTrap(tile: any, x: any, y: any, TooltipList: any): void;
     function Inferno(tile: any, x: any, y: any, TooltipList: any): void;
     function Ember(tile: any, x: any, y: any, TooltipList: any): void;
     function Ice(tile: any, x: any, y: any, TooltipList: any): void;
+    function Water(tile: any, x: any, y: any, TooltipList: any): void;
     function Vines(tile: any, x: any, y: any, TooltipList: any): void;
     function Ropes(tile: any, x: any, y: any, TooltipList: any): void;
     function Chains(tile: any, x: any, y: any, TooltipList: any): void;
@@ -515,12 +707,32 @@ declare namespace KDEffectTileTooltips {
     function FabricGreen(tile: any, x: any, y: any, TooltipList: any): void;
     function Slime(tile: any, x: any, y: any, TooltipList: any): void;
     function Latex(tile: any, x: any, y: any, TooltipList: any): void;
+    function LatexThin(tile: any, x: any, y: any, TooltipList: any): void;
     function Steam(tile: any, x: any, y: any, TooltipList: any): void;
     function Smoke(tile: any, x: any, y: any, TooltipList: any): void;
     function Torch(tile: any, x: any, y: any, TooltipList: any): void;
     function TorchUnlit(tile: any, x: any, y: any, TooltipList: any): void;
     function Lantern(tile: any, x: any, y: any, TooltipList: any): void;
     function LanternUnlit(tile: any, x: any, y: any, TooltipList: any): void;
+    function IllusOrb(tile: any, x: any, y: any, TooltipList: any): void;
+    function IllusOrbDead(tile: any, x: any, y: any, TooltipList: any): void;
     function TorchOrb(tile: any, x: any, y: any, TooltipList: any): void;
     function Cracked(tile: any, x: any, y: any, TooltipList: any): void;
 }
+/**
+ * Elements which are temporary and drawn using a declarative style
+ * If not redrawn at the end of a frame, they will be removed
+ */
+declare let KDTempElements: Map<any, any>;
+/**
+ * Elements which are temporary and drawn using a declarative style
+ * If not redrawn at the end of a frame, they will be removed
+ */
+declare let KDDrawnElements: Map<any, any>;
+declare let KDUpdateFog: boolean;
+declare namespace KDLastCamPos {
+    const x: number;
+    const y: number;
+}
+declare let KDDrawPlayer: boolean;
+declare let KDDesiredPlayerPose: {};

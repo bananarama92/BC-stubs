@@ -1,3 +1,9 @@
+declare namespace KDDialogueParams {
+    const ShopkeeperFee: number;
+    const ShopkeeperFeePerLevel: number;
+    const ShopkeeperFeePunishThresh: number;
+    const ChefChance: number;
+}
 /**
  * Tags that are deleted on ng++
  * @type {string[]}

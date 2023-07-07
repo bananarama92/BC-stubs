@@ -1,11 +1,28 @@
+/**
+ *
+ * @param {string[]} tags
+ * @param {number} count
+ * @param {string} msg
+ */
+declare function KDBasicRestraintsMachine_Player(tags: string[], count: number, msg: string): number;
 declare function KDSlimeImmuneEntity(entity: any): any;
 declare function KDSlimeWalker(entity: any): boolean;
 declare function KDSlimeImmune(enemy: any): any;
 /**
- * Return value: whether or not to continue to allow peripheral tile updates
- * @type {Record<string, (delta) => boolean>}
+ * Updates local tiles such as conveyors
+ * @type {Record<string, (delta: number, X?: number, Y?: number) => void>}
  */
-declare let KDTileUpdateFunctions: Record<string, (delta: any) => boolean>;
+declare let KDTileUpdateFunctionsLocal: Record<string, (delta: number, X?: number, Y?: number) => void>;
+/**
+ * Return value: whether or not to continue to allow peripheral tile updates
+ * @type {Record<string, KDBondageMachineFunc>}
+ */
+declare let KDBondageMachineFunctions: Record<string, KDBondageMachineFunc>;
+/**
+ * Return value: whether or not to continue to allow peripheral tile updates
+ * @type {Record<string, (delta: number) => boolean>}
+ */
+declare let KDTileUpdateFunctions: Record<string, (delta: number) => boolean>;
 /**
  * @type {Record<string, (moveX, moveY) => boolean>}
  */
@@ -16,6 +33,7 @@ declare let KDMoveObjectFunctions: Record<string, (moveX: any, moveY: any) => bo
  */
 declare let KDEffectTileFunctionsStandalone: Record<string, (delta: any, tile: effectTile) => boolean>;
 /**
+ * These happen when stepped on
  * Return is whether or not something the player should know about happened
  * @type {Record<string, (delta, entity: entity, tile: effectTile) => boolean>}
  */
@@ -25,6 +43,12 @@ declare let KDEffectTileFunctions: Record<string, (delta: any, entity: entity, t
  * @type {Record<string, (newTile: effectTile, existingTile: effectTile) => boolean>}
  */
 declare let KDEffectTileCreateFunctionsCreator: Record<string, (newTile: effectTile, existingTile: effectTile) => boolean>;
+/**
+ * Return is whether or not something the player should know about happened
+ * Return type is whether or not the signal should stop (true) or pass (false)
+ * @type {Record<string, (tile: any, x: number, y: number) => boolean>}
+ */
+declare let KDActivateMapTile: Record<string, (tile: any, x: number, y: number) => boolean>;
 /**
  * Return is whether or not something the player should know about happened
  * @type {Record<string, (newTile: effectTile, existingTile: effectTile) => boolean>}

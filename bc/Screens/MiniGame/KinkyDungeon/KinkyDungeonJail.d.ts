@@ -50,7 +50,12 @@ declare function KDSetPlayCD(enemy: entity, mult: number, base?: number): void;
  */
 declare function KinkyDungeonGetJailRestraintForGroup(Group: string): restraint;
 declare function KinkyDungeonGetJailRestraintLevelFor(Name: any): number;
-declare function KinkyDungeonInJail(): boolean;
+/**
+ *
+ * @param {string[]} [filter] - Have to be in a jail, not a dropoff
+ * @returns {boolean}
+ */
+declare function KinkyDungeonInJail(filter?: string[]): boolean;
 declare function KinkyDungeonPlaceJailKeys(): boolean;
 declare function KinkyDungeonHandleJailSpawns(delta: any): void;
 declare function KinkyDungeonLockableItems(): string[];
@@ -77,9 +82,10 @@ declare function KinkyDungeonJailGetLeashPoint(xx: any, yy: any, enemy: any): {
 /**
  * @param {boolean} [any]
  * @param {boolean} [qualified] - Makes sure the player is qualified
+ * @param {string[]} [filter]
  * @returns {boolean} - Returns if the player is inside the nearest jail cell
  */
-declare function KinkyDungeonPlayerInCell(any?: boolean, qualified?: boolean): boolean;
+declare function KinkyDungeonPlayerInCell(any?: boolean, qualified?: boolean, filter?: string[]): boolean;
 declare function KinkyDungeonPointInCell(x: any, y: any): boolean;
 declare function KinkyDungeonPassOut(noteleport: any): void;
 declare function KDGetJailDoor(x: any, y: any): {
@@ -88,6 +94,7 @@ declare function KDGetJailDoor(x: any, y: any): {
     y: any;
 };
 declare function KDDefeatedPlayerTick(): void;
+declare function KDEnterDollTerminal(willing: any, cancelDialogue?: boolean): void;
 declare function KinkyDungeonDefeat(PutInJail: any): void;
 /**
  *
@@ -95,9 +102,20 @@ declare function KinkyDungeonDefeat(PutInJail: any): void;
  * @returns {boolean}
  */
 declare function KDEnemyIsTemporary(enemy: entity): boolean;
+/** Kicks enemies away, and also out of offlimits zones if they are aware */
 declare function KDKickEnemies(nearestJail: any): void;
 declare function KDResetAllIntents(): void;
-declare function KDKickEnemy(e: any): void;
+declare function KDResetAllAggro(): void;
+/**
+ * Moves an enemy to a random position on the map
+ * @param {entity} e
+ */
+declare function KDKickEnemy(e: entity): void;
+/**
+ * Moves an enemy to a random position on the map
+ * @param {entity} e
+ */
+declare function KDKickEnemyLocal(e: entity): void;
 declare function KinkyDungeonStripInventory(KeepPicks: any): void;
 declare function KDExpireFlags(enemy: any): void;
 /**
@@ -113,6 +131,8 @@ declare function KDGetJailRestraints(overrideTags?: string[], requireJail?: bool
 }[];
 /** Time spent in cage before guards start getting teleported */
 declare let KDMaxCageTime: number;
+/** Only these have jail events */
+declare let KDJailFilters: string[];
 /** Max turns for the alert timer until the whole map becomes hostile */
 declare let KDMaxAlertTimer: number;
 declare let KDMaxAlertTimerAggro: number;

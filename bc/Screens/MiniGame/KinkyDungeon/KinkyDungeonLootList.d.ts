@@ -29,8 +29,10 @@ declare let KDBasicArmor_Cursed: {
     minLevel: number;
     weight: number;
     armor: string;
-    curses: string[];
-    norestraint: string[];
+    curselevelmin: number;
+    curselevelmax: number;
+    unlockcurse: string[];
+    norestraintcursed: string;
     message: string;
     messageColor: string;
     messageTime: number;
@@ -41,14 +43,30 @@ declare let KDAdvancedArmor_Cursed: {
     minLevel: number;
     weight: number;
     armor: string;
-    curses: string[];
-    norestraint: string[];
+    curselevelmin: number;
+    curselevelmax: number;
+    unlockcurse: string[];
+    norestraintcursed: string;
     message: string;
     messageColor: string;
     messageTime: number;
     allFloors: boolean;
 }[];
 declare namespace KinkyDungeonLootTable {
+    const cursedrestraint: {
+        name: string;
+        minLevel: number;
+        weight: number;
+        armor: string;
+        curselevelmin: number;
+        curselevelmax: number;
+        unlockcurse: string[];
+        norestraintcursed: string;
+        message: string;
+        messageColor: string;
+        messageTime: number;
+        allFloors: boolean;
+    }[];
     const rubble: ({
         name: string;
         minLevel: number;
@@ -124,6 +142,19 @@ declare namespace KinkyDungeonLootTable {
         prerequisites: string[];
     }[];
     const shadow: ({
+        name: string;
+        minLevel: number;
+        weight: number;
+        armor: string;
+        curselevelmin: number;
+        curselevelmax: number;
+        unlockcurse: string[];
+        norestraintcursed: string;
+        message: string;
+        messageColor: string;
+        messageTime: number;
+        allFloors: boolean;
+    } | {
         name: string;
         minLevel: number;
         weight: number;
@@ -231,6 +262,7 @@ declare namespace KinkyDungeonLootTable {
         name: string;
         minLevel: number;
         weight: number;
+        lock: string;
         message: string;
         messageColor: string;
         messageTime: number;
@@ -250,6 +282,19 @@ declare namespace KinkyDungeonLootTable {
         power: number;
     }[];
     const chest: ({
+        name: string;
+        minLevel: number;
+        weight: number;
+        armor: string;
+        curselevelmin: number;
+        curselevelmax: number;
+        unlockcurse: string[];
+        norestraintcursed: string;
+        message: string;
+        messageColor: string;
+        messageTime: number;
+        allFloors: boolean;
+    } | {
         name: string;
         minLevel: number;
         weight: number;
@@ -373,6 +418,29 @@ declare namespace KinkyDungeonLootTable {
         prerequisites: string[];
     }[];
     const cache: ({
+        name: string;
+        minLevel: number;
+        weight: number;
+        armor: string;
+        curselevelmin: number;
+        curselevelmax: number;
+        unlockcurse: string[];
+        norestraintcursed: string;
+        message: string;
+        messageColor: string;
+        messageTime: number;
+        allFloors: boolean;
+    } | {
+        name: string;
+        minLevel: number;
+        weight: number;
+        armor: string;
+        norestraint: string[];
+        message: string;
+        messageColor: string;
+        messageTime: number;
+        allFloors: boolean;
+    } | {
         name: string;
         minLevel: number;
         weight: number;

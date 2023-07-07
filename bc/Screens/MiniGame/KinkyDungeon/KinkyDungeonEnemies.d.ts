@@ -16,14 +16,9 @@ declare function KinkyDungeonGetEnemyByName(name: string): enemy;
  * @param {string[]} [filter]
  * @param {boolean} [any]
  * @param {boolean} [qualified] - Exclude jails where the player doesnt meet conditions
- * @returns {{x: number, y: number, type: string, radius: number}}
+ * @returns {KDJailPoint}
  */
-declare function KinkyDungeonNearestJailPoint(x: number, y: number, filter?: string[], any?: boolean, qualified?: boolean): {
-    x: number;
-    y: number;
-    type: string;
-    radius: number;
-};
+declare function KinkyDungeonNearestJailPoint(x: number, y: number, filter?: string[], any?: boolean, qualified?: boolean): KDJailPoint;
 declare function KDLockNearbyJailDoors(x: any, y: any): void;
 /**
  *
@@ -95,7 +90,18 @@ declare function KDGetEnemyDistractRate(enemy: entity, vibe: number): number;
  * @returns {number}
  */
 declare function KDGetEnemyDistractionDamage(enemy: entity, vibe: number): number;
-declare function KinkyDungeonDrawEnemiesHP(canvasOffsetX: any, canvasOffsetY: any, CamX: any, CamY: any): void;
+/**
+ *
+ * @param {number} currentval
+ * @param {number} targetval
+ * @param {number} rate
+ * @param {number} minrate - Minimum rate
+ * @param {number} delta
+ * @param {number} eps -epsilon, threshold for making the value eqyal exactly
+ * @returns {number}
+ */
+declare function KDEaseValue(delta: number, currentval: number, targetval: number, rate: number, minrate: number, eps?: number): number;
+declare function KinkyDungeonDrawEnemiesHP(delta: any, canvasOffsetX: any, canvasOffsetY: any, CamX: any, CamY: any, CamXoffset: any, CamYoffset: any): void;
 /**
  *
  * @param {entity} enemy
@@ -115,7 +121,13 @@ declare function KinkyDungeonCapture(enemy: entity): boolean;
  * @param {entity} enemy
  */
 declare function KDDropStolenItems(enemy: entity): void;
-declare function KinkyDungeonEnemyCheckHP(enemy: any, E: any): boolean;
+/**
+ *
+ * @param {entity} enemy
+ * @param {number} E
+ * @returns {boolean}
+ */
+declare function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean;
 /**
  *
  * @param {entity} enemy
@@ -175,6 +187,10 @@ declare function KDNearbyTiles(x: number, y: number, dist: number): {
  */
 declare function KDNearbyNeutrals(x: number, y: number, dist: number, neutralEnemy?: entity): entity[];
 declare function KinkyDungeonGetRandomEnemyPoint(avoidPlayer: any, onlyPlayer: any, Enemy: any, playerDist?: number, minDist?: number): {
+    x: number;
+    y: number;
+};
+declare function KinkyDungeonGetRandomEnemyPointCriteria(criteria: any, avoidPlayer: any, onlyPlayer: any, Enemy: any, playerDist?: number, minDist?: number): {
     x: number;
     y: number;
 };
@@ -244,7 +260,14 @@ declare function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number
     defeat: boolean;
 };
 declare function KinkyDungeonGetEnemyID(): number;
+declare function KinkyDungeonGetItemID(): number;
 declare function KinkyDungeonNoEnemy(x: any, y: any, Player: any): boolean;
+/**
+ *
+ * @param {entity} enemy
+ * @returns {boolean}
+ */
+declare function KDIsImmobile(enemy: entity): boolean;
 /**
  *
  * @param {entity} e - Target enemy
@@ -261,6 +284,14 @@ declare function KinkyDungeonGetWarningTilesAdj(): {
     x: number;
     y: number;
 }[];
+/**
+ * Returns whether or not the player can be pickpocketed
+ * Current conditions are:
+ *  - Player has less than 50 willpower
+ * @param {entity} player
+ * @returns {boolean}
+ */
+declare function KDCanPickpocketPlayer(player: entity): boolean;
 declare function KDCanPickpocket(enemy: any): boolean;
 declare function KinkyDungeonGetWarningTiles(dx: any, dy: any, range: any, width: any, forwardOffset?: number): {
     x: number;
@@ -298,7 +329,6 @@ declare function KDGetDir(enemy: entity, target: any): {
     y: number;
     delta: number;
 };
-declare function KDIsImmobile(enemy: any): any;
 /**
  *
  * @param {entity} enemy
@@ -420,7 +450,61 @@ declare function KDClearItems(enemy: any): void;
  * @param {entity} player
  * @returns {boolean}
  */
-declare function KDCanDetect(enemy: entity, player: entity): boolean;
+declare function KDCanDetect(enemy: entity, player: entity, allowBlind?: boolean): boolean;
+/**
+ *
+ * @param {entity} enemy
+ * @param {string} type
+ * @returns {number}
+ */
+declare function KDGetSecurity(enemy: entity, type: string): number;
+/**
+ * Reduces the enemy's binding by a certain amount
+ * @param {entity} enemy
+ * @param {number} bonus
+ */
+declare function KDReduceBinding(enemy: entity, bonus: number): void;
+/**
+ * Helper function to determine if a character needs punishing
+ * @param {entity} enemy
+ * @param {entity} player
+ */
+declare function KDPlayerDeservesPunishment(enemy: entity, player: entity): boolean;
+/**
+ *
+ * @param {entity} enemy
+ */
+declare function KDPlugEnemy(enemy: entity): void;
+/**
+ *
+ * @param {entity} enemy
+ * @param {boolean} removeSpecial
+ * @returns {Record<string, boolean>}
+ */
+declare function KDGetTags(enemy: entity, removeSpecial: boolean): Record<string, boolean>;
+/**
+ *
+ * @param {entity} enemy
+ * @param {boolean} useSpecial
+ * @returns {Record<string, boolean>}
+ */
+declare function KDGetExtraTags(enemy: entity, useSpecial: boolean): Record<string, boolean>;
+/**
+ *
+ * @param {entity} enemy
+ * @param {string} faction
+ * @param {restraint[]} restraintsToAdd
+ * @param {(item) => void} blockFunction
+ * @param {string[]} [restraintFromInventory]
+ * @param {spell} [spell]
+ * @returns {restraint[]}
+ */
+declare function KDRunBondageResist(enemy: entity, faction: string, restraintsToAdd: restraint[], blockFunction: (item: any) => void, restraintFromInventory?: string[], spell?: spell): restraint[];
+/**
+ * Assigns the point an enemy leashes the player to
+ * @param {entity} enemy
+ */
+declare function KDAssignLeashPoint(enemy: entity): void;
 declare let KDEnemiesCache: Map<any, any>;
 declare let KinkyDungeonSummonCount: number;
 declare let KinkyDungeonEnemyAlertRadius: number;
@@ -429,11 +513,14 @@ declare let KDConspicuousMult: number;
 declare let commentChance: number;
 declare let actionDialogueChance: number;
 declare let actionDialogueChanceIntense: number;
+declare let KDEventableAttackTypes: string[];
 /** @type {Map<string, number>} */
 declare let KinkyDungeonFlags: Map<string, number>;
 declare let KinkyDungeonFastMoveSuppress: boolean;
 declare let KinkyDungeonFastStruggleSuppress: boolean;
 declare let KDMaxBindingBars: number;
+declare let KDBarAdvanceRate: number;
+declare let KDBarAdvanceRateMin: number;
 declare let KDChampionMax: number;
 declare let KinkyDungeonDamageTaken: boolean;
 declare let KinkyDungeonTorsoGrabCD: number;

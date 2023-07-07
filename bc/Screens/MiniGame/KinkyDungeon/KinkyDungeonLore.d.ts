@@ -17,12 +17,19 @@ declare let KinkyDungeonCurrentLoreItemOffset: number;
 declare let KinkyDungeonCurrentLoreTabOffset: number;
 declare let KinkyDungeonLore: number[];
 declare namespace KinkyDungeonCheckpointLore {
+    const Combat: number[];
     const School: number[];
+    const History: number[];
     const Enemy: number[];
     const grv: number[];
-    const cat: number[];
-    const jng: number[];
     const tmb: number[];
+    const cat: number[];
+    const lib: number[];
+    const jng: number[];
+    const cry: number[];
+    const tmp: number[];
+    const ore: number[];
+    const bel: number[];
 }
 declare let KinkyDungeonLoreScale: number;
 declare let KinkyDungeonRepeatLoreChance: number;

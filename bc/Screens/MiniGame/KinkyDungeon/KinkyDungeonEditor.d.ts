@@ -43,6 +43,7 @@ declare function KDObjFromMapArray(array: any): any;
 declare function KDReloadAllEditorTiles(): void;
 declare function KDTE_GetField(field: any): string | number | string[];
 declare let KDMapTilesListEditor: any;
+declare let KDTileToTest: any;
 declare let KDEditorTileIndex: string;
 declare let KDEditorTileFlex: string;
 declare let KDEditorTileFlexSuper: string;
@@ -244,6 +245,9 @@ declare let KDTilePalette: {
             tags: {
                 type: string;
             };
+            filterTags: {
+                type: string;
+            };
             Label: {
                 type: string;
             };
@@ -254,6 +258,56 @@ declare let KDTilePalette: {
                 type: string;
             };
             force: {
+                type: string;
+            };
+            faction: {
+                type: string;
+            };
+            levelBoost: {
+                type: string;
+            };
+            forceIndex: {
+                type: string;
+            };
+        };
+    };
+    ForceSpawnCustom: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            required: any[];
+            Label: string;
+        };
+        customfields: {
+            required: {
+                type: string;
+            };
+            tags: {
+                type: string;
+            };
+            filterTags: {
+                type: string;
+            };
+            Label: {
+                type: string;
+            };
+            Chance: {
+                type: string;
+            };
+            AI: {
+                type: string;
+            };
+            force: {
+                type: string;
+            };
+            faction: {
+                type: string;
+            };
+            levelBoost: {
+                type: string;
+            };
+            forceIndex: {
                 type: string;
             };
         };
@@ -284,6 +338,30 @@ declare let KDTilePalette: {
     Crack: {
         type: string;
         tile: string;
+    };
+    Pipe: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Skin: string;
+        };
+    };
+    LatexPipe: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Skin: string;
+        };
+    };
+    LatexThin: {
+        type: string;
+        effectTile: string;
+    };
+    Latex: {
+        type: string;
+        effectTile: string;
     };
     WallHook: {
         type: string;
@@ -358,7 +436,59 @@ declare let KDTilePalette: {
             Lock: string;
         };
     };
-    '----Useful----': {
+    AutoDoorToggle: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            wireType: string;
+        };
+    };
+    AutoDoorOpenToggle: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            wireType: string;
+        };
+    };
+    AutoDoorHoldOpen: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            wireType: string;
+            Label: string;
+        };
+    };
+    AutoDoorHoldClosed: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            wireType: string;
+            Label: string;
+        };
+    };
+    AutoDoorOpen: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            wireType: string;
+            Label: string;
+        };
+    };
+    AutoDoorClose: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            wireType: string;
+            Label: string;
+        };
+    };
+    '----Furniture----': {
         type: string;
     };
     Table: {
@@ -512,6 +642,7 @@ declare let KDTilePalette: {
         special: {
             Type: string;
             Loot: string;
+            Chance: number;
         };
     };
     ChestCustom: {
@@ -582,6 +713,14 @@ declare let KDTilePalette: {
     '----Chargers----': {
         type: string;
     };
+    PriorityCharger: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Priority: boolean;
+        };
+    };
     Charger: {
         type: string;
         tile: string;
@@ -615,6 +754,335 @@ declare let KDTilePalette: {
             Type: string;
         };
     };
+    '----Conveyors----': {
+        type: string;
+    };
+    ConveyorUp: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+        };
+    };
+    ConveyorDown: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+        };
+    };
+    ConveyorLeft: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+        };
+    };
+    ConveyorRight: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+        };
+    };
+    ConveyorUpOn: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorDownOn: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorLeftOn: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorRightOn: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorUpOff: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorDownOff: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorLeftOff: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorRightOff: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorUpSwitch: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorDownSwitch: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorLeftSwitch: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    ConveyorRightSwitch: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            DX: number;
+            DY: number;
+            wireType: string;
+            SwitchMode: string;
+        };
+    };
+    '----Machines----': {
+        type: string;
+    };
+    DollSupply: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+        };
+    };
+    DollSupplyManual: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            count: number;
+            wireType: string;
+            rate: number;
+        };
+    };
+    DollTerminal: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+        };
+    };
+    BondageMachineLatex: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Binding: string;
+        };
+    };
+    BondageMachinePlug: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Binding: string;
+        };
+    };
+    BondageMachineChastity: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Binding: string;
+        };
+    };
+    BondageMachineTape: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Binding: string;
+        };
+    };
+    BondageMachineMetal: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Binding: string;
+        };
+    };
+    DollDropoffU: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            Overlay: string;
+            direction: {
+                x: number;
+                y: number;
+            };
+        };
+    };
+    DollDropoffD: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            Overlay: string;
+            direction: {
+                x: number;
+                y: number;
+            };
+        };
+    };
+    DollDropoffR: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            Overlay: string;
+            direction: {
+                x: number;
+                y: number;
+            };
+        };
+    };
+    DollDropoffL: {
+        type: string;
+        tile: string;
+        special: {
+            Type: string;
+            Sprite: string;
+            Overlay: string;
+            direction: {
+                x: number;
+                y: number;
+            };
+        };
+    };
+    '----Signals----': {
+        type: string;
+    };
+    Button: {
+        type: string;
+        tile: string;
+    };
+    Wire: {
+        type: string;
+        effectTile: string;
+    };
+    PressurePlate: {
+        type: string;
+        effectTile: string;
+    };
+    PressurePlateHold: {
+        type: string;
+        effectTile: string;
+    };
+    PressurePlateOneUse: {
+        type: string;
+        effectTile: string;
+    };
     '----Misc----': {
         type: string;
     };
@@ -622,6 +1090,9 @@ declare let KDTilePalette: {
         type: string;
     };
     OffLimits: {
+        type: string;
+    };
+    Jail: {
         type: string;
     };
     Keyring: {
@@ -643,6 +1114,7 @@ declare namespace KDTE_Brush {
     function clear(brush: any, curr: any, noSwap: any): void;
     function tile(brush: any, curr: any, noSwap: any): void;
     function offlimits(brush: any, curr: any, noSwap: any): void;
+    function jail(brush: any, curr: any, noSwap: any): void;
     function Keyring(brush: any, curr: any, noSwap: any): void;
     function effect(brush: any, curr: any, noSwap: any): void;
     function POI(brush: any, curr: any, noSwap: any): void;

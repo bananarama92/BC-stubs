@@ -15,7 +15,11 @@ declare function KinkyDungeonFindConsumableOrBasic(Name: any): consumable | {
     rarity: number;
     shop: boolean;
 };
-declare function KinkyDungeonGetInventoryItem(Name: any, Filter?: string): any;
+declare function KinkyDungeonGetInventoryItem(Name: any, Filter?: string): {
+    name: any;
+    item: any;
+    preview: string;
+};
 declare function KinkyDungeonItemCount(Name: any): any;
 declare function KinkyDungeonGetShopItem(Level: any, Rarity: any, Shop: any): any;
 /**
@@ -25,8 +29,8 @@ declare function KinkyDungeonGetShopItem(Level: any, Rarity: any, Shop: any): an
  * @return {boolean}
  */
 declare function KinkyDungeonChangeConsumable(consumable: consumable, Quantity: number): boolean;
-declare function KinkyDungeonConsumableEffect(Consumable: any): void;
+declare function KinkyDungeonConsumableEffect(Consumable: any, type: any): void;
 declare function KinkyDungeonPotionCollar(): boolean;
-declare function KinkyDungeonCanDrink(): boolean;
+declare function KinkyDungeonCanDrink(byEnemy: any): boolean;
 declare function KinkyDungeonAttemptConsumable(Name: any, Quantity: any): boolean;
 declare function KinkyDungeonUseConsumable(Name: any, Quantity: any): boolean;

@@ -20,15 +20,20 @@ declare function KinkyDungeonCreateTileMaze(POI: any, VisitedRooms: any, width: 
     spawnpoints: any[];
 }): void;
 declare function KinkyDungeonCreateRoom(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
+declare function KinkyDungeonCreateDollRoom(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
+declare function KinkyDungeonCreateDollmaker(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
 declare function KinkyDungeonCreateTunnel(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
 declare function KinkyDungeonCreatePerkRoom(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
 declare function KinkyDungeonCreateJourneyFloor(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
+declare function KinkyDungeonCreateShopStart(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
+declare function KinkyDungeonCreateTestTile(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
 declare function KinkyDungeonCreateTutorial(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
 declare namespace KDJourneyMapMod {
     const Random: boolean;
 }
 declare namespace KDDefaultMaxFlags {
     const goldchest: number;
+    const lessergold: number;
     const silverchest: number;
     const darkchest: number;
     const redchest: number;
@@ -72,7 +77,7 @@ declare namespace alts {
         const orbs: number;
         const setpieces: {};
         const chargers: boolean;
-        const torches: boolean;
+        const notorches: boolean;
         const heart: boolean;
         const specialtiles: boolean;
         const shortcut: boolean;
@@ -86,6 +91,7 @@ declare namespace alts {
         const noShrineTypes: string[];
         const tickFlags: boolean;
         const noMusic: boolean;
+        const keepMainPath: boolean;
     }
     namespace PerkRoom {
         const name_1: string;
@@ -112,8 +118,8 @@ declare namespace alts {
         export { orbs_1 as orbs };
         const chargers_1: boolean;
         export { chargers_1 as chargers };
-        const torches_1: boolean;
-        export { torches_1 as torches };
+        const notorches_1: boolean;
+        export { notorches_1 as notorches };
         const heart_1: boolean;
         export { heart_1 as heart };
         const specialtiles_1: boolean;
@@ -138,6 +144,8 @@ declare namespace alts {
         export { noShrineTypes_1 as noShrineTypes };
         const noMusic_1: boolean;
         export { noMusic_1 as noMusic };
+        const keepMainPath_1: boolean;
+        export { keepMainPath_1 as keepMainPath };
     }
     namespace Jail {
         const name_2: string;
@@ -175,8 +183,8 @@ declare namespace alts {
         export { orbs_2 as orbs };
         const chargers_2: boolean;
         export { chargers_2 as chargers };
-        const torches_2: boolean;
-        export { torches_2 as torches };
+        const notorches_2: boolean;
+        export { notorches_2 as notorches };
         const heart_2: boolean;
         export { heart_2 as heart };
         const specialtiles_2: boolean;
@@ -198,17 +206,22 @@ declare namespace alts {
         const noShrineTypes_2: string[];
         export { noShrineTypes_2 as noShrineTypes };
     }
-    namespace JourneyFloor {
+    namespace DollRoom {
         const name_3: string;
         export { name_3 as name };
+        export const noWear: boolean;
         const bossroom_3: boolean;
         export { bossroom_3 as bossroom };
         const width_3: number;
         export { width_3 as width };
         const height_3: number;
         export { height_3 as height };
+        export const nopatrols: boolean;
         const setpieces_3: {};
         export { setpieces_3 as setpieces };
+        export namespace data {
+            const dollroom: boolean;
+        }
         const genType_3: string;
         export { genType_3 as genType };
         const spawns_3: boolean;
@@ -221,8 +234,8 @@ declare namespace alts {
         export { orbs_3 as orbs };
         const chargers_3: boolean;
         export { chargers_3 as chargers };
-        const torches_3: boolean;
-        export { torches_3 as torches };
+        const notorches_3: boolean;
+        export { notorches_3 as notorches };
         const heart_3: boolean;
         export { heart_3 as heart };
         const specialtiles_3: boolean;
@@ -235,19 +248,23 @@ declare namespace alts {
         export { nojail_3 as nojail };
         const nokeys_3: boolean;
         export { nokeys_3 as nokeys };
-        const nolore_2: boolean;
-        export { nolore_2 as nolore };
         const nostairs_3: boolean;
         export { nostairs_3 as nostairs };
+        export const nostartstairs: boolean;
         const notraps_3: boolean;
         export { notraps_3 as notraps };
         const noClutter_2: boolean;
         export { noClutter_2 as noClutter };
-        export const skiptunnel: boolean;
+        export const nobrick: boolean;
+        const nolore_2: boolean;
+        export { nolore_2 as nolore };
+        export const noboring: boolean;
     }
-    namespace Tutorial {
+    namespace TestTile {
         const name_4: string;
         export { name_4 as name };
+        const noWear_1: boolean;
+        export { noWear_1 as noWear };
         const bossroom_4: boolean;
         export { bossroom_4 as bossroom };
         const width_4: number;
@@ -268,8 +285,8 @@ declare namespace alts {
         export { orbs_4 as orbs };
         const chargers_4: boolean;
         export { chargers_4 as chargers };
-        const torches_4: boolean;
-        export { torches_4 as torches };
+        const notorches_4: boolean;
+        export { notorches_4 as notorches };
         const heart_4: boolean;
         export { heart_4 as heart };
         const specialtiles_4: boolean;
@@ -282,14 +299,161 @@ declare namespace alts {
         export { nojail_4 as nojail };
         const nokeys_4: boolean;
         export { nokeys_4 as nokeys };
-        const nolore_3: boolean;
-        export { nolore_3 as nolore };
         const nostairs_4: boolean;
         export { nostairs_4 as nostairs };
+        const nostartstairs_1: boolean;
+        export { nostartstairs_1 as nostartstairs };
         const notraps_4: boolean;
         export { notraps_4 as notraps };
         const noClutter_3: boolean;
         export { noClutter_3 as noClutter };
+        const nobrick_1: boolean;
+        export { nobrick_1 as nobrick };
+        const nolore_3: boolean;
+        export { nolore_3 as nolore };
+        const noboring_1: boolean;
+        export { noboring_1 as noboring };
+    }
+    namespace JourneyFloor {
+        const name_5: string;
+        export { name_5 as name };
+        const bossroom_5: boolean;
+        export { bossroom_5 as bossroom };
+        const width_5: number;
+        export { width_5 as width };
+        const height_5: number;
+        export { height_5 as height };
+        const setpieces_5: {};
+        export { setpieces_5 as setpieces };
+        const genType_5: string;
+        export { genType_5 as genType };
+        const spawns_5: boolean;
+        export { spawns_5 as spawns };
+        const chests_5: boolean;
+        export { chests_5 as chests };
+        const shrines_5: boolean;
+        export { shrines_5 as shrines };
+        const orbs_5: number;
+        export { orbs_5 as orbs };
+        const chargers_5: boolean;
+        export { chargers_5 as chargers };
+        const notorches_5: boolean;
+        export { notorches_5 as notorches };
+        const heart_5: boolean;
+        export { heart_5 as heart };
+        const specialtiles_5: boolean;
+        export { specialtiles_5 as specialtiles };
+        const shortcut_5: boolean;
+        export { shortcut_5 as shortcut };
+        const enemies_5: boolean;
+        export { enemies_5 as enemies };
+        const nojail_5: boolean;
+        export { nojail_5 as nojail };
+        const nokeys_5: boolean;
+        export { nokeys_5 as nokeys };
+        const nolore_4: boolean;
+        export { nolore_4 as nolore };
+        const nostairs_5: boolean;
+        export { nostairs_5 as nostairs };
+        const notraps_5: boolean;
+        export { notraps_5 as notraps };
+        const noClutter_4: boolean;
+        export { noClutter_4 as noClutter };
+        export const skiptunnel: boolean;
+    }
+    namespace ShopStart {
+        const name_6: string;
+        export { name_6 as name };
+        const bossroom_6: boolean;
+        export { bossroom_6 as bossroom };
+        const width_6: number;
+        export { width_6 as width };
+        const height_6: number;
+        export { height_6 as height };
+        const setpieces_6: {};
+        export { setpieces_6 as setpieces };
+        const genType_6: string;
+        export { genType_6 as genType };
+        const spawns_6: boolean;
+        export { spawns_6 as spawns };
+        const chests_6: boolean;
+        export { chests_6 as chests };
+        const shrines_6: boolean;
+        export { shrines_6 as shrines };
+        const orbs_6: number;
+        export { orbs_6 as orbs };
+        const chargers_6: boolean;
+        export { chargers_6 as chargers };
+        const notorches_6: boolean;
+        export { notorches_6 as notorches };
+        const heart_6: boolean;
+        export { heart_6 as heart };
+        const specialtiles_6: boolean;
+        export { specialtiles_6 as specialtiles };
+        const shortcut_6: boolean;
+        export { shortcut_6 as shortcut };
+        const enemies_6: boolean;
+        export { enemies_6 as enemies };
+        const nojail_6: boolean;
+        export { nojail_6 as nojail };
+        const nokeys_6: boolean;
+        export { nokeys_6 as nokeys };
+        const nolore_5: boolean;
+        export { nolore_5 as nolore };
+        const nostairs_6: boolean;
+        export { nostairs_6 as nostairs };
+        const notraps_6: boolean;
+        export { notraps_6 as notraps };
+        const noClutter_5: boolean;
+        export { noClutter_5 as noClutter };
+        const skiptunnel_1: boolean;
+        export { skiptunnel_1 as skiptunnel };
+    }
+    namespace Tutorial {
+        const name_7: string;
+        export { name_7 as name };
+        const bossroom_7: boolean;
+        export { bossroom_7 as bossroom };
+        const width_7: number;
+        export { width_7 as width };
+        const height_7: number;
+        export { height_7 as height };
+        const setpieces_7: {};
+        export { setpieces_7 as setpieces };
+        const genType_7: string;
+        export { genType_7 as genType };
+        const spawns_7: boolean;
+        export { spawns_7 as spawns };
+        const chests_7: boolean;
+        export { chests_7 as chests };
+        const shrines_7: boolean;
+        export { shrines_7 as shrines };
+        const orbs_7: number;
+        export { orbs_7 as orbs };
+        const chargers_7: boolean;
+        export { chargers_7 as chargers };
+        const notorches_7: boolean;
+        export { notorches_7 as notorches };
+        const heart_7: boolean;
+        export { heart_7 as heart };
+        const specialtiles_7: boolean;
+        export { specialtiles_7 as specialtiles };
+        const shortcut_7: boolean;
+        export { shortcut_7 as shortcut };
+        const enemies_7: boolean;
+        export { enemies_7 as enemies };
+        const nojail_7: boolean;
+        export { nojail_7 as nojail };
+        const nokeys_7: boolean;
+        export { nokeys_7 as nokeys };
+        const nolore_6: boolean;
+        export { nolore_6 as nolore };
+        const nostairs_7: boolean;
+        export { nostairs_7 as nostairs };
+        const notraps_7: boolean;
+        export { notraps_7 as notraps };
+        const noClutter_6: boolean;
+        export { noClutter_6 as noClutter };
     }
 }
 declare let KDJourneyList: string[];
@@ -297,6 +461,10 @@ declare namespace KinkyDungeonCreateMapGenType {
     export function Room(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
     export function JourneyFloor_1(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
     export { JourneyFloor_1 as JourneyFloor };
+    export function ShopStart_1(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
+    export { ShopStart_1 as ShopStart };
+    export function TestTile_1(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
+    export { TestTile_1 as TestTile };
     export function Tutorial_1(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
     export { Tutorial_1 as Tutorial };
     export function Tunnel_1(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
@@ -307,4 +475,7 @@ declare namespace KinkyDungeonCreateMapGenType {
     export function Maze(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
     export function TileMaze(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
     export function NarrowMaze(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
+    export function DollRoom_1(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
+    export { DollRoom_1 as DollRoom };
+    export function Dollmaker(POI: any, VisitedRooms: any, width: any, height: any, openness: any, density: any, hallopenness: any, data: any): void;
 }

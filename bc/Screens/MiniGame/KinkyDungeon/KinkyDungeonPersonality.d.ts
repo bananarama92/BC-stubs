@@ -35,6 +35,7 @@ declare let KDEnemyPersonalities: {
         brat: boolean;
         tags: {
             robot: number;
+            cyborg: number;
         };
     };
     Dom: {
@@ -48,6 +49,7 @@ declare let KDEnemyPersonalities: {
             elite: number;
             boss: number;
             robot: number;
+            cyborg: number;
         };
     };
     Sub: {
@@ -61,6 +63,7 @@ declare let KDEnemyPersonalities: {
             elite: number;
             boss: number;
             robot: number;
+            cyborg: number;
         };
     };
     Brat: {
@@ -74,6 +77,7 @@ declare let KDEnemyPersonalities: {
             human: number;
             boss: number;
             robot: number;
+            cyborg: number;
         };
     };
 };

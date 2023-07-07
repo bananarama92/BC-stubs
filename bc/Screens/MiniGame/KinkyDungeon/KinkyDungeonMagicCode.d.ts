@@ -14,7 +14,8 @@ declare namespace KDCommandBindBindings {
     export { vine_1 as vine };
     export function rope_1(spell: any, x: any, y: any, faction: any, bullet: any, miscast: any, attacker: any, counter: any): void;
     export { rope_1 as rope };
-    export function rofabricpe(spell: any, x: any, y: any, faction: any, bullet: any, miscast: any, attacker: any, counter: any): void;
+    export function fabric_1(spell: any, x: any, y: any, faction: any, bullet: any, miscast: any, attacker: any, counter: any): void;
+    export { fabric_1 as fabric };
     export function chain_1(spell: any, x: any, y: any, faction: any, bullet: any, miscast: any, attacker: any, counter: any): void;
     export { chain_1 as chain };
     export function belt_1(spell: any, x: any, y: any, faction: any, bullet: any, miscast: any, attacker: any, counter: any): void;

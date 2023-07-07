@@ -21,16 +21,17 @@ declare function KDLinkSize(restraint: restraint): number;
  *
  * @param {item} item
  * @param {string} linkCategory
+ * @param {item} [ignoreItem]
  * @returns {number}
  */
-declare function KDLinkCategorySize(item: item, linkCategory: string): number;
+declare function KDLinkCategorySize(item: item, linkCategory: string, ignoreItem?: item): number;
 declare function KinkyDungeonDrawInputs(): void;
 declare function KDCycleSpellPage(reverse: any): void;
-declare function KinkyDungeonDrawProgress(x: any, y: any, amount: any, totalIcons: any, maxWidth: any, sprite: any): void;
 declare function KinkyDungeonCanSleep(): boolean;
 declare function KDLinspace(min: any, max: any, steps: any): any[];
 declare function KDSteps(max: any, step: any, maxStep?: number): any[];
 declare function KinkyDungeonDrawStats(x: any, y: any, width: any, heightPerBar: any): void;
+declare function KDAutoStruggleClick(): void;
 declare function KinkyDungeonActivateWeaponSpell(instant: any): boolean;
 declare function KinkyDungeonRangedAttack(): boolean;
 declare function KinkyDungeonHandleHUD(): boolean;
@@ -38,6 +39,7 @@ declare function KinkyDungeonUpdateStruggleGroups(): void;
 declare let KinkyDungeonStruggleGroups: any[];
 declare let KinkyDungeonStruggleGroupsBase: string[];
 declare let KinkyDungeonDrawStruggle: number;
+declare let KDPlayerSetPose: boolean;
 declare let KinkyDungeonDrawStruggleHover: boolean;
 declare let KinkyDungeonDrawState: string;
 declare let KinkyDungeonDrawStatesModal: string[];
@@ -49,6 +51,8 @@ declare let KinkyDungeonTargetY: number;
 declare let KinkyDungeonLastDraw: number;
 declare let KinkyDungeonLastDraw2: number;
 declare let KinkyDungeonDrawDelta: number;
+declare let KD_HUD_RESTRAINTINFOFONTSIZE: number;
+declare let KD_HUD_RESTRAINTINFOLINESIZE: number;
 declare const KinkyDungeonLastChatTimeout: 10000;
 declare let KinkyDungeonStatBarHeight: number;
 declare let KinkyDungeonToggleAutoDoor: boolean;
@@ -96,6 +100,10 @@ declare namespace KDBuffSprites {
     const AvatarEarth: boolean;
     const AvatarAir: boolean;
     const DistractionCast: boolean;
+    const BoundByFate: boolean;
+    const GreaterInvisibility: boolean;
+    const Invisibility: boolean;
+    const Haunted: boolean;
 }
 declare namespace KDStatsSkipLine {
     const info: number;

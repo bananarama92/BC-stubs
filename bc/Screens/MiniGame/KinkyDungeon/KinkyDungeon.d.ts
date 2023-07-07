@@ -7,7 +7,7 @@ declare function KinkyDungeonLeashingEnemy(): any;
 declare function KinkyDungeonJailGuard(): entity;
 declare function KinkyDungeonAngel(): any;
 declare function KDUnlockPerk(Perk: any): void;
-declare function KDLoadPerks(Perk: any): void;
+declare function KDLoadPerks(): void;
 /**
  *
  * @param {any[]} list
@@ -16,6 +16,8 @@ declare function KDLoadPerks(Perk: any): void;
 declare function KDMapInit(list: any[]): Record<any, any>;
 declare function KDistEuclidean(x: any, y: any): number;
 declare function KDistChebyshev(x: any, y: any): number;
+declare function KDLoadToggles(): void;
+declare function KDSaveToggles(): void;
 /**
  * Loads the kinky dungeon game
  * @returns {void} - Nothing
@@ -31,7 +33,9 @@ declare function KinkyDungeonDeviousDungeonAvailable(): boolean;
  * @returns {boolean} - If the player is the game player
  */
 declare function KinkyDungeonIsPlayer(): boolean;
+declare function sleep(msec: any): Promise<any>;
 declare function KinkyDungeonRun(): void;
+declare function KDCullSprites(): void;
 /**
  * Draws a button component
  * @param {string} name - Name of the button element
@@ -71,12 +75,46 @@ declare function DrawButtonKD(name: string, enabled: boolean, Left: number, Top:
  * @param {boolean} [options.noTextBG] - Dont show text backgrounds
  * @param {number} [options.alpha] - Dont show text backgrounds
  * @param {number} [options.zIndex] - zIndex
+ * @param {boolean} [options.scaleImage] - zIndex
  * @returns {void} - Nothing
  */
 declare function DrawButtonKDEx(name: string, func: (bdata: any) => boolean, enabled: boolean, Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: string, HoveringText?: string, Disabled?: boolean, NoBorder?: boolean, FillColor?: string, FontSize?: number, ShiftText?: boolean, options?: {
     noTextBG?: boolean;
     alpha?: number;
     zIndex?: number;
+    scaleImage?: boolean;
+}): void;
+/**
+ * Draws a button component
+ * @param {any} Container - Container to draw to
+ * @param {string} name - Name of the button element
+ * @param {(bdata: any) => boolean} func - Whether or not you can click on it
+ * @param {boolean} enabled - Whether or not you can click on it
+ * @param {number} Left - Position of the component from the left of the canvas
+ * @param {number} Top - Position of the component from the top of the canvas
+ * @param {number} Width - Width of the component
+ * @param {number} Height - Height of the component
+ * @param {string} Label - Text to display in the button
+ * @param {string} Color - Color of the component
+ * @param {string} [Image] - URL of the image to draw inside the button, if applicable
+ * @param {string} [HoveringText] - Text of the tooltip, if applicable
+ * @param {boolean} [Disabled] - Disables the hovering options if set to true
+ * @param {boolean} [NoBorder] - Disables border
+ * @param {string} [FillColor] - BG color
+ * @param {number} [FontSize] - Font size
+ * @param {boolean} [ShiftText] - Shift text to make room for the button
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.noTextBG] - Dont show text backgrounds
+ * @param {number} [options.alpha] - Dont show text backgrounds
+ * @param {number} [options.zIndex] - zIndex
+ * @param {boolean} [options.unique] - This button is unique, so X and Y are not differentiators
+ * @returns {void} - Nothing
+ */
+declare function DrawButtonKDExTo(Container: any, name: string, func: (bdata: any) => boolean, enabled: boolean, Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: string, HoveringText?: string, Disabled?: boolean, NoBorder?: boolean, FillColor?: string, FontSize?: number, ShiftText?: boolean, options?: {
+    noTextBG?: boolean;
+    alpha?: number;
+    zIndex?: number;
+    unique?: boolean;
 }): void;
 declare function KDProcessButtons(): boolean;
 /**
@@ -156,6 +194,20 @@ declare function AudioPlayInstantSoundKD(Path: string, volume?: number): void;
 declare function hashCode(s: any): number;
 declare function TextGetKD(Text: any): any;
 declare function KinkyDungeonCheckPlayerRefresh(): void;
+declare function CJKcheck(text: any, p?: number, o?: string): any;
+/**
+ * @param {string} id
+ * @returns {HTMLCanvasElement}
+ */
+declare function KinkyDungeonGetCanvas(id: string): HTMLCanvasElement;
+declare let CanvasWidth: number;
+declare let CanvasHeight: number;
+declare let KDStartTime: number;
+/** These languages have characters which are rendered bigger than English. */
+declare let KDBigLanguages: string[];
+declare let KDBigLanguages2: string[];
+/** Language List */
+declare let KDLanguages: string[];
 declare let KinkyDungeonPlayerNeedsRefresh: boolean;
 declare let KinkyDungeonNextRefreshCheck: number;
 declare const pp: URLSearchParams;
@@ -169,7 +221,6 @@ declare let KDDebugPerks: boolean;
 declare let KDDebugGold: boolean;
 declare let KDAllModFiles: any[];
 declare let KDModFiles: {};
-declare let KDClasses: number;
 declare let KinkyDungeonPerksConfig: string;
 declare let KDUnlockedPerks: any[];
 declare let KinkyDungeonBackground: string;
@@ -186,6 +237,9 @@ declare let KinkyDungeonKeybindingCurrentKeyRelease: string;
 declare let KinkyDungeonNewGame: number;
 declare let KinkyDungeonGameRunning: boolean;
 declare let KDLose: boolean;
+declare let KDLoadingFinished: boolean;
+declare let KDLoadingDone: number;
+declare let KDLoadingMax: number;
 declare let KinkyDungeonKey: string[];
 declare let KinkyDungeonKeySpell: string[];
 declare let KinkyDungeonKeyWait: string[];
@@ -199,6 +253,20 @@ declare let KinkyDungeonKeyToggle: string[];
 declare let KinkyDungeonKeySpellPage: string[];
 declare let KinkyDungeonKeySwitchWeapon: string[];
 declare let KDLoadingTextKeys: {};
+declare let KinkyDungeonGraphicsQuality: boolean;
+declare namespace KDToggles {
+    const VibeSounds: boolean;
+    const Music: boolean;
+    const Sound: boolean;
+    const Drool: boolean;
+    const DrawArmor: boolean;
+    const TurnCounter: boolean;
+    const ShowNPCStatuses: boolean;
+    const StunFlash: boolean;
+    const ArousalHearts: boolean;
+    const VibeHearts: boolean;
+    const FancyWalls: boolean;
+}
 declare namespace KDDefaultKB {
     const Down: string;
     const DownLeft: string;
@@ -245,7 +313,10 @@ declare let KinkyDungeonStreamingPlayers: any[];
 declare let KinkyDungeonInitTime: number;
 declare let KinkyDungeonSleepTime: number;
 declare let KinkyDungeonFreezeTime: number;
+declare let KinkyDungeonPlaySelfTime: number;
+declare let KinkyDungeonOrgasmTime: number;
 declare let KinkyDungeonAutoWait: boolean;
+declare let KinkyDungeonAutoWaitStruggle: boolean;
 declare let KinkyDungeonConfigAppearance: boolean;
 declare const Consumable: "consumable";
 declare const Restraint: "restraint";
@@ -303,14 +374,7 @@ type KDGameDataBase = {
     Outfit: string;
     Champion: string;
     ChampionCurrent: number;
-    JailPoints: {
-        x: number;
-        y: number;
-        type: string;
-        radius: number;
-        requireLeash?: boolean;
-        requireFurniture?: boolean;
-    }[];
+    JailPoints: KDJailPoint[];
     LastMapSeed: string;
     AlreadyOpened: {
         x: number;
@@ -352,6 +416,7 @@ type KDGameDataBase = {
     Quests: string[];
     MapFaction: string;
     PriorJailbreaks: number;
+    PriorJailbreaksDecay: number;
     PreviousWeapon: string;
     StaminaPause: number;
     StaminaSlow: number;
@@ -364,19 +429,42 @@ type KDGameDataBase = {
         y: number;
     }[];
     HiddenItems: Record<string, boolean>;
+    ItemPriority: Record<string, number>;
     CagedTime: number;
     ShopItems: shopItem[];
     DelayedActions: KDDelayedAction[];
     JailFaction: string[];
     GuardFaction: string[];
     OfferCount: number;
+    MainPath: string;
+    ShortcutPath: string;
+    ItemID: number;
+    ShopkeeperFee: number;
+    DollCount: number;
+    ChestsGenerated: string[];
+    DollRoomCount: number;
+    CollectedHearts: number;
+    CollectedOrbs: number;
+    otherPlaying: number;
+    Training: Record<string, KDTrainingRecord>;
+    QuickLoadout: KDPresetLoadout[];
 };
 declare namespace KDGameDataBase {
+    export const Training: {};
+    export const CollectedOrbs: number;
+    export const CollectedHearts: number;
+    export const DollRoomCount: number;
+    export const ChestsGenerated: any[];
+    export const MainPath: string;
+    export const ShortcutPath: string;
+    export const DollCount: number;
     export const CagedTime: number;
     export const HiddenItems: {};
+    export const ItemPriority: {};
     export const KeyringLocations: any[];
     export const HiddenSpellPages: {};
     export const PriorJailbreaks: number;
+    export const PriorJailbreaksDecay: number;
     export const MapFaction: string;
     export const KeysNeeded: boolean;
     export const RoomType: string;
@@ -460,6 +548,7 @@ declare namespace KDGameDataBase {
     export const OfferFatigue: number;
     export const Favors: {};
     export const PreviousWeapon: any;
+    export const QuickLoadout: any[];
     export const StaminaPause: number;
     export const StaminaSlow: number;
     export const ManaSlow: number;
@@ -469,6 +558,9 @@ declare namespace KDGameDataBase {
     export const JailFaction: any[];
     export const GuardFaction: any[];
     export const OfferCount: number;
+    export const ItemID: number;
+    export const ShopkeeperFee: number;
+    export const otherPlaying: number;
 }
 /**
  * @type {KDGameDataBase}
@@ -485,16 +577,12 @@ declare let KinkyDungeonCreditsPos: number;
 declare let KDMaxPatronPerPage: number;
 declare let KDMaxPatron: number;
 declare let KinkyDungeonPatronPos: number;
-declare let KinkyDungeonSound: boolean;
-declare let KinkyDungeonFullscreen: boolean;
-declare let KinkyDungeonDrool: boolean;
-declare let KinkyDungeonArmor: boolean;
-declare let KinkyDungeonGraphicsQuality: boolean;
 declare let KinkyDungeonFastWait: boolean;
 declare let KinkyDungeonTempWait: boolean;
 declare let KinkyDungeonSexyMode: boolean;
 declare let KinkyDungeonClassMode: string;
 declare let KinkyDungeonRandomMode: boolean;
+declare let KinkyDungeonEasyMode: number;
 declare let KinkyDungeonSaveMode: boolean;
 declare let KinkyDungeonSexyPiercing: boolean;
 declare let KinkyDungeonSexyPlug: boolean;
@@ -504,6 +592,14 @@ declare let KDRestart: boolean;
 declare let fpscounter: number;
 declare let lastfps: number;
 declare let dispfps: number;
+declare let KDMarkAsCache: any[];
+declare let lastGlobalRefresh: number;
+declare let GlobalRefreshInterval: number;
+declare let KDGlobalRefresh: boolean;
+declare let KDDrawDelta: number;
+declare let kdTrackGameBoard: boolean;
+declare let kdTrackGameFog: boolean;
+declare let kdTrackGameParticles: boolean;
 /**
  * @type {Record<string, {Left: number, Top: number, Width: number, Height: number, enabled: boolean, func?: (bdata: any) => boolean}>}
  */
@@ -526,12 +622,23 @@ declare let KDLastButtonsCache: Record<string, {
     enabled: boolean;
     func?: (bdata: any) => boolean;
 }>;
-declare let KinkyDungeonReplaceConfirm: number;
 declare let KinkyDungeonGameFlag: boolean;
 declare let KDDefaultJourney: string[];
 declare let KDDefaultAlt: string[];
+declare let afterLoaded: boolean;
+/**
+ * Dummy function. You can modify this function as part of your mod like so:
+ * function _KDModsAfterLoad = KDModsAfterLoad;
+ * KDModsAfterLoad = () => {
+ * [Your stuff here]
+ * _KDModsAfterLoad();
+ * }
+ * It is declared with `let` intentionally to allow the above, without suggesting a type error
+ */
+declare function KDModsAfterLoad(): void;
 declare let KDHardModeThresh: number;
 declare let mouseDown: boolean;
+declare let MouseClicked: boolean;
 /**
  * Game keyboard input handler object: Handles keyboard inputs.
  * @constant

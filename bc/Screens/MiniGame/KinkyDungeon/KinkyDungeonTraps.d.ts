@@ -1,5 +1,5 @@
-declare function KinkyDungeonHandleStepOffTraps(x: any, y: any, moveX: any, moveY: any): void;
-declare function KinkyDungeonHandleTraps(x: any, y: any, Moved: any): void;
+declare function KinkyDungeonHandleStepOffTraps(entity: any, x: any, y: any, moveX: any, moveY: any): void;
+declare function KinkyDungeonHandleTraps(entity: any, x: any, y: any, Moved: any): void;
 declare function KDTrigPanic(): void;
 /**
  *
@@ -20,7 +20,15 @@ declare function KinkyDungeonGetTrap(trapTypes: any, Level: any, tags: any): {
     Enemy: any;
     Spell: any;
     Power: any;
+    extraTag: any;
 };
 declare function KDSmokePuff(x: any, y: any, radius: any, density: any, nomsg: any): void;
 declare function KDSteamPuff(x: any, y: any, radius: any, density: any, nomsg: any): void;
+/** @type {Record<string, KDTrapType>} */
+declare let KDTrapTypes: Record<string, KDTrapType>;
+declare namespace KDTrapTypesStepOff {
+    function DoorLock(tile: any, entity: any, x: any, y: any): {
+        msg: string;
+    };
+}
 declare let KinkyDungeonTrapMoved: boolean;

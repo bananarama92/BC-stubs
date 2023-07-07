@@ -2,6 +2,10 @@
  * @type {Record<string, consumable>}
  */
 declare let KinkyDungeonConsumables: Record<string, consumable>;
+/**
+ * @type {Record<string, consumable>}
+ */
+declare let KDCookies: Record<string, consumable>;
 declare let KDRechargeCost: number;
 declare let KinkyDungneonBasic: {
     RedKey: {

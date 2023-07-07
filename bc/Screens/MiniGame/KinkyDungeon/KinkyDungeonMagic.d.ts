@@ -61,7 +61,7 @@ declare function KDGetPrerequisite(spell: any): string;
 declare function KinkyDungeonCheckSpellPrerequisite(spell: any): boolean;
 declare function KinkyDungeonDetectLanguageForMaxWidth(str: any, maxWidthTranslate: any, maxWidthEnglish: any): any;
 declare function KinkyDungeonWordWrap(str: any, maxWidthTranslate: any, maxWidthEnglish: any): string;
-declare function KinkyDungeonTestWhite(x: any): boolean;
+declare function KinkyDungeonTestWhite(x: any, language: any): any;
 declare function KDSchoolColor(school: any): string;
 declare function KinkyDungeonDrawMagic(): void;
 declare function KDFilterSpellPages(): string[][][];

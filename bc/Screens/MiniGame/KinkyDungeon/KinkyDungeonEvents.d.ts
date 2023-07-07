@@ -96,7 +96,7 @@ declare let KDEventMapInventory: {
 /**
  * @type {Object.<string, Object.<string, function(KinkyDungeonEvent, *, entity, *): void>>}
  */
-declare let KDEventMapBuff: {
+declare const KDEventMapBuff: {
     [x: string]: {
         [x: string]: (arg0: KinkyDungeonEvent, arg1: any, arg2: entity, arg3: any) => void;
     };

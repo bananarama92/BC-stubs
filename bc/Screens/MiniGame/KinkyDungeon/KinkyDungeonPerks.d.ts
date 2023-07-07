@@ -1,7 +1,24 @@
 declare function KDGetPerkCost(perk: any): any;
 declare function KinkyDungeonGetStatPoints(Stats: any): number;
-declare function KinkyDungeonCanPickStat(Stat: any, points: any): boolean;
-declare function KDPerkBlocked(perk1: any, perk2: any): boolean;
+/**
+ * Determine if a perk can be picked with a certain number of points remaining
+ * @param {string} Stat
+ * @param {number} [points]
+ * @returns {boolean}
+ */
+declare function KinkyDungeonCanPickStat(Stat: string, points?: number): boolean;
+/**
+ * General validation for a perk
+ * @param {KDPerk} stat
+ * @returns {boolean}
+ */
+declare function KDValidatePerk(stat: KDPerk): boolean;
+/**
+ * @param {string} perk1
+ * @param {string} perk2
+ * @returns {boolean}
+ * Determines if perk1 is blocked by another perk or in general */
+declare function KDPerkBlocked(perk1: string, perk2: string): boolean;
 declare function KinkyDungeonCanUnPickStat(Stat: any): boolean;
 declare function KinkyDungeonDrawPerks(NonSelectable: any): boolean;
 /**
@@ -27,6 +44,13 @@ declare let KDDoorKnobChance: number;
 declare let KDDoorKnobChanceArms: number;
 declare let KDDoorAttractChance: number;
 declare let KDDoorAttractChanceArms: number;
+/** These weapons can get removed if you start the game with them*/
+declare let kdStartWeapons: string[];
+declare namespace KDPerkParams {
+    const KDEnemyDamageMult: number;
+    const KDEnemyResistBuff: number;
+    const KDEnemyArmorBoost: number;
+}
 declare let KDCategoriesStart: {
     name: string;
     buffs: any[];
@@ -52,11 +76,12 @@ declare namespace KDPerkUpdateStats {
     export function Unperturbed(): void;
     export function PainTolerance(): void;
     export function Sticky(): void;
-    export function DistractionCast(): void;
+    export function EnemyResist(): void;
     export function BoundPower_1(): void;
     export { BoundPower_1 as BoundPower };
     export function BerserkerRage_1(): void;
     export { BerserkerRage_1 as BerserkerRage };
+    export function Dodge(): void;
     export function UnstableMagic_1(): void;
     export { UnstableMagic_1 as UnstableMagic };
     export function CommonLatex(): void;
@@ -65,6 +90,7 @@ declare namespace KDPerkUpdateStats {
     export function CommonWolf(): void;
     export function CommonDress(): void;
     export function CommonFuuka(): void;
+    export function CommonCyber(): void;
     export function CommonExp(): void;
     export function CommonKitty(): void;
 }
@@ -90,7 +116,11 @@ declare namespace KDPerkStart {
     export function Conjurer(): void;
     export function Magician(): void;
     export function Brawler(): void;
+    export function SelfBondage(): void;
     export function StartLatex(): void;
+    export function DollmakerVisor(): void;
+    export function DollmakerMask(): void;
+    export function StartCyberDoll(): void;
     export function StartMaid(): void;
     export function StartWolfgirl(): void;
     export function StartObsidian(): void;
@@ -98,7 +128,9 @@ declare namespace KDPerkStart {
     export function Stranger(): void;
     export function WrongNeighborhood(): void;
     export function Cursed(): void;
+    export function MC_Trainee(): void;
 }
+declare let KDPerksFilter: string;
 declare let KDPerksButtonWidth: number;
 declare let KDPerksButtonWidthPad: number;
 declare let KDPerksButtonHeight: number;

@@ -12,6 +12,16 @@ declare let KinkyDungeonOutfitsBase: ({
     events: {
         trigger: string;
         type: string;
+        power: number;
+    }[];
+} | {
+    name: string;
+    dress: string;
+    shop: boolean;
+    rarity: number;
+    events: {
+        trigger: string;
+        type: string;
         requiredTag: string;
         power: number;
     }[];

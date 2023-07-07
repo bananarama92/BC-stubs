@@ -27,6 +27,23 @@ declare function KinkyDungeonTilesGet(location: string): any;
  * @param {string} location
  */
 declare function KinkyDungeonTilesDelete(location: string): void;
+/**
+ *
+ * @param {string} location
+ * @param {any} value
+ */
+declare function KinkyDungeonSkinSet(location: string, value: any): void;
+/**
+ *
+ * @param {string} location
+ * @returns {any}
+ */
+declare function KinkyDungeonSkinGet(location: string): any;
+/**
+ *
+ * @param {string} location
+ */
+declare function KinkyDungeonSkinDelete(location: string): void;
 declare function KDAlreadyOpened(x: any, y: any): boolean;
 declare function KinkyDungeonPlaySound(src: any, entity: any): void;
 declare function KinkyDungeonSetCheckPoint(Checkpoint: any, AutoSave: any, suppressCheckPoint: any): void;
@@ -35,7 +52,11 @@ declare function KDResetData(Data: any): void;
 declare function KDResetEventData(Data: any): void;
 declare function KinkyDungeonInitialize(Level: any, Load: any): void;
 declare function KDInitCanvas(): void;
-declare function KDCreateBoringness(): void;
+declare function KDCreateBoringness(noBoring: any): void;
+/**
+ * @returns {number}
+ */
+declare function KDGetMapSize(): number;
 /**
  *
  * @param {floorParams} MapParams
@@ -53,18 +74,18 @@ declare function KinkyDungeonGetAccessibleRoom(startX: any, startY: any): string
 declare function KinkyDungeonIsAccessible(testX: any, testY: any): boolean;
 declare function KinkyDungeonIsReachable(testX: any, testY: any, testLockX: any, testLockY: any): boolean;
 declare function KinkyDungeonGetAllies(): entity[];
-declare function KinkyDungeonPlaceEnemies(spawnPoints: any, InJail: any, Tags: any, BonusTags: any, Floor: any, width: any, height: any, altRoom: any): void;
+declare function KinkyDungeonPlaceEnemies(spawnPoints: any, InJail: any, Tags: any, BonusTags: any, Floor: any, width: any, height: any, altRoom: any, factionList: any): void;
 declare function KinkyDungeonGetClosestSpecialAreaDist(x: any, y: any): number;
-declare function KinkyDungeonCreateRectangle(Left: any, Top: any, Width: any, Height: any, Border: any, Fill: any, Padding: any, OffLimits: any, NoWander: any, flexCorner: any): void;
-declare function KinkyDungeonPlaceStairs(checkpoint: any, startpos: any, width: any, height: any, noStairs: any): void;
+declare function KinkyDungeonCreateRectangle(Left: any, Top: any, Width: any, Height: any, Border: any, Fill: any, Padding: any, OffLimits: any, NoWander: any, flexCorner: any, Jail: any): void;
+declare function KinkyDungeonPlaceStairs(checkpoint: any, startpos: any, width: any, height: any, noStairs: any, nostartstairs: any): void;
 declare function KinkyDungeonSkinArea(skin: any, X: any, Y: any, Radius: any, NoStairs: any): void;
-declare function KinkyDungeonGetMainPath(level: any): string;
-declare function KinkyDungeonGetShortcut(level: any): string;
+declare function KinkyDungeonGetMainPath(level: any, altType: any): string;
+declare function KinkyDungeonGetShortcut(level: any, altType: any): string;
 declare function KinkyDungeonPlaceShortcut(checkpoint: any, width: any, height: any): void;
-declare function KinkyDungeonPlaceChests(chestlist: any, treasurechance: any, treasurecount: any, rubblechance: any, Floor: any, width: any, height: any): void;
+declare function KinkyDungeonPlaceChests(chestlist: any, shrinelist: any, treasurechance: any, treasurecount: any, rubblechance: any, Floor: any, width: any, height: any): void;
 declare function KinkyDungeonPlaceLore(width: any, height: any): number;
 declare function KinkyDungeonPlaceHeart(width: any, height: any, Floor: any): boolean;
-declare function KinkyDungeonPlaceShrines(shrinelist: any, shrinechance: any, shrineTypes: any, shrinecount: any, shrinefilter: any, ghostchance: any, manaChance: any, orbcount: any, filterTypes: any, Floor: any, width: any, height: any): void;
+declare function KinkyDungeonPlaceShrines(chestlist: any, shrinelist: any, shrinechance: any, shrineTypes: any, shrinecount: any, shrinefilter: any, ghostchance: any, manaChance: any, orbcount: any, filterTypes: any, Floor: any, width: any, height: any): void;
 declare function KinkyDungeonPlaceChargers(chargerlist: any, chargerchance: any, litchargerchance: any, chargercount: any, Floor: any, width: any, height: any): void;
 /**
  *
@@ -163,7 +184,7 @@ declare function KinkyDungeonTargetTileMsg(): void;
  * @param {Character} C - The character whose appearance should be changed
  * @param {string} Group - The name of the corresponding groupr for the item
  * @param {Asset|null} ItemAsset - The asset collection of the item to be changed
- * @param {string|string[]} NewColor - The new color (as "#xxyyzz" hex value) for that item
+ * @param {ItemColor} NewColor - The new color (as "#xxyyzz" hex value) for that item
  * @param {number} [DifficultyFactor=0] - The difficulty, on top of the base asset difficulty, that should be assigned
  * to the item
  * @param {number} [ItemMemberNumber=-1] - The member number of the player adding the item - defaults to -1
@@ -171,7 +192,18 @@ declare function KinkyDungeonTargetTileMsg(): void;
  * @param {item} [item] - The item, to pass to the event
  * @returns {Item} - the item itself
  */
-declare function KDAddAppearance(C: Character, Group: string, ItemAsset: Asset | null, NewColor: string | string[], DifficultyFactor?: number, ItemMemberNumber?: number, Refresh?: boolean, item?: item): Item;
+declare function KDAddAppearance(C: Character, Group: string, ItemAsset: Asset | null, NewColor: ItemColor, DifficultyFactor?: number, ItemMemberNumber?: number, Refresh?: boolean, item?: item): Item;
+/**
+ * Sets an item in the character appearance
+ * @param {Character} C - The character whose appearance should be changed
+ * @param {string} Group - The name of the corresponding groupr for the item
+ * @param {Model} ItemModel - The asset collection of the item to be changed
+ * @param {ItemColor} NewColor - The new color (as "#xxyyzz" hex value) for that item
+ * @param {item} [item] - The item, to pass to the event
+ * @param {Record<string, LayerFilter>} filters - The item, to pass to the event
+ * @returns {Item} - the item itself
+ */
+declare function KDAddModel(C: Character, Group: string, ItemModel: Model, NewColor: ItemColor, filters: Record<string, LayerFilter>, item?: item): Item;
 declare function KinkyDungeonCloseDoor(data: any): void;
 declare function KDGetEnemyCache(): Map<string, entity>;
 /**
@@ -189,19 +221,25 @@ declare function KDTileDelete(x?: number, y?: number): void;
 /**
  * Stuns the player for [turns] turns
  * @param {number} turns
+ * @param {boolean} [noFlag] - Doesn't add the 'stun' flag which makes the game think you are in trouble
  */
-declare function KDStunTurns(turns: number): void;
+declare function KDStunTurns(turns: number, noFlag?: boolean): void;
+/**
+ * Kneels the player for [turns] turns
+ * @param {number} turns
+ */
+declare function KDKneelTurns(turns: number): void;
 /**
  * Picks a string based on weights
  * @param {Record<string, number>} list - a list of weights with string keys
  * @returns {string} - the key that was selected
  */
 declare function KDGetByWeight(list: Record<string, number>): string;
+declare function KDGetAltType(Floor: any): any;
+declare function KDCanPassEnemy(player: any, Enemy: any): any;
 declare let KinkyDungeonGagMumbleChance: number;
 declare let KinkyDungeonGagMumbleChancePerRestraint: number;
 declare let MiniGameKinkyDungeonCheckpoint: string;
-declare let MiniGameKinkyDungeonShortcut: string;
-declare let MiniGameKinkyDungeonMainPath: string;
 declare let MiniGameKinkyDungeonLevel: number;
 /**
  * @type Record<string, string>
@@ -252,17 +290,18 @@ declare let KinkyDungeonEntities: entity[];
 declare let KinkyDungeonTerrain: any[];
 declare let KinkyDungeonPOI: any[];
 declare let KinkyDungeonMapBrightness: number;
+declare let KDDefaultAvoidTiles: string;
 declare let KinkyDungeonGroundTiles: string;
 declare let KinkyDungeonWallTiles: string;
 declare let KinkyDungeonMovableTilesEnemy: string;
 declare let KinkyDungeonMovableTilesSmartEnemy: string;
 declare let KinkyDungeonMovableTiles: string;
-declare let KinkyDungeonTransparentObjects: string;
-declare let KinkyDungeonTransparentMovableObjects: string;
-declare let KDOpenDoorTiles: string[];
 declare let KDRandomDisallowedNeighbors: string;
 declare let KDTrappableNeighbors: string;
 declare let KDTrappableNeighborsLikely: string;
+declare let KinkyDungeonTransparentObjects: string;
+declare let KinkyDungeonTransparentMovableObjects: string;
+declare let KDOpenDoorTiles: string[];
 /**
  * @type {Record<string, {x: number, y: number, tags?:string[]}>}
  */
@@ -301,7 +340,8 @@ declare let KinkyDungeonNextDataSendStatsTime: number;
 declare let KinkyDungeonNextDataLastTimeReceived: number;
 declare let KinkyDungeonNextDataLastTimeReceivedTimeout: number;
 declare let KinkyDungeonLastMoveDirection: any;
-declare let KinkyDungeonTargetingSpell: any;
+/** @type {spell} */
+declare let KinkyDungeonTargetingSpell: spell;
 /**
  * Item to decrement by 1 when spell is cast
  */
@@ -328,7 +368,12 @@ declare namespace KinkyDungeonEndPosition {
     const y_2: number;
     export { y_2 as y };
 }
-declare let KinkyDungeonShortcutPosition: any;
+declare namespace KinkyDungeonShortcutPosition {
+    const x_3: number;
+    export { x_3 as x };
+    const y_3: number;
+    export { y_3 as y };
+}
 declare let KinkyDungeonJailLeash: number;
 declare let KinkyDungeonJailLeashX: number;
 declare let KinkyDungeonSaveInterval: number;
@@ -338,9 +383,24 @@ declare let KinkyDungeonSpecialAreas: any[];
 declare let KDMinBoringness: number;
 declare let KinkyDungeonCommercePlaced: number;
 declare let KDFood: {
-    Food: string;
-    Weight: number;
-}[];
+    "": {
+        Food: string;
+        Weight: number;
+    };
+    Plate: {
+        Food: string;
+        Weight: number;
+    };
+    Cookies: {
+        Food: string;
+        Theft: string;
+        Weight: number;
+    };
+    Pizza: {
+        Food: string;
+        Weight: number;
+    };
+};
 declare let canvasOffsetX: number;
 declare let canvasOffsetY: number;
 declare const canvasOffsetX_ui: 500;

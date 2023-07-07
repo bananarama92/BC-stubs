@@ -2,9 +2,17 @@ declare function KDGetSleepWillFraction(): number;
 declare function KDInitInventory(): void;
 declare function KinkyDungeonDefaultStats(Load: any): void;
 declare function KinkyDungeonGetVisionRadius(): number;
+/** Returns if the player is automatically doing stuff
+ * @returns {boolean}
+ */
+declare function KDIsAutoAction(): boolean;
+/**
+ * Disables all automatic actions
+ */
+declare function KDDisableAutoWait(): void;
 declare function KinkyDungeonInterruptSleep(): void;
 declare function KDGetStamDamageThresh(): number;
-declare function KinkyDungeonDealDamage(Damage: any, bullet: any, noAlreadyHit: any): {
+declare function KinkyDungeonDealDamage(Damage: any, bullet: any, noAlreadyHit: any, noInterrupt: any): {
     happened: any;
     string: string;
 };
@@ -21,7 +29,7 @@ declare function KinkyDungeonUpdateDialogue(entity: any, delta: any): void;
  */
 declare function KinkyDungeonSendDialogue(entity: entity, dialogue: string, color: string, duration: number, priority: number, force?: boolean, nooverride?: boolean): void;
 declare function KinkyDungeonChangeDistraction(Amount: any, NoFloater: any, lowerPerc: any, minimum?: number): void;
-declare function KinkyDungeonChangeStamina(Amount: any, NoFloater: any, Pause: any, NoSlow: any, minimum?: number): void;
+declare function KinkyDungeonChangeStamina(Amount: any, NoFloater: any, Pause: any, NoSlow: any, minimum?: number, slowFloor?: number): void;
 /**
  *
  * @param {number} Amount]
@@ -42,7 +50,11 @@ declare function KinkyDungeonSetMaxStats(delta: any): {
 };
 declare function KinkyDungeonCanUseWeapon(NoOverride: any, e: any): boolean;
 declare function KDGetDistractionRate(delta: any): number;
-declare function KinkyDungeonUpdateStats(delta: any): void;
+/**
+ *
+ * @param {number} delta
+ */
+declare function KinkyDungeonUpdateStats(delta: number): void;
 declare function KDGetEnvironmentalDmg(): number;
 declare function KDUpdatePerksBonus(): void;
 declare function KinkyDungeonCalculateMiscastChance(): void;
@@ -62,6 +74,7 @@ declare function KinkyDungeonCanTalk(Loose: any): boolean;
 declare function KinkyDungeonCalculateSubmissiveMult(): number;
 declare function KinkyDungeonCanPlayWithSelf(): boolean;
 declare function KinkyDungeonCanTryOrgasm(): boolean;
+declare function KDGetOrgasmCost(): number;
 /**
  * @param {number} [tease] - The teasing power
  * @returns {{orig: number, final: number}}
@@ -85,6 +98,12 @@ declare function KinkyDungeonChastityMult(): number;
  * @returns {number}
  */
 declare function KDBuffResist(buffs: any, type: string): number;
+/**
+ *
+ * @param {entity} player
+ * @returns {boolean}
+ */
+declare function KDIsEdged(player: entity): boolean;
 declare let KinkyDungeonPlayerEntity: any;
 declare let KDSleepWillFraction: number;
 declare let KDSleepWillFractionJail: number;
@@ -130,7 +149,7 @@ declare let KinkyDungeonStatStaminaRegenSleep: number;
 declare let KinkyDungeonStatStaminaRegenSleepBedMultiplier: number;
 declare let KinkyDungeonStatStaminaRegenWait: number;
 declare let KinkyDungeoNStatStaminaLow: number;
-declare let KDSprintCost: number;
+declare let KDSprintCostBase: number;
 declare let KDSprintCostSlowLevel: number[];
 declare let KinkyDungeonStatWillMax: number;
 declare let KinkyDungeonStatWill: number;
@@ -200,12 +219,6 @@ declare let KinkyDungeonPlayers: any[];
 declare let KinkyDungeonDifficulty: number;
 declare let KinkyDungeonSubmissiveMult: number;
 declare let KinkyDungeonSpellPoints: number;
-declare namespace KDClassStart {
-    function Fighter(): void;
-    function Rogue(): void;
-    function Mage(): void;
-    function Peasant(): void;
-}
 declare let KDMaxVisionDist: number;
 declare namespace KDBaseDamageTypes {
     const arouseTypes: string[];
@@ -236,12 +249,16 @@ declare let KDDamageAmpPerksMagic: number;
 declare let KDDamageAmpPerksSpell: number;
 declare let KDDamageAmpEnvironmental: number;
 declare let KDExtraEnemyTags: {};
-declare let KinkyDungeonOrgasmVibeLevelMult: number;
+/** Percentage of vibe level that is turned into playSelfPower to try to have an orgasm*/
+declare let KinkyDungeonOrgasmVibeLevelPlayPowerMult: number;
 declare let KinkyDungeonOrgasmChanceBase: number;
 declare let KinkyDungeonOrgasmChanceScaling: number;
 declare let KinkyDungeonMaxOrgasmStage: number;
 declare let KinkyDungeonOrgasmStageVariation: number;
+/** Threshold at which the player can play with herself */
 declare let KinkyDungeonDistractionSleepDeprivationThreshold: number;
+/** Threshold at which the player will automatically play with herself if able*/
+declare let KinkyDungeonDistractionPlaySelfThreshold: number;
 declare let KinkyDungeonPlaySelfOrgasmThreshold: number;
 declare let KinkyDungeonOrgasmTurnsMax: number;
 declare let KinkyDungeonOrgasmTurnsCrave: number;
@@ -259,6 +276,7 @@ declare let KinkyDungeonOrgasmCost: number;
 declare let KinkyDungeonOrgasmCostPercent: number;
 declare let KinkyDungeonOrgasmWillpowerCost: number;
 declare let KinkyDungeonEdgeCost: number;
+declare let KinkyDungeonEdgeWillpowerCost: number;
 declare let KinkyDungeonPlayCost: number;
 declare let KinkyDungeonOrgasmStunTime: number;
 declare let KinkyDungeonPlayWithSelfMult: number;

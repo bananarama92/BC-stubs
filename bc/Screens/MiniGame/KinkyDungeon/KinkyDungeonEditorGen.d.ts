@@ -43,6 +43,7 @@ declare function KD_GetMapTile(index: string, indX: number, indY: number, tilesF
  * @returns {boolean}
  */
 declare function KDCheckMapTileFilling(mapTile: KDMapTile, indX: number, indY: number, indices: Record<string, string>, requiredAccess: Record<string, boolean>, indexFilled: Record<string, string>): boolean;
+/** Suspends the inside of large tiles */
 declare function KDLooseIndexRankingSuspend(indexCheck: any, indexTile: any, w: any, h: any, xx: any, yy: any): boolean;
 /**
  *
@@ -92,9 +93,12 @@ declare function KDCreateEffectTileTile(x: number, y: number, tileGenerator: any
  * @return {Record<string, boolean>}
  */
 declare function KDAggregateTileTags(x: number, y: number, w: number, h: number, tilesFilled: Record<string, KDMapTile>, globalTags: Record<string, boolean>): Record<string, boolean>;
+/** If a tile's weight is higher than this, then any time without this much weight will get culled from the list */
+declare let KD_GENWEIGHTCUTOFF: number;
 declare namespace KDEffectTileGen {
     function TorchUnlit(x: any, y: any, tile: any, tileGenerator: any, data: any): any;
     function Torch(x: any, y: any, tile: any, tileGenerator: any, data: any): any;
+    function Wire(x: any, y: any, tile: any, tileGenerator: any, data: any): any;
 }
 /**
  * @type {Record<string, (x: number, y: number, tile: any, tileGenerator: any, data: {params: floorParams; chestlist: any[]; traps: any[]; shrinelist: any[]; chargerlist: any[]; spawnpoints: any[]}) => any>}

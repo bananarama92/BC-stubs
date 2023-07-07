@@ -9,8 +9,12 @@ declare function KinkyDungeonWeaponCanCut(RequireInteract: any, MagicOnly: any):
 declare function KDSetWeapon(Weapon: any, forced: any): void;
 declare function KinkyDungeonGetPlayerWeaponDamage(HandsFree: any, NoOverride: any): weapon;
 declare function KinkyDungeonGetEvasion(Enemy: any, NoOverride: any, IsSpell: any, IsMagic: any, cost: any): number;
+declare function KinkyDungeonDoEnemyBlock(Enemy: any, NoOverride: any, IsSpell: any, IsMagic: any, cost: any): number;
 declare function KinkyDungeonAggro(Enemy: any, Spell: any, Attacker: any, Faction: any): void;
+declare function KDPlayerEvasionPenalty(): number;
+declare function KDPlayerBlockPenalty(): number;
 declare function KinkyDungeonPlayerEvasion(): number;
+declare function KinkyDungeonPlayerBlock(): number;
 declare function KinkyDungeonGetPlayerStat(stat: any, mult: any): number;
 declare function KDRestraintBlockPower(block: any, power: any): number;
 declare function KinkyDungeonEvasion(Enemy: any, IsSpell: any, IsMagic: any, Attacker: any): boolean;
@@ -119,8 +123,15 @@ declare let KinkyDungeonKilledEnemy: any;
 declare let KinkyDungeonAlert: number;
 declare let KDBrawlerAmount: number;
 declare let KDClumsyAmount: number;
+declare namespace KDUnfocusedParams {
+    const AmountMin: number;
+    const AmountMax: number;
+    const ThreshMin: number;
+    const ThreshMax: number;
+}
 declare let KDDodgeAmount: number;
 declare let KinkyDungeonMissChancePerBlind: number;
+declare let KinkyDungeonBlockMissChancePerBlind: number;
 declare let KinkyDungeonMissChancePerSlow: number;
 declare let KinkyDungeonBullets: any[];
 /**
@@ -150,7 +161,9 @@ declare let KinkyDungeonBulletsID: {};
 declare let KDVulnerableDmg: number;
 declare let KDVulnerableDmgMult: number;
 declare let KDVulnerableHitMult: number;
+declare let KDVulnerableBlockHitMult: number;
 declare let KDPacifistReduction: number;
+declare let KDEnemyResistReduction: number;
 declare let KDRiggerDmgBoost: number;
 declare let KDRiggerBindBoost: number;
 declare let KDStealthyDamageMult: number;
@@ -160,9 +173,11 @@ declare let KDStealthyEnemyCountMult: number;
 declare let KDBoundPowerMult: number;
 declare let KDBerserkerAmp: number;
 declare let KDUnstableAmp: number;
+declare namespace KDFightParams {
+    const KDFreezeMeleeMult: number;
+}
 declare let KinkyDungeonOpenObjects: string;
 declare let KinkyDungeonMeleeDamageTypes: string[];
-declare let KinkyDungeonHalfDamageTypes: string[];
 declare let KinkyDungeonTeaseDamageTypes: string[];
 declare let KinkyDungeonStunDamageTypes: string[];
 declare let KinkyDungeonBindDamageTypes: string[];
@@ -420,6 +435,7 @@ declare namespace KDDamageEquivalencies {
     export { souldrain_1 as souldrain };
     const drain_1: string;
     export { drain_1 as drain };
+    export const shock: string;
 }
 declare let KDDamageQueue: any[];
 declare let KDBulletWarnings: any[];
@@ -433,4 +449,5 @@ declare namespace KDPrereqs {
     function bound(enemy: any, e: any, data: any): boolean;
     function Waiting(enemy: any, e: any, data: any): any;
     function damageType(enemy: any, e: any, data: any): boolean;
+    function afterAmbush(enemy: any, e: any, data: any): boolean;
 }

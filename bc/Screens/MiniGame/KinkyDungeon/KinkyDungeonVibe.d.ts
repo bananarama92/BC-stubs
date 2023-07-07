@@ -79,6 +79,10 @@ declare namespace KDVibeSound {
     const ItemNipples_2: string;
     export { ItemNipples_2 as ItemNipples };
 }
+declare let KDResolutionConfirm: boolean;
+declare let KDResolution: number;
+declare let KDResolutionListIndex: number;
+declare let KDResolutionList: number[];
 declare let KDVibeVolume: number;
 declare let KDVibeVolumeListIndex: number;
 declare let KDVibeVolumeList: number[];
@@ -86,6 +90,9 @@ declare let KDMusicVolumeMult: number;
 declare let KDMusicVolume: number;
 declare let KDMusicVolumeListIndex: number;
 declare let KDMusicVolumeList: number[];
+declare let KDSfxVolume: number;
+declare let KDSfxVolumeListIndex: number;
+declare let KDSfxVolumeList: number[];
 declare let KDAnimSpeed: number;
 declare let KDAnimSpeedListIndex: number;
 declare let KDAnimSpeedList: number[];
