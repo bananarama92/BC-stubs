@@ -334,6 +334,7 @@ declare var ClubCardLogText: string;
 declare var ClubCardLogScroll: boolean;
 declare var ClubCardColor: string[];
 declare var ClubCardOpponent: any;
+declare var ClubCardOpponentDeck: any[];
 declare var ClubCardReward: any;
 declare var ClubCardHover: any;
 declare var ClubCardFocus: any;

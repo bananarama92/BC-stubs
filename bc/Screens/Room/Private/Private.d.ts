@@ -694,6 +694,11 @@ declare function PrivateEnterBed(): void;
  */
 declare function PrivateRandomBed(): void;
 /**
+ * Returns the Club Card Deck that will be used by the NPC
+ * @returns {Array} - The Deck to useRule
+ */
+declare function PrivateGetClubCardDeck(C: any): any[];
+/**
  * When the club card game against a friend NPC starts
  * @returns {void} - Nothing
  */
