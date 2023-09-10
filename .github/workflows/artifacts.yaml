@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 env:
-  BC_URL: https://gitgud.io/bananarama92/Bondage-College
+  BC_URL: https://gitgud.io/bananarama92/Bondage-College.git
   BC_BRANCH: typtyptyp
 
 # Allow one concurrent deployment
