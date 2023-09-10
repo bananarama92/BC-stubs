@@ -75,9 +75,5 @@ jobs:
           git add bc/*
           rm -rf Bondage-College
           git status
-          if [[ "$(git status --porcelain)" ]]; then
-            git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $BC_URL" -m "Branch: \`$BC_BRANCH\`" -m "Commit: \`$BC_HASH\`"
-            git push
-          else
-            echo "nothing to commit"
-          fi
+          git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $BC_URL" -m "Branch: \`$BC_BRANCH\`" -m "Commit: \`$BC_HASH\`"
+          git push
