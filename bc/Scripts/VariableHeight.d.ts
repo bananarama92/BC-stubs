@@ -19,7 +19,7 @@ declare function VariableHeightGetDrawData(drawData: VariableHeightConfigDrawDat
  * @param {null | ExtendedItemOption} parentOption
  * @returns {VariableHeightData} - The generated variable height data for the asset
  */
-declare function VariableHeightCreateData(asset: Asset, { MaxHeight, MinHeight, DialogPrefix, ChatTags, Dictionary, GetHeightFunction, SetHeightFunction, ScriptHooks, BaselineProperty, DrawData, }: VariableHeightConfig, parentOption?: null | ExtendedItemOption): VariableHeightData;
+declare function VariableHeightCreateData(asset: Asset, { MaxHeight, MinHeight, DialogPrefix, ChatTags, Dictionary, GetHeightFunction, SetHeightFunction, ScriptHooks, BaselineProperty, DrawData, AllowEffect, }: VariableHeightConfig, parentOption?: null | ExtendedItemOption): VariableHeightData;
 /**
  * @param {VariableHeightData} data - The variable height data for the asset
  */

@@ -43,7 +43,7 @@ declare function ModularItemBuildModules(asset: Asset, modules: readonly Modular
  * @param {ModularItemConfig} config - The item's extended item configuration
  * @returns {ModularItemData} - The generated modular item data for the asset
  */
-declare function ModularItemCreateModularData(asset: Asset, { Modules, ChatSetting, ChatTags, ChangeWhenLocked, DialogPrefix, ScriptHooks, Dictionary, DrawData, BaselineProperty, DrawImages, }: ModularItemConfig): ModularItemData;
+declare function ModularItemCreateModularData(asset: Asset, { Modules, ChatSetting, ChatTags, ChangeWhenLocked, DialogPrefix, ScriptHooks, Dictionary, DrawData, AllowEffect, BaselineProperty, DrawImages, }: ModularItemConfig): ModularItemData;
 /**
  * Creates a modular item's base draw function (for the module selection screen)
  * @param {ModularItemData} data - The modular item data for the asset

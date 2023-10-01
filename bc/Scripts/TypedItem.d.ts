@@ -31,7 +31,7 @@ declare function TypedItemGetDrawData(asset: Asset, drawData: ExtendedItemConfig
  * @param {TypedItemConfig} config - The item's extended item configuration
  * @returns {TypedItemData} - The generated typed item data for the asset
  */
-declare function TypedItemCreateTypedItemData(asset: Asset, { Options, DialogPrefix, ChatTags, Dictionary, ChatSetting, DrawImages, ChangeWhenLocked, ScriptHooks, DrawData, BaselineProperty, }: TypedItemConfig): TypedItemData;
+declare function TypedItemCreateTypedItemData(asset: Asset, { Options, DialogPrefix, ChatTags, Dictionary, ChatSetting, DrawImages, ChangeWhenLocked, ScriptHooks, DrawData, AllowEffect, BaselineProperty, }: TypedItemConfig): TypedItemData;
 /**
  *
  * @param {TypedItemData} data
@@ -49,10 +49,10 @@ declare function TypedItemPublishAction(data: TypedItemData, C: Character, item:
 declare function TypedItemGenerateAllowType({ asset, options }: TypedItemData): void;
 /**
  * Generates an asset's AllowEffect property based on its typed item data.
- * @param {TypedItemData} data - The typed item's data
+ * @param {TypedItemData | VibratingItemData} data - The typed item's data
  * @returns {void} - Nothing
  */
-declare function TypedItemGenerateAllowEffect({ asset, options }: TypedItemData): void;
+declare function TypedItemGenerateAllowEffect({ asset, options, allowEffect }: TypedItemData | VibratingItemData): void;
 /**
  * Generates an asset's AllowBlock property based on its typed item data.
  * @param {TypedItemData} data - The typed item's data

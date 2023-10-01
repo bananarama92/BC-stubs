@@ -33,7 +33,7 @@ declare function VibratorModeGetDrawData(modeSet: readonly VibratorModeSet[], dr
  * @param {VibratingItemConfig} config - The item's extended item configuration
  * @returns {VibratingItemData} - The generated vibrating item data for the asset
  */
-declare function VibratorModeCreateData(asset: Asset, { Options, ScriptHooks, BaselineProperty, Dictionary, DialogPrefix, DrawData, ChatTags }: VibratingItemConfig, parentOption?: any): VibratingItemData;
+declare function VibratorModeCreateData(asset: Asset, { Options, ScriptHooks, BaselineProperty, Dictionary, DialogPrefix, DrawData, ChatTags, AllowEffect }: VibratingItemConfig, parentOption?: any): VibratingItemData;
 /**
  * Gather all extended item options for a given list of modes.
  * @param {VibratingItemData} data - The extended item data
@@ -52,10 +52,12 @@ declare function VibratorModeLoad({ dialogPrefix: { header } }: VibratingItemDat
  * @param {Item} item - The item whose options are being validated
  * @param {VibratingItemOption} newOption - The new option
  * @param {VibratingItemOption} previousOption - The previously applied option
+ * @param {boolean} permitExisting - Determines whether the validation should allow the new option and previous option
+ * to be identical. Defaults to `false`.
  * @returns {string|undefined} - undefined or an empty string if the validation passes. Otherwise, returns a string
  * message informing the player of the requirements that are not met.
  */
-declare function VibratorModeValidate(data: VibratingItemData, C: Character, item: Item, newOption: VibratingItemOption, previousOption: VibratingItemOption): string | undefined;
+declare function VibratorModeValidate(data: VibratingItemData, C: Character, item: Item, newOption: VibratingItemOption, previousOption: VibratingItemOption, permitExisting?: boolean): string | undefined;
 /**
  * Publish a vibrator action and exit the dialog of applicable
  * @param {VibratingItemData} data
@@ -71,12 +73,6 @@ declare function VibratorModePublishAction(data: VibratingItemData, C: Character
  * @returns {void} - Nothing
  */
 declare function VibratorModeSetAssetProperties(data: VibratingItemData): void;
-/**
- * Sets the AllowEffect property for a vibrating item
- * @param {VibratingItemData} data - The vibrating item data for the asset
- * @returns {void} - Nothing
- */
-declare function VibratorModeSetAllowEffect({ asset, modeSet }: VibratingItemData): void;
 /**
  * @typedef {{ Mode?: VibratorMode, ChangeTime?: number, LastChange?: number }} VibratorModePersistentData
  */

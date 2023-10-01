@@ -71,9 +71,9 @@ declare function PortalLinkCycleChastityModule(sender: Character, item: Item): v
 /**
  * The handler for processing the hidden PortalLink messages
  * @param {Character} sender
- * @param {IChatRoomMessage} data
+ * @param {ServerChatRoomMessage} data
  */
-declare function PortalLinkProcessMessage(sender: Character, data: IChatRoomMessage): void;
+declare function PortalLinkProcessMessage(sender: Character, data: ServerChatRoomMessage): void;
 /**
  * This file contains everything needed to add remote-style functions
  * (a.k.a PortalLink compatibility) to an asset, both as a transmitter
