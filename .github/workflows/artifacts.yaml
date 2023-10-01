@@ -52,6 +52,7 @@ jobs:
           cp Scripts/Typedef.d.ts dist/Typedef.d.ts
           cp Scripts/Messages.d.ts dist/Messages.d.ts
           cp Assets/Female3DCG/Female3DCG_Types.d.ts dist/Female3DCG_Types.d.ts
+          rm -rf dist/Screens/MiniGame/KinkyDungeon
           rm -rf ../../bc
           mv dist ../../bc
 
@@ -59,14 +60,6 @@ jobs:
         run: |
           cd Bondage-College/BondageClub
           npm list
-
-      - name: Apply patches
-        run: |
-          for filename in patches/*.patch; do
-            [ -e "$filename" ] || continue
-            echo "Applying $filename"
-            git apply "$filename"
-          done
 
       - name: Push artifacts
         run: |
