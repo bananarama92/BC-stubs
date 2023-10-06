@@ -111,15 +111,16 @@ declare function VibratorModePublish(data: VibratingItemData, C: Character, item
  * @param {VibratingItemData} data
  * @param {Item} Item - The item in question
  * @param {Character} C - The character that has the item equiped
- * @param {boolean} Refresh - Whether the character and relevant item should be refreshed and pushed to the server
+ * @param {boolean} Push - Whether to push to changes to the server
+ * @param {boolean} Refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
  * @returns {boolean} Whether properties were initialized or not
  */
-declare function VibratorModeInit(data: VibratingItemData, C: Character, Item: Item, Refresh?: boolean): boolean;
+declare function VibratorModeInit(data: VibratingItemData, C: Character, Item: Item, Push?: boolean, Refresh?: boolean): boolean;
 /**
  * An alias for {@link TypedItemSetOptionByName}.
  * @type {typeof TypedItemSetOptionByName}
  */
-declare function VibratorModeSetOptionByName(C: Character, itemOrGroupName: AssetGroupName | Item, optionName: string, push?: boolean, C_Source?: Character, subscreen?: [archetype: "typed" | "vibrating", screen: string]): string;
+declare function VibratorModeSetOptionByName(C: Character, itemOrGroupName: AssetGroupName | Item, optionName: string, push?: boolean, C_Source?: Character, subscreen?: [archetype: "typed" | "vibrating", screen: string], refresh?: boolean): string;
 /**
  * Return the (standard) vibrator mode one would get by incrementing/decrementing the passed mode.
  * @param {VibratorMode} mode - The current vibrator mode

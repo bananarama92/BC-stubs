@@ -56,11 +56,6 @@ declare function ChatRoomOwnershipOptionIs(Option: ChatRoomOwnershipOption): boo
  */
 declare function ChatRoomLovershipOptionIs(Option: ChatRoomLovershipOption): boolean;
 /**
- * Returns TRUE if room customization is allowed based on player preference
- * @returns {boolean} - TRUE if allowed
- */
-declare function ChatRoomCustomizationAllowed(): boolean;
-/**
  * Returns TRUE if the room customization button can be used
  * @returns {boolean} - TRUE if can be used
  */
@@ -472,6 +467,16 @@ declare function ChatRoomStatusUpdateTalk(Key: KeyboardEvent): void;
  */
 declare function ChatRoomStatusCheckExpiration(): void;
 /**
+ * Clears the room customization data
+ * @returns {void} - Nothing.
+ */
+declare function ChatRoomCustomizationClear(): void;
+/**
+ * Use the room customization features if needed
+ * @returns {void} - Nothing.
+ */
+declare function ChatRoomCustomizationRun(): void;
+/**
  * Runs the chatroom screen.
  * @returns {void} - Nothing.
  */
@@ -538,7 +543,8 @@ declare function ChatRoomPublishAction(C: Character, Action: string, PrevItem: I
 /**
  * Updates an item on character for everyone in a chat room - replaces ChatRoomCharacterUpdate to cut on the lag.
  *
- * DO NOT USE. The server doesn't persist changes made that way to the database.
+ * Note that this will *not* update the server database,
+ * which requires either {@link CharacterRefresh}, {@link ServerPlayerAppearanceSync} or {@link ChatRoomCharacterUpdate}.
  *
  * @param {Character} C - Character to update.
  * @param {AssetGroupName} [Group] - Item group to update.
@@ -555,7 +561,11 @@ declare function ChatRoomCharacterItemUpdate(C: Character, Group?: AssetGroupNam
  */
 declare function ChatRoomPublishCustomAction(msg: string, LeaveDialog: boolean, Dictionary: ChatMessageDictionary): void;
 /**
- * Pushes the new character data/appearance to the server.
+ * Pushes the new character data/appearance to everyone else in a chat room and updates the server database.
+ *
+ * Note that this will *not* update the server database,
+ * which requires either {@link CharacterRefresh} or {@link ServerPlayerAppearanceSync}.
+ *
  * @param {Character} C - Character to update.
  * @returns {void} - Nothing.
  */
@@ -1239,6 +1249,9 @@ declare var ChatRoomLeashPlayer: number | null;
  */
 declare var ChatRoomJoinLeash: string;
 declare var ChatRoomTargetDirty: boolean;
+declare var ChatRoomCustomized: boolean;
+declare var ChatRoomCustomBackground: string;
+declare var ChatRoomCustomFilter: string;
 /**
  * Chances of a chat message popping up reminding you of some stimulation.
  *

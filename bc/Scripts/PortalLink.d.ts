@@ -1,5 +1,5 @@
 /** @type {ExtendedItemCallbacks.Init} */
-declare function PortalLinkRecieverInit(C: Character, Item: Item, Refresh: boolean): boolean;
+declare function PortalLinkRecieverInit(C: Character, Item: Item, Push: boolean, Refresh: boolean): boolean;
 /** @type {ExtendedItemCallbacks.Load} */
 declare function PortalLinkRecieverLoad(): void;
 /** @type {ExtendedItemCallbacks.Draw} */
@@ -8,7 +8,7 @@ declare function PortalLinkRecieverDraw(): void;
 declare function PortalLinkRecieverClick(): void;
 declare function PortalLinkRecieverExit(): void;
 /** @type {ExtendedItemCallbacks.Init} */
-declare function PortalLinkTransmitterInit(C: Character, Item: Item, Refresh: boolean): boolean;
+declare function PortalLinkTransmitterInit(C: Character, Item: Item, Push: boolean, Refresh: boolean): boolean;
 /** @type {ExtendedItemCallbacks.Load} */
 declare function PortalLinkTransmitterLoad(): void;
 /** @type {ExtendedItemCallbacks.Draw} */

@@ -141,7 +141,11 @@ declare function ServerAddRequiredAppearance(assetFamily: IAssetFamily, diffMap:
  */
 declare function ServerValidateColorAgainstSchema(Color: string, Schema: readonly string[]): string;
 /**
- * Syncs the player appearance with the server
+ * Syncs the player appearance with the server database.
+ *
+ * Note that this will *not* push appearance changes to the rest of the chatroom,
+ * which requires either {@link ChatRoomCharacterItemUpdate} or {@link ChatRoomCharacterUpdate}.
+ *
  * @returns {void} - Nothing
  */
 declare function ServerPlayerAppearanceSync(): void;

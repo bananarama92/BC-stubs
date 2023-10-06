@@ -80,12 +80,12 @@ declare function TypedItemGenerateAllowLockType({ asset, options }: TypedItemDat
 /**
  * Sets the AllowLock and AllowLockType properties on an asset based on an AllowLockType array and the total number of
  * possible types.
- * @param {Asset} asset - The asset to set properties on
+ * @param {Mutable<Asset>} asset - The asset to set properties on
  * @param {readonly string[]} allowLockType - The AllowLockType array indicating which of the asset's types permit locks
  * @param {number} typeCount - The total number of types available on the asset
  * @returns {void} - Nothing
  */
-declare function TypedItemSetAllowLockType(asset: Asset, allowLockType: readonly string[], typeCount: number): void;
+declare function TypedItemSetAllowLockType(asset: Mutable<Asset>, allowLockType: readonly string[], typeCount: number): void;
 /**
  * Returns the options configuration array for a typed item
  * @param {AssetGroupName} groupName - The name of the asset group
@@ -134,10 +134,11 @@ declare function TypedItemValidateOption<T extends ExtendedItemOption>(data: Ext
  * player) - defaults to false.
  * @param {null | Character} [C_Source] - The character setting the new item option. If `null`, assume that it is _not_ the player character.
  * @param {null | [archetype: "typed" | "vibrating", screen: string]} [subscreen]
+ * @param refresh Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
  * @returns {string|undefined} - undefined or an empty string if the type was set correctly. Otherwise, returns a string
  * informing the player of the requirements that are not met.
  */
-declare function TypedItemSetOptionByName(C: Character, itemOrGroupName: Item | AssetGroupName, optionName: string, push?: boolean, C_Source?: null | Character, subscreen?: null | [archetype: "typed" | "vibrating", screen: string]): string | undefined;
+declare function TypedItemSetOptionByName(C: Character, itemOrGroupName: Item | AssetGroupName, optionName: string, push?: boolean, C_Source?: null | Character, subscreen?: null | [archetype: "typed" | "vibrating", screen: string], refresh?: boolean): string | undefined;
 /**
  * Finds the currently set option on the given typed item
  * @template {TypedItemOption | VibratingItemOption} T
@@ -164,10 +165,11 @@ declare function TypedItemSetRandomOption(C: Character, itemOrGroupName: Item | 
  * @param {TypedItemData} Data - The item's extended item data
  * @param {Item} Item - The item in question
  * @param {Character} C - The character that has the item equiped
- * @param {boolean} Refresh - Whether the character and relevant item should be refreshed and pushed to the server
+ * @param {boolean} Push - Whether to push to changes to the server
+ * @param {boolean} Refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
  * @returns {boolean} Whether properties were initialized or not
  */
-declare function TypedItemInit(Data: TypedItemData, C: Character, Item: Item, Refresh?: boolean): boolean;
+declare function TypedItemInit(Data: TypedItemData, C: Character, Item: Item, Push?: boolean, Refresh?: boolean): boolean;
 /**
  * Draws the extended item type selection screen
  * @param {TypedItemData | VibratingItemData} data - An Array of type definitions for each allowed extended type. The first item

@@ -339,11 +339,10 @@ declare function CommonStringTitlecase(str: string): string;
 declare function CommonCensor(S: string): string;
 /**
  * Type guard which checks that a value is a simple object (i.e. a non-null object which is not an array)
- * @template T
- * @param {T} value - The value to test
- * @returns {value is Record<string, T>}
+ * @param {unknown} value - The value to test
+ * @returns {value is Record<string, unknown>}
  */
-declare function CommonIsObject<T>(value: T): value is Record<string, T>;
+declare function CommonIsObject(value: unknown): value is Record<string, unknown>;
 /**
  * Deep-clones an object
  * @todo JSON serialization will break things like functions, Sets and Maps.

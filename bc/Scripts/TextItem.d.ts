@@ -46,7 +46,7 @@ declare function TextItemPropertyRevert({ textNames }: TextItemData, item: Item)
  */
 declare const TextItemDataLookup: Record<string, TextItemData>;
 declare namespace TextItem {
-    function Init({ asset, font, baselineProperty, maxLength }: TextItemData, C: Character, item: Item, refresh?: boolean): boolean;
+    function Init({ asset, font, baselineProperty, maxLength }: TextItemData, C: Character, item: Item, push?: boolean, refresh?: boolean): boolean;
     function Load(data: TextItemData): void;
     function Draw({ asset, drawData, textNames }: TextItemData): void;
     function Click({ functionPrefix, drawData }: TextItemData): void;
