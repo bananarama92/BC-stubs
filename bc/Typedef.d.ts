@@ -2398,8 +2398,6 @@ interface ItemPropertiesCustom {
 
 	/** The futuristic bra's heart rate value */
 	HeartRate?: number;
-	/** Is the futuristic bra's heart icon shown */
-	HeartIcon?: boolean;
 
 	// #region Futuristic gag & panel gag settings */
 
