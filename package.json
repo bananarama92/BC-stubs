@@ -13,7 +13,7 @@
   },
   "homepage": "https://github.com/bananarama92/BC-stubs#readme",
   "dependencies": {
-    "@types/socket.io-client": "^4.6.1"
+    "socket.io-client": "^4.6.1"
   },
   "typeScriptVersion": "^4.3.5"
 }
