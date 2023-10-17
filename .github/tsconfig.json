@@ -16,6 +16,9 @@
     "outDir": "dist",
     // Enable color and formatting in TypeScript's output to make
     // compiler errors easier to read.
-    "pretty": true
+    "pretty": true,
+    // Emit additional JavaScript to ease support for importing CommonJS modules.
+    // This enables `allowSyntheticDefaultImports` for type compatibility
+    "esModuleInterop": true
   }
 }
