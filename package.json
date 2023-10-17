@@ -1,10 +1,15 @@
 {
   "name": "bc-stubs",
   "version": "97.0.0",
-  "repository": "git@github.com:bananarama92/BC-stubs.git",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bananarama92/BC-stubs.git"
+  },
   "author": "bananarama92 <105885570+bananarama92@users.noreply.github.com>",
   "license": "MIT",
-  "files": ["bc/"],
+  "files": [
+    "bc/"
+  ],
   "main": "",
   "private": false,
   "description": "TypeScript definitions for BC",
