@@ -2842,14 +2842,17 @@ declare var PlatformDialogData: ({
             Pose: string;
         }[];
         Text?: undefined;
+        Audio?: undefined;
         Answer?: undefined;
     } | {
         Text: string;
+        Audio: string;
         Background?: undefined;
         Character?: undefined;
         Answer?: undefined;
     } | {
         Text: string;
+        Audio: string;
         Character: {
             Name: string;
             Status: string;
@@ -2859,6 +2862,13 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
     } | {
         Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
         Answer: ({
             Text: string;
             Script: () => void;

@@ -560,6 +560,7 @@ declare var PreferenceSettingsVolumeList: number[];
 declare var PreferenceSettingsSensitivityList: number[];
 declare var PreferenceSettingsDeadZoneList: number[];
 declare var PreferenceSettingsVolumeIndex: number;
+declare var PreferenceSettingsMusicVolumeIndex: number;
 declare var PreferenceSettingsSensitivityIndex: number;
 declare var PreferenceSettingsDeadZoneIndex: number;
 /** @type {ArousalActiveName[]} */

@@ -435,6 +435,13 @@ declare function CommonEnumerate<T>(iterable: Iterable<T>, start?: number, step?
  * @param {number} max
  */
 declare function CommonClamp(value: number, min: number, max: number): number;
+/**
+ * Returns TRUE if the URL is valid, is from http or https or screens/ or backgrounds/ and has the required extension
+ * @param {string} TestURL - The URL to test
+ * @param {array} Extension - An array containing the valid extensions
+ * @returns {boolean}
+*/
+declare function CommonURLHasExtension(TestURL: string, Extension: any[]): boolean;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {number|string} */

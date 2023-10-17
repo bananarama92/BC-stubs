@@ -1508,6 +1508,7 @@ interface PlayerCharacter extends Character {
 	};
 	AudioSettings?: {
 		Volume: number;
+		MusicVolume: number;
 		PlayBeeps: boolean;
 		/** Play items sounds in chatrooms */
 		PlayItem: boolean;
@@ -1550,7 +1551,6 @@ interface PlayerCharacter extends Character {
 		ChatRoomMuffle: boolean;
 		BlindAdjacent: boolean;
 		AllowTints: boolean;
-		ShowRoomCustomization: number; // 0 - Never, 1 - No by default, 2 - Yes by default, 3 - Always
 	};
 	LastChatRoom?: string;
 	LastChatRoomBG?: string;
@@ -1638,6 +1638,7 @@ interface PlayerOnlineSettings {
 	SendStatus?: boolean;
 	ShowStatus?: boolean;
 	EnableAfkTimer: boolean;
+	ShowRoomCustomization: 0 | 1 | 2 | 3; // 0 - Never, 1 - No by default, 2 - Yes by default, 3 - Always
 }
 
 /** Pandora Player extension */
@@ -2429,6 +2430,8 @@ interface ItemPropertiesCustom {
 	PunishOrgasm?: boolean;
 	/** Whether standing up should result in punishment */
 	PunishStandup?: boolean;
+	/** Whether performing activities should result in punishment */
+	PunishActivity?: boolean;
 	/** The punishment for talking; represents an index of {@link FuturisticTrainingBeltSpeechPunishments} */
 	PunishSpeech?: 0 | 1 | 2 | 3;
 	/** The punishment for not speaking a required word; represents an index of {@link FuturisticTrainingBeltSpeechPunishments} */

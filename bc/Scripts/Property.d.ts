@@ -58,6 +58,14 @@ declare function PropertyAutoPunishParseMessage(Sensitivity: 0 | 1 | 2 | 3, msg:
  */
 declare function PropertyAutoPunishDetectSpeech(Item: Item, LastMessageLen?: number | null): boolean;
 /**
+ * Check if the player character has performed one or more of the passed activities ever since the last {@link PropertyPunishActivityNames} refresh.
+ * @param {null | ActivityName | readonly ActivityName[]} name - The name(s) of the activity to check. If `null`, check if any activity at all is present
+ * @param {boolean} clearCache - Whether to automatically remove `name` from the {@link PropertyPunishActivityNames} cache.
+ * `name == null` implies that all entries should be removed.
+ * @returns {boolean}
+ */
+declare function PropertyPunishActivityCheck(name?: null | ActivityName | readonly ActivityName[], clearCache?: boolean): boolean;
+/**
  * Merge all passed item properties into the passed output, merging (and shallow copying) arrays if necessary.
  * @param {ItemProperties} output - The to be updated properties
  * @param {readonly ItemProperties[]} args - The additional item properties to be merged into the output
@@ -91,6 +99,12 @@ declare function PropertyOpacityChange(C: any, Item: any, Opacity: any): void;
  * @type {Set<AssetGroupName>}
  */
 declare let PropertyAutoPunishHandled: Set<AssetGroupName>;
+/**
+ * A set with the names of all activities as performed by the player.
+ * Functions as a cache for {@link PropertyPunishActivityCheck} and can be automatically emptied out by the latter.
+ * @type {Set<ActivityName>}
+ */
+declare let PropertyPunishActivityCache: Set<ActivityName>;
 /**
  * A list of keywords that can trigger automatic punishment when included in `/me`- or `*`-based messages
  * @type {readonly string[]}

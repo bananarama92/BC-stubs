@@ -1,4 +1,11 @@
 /**
+ * Changes a customiation value from a chat room command
+ * @param {string} Property - The custom property to change (Image, Filter or Music)
+ * @param {string} Value - The value to set in that property
+ * @returns {void} - Nothing
+ */
+declare function ChatAdminRoomCustomizationCommand(Property: string, Value: string): void;
+/**
  * Loads the chat Admin Custom screen properties and creates the inputs
  * @returns {void} - Nothing
  */
