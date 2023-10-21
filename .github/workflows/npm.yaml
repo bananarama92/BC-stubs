@@ -26,6 +26,6 @@ jobs:
 
       - name: Publish release
         if: '!github.event.prerelease'
-        run: npm publish --tag latest --tag beta
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
