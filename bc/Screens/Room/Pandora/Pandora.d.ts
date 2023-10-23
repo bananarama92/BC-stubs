@@ -332,8 +332,8 @@ declare var PandoraParty: NPCCharacter[];
 declare var PandoraFightCharacter: null | NPCCharacter;
 declare var PandoraRandomNPCList: string[];
 declare namespace PandoraMoveDirectionTimer {
-    const Direction: string;
-    const Timer: number;
+    let Direction: string;
+    let Timer: number;
 }
 /** @type {null | PandoraBaseRoom} */
 declare var PandoraTargetRoom: null | PandoraBaseRoom;

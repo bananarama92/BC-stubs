@@ -18,12 +18,18 @@ type MemoizedFunction<T extends Function> = T & {
 };
 
 // GL shim
+interface WebGLTextureData {
+	width: number,
+	height: number,
+	texture: WebGLTexture,
+}
+
 interface WebGL2RenderingContext {
 	program?: WebGLProgram;
 	programFull?: WebGLProgram;
 	programHalf?: WebGLProgram;
 	programTexMask?: WebGLProgram;
-	textureCache?: Map<string, { width: number, height: number, texture: WebGLTexture }>;
+	textureCache?: Map<string, WebGLTextureData>;
 	maskCache?: Map<string, WebGLTexture>;
 }
 
@@ -1468,6 +1474,10 @@ interface Character {
 	TrainingCountPerfect?: number;
 }
 
+interface ExtensionSettings {
+
+}
+
 interface PlayerCharacter extends Character {
 	// PreferenceInitPlayer() must be updated with defaults, when adding a new setting
 	ChatSettings?: {
@@ -1558,6 +1568,7 @@ interface PlayerCharacter extends Character {
 	LastChatRoomSize?: number;
 	LastChatRoomLanguage?: ServerChatRoomLanguage;
 	LastChatRoomDesc?: string;
+	LastChatRoomCustom?: ServerChatRoomData["Custom"];
 	LastChatRoomAdmin?: number[];
 	LastChatRoomBan?: number[];
 	LastChatRoomBlockCategory?: ServerChatRoomBlockCategory[];
@@ -1623,6 +1634,7 @@ interface PlayerCharacter extends Character {
 	};
 	/** The list of items we got confiscated in the Prison */
 	ConfiscatedItems?: { Group: AssetGroupName, Name: string }[];
+	ExtensionSettings: ExtensionSettings;
 }
 
 /**
@@ -2113,7 +2125,7 @@ interface ExtendedItemData<OptionType extends ExtendedItemOption> {
 	 * To-be initialized properties independent of the selected item module(s).
 	 * Relevant if there are properties that are (near) exclusively managed by {@link ExtendedItemData.scriptHooks} functions.
 	 */
-	baselineProperty: ItemPropertiesNoArray | null;
+	baselineProperty: PropertiesNoArray.Item | null;
 	/** The extended item option of the super screen that this archetype was initialized from (if any) */
 	parentOption: null | ExtendedItemOption;
 	/** An interface with element-specific drawing data for a given screen. */
@@ -2494,8 +2506,41 @@ interface ItemPropertiesCustom {
 
 interface ItemProperties extends ItemPropertiesBase, AssetDefinitionProperties, ItemPropertiesCustom { }
 
-/** An {@link ItemProperties} super-type with all array-containing values removed. */
-type ItemPropertiesNoArray = { [k in keyof ItemProperties]: ItemProperties[k] extends any[] ? never : ItemProperties[k] };
+/** All item/asset/group properties with all array-based values removed */
+declare namespace PropertiesNoArray {
+	/** All {@link ItemProperties} properties with array-based values removed */
+	type Item = { [k in keyof ItemProperties as ItemProperties[k] extends readonly any[] ? never : k]: ItemProperties[k] };
+	/** All {@link Asset} properties with array-based values removed */
+	type Asset = { [k in keyof globalThis.Asset as globalThis.Asset[k] extends readonly any[] ? never : k]: globalThis.Asset[k] };
+	/** All {@link Group} properties with array-based values removed */
+	type Group = { [k in keyof AssetGroup as AssetGroup[k] extends readonly any[] ? never : k]: AssetGroup[k] };
+}
+type PropertiesNoArray = PropertiesNoArray.Item & PropertiesNoArray.Asset & PropertiesNoArray.Group;
+
+/** All item/asset/group properties with array-based values */
+declare namespace PropertiesArray {
+	/** All {@link ItemProperties} properties with array-based values */
+	type Item = { [k in keyof ItemProperties as ItemProperties[k] extends readonly any[] ? k : never]: ItemProperties[k] };
+	/** All {@link Asset} properties with array-based values */
+	type Asset = { [k in keyof globalThis.Asset as globalThis.Asset[k] extends readonly any[] ? k : never]: globalThis.Asset[k] };
+	/** All {@link Group} properties with array-based values */
+	type Group = { [k in keyof AssetGroup as AssetGroup[k] extends readonly any[] ? k : never]: AssetGroup[k] };
+}
+type PropertiesArray = PropertiesArray.Item & PropertiesArray.Asset & PropertiesArray.Group;
+
+/**
+ * All item/asset/group properties with record-based values.
+ * @note This includes a number of somewhat unexpected values as arrays are treated as a record subtype.
+ */
+declare namespace PropertiesRecord {
+	/** All {@link ItemProperties} properties with record-based values. */
+	type Item = { [k in keyof ItemProperties as ItemProperties[k] extends Record<string, any> ? k : never]: ItemProperties[k] };
+	/** All {@link Asset} properties with record-based values. */
+	type Asset = { [k in keyof globalThis.Asset as globalThis.Asset[k] extends Record<string, any> ? k : never]: globalThis.Asset[k] };
+	/** All {@link Group} properties with record-based values. */
+	type Group = { [k in keyof AssetGroup as AssetGroup[k] extends Record<string, any> ? k : never]: AssetGroup[k] };
+}
+type PropertiesRecord = PropertiesRecord.Item & PropertiesRecord.Asset & PropertiesRecord.Group;
 
 //#endregion
 
@@ -2772,7 +2817,7 @@ interface TextItemData extends ExtendedItemData<TextItemOption> {
 	};
 	scriptHooks: ExtendedItemScriptHookStruct<TextItemData, TextItemOption>;
 	chatSetting: "default";
-	baselineProperty: ItemPropertiesNoArray;
+	baselineProperty: PropertiesNoArray.Item;
 	eventListeners: TextItemRecord<TextItemEventListener>;
 	drawData: ExtendedItemDrawData<ElementMetaData.Text>;
 	pushOnPublish: boolean;
@@ -3557,7 +3602,7 @@ interface ClubCard {
 	ExtraTime?: number;
 	ExtraDraw?: number;
 	ExtraPlay?: number;
-	Group?: any[];
+	Group?: string[];
 	Location?: string;
 	GlowTimer?: number;
 	GlowColor?: string;

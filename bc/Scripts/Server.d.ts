@@ -38,13 +38,7 @@ declare function ServerDisconnect(data: any, close?: boolean): void;
  * @returns {boolean} - True if in a chatroom
  */
 declare function ServerPlayerIsInChatRoom(): boolean;
-/**
- * Sends a message with the given data to the server via socket.emit
- * @type {<Ev extends import("@socket.io/component-emitter").EventNames<ClientToServerEvents>>(
- *     ev: Ev, ...args: import("@socket.io/component-emitter").EventParams<ClientToServerEvents, Ev>
- * ) => void}
- */
-declare function ServerSend<Ev extends "AccountCreate" | "AccountLogin" | "PasswordReset" | "PasswordResetProcess" | "AccountUpdate" | "AccountUpdateEmail" | "AccountQuery" | "AccountBeep" | "AccountOwnership" | "AccountLovership" | "AccountDifficulty" | "AccountDisconnect" | "ChatRoomSearch" | "ChatRoomCreate" | "ChatRoomJoin" | "ChatRoomLeave" | "ChatRoomChat" | "ChatRoomCharacterUpdate" | "ChatRoomCharacterExpressionUpdate" | "ChatRoomCharacterPoseUpdate" | "ChatRoomCharacterArousalUpdate" | "ChatRoomCharacterItemUpdate" | "ChatRoomAdmin" | "ChatRoomAllowItem" | "ChatRoomGame">(Message: Ev, ...args: Parameters<ClientToServerEvents[Ev]>): void;
+declare function ServerSend<Ev extends "AccountCreate" | "AccountLogin" | "PasswordReset" | "PasswordResetProcess" | "AccountUpdate" | "AccountUpdateEmail" | "AccountQuery" | "AccountBeep" | "AccountOwnership" | "AccountLovership" | "AccountDifficulty" | "AccountDisconnect" | "ChatRoomSearch" | "ChatRoomCreate" | "ChatRoomJoin" | "ChatRoomLeave" | "ChatRoomChat" | "ChatRoomCharacterUpdate" | "ChatRoomCharacterExpressionUpdate" | "ChatRoomCharacterPoseUpdate" | "ChatRoomCharacterArousalUpdate" | "ChatRoomCharacterItemUpdate" | "ChatRoomAdmin" | "ChatRoomAllowItem" | "ChatRoomGame">(ev: Ev, ...args: Parameters<ClientToServerEvents[Ev]>): void;
 /**
  * Syncs Money, owner name and lover name with the server
  * @returns {void} - Nothing
@@ -80,6 +74,12 @@ declare function ServerPlayerSkillSync(): void;
  * @returns {void} - Nothing
  */
 declare function ServerPlayerRelationsSync(): void;
+/**
+ * Syncs {@link Player.ExtensionSettings} to the server.
+ * @param {keyof ExtensionSettings} dataKeyName - The single key to sync
+ * @param {boolean} [force] - force immediate sync to server (by default data is delayed a bit to avoid rapid saving and reduce server load)
+ */
+declare function ServerPlayerExtensionSettingsSync(dataKeyName: keyof ExtensionSettings, force?: boolean): void;
 /**
  * Prepares an appearance bundle so we can push it to the server. It minimizes it by keeping only the necessary
  * information. (Asset name, group name, color, properties and difficulty)

@@ -31,11 +31,7 @@ declare function PropertyOpacityDraw(Data?: null | ExtendedItemData<any>, Origin
  * @returns {boolean} Whether the opacity was updated or not
  */
 declare function PropertyOpacityExit(Data?: null | ExtendedItemData<any>, OriginalFunction?: null | (() => void), Refresh?: boolean): boolean;
-/**
- * Validation function for items with opacity sliders.
- * @type {ExtendedItemScriptHookCallbacks.Validate<ExtendedItemData<any>, any>}
- */
-declare function PropertyOpacityValidate(Data: ExtendedItemData<any>, OriginalFunction: (C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean) => string, C: Character, Item: Item, Option: any, CurrentOption: any): string;
+declare function PropertyOpacityValidate(data: ExtendedItemData<any>, originalFunction: (C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean) => string, C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean): string;
 /**
  * Helper fuction for publishing shock-related actions.
  * @param {Character} C - The shocked character; defaults to the {@link CharacterGetCurrent} output

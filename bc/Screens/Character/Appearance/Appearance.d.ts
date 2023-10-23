@@ -289,7 +289,11 @@ declare function AppearanceItemStringify(Item: Item[] | Item | any): string;
  * @returns {void} - Nothing
  */
 declare function CharacterAppearanceRestore(C: Character, backup: string): void;
-declare function AppearanceItemParse(stringified: any): any;
+/**
+ * @param {string} stringified
+ * @returns {any}
+ */
+declare function AppearanceItemParse(stringified: string): any;
 /**
  * Opens the color picker for a selected item
  * @param {Character} C - The character the appearance is being changed for
@@ -386,7 +390,7 @@ declare const CanvasLowerOverflow: 150;
 declare const CanvasDrawWidth: 500;
 declare const CanvasDrawHeight: number;
 declare namespace AppearancePermissionColors {
-    const red: string[];
-    const amber: string[];
-    const green: string[];
+    let red: string[];
+    let amber: string[];
+    let green: string[];
 }

@@ -1269,58 +1269,58 @@ declare var ChatRoomCustomFilter: string;
  */
 declare const ChatRoomStimulationEvents: Record<StimulationAction, StimulationEvent>;
 declare namespace ChatRoomArousalMsg_Chance {
-    const Kneel: number;
-    const Walk: number;
-    const StruggleFail: number;
-    const StruggleAction: number;
-    const Gag: number;
+    let Kneel: number;
+    let Walk: number;
+    let StruggleFail: number;
+    let StruggleAction: number;
+    let Gag: number;
 }
 declare namespace ChatRoomArousalMsg_ChanceScaling {
-    const Kneel_1: number;
+    let Kneel_1: number;
     export { Kneel_1 as Kneel };
-    const Walk_1: number;
+    let Walk_1: number;
     export { Walk_1 as Walk };
-    const StruggleFail_1: number;
+    let StruggleFail_1: number;
     export { StruggleFail_1 as StruggleFail };
-    const StruggleAction_1: number;
+    let StruggleAction_1: number;
     export { StruggleAction_1 as StruggleAction };
-    const Gag_1: number;
+    let Gag_1: number;
     export { Gag_1 as Gag };
 }
 declare namespace ChatRoomArousalMsg_ChanceVibeMod {
-    const Kneel_2: number;
+    let Kneel_2: number;
     export { Kneel_2 as Kneel };
-    const Walk_2: number;
+    let Walk_2: number;
     export { Walk_2 as Walk };
-    const StruggleFail_2: number;
+    let StruggleFail_2: number;
     export { StruggleFail_2 as StruggleFail };
-    const StruggleAction_2: number;
+    let StruggleAction_2: number;
     export { StruggleAction_2 as StruggleAction };
-    const Gag_2: number;
+    let Gag_2: number;
     export { Gag_2 as Gag };
 }
 declare namespace ChatRoomArousalMsg_ChanceInflationMod {
-    const Kneel_3: number;
+    let Kneel_3: number;
     export { Kneel_3 as Kneel };
-    const Walk_3: number;
+    let Walk_3: number;
     export { Walk_3 as Walk };
-    const StruggleFail_3: number;
+    let StruggleFail_3: number;
     export { StruggleFail_3 as StruggleFail };
-    const StruggleAction_3: number;
+    let StruggleAction_3: number;
     export { StruggleAction_3 as StruggleAction };
-    const Gag_3: number;
+    let Gag_3: number;
     export { Gag_3 as Gag };
 }
 declare namespace ChatRoomArousalMsg_ChanceGagMod {
-    const Kneel_4: number;
+    let Kneel_4: number;
     export { Kneel_4 as Kneel };
-    const Walk_4: number;
+    let Walk_4: number;
     export { Walk_4 as Walk };
-    const StruggleFail_4: number;
+    let StruggleFail_4: number;
     export { StruggleFail_4 as StruggleFail };
-    const StruggleAction_4: number;
+    let StruggleAction_4: number;
     export { StruggleAction_4 as StruggleAction };
-    const Gag_4: number;
+    let Gag_4: number;
     export { Gag_4 as Gag };
 }
 declare var ChatRoomHideIconState: number;
@@ -1331,9 +1331,9 @@ declare var ChatRoomHideIconState: number;
 declare var ChatRoomMenuButtons: string[];
 declare let ChatRoomFontSize: number;
 declare namespace ChatRoomFontSizes {
-    const Small: number;
-    const Medium: number;
-    const Large: number;
+    let Small: number;
+    let Medium: number;
+    let Large: number;
 }
 declare var ChatRoomCharacterX_Upper: number;
 declare var ChatRoomCharacterX_Lower: number;
@@ -1350,11 +1350,11 @@ declare function ChatRoomListOperationTriggers(): {
     }[];
 }[];
 declare namespace ChatRoomResizeManager {
-    const atStart: boolean;
-    const timer: null | number;
-    const timeOut: number;
-    const ChatRoomScrollPercentage: number;
-    const ChatLogScrolledToEnd: boolean;
+    let atStart: boolean;
+    let timer: null | number;
+    let timeOut: number;
+    let ChatRoomScrollPercentage: number;
+    let ChatLogScrolledToEnd: boolean;
     function ChatRoomResizeEvent(): void;
     function ChatRoomResizeEventsEnd(): void;
 }

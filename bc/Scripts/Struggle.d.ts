@@ -1,5 +1,6 @@
 /**
  * Get the list of struggle minigames.
+ * @returns {[StruggleKnownMinigames, StruggleMinigame][]}
  */
 declare function StruggleGetMinigames(): [StruggleKnownMinigames, StruggleMinigame][];
 /**
@@ -364,8 +365,8 @@ declare var StruggleProgressDexTarget: number;
 declare var StruggleProgressDexCurrent: number;
 declare var StruggleProgressDexMax: number;
 declare var StruggleProgressDexDirectionRight: boolean;
-/** @type {Record<string, StruggleMinigame>} */
-declare const StruggleMinigames: Record<string, StruggleMinigame>;
+/** @type {Record<StruggleKnownMinigames, StruggleMinigame>} */
+declare const StruggleMinigames: Record<StruggleKnownMinigames, StruggleMinigame>;
 /**
  * List of expressions to go through while struggling, keyed by duration
  * @type {Record<number, Partial<Record<ExpressionGroupName, ExpressionName>>>}

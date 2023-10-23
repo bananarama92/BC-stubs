@@ -1,15 +1,7 @@
-/** @type {ExtendedItemCallbacks.Init} */
-declare function InventoryItemNeckSlaveCollarInit(C: Character, Item: Item, Push: boolean, Refresh: boolean): boolean;
-/** @type {ExtendedItemCallbacks.Load} */
+declare function InventoryItemNeckSlaveCollarInit(C: Character, item: Item, push: boolean, refresh: boolean): boolean;
 declare function InventoryItemNeckSlaveCollarLoad(): void;
-/** @type {ExtendedItemCallbacks.Draw} */
 declare function InventoryItemNeckSlaveCollarDraw(): void;
-/** @type {ExtendedItemCallbacks.Click} */
 declare function InventoryItemNeckSlaveCollarClick(): void;
-/**
- * Sets the slave collar model
- * @type {TypedItemSetTypeCallback}
- */
 declare function InventoryItemNeckSlaveCollarSetType(NewType: string): void;
 declare var InventoryItemNeckSlaveCollarColorMode: boolean;
 /** @type {ItemColor} */

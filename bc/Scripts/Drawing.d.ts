@@ -6,10 +6,10 @@
 declare function DrawHexToRGB(color: string): RGBColor;
 /**
  * Converts a RGB color to a hex color string
- * @param {number[]} color - RGB color to conver
+ * @param {readonly number[]} color - RGB color to conver
  * @returns {string} - Hex color string
  */
-declare function DrawRGBToHex(color: number[]): string;
+declare function DrawRGBToHex(color: readonly number[]): string;
 /**
  * Loads the canvas to draw on with its style and event listeners.
  * @returns {void} - Nothing
@@ -80,7 +80,7 @@ declare function DrawCharacter(C: Character, X: number, Y: number, Zoom: number,
 /**
  * Draws an asset group zone outline over the character
  * @param {Character} C - Character for which to draw the zone
- * @param {readonly [number, number, number, number][]} Zone - Zone to be drawn
+ * @param {readonly RectTuple[]} Zone - Zone to be drawn
  * @param {number} Zoom - Height ratio of the character
  * @param {number} X - Position of the character on the X axis
  * @param {number} Y - Position of the character on the Y axis
@@ -90,7 +90,7 @@ declare function DrawCharacter(C: Character, X: number, Y: number, Zoom: number,
  * @param {string} FillColor - If non-empty, the color to fill the rectangle with
  * @returns {void} - Nothing
  */
-declare function DrawAssetGroupZone(C: Character, Zone: readonly [number, number, number, number][], Zoom: number, X: number, Y: number, HeightRatio: number, Color: string, Thickness?: number, FillColor?: string): void;
+declare function DrawAssetGroupZone(C: Character, Zone: readonly RectTuple[], Zoom: number, X: number, Y: number, HeightRatio: number, Color: string, Thickness?: number, FillColor?: string): void;
 /**
  * Return a semi-transparent copy of a canvas
  * @param {HTMLCanvasElement} Canvas - source
@@ -236,9 +236,9 @@ declare function DrawImageEx(Source: string | HTMLImageElement | HTMLCanvasEleme
  * This function can also break between a long English word if somehow needed in the script.
  * @param {string} text - The text to be fragmented.
  * @param {number} maxWidth - The max width the text will be filled in.
- * @returns {Array<string>} - A list of string that being fragmented.
+ * @returns {string[]} - A list of string that being fragmented.
  */
-declare function fragmentText(text: string, maxWidth: number): Array<string>;
+declare function fragmentText(text: string, maxWidth: number): string[];
 /**
  * Reduces the font size progressively until the text fits the wrap size
  * @param {string} Text - Text that will be drawn
@@ -439,26 +439,9 @@ declare function DrawProcessHoverElements(): void;
  * @param {Character} char - The character using the item (used to calculate dynamic item descriptions/previews)
  * @param {number} X
  * @param {number} Y
- * @param {object} [options]
- * @param {string} [options.Background] - The background color to draw the preview box in - defaults to white
- * @param {string} [options.Foreground] - The foreground (text) color to draw the description in - defaults to black
- * @param {boolean} [options.Border] - Whether or not to draw a border around the preview box
- * @param {boolean} [options.Hover] - Whether or not the button should enable hover behavior (background color change)
- * @param {string} [options.HoverBackground] - The background color that should be used on mouse hover, if any
- * @param {boolean} [options.Disabled] - Whether or not the element is disabled (prevents hover functionality)
- * @param {number} [options.Width] - The width of the preview rectangle. Defaults to 225.
- * @param {number} [options.Height] - The width of the preview rectangle. Defaults to 275.
+ * @param {PreviewDrawOptions} [options]
  */
-declare function DrawItemPreview(itemOrDialogItem: Item | DialogInventoryItem, char: Character, X: number, Y: number, options?: {
-    Background?: string;
-    Foreground?: string;
-    Border?: boolean;
-    Hover?: boolean;
-    HoverBackground?: string;
-    Disabled?: boolean;
-    Width?: number;
-    Height?: number;
-}): void;
+declare function DrawItemPreview(itemOrDialogItem: Item | DialogInventoryItem, char: Character, X: number, Y: number, options?: PreviewDrawOptions): void;
 /**
  * Draws an asset's preview box
  * @param {number} X - Position of the preview box on the X axis
@@ -562,8 +545,9 @@ declare var DrawLastCharacters: Character[];
 declare var DrawHoverElements: Function[];
 /**
  * The last canvas position in format `[left, top, width, height]`
+ * @type {RectTuple}
  */
-declare var DrawCanvasPosition: number[];
+declare var DrawCanvasPosition: RectTuple;
 /**
  * Gets the text size needed to fit inside a given width according to the current font.
  * This function is memoized because <code>MainCanvas.measureText(Text)</code> is a major resource hog.
@@ -571,7 +555,7 @@ declare var DrawCanvasPosition: number[];
  * @param {number} Width - Width in which the text has to fit
  * @returns {[string, number]} - Text to draw and its font size
  */
-declare const DrawingGetTextSize: MemoizedFunction<(Text: any, Width: any) => any[]>;
+declare const DrawingGetTextSize: MemoizedFunction<(Text: string, Width: number) => [text: string, size: number]>;
 declare var DrawScreenFlashTime: number;
 declare var DrawScreenFlashColor: any;
 declare var DrawScreenFlashStrength: number;

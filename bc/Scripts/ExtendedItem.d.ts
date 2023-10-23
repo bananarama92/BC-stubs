@@ -337,5 +337,4 @@ declare var ExtendedItemPermissionMode: boolean;
  * @type {string|null}
  */
 declare var ExtendedItemSubscreen: string | null;
-/** @type {(item: Item) => ExtendedItemOption[]} */
 declare function ExtendedItemGatherOptions(item: Item): ExtendedItemOption[];

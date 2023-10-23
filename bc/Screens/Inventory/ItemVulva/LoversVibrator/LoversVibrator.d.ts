@@ -1,2 +1,1 @@
-/** @type {ExtendedItemScriptHookCallbacks.Draw<VibratingItemData>} */
-declare function InventoryItemVulvaLoversVibratorDrawHook(Data: VibratingItemData, OriginalFunction: () => void): void;
+declare function InventoryItemVulvaLoversVibratorDrawHook(data: VibratingItemData, originalFunction: () => void): void;

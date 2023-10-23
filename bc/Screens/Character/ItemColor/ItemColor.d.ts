@@ -186,12 +186,12 @@ declare function ItemColorReset(): void;
  */
 declare function ItemColorIsDefault(Item: Item): boolean;
 declare namespace ItemColorConfig {
-    const buttonSpacing: number;
-    const buttonSize: number;
-    const headerButtonSize: number;
-    const colorPickerButtonWidth: number;
-    const colorDisplayWidth: number;
-    const colorInputHeight: number;
+    let buttonSpacing: number;
+    let buttonSize: number;
+    let headerButtonSize: number;
+    let colorPickerButtonWidth: number;
+    let colorDisplayWidth: number;
+    let colorInputHeight: number;
 }
 /**
  * An enum for the possible item color UI modes

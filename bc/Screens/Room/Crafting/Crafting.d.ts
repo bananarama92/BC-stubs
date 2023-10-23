@@ -215,7 +215,7 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): false 
     MirrorExpression?: AssetGroupBodyName;
     FixedPosition: boolean;
     Layer: readonly AssetLayer[];
-    ColorableLayerCount: number;
+    ColorableLayerCount: number; /** @type {HTMLInputElement} */
     Archetype?: ExtendedArchetype;
     Attribute: readonly AssetAttribute[];
     PreviewIcons: readonly InventoryIcon[];

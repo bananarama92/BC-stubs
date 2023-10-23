@@ -818,12 +818,7 @@ declare function DialogActualNameForGroup(C: Character, G: AssetGroup): string;
  * @param {Item} NextItem
  */
 declare function DialogStruggleStart(C: Character, Action: DialogStruggleActionType, PrevItem: Item, NextItem: Item): void;
-/**
- * Handle the struggle minigame completing, either as a failure, an interruption, or a success.
- *
- * @type {StruggleCompletionCallback}
- */
-declare function DialogStruggleStop(C: Character, Game: StruggleKnownMinigames, { Progress, PrevItem, NextItem, Skill, Attempts, Interrupted, Auto }: StruggleCompletionData): void;
+declare function DialogStruggleStop(character: Character, game: StruggleKnownMinigames, data: StruggleCompletionData): void;
 declare var DialogText: string;
 declare var DialogTextDefault: string;
 declare var DialogTextDefaultTimer: number;

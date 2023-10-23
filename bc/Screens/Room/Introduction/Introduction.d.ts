@@ -185,9 +185,9 @@ declare var IntroductionJobCount: number;
 /** @type {null | string} */
 declare var IntroductionJobParam: null | string;
 declare namespace IntroductionJobPosition {
-    const Active: boolean;
-    const X: number;
-    const Y: number;
+    let Active: boolean;
+    let X: number;
+    let Y: number;
 }
 declare var IntroductionJobLockList: string[];
 declare var IntroductionJobSearchList: string[];

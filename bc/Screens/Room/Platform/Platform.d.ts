@@ -403,8 +403,8 @@ declare var PlatformParty: any[];
 declare var PlatformRegen: number;
 declare var PlatformCooldown: any[];
 declare namespace PlatformTimedScreenFilter {
-    const End: number;
-    const Filter: string;
+    let End: number;
+    let Filter: string;
 }
 declare var PlatformRightButtons: any[];
 declare var PlatformInventory: any[];

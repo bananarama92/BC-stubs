@@ -44,9 +44,9 @@ declare function InventoryDeleteGroup(C: Character, group: AssetGroupName, push?
 * Loads the current inventory for a character, can be loaded from an object of Name/Group or a compressed array using
 * LZString
 * @param {Character} C - The character on which we should load the inventory
-* @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>} Inventory - An array of Name / Group of items to load
+* @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly AssetGroupName[]>>} Inventory - An array of Name / Group of items to load
 */
-declare function InventoryLoad(C: Character, Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>): void;
+declare function InventoryLoad(C: Character, Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly AssetGroupName[]>>): void;
 /**
 * Checks if the character has the inventory available
 * @param {Character} C - The character on which we should remove the item
@@ -625,5 +625,7 @@ declare function InventoryShockExpression(C: Character): void;
  * object
  */
 declare function InventoryExtractLockProperties(property: ItemProperties): ItemProperties;
-declare const PropertiesArrayLike: Set<string>;
-declare const PropertiesObjectLike: Set<string>;
+/** @satisfies {Set<keyof PropertiesArray>} */
+declare const PropertiesArrayLike: Set<"AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "WhitelistActivePose" | "Prerequisite" | "ExpressionTrigger" | "AllowEffect" | "Block" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AllowLockType" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Hide" | "Effect" | "SetPose" | "FreezeActivePose" | "AllowExpression" | "HideForPose" | "Alpha" | "AllowTypes" | "AllowPose" | "MemberNumberList" | "UnHide" | "Texts">;
+/** @satisfies {Set<keyof PropertiesRecord>} */
+declare const PropertiesObjectLike: Set<"ActivityExpression" | "PoseMapping" | "RemoveItemOnRemove">;

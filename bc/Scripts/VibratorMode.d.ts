@@ -116,10 +116,6 @@ declare function VibratorModePublish(data: VibratingItemData, C: Character, item
  * @returns {boolean} Whether properties were initialized or not
  */
 declare function VibratorModeInit(data: VibratingItemData, C: Character, Item: Item, Push?: boolean, Refresh?: boolean): boolean;
-/**
- * An alias for {@link TypedItemSetOptionByName}.
- * @type {typeof TypedItemSetOptionByName}
- */
 declare function VibratorModeSetOptionByName(C: Character, itemOrGroupName: AssetGroupName | Item, optionName: string, push?: boolean, C_Source?: Character, subscreen?: [archetype: "typed" | "vibrating", screen: string], refresh?: boolean): string;
 /**
  * Return the (standard) vibrator mode one would get by incrementing/decrementing the passed mode.

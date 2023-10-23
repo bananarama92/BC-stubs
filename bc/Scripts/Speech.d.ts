@@ -36,7 +36,6 @@ declare function SpeechGetTotalGagLevel(C: Character, NoDeaf?: boolean): number;
  * @returns {string} - Returns the dialog after speech effects were processed (Garbling, Stuttering, Baby talk)
  */
 declare function SpeechGarble(C: Character, CD: string, NoDeaf?: boolean): string;
-declare function sfc32(a: any, b: any, c: any, d: any): () => number;
 /**
  * A PRNG(Pseudo random number generator) helper to generate random number sequence by seed.
  * Stole this function and the function below from {@link https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript stackoverflow}
