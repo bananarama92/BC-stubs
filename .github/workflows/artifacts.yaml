@@ -38,25 +38,21 @@ jobs:
 
       - name: Generate .d.ts
         run: |
-          cd Bondage-College/BondageClub
           npm install
+          cd Bondage-College/BondageClub
           cp ../../.github/tsconfig.json tsconfig.json
 
-          set +e
           npx -p typescript tsc
-          set -e
 
           cp ../../.github/patch.d.ts dist/patch.d.ts
           cp Scripts/Typedef.d.ts dist/Typedef.d.ts
           cp Scripts/Messages.d.ts dist/Messages.d.ts
           cp Assets/Female3DCG/Female3DCG_Types.d.ts dist/Female3DCG_Types.d.ts
-          rm -rf dist/Screens/MiniGame/KinkyDungeon
           rm -rf ../../bc
           mv dist ../../bc
 
       - name: List NPM packages
         run: |
-          cd Bondage-College/BondageClub
           npm list
 
       - name: Push artifacts

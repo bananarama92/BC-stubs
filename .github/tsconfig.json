@@ -1,6 +1,11 @@
 {
   // Change this to match your project
   "include": ["Assets", "Audio", "Backgrounds", "Icons", "Screens", "Scripts"],
+  // Specifies an array of filenames or patterns that should be skipped when resolving include.
+  "exclude": [
+    "Screens/MiniGame/KinkyDungeon"
+  ],
+
   "compilerOptions": {
     // Tells TypeScript to read JS files, as
     // normally they are ignored as source files
@@ -19,6 +24,7 @@
     "pretty": true,
     // Emit additional JavaScript to ease support for importing CommonJS modules.
     // This enables `allowSyntheticDefaultImports` for type compatibility
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "lib": ["es2018", "dom"]
   }
 }
