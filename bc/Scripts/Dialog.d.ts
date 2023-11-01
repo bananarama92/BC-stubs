@@ -285,6 +285,14 @@ declare function DialogCanUnlock(C: Character, Item: Item): boolean;
  */
 declare function DialogCanPickLock(C: Character, Item: Item): boolean;
 /**
+ * Checks whether we can lockpick a lock and return an appropriate dialog key.
+ * `"PickLock"` will be returned if the lock can be picked.
+ * @param {Character} C
+ * @param {Item} Item
+ * @returns {`PickLock${PickLockAvailability}`}
+ */
+declare function DialogGetPickLockDialog(C: Character, Item: Item): `PickLock${PickLockAvailability}`;
+/**
  * Checks whether we can access a lock.
  *
  * This function is used to enable the locked submenu

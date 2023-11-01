@@ -41,3 +41,9 @@ declare function ChatAdminRoomCustomizationExit(): void;
 declare var ChatAdminRoomCustomizationBackground: string;
 declare var ChatAdminRoomCustomizationCurrent: any;
 declare var ChatAdminRoomCustomizationMusic: any;
+declare var ChatAdminRoomCustomizationMode: any;
+declare var ChatAdminRoomCustomizationMusicLibrary: {
+    Name: string;
+    URL: string;
+    Source: string;
+}[];

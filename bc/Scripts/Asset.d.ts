@@ -20,6 +20,12 @@ declare function AssetActivityMirrorGroupSet(group: AssetGroup): void;
  */
 declare function AssetAdd(Group: AssetGroup, AssetDef: AssetDefinition, ExtendedConfig: ExtendedItemMainConfig): void;
 /**
+ * Automatically generated pose-related asset prerequisites
+ * @param {Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>} asset The asset or any other object with the expected asset interface subset
+ * @returns {AssetPrerequisite[]} The newly generated prerequisites
+ */
+declare function AssetParsePosePrerequisite(asset: Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>): AssetPrerequisite[];
+/**
  * Construct the items extended item config, merging via {@link AssetArchetypeConfig.CopyConfig} if required.
  * Potentially updates the passed {@link AssetArchetypeConfig} object inplace.
  * @param {Asset} A - The asset to configure
@@ -70,15 +76,12 @@ declare function AssetMapLayer(Layer: AssetLayerDefinition, AssetDefinition: Ass
 /**
  * Resolves the AllowPose and HideForPose properties on a layer or an asset
  * @param {Asset | AssetLayerDefinition} obj - The asset or layer object
- * @param {AssetPoseName[]} defaultAllowPose - A fallback value for the AllowPose property if it's not defined on the
+ * @param {readonly AssetPoseName[]} defaultAllowPose - A fallback value for the AllowPose property if it's not defined on the
  * object
- * @return {{AllowPose: AssetPoseName[], HideForPose: (AssetPoseName | "")[]}} - A partial object containing AllowPose and HideForPose
+ * @return {Pick<Asset, "AllowPose" | "HideForPose">} - A partial object containing AllowPose and HideForPose
  * properties
  */
-declare function AssetParsePoseProperties(obj: Asset | AssetLayerDefinition, defaultAllowPose?: AssetPoseName[]): {
-    AllowPose: AssetPoseName[];
-    HideForPose: (AssetPoseName | "")[];
-};
+declare function AssetParsePoseProperties(obj: Asset | AssetLayerDefinition, defaultAllowPose: readonly AssetPoseName[]): Pick<Asset, "AllowPose" | "HideForPose">;
 /**
  * Parses and validates asset's opacity
  * @param {number|undefined} opacity

@@ -40,6 +40,10 @@ declare function ServerDisconnect(data: any, close?: boolean): void;
 declare function ServerPlayerIsInChatRoom(): boolean;
 declare function ServerSend<Ev extends "AccountCreate" | "AccountLogin" | "PasswordReset" | "PasswordResetProcess" | "AccountUpdate" | "AccountUpdateEmail" | "AccountQuery" | "AccountBeep" | "AccountOwnership" | "AccountLovership" | "AccountDifficulty" | "AccountDisconnect" | "ChatRoomSearch" | "ChatRoomCreate" | "ChatRoomJoin" | "ChatRoomLeave" | "ChatRoomChat" | "ChatRoomCharacterUpdate" | "ChatRoomCharacterExpressionUpdate" | "ChatRoomCharacterPoseUpdate" | "ChatRoomCharacterArousalUpdate" | "ChatRoomCharacterItemUpdate" | "ChatRoomAdmin" | "ChatRoomAllowItem" | "ChatRoomGame">(ev: Ev, ...args: Parameters<ClientToServerEvents[Ev]>): void;
 /**
+ * Process the outgoing server messages queue
+ */
+declare function ServerSendQueueProcess(): void;
+/**
  * Syncs Money, owner name and lover name with the server
  * @returns {void} - Nothing
  */
@@ -241,8 +245,29 @@ declare var ServerAccountUpdate: {
      */
     QueueData(Data: object, Force?: true): void;
 };
+/** Ratelimit: Max number of messages per interval */
+declare var ServerSendRateLimit: number;
+/** Ratelimit: Length of the rate-limit window, in msec */
+declare var ServerSendRateLimitInterval: number;
+/**
+ * Queued messages waiting to be sent
+ *
+ * @typedef {{ Message: ClientEvent, args: ClientEventParams<ClientEvent>}} SendRateLimitQueueItem
+ *
+ * @type {SendRateLimitQueueItem[]}
+ */
+declare const ServerSendRateLimitQueue: SendRateLimitQueueItem[];
+/** @type {number[]} */
+declare let ServerSendRateLimitTimes: number[];
 /**
  * A map containing appearance item diffs, keyed according to the item group. Used to compare and validate before/after
  * for appearance items.
  */
 type AppearanceDiffMap = Partial<Record<AssetGroupName, Item[]>>;
+/**
+ * Queued messages waiting to be sent
+ */
+type SendRateLimitQueueItem = {
+    Message: ClientEvent;
+    args: ClientEventParams<ClientEvent>;
+};

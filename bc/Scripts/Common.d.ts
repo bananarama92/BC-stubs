@@ -442,6 +442,15 @@ declare function CommonClamp(value: number, min: number, max: number): number;
  * @returns {boolean}
 */
 declare function CommonURLHasExtension(TestURL: string, Extension: any[]): boolean;
+/**
+ * Return whether two records are equivalent for all fields as returned by {@link Object.keys}.
+ * @note does *not* support the comparison of nested structures.
+ * @template T
+ * @param {T} rec1
+ * @param {unknown} rec2
+ * @returns {rec2 is T}
+ */
+declare function CommonObjectEqual<T>(rec1: T, rec2: unknown): rec2 is T;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {number|string} */

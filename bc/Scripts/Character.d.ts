@@ -79,21 +79,23 @@ declare function CharacterDelete(NPCType: string): void;
  */
 declare function CharacterDeleteAllOnline(): void;
 /**
- * Checks whether the given character can change to the named pose unaided
+ * Checks whether the given character can change to the named pose (without aid by default)
  * @param {Character} C - The character to check
  * @param {AssetPoseName} poseName - The name of the pose to check for
+ * @param {boolean} changeUnaided - Whether the character can change the pose unaided or not,
+ * _i.e._ whether one can stand up using the pose menu or requires usage of the "kneel/stand up" button
  * @returns {boolean} - Returns true if the character has no conflicting items and is not prevented from changing to
  * the provided pose
  */
-declare function CharacterCanChangeToPose(C: Character, poseName: AssetPoseName): boolean;
+declare function CharacterCanChangeToPose(C: Character, poseName: AssetPoseName, changeUnaided?: boolean): boolean;
 /**
  * Checks if a certain pose is whitelisted and available for the pose menu
  * @param {Character} C - Character to check for the pose
- * @param {AssetPoseCategory|undefined} Type - Pose type to check for within items
+ * @param {AssetPoseCategory} Type - Pose type to check for within items
  * @param {AssetPoseName} Pose - Pose to check for whitelist
  * @returns {boolean} - TRUE if the character has the pose available
  */
-declare function CharacterItemsHavePoseAvailable(C: Character, Type: AssetPoseCategory | undefined, Pose: AssetPoseName): boolean;
+declare function CharacterItemsHavePoseAvailable(C: Character, Type: AssetPoseCategory, Pose: AssetPoseName): boolean;
 /**
  * Checks if a character has a pose from items (not active pose unless an item lets it through)
  * @param {Character} C - Character to check for the pose

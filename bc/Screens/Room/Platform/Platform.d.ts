@@ -144,9 +144,10 @@ declare function PlatformCreateTreasure(): void;
  * @param {Number} Damage - The number of damage to apply
  * @param {Number} Time - The current time when the action is done
  * @param {String} Type - The damage type (Collsion or Action)
+ * @param {String} AttackName - The name of the attack that was done
  * @returns {void} - Nothing
  */
-declare function PlatformDamage(Source: any, Target: any, Damage: number, Time: number, Type: string): void;
+declare function PlatformDamage(Source: any, Target: any, Damage: number, Time: number, Type: string, AttackName?: string): void;
 /**
  * Checks if the hitbox of an attack clashes with a hitbox of the target
  * @param {Object} Source - The character doing the damage
@@ -434,6 +435,7 @@ declare var PlatformTemplate: ({
     DamageBackOdds: number;
     DamageKnockForce: number;
     DamageAudio: string[];
+    DownAudio: string[];
     BindAudio: string[];
     Animation: {
         Name: string;
@@ -487,6 +489,7 @@ declare var PlatformTemplate: ({
     DamageBackOdds: number;
     DamageKnockForce: number;
     DamageAudio: string[];
+    DownAudio: string[];
     BindAudio: string[];
     Animation: ({
         Name: string;
@@ -570,6 +573,7 @@ declare var PlatformTemplate: ({
     DamageBackOdds: number;
     DamageKnockForce: number;
     DamageAudio: string[];
+    DownAudio: string[];
     BindAudio: string[];
     Animation: ({
         Name: string;
@@ -634,6 +638,7 @@ declare var PlatformTemplate: ({
     DamageBackOdds?: undefined;
     DamageKnockForce?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
@@ -677,6 +682,7 @@ declare var PlatformTemplate: ({
     DamageBackOdds?: undefined;
     DamageKnockForce?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
@@ -721,6 +727,7 @@ declare var PlatformTemplate: ({
     DamageBackOdds?: undefined;
     DamageKnockForce?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
@@ -766,6 +773,7 @@ declare var PlatformTemplate: ({
     PerkName?: undefined;
     HealthPerLevel?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
@@ -810,6 +818,7 @@ declare var PlatformTemplate: ({
     HealthPerLevel?: undefined;
     DamageBackOdds?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
@@ -853,6 +862,7 @@ declare var PlatformTemplate: ({
     JumpHitBox?: undefined;
     JumpForce?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
@@ -925,6 +935,7 @@ declare var PlatformTemplate: ({
     PerkName?: undefined;
     HealthPerLevel?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
@@ -974,6 +985,7 @@ declare var PlatformTemplate: ({
     JumpHitBox?: undefined;
     JumpForce?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
@@ -1021,6 +1033,7 @@ declare var PlatformTemplate: ({
     HealthPerLevel?: undefined;
     RunSpeed?: undefined;
     DamageAudio?: undefined;
+    DownAudio?: undefined;
     BindAudio?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;

@@ -135,9 +135,9 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): false 
     SetPose?: readonly AssetPoseName[];
     AllowPose: readonly AssetPoseName[];
     HideForPose: readonly ("" | AssetPoseName)[];
-    PoseMapping?: Partial<Record<AssetPoseName, "" | AssetPoseName>>;
+    PoseMapping: Partial<Record<AssetPoseName, "" | AssetPoseName>>;
     AllowActivePose?: readonly AssetPoseName[];
-    WhitelistActivePose?: readonly AssetPoseName[];
+    WhitelistActivePose?: never;
     Value: number;
     Difficulty: number;
     SelfBondage: number;
@@ -209,13 +209,13 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): false 
     AllowColorizeAll: boolean;
     AvailableLocations: readonly string[];
     OverrideHeight?: AssetOverrideHeight;
-    FreezeActivePose: readonly AssetPoseCategory[];
+    FreezeActivePose?: never;
     DrawLocks: boolean;
     AllowExpression?: readonly ExpressionName[];
     MirrorExpression?: AssetGroupBodyName;
     FixedPosition: boolean;
     Layer: readonly AssetLayer[];
-    ColorableLayerCount: number; /** @type {HTMLInputElement} */
+    ColorableLayerCount: number;
     Archetype?: ExtendedArchetype;
     Attribute: readonly AssetAttribute[];
     PreviewIcons: readonly InventoryIcon[];

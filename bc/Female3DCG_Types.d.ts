@@ -21,9 +21,12 @@ interface AssetCommonPropertiesGroupAssetLayer {
 	ParentGroup?: AssetGroupName | null;
 
 	/**
-	 * The poses supported by the target
+	 * The poses that have pose-specific assets.
 	 *
 	 * Used when building the file paths for the asset's layers.
+	 *
+	 * If a pose is absent then the asset corresponding to the default pose will be used in its place.
+	 * Note that a pose's absence from this list does *not* prevent its usage.
 	 */
 	AllowPose?: AssetPoseName[];
 
@@ -57,11 +60,14 @@ interface AssetCommonPropertiesGroupAsset {
 	/** A list of effects wearing the asset causes on the character */
 	Effect?: EffectName[];
 
-	/** A pose that the character should change to when wearing the asset */
+	/** A pose that the character will change to when wearing the asset */
 	SetPose?: AssetPoseName[];
 
-	/** A list of pose categories that the character will be prevented to change */
-	FreezeActivePose?: AssetPoseCategory[];
+	/**
+	 * A list of pose categories that the character will be prevented to change
+	 * @deprecated Use {@link AssetDefinition.AllowActivePose} instead
+	 */
+	FreezeActivePose?: never;
 
 	/** Which expression the group allows to be set on it */
 	AllowExpression?: ExpressionName[];
@@ -241,7 +247,12 @@ type AssetBonusName = "KidnapDomination" | "KidnapSneakiness" | "KidnapBruteForc
 type AssetGender = 'F' | 'M';
 
 interface AssetCommonPropertiesAssetLayer {
-	/** A list of poses that hide the asset when they get set. */
+	/**
+	 * A list of poses that hide the asset when they get set.
+	 *
+	 * Note that this does not prevent usage of the pose (see {@link AssetDefinition.AllowActivePose}).
+	 * Values are automatically added to {@link Asset.AllowPose}.
+	 */
 	HideForPose?: (AssetPoseName | "")[];
 
 	Alpha?: AlphaDefinition[];
@@ -347,13 +358,19 @@ interface AssetDefinition extends AssetCommonPropertiesGroupAsset, AssetCommonPr
 	 * being used when generating the file paths for the asset's layers.
 	 *
 	 * Works like DynamicGroupName, but for poses.
+	 * Values are automatically added to {@link Asset.AllowPose}.
 	 */
 	PoseMapping?: AssetPoseMapping;
 
-	/** A list of poses that wearing the asset also enables. */
+	/**
+	 * A list of poses that, in combination with {@link AssetDefinition.SetPose}, represents all poses that wearing the asset enables.
+	 *
+	 * Contrary to {@link AssetDefinition.AllowPose} poses that are absent from this list can *not* be used.
+	 */
 	AllowActivePose?: AssetPoseName[];
 
-	WhitelistActivePose?: AssetPoseName[];
+	/** @deprecated - Use {@link AssetDefinition.AllowActivePose} instead */
+	WhitelistActivePose?: never;
 
 	/**
 	 * The cost of the asset in the shop. Defaults to 0.

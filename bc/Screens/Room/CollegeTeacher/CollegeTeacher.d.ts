@@ -13,12 +13,12 @@ declare function CollegeTeacherMildredLoveIs(LoveLevel: string): boolean;
  * Checks, if Mildred won the Literature Class quiz and player is not owned
  * @returns {boolean} - Returns true if Mildred is Dominant and player is not owned
  */
-declare function CollegeDetentionIsMildredDominant(): boolean;
+declare function CollegeTeacherIsMildredDominant(): boolean;
 /**
  * Checks, if Mildred lost the Literature Class quiz
  * @returns {boolean} - Returns true if Mildred is Submissive
  */
-declare function CollegeDetentionIsMildredSubmissive(): boolean;
+declare function CollegeTeacherIsMildredSubmissive(): boolean;
 /**
  * Fully dress-up Mildred
  * @param {Character} C - The character object to dress up

@@ -205,9 +205,30 @@ declare function ExtendedItemCreateNpcDialogFunction(Asset: Asset, FunctionPrefi
  * @param {number} Y - The Y coordinate of the button
  * @param {string | null} imagePath — The pa
  * @param {boolean} IsSelected - Whether the button is selected or not
+ * @param {boolean} ChangeWhenLocked - Whether the button can be clicked when locked
  * @returns {void} Nothing
  */
-declare function ExtendedItemCustomDraw(Name: string, X: number, Y: number, imagePath?: string | null, IsSelected?: boolean): void;
+declare function ExtendedItemCustomDraw(Name: string, X: number, Y: number, imagePath?: string | null, IsSelected?: boolean, ChangeWhenLocked?: boolean): void;
+/**
+ * Helper click function for creating custom check boxes, including extended item permission support.
+ * @param {string} name - The name of the checkbox and its pseudo-type
+ * @param {number} x - The X coordinate of the checkbox
+ * @param {number} y - The Y coordinate of the checkbox
+ * @param {boolean} isChecked - Whether the checkbox is checked or not
+ * @param {Object} options
+ * @param {string} [options.text] - Label associated with the checkbox
+ * @param {number} [options.width] - Width of the checkbox
+ * @param {number} [options.height] - Height of the checkbox
+ * @param {boolean} [options.changeWhenLocked] - Whether the checkbox can be toggled when locked
+ * @param {string} [options.textColor]
+ */
+declare function ExtendedItemDrawCheckbox(name: string, x: number, y: number, isChecked: boolean, options?: {
+    text?: string;
+    width?: number;
+    height?: number;
+    changeWhenLocked?: boolean;
+    textColor?: string;
+}): void;
 /**
  * Helper click function for creating custom buttons, including extended item permission support.
  * @param {string} Name - The name of the button and its pseudo-type
@@ -215,7 +236,18 @@ declare function ExtendedItemCustomDraw(Name: string, X: number, Y: number, imag
  * @param {boolean} Worn - `true` if the player is changing permissions for an item they're wearing
  * @returns {boolean} `false` if the item's requirement check failed and `true` otherwise
  */
-declare function ExtendedItemCustomClick(Name: string, Callback: () => void, Worn?: boolean): boolean;
+declare function ExtendedItemCustomClick(Name: string, Callback: () => void, Worn?: boolean, ChangeWhenLocked?: boolean): boolean;
+/**
+ * Helper click function for creating custom buttons, including extended item permission support, and pushing the changes to the server.
+ * @param {Character} C - The character
+ * @param {Item} item - The item
+ * @param {string} name - The name of the button and its pseudo-type
+ * @param {() => void} callback - A callback to be executed whenever the button is clicked and all requirements are met
+ * @param {boolean} worn - `true` if the player is changing permissions for an item they're wearing
+ * @param {boolean} changeWhenLocked - Whether the button r
+ * @returns {boolean} `false` if the item's requirement check failed and `true` otherwise
+ */
+declare function ExtendedItemCustomClickAndPush(C: Character, item: Item, name: string, callback: () => void, worn?: boolean, changeWhenLocked?: boolean): boolean;
 /**
  * Helper publish + exit function for creating custom buttons whose clicks exit the dialog menu.
  *
@@ -293,6 +325,14 @@ declare function ExtendedItemManualRegister(): void;
  * @return {ExtendedItemDrawData<MetaData>} - The parsed draw data
  */
 declare function ExtendedItemGetDrawData<MetaData extends ElementMetaData>(drawData: ExtendedItemConfigDrawData<Partial<MetaData>>, defaults: Pick<ExtendedItemDrawData<MetaData>, "elementData" | "itemsPerPage">): ExtendedItemDrawData<MetaData>;
+/**
+ * Pre-process the passed extended item option and return a shallow copy.
+ * @template {Pick<ExtendedItemOption, "Property" | "Prerequisite">} T
+ * @param {T} option The to-be processed extended item option
+ * @param {Asset} asset
+ * @returns {T}
+ */
+declare function ExtendedItemParseOptions<T extends Pick<ExtendedItemOption, "Prerequisite" | "Property">>(option: T, asset: Asset): T;
 /**
  * Utility file for handling extended items
  */

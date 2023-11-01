@@ -55,6 +55,13 @@ declare function InventoryLoad(C: Character, Inventory: string | readonly ItemBu
 */
 declare function InventoryAvailable(C: Character, InventoryName: string | '*', InventoryGroup: AssetGroupName): boolean;
 /**
+ * Return whether the character has a given pose or is elligble to change to it.
+ * @param {Character} C The character
+ * @param {AssetPoseName} pose The to-be addopted pose
+ * @returns {boolean} Whether the pose change can occur
+ */
+declare function InventoryPrerequisiteCanChangeToPose(C: Character, pose: AssetPoseName): boolean;
+/**
 * Returns an error message if a prerequisite clashes with the character's items and clothes
 * @param {Character} C - The character on which we check for prerequisites
 * @param {AssetPrerequisite} Prerequisite - The name of the prerequisite
@@ -316,9 +323,9 @@ declare function InventoryGetItemProperty<Name extends "Name" | "Gender" | "BuyG
     SetPose?: readonly AssetPoseName[];
     AllowPose: readonly AssetPoseName[];
     HideForPose: readonly ("" | AssetPoseName)[];
-    PoseMapping?: Partial<Record<AssetPoseName, "" | AssetPoseName>>;
+    PoseMapping: Partial<Record<AssetPoseName, "" | AssetPoseName>>;
     AllowActivePose?: readonly AssetPoseName[];
-    WhitelistActivePose?: readonly AssetPoseName[];
+    WhitelistActivePose?: never;
     Value: number;
     Difficulty: number;
     SelfBondage: number;
@@ -390,7 +397,7 @@ declare function InventoryGetItemProperty<Name extends "Name" | "Gender" | "BuyG
     AllowColorizeAll: boolean;
     AvailableLocations: readonly string[];
     OverrideHeight?: AssetOverrideHeight;
-    FreezeActivePose: readonly AssetPoseCategory[];
+    FreezeActivePose?: never;
     DrawLocks: boolean;
     AllowExpression?: readonly ExpressionName[];
     MirrorExpression?: AssetGroupBodyName;
@@ -626,6 +633,6 @@ declare function InventoryShockExpression(C: Character): void;
  */
 declare function InventoryExtractLockProperties(property: ItemProperties): ItemProperties;
 /** @satisfies {Set<keyof PropertiesArray>} */
-declare const PropertiesArrayLike: Set<"AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "WhitelistActivePose" | "Prerequisite" | "ExpressionTrigger" | "AllowEffect" | "Block" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AllowLockType" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Hide" | "Effect" | "SetPose" | "FreezeActivePose" | "AllowExpression" | "HideForPose" | "Alpha" | "AllowTypes" | "AllowPose" | "MemberNumberList" | "UnHide" | "Texts">;
+declare const PropertiesArrayLike: Set<"AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "Prerequisite" | "ExpressionTrigger" | "AllowEffect" | "Block" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AllowLockType" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Hide" | "Effect" | "SetPose" | "AllowExpression" | "HideForPose" | "Alpha" | "AllowTypes" | "AllowPose" | "MemberNumberList" | "UnHide" | "Texts">;
 /** @satisfies {Set<keyof PropertiesRecord>} */
 declare const PropertiesObjectLike: Set<"ActivityExpression" | "PoseMapping" | "RemoveItemOnRemove">;

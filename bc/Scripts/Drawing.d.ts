@@ -258,9 +258,10 @@ declare function GetWrapTextSize(Text: string, Width: number, MaxLine: number): 
  * @param {string} [BackColor] - Background color
  * @param {number} [MaxLine] - Maximum of lines the word can wrap for
  * @param {number} LineSpacing - The number of pixels between each lines (default to 23)
+ * @param {"Center" | "Top"} Alignment - How the text should be alligned w.r.t. the Y position when wrapped over multiple lines
  * @returns {void} - Nothing
  */
-declare function DrawTextWrap(Text: string, X: number, Y: number, Width: number, Height: number, ForeColor: string, BackColor?: string, MaxLine?: number, LineSpacing?: number): void;
+declare function DrawTextWrap(Text: string, X: number, Y: number, Width: number, Height: number, ForeColor: string, BackColor?: string, MaxLine?: number, LineSpacing?: number, Alignment?: "Center" | "Top"): void;
 /**
  * Draws a text element on the canvas that will fit on the specified width
  * @param {string} Text - Text to draw
