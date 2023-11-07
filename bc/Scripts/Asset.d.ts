@@ -22,9 +22,12 @@ declare function AssetAdd(Group: AssetGroup, AssetDef: AssetDefinition, Extended
 /**
  * Automatically generated pose-related asset prerequisites
  * @param {Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>} asset The asset or any other object with the expected asset interface subset
- * @returns {AssetPrerequisite[]} The newly generated prerequisites
+ * @returns {{ Prerequisite?: AssetPrerequisite[], AllowActivePose?: AssetPoseName[] }} The newly generated prerequisites
  */
-declare function AssetParsePosePrerequisite(asset: Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>): AssetPrerequisite[];
+declare function AssetParsePosePrerequisite({ SetPose, AllowActivePose, Effect, Prerequisite }: Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>): {
+    Prerequisite?: AssetPrerequisite[];
+    AllowActivePose?: AssetPoseName[];
+};
 /**
  * Construct the items extended item config, merging via {@link AssetArchetypeConfig.CopyConfig} if required.
  * Potentially updates the passed {@link AssetArchetypeConfig} object inplace.
@@ -74,15 +77,6 @@ declare function AssetBuildLayer(AssetDefinition: AssetDefinition, A: Asset): As
  */
 declare function AssetMapLayer(Layer: AssetLayerDefinition, AssetDefinition: AssetDefinition, A: Asset, I: number): AssetLayer;
 /**
- * Resolves the AllowPose and HideForPose properties on a layer or an asset
- * @param {Asset | AssetLayerDefinition} obj - The asset or layer object
- * @param {readonly AssetPoseName[]} defaultAllowPose - A fallback value for the AllowPose property if it's not defined on the
- * object
- * @return {Pick<Asset, "AllowPose" | "HideForPose">} - A partial object containing AllowPose and HideForPose
- * properties
- */
-declare function AssetParsePoseProperties(obj: Asset | AssetLayerDefinition, defaultAllowPose: readonly AssetPoseName[]): Pick<Asset, "AllowPose" | "HideForPose">;
-/**
  * Parses and validates asset's opacity
  * @param {number|undefined} opacity
  * @returns {number}
@@ -122,6 +116,12 @@ declare function AssetBuildDescription(Family: IAssetFamily, CSV: string[][]): v
  * @param {IAssetFamily} Family The asset family to load the description for
  */
 declare function AssetLoadDescription(Family: IAssetFamily): void;
+/**
+ * Yield the passed group, all its assets and all their layers
+ * @param {AssetGroup} group
+ * @return {Generator<AssetGroup | Asset | AssetLayer, void>}
+ */
+declare function AssetYieldAll(group: AssetGroup): Generator<AssetGroup | Asset | AssetLayer, void>;
 /**
  * Loads a specific asset file
  * @param {readonly AssetGroupDefinition[]} Groups
@@ -215,5 +215,11 @@ declare var AssetMap: Map<string, Asset>;
 declare var AssetGroupMap: Map<AssetGroupName, AssetGroup>;
 /** @type {Pose[]} */
 declare var Pose: Pose[];
+/** A record mapping pose names to their respective {@link Pose}. */
+declare const PoseRecord: Record<AssetPoseName, Pose>;
 /** @type {Map<AssetGroupName, AssetGroup[]>} */
 declare var AssetActivityMirrorGroups: Map<AssetGroupName, AssetGroup[]>;
+declare namespace PoseType {
+    let HIDE: "Hide";
+    let DEFAULT: "";
+}

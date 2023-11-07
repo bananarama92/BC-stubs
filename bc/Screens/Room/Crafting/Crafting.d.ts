@@ -111,7 +111,7 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): false 
     Description: string;
     Group: AssetGroup;
     ParentItem?: string;
-    ParentGroupName?: AssetGroupName;
+    ParentGroupName: AssetGroupName;
     Enable: boolean;
     Visible: boolean;
     NotVisibleOnScreen?: readonly string[];
@@ -133,9 +133,9 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): false 
     HideItemAttribute: readonly AssetAttribute[];
     Require: readonly AssetGroupBodyName[];
     SetPose?: readonly AssetPoseName[];
-    AllowPose: readonly AssetPoseName[];
-    HideForPose: readonly ("" | AssetPoseName)[];
-    PoseMapping: Partial<Record<AssetPoseName, "" | AssetPoseName>>;
+    AllowPose?: never;
+    HideForPose?: never;
+    PoseMapping: Partial<Record<AssetPoseName, AssetPoseName | PoseType>>;
     AllowActivePose?: readonly AssetPoseName[];
     WhitelistActivePose?: never;
     Value: number;
@@ -200,7 +200,7 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): false 
     DynamicAudio: (C: Character) => string;
     CharacterRestricted: boolean;
     AllowRemoveExclusive: boolean;
-    InheritColor?: AssetGroupName;
+    InheritColor: AssetGroupName;
     DynamicBeforeDraw: boolean;
     DynamicAfterDraw: boolean;
     DynamicScriptDraw: boolean;

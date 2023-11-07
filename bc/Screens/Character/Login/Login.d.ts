@@ -121,6 +121,8 @@ declare function LoginQueue(Pos: number): void;
  * @returns {void} Nothing
  */
 declare function LoginResponse(C: object | string): void;
+/** Check if the player's browser has ES2020 support */
+declare function LoginCheckES2020(): void;
 /**
  * Handles player click events on the character login screen
  * @returns {void} Nothing
@@ -192,3 +194,4 @@ declare let LoginInventoryFixups: {
         Option?: string;
     };
 }[];
+declare const ES2020_MESSAGE: "If you see this message, it means that your browser lacks ES2020 support and will not be working in the next Bondage Club version (R99).\n\nPlease update your browser or contact the developer team on Discord before the next release so we can review the upcoming changes";

@@ -27,8 +27,7 @@ declare function CommonDrawFindPose(C: Character, AllowedPoses: readonly AssetPo
 /**
  * Finds the pose that should be used when a given asset (and optionally layer) is drawn.
  * @param {Character} C - The character whose poses to check
- * @param {Asset} A - The asset to check
  * @param {AssetLayer} [Layer] - The layer to check (optional)
  * @returns {AssetPoseName | null} - The pose to use when drawing the given asset (or layer)
  */
-declare function CommonDrawResolveAssetPose(C: Character, A: Asset, Layer?: AssetLayer): AssetPoseName | null;
+declare function CommonDrawResolveAssetPose(C: Character, Layer?: AssetLayer): AssetPoseName | null;

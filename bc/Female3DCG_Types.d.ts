@@ -27,8 +27,18 @@ interface AssetCommonPropertiesGroupAssetLayer {
 	 *
 	 * If a pose is absent then the asset corresponding to the default pose will be used in its place.
 	 * Note that a pose's absence from this list does *not* prevent its usage.
+	 *
+	 * @deprecated - Superceded by {@link PoseMapping}
 	 */
-	AllowPose?: AssetPoseName[];
+	AllowPose?: never;
+
+	/**
+     * A record mapping pose names to the actually to-be drawn poses.
+     * Special values can be specified, via use of {@link PoseType}, for either hiding the asset or using pose-agnostic assets.
+	 *
+	 * Poses that are absent from the mapping (or whose value is set to {@link PoseType.DEFAULT}) will use the default pose-agnostic path.
+	 */
+	PoseMapping?: AssetPoseMapping;
 
 	/**
 	 * Whether that layer is colorized
@@ -252,8 +262,10 @@ interface AssetCommonPropertiesAssetLayer {
 	 *
 	 * Note that this does not prevent usage of the pose (see {@link AssetDefinition.AllowActivePose}).
 	 * Values are automatically added to {@link Asset.AllowPose}.
+	 *
+	 * @deprecated - Superceded by {@link AssetCommonPropertiesGroupAssetLayer.PoseMapping}
 	 */
-	HideForPose?: (AssetPoseName | "")[];
+	HideForPose?: never;
 
 	Alpha?: AlphaDefinition[];
 
@@ -352,18 +364,9 @@ interface AssetDefinition extends AssetCommonPropertiesGroupAsset, AssetCommonPr
 	Require?: AssetGroupBodyName[];
 
 	/**
-	 * A mapping of poses for the purpose of fallbacks.
+	 * A list of poses that represents all poses that wearing the asset enables.
 	 *
-	 * If the current pose appears in the mapping, it will result in the mapped pose name
-	 * being used when generating the file paths for the asset's layers.
-	 *
-	 * Works like DynamicGroupName, but for poses.
-	 * Values are automatically added to {@link Asset.AllowPose}.
-	 */
-	PoseMapping?: AssetPoseMapping;
-
-	/**
-	 * A list of poses that, in combination with {@link AssetDefinition.SetPose}, represents all poses that wearing the asset enables.
+	 * Automatically concatenated with {@link AssetDefinition.SetPose} members.
 	 *
 	 * Contrary to {@link AssetDefinition.AllowPose} poses that are absent from this list can *not* be used.
 	 */
