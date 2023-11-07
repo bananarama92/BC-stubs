@@ -36,9 +36,13 @@ jobs:
         with:
           node-version: 16
 
-      - name: Generate .d.ts
+      - name: Install dependencies
         run: |
           npm install
+          npm list
+
+      - name: Generate .d.ts
+        run: |
           cd Bondage-College/BondageClub
           cp ../../.github/tsconfig.json tsconfig.json
 
