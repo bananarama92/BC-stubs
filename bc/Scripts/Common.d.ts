@@ -403,22 +403,22 @@ declare function CommonIncludes<T>(array: readonly T[], searchElement: unknown, 
  * so you don't keep checking items after handling one.
  *
  * @template T
- * @param {T[]} items
+ * @param {readonly T[]} items
  * @param {number} offset
  * @param {CommonGenerateGridParameters} grid
  * @param {CommonGenerateGridCallback<T>} callback
  * @returns {number}
  */
-declare function CommonGenerateGrid<T>(items: T[], offset: number, grid: CommonGenerateGridParameters, callback: CommonGenerateGridCallback<T>): number;
+declare function CommonGenerateGrid<T>(items: readonly T[], offset: number, grid: CommonGenerateGridParameters, callback: CommonGenerateGridCallback<T>): number;
 /**
  * Create a copy of the passed record with all specified keys removed
  * @template {keyof RecordType} KeyType
  * @template {{}} RecordType
  * @param {RecordType} object - The to-be copied record
- * @param {KeyType[]} keys - The to-be removed keys from the record
+ * @param {readonly KeyType[]} keys - The to-be removed keys from the record
  * @returns {Omit<RecordType, KeyType>}
  */
-declare function CommonOmit<KeyType_1 extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: KeyType_1[]): Omit<RecordType, KeyType_1>;
+declare function CommonOmit<KeyType_1 extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: readonly KeyType_1[]): Omit<RecordType, KeyType_1>;
 /**
  * Iterate through the passed iterable and yield index/value pairs.
  * @template T
@@ -433,15 +433,16 @@ declare function CommonEnumerate<T>(iterable: Iterable<T>, start?: number, step?
  * @param {number} value
  * @param {number} min
  * @param {number} max
+ * @returns {number}
  */
 declare function CommonClamp(value: number, min: number, max: number): number;
 /**
  * Returns TRUE if the URL is valid, is from http or https or screens/ or backgrounds/ and has the required extension
  * @param {string} TestURL - The URL to test
- * @param {array} Extension - An array containing the valid extensions
+ * @param {readonly string[]} Extension - An array containing the valid extensions
  * @returns {boolean}
 */
-declare function CommonURLHasExtension(TestURL: string, Extension: any[]): boolean;
+declare function CommonURLHasExtension(TestURL: string, Extension: readonly string[]): boolean;
 /**
  * Return whether two records are equivalent for all fields as returned by {@link Object.keys}.
  * @note does *not* support the comparison of nested structures.

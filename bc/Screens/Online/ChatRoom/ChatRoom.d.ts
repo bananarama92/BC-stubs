@@ -628,6 +628,7 @@ declare function ChatRoomRegisterMessageHandler(handler: ChatRoomMessageHandler)
  *
  * @param {ServerChatRoomMessage} data
  * @param {Character} SenderCharacter
+ * @returns {boolean}
  */
 declare function ChatRoomMessageProcessHidden(data: ServerChatRoomMessage, SenderCharacter: Character): boolean;
 /**
@@ -692,8 +693,9 @@ declare function ChatRoomMessageRunExtractors(data: ServerChatRoomMessage, sende
  * @param {Character} sender - The actual message sender character object
  * @param {string} msg - The escaped message, likely different from data.Contents
  * @param {IChatRoomMessageMetadata} [metadata] - The message metadata, only available for post-handlers
+ * @returns {boolean | string}
  */
-declare function ChatRoomMessageRunHandlers(type: "pre" | "post", data: ServerChatRoomMessage, sender: Character, msg: string, metadata?: IChatRoomMessageMetadata): string | boolean;
+declare function ChatRoomMessageRunHandlers(type: "pre" | "post", data: ServerChatRoomMessage, sender: Character, msg: string, metadata?: IChatRoomMessageMetadata): boolean | string;
 /**
  * Handles the reception of a chatroom message.
  *
@@ -897,10 +899,10 @@ declare function ChatRoomGetTransparentColor(Color: HexColor): string;
 /**
  * Adds or removes an online member to/from a specific list. (From the dialog menu)
  * @param {"Add" | "Remove"} Operation - Operation to perform.
- * @param {string} ListType - Name of the list to alter. (Whitelist, friendlist, blacklist, ghostlist)
+ * @param {"WhiteList" | "FriendList" | "BlackList" | "GhostList"} ListType - Name of the list to alter. (Whitelist, friendlist, blacklist, ghostlist)
  * @returns {void} - Nothing
  */
-declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: string): void;
+declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: "WhiteList" | "FriendList" | "BlackList" | "GhostList"): void;
 /**
  * Adds or removes an online member to/from a specific list from a typed message.
  * @param {number[]|null} List - List to add to or remove from.
@@ -952,9 +954,9 @@ declare function ChatRoomSendLovershipRequest(RequestType: "Propose" | "Accept" 
  * @returns {void} - Nothing
  */
 declare function ChatRoomDrinkPick(DrinkType: string, Money: number): void;
-declare function ChatRoomSendLoverRule(RuleType: any, Option: any): void;
-declare function ChatRoomSendOwnerRule(RuleType: any, Option: any): void;
-declare function ChatRoomAdvancedRule(RuleType: any): void;
+declare function ChatRoomSendLoverRule(RuleType: LogNameType[keyof LogNameType], Option: "Quest" | "Leave"): void;
+declare function ChatRoomSendOwnerRule(RuleType: LogNameType[keyof LogNameType], Option: "Quest" | "Leave"): void;
+declare function ChatRoomAdvancedRule(RuleType: LogNameAdvanced): void;
 declare function ChatRoomForbiddenWords(): void;
 /**
  * Sends a rule / restriction / punishment to the player's slave/lover client, it will be handled on the slave/lover's
@@ -1002,10 +1004,11 @@ declare function ChatRoomGiveMoneyForOwner(): void;
 declare function ChatRoomPayQuest(questGiverNumber: number, paymentAmount: number): void;
 /**
  * Triggered when online game data comes in
- * @param {object} data - Game data to process, sent to the current game handler.
+ * @param {ServerChatRoomGameBountyUpdateRequest["OnlineBounty"]} data - Game data to process, sent to the current game handler.
+ * @param {number} sender
  * @returns {void} - Nothing
  */
-declare function ChatRoomOnlineBountyHandleData(data: object, sender: any): void;
+declare function ChatRoomOnlineBountyHandleData(data: ServerChatRoomGameBountyUpdateRequest["OnlineBounty"], sender: number): void;
 /**
  * Triggered when a game message comes in, we forward it to the current online game being played.
  * @param {ServerChatRoomGameResponse} data - Game data to process, sent to the current game handler.
@@ -1034,18 +1037,18 @@ declare function ChatRoomSafewordRelease(): void;
  * Concatenates the list of users to ban.
  * @param {boolean} IncludesBlackList - Adds the blacklist to the banlist
  * @param {boolean} IncludesGhostList - Adds the ghostlist to the banlist
- * @param {number[]} [ExistingList] - The existing Banlist, if applicable
+ * @param {readonly number[]} [ExistingList] - The existing Banlist, if applicable
  * @returns {number[]} Complete array of members to ban
  */
-declare function ChatRoomConcatenateBanList(IncludesBlackList: boolean, IncludesGhostList: boolean, ExistingList?: number[]): number[];
+declare function ChatRoomConcatenateBanList(IncludesBlackList: boolean, IncludesGhostList: boolean, ExistingList?: readonly number[]): number[];
 /**
  * Concatenates the list of users for Admin list.
  * @param {boolean} IncludesOwner - Adds the owner to the admin list
  * @param {boolean} IncludesLovers - Adds lovers to the admin list
- * @param {number[]} [ExistingList] - The existing Admin list, if applicable
+ * @param {readonly number[]} [ExistingList] - The existing Admin list, if applicable
  * @returns {number[]} Complete array of admin members
  */
-declare function ChatRoomConcatenateAdminList(IncludesOwner: boolean, IncludesLovers: boolean, ExistingList?: number[]): number[];
+declare function ChatRoomConcatenateAdminList(IncludesOwner: boolean, IncludesLovers: boolean, ExistingList?: readonly number[]): number[];
 /**
  * Handles a request from another player to read the player's log entries that they are permitted to read. Lovers and
  * owners can read certain entries from the player's log.
@@ -1153,12 +1156,12 @@ declare function ChatRoomOwnerPresenceRule(RuleName: LogNameType["OwnerRule"], T
  * @returns {CommonSubtituteSubstitution[]} - The replacement pronoun text for keywords in the original message
  */
 declare function ChatRoomPronounSubstitutions(C: Character, key: string, hideIdentity: boolean): CommonSubtituteSubstitution[];
-/**
- * An enum for the options for chat room spaces
- * @readonly
- * @type {Record<ChatRoomSpaceLabel, ServerChatRoomSpace>}
- */
-declare const ChatRoomSpaceType: Record<ChatRoomSpaceLabel, ServerChatRoomSpace>;
+declare namespace ChatRoomSpaceType {
+    let MIXED: "X";
+    let FEMALE_ONLY: "";
+    let MALE_ONLY: "M";
+    let ASYLUM: "Asylum";
+}
 declare var ChatRoomBackground: string;
 /**
  * The data for the current chatroom, as recieved from the server.
@@ -1227,7 +1230,12 @@ declare var ChatRoomSenseDepBypass: boolean;
 declare var ChatRoomGetUpTimer: number;
 declare var ChatRoomLastName: string;
 declare var ChatRoomLastBG: string;
-declare var ChatRoomLastCustom: any;
+/** @type {null | {ImageURL?: string, ImageFilter?: string, MusicURL?: string }} */
+declare var ChatRoomLastCustom: null | {
+    ImageURL?: string;
+    ImageFilter?: string;
+    MusicURL?: string;
+};
 declare var ChatRoomLastPrivate: boolean;
 declare var ChatRoomLastSize: number;
 /** @type {ServerChatRoomLanguage} */

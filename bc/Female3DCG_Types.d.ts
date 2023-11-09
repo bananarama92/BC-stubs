@@ -113,7 +113,8 @@ interface AssetCommonPropertiesGroupAsset {
 	BodyCosplay?: boolean;
 }
 
-interface AssetGroupDefinition extends AssetCommonPropertiesGroupAsset, AssetCommonPropertiesGroupAssetLayer {
+/** Input interface for constructing {@link AssetGroup} objects. */
+interface AssetGroupDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetCommonPropertiesGroupAssetLayer {
 	/** The internal identifier for the group */
 	Group: AssetGroupName;
 	/** The list of assets defined by the group */
@@ -197,7 +198,7 @@ interface AssetGroupDefinition extends AssetCommonPropertiesGroupAsset, AssetCom
 	 *
 	 * Only applicable for "Item" groups
 	 */
-	Zone?: [number, number, number, number][];
+	Zone?: RectTuple[];
 
 	/**
 	 * If the group is empty, it'll automatically mirror an asset from the group specified
@@ -222,7 +223,7 @@ interface AssetGroupDefinition extends AssetCommonPropertiesGroupAsset, AssetCom
 	Blink?: boolean;
 
 	/** A rect used when generating dynamic previews of the group */
-	PreviewZone?: [number, number, number, number];
+	PreviewZone?: RectTuple;
 
 	/**
 	 * An alternate name for the group
@@ -253,6 +254,46 @@ interface AssetGroupDefinition extends AssetCommonPropertiesGroupAsset, AssetCom
 	HasPreviewImages?: boolean;
 }
 
+/** Input interface for constructing {@link AssetGroup} objects. */
+declare namespace AssetGroupDefinition {
+	/** An {@link AssetGroupDefinition} subtype for groups of the `Item` category. */
+	interface Item extends AssetGroupDefinitionBase {
+		Group: AssetGroupItemName;
+		Asset: (AssetDefinition.Item | string)[];
+		Category: "Item";
+		Clothing?: false;
+		Underwear?: false;
+		Default?: false;
+		AllowCustomize?: true;
+		ExpressionPrerequisite?: never;
+		Blink?: false;
+		BodyCosplay?: false;
+		AllowNone?: true;
+		Zone?: RectTuple[];
+	}
+	/** An {@link AssetGroupDefinition} subtype for groups of the `Appearance` category. */
+	interface Appearance extends AssetGroupDefinitionBase {
+		Group: AssetGroupBodyName;
+		Asset: (AssetDefinition.Appearance | string)[];
+		Category?: "Appearance";
+		IsRestraint?: false;
+		Zone?: never;
+		Time?: never;
+	}
+	/** An {@link AssetGroupDefinition} subtype for groups of the `Script` category. */
+	interface Script extends AssetGroupDefinitionBase {
+		Group: AssetGroupScriptName;
+		Asset: (AssetDefinition.Script | string)[];
+		Category: "Script";
+	}
+}
+
+type AssetGroupDefinition = (
+	AssetGroupDefinition.Item
+	| AssetGroupDefinition.Appearance
+	| AssetGroupDefinition.Script
+);
+
 type AssetBonusName = "KidnapDomination" | "KidnapSneakiness" | "KidnapBruteForce";
 type AssetGender = 'F' | 'M';
 
@@ -282,7 +323,8 @@ interface AssetCommonPropertiesAssetLayer {
 	MaxOpacity?: number;
 }
 
-interface AssetDefinition extends AssetCommonPropertiesGroupAsset, AssetCommonPropertiesAssetLayer, AssetCommonPropertiesGroupAssetLayer {
+/** Input interface for constructing {@link Asset} objects. */
+interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetCommonPropertiesAssetLayer, AssetCommonPropertiesGroupAssetLayer {
 	/** The asset's internal name. */
 	Name: string,
 
@@ -513,6 +555,46 @@ interface AssetDefinition extends AssetCommonPropertiesGroupAsset, AssetCommonPr
 	/** A list of prerequisite checks that must pass for the group's expressions to be selectable */
 	ExpressionPrerequisite?: AssetPrerequisite[];
 }
+
+/** Input interface for constructing {@link Asset} objects. */
+declare namespace AssetDefinition {
+	/** An {@link AssetDefinition} subtype for assets whose group is of the `Item` category. */
+	interface Item extends AssetDefinitionBase {
+		BodyCosplay?: false;
+	}
+	/** An {@link AssetDefinition} subtype for assets whose group is of the `Appearance` category. */
+	interface Appearance extends AssetDefinitionBase {
+		AllowLock?: false;
+		IsLock?: false;
+		PickDifficulty?: never;
+		OwnerOnly?: false;
+		LoverOnly?: false;
+		FamilyOnly?: false;
+		AllowTighten?: false;
+		DrawLocks?: false;
+		CustomBlindBackground?: never;
+		CraftGroup?: never;
+		AllowLockType?: never;
+		CharacterRestricted?: false;
+		AllowRemoveExclusive?: false;
+		ArousalZone?: never;
+		Difficulty?: never;
+		SelfBondage?: never;
+		SelfUnlock?: false;
+		RemoveTime?: never;
+		AlwaysInteract?: false;
+		IsRestraint?: false;
+	}
+	/** An {@link AssetDefinition} subtype for assets whose group is of the `Script` category. */
+	interface Script extends AssetDefinitionBase {
+	}
+}
+
+type AssetDefinition = (
+	AssetDefinition.Item
+	| AssetDefinition.Appearance
+	| AssetDefinition.Script
+);
 
 interface AssetLayerDefinition extends AssetCommonPropertiesGroupAssetLayer, AssetCommonPropertiesAssetLayer {
 	/** The layer's name */

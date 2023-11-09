@@ -567,14 +567,14 @@ declare function DialogClick(): void;
 /**
  * Returns whether the clicked co-ordinates are inside the asset zone
  * @param {Character} C - The character the click is on
- * @param {readonly [number, number, number, number]} Zone - The 4 part array of the rectangular asset zone on the character's body: [X, Y, Width, Height]
+ * @param {RectTuple} Zone - The 4 part array of the rectangular asset zone on the character's body: [X, Y, Width, Height]
  * @param {number} Zoom - The amount the character has been zoomed
  * @param {number} X - The X co-ordinate of the click
  * @param {number} Y - The Y co-ordinate of the click
  * @param {number} HeightRatio - The displayed height ratio of the character
  * @returns {boolean} - If TRUE the click is inside the zone
  */
-declare function DialogClickedInZone(C: Character, Zone: readonly [number, number, number, number], Zoom: number, X: number, Y: number, HeightRatio: number): boolean;
+declare function DialogClickedInZone(C: Character, Zone: RectTuple, Zoom: number, X: number, Y: number, HeightRatio: number): boolean;
 /**
  * Return the co-ordinates and dimensions of the asset group zone as it appears on screen
  * @param {Character} C - The character the zone is calculated for
@@ -836,12 +836,12 @@ declare var DialogTextDefaultTimer: number;
 declare var DialogTextDefaultDuration: number;
 /**
  * The default color to use when applying items.
- * @type {string}
+ * @type {null | string}
  */
-declare var DialogColorSelect: string;
+declare var DialogColorSelect: null | string;
 /**
  * The list of available items for the selected group.
- * @type DialogInventoryItem[]
+ * @type {DialogInventoryItem[]}
  */
 declare var DialogInventory: DialogInventoryItem[];
 /**
@@ -880,23 +880,18 @@ declare var DialogMenuButton: DialogMenuButton[];
  * @type {DialogMenuMode}
  */
 declare var DialogMenuMode: DialogMenuMode;
-/** @deprecated Use DialogMenuMode. */
-declare var DialogColor: any;
-/** @deprecated Use DialogMenuMode. */
-declare var DialogItemPermissionMode: any;
-/**
- * @deprecated Use DialogMenuMode.
- * @type {null | Item}
- * */
-declare var DialogItemToLock: null | Item;
-/**
- * @deprecated Use DialogMenuMode.
- */
-declare var DialogActivityMode: boolean;
-/** @deprecated Use DialogMenuMode. */
-declare var DialogLockMenu: boolean;
-/** @deprecated Use DialogMenuMode. */
-declare var DialogCraftingMenu: boolean;
+/** @deprecated Use {@link DialogMenuMode}. */
+declare var DialogColor: never;
+/** @deprecated Use {@link DialogMenuMode}. */
+declare var DialogItemPermissionMode: never;
+/** @deprecated Use {@link DialogMenuMode}.*/
+declare var DialogItemToLock: never;
+/** @deprecated Use {@link DialogMenuMode}. */
+declare var DialogActivityMode: never;
+/** @deprecated Use {@link DialogMenuMode}. */
+declare var DialogLockMenu: never;
+/** @deprecated Use {@link DialogMenuMode}. */
+declare var DialogCraftingMenu: never;
 /**
  * The group that was selected before we entered the expression coloring screen
  * @type {{mode: DialogMenuMode, group: AssetItemGroup}}
@@ -926,8 +921,18 @@ declare var DialogExtendedMessage: string;
  * @type {ItemActivity[]}
  */
 declare var DialogActivity: ItemActivity[];
-/** @type {Record<"Enabled" | "Equipped" | "BothFavoriteUsable" | "TargetFavoriteUsable" | "PlayerFavoriteUsable" | "Usable" | "TargetFavoriteUnusable" | "PlayerFavoriteUnusable" | "Unusable" | "Blocked", DialogSortOrder>} */
-declare var DialogSortOrder: Record<"Enabled" | "Equipped" | "BothFavoriteUsable" | "TargetFavoriteUsable" | "PlayerFavoriteUsable" | "Usable" | "TargetFavoriteUnusable" | "PlayerFavoriteUnusable" | "Unusable" | "Blocked", DialogSortOrder>;
+declare namespace DialogSortOrder {
+    let Enabled: 1;
+    let Equipped: 2;
+    let BothFavoriteUsable: 3;
+    let TargetFavoriteUsable: 4;
+    let PlayerFavoriteUsable: 5;
+    let Usable: 6;
+    let TargetFavoriteUnusable: 7;
+    let PlayerFavoriteUnusable: 8;
+    let Unusable: 9;
+    let Blocked: 10;
+}
 /** @type {null | DialogSelfMenuOptionType} */
 declare var DialogSelfMenuSelected: null | DialogSelfMenuOptionType;
 declare var DialogLeaveDueToItem: boolean;

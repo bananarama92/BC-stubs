@@ -681,7 +681,7 @@ interface AssetGroup {
 	readonly BodyCosplay: boolean;
 	readonly Hide?: readonly AssetGroupName[];
 	readonly Block?: readonly AssetGroupItemName[];
-	readonly Zone?: readonly [number, number, number, number][];
+	readonly Zone?: readonly RectTuple[];
 	readonly SetPose?: readonly AssetPoseName[];
 	/** @deprecated - Superceded by {@link PoseMapping} */
 	readonly AllowPose?: never;
@@ -722,7 +722,6 @@ interface AssetAppearanceGroup extends AssetGroup {
 	readonly Category: "Appearance";
 	readonly Name: AssetGroupBodyName;
 	readonly IsRestraint: false;
-	readonly AllowExpression?: readonly ExpressionName[];
 }
 
 /** An AssetGroup subtype for the `Item` {@link AssetGroup.Category} */
@@ -733,7 +732,6 @@ interface AssetItemGroup extends AssetGroup {
 	readonly BodyCosplay: false;
 	readonly Clothing: false;
 	readonly IsDefault: false;
-	readonly AllowExpression?: undefined;
 	readonly Zone: readonly RectTuple[];
 }
 
@@ -746,7 +744,6 @@ interface AssetScriptGroup extends AssetGroup {
 	readonly Underwear: false;
 	readonly Clothing: false;
 	readonly IsDefault: false;
-	readonly AllowExpression?: undefined;
 }
 
 /** Mapped type for mapping group names to their respective {@link AssetGroup} subtype */
@@ -759,64 +756,64 @@ type AssetGroupMap = (
 /** An object defining a drawable layer of an asset */
 interface AssetLayer {
 	/** The name of the layer - may be null if the asset only contains a single default layer */
-	Name: string | null;
+	readonly Name: string | null;
 	/** whether or not this layer can be colored */
-	AllowColorize: boolean;
+	readonly AllowColorize: boolean;
 	/** if not null, specifies that this layer should always copy the color of the named layer */
-	CopyLayerColor: string | null;
+	readonly CopyLayerColor: string | null;
 	/** specifies the name of a color group that this layer belongs to. Any layers within the same color group can be colored together via the item color UI */
-	ColorGroup: string | null;
+	readonly ColorGroup: string | null;
 	/** whether or not this layer can be colored in the coloring UI */
-	HideColoring: boolean;
+	readonly HideColoring: boolean;
 	/** A list of allowed extended item types that this layer permits - the layer will only be drawn if
 	the item type matches one of these types. If null, the layer is considered to permit all extended types. */
-	AllowTypes: readonly string[] | null;
+	readonly AllowTypes: readonly string[] | null;
 	/** whether or not the layer has separate assets per type. If not, the extended type will not be included in
 	the URL when fetching the layer's image */
-	HasType: boolean;
+	readonly HasType: boolean;
 	/** The name of the parent group for this layer. If null, the layer has no parent group. If
 	undefined, the layer inherits its parent group from it's asset/group. */
-	ParentGroupName: AssetGroupName | null;
+	readonly ParentGroupName: AssetGroupName | null;
 	/** @deprecated - Superceded by {@link PoseMapping} */
-	AllowPose?: never;
+	readonly AllowPose?: never;
 	/** @deprecated - Superceded by {@link PoseMapping} */
-	HideForPose?: never;
+	readonly HideForPose?: never;
 	/** An array of objects mapping poses to other poses to determine their draw folder */
-	PoseMapping: Readonly<AssetPoseMapping>;
+	readonly PoseMapping: Readonly<AssetPoseMapping>;
 	/** The drawing priority of this layer. Inherited from the parent asset/group if not specified in the layer
 	definition. */
-	Priority: number;
-	InheritColor: AssetGroupName | null;
-	Alpha: readonly AlphaDefinition[];
+	readonly Priority: number;
+	readonly InheritColor: AssetGroupName | null;
+	readonly Alpha: readonly AlphaDefinition[];
 	/** The asset that this layer belongs to */
-	Asset: Asset;
-	DrawingLeft?: number;
-	DrawingTop?: number;
-	HideAs?: Readonly<{ Group: AssetGroupName; Asset?: string }>;
+	readonly Asset: Asset;
+	readonly DrawingLeft?: number;
+	readonly DrawingTop?: number;
+	readonly HideAs?: Readonly<{ Group: AssetGroupName; Asset?: string }>;
 	/** That layer is drawing at a fixed Y position */
-	FixedPosition?: boolean;
-	HasImage: boolean;
-	Opacity: number;
-	MinOpacity: number;
-	MaxOpacity: number;
-	BlendingMode: GlobalCompositeOperation;
-	LockLayer: boolean;
-	MirrorExpression?: AssetGroupName;
-	AllowModuleTypes?: readonly string[];
+	readonly FixedPosition?: boolean;
+	readonly HasImage: boolean;
+	readonly Opacity: number;
+	readonly MinOpacity: number;
+	readonly MaxOpacity: number;
+	readonly BlendingMode: GlobalCompositeOperation;
+	readonly LockLayer: boolean;
+	readonly MirrorExpression?: AssetGroupName;
+	readonly AllowModuleTypes?: readonly string[];
 	/** The coloring index for this layer */
-	ColorIndex: number;
+	readonly ColorIndex: number;
 	/** Any group-specific alpha masks that should be applied when drawing the layer. Only available on layers that have
 	been created prior to drawing */
-	GroupAlpha?: AlphaDefinition[];
+	readonly GroupAlpha?: Readonly<AlphaDefinition>[];
 	/** A module for which the layer can have types. */
-	ModuleType: readonly string[] | null;
+	readonly ModuleType: readonly string[] | null;
 	/* Specifies that this layer should not be drawn if the character is wearing any item with the given attributes */
-	HideForAttribute: readonly AssetAttribute[] | null;
+	readonly HideForAttribute: readonly AssetAttribute[] | null;
 	/* Specifies that this layer should not be drawn unless the character is wearing an item with one of the given attributes */
-	ShowForAttribute: readonly AssetAttribute[] | null;
+	readonly ShowForAttribute: readonly AssetAttribute[] | null;
 	/** Used along with a hook to make layers of an asset disappear in some cases. */
-	Visibility: "Player" | "AllExceptPlayerDialog" | "Others" | "OthersExceptDialog" | "Owner" | "Lovers" | "Mistresses" | null;
-	ColorSuffix: Readonly<Record<string, string>> | null;
+	readonly Visibility: "Player" | "AllExceptPlayerDialog" | "Others" | "OthersExceptDialog" | "Owner" | "Lovers" | "Mistresses" | null;
+	readonly ColorSuffix: Readonly<Record<string, string>> | null;
 }
 
 /** An object defining a group of alpha masks to be applied when drawing an asset layer */
@@ -863,133 +860,133 @@ interface ExpressionItem {
 /**
  * The internal Asset definition of an asset.
  *
- * See AssetDefinition in Female3DCG.d.ts for documentation.
+ * See {@link AssetDefinition} in Female3DCG.d.ts for documentation.
  */
-type Asset = Readonly<{
-	Name: string;
-	Description: string;
-	Group: AssetGroup;
-	ParentItem?: string;
-	ParentGroupName: AssetGroupName | null;
-	Enable: boolean;
-	Visible: boolean;
-	NotVisibleOnScreen?: readonly string[];
-	Wear: boolean;
-	Activity: ActivityName | null;
-	AllowActivity?: readonly ActivityName[];
-	ActivityAudio?: readonly string[];
-	ActivityExpression: Partial<Record<ActivityName, readonly ExpressionTrigger[]>>;
-	AllowActivityOn?: readonly AssetGroupItemName[];
-	BuyGroup?: string;
-	PrerequisiteBuyGroups?: readonly string[];
-	Effect: readonly EffectName[];
-	Bonus?: AssetBonusName;
-	Block?: readonly AssetGroupItemName[];
-	Expose: readonly AssetGroupItemName[];
-	Hide?: readonly AssetGroupName[];
-	HideItem?: readonly string[];
-	HideItemExclude: readonly string[];
-	HideItemAttribute: readonly AssetAttribute[];
-	Require: readonly AssetGroupBodyName[];
-	SetPose?: readonly AssetPoseName[];
+interface Asset {
+	readonly Name: string;
+	readonly Description: string;
+	readonly Group: AssetGroup;
+	readonly ParentItem?: string;
+	readonly ParentGroupName: AssetGroupName | null;
+	readonly Enable: boolean;
+	readonly Visible: boolean;
+	readonly NotVisibleOnScreen?: readonly string[];
+	readonly Wear: boolean;
+	readonly Activity: ActivityName | null;
+	readonly AllowActivity?: readonly ActivityName[];
+	readonly ActivityAudio?: readonly string[];
+	readonly ActivityExpression: Readonly<Partial<Record<ActivityName, readonly ExpressionTrigger[]>>>;
+	readonly AllowActivityOn?: readonly AssetGroupItemName[];
+	readonly BuyGroup?: string;
+	readonly PrerequisiteBuyGroups?: readonly string[];
+	readonly Effect: readonly EffectName[];
+	readonly Bonus?: AssetBonusName;
+	readonly Block?: readonly AssetGroupItemName[];
+	readonly Expose: readonly AssetGroupItemName[];
+	readonly Hide?: readonly AssetGroupName[];
+	readonly HideItem?: readonly string[];
+	readonly HideItemExclude: readonly string[];
+	readonly HideItemAttribute: readonly AssetAttribute[];
+	readonly Require: readonly AssetGroupBodyName[];
+	readonly SetPose?: readonly AssetPoseName[];
 	/** @deprecated - Superceded by {@link Asset.PoseMapping} */
-	AllowPose?: never;
+	readonly AllowPose?: never;
 	/** @deprecated - Superceded by {@link Asset.PoseMapping} */
-	HideForPose?: never;
-	PoseMapping: AssetPoseMapping;
-	AllowActivePose?: readonly AssetPoseName[];
+	readonly HideForPose?: never;
+	readonly PoseMapping: Readonly<AssetPoseMapping>;
+	readonly AllowActivePose?: readonly AssetPoseName[];
 	/** @deprecated Use {@link Asset.AllowActivePose} instead */
-	WhitelistActivePose?: never;
-	Value: number;
-	Difficulty: number;
-	SelfBondage: number;
-	SelfUnlock: boolean;
-	ExclusiveUnlock: boolean;
-	Random: boolean;
-	RemoveAtLogin: boolean;
-	WearTime: number;
-	RemoveTime: number;
-	RemoveTimer: number;
-	MaxTimer: number;
-	DrawingPriority?: number;
-	DrawingLeft?: number;
-	DrawingTop?: number;
-	HeightModifier: number;
-	ZoomModifier: number;
-	Alpha?: readonly AlphaDefinition[];
-	Prerequisite: readonly AssetPrerequisite[];
-	Extended: boolean;
-	AlwaysExtend: boolean;
-	AlwaysInteract: boolean;
-	AllowLock: boolean;
-	LayerVisibility: boolean;
-	IsLock: boolean;
-	PickDifficulty: number;
-	OwnerOnly: boolean;
-	LoverOnly: boolean;
-	FamilyOnly: boolean;
-	ExpressionTrigger?: readonly ExpressionTrigger[];
-	RemoveItemOnRemove: readonly { Name: string; Group: AssetGroupName; Type?: string; }[];
-	AllowEffect?: readonly EffectName[];
-	AllowBlock?: readonly AssetGroupItemName[];
-	AllowHide?: readonly AssetGroupName[];
-	AllowHideItem?: readonly string[];
-	AllowTypes?: readonly string[];
-	AllowTighten?: boolean;
+	readonly WhitelistActivePose?: never;
+	readonly Value: number;
+	readonly Difficulty: number;
+	readonly SelfBondage: number;
+	readonly SelfUnlock: boolean;
+	readonly ExclusiveUnlock: boolean;
+	readonly Random: boolean;
+	readonly RemoveAtLogin: boolean;
+	readonly WearTime: number;
+	readonly RemoveTime: number;
+	readonly RemoveTimer: number;
+	readonly MaxTimer: number;
+	readonly DrawingPriority?: number;
+	readonly DrawingLeft?: number;
+	readonly DrawingTop?: number;
+	readonly HeightModifier: number;
+	readonly ZoomModifier: number;
+	readonly Alpha?: readonly AlphaDefinition[];
+	readonly Prerequisite: readonly AssetPrerequisite[];
+	readonly Extended: boolean;
+	readonly AlwaysExtend: boolean;
+	readonly AlwaysInteract: boolean;
+	readonly AllowLock: boolean;
+	readonly LayerVisibility: boolean;
+	readonly IsLock: boolean;
+	readonly PickDifficulty: number;
+	readonly OwnerOnly: boolean;
+	readonly LoverOnly: boolean;
+	readonly FamilyOnly: boolean;
+	readonly ExpressionTrigger?: readonly ExpressionTrigger[];
+	readonly RemoveItemOnRemove: readonly Readonly<{ Name: string; Group: AssetGroupName; Type?: string; }>[];
+	readonly AllowEffect?: readonly EffectName[];
+	readonly AllowBlock?: readonly AssetGroupItemName[];
+	readonly AllowHide?: readonly AssetGroupName[];
+	readonly AllowHideItem?: readonly string[];
+	readonly AllowTypes?: readonly string[];
+	readonly AllowTighten?: boolean;
 	/**
 	 * The default color of the item: an array of length {@link Asset.ColorableLayerCount} consisting of `"Default"` and/or valid color hex codes.
 	 */
-	DefaultColor: readonly string[];
-	Opacity: number;
-	MinOpacity: number;
-	MaxOpacity: number;
-	Audio?: string;
-	Category?: readonly AssetCategory[];
-	Fetish?: readonly FetishName[];
-	CustomBlindBackground?: string;
-	ArousalZone: AssetGroupItemName;
-	IsRestraint: boolean;
-	BodyCosplay: boolean;
-	OverrideBlinking: boolean;
-	DialogSortOverride?: DialogSortOrder;
-	DynamicDescription: (C: Character) => string;
-	DynamicPreviewImage: (C: Character) => string;
-	DynamicAllowInventoryAdd: (C: Character) => boolean;
-	DynamicName: (C: Character) => string;
-	DynamicGroupName: AssetGroupName;
-	DynamicActivity: (C: Character) => ActivityName | null | undefined;
-	DynamicAudio: ((C: Character) => string) | null;
-	CharacterRestricted: boolean;
-	AllowRemoveExclusive: boolean;
-	InheritColor: null | AssetGroupName;
-	DynamicBeforeDraw: boolean;
-	DynamicAfterDraw: boolean;
-	DynamicScriptDraw: boolean;
-	HasType: boolean;
-	AllowLockType?: readonly string[];
-	AllowColorizeAll: boolean;
-	AvailableLocations: readonly string[];
-	OverrideHeight?: AssetOverrideHeight;
+	readonly DefaultColor: readonly string[];
+	readonly Opacity: number;
+	readonly MinOpacity: number;
+	readonly MaxOpacity: number;
+	readonly Audio?: string;
+	readonly Category?: readonly AssetCategory[];
+	readonly Fetish?: readonly FetishName[];
+	readonly CustomBlindBackground?: string;
+	readonly ArousalZone: AssetGroupItemName;
+	readonly IsRestraint: boolean;
+	readonly BodyCosplay: boolean;
+	readonly OverrideBlinking: boolean;
+	readonly DialogSortOverride?: DialogSortOrder;
+	readonly DynamicDescription: (C: Character) => string;
+	readonly DynamicPreviewImage: (C: Character) => string;
+	readonly DynamicAllowInventoryAdd: (C: Character) => boolean;
+	readonly DynamicName: (C: Character) => string;
+	readonly DynamicGroupName: AssetGroupName;
+	readonly DynamicActivity: (C: Character) => ActivityName | null | undefined;
+	readonly DynamicAudio: ((C: Character) => string) | null;
+	readonly CharacterRestricted: boolean;
+	readonly AllowRemoveExclusive: boolean;
+	readonly InheritColor: null | AssetGroupName;
+	readonly DynamicBeforeDraw: boolean;
+	readonly DynamicAfterDraw: boolean;
+	readonly DynamicScriptDraw: boolean;
+	readonly HasType: boolean;
+	readonly AllowLockType?: readonly string[];
+	readonly AllowColorizeAll: boolean;
+	readonly AvailableLocations: readonly string[];
+	readonly OverrideHeight?: Readonly<AssetOverrideHeight>;
 	/** @deprecated Use {@link Asset.AllowActivePose} instead */
-	FreezeActivePose?: never;
-	DrawLocks: boolean;
-	AllowExpression?: readonly ExpressionName[];
-	MirrorExpression?: AssetGroupBodyName;
-	FixedPosition: boolean;
-	Layer: readonly AssetLayer[];
+	readonly FreezeActivePose?: never;
+	readonly DrawLocks: boolean;
+	readonly AllowExpression?: readonly ExpressionName[];
+	readonly MirrorExpression?: AssetGroupName;
+	readonly FixedPosition: boolean;
+	readonly Layer: readonly AssetLayer[];
 	/** The number of colorable layers. Guaranteed to be >= 1 */
-	ColorableLayerCount: number;
-	Archetype?: ExtendedArchetype;
-	Attribute: readonly AssetAttribute[];
-	PreviewIcons: readonly InventoryIcon[];
-	Tint: readonly TintDefinition[];
-	AllowTint: boolean;
-	DefaultTint?: string;
-	Gender?: AssetGender;
-	CraftGroup: string;
-	ColorSuffix: Record<string, string>;
-	ExpressionPrerequisite?: readonly AssetPrerequisite[];
-}>;
+	readonly ColorableLayerCount: number;
+	readonly Archetype?: ExtendedArchetype;
+	readonly Attribute: readonly AssetAttribute[];
+	readonly PreviewIcons: readonly InventoryIcon[];
+	readonly Tint: readonly Readonly<TintDefinition>[];
+	readonly AllowTint: boolean;
+	readonly DefaultTint?: string;
+	readonly Gender?: AssetGender;
+	readonly CraftGroup: string;
+	readonly ColorSuffix: Readonly<Record<string, string>>;
+	readonly ExpressionPrerequisite?: readonly AssetPrerequisite[];
+}
 
 //#endregion
 
@@ -1318,7 +1315,7 @@ interface Character {
 	HasAttribute: (attribute: AssetAttribute) => boolean;
 	DrawPose?: AssetPoseName[];
 	DrawAppearance?: Item[];
-	AppearanceLayers?: AssetLayer[];
+	AppearanceLayers?: Mutable<AssetLayer>[];
 	Hooks: Map<CharacterHook, Map<string, () => void>> | null;
 	RegisterHook: (hookName: CharacterHook, hookInstance: string, callback: () => void) => boolean;
 	UnregisterHook: (hookName: CharacterHook, hookInstance: string) => boolean;
@@ -3409,13 +3406,20 @@ type ColorPickerCallbackType = (Color: string) => void;
 // #region Log
 
 interface LogRecord {
-	Name: string;
+	Name: LogNameType[LogGroupType];
 	Group: LogGroupType;
 	Value: number;
 }
 
 /** The logging groups as supported by the {@link LogRecord.Group} */
 type LogGroupType = keyof LogNameType;
+
+type LogNameAdvanced = (
+	`BlockScreen${string}`
+	| `BlockAppearance${string}`
+	| `BlockItemGroup${string}`
+	| `ForbiddenWords${string}`
+);
 
 /** An interface mapping {@link LogRecord.Group} types to valid {@link LogRecord.Name} types */
 interface LogNameType {
@@ -3441,7 +3445,7 @@ interface LogNameType {
 	"NPC-Julia": "Dominant" | "Submissive",
 	"NPC-Yuki": "Dominant" | "Submissive",
 	"NPC-Mildred": "Dominant" | "Submissive",
-	// NOTE: A number of owner rules can have arbitrary suffices, and can thus not be expressed as string literals
+	// NOTE: A number of owner rules can have arbitrary suffices, and can thus not be fully expressed as string literals
 	OwnerRule: (
 		"BlockChange"
 		| "BlockTalk"
@@ -3451,6 +3455,7 @@ interface LogNameType {
 		| "BlockAccessSelf"
 		| "BlockAccessOther"
 		| "BlockKey"
+		| "BlockFamilyKey"
 		| "BlockOwnerLockSelf"
 		| "BlockRemote"
 		| "BlockRemoteSelf"
@@ -3461,7 +3466,7 @@ interface LogNameType {
 		| "BlockItemGroup"
 		| "ForbiddenWords"
 		| "BlockTalkForbiddenWords"
-		| string
+		| LogNameAdvanced
 	),
 	Pony: "JoinedStable",
 	PonyExam: "JoinedStable",

@@ -79,9 +79,11 @@ declare function AssetMapLayer(Layer: AssetLayerDefinition, AssetDefinition: Ass
 /**
  * Parses and validates asset's opacity
  * @param {number|undefined} opacity
+ * @param {number} min - The minimum opacity
+ * @param {number} max - The maximum opacity
  * @returns {number}
  */
-declare function AssetParseOpacity(opacity: number | undefined): number;
+declare function AssetParseOpacity(opacity: number | undefined, min?: number, max?: number): number;
 /**
  * Determines whether a layer can be colorized, based on the layer definition and its parent asset/group definitions
  * @param {AssetLayerDefinition} Layer - The raw layer definition
