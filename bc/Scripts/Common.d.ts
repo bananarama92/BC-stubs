@@ -278,12 +278,23 @@ declare function CommonCompareVersion(Current: string, Other: string): -1 | 0 | 
 /**
  * A simple deep equality check function which checks whether two objects are equal. The function traverses recursively
  * into objects and arrays to check for equality. Primitives and simple types are considered equal as defined by `===`.
- * @param {*} obj1 - The first object to compare
- * @param {*} obj2 - The second object to compare
- * @returns {boolean} - TRUE if both objects are equal, up to arbitrarily deeply nested property values, FALSE
+ * @template T
+ * @param {unknown} obj1 - The first object to compare
+ * @param {T} obj2 - The second object to compare
+ * @returns {obj1 is T} - TRUE if both objects are equal, up to arbitrarily deeply nested property values, FALSE
  * otherwise.
  */
-declare function CommonDeepEqual(obj1: any, obj2: any): boolean;
+declare function CommonDeepEqual<T>(obj1: unknown, obj2: T): obj1 is T;
+/**
+ * A simple deep equality check function which checks whether two objects are equal for all properties in `subRec`.
+ * The function traverses recursively into objects and arrays to check for equality.
+ * Primitives and simple types are considered equal as defined by `===`.
+ * @template T
+ * @param {unknown} subRec - The subset-containg object to compare
+ * @param {T} superRec - The superset-containg object to compare
+ * @returns {subRec is Partial<T>} - Whether `subRec` is a subset of `superRec` up to arbitrarily deeply nested property values
+ */
+declare function CommonDeepIsSubset<T>(subRec: unknown, superRec: T): subRec is Partial<T>;
 /**
  * Adds all items from the source array to the destination array if they aren't already included
  * @template T

@@ -207,6 +207,12 @@ declare function AssetLayerSort(layers: AssetLayer[]): AssetLayer[];
  * @returns {string[]} See {@link Asset.DefaultColor}
  */
 declare function AssetParseDefaultColor(colorableLayerCount: number, color?: string | readonly string[]): string[];
+/**
+ * Unflatten a pose name array, converting it into a dictionary mapping pose categories to aforementioned pose names
+ * @param {readonly AssetPoseName[]} poses
+ * @returns {Partial<Record<AssetPoseCategory, AssetPoseName[]>>}
+ */
+declare function AssetPoseToMapping(poses: readonly AssetPoseName[]): Partial<Record<AssetPoseCategory, AssetPoseName[]>>;
 /** @type {Asset[]} */
 declare var Asset: Asset[];
 /** @type {AssetGroup[]} */

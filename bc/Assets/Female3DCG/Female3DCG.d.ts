@@ -254,9 +254,25 @@ declare namespace AssetPoseMapping {
         let Spread_8: "Spread";
         export { Spread_8 as Spread };
     }
-    namespace SuitLower {
+    namespace Suit {
+        let BackBoxTie_8: "BackBoxTie";
+        export { BackBoxTie_8 as BackBoxTie };
+        let BackCuffs_8: "BackCuffs";
+        export { BackCuffs_8 as BackCuffs };
+        let BackElbowTouch_7: "BackElbowTouch";
+        export { BackElbowTouch_7 as BackElbowTouch };
         let Hogtied_11: "Hogtied";
         export { Hogtied_11 as Hogtied };
+        let OverTheHead_7: "OverTheHead";
+        export { OverTheHead_7 as OverTheHead };
+        let TapedHands_6: "TapedHands";
+        export { TapedHands_6 as TapedHands };
+        let Yoked_8: "Yoked";
+        export { Yoked_8 as Yoked };
+    }
+    namespace SuitLower {
+        let Hogtied_12: "Hogtied";
+        export { Hogtied_12 as Hogtied };
         let Kneel_10: "Kneel";
         export { Kneel_10 as Kneel };
         let KneelingSpread_8: "KneelingSpread";
