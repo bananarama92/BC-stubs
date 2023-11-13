@@ -213,11 +213,12 @@ declare function PlatformAnimAvailable(C: any, AnimationName: string): boolean;
  * @param {Number} X - The X position
  * @param {Number} Y - The Y position
  * @param {Number} Force - The speed of the projectile
+ * @param {Number} Gravity - The Y axis gravity pulling that projectile down (default to 0.25)
  * @param {Number} Damage - The damage done by the projectile
  * @param {any} HitAudio - The damage done by the projectile
  * @returns {void} - Nothing
  */
-declare function PlatformCreateProjectile(Name: string, Type: string, FaceLeft: boolean, X: number, Y: number, Force: number, Damage: number, HitAudio: any): void;
+declare function PlatformCreateProjectile(Name: string, Type: string, FaceLeft: boolean, X: number, Y: number, Force: number, Gravity: number, Damage: number, HitAudio: any): void;
 /**
  * Calculates the projectiles
  * @param {Number} Time - The current time stamp of the frame
