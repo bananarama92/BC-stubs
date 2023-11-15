@@ -364,6 +364,11 @@ declare const ExtendedXYWithoutImages: [number, number][][];
  * @type {[number, number][][]}
  */
 declare const ExtendedXYClothes: [number, number][][];
+/**
+ * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
+ * @type {[number, number][][]}
+ */
+declare const ExtendedXYClothesWithoutImages: [number, number][][];
 /** Memoization of the requirements check */
 declare const ExtendedItemRequirementCheckMessageMemo: MemoizedFunction<typeof ExtendedItemRequirementCheckMessage>;
 /**

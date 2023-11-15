@@ -119,12 +119,6 @@ declare function AssetBuildDescription(Family: IAssetFamily, CSV: string[][]): v
  */
 declare function AssetLoadDescription(Family: IAssetFamily): void;
 /**
- * Yield the passed group, all its assets and all their layers
- * @param {AssetGroup} group
- * @return {Generator<AssetGroup | Asset | AssetLayer, void>}
- */
-declare function AssetYieldAll(group: AssetGroup): Generator<AssetGroup | Asset | AssetLayer, void>;
-/**
  * Loads a specific asset file
  * @param {readonly AssetGroupDefinition[]} Groups
  * @param {IAssetFamily} Family
