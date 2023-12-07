@@ -1,6 +1,5 @@
 /**
- * Registers a typed extended item. This automatically creates the item's load, draw and click functions. It will also
- * generate the asset's AllowType array.
+ * Registers a typed extended item. This automatically creates the item's load, draw and click functions.
  * @param {Asset} asset - The asset being registered
  * @param {TextItemConfig} config - The item's typed item configuration
  * @param {null | ExtendedItemOption} parentOption
@@ -22,7 +21,7 @@ declare function TextItemGetDrawData(fieldNames: readonly TextItemNames[], drawD
  * @param {null | ExtendedItemOption} parentOption - The parent extended item option of the super screens (if any)
  * @returns {TextItemData} - The generated typed item data for the asset
  */
-declare function TextItemCreateTextItemData(asset: Asset, { MaxLength, Font, DialogPrefix, ChatTags, Dictionary, ScriptHooks, BaselineProperty, EventListeners, DrawData, PushOnPublish, AllowEffect, }: TextItemConfig, parentOption?: null | ExtendedItemOption): TextItemData;
+declare function TextItemCreateTextItemData(asset: Asset, { MaxLength, Font, DialogPrefix, ChatTags, Dictionary, ScriptHooks, BaselineProperty, EventListeners, DrawData, PushOnPublish, AllowEffect, Name, }: TextItemConfig, parentOption?: null | ExtendedItemOption): TextItemData;
 /**
  * @param {TextItemData} data - The extended item data
  * @param {Item} item - The item in question

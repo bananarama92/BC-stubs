@@ -426,10 +426,19 @@ declare function CommonGenerateGrid<T>(items: readonly T[], offset: number, grid
  * @template {keyof RecordType} KeyType
  * @template {{}} RecordType
  * @param {RecordType} object - The to-be copied record
- * @param {readonly KeyType[]} keys - The to-be removed keys from the record
+ * @param {Iterable<KeyType>} keys - The to-be removed keys from the record
  * @returns {Omit<RecordType, KeyType>}
  */
-declare function CommonOmit<KeyType_1 extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: readonly KeyType_1[]): Omit<RecordType, KeyType_1>;
+declare function CommonOmit<KeyType_1 extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: Iterable<KeyType_1>): Omit<RecordType, KeyType_1>;
+/**
+ * Create a copy of the passed record with all specified keys removed
+ * @template {keyof RecordType} KeyType
+ * @template {{}} RecordType
+ * @param {RecordType} object - The to-be copied record
+ * @param {Iterable<KeyType>} keys - The to-be removed keys from the record
+ * @returns {Pick<RecordType, KeyType>}
+ */
+declare function CommonPick<KeyType_1 extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: Iterable<KeyType_1>): Pick<RecordType, KeyType_1>;
 /**
  * Iterate through the passed iterable and yield index/value pairs.
  * @template T
@@ -463,6 +472,22 @@ declare function CommonURLHasExtension(TestURL: string, Extension: readonly stri
  * @returns {rec2 is T}
  */
 declare function CommonObjectEqual<T>(rec1: T, rec2: unknown): rec2 is T;
+/**
+ * Return if the key/value pairs of `subRec` form a subset of `superRec`
+ * @template T
+ * @param {unknown} subRec
+ * @param {T} superRec
+ * @returns {subRec is Partial<T>}
+ */
+declare function CommonObjectIsSubset<T>(subRec: unknown, superRec: T): subRec is Partial<T>;
+/**
+ * Parse the passed stringified JSON data and catch any exceptions.
+ * Exceptions will cause the function to return `undefined`.
+ * @param {string} data
+ * @returns {any}
+ * @see {@link JSON.parse}
+ */
+declare function CommonJSONParse(data: string): any;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {number|string} */
@@ -476,6 +501,7 @@ declare var CurrentScreenFunctions: ScreenFunctions;
 /** @type {Character|NPCCharacter|null} */
 declare var CurrentCharacter: Character | NPCCharacter | null;
 declare var CurrentOnlinePlayers: number;
+/** A per-screen ratio of how darkened the background must be */
 declare var CurrentDarkFactor: number;
 declare var CommonIsMobile: boolean;
 /** @type {Record<string, string[][]>} */

@@ -99,6 +99,24 @@ declare function DrawAssetGroupZone(C: Character, Zone: readonly RectTuple[], Zo
  */
 declare function DrawAlpha(Canvas: HTMLCanvasElement, Alpha?: number): HTMLCanvasElement;
 /**
+ * Clears a rectangle on a canvas
+ * @param {CanvasRenderingContext2D} Canvas - The canvas on which to clear rect
+ * @param {number} x - Position of the image on the X axis
+ * @param {number} y - Position of the image on the Y axis
+ * @param {number} width - Width of the rectangle to clear
+ * @param {number} height - Height of the rectangle to clear
+ * @returns {void} - Nothing
+ */
+declare function DrawClearRect(Canvas: CanvasRenderingContext2D, x: number, y: number, width: number, height: number): void;
+/**
+ * Clears alpha masks on a canvas
+ * @param {CanvasRenderingContext2D} Canvas - The canvas on which to clear rect
+ * @param {number} X - X offset of where the masking should be done
+ * @param {number} Y - Y offset of where the masking should be done
+ * @param {readonly RectTuple[]} AlphaMasks - An array of alpha masks to apply
+ */
+declare function DrawClearAlphaMasks(Canvas: CanvasRenderingContext2D, X: number, Y: number, AlphaMasks: readonly RectTuple[]): void;
+/**
  * Draws a zoomed image from a source to a specific canvas
  * @param {string} Source - URL of the image
  * @param {CanvasRenderingContext2D} Canvas - Canvas on which to draw the image
@@ -126,17 +144,14 @@ declare function DrawImageZoomCanvas(Source: string, Canvas: CanvasRenderingCont
 declare function DrawImageResize(Source: string, X: number, Y: number, Width: number, Height: number): boolean;
 /**
  * Draws a zoomed image from a source to a specific canvas
- * @param {string} Source - URL of the image
+ * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of the image
  * @param {CanvasRenderingContext2D} Canvas - Canvas on which to draw the image
  * @param {number} X - Position of the image on the X axis
  * @param {number} Y - Position of the image on the Y axis
- * @param {readonly RectTuple[]} [AlphaMasks] - A list of alpha masks to apply to the asset
- * @param {number} [Opacity=1] - The opacity at which to draw the image
- * @param {boolean} [Rotate=false] - If the image should be rotated by 180 degrees
- * @param {GlobalCompositeOperation} [BlendingMode="source-over"] - blending mode for drawing the image
+ * @param {DrawOptions} [Options] Options to use when drawing
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawImageCanvas(Source: string, Canvas: CanvasRenderingContext2D, X: number, Y: number, AlphaMasks?: readonly RectTuple[], Opacity?: number, Rotate?: boolean, BlendingMode?: GlobalCompositeOperation): boolean;
+declare function DrawImageCanvas(Source: string | HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, X: number, Y: number, Options?: DrawOptions): boolean;
 /**
  * Draws a canvas to a specific canvas
  * @param {HTMLImageElement | HTMLCanvasElement} Img - Canvas to draw
@@ -148,25 +163,6 @@ declare function DrawImageCanvas(Source: string, Canvas: CanvasRenderingContext2
  */
 declare function DrawCanvas(Img: HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, X: number, Y: number, AlphaMasks: readonly RectTuple[]): boolean;
 /**
- * Draws a specific canvas with a zoom on the main canvas
- * @param {HTMLImageElement | HTMLCanvasElement} Canvas - Canvas to draw on the main canvas
- * @param {number} X - Position of the canvas on the X axis
- * @param {number} Y - Position of the canvas on the Y axis
- * @param {number} Zoom - Zoom factor
- * @returns {boolean} - whether the image was complete or not
- */
-declare function DrawCanvasZoom(Canvas: HTMLImageElement | HTMLCanvasElement, X: number, Y: number, Zoom: number): boolean;
-/**
- * Draws a zoomed image from a source to the canvas and mirrors it from left to right
- * @param {string} Source - URL of the image
- * @param {number} X - Position of the image on the X axis
- * @param {number} Y - Position of the image on the Y axis
- * @param {number} Width - Width of the image
- * @param {number} Height - Height of the image
- * @returns {boolean} - whether the image was complete or not
- */
-declare function DrawImageZoomMirror(Source: string, X: number, Y: number, Width: number, Height: number): boolean;
-/**
  * Draws an image from a source on the main canvas
  * @param {string} Source - URL of the image
  * @param {number} X - Position of the image on the X axis
@@ -176,61 +172,15 @@ declare function DrawImageZoomMirror(Source: string, X: number, Y: number, Width
  */
 declare function DrawImage(Source: string, X: number, Y: number, Invert?: boolean): boolean;
 /**
- * Draws an image from a source to the specified canvas
- * @param {string} Source - URL of the image
- * @param {CanvasRenderingContext2D} Canvas - Canvas on which to draw the image
- * @param {number} X - Position of the rectangle on the X axis
- * @param {number} Y - Position of the rectangle on the Y axis
- * @param {number} Zoom - Zoom factor
- * @param {string} HexColor - Color of the image to draw
- * @param {boolean} FullAlpha - Whether or not it is drawn in full alpha mode
- * @param {readonly RectTuple[]} [AlphaMasks] - A list of alpha masks to apply to the asset
- * @param {number} [Opacity=1] - The opacity at which to draw the image
- * @param {boolean} [Rotate=false] - If the image should be rotated by 180 degrees
- * @param {GlobalCompositeOperation} [BlendingMode="source-over"] - blending mode for drawing the image
- * @returns {boolean} - whether the image was complete or not
- */
-declare function DrawImageCanvasColorize(Source: string, Canvas: CanvasRenderingContext2D, X: number, Y: number, Zoom: number, HexColor: string, FullAlpha: boolean, AlphaMasks?: readonly RectTuple[], Opacity?: number, Rotate?: boolean, BlendingMode?: GlobalCompositeOperation): boolean;
-/**
- * Draws the mirrored version of an image from a source on the canvas
- * @param {string} Source - URL of the image
- * @param {number} X - Position of the image on the X axis
- * @param {number} Y - Position of the image on the Y axis
- * @returns {boolean} - whether the image was complete or not
- */
-declare function DrawImageMirror(Source: string, X: number, Y: number): boolean;
-/**
- * Flips an image vertically
- * @param {HTMLImageElement} Img - The image to be inverted
- * @returns {HTMLCanvasElement} - Canvas with the inverted image
- */
-declare function DrawImageInvert(Img: HTMLImageElement): HTMLCanvasElement;
-/**
  * Draws an image on canvas, applying all options
  * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of image or image itself
+ * @param {CanvasRenderingContext2D} Canvas - Canvas on which to draw the image
  * @param {number} X - Position of the image on the X axis
  * @param {number} Y - Position of the image on the Y axis
- * @param {object} [options] - any extra options, optional
- * @param {CanvasRenderingContext2D} [options.Canvas] - Canvas on which to draw the image, defaults to `MainCanvas`
- * @param {number} [options.Alpha] - transparency between 0-1
- * @param {readonly [number, number, number, number]} [options.SourcePos] - Area in original image to draw in format `[left, top, width, height]`
- * @param {number} [options.Width] - Width of the drawn image, defaults to width of original image
- * @param {number} [options.Height] - Height of the drawn image, defaults to height of original image
- * @param {boolean} [options.Invert=false] - If image should be flipped vertically
- * @param {boolean} [options.Mirror=false] - If image should be flipped horizontally
- * @param {number} [options.Zoom=1] - Zoom factor
+ * @param {DrawOptions} [Options = {}] - any extra options
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawImageEx(Source: string | HTMLImageElement | HTMLCanvasElement, X: number, Y: number, { Canvas, Alpha, SourcePos, Width, Height, Invert, Mirror, Zoom }?: {
-    Canvas?: CanvasRenderingContext2D;
-    Alpha?: number;
-    SourcePos?: readonly [number, number, number, number];
-    Width?: number;
-    Height?: number;
-    Invert?: boolean;
-    Mirror?: boolean;
-    Zoom?: number;
-}): boolean;
+declare function DrawImageEx(Source: string | HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, X: number, Y: number, Options?: DrawOptions): boolean;
 /**
  * Wrapping text in fragments to support languages that do not separate between words using space.
  * This function can also break between a long English word if somehow needed in the script.
@@ -519,12 +469,16 @@ declare function DrawImageTrapezify(image: HTMLCanvasElement | HTMLImageElement,
  * @type {CanvasRenderingContext2D}
  */
 declare let MainCanvas: CanvasRenderingContext2D;
-/** @type {CanvasRenderingContext2D} */
+/**
+ * Temporary GPU-based canvas
+ * @type {CanvasRenderingContext2D}
+ */
 declare let TempCanvas: CanvasRenderingContext2D;
-/** @type {CanvasRenderingContext2D} */
+/**
+ * Temporary CPU-based canvas (for colorization)
+ * @type {CanvasRenderingContext2D}
+ */
 declare let ColorCanvas: CanvasRenderingContext2D;
-/** @type {CanvasRenderingContext2D} */
-declare let CharacterCanvas: CanvasRenderingContext2D;
 declare var DialogLeaveDueToItem: boolean;
 declare var BlindFlash: boolean;
 declare var DrawingBlindFlashTimer: number;

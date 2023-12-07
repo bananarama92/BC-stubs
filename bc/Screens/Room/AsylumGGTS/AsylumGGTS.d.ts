@@ -25,6 +25,21 @@ declare function AsylumGGTSLevelCompleted(): boolean;
  */
 declare function AsylumGGTSGetLevel(C: Character): number;
 /**
+ * Returns the character's current level timer
+ * @param {Character} C
+ */
+declare function AsylumGGTSGetLevelTime(C: Character): number;
+/**
+ * Returns the character's current strike count
+ * @param {Character} C
+ */
+declare function AsylumGGTSGetStrikes(C: Character): number;
+/**
+ * Returns the character's currently set GGTS rules
+ * @param {Character} C
+ */
+declare function AsylumGGTSGetRules(C: Character): string[];
+/**
  * Sets the computer image based on the player level
  * @param {number} Level - The player GGTS level
  * @returns {void} - Nothing
@@ -324,7 +339,10 @@ declare var AsylumGGTSTaskEnd: number;
  */
 declare var AsylumGGTSTaskList: string[][];
 declare var AsylumGGTSLevelTime: number[];
-/** The last pose the character had. Used to enforce KeepPose rules */
-declare var AsylumGGTSPreviousPose: any[];
+/**
+ * The last pose the character had. Used to enforce KeepPose rules.
+ * @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>}
+ */
+declare var AsylumGGTSPreviousPose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
 declare var AsylumGGTSWordCheck: number;
 declare var AsylumGGTSSpeed: number;

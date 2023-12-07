@@ -79,54 +79,6 @@ declare function CharacterDelete(NPCType: string): void;
  */
 declare function CharacterDeleteAllOnline(): void;
 /**
- * Checks whether the given character can change to the named pose (without aid by default)
- * @param {Character} C - The character to check
- * @param {AssetPoseName} poseName - The name of the pose to check for
- * @param {boolean} changeUnaided - Whether the character can change the pose unaided or not,
- * _i.e._ whether one can stand up using the pose menu or requires usage of the "kneel/stand up" button
- * @returns {boolean} - Returns true if the character has no conflicting items and is not prevented from changing to
- * the provided pose
- */
-declare function CharacterCanChangeToPose(C: Character, poseName: AssetPoseName, changeUnaided?: boolean): boolean;
-/**
- * Checks if a certain pose is whitelisted and available for the pose menu
- * @param {Character} C - Character to check for the pose
- * @param {AssetPoseCategory} Type - Pose type to check for within items
- * @param {AssetPoseName} Pose - Pose to check for whitelist
- * @returns {boolean} - TRUE if the character has the pose available
- */
-declare function CharacterItemsHavePoseAvailable(C: Character, Type: AssetPoseCategory, Pose: AssetPoseName): boolean;
-/**
- * Checks if a character has a pose from items (not active pose unless an item lets it through)
- * @param {Character} C - Character to check for the pose
- * @param {AssetPoseName} Pose - Pose to check for within items
- * @param {boolean} [ExcludeClothes=false] - Ignore clothing items in the check
- * @returns {boolean} - TRUE if the character has the pose
- */
-declare function CharacterItemsHavePose(C: Character, Pose: AssetPoseName, ExcludeClothes?: boolean): boolean;
-/**
- * Checks whether the items on a character set a given pose on the character
- * @param {Character} C - The character to check
- * @param {AssetPoseName} pose - The name of the pose to check for
- * @param {boolean} [excludeClothes=false] - Ignore clothing items in the check
- * @returns {boolean} - Returns true if the character is wearing an item that sets the given pose, false otherwise
- */
-declare function CharacterDoItemsSetPose(C: Character, pose: AssetPoseName, excludeClothes?: boolean): boolean;
-/**
- * Checks if a character has a pose type from items (not active pose unless an item lets it through)
- * @param {Character} C - Character to check for the pose type
- * @param {string} Type - Pose type to check for within items
- * @param {boolean} OnlyItems - Whether or not allowed activeposes should be ignored.
- * @returns {boolean} - TRUE if the character has the pose type active
- */
-declare function CharacterItemsHavePoseType(C: Character, Type: string, OnlyItems: boolean): boolean;
-/**
- * Refreshes the list of poses for a character. Each pose can only be found once in the pose array
- * @param {Character} C - Character for which to refresh the pose list
- * @returns {void} - Nothing
- */
-declare function CharacterLoadPose(C: Character): void;
-/**
  * Refreshes the list of effects for a character. Each effect can only be found once in the effect array
  * @param {Character} C - Character for which to refresh the effect list
  * @returns {void} - Nothing
@@ -280,14 +232,6 @@ declare function CharacterGetBonus(C: Character, BonusType: string): number;
  * @param {boolean} [Refresh] - do not call CharacterRefresh if false
  */
 declare function CharacterFullRandomRestrain(C: Character, Ratio?: "FEW" | "LOT" | "ALL", Refresh?: boolean): void;
-/**
- * Sets a new pose for the character
- * @param {Character} C - Character for which to set the pose
- * @param {null | AssetPoseName} NewPose - Name of the pose to set as active or `null` to return to the default pose
- * @param {boolean} [ForceChange=false] - TRUE if the set pose(s) should overwrite current active pose(s)
- * @returns {void} - Nothing
- */
-declare function CharacterSetActivePose(C: Character, NewPose: null | AssetPoseName, ForceChange?: boolean): void;
 /**
  * Sets a specific facial expression on the character's specified AssetGroup.
  *
@@ -498,3 +442,21 @@ declare const CharacterBlurLevels: Map<BlurEffectName, number>;
  * @type {Record<"ONLINE"|"NPC"|"SIMPLE", CharacterType>}
  */
 declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE", CharacterType>;
+/**
+ * Sets a new pose for the character
+ * @param {Character} C - Character for which to set the pose
+ * @param {null | AssetPoseName} poseName - Name of the pose to set as active or `null` to return to the default pose
+ * @param {boolean} [ForceChange=false] - TRUE if the set pose(s) should overwrite current active pose(s)
+ * @returns {void} - Nothing
+ * @deprecated - Deprecated alias for {@link PoseSetActive}
+ */
+declare var CharacterSetActivePose: typeof PoseSetActive;
+/**
+ * Checks whether the given character can change to the named pose (without aid by default).
+ * @param {Character} C - The character to check
+ * @param {AssetPoseName} poseName - The name of the pose to check for
+ * @returns {boolean} - Returns true if the character has no conflicting items and is not prevented from changing to
+ * the provided pose
+ * @deprecated Superseded by {@link PoseCanChangeUnaided}
+ */
+declare var CharacterCanChangeToPose: typeof PoseCanChangeUnaided;

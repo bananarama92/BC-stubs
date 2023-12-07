@@ -393,12 +393,6 @@ declare function DialogGetLockIcon(item: Item, isWorn: boolean): InventoryIcon[]
  */
 declare function DialogGetAssetIcons(asset: Asset): InventoryIcon[];
 /**
- * Return icons for each "interesting" effect on the item.
- * @param {Item} item
- * @returns {InventoryIcon[]} - A list of icon names.
- */
-declare function DialogGetEffectIcons(item: Item): InventoryIcon[];
-/**
  * Some special screens can always allow you to put on new restraints. This function determines, if this is possible
  * @returns {boolean} - Returns trues, if it is possible to put on new restraints.
  */
@@ -724,6 +718,16 @@ declare function DialogDrawRepositionButton(): void;
  */
 declare function DialogDrawTopMenu(C: Character): void;
 /**
+ * Draws the left menu for the character
+ * @param {Character} C - The currently focused character
+ */
+declare function DialogSelfMenuDraw(C: Character): void;
+/**
+ * Handles clicks on the left menu
+ * @param {Character} C - The currently focused character
+ */
+declare function DialogSelfMenuClick(C: Character): void;
+/**
  * Draws the initial Dialog screen.
  *
  * This is the main handler for drawing the Dialog UI, which activates
@@ -967,5 +971,12 @@ declare var DialogFavoriteStateDetails: FavoriteState[];
  * @type {readonly DialogSelfMenuOptionType[]}
  */
 declare var DialogSelfMenuOptions: readonly DialogSelfMenuOptionType[];
-/** @type {Partial<Record<InventoryIcon, EffectName[]>>} */
-declare const DialogEffectIconTable: Partial<Record<InventoryIcon, EffectName[]>>;
+declare namespace DialogEffectIcons {
+    let Table: Partial<Record<InventoryIcon, readonly EffectName[]>>;
+    function GetIcons(item: Item): InventoryIcon[];
+    let GetEffectIcons: (effects: EffectName[], prop?: CraftingPropertyType) => InventoryIcon[];
+    function _GetGagIcon(effect: EffectName, prop?: CraftingPropertyType): InventoryIcon;
+    function _GetBlindIcon(effect: EffectName, prop?: CraftingPropertyType): InventoryIcon;
+    let _GagLevelToIcon: (level?: number) => InventoryIcon;
+    let _BlindLevelToIcon: (level?: number) => InventoryIcon;
+}

@@ -31,11 +31,12 @@ declare function VibratorModeGetDrawData(modeSet: readonly VibratorModeSet[], dr
  * Generates an asset's vibrating item data
  * @param {Asset} asset - The asset to generate vibrating item data for
  * @param {VibratingItemConfig} config - The item's extended item configuration
+ * @param {null | ExtendedItemOption} parentOption - The parent extended item option of the super screens (if any)
  * @returns {VibratingItemData} - The generated vibrating item data for the asset
  */
-declare function VibratorModeCreateData(asset: Asset, { Options, ScriptHooks, BaselineProperty, Dictionary, DialogPrefix, DrawData, ChatTags, AllowEffect }: VibratingItemConfig, parentOption?: any): VibratingItemData;
+declare function VibratorModeCreateData(asset: Asset, { Options, ScriptHooks, BaselineProperty, Dictionary, DialogPrefix, DrawData, ChatTags, AllowEffect, Name, }: VibratingItemConfig, parentOption?: null | ExtendedItemOption): VibratingItemData;
 /**
- * Gather all extended item options for a given list of modes.
+ * Construct all extended item options for a given list of modes.
  * @param {VibratingItemData} data - The extended item data
  * @param {readonly VibratorModeSet[]} modeSet - The vibrator mods
  * @returns {VibratingItemOption[]} - The generated vibrating item options
@@ -109,14 +110,14 @@ declare function VibratorModePublish(data: VibratingItemData, C: Character, item
 /**
  * Initialize the vibrating item properties
  * @param {VibratingItemData} data
- * @param {Item} Item - The item in question
+ * @param {Item} item - The item in question
  * @param {Character} C - The character that has the item equiped
- * @param {boolean} Push - Whether to push to changes to the server
- * @param {boolean} Refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
+ * @param {boolean} push - Whether to push to changes to the server
+ * @param {boolean} refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
  * @returns {boolean} Whether properties were initialized or not
  */
-declare function VibratorModeInit(data: VibratingItemData, C: Character, Item: Item, Push?: boolean, Refresh?: boolean): boolean;
-declare function VibratorModeSetOptionByName(C: Character, itemOrGroupName: AssetGroupName | Item, optionName: string, push?: boolean, C_Source?: Character, subscreen?: [archetype: "typed" | "vibrating", screen: string], refresh?: boolean): string;
+declare function VibratorModeInit(data: VibratingItemData, C: Character, item: Item, push?: boolean, refresh?: boolean): boolean;
+declare function VibratorModeSetOptionByName(C: Character, itemOrGroupName: AssetGroupName | Item, optionName: string, push?: boolean, C_Source?: Character, refresh?: boolean): string;
 /**
  * Return the (standard) vibrator mode one would get by incrementing/decrementing the passed mode.
  * @param {VibratorMode} mode - The current vibrator mode

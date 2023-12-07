@@ -181,24 +181,11 @@ declare function ChatSearchMatchesTerms(Room: {
  */
 declare function ChatSearchCalculateIgnoredRoomsOffset(shownRooms: number): number;
 declare var ChatSearchBackground: string;
-/** @type {{ Name: string, CreatorMemberNumber: number, MemberLimit: number, MemberCount: number, DisplayName: string, BlockCategory: ServerChatRoomBlockCategory[], Game: ServerChatRoomGame, Friends: { MemberName: string, MemberNumber: number, Type: string }[], Description: string, Creator: string, Order: number }[]} */
-declare var ChatSearchResult: {
-    Name: string;
-    CreatorMemberNumber: number;
-    MemberLimit: number;
-    MemberCount: number;
+/** @type {(ServerChatRoomSearchData & { DisplayName: string, Order: number })[]} */
+declare var ChatSearchResult: (ServerChatRoomSearchData & {
     DisplayName: string;
-    BlockCategory: ServerChatRoomBlockCategory[];
-    Game: ServerChatRoomGame;
-    Friends: {
-        MemberName: string;
-        MemberNumber: number;
-        Type: string;
-    }[];
-    Description: string;
-    Creator: string;
     Order: number;
-}[];
+})[];
 /** @type {typeof ChatSearchResult} */
 declare var ChatSearchHiddenResult: typeof ChatSearchResult;
 declare var ChatSearchLastSearchDataJSON: string;
@@ -213,10 +200,10 @@ declare var ChatSearchLeaveRoom: string;
 declare var ChatSearchLeaveSpace: ModuleType;
 /** @type {null | Item[]} */
 declare var ChatSearchSafewordAppearance: null | Item[];
-/** @type {null | AssetPoseName[]} */
-declare var ChatSearchSafewordPose: null | AssetPoseName[];
-/** @type {null | AssetPoseName[]} */
-declare var ChatSearchPreviousActivePose: null | AssetPoseName[];
+/** @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>} */
+declare var ChatSearchSafewordPose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
+/** @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>} */
+declare var ChatSearchPreviousActivePose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
 /** @type {number[]} */
 declare var ChatSearchTempHiddenRooms: number[];
 /** @type {"" | "Filter"} */

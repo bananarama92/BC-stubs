@@ -76,19 +76,14 @@ declare function GLDrawCreateProgram(gl: WebGL2RenderingContext, vertexShader: W
 /**
  * Draws an image from a given url to a WebGLRenderingContext
  * @param {string} url - URL of the image to render
- * @param {WebGL2RenderingContext} gl - WebGL context
+ * @param {WebGL2RenderingContext} gl - The context we're drawing with
  * @param {number} dstX - Position of the image on the X axis
  * @param {number} dstY - Position of the image on the Y axis
- * @param {number} offsetX - Additional offset to add to the X axis (for blinking)
- * @param {string} color - Color of the image to draw
- * @param {boolean} fullAlpha - Whether or not the full alpha should be rendered
- * @param {readonly RectTuple[]} alphaMasks - A list of alpha masks to apply to the asset
- * @param {number} [opacity=1] - The opacity at which to draw the image
- * @param {boolean} [rotate=false] - If the image should be rotated by 180 degrees
- * @param {GlobalCompositeOperation} [blendingMode="source-over"] - blending mode for drawing the image
+ * @param {DrawOptions} options - Drawing options
+ * @param {number} [offsetX=0] - Additional offset to add to the X axis (for blinking)
  * @returns {void} - Nothing
  */
-declare function GLDrawImage(url: string, gl: WebGL2RenderingContext, dstX: number, dstY: number, offsetX: number, color: string, fullAlpha: boolean, alphaMasks: readonly RectTuple[], opacity?: number, rotate?: boolean, blendingMode?: GlobalCompositeOperation): void;
+declare function GLDrawImage(url: string, gl: WebGL2RenderingContext, dstX: number, dstY: number, options: DrawOptions, offsetX?: number): void;
 /**
  * Chooses right program using input parameters
  * @param {WebGL2RenderingContext} gl - WebGL context

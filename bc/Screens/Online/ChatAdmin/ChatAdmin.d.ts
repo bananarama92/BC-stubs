@@ -35,6 +35,8 @@ declare var ChatAdminBackgroundIndex: number;
 declare var ChatAdminBackgroundSelect: string;
 declare var ChatAdminPrivate: boolean;
 declare var ChatAdminLocked: boolean;
+/** @type {object} */
+declare var ChatAdminMapData: object;
 /** @type {ServerChatRoomGame} */
 declare var ChatAdminGame: ServerChatRoomGame;
 /** @type {ServerChatRoomGame[]} */

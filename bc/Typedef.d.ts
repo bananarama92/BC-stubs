@@ -58,6 +58,7 @@ interface HTMLImageElement {
 
 interface HTMLElement {
 	setAttribute(qualifiedName: string, value: any): void;
+	removeAttribute(qualifiedName: string): void;
 }
 
 interface RGBColor {
@@ -113,7 +114,7 @@ type DialogMenuButton = "Activity" |
 	"GGTSControl" |
 	"InspectLock" | "InspectLockDisabled" |
 	"Lock" | "LockDisabled" | "LockMenu" |
-	"Next" | "Prev" | `PickLock${PickLockAvailability}` |
+	"Swap" | "Next" | "Prev" | `PickLock${PickLockAvailability}` |
 	"Remote" | "RemoteDisabled" | `RemoteDisabledFor${VibratorRemoteAvailability}` |
 	"Unlock" | "Use" | "UseDisabled" | "Struggle" | "TightenLoosen" |
 	// Wardrobe buttons
@@ -166,142 +167,30 @@ type BlurEffectName = "BlurLight" | "BlurNormal" | "BlurHeavy" | "BlurTotal";
 /** The {@link EffectName} values for all deafness-related effects. */
 type DeafEffectName = "DeafLight" | "DeafNormal" | "DeafHeavy" | "DeafTotal";
 
-/**
- * @property Freeze - Prevents walking and kneeling unaided. There's a few caveats with the kneeling part.
- * @property Prone - Indicates the character is prone. Looks non-functional.
- * @property Block - Indicates that the character is "blocked". Acts as a restraint.
- * @property Mounted - Indicates that the character is mounted onto something. Acts as a restraint and blocks moving around.
- * @property KneelFreeze - Prevents walking while kneeling.
- * @property ForceKneel - Deprecated: Equivalent to adding a `BodyLower` pose to {@link Asset.SetPose} while `Kneel` is included in {@link Asset.AllowActivePose}
- * @property BlockKneel - Deprecated: omit `Kneel` from {@link Asset.AllowActivePose} instead
- *
- * @property CuffedFeet - Enable items that have the CuffedFeet prerequisite to be applied.
- * @property CuffedLegs - Enable items that have the CuffedLegs prerequisite to be applied.
- * @property CuffedArms - Enable items that have the CuffedArms prerequisite to be applied.
- * @property IsChained - Prevents items that have the NotChained prerequisite from being applied.
- * @property FixedHead - Locks the character's head in-place. Prevents nodding and shaking activities on it.
- * @property MergedFingers - Indicates the character can't use their fingers normally. Limits activities.
- *
- * @property Shackled - Prevents items that have the NotShackled prerequisite from being applied.
- * @property Tethered - Prevents leashing items from working.
- * @property Enclose - Indicates the character cannot be interacted with and can't interact back.
- * @property OneWayEnclose - Indicates the character can be interacted with but can't interact back.
- * @property OnBed - Enable items that have the OnBed prerequisite to be applied.
- * @property Lifted - Prevents items that have the NotLifted prerequisite to be applied.
- *
- * @property Slow - Indicates the character is slowed. Used when exiting chatrooms.
- * @property FillVulva - Marks the item as filling the character's vulva.
- *   Used when checking activities' prerequisites and the auto-stimulation events.
- * @property ShaftVulva - Marks the item as being some sort of shaft extending out of the vulva.
- *   Used to block things like chastity from closing.
- * @property IsPlugged - Marks the item as filling the character's butt.
- * @property IsPlugged - Marks the item as filling the character's butt.
- *   Used when checking activities' prerequisites and the auto-stimulation events.
- *
- * @property Egged - Marks the item as being a "vibrator" kind-of item.
- *   Make the item's Vibrator-related properties be taken into account for arousal,
- *   as well as the stuttering effect.
- * @property Vibrating - Indicates an "Egged" item as being vibrating.
- *   Normally handled automatically by VibrationMode. Makes the item preview wobble
- *   in the inventory, as well as cause auto-stimulation events.
- *
- * @property Edged - Marks the item as causing the character to be edged.
- *   Normally handled automatically by VibrationMode. Causes the character's arousal
- *   to be capped, and ruins its orgasms.
- * @property DenialMode - Marks the item as causing the character to be denied.
- *   Causes the character's arousal to be capped (higher that Edged).
- * @property RuinOrgasms - Marks the item as ruining orgasms.
- *   Requires DenialMode. Makes the character unable to fully orgasm.
- *
- * @property Remote - Marks the item as a remote. Looks non-functional.
- * @property UseRemote - Marks the item as needing a remote to be changed.
- * @property BlockRemotes - Marks the item as preventing remotes from being used
- *   on the character.
- *
- * @property Lock - Marks the item as being some kind of lock.
- * @property NotSelfPickable - Disables the item from being lock-picked.
- *
- * @property Chaste - Marks the item as applying chastity.
- *   Prevents items that have the NotChaste prerequisite from being applied.
- *   Allows the item to be taken off at the club management.
- * @property BreastChaste - Marks the item as applying breast chastity.
- *   Allows the item to be taken off at the club management.
- *
- * @property Leash - Marks the item as being usable as a leash.
- * @property IsLeashed - Marks a leash item as being held.
- * @property CrotchRope - Marks the item as being a crotchrope-style item.
- *   Used for the auto-stimulation events.
- *
- * @property ReceiveShock - Marks the item as being a shock-dispensing item.
- * @property TriggerShock - Marks the item as being a trigger for shock-dispensing items.
- *
- * @property OpenPermission - Marks the item as requiring collar-permissions (Futuristic).
- * @property OpenPermissionArm - Marks the item as requiring arm-permissions (Futuristic).
- * @property OpenPermissionLeg - Marks the item as requiring arm-permissions (Futuristic).
- * @property OpenPermissionChastity - Marks the item as requiring chastity-permissions (Futuristic).
- *
- * @property BlockMouth - Marks the item as blocking the character's mouth.
- *   Prevents items that have the NotLifted prerequisite to be applied.
- *   Also used when checking activities' prerequisites.
- * @property OpenMouth - Marks the item as opening the character's mouth.
- *   Used when checking activities' prerequisites.
- *
- * @property ProtrudingMouth - Indicates that the item bulges out from the character's mouth.
- *   Prevents items that wrap the head to be applied.
- *
- * @property Wiggling - Indicates that the item hangs from the character and can wiggle from it,
- *   triggering arousal. Used as part of the stimulation event system.
- */
+/** All known effects */
 type EffectName =
 	GagEffectName | BlindEffectName | BlurEffectName | DeafEffectName |
-
-	"Freeze" | "Prone" | "Block" | "Mounted" | "KneelFreeze" |
-
+	"Freeze" | "BlockWardrobe" | "Block" | "Mounted" |
 	"CuffedFeet" | "CuffedLegs" | "CuffedArms" | "IsChained" | "FixedHead" | "MergedFingers" |
-
 	"Shackled" | "Tethered" | "Enclose" | "OneWayEnclose" | "OnBed" | "Lifted" | "Suspended" |
-
 	"Slow" | "FillVulva" | "VulvaShaft" | "IsPlugged" |
-
 	"Egged" | "Vibrating" |
-
 	"Edged" | "DenialMode" | "RuinOrgasms" |
-
 	"Remote" | "UseRemote" | "BlockRemotes" |
-
 	"Lock" | "NotSelfPickable" |
-
 	"Chaste" | "BreastChaste" | "ButtChaste" |
-
 	"Leash" | "IsLeashed" | "CrotchRope" |
-
 	"ReceiveShock" | "TriggerShock" |
-
 	"OpenPermission" | "OpenPermissionArm" | "OpenPermissionLeg" | "OpenPermissionChastity" |
-
 	"BlockMouth" | "OpenMouth" |
-
 	"VR" | "VRAvatars" | "KinkyDungeonParty" |
-
-	"LightBall" |
-
 	"RegressedTalk" |
-
 	"HideRestraints" |
-
-	"Unlock-MetalPadlock" | "Unlock-OwnerPadlock" | "Unlock-OwnerTimerPadlock" |
-	"Unlock-LoversPadlock" | "Unlock-LoversTimerPadlock" |
-	"Unlock-FamilyPadlock" |
-	"Unlock-MistressPadlock" | "Unlock-MistressTimerPadlock" |
-	"Unlock-PandoraPadlock" |
-
-	"Unlock-MetalCuffs" | "Unlock-EscortAnkleCuffs" | "Unlock-PortalPanties" |
-
-	// XXX: only for lockpicks?
-	"Unlock-" |
-
-	"ProtrudingMouth" | "Wiggling" |
-	""
+	"UnlockMetalPadlock" | "UnlockOwnerPadlock" | "UnlockOwnerTimerPadlock" |
+	"UnlockLoversPadlock" | "UnlockLoversTimerPadlock" |
+	"UnlockFamilyPadlock" | "UnlockMistressPadlock" | "UnlockMistressTimerPadlock" |
+	"UnlockPandoraPadlock" | "UnlockMetalCuffs" | "UnlockEscortAnkleCuffs" | "UnlockPortalPanties" |
+	"ProtrudingMouth" | "Wiggling"
 	;
 
 interface ExpressionNameMap {
@@ -375,7 +264,8 @@ type AssetPoseName = AssetPoseMap[keyof AssetPoseMap];
  */
 type AssetPoseMapping = Partial<Record<AssetPoseName, AssetPoseName | PoseType>>;
 
-type PoseType = "Hide" | "";
+type PoseType = "Hide" | PoseTypeDefault;
+type PoseTypeDefault = "";
 
 type AssetLockType =
 	"CombinationPadlock" | "ExclusivePadlock" | "HighSecurityPadlock" |
@@ -492,7 +382,8 @@ type ThumbIcon = "lock" | "blindfold" | "lightbulb" | "player" | "rope";
 type ChatRoomLovershipOption = "" | "CanOfferBeginWedding" | "CanBeginWedding";
 type ChatRoomOwnershipOption = "" | "CanOfferEndTrial" | "CanOfferTrial" | "CanEndTrial";
 
-interface ChatRoom extends ServerChatRoomData {}
+type ChatRoom = ServerChatRoomData;
+type ChatRoomSettings = ServerChatRoomSettings;
 
 type StimulationAction = "Kneel" | "Walk" | "Struggle" | "StruggleFail" | "Talk";
 
@@ -660,6 +551,8 @@ type Mutable<T> = {
 
 type IAssetFamily = "Female3DCG";
 
+type WardrobeReorderType = "None" | "Select" | "Place";
+
 interface AssetGroup {
 	readonly Family: IAssetFamily;
 	readonly Name: AssetGroupName;
@@ -689,11 +582,10 @@ interface AssetGroup {
 	readonly AllowExpression?: readonly ExpressionName[];
 	readonly Effect: readonly EffectName[];
 	readonly MirrorGroup: AssetGroupName | "";
-	readonly RemoveItemOnRemove: readonly Readonly<{ Group: AssetGroupItemName; Name: string; Type?: string }>[];
+	readonly RemoveItemOnRemove: readonly Readonly<{ Group: AssetGroupItemName; Name: string; TypeRecord?: TypeRecord }>[];
 	readonly DrawingPriority: number;
-	readonly DrawingLeft: number;
-	readonly DrawingTop: number;
-	readonly DrawingFullAlpha: boolean;
+	readonly DrawingLeft: TopLeft.Data;
+	readonly DrawingTop: TopLeft.Data;
 	readonly DrawingBlink: boolean;
 	readonly InheritColor: AssetGroupName | null;
 	/** @deprecated Use {@link Asset.AllowActivePose} instead */
@@ -765,12 +657,10 @@ interface AssetLayer {
 	readonly ColorGroup: string | null;
 	/** whether or not this layer can be colored in the coloring UI */
 	readonly HideColoring: boolean;
-	/** A list of allowed extended item types that this layer permits - the layer will only be drawn if
-	the item type matches one of these types. If null, the layer is considered to permit all extended types. */
-	readonly AllowTypes: readonly string[] | null;
-	/** whether or not the layer has separate assets per type. If not, the extended type will not be included in
-	the URL when fetching the layer's image */
-	readonly HasType: boolean;
+	/** A record mapping stringified {@link PartialType} values to a set of unique IDs. */
+	readonly AllowTypes: AllowTypes.Data | null;
+	/** @deprecated - superceded by {@link CreateLayerTypes} */
+	readonly HasType?: never;
 	/** The name of the parent group for this layer. If null, the layer has no parent group. If
 	undefined, the layer inherits its parent group from it's asset/group. */
 	readonly ParentGroupName: AssetGroupName | null;
@@ -784,11 +674,11 @@ interface AssetLayer {
 	definition. */
 	readonly Priority: number;
 	readonly InheritColor: AssetGroupName | null;
-	readonly Alpha: readonly AlphaDefinition[];
+	readonly Alpha: readonly Alpha.Data[];
 	/** The asset that this layer belongs to */
 	readonly Asset: Asset;
-	readonly DrawingLeft?: number;
-	readonly DrawingTop?: number;
+	readonly DrawingLeft: TopLeft.Data;
+	readonly DrawingTop: TopLeft.Data;
 	readonly HideAs?: Readonly<{ Group: AssetGroupName; Asset?: string }>;
 	/** That layer is drawing at a fixed Y position */
 	readonly FixedPosition?: boolean;
@@ -799,14 +689,16 @@ interface AssetLayer {
 	readonly BlendingMode: GlobalCompositeOperation;
 	readonly LockLayer: boolean;
 	readonly MirrorExpression?: AssetGroupName;
-	readonly AllowModuleTypes?: readonly string[];
+	/** @deprecated */
+	readonly AllowModuleTypes?: never;
 	/** The coloring index for this layer */
 	readonly ColorIndex: number;
 	/** Any group-specific alpha masks that should be applied when drawing the layer. Only available on layers that have
 	been created prior to drawing */
-	readonly GroupAlpha?: Readonly<AlphaDefinition>[];
-	/** A module for which the layer can have types. */
-	readonly ModuleType: readonly string[] | null;
+	readonly GroupAlpha?: readonly Alpha.Data[];
+	/** @deprecated - Superceded by {@link CreateLayerTypes} */
+	readonly ModuleType?: never;
+	readonly CreateLayerTypes: readonly string[];
 	/* Specifies that this layer should not be drawn if the character is wearing any item with the given attributes */
 	readonly HideForAttribute: readonly AssetAttribute[] | null;
 	/* Specifies that this layer should not be drawn unless the character is wearing an item with one of the given attributes */
@@ -814,22 +706,6 @@ interface AssetLayer {
 	/** Used along with a hook to make layers of an asset disappear in some cases. */
 	readonly Visibility: "Player" | "AllExceptPlayerDialog" | "Others" | "OthersExceptDialog" | "Owner" | "Lovers" | "Mistresses" | null;
 	readonly ColorSuffix: Readonly<Record<string, string>> | null;
-}
-
-/** An object defining a group of alpha masks to be applied when drawing an asset layer */
-interface AlphaDefinition {
-	/** A list of the group names that the given alpha masks should be applied to. If empty or not present, the
-alpha masks will be applied to every layer underneath the present one. */
-	Group?: AssetGroupName[];
-	/** A list of the poses that the given alpha masks should be applied to. If empty or not present, the alpha
-masks will be applied regardless of character pose. */
-	Pose?: AssetPoseName[];
-	/** A list of the extended types that the given alpha masks should be applied to. If empty or not present, the alpha
-masks will be applied regardless of the extended type. */
-	Type?: string[];
-	/** A list of alpha mask definitions. A definition is a 4-tuple of numbers defining the top left coordinate of
-a rectangle and the rectangle's width and height - e.g. [left, top, width, height] */
-	Masks: RectTuple[];
 }
 
 interface TintDefinition {
@@ -909,11 +785,11 @@ interface Asset {
 	readonly RemoveTimer: number;
 	readonly MaxTimer: number;
 	readonly DrawingPriority?: number;
-	readonly DrawingLeft?: number;
-	readonly DrawingTop?: number;
+	readonly DrawingLeft: TopLeft.Data;
+	readonly DrawingTop: TopLeft.Data;
 	readonly HeightModifier: number;
 	readonly ZoomModifier: number;
-	readonly Alpha?: readonly AlphaDefinition[];
+	readonly Alpha: null | readonly Alpha.Data[];
 	readonly Prerequisite: readonly AssetPrerequisite[];
 	readonly Extended: boolean;
 	readonly AlwaysExtend: boolean;
@@ -926,12 +802,13 @@ interface Asset {
 	readonly LoverOnly: boolean;
 	readonly FamilyOnly: boolean;
 	readonly ExpressionTrigger?: readonly ExpressionTrigger[];
-	readonly RemoveItemOnRemove: readonly Readonly<{ Name: string; Group: AssetGroupName; Type?: string; }>[];
+	readonly RemoveItemOnRemove: readonly { Name: string; Group: AssetGroupName; TypeRecord?: TypeRecord; }[];
 	readonly AllowEffect?: readonly EffectName[];
 	readonly AllowBlock?: readonly AssetGroupItemName[];
 	readonly AllowHide?: readonly AssetGroupName[];
 	readonly AllowHideItem?: readonly string[];
-	readonly AllowTypes?: readonly string[];
+	/** @deprecated */
+	readonly AllowTypes?: never;
 	readonly AllowTighten?: boolean;
 	/**
 	 * The default color of the item: an array of length {@link Asset.ColorableLayerCount} consisting of `"Default"` and/or valid color hex codes.
@@ -962,8 +839,15 @@ interface Asset {
 	readonly DynamicBeforeDraw: boolean;
 	readonly DynamicAfterDraw: boolean;
 	readonly DynamicScriptDraw: boolean;
-	readonly HasType: boolean;
-	readonly AllowLockType?: readonly string[];
+	/** @deprecated - superceded by {@link CreateLayerTypes} */
+	readonly HasType?: never;
+	/**
+	 * A module for which the layer can have types.
+	 * Allows one to define different module-specific assets for a single layer.
+	 */
+	readonly CreateLayerTypes: readonly string[];
+	/** A record that maps {@link ExtendedItemData.name} to a set with all option indices that support locks */
+	readonly AllowLockType: null | Record<string, Set<number>>;
 	readonly AllowColorizeAll: boolean;
 	readonly AvailableLocations: readonly string[];
 	readonly OverrideHeight?: Readonly<AssetOverrideHeight>;
@@ -985,7 +869,9 @@ interface Asset {
 	readonly Gender?: AssetGender;
 	readonly CraftGroup: string;
 	readonly ColorSuffix: Readonly<Record<string, string>>;
+	readonly FullAlpha: boolean;
 	readonly ExpressionPrerequisite?: readonly AssetPrerequisite[];
+	readonly AllowColorize: boolean;
 }
 
 //#endregion
@@ -1002,7 +888,6 @@ interface Pose {
 	/** Only show in menu if an asset supports it */
 	AllowMenuTransient?: true;
 	OverrideHeight?: AssetOverrideHeight;
-	Hide?: AssetGroupName[];
 	MovePosition?: { Group: AssetGroupName; X: number; Y: number; }[];
 }
 
@@ -1013,12 +898,12 @@ type ActivityNameBasic = "Bite" | "Caress" | "Choke" | "Cuddle" | "FrenchKiss" |
 	"MoanGag" | "MoanGagAngry" | "MoanGagGiggle" | "MoanGagGroan" | "MoanGagTalk" |
 	"MoanGagWhimper" | "Nibble" | "Nod" | "PenetrateFast" |
 	"PenetrateSlow" | "Pet" | "Pinch" | "PoliteKiss" | "Pull" |
-	"RestHead" | "Rub" | "Sit" | "Slap" | "Spank" | "Step" | "StruggleArms" | "StruggleLegs" |
+	"RestHead" | "Rub" | "Scratch" | "Sit" | "Slap" | "Spank" | "Step" | "StruggleArms" | "StruggleLegs" |
 	"Suck" | "TakeCare" | "Tickle" | "Whisper" | "Wiggle" |
 	"SistersHug" | "BrothersHandshake" | "SiblingsCheekKiss"
 ;
 
-type ActivityNameItem = "Inject" | "MasturbateItem" | "PenetrateItem" | "PourItem" | "RollItem" | "RubItem" | "ShockItem" | "SipItem" | "SpankItem" | "TickleItem";
+type ActivityNameItem = "Inject" | "MasturbateItem" | "PenetrateItem" | "PourItem" | "RollItem" | "RubItem" | "ShockItem" | "SipItem" | "SpankItem" | "TickleItem" | "EatItem" | "Scratch" | "ThrowItem";
 
 type ActivityName = ActivityNameBasic | ActivityNameItem;
 
@@ -1214,9 +1099,58 @@ interface Character {
 	Dialog: DialogLine[];
 	Reputation: Reputation[];
 	Skill: Skill[];
-	Pose: AssetPoseName[];
-	ActivePose: AssetPoseName[];
-	AllowedActivePose: AssetPoseName[];
+	/**
+	 * Get a copy or set the array of currently enabled poses.
+	 * @see {@link PoseMapping} - The underlying record of this property, usage of which is recommended
+	 */
+	get Pose(): readonly AssetPoseName[];
+	set Pose(value: readonly AssetPoseName[]);
+	/**
+	 * Get a copy or set the array of the last set of manually activated poses.
+	 *
+	 * Note that these poses are by no means guaranted to be enabled, as they do not reflect any item-specific automatic pose changes (see {@link Pose}).
+	 * @see {@link ActivePoseMapping} - The underlying record of this property, usage of which is recommended
+	 */
+	get ActivePose(): readonly AssetPoseName[];
+	set ActivePose(value: readonly AssetPoseName[]);
+	/**
+	 * Get a copy or set the array of the last of a subset of all allowed poses.
+	 *
+	 * Only guaranteed to reflect the total number of allowed poses if, for a given pose category, at least one pose is allowed.
+	 * @see {@link ActivePoseMapping} - The underlying record of this property, usage of which is recommended
+	 */
+	get AllowedActivePose(): readonly AssetPoseName[];
+	set AllowedActivePose(value: readonly AssetPoseName[]);
+	/**
+	 * Get a copy or set the array of something something poses.
+	 * @see {@link DrawPoseMapping} - The underlying record of this property, usage of which is recommended
+	 */
+	get DrawPose(): readonly AssetPoseName[];
+	set DrawPose(value: readonly AssetPoseName[]);
+	/**
+	 * A record mapping pose categories to the currently enabled pose belonging to it.
+	 *
+	 * @see {@link ItemProperties.SetPose} - The item-/asset-level equivalent of this property
+	 */
+	PoseMapping: Partial<Record<AssetPoseCategory, AssetPoseName>>;
+	/**
+	 * A record mapping pose categories to the last manually enabled pose belonging to it.
+	 *
+	 * Note that these poses are by no means guaranted to be enabled, as they do not reflect any item-specific automatic pose changes (see {@link PoseMapping}).
+	 */
+	ActivePoseMapping: Partial<Record<AssetPoseCategory, AssetPoseName>>;
+	/**
+	 * A record mapping pose categories to all allowed poses belonging to it.
+	 *
+	 * A value of `null` implies that all poses within the category are allowed.
+	 *
+	 * @see {@link ItemProperties.AllowActivePose} - The item-/asset-level equivalent of this property
+	 */
+	AllowedActivePoseMapping: Partial<Record<AssetPoseCategory, AssetPoseName[]>>;
+	/**
+	 * A record mapping pose categories to something something.
+	 */
+	DrawPoseMapping: Partial<Record<AssetPoseCategory, AssetPoseName>>;
 	Effect: EffectName[];
 	Tints: ResolvedTintDefinition[];
 	Attribute: AssetAttribute[];
@@ -1256,7 +1190,6 @@ interface Character {
 	 * @returns {boolean} - TRUE if changing is possible, FALSE otherwise.
 	 */
 	CanChangeClothesOn: (C: Character) => boolean;
-	IsProne: () => boolean;
 	IsRestrained: () => boolean;
 	IsBlind: () => boolean;
 	IsEnclose: () => boolean;
@@ -1286,6 +1219,7 @@ interface Character {
 	IsPlugged: () => boolean;
 	IsShackled: () => boolean;
 	IsSlow: () => boolean;
+	GetSlowLevel: () => number;
 	IsMouthBlocked: () => boolean;
 	IsMouthOpen: () => boolean;
 	IsVulvaFull: () => boolean;
@@ -1313,7 +1247,6 @@ interface Character {
 	HasTints: () => boolean;
 	GetTints: () => RGBAColor[];
 	HasAttribute: (attribute: AssetAttribute) => boolean;
-	DrawPose?: AssetPoseName[];
 	DrawAppearance?: Item[];
 	AppearanceLayers?: Mutable<AssetLayer>[];
 	Hooks: Map<CharacterHook, Map<string, () => void>> | null;
@@ -1342,6 +1275,10 @@ interface Character {
 		Poker?: GamePokerParameters,
 		ClubCard?: GameClubCardParameters,
 	};
+	MapData?: {
+		X?: number;
+		Y?: number;
+	};
 	BlackList: number[];
 	RunScripts?: boolean;
 	HasScriptedAssets?: boolean;
@@ -1356,6 +1293,10 @@ interface Character {
 	Status?: string | null;
 	StatusTimer?: number;
 	Crafting?: (null | CraftingItem)[];
+	LastMapData? : {
+		X: number;
+		Y: number;
+	};
 }
 
 /**
@@ -1579,18 +1520,8 @@ interface PlayerCharacter extends Character {
 		BlindAdjacent: boolean;
 		AllowTints: boolean;
 	};
-	LastChatRoom?: string;
-	LastChatRoomBG?: string;
-	LastChatRoomPrivate?: boolean;
-	LastChatRoomSize?: number;
-	LastChatRoomLanguage?: ServerChatRoomLanguage;
-	LastChatRoomDesc?: string;
-	LastChatRoomCustom?: ServerChatRoomData["Custom"];
-	LastChatRoomAdmin?: number[];
-	LastChatRoomBan?: number[];
-	LastChatRoomBlockCategory?: ServerChatRoomBlockCategory[];
-	LastChatRoomTimer?: any;
-	LastChatRoomSpace?: ServerChatRoomSpace;
+	/** The chat room we were previous in. Used for relog room re-creation */
+	LastChatRoom?: ChatRoomSettings;
 	RestrictionSettings?: {
 		BypassStruggle: boolean;
 		SlowImmunity: boolean;
@@ -2152,6 +2083,14 @@ interface ExtendedItemData<OptionType extends ExtendedItemOption> {
 	 * Should only defined when there are effects that are exclusively managed by script hooks and thus cannot be extracted from the normal extended item options.
 	 */
 	allowEffect: readonly EffectName[];
+	/**
+	 * The unique name for this (sub)-screen used for the automatic construction of {@link ItemProperties.TypeRecord} keys.
+	 * Names *should* be short.
+	 *
+	 * If not explicitly specified defaults to the name of {@link ExtendedItemData.parentOption}
+	 * for sub screens and the name of the archetype in case of the (outer-most) super screen.
+	 */
+	name: string;
 }
 
 /** A struct-type that maps archetypes to their respective extended item data.  */
@@ -2322,6 +2261,15 @@ interface AssetDefinitionProperties {
 	Fetish?: FetishName[];
 }
 
+/** A concatenation of a single {@link TypeRecord} key/value pair. */
+type PartialType = `${string}${number}`;
+
+/**
+ * A record mapping screen names to option indices.
+ * @see {@link PartialType} A concatenation of a single `TypeRecord` key/value pair.
+ */
+type TypeRecord = Record<string, number>;
+
 /**
  * Properties for Expression Queue item
  */
@@ -2338,8 +2286,13 @@ interface ExpressionQueueItem {
  * Those are the properties the main game code enforces.
  */
 interface ItemPropertiesBase {
-	/** A string (or `null`) denoting the state of an extended item. How the type-string translate to concrete properties depends on the Archetype in question. */
-	Type?: string | null;
+	/**
+	 * @deprecated
+	 * A string (or `null`) denoting the state of an extended item. How the type-string translate to concrete properties depends on the Archetype in question.
+	 */
+	Type?: string;
+	/** A record mapping screen names to option indices. */
+	TypeRecord?: TypeRecord;
 
 	/** A facial expression */
 	Expression?: ExpressionName;
@@ -3039,6 +2992,32 @@ interface AudioChatAction {
 
 // #region Character drawing
 
+/** Options available to most draw calls */
+type DrawOptions = {
+	/** Transparency between 0-1 */
+	Alpha?: number;
+	/** Area in original image to draw in format `[left, top, width, height]` */
+	SourcePos?: RectTuple;
+	/** Width of the drawn image, defaults to width of original image */
+	Width?: number;
+	/** Height of the drawn image, defaults to height of original image */
+	Height?: number;
+	/** If image should be flipped vertically */
+	Invert?: boolean;
+	/** If image should be flipped horizontally */
+	Mirror?: boolean;
+	/** Zoom factor */
+	Zoom?: number;
+	/* Color of the image to draw */
+	HexColor?: string;
+	/* Whether or not it is drawn in full alpha mode */
+	FullAlpha?: boolean;
+	/** A list of alpha masks to apply to the call */
+	readonly AlphaMasks?: readonly RectTuple[];
+	/** Blending mode for drawing the image */
+	BlendingMode?: GlobalCompositeOperation;
+}
+
 /**
  * A callback function used for clearing a rectangular area of a canvas
  * @param {number} x - The x coordinate of the left of the rectangle to clear
@@ -3075,10 +3054,7 @@ type DrawImageCallback = (
 	src: string,
 	x: number,
 	y: number,
-	alphasMasks: RectTuple[],
-	opacity?: number,
-	rotate?: boolean,
-	blendingMode?: GlobalCompositeOperation,
+	options?: DrawOptions
 ) => void;
 
 /**
@@ -3098,12 +3074,7 @@ type DrawImageColorizeCallback = (
 	src: string,
 	x: number,
 	y: number,
-	color: string,
-	fullAlpha: boolean,
-	alphaMasks?: RectTuple[],
-	opacity?: number,
-	rotate?: boolean,
-	blendingMode?: GlobalCompositeOperation,
+	options?: DrawOptions
 ) => void;
 
 interface CommonDrawCallbacks {
@@ -3275,9 +3246,10 @@ interface CraftingItem {
 	Private: boolean;
 	/**
 	 * The type of the crafted item; only relevant for extended items and should be an empty string otherwise.
+	 * @deprecated - superseded by {@link CraftingItem.TypeRecord}
 	 * @see {@link ItemProperties.Type}
 	 */
-	Type: string | null;
+	Type?: string | null;
 	/**
 	 * An integer (or `null`) representing the item layering priority; see {@link ItemProperties.OverridePriority}.
 	 * @deprecated - superseded by {@link CraftingItem.ItemProperty}
@@ -3289,6 +3261,11 @@ interface CraftingItem {
 	 * * Properties as specified in {@link ExtendedItemData.baselineProperty}
 	 */
 	ItemProperty: ItemProperties | null;
+	/**
+	 * A record for extended items mapping screen names to option indices.
+	 * @see {@link ItemProperties.TypeRecord}
+	 */
+	TypeRecord?: null | TypeRecord;
 }
 
 /**
@@ -3311,11 +3288,10 @@ interface CraftingItemSelected {
 	/** Whether the crafted item should be private or not. */
 	Private: boolean;
 	/**
-	 * The type of the crafted item; only relevant for extended items and should be an empty string otherwise.
-	 * Note that `null` values, which are legal for Typed extended items, *must* be converted to empty strings.
-	 * @see {@link ItemProperties.Type}
+	 * A record for extended items mapping screen names to option indices.
+	 * @see {@link ItemProperties.TypeRecord}
 	 */
-	Type: string;
+	TypeRecord: null | TypeRecord;
 	/**
 	 * A record with a select few (optional) extra item properties:
 	 * * {@link ItemProperties.OverridePriority} in either its record or number form.
@@ -3368,6 +3344,11 @@ type itemColorExitListener = (
 interface ItemColorStateType {
 	colorGroups: ColorGroup[];
 	colors: string[];
+	/**
+	 * The underlying assets default colors.
+	 * @see {@link Asset.DefaultColor}
+	 */
+	defaultColors: readonly string[];
 	simpleMode: boolean;
 	paginationButtonX: number;
 	cancelButtonX: number;
@@ -3688,5 +3669,24 @@ interface PreviewDrawOptions {
 	/** The height of the preview rectangle */
 	Height?: number;
 }
+
+// #end region
+
+// #region deprecation
+
+/** @deprecated superseded by {@link PoseAvailable} */
+declare const CharacterItemsHavePoseAvailable: never;
+/** @deprecated superseded by {@link PoseAvailable} */
+declare const InventoryPrerequisiteCanChangeToPose: never;
+/** @deprecated superseded by {@link PoseSetByItems} */
+declare const CharacterItemsHavePose: never;
+/** @deprecated superseded by {@link PoseSetByItems} */
+declare const CharacterDoItemsSetPose: never;
+/** @deprecated superseded by {@link PoseCategoryAvailable} */
+declare const CharacterItemsHavePoseType: never;
+/** @deprecated superseded by {@link PoseRefresh} */
+declare const CharacterLoadPose: never;
+/** @deprecated superseded by {@link PoseToMapping} */
+declare const AssetPoseToMapping: never;
 
 // #end region

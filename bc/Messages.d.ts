@@ -99,7 +99,12 @@ type ServerChatRoomBlockCategory =
 	/** Those are room features */
 	"Leashing" | "Photos" | "Arousal";
 
-interface ServerChatRoomData {
+
+
+/**
+ * The chatroom data received from the server
+ */
+type ServerChatRoomData = {
 	Name: string;
 	Description: string;
 	Admin: number[];
@@ -111,14 +116,29 @@ interface ServerChatRoomData {
 	Locked: boolean;
 	Private: boolean;
 	BlockCategory: ServerChatRoomBlockCategory[];
-	Character?: ServerAccountDataSynced[];
 	Language: ServerChatRoomLanguage;
 	Space: ServerChatRoomSpace;
+	MapData: {
+		Active?: boolean;
+		Tiles?: string;
+		Objects?: string;
+	};
 	Custom: {
 		ImageURL?: string;
 		ImageFilter?: string;
 		MusicURL?: string;
 	};
+	Character: ServerAccountDataSynced[];
+}
+
+/**
+ * A chatroom's settings
+ *
+ * Define to `never` any property of {@link ServerChatRoomData} that
+ * shouldn't be sent back to the server.
+ */
+type ServerChatRoomSettings = Partial<ServerChatRoomData> & {
+	Character?: never;
 }
 
 //#endregion
@@ -305,29 +325,14 @@ interface ServerChatRoomSearchData {
 
 type ServerChatRoomSearchResultResponse = ServerChatRoomSearchData[];
 
-interface ServerChatRoomCreateData {
-	Name: string;
-	Description: string;
-	Admin: number[];
-	Ban: number[];
-	Background: string;
-	Limit: number;
-	Game: ServerChatRoomGame;
-	Locked: boolean;
-	Private: boolean;
-	BlockCategory: ServerChatRoomBlockCategory[];
-	Language: ServerChatRoomLanguage;
-	Space: ServerChatRoomSpace;
-}
-
-interface ServerChatRoomCreateRequest extends ServerChatRoomCreateData {}
+interface ServerChatRoomCreateRequest extends ServerChatRoomSettings {}
 
 type ServerChatRoomCreateResponse = "AccountError" | "RoomAlreadyExist" | "InvalidRoomData" | "ChatRoomCreated";
 
 interface ServerChatRoomAdminUpdateRequest {
 	MemberNumber: number;
 	Action: "Update";
-	Room: Partial<ServerChatRoomData>;
+	Room: Partial<ServerChatRoomSettings>;
 }
 
 interface ServerChatRoomAdminMoveRequest {
@@ -720,7 +725,7 @@ interface ServerChatRoomReorderResponse {
 
 interface ServerCharacterUpdate {
 	ID: string;
-	ActivePose: string[];
+	ActivePose: readonly string[];
 	Appearance: ServerAppearanceBundle;
 }
 
@@ -737,7 +742,7 @@ interface ServerCharacterExpressionResponse {
 }
 
 interface ServerCharacterPoseUpdate {
-	Pose: string | string[] | null;
+	Pose: string | readonly string[] | null;
 }
 
 interface ServerCharacterPoseResponse {

@@ -325,11 +325,18 @@ declare function ChatRoomUpdateDisplay(): void;
  */
 declare function DrawStatus(C: Character, X: number, Y: number, Zoom: number): void;
 /**
+ * Iterate over a room's characters
+ *
+ * This function takes a callback it will call for each character in turn after having
+ * calculated their respective drawing parameters (location), accounting for the smooth zoom effect
+ * @param {(charIdx: number, charX: number, charY: number, space: number, zoom: number) => boolean | void} callback
+ */
+declare function ChatRoomLoopCharacters(callback: (charIdx: number, charX: number, charY: number, space: number, zoom: number) => boolean | void): void;
+/**
  * Draws the chatroom characters.
- * @param {boolean} DoClick - Whether or not a click was registered.
  * @returns {void} - Nothing.
  */
-declare function ChatRoomDrawCharacter(DoClick: boolean): void;
+declare function ChatRoomDrawCharacter(): void;
 /**
  * Draw the background of a chat room
  * @param {string} Background - The name of the background image file
@@ -389,10 +396,10 @@ declare function ChatRoomSetTarget(MemberNumber: number): void;
 declare function ChatRoomTarget(): void;
 /**
  * Updates the account to set the last chat room
- * @param {string} room - room to set it to. "" to reset.
+ * @param {ChatRoom|null} room - room to set it to. null to reset.
  * @returns {void} - Nothing
  */
-declare function ChatRoomSetLastChatRoom(room: string): void;
+declare function ChatRoomSetLastChatRoom(room: ChatRoom | null): void;
 /**
  * Triggers a chat room message for stimulation events.
  *
@@ -503,6 +510,28 @@ declare function ChatRoomAttemptStandMinigameEnd(): void;
  */
 declare function ChatRoomCanLeave(): boolean;
 /**
+ * Calculates the slow leave duration
+ *
+ * @param {number} level - The slow level
+ * @param {number} skill - The evasion skill level
+ * @param {number} min - The minimum cap
+ * @returns {number} The slow leave duration
+ */
+declare function ChatRoomSlowLeaveDuration(level: number, skill: number, min: number): number;
+declare function ChatRoomAttemptLeave(): void;
+/**
+ * Whether the player is currently leaving slowly
+ */
+declare function ChatRoomIsLeavingSlowly(): boolean;
+/**
+ * Cancel our attempt at leaving slowly
+ */
+declare function ChatRoomSlowLeaveCancel(): void;
+/**
+ * Processing function for the slow-leave "state machine"
+ */
+declare function ChatRoomProcessSlowLeave(): void;
+/**
  * Make the player exit from the current chatroom
  * @param {boolean} clearCharacters - Whether the online character cache should be cleared
  */
@@ -532,7 +561,11 @@ declare function ChatRoomSendLocal(Content: string, Timeout?: number): void;
  */
 declare function ChatRoomSendEmote(msg: string): void;
 /**
- * Publishes common player actions (add, remove, swap) to the chat.
+ * Publishes common player actions (add, remove, swap) to the rest of the chatroom.
+ *
+ * Note that this will *not* update the server database,
+ * which requires either {@link CharacterRefresh}, {@link ServerPlayerAppearanceSync} or {@link ChatRoomCharacterUpdate}.
+ *
  * @param {Character} C - Character on which the action is done.
  * @param {string} Action - Action modifier
  * @param {Item} PrevItem - The item that has been removed.
@@ -562,7 +595,11 @@ declare function ChatRoomCharacterItemUpdate(C: Character, Group?: AssetGroupNam
  */
 declare function ChatRoomCharacterExpressionUpdate(C: Character, Group: ExpressionGroupName): void;
 /**
- * Publishes a custom action to the chat
+ * Publishes a custom action to the rest of the chatroom.
+ *
+ * Note that this will *not* update the server database,
+ * which requires either {@link CharacterRefresh}, {@link ServerPlayerAppearanceSync} or {@link ChatRoomCharacterUpdate}.
+ *
  * @param {string} msg - Tag of the action to send
  * @param {boolean} LeaveDialog - Whether or not the dialog should be left.
  * @param {ChatMessageDictionary} Dictionary - Dictionary of tags and data to send
@@ -729,10 +766,10 @@ declare function ChatRoomHideIdentity(C: Character): boolean;
 declare function ChatRoomAddCharacterToChatRoom(newCharacter: Character, newRawCharacter: ServerChatRoomSyncCharacterResponse["Character"]): void;
 /**
  * Handles the reception of the complete room data from the server.
- * @param {ServerChatRoomData} chatRoomProperties - Room object containing the updated chatroom data.
+ * @param {unknown} obj - Room object containing the updated chatroom data.
  * @returns {chatRoomProperties is ChatRoom} - Returns true if the passed properties are valid and false if they're invalid.
  */
-declare function ChatRoomValidateProperties(chatRoomProperties: ServerChatRoomData): chatRoomProperties is ChatRoom;
+declare function ChatRoomValidateProperties(obj: unknown): chatRoomProperties is ServerChatRoomData;
 /**
  * Handles the reception of the new room data from the server.
  * @param {ServerChatRoomSyncMessage} data - Room object containing the updated chatroom data.
@@ -1156,6 +1193,12 @@ declare function ChatRoomOwnerPresenceRule(RuleName: LogNameType["OwnerRule"], T
  * @returns {CommonSubtituteSubstitution[]} - The replacement pronoun text for keywords in the original message
  */
 declare function ChatRoomPronounSubstitutions(C: Character, key: string, hideIdentity: boolean): CommonSubtituteSubstitution[];
+/**
+ * Gets only the settings/configurable properties of a chat room.
+ * @param {ChatRoom} room
+ * @return {ChatRoomSettings}
+ */
+declare function ChatRoomGetSettings(room: ChatRoom): ChatRoomSettings;
 declare namespace ChatRoomSpaceType {
     let MIXED: "X";
     let FEMALE_ONLY: "";
@@ -1228,28 +1271,11 @@ declare var ChatRoomCharacterCount: number;
 declare var ChatRoomCharacterDrawlist: Character[];
 declare var ChatRoomSenseDepBypass: boolean;
 declare var ChatRoomGetUpTimer: number;
-declare var ChatRoomLastName: string;
-declare var ChatRoomLastBG: string;
-/** @type {null | {ImageURL?: string, ImageFilter?: string, MusicURL?: string }} */
-declare var ChatRoomLastCustom: null | {
-    ImageURL?: string;
-    ImageFilter?: string;
-    MusicURL?: string;
-};
-declare var ChatRoomLastPrivate: boolean;
-declare var ChatRoomLastSize: number;
-/** @type {ServerChatRoomLanguage} */
-declare var ChatRoomLastLanguage: ServerChatRoomLanguage;
-declare var ChatRoomLastDesc: string;
-/** @type {number[]} */
-declare var ChatRoomLastAdmin: number[];
-/** @type {number[]} */
-declare var ChatRoomLastBan: number[];
-/** @type {string[]} */
-declare var ChatRoomLastBlockCategory: string[];
-declare var ChatRoomLastSpace: string;
-/** @type {ServerChatRoomData | null} */
-declare var ChatRoomNewRoomToUpdate: ServerChatRoomData | null;
+/**
+ * The complete data to update a recreated room with once the creation is successful
+ * @type {ChatRoomSettings}
+ * */
+declare var ChatRoomNewRoomToUpdate: ChatRoomSettings;
 declare var ChatRoomNewRoomToUpdateTimer: number;
 /**
  * The list of MemberNumbers whose characters we're holding the leash of
@@ -1367,6 +1393,8 @@ declare namespace ChatRoomResizeManager {
     function ChatRoomResizeEventsEnd(): void;
 }
 declare let ChatRoomStatusDeadKeys: string[];
+/** When slowed, we can't leave quicker than this */
+declare const ChatRoomSlowLeaveMinTime: 5000;
 /**
  * Regex used to split out a string at word boundaries
  *

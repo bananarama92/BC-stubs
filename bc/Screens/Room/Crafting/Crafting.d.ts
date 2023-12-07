@@ -54,16 +54,30 @@ declare function CraftingKeyUp(): void;
  */
 declare function CraftingParsePriorityElement(): number | null;
 /**
+ * Serialize a single crafted item into a string in order to prepare it for server saving
+ * @param {CraftingItem} craft The crafted item
+ * @returns {string} The serialized crafted item
+ * @see {@link CraftingSaveServer}
+ */
+declare function CraftingSerialize(craft: CraftingItem): string;
+/**
  * Prepares a compressed packet of the crafting data and sends it to the server
  * @returns {void} - Nothing
  */
 declare function CraftingSaveServer(): void;
 /**
- * Deserialize and unpack the crafting data from the server.
- * @param {string|array} Data The serialized crafting data
- * @returns {CraftingItem[]}
+ * Deserialize a single crafted item from a string in order to parse data received from the server.
+ * @param {string} craftString The serialized crafted item
+ * @returns {null | CraftingItem} The crafted item or `null` if either its {@link CraftingItem.Item} or {@link CraftingItem.Name} property is invalid
+ * @see {@link CraftingDecompressServerData}
  */
-declare function CraftingDecompressServerData(Data: string | any[]): CraftingItem[];
+declare function CraftingDeserialize(craftString: string): null | CraftingItem;
+/**
+ * Deserialize and unpack the crafting data from the server.
+ * @param {string | (null | CraftingItem)[]} Data The serialized crafting data
+ * @returns {(null | CraftingItem)[]}
+ */
+declare function CraftingDecompressServerData(Data: string | (null | CraftingItem)[]): (null | CraftingItem)[];
 /**
  * Loads the server packet and creates the crafting array for the player
  * @param {string} Packet - The packet
@@ -171,6 +185,15 @@ declare let CraftingReorderMode: CraftingReorderType;
  * @type {null | TextCache}
  */
 declare let CraftingLayerNames: null | TextCache;
+/** The separator used between different crafted items when serializing them. */
+declare const CraftingSerializeItemSep: "§";
+/** The separator used between fields within a single crafted item when serializing them. */
+declare const CraftingSerializeFieldSep: "¶";
+/**
+ * Regexp pattern for sanitizing to-be serialized crafted item string data by finding all
+ * special separator characters (see {@link CraftingSerializeItemSep} and {@link CraftingSerializeFieldSep}).
+ */
+declare const CraftingSerializeSanitize: RegExp;
 /**
  * Map crafting properties to their respective validation function.
  * @type {Map<CraftingPropertyType, (asset: Asset) => boolean>}

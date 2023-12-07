@@ -136,9 +136,16 @@ declare function SpeechBabyTalk(C: Character, CD: string): string;
 declare function SpeechAnonymize(msg: string, characters: readonly Character[]): string;
 declare const chineseRegex: RegExp;
 declare const chineseRandomGarbledSound: string[];
-/**
- * A lookup mapping the gag effect names to their corresponding gag level numbers.
- * @type {Record<GagEffectName, number>}
- * @constant
- */
-declare var SpeechGagLevelLookup: Record<GagEffectName, number>;
+declare namespace SpeechGagLevelLookup {
+    let GagTotal4: 20;
+    let GagTotal3: 16;
+    let GagTotal2: 12;
+    let GagTotal: 8;
+    let GagVeryHeavy: 7;
+    let GagHeavy: 6;
+    let GagMedium: 5;
+    let GagNormal: 4;
+    let GagEasy: 3;
+    let GagLight: 2;
+    let GagVeryLight: 1;
+}

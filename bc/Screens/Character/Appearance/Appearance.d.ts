@@ -50,14 +50,21 @@ declare function CharacterAppearanceNaked(C: Character): void;
  */
 declare function CharacterAppearanceStripLayer(C: Character): void;
 /**
+ * Check whether a layer must be visible given a provided type record.
+ * @param {AllowTypes.Data} allowTypes - The layer's allowed types
+ * @param {TypeRecord} typeRecord - The type record in question.
+ * @returns {boolean} - Whether the layer should be visible
+ */
+declare function CharacterAppearanceAllowForTypes(allowTypes: AllowTypes.Data, typeRecord: TypeRecord): boolean;
+/**
  * Determines whether an asset layer should be rendered, assuming the asset itself is visible.
  * @param {Character} C - The character wearing the item
  * @param {AssetLayer} layer - The layer to check visibility for
  * @param {Asset} asset - The asset that the layer belongs to
- * @param {string} [type] - The item's type, if it has one
+ * @param {TypeRecord} [typeRecord] - The item's type, if it has one
  * @returns {boolean} - TRUE if the layer should be visible, FALSE otherwise
  */
-declare function CharacterAppearanceIsLayerVisible(C: Character, layer: AssetLayer, asset: Asset, type?: string): boolean;
+declare function CharacterAppearanceIsLayerVisible(C: Character, layer: AssetLayer, asset: Asset, typeRecord?: TypeRecord): boolean;
 /**
  * Builds a filtered and sorted set of appearance layers, each representing a drawable layer of a character's current appearance. Layers
  * that will not be drawn (because their asset is not visible or they do not permit the current asset type) are filtered out at this stage.
@@ -216,6 +223,14 @@ declare function CharacterAppearanceMoveGroup(C: Character, Move: number): void;
  * @returns {void} - Nothing
  */
 declare function CharacterAppearanceSetColorForGroup(C: Character, Color: string, Group: AssetGroupName): void;
+/**
+ * Advance to the next reordering mode, or set the mode to the specified
+ * value.  The reordering mode cycles through the values:
+ * "None" -> "Select" -> "Place"
+ *
+ * @param {WardrobeReorderType} newmode - The mode to set.  If null, advance to next mode.
+ */
+declare function AppearanceWardrobeReorderModeSet(newmode?: WardrobeReorderType): void;
 /**
  * Handle the clicks in the character appearance selection screen. The function name is created dynamically.
  * @returns {void} - Nothing
@@ -385,6 +400,13 @@ declare var AppearanceMenu: DialogMenuButton[];
 /** @type {Character[]} */
 declare var AppearancePreviews: Character[];
 declare var AppearanceUseCharacterInPreviewsSetting: boolean;
+/**
+ * List of item indices collected for swapping.
+ * #type {number[]}
+ */
+declare let AppearanceWardrobeReorderList: any[];
+/** @type {WardrobeReorderType} */
+declare let AppearanceWardrobeReorderMode: WardrobeReorderType;
 declare const CanvasUpperOverflow: 700;
 declare const CanvasLowerOverflow: 150;
 declare const CanvasDrawWidth: 500;

@@ -1,5 +1,6 @@
 declare function InventoryItemMouthFuturisticPanelGagDrawHook(data: ModularItemData, originalFunction: () => void): void;
 declare function InventoryItemMouthFuturisticPanelGagClickHook(data: ModularItemData, originalFunction: () => void): void;
+declare function InventoryItemMouthFuturisticPanelGagSetOptionHook(data: ModularItemData, originalFunction: (C: Character, item: Item, newOption: ModularItemOption, previousOption: ModularItemOption, push: boolean, refresh: boolean) => void, C: Character, item: Item, newOption: ModularItemOption, previousOption: ModularItemOption, push: boolean, refresh: boolean): void;
 /**
  * Send message for an automatic gag inflation.
  * @param {Character} C - The selected character
@@ -14,11 +15,11 @@ declare function InventoryItemMouthFuturisticPanelGagPublishActionTrigger(C: Cha
  * @param {Character} C - The selected character
  * @param {Item} Item - The item in question
  * @param {ModularItemOption} previousOption
- * @param {readonly ModularItemOption[]} options
+ * @param {ModularItemModule} module
  * @param {boolean} Deflate - Whether this function is triggered by an automatic deflation or not
  * @returns {ModularItemOption}
  */
-declare function InventoryItemMouthFuturisticPanelGagTriggerGetOptions(C: Character, Item: Item, previousOption: ModularItemOption, options: readonly ModularItemOption[], Deflate: boolean): ModularItemOption;
+declare function InventoryItemMouthFuturisticPanelGagTriggerGetOptions(C: Character, Item: Item, previousOption: ModularItemOption, module: ModularItemModule, Deflate: boolean): ModularItemOption;
 /**
  * Helper function for handling automatic gag inflation and deflation.
  * @param {ModularItemData} data

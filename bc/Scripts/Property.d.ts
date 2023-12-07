@@ -76,6 +76,12 @@ declare function PropertyUnion(output: ItemProperties, ...args: readonly ItemPro
  */
 declare function PropertyDifference(output: ItemProperties, ...args: readonly ItemProperties[]): ItemProperties;
 /**
+ * Convert the passed type record into a list of stringified key/value pairs.
+ * @param {TypeRecord} typeRecord
+ * @returns {string[]}
+ */
+declare function PropertyTypeRecordToStrings(typeRecord: TypeRecord): string[];
+/**
  * Property.js
  * -----------
  * A module with common helper functions for the handling of specific {@link ItemProperties} properties.

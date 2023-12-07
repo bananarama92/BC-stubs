@@ -62,6 +62,7 @@ declare function ExtendedItemLoad({ functionPrefix, dialogPrefix, parentOption }
 declare function ExtendedItemDrawButton(Option: ExtendedItemOption | ModularItemModule, CurrentOption: ExtendedItemOption, DialogPrefix: string, buttonData: ElementData<ElementMetaData>, Item?: Item, IsSelected?: boolean | null): void;
 /**
  * Determine the background color for the item option's button
+ * @param {ExtendedItemData<any>} data - The extended item data
  * @param {Character} C - The character wearing the item
  * @param {ExtendedItemOption | ModularItemModule} Option - A type for the extended item
  * @param {ExtendedItemOption} CurrentOption - The currently selected option for the item
@@ -70,7 +71,7 @@ declare function ExtendedItemDrawButton(Option: ExtendedItemOption | ModularItem
  * @param {Item} Item - The item in question; defaults to {@link DialogFocusItem}
  * @returns {string} The name or hex code of the color
  */
-declare function ExtendedItemGetButtonColor(C: Character, Option: ExtendedItemOption | ModularItemModule, CurrentOption: ExtendedItemOption, Hover: boolean, IsSelected: boolean, Item?: Item): string;
+declare function ExtendedItemGetButtonColor(data: ExtendedItemData<any>, C: Character, Option: ExtendedItemOption | ModularItemModule, CurrentOption: ExtendedItemOption, Hover: boolean, IsSelected: boolean, Item?: Item): string;
 /**
  * Exit function for the extended item dialog.
  *
@@ -334,6 +335,31 @@ declare function ExtendedItemGetDrawData<MetaData extends ElementMetaData>(drawD
  */
 declare function ExtendedItemParseOptions<T extends Pick<ExtendedItemOption, "Prerequisite" | "Property">>(option: T, asset: Asset): T;
 /**
+ *
+ * @param {Character} C
+ * @param {AssetGroupName | Item} itemOrGroupName
+ * @param {TypeRecord} typeRecord
+ * @param {Object} options
+ * @param {boolean} [options.push]
+ * @param {Character} [options.C_Source]
+ * @param {boolean} [options.refresh]
+ * @param {ItemProperties} [options.properties]
+ * @returns {void}
+ */
+declare function ExtendedItemSetOptionByRecord(C: Character, itemOrGroupName: AssetGroupName | Item, typeRecord: TypeRecord, options?: {
+    push?: boolean;
+    C_Source?: Character;
+    refresh?: boolean;
+    properties?: ItemProperties;
+}): void;
+/**
+ * Take an old {@link ItemProperties.Type} and convert it into a {@link ItemProperties.TypeRecord}.
+ * @param {Asset} asset - The asset in question
+ * @param {null | string} type - The to-be convert type string
+ * @returns {TypeRecord} The newly created type record
+ */
+declare function ExtendedItemTypeToRecord(asset: Asset, type: null | string): TypeRecord;
+/**
  * Utility file for handling extended items
  */
 /**
@@ -382,4 +408,4 @@ declare var ExtendedItemPermissionMode: boolean;
  * @type {string|null}
  */
 declare var ExtendedItemSubscreen: string | null;
-declare function ExtendedItemGatherOptions(item: Item): ExtendedItemOption[];
+declare function ExtendedItemGatherOptions(item: Item): ExtendedItemOptionUnion[];
