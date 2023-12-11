@@ -4,6 +4,33 @@
  */
 declare function ChatRoomMapButton(): boolean;
 /**
+ * Activates the chat room map and the required events
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapActivate(): void;
+/**
+ * Returns the sight range for the current player, based on the blindness level
+ * @returns {number} - The number of visible tiles
+ */
+declare function ChatRoomMapGetSightRange(): number;
+/**
+ * Returns the hearing range for the current player, based on the deafness level
+ * @returns {number} - The number of tiles
+ */
+declare function ChatRoomMapGetHearingRange(): number;
+/**
+ * Returns TRUE if the player can see a character at her sight range
+ * @param {Character} C - The character to evaluate
+ * @returns {boolean} - TRUE if visible
+ */
+declare function ChatRoomMapCharacterIsVisible(C: Character): boolean;
+/**
+ * Returns TRUE if the player can see hear a character at her hearing range
+ * @param {Character} C - The character to evaluate
+ * @returns {boolean} - TRUE if hearable
+ */
+declare function ChatRoomMapCharacterIsHearable(C: Character): boolean;
+/**
  * Sets the correct wall tile based on it's surrounding (North-West, North-Center, etc.)
  * @param {boolean} CW - If Center West is a wall
  * @param {boolean} CE - If Center East is a wall
@@ -157,6 +184,7 @@ declare var ChatRoomMapUpdateLastMapDataNext: any;
 declare var ChatRoomMapFocusedCharacter: any;
 declare var ChatRoomMapBaseMovementSpeed: number;
 declare var ChatRoomMapMovement: any;
+declare var ChatRoomMapTypeList: string[];
 declare var ChatRoomMapTileList: {
     ID: number;
     Type: string;
@@ -169,7 +197,8 @@ declare var ChatRoomMapObjectList: ({
     Top?: undefined;
     Unique?: undefined;
     Height?: undefined;
-    Speed?: undefined;
+    AssetName?: undefined;
+    AssetGroup?: undefined;
     Left?: undefined;
     Width?: undefined;
 } | {
@@ -179,7 +208,8 @@ declare var ChatRoomMapObjectList: ({
     Top: number;
     Unique: boolean;
     Height?: undefined;
-    Speed?: undefined;
+    AssetName?: undefined;
+    AssetGroup?: undefined;
     Left?: undefined;
     Width?: undefined;
 } | {
@@ -189,17 +219,8 @@ declare var ChatRoomMapObjectList: ({
     Top: number;
     Unique?: undefined;
     Height?: undefined;
-    Speed?: undefined;
-    Left?: undefined;
-    Width?: undefined;
-} | {
-    ID: number;
-    Type: string;
-    Style: string;
-    Top: number;
-    Height: number;
-    Speed: number;
-    Unique?: undefined;
+    AssetName?: undefined;
+    AssetGroup?: undefined;
     Left?: undefined;
     Width?: undefined;
 } | {
@@ -209,7 +230,19 @@ declare var ChatRoomMapObjectList: ({
     Top: number;
     Height: number;
     Unique?: undefined;
-    Speed?: undefined;
+    AssetName?: undefined;
+    AssetGroup?: undefined;
+    Left?: undefined;
+    Width?: undefined;
+} | {
+    ID: number;
+    Type: string;
+    Style: string;
+    Top: number;
+    Height: number;
+    AssetName: string;
+    AssetGroup: string;
+    Unique?: undefined;
     Left?: undefined;
     Width?: undefined;
 } | {
@@ -221,5 +254,6 @@ declare var ChatRoomMapObjectList: ({
     Width: number;
     Height: number;
     Unique?: undefined;
-    Speed?: undefined;
+    AssetName?: undefined;
+    AssetGroup?: undefined;
 })[];

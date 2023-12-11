@@ -2453,6 +2453,12 @@ interface ItemPropertiesCustom {
 	/** Number of times the item was triggered; often used by shock collars */
 	TriggerCount?: number;
 
+	/** Number of times the wearer had orgasm;*/
+	OrgasmCount?: number;
+
+	/** Number of times the wearer had ruined orgasm;*/
+	RuinedOrgasmCount?: number;
+
 	/** Number of times the suitcase got cracked */
 	Iterations?: number;
 

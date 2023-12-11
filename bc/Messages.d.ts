@@ -119,7 +119,7 @@ type ServerChatRoomData = {
 	Language: ServerChatRoomLanguage;
 	Space: ServerChatRoomSpace;
 	MapData: {
-		Active?: boolean;
+		Type?: string;
 		Tiles?: string;
 		Objects?: string;
 	};
