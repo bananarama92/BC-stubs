@@ -268,17 +268,17 @@ declare function CharacterIsExpressionAllowed(C: Character, Item: Item, Expressi
 declare function CharacterGetCurrent(): Character | null;
 /**
  * Compresses a character wardrobe from an array to a LZ string to use less storage space
- * @param {Array.<Array.<*>>} Wardrobe - Uncompressed wardrobe
+ * @param {readonly ItemBundle[][]} Wardrobe - Uncompressed wardrobe
  * @returns {string} - The compressed wardrobe
  */
-declare function CharacterCompressWardrobe(Wardrobe: Array<Array<any>>): string;
+declare function CharacterCompressWardrobe(Wardrobe: readonly ItemBundle[][]): string;
 /**
  * Decompresses a character wardrobe from a LZ String to an array if it was previously compressed (For backward compatibility with old
  * wardrobes)
- * @param {Array.<Array.<*>> | string} Wardrobe - The current wardrobe
- * @returns {Array.<Array.<*>>} - The array of wardrobe items decompressed
+ * @param {ItemBundle[][] | string} Wardrobe - The current wardrobe
+ * @returns {ItemBundle[][]} - The array of wardrobe items decompressed
  */
-declare function CharacterDecompressWardrobe(Wardrobe: Array<Array<any>> | string): Array<Array<any>>;
+declare function CharacterDecompressWardrobe(Wardrobe: ItemBundle[][] | string): ItemBundle[][];
 /**
  * Checks if the character is wearing an item that has a specific attribute
  * @param {Character} C - The character to test for

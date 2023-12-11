@@ -81,9 +81,9 @@ declare function ServerPlayerRelationsSync(): void;
 /**
  * Syncs {@link Player.ExtensionSettings} to the server.
  * @param {keyof ExtensionSettings} dataKeyName - The single key to sync
- * @param {boolean} [force] - force immediate sync to server (by default data is delayed a bit to avoid rapid saving and reduce server load)
+ * @param {boolean} [_force] - unused
  */
-declare function ServerPlayerExtensionSettingsSync(dataKeyName: keyof ExtensionSettings, force?: boolean): void;
+declare function ServerPlayerExtensionSettingsSync(dataKeyName: keyof ExtensionSettings, _force?: boolean): void;
 /**
  * Prepares an appearance bundle so we can push it to the server. It minimizes it by keeping only the necessary
  * information. (Asset name, group name, color, properties and difficulty)

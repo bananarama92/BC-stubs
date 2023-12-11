@@ -321,6 +321,7 @@ interface ServerChatRoomSearchData {
     Game: string;
     Friends: ServerFriendInfo[];
     Space: ServerChatRoomSpace;
+	MapType?: string;
 }
 
 type ServerChatRoomSearchResultResponse = ServerChatRoomSearchData[];

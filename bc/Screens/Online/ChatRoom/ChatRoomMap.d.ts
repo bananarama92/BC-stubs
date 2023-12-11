@@ -48,6 +48,13 @@ declare function ChatRoomMapFindWallEffectTile(CW: boolean, CE: boolean, SW: boo
  */
 declare function ChatRoomMapIsWall(X: number, Y: number): boolean;
 /**
+ * Returns the object located at a X and Y position on the map, or NULL if nothing
+ * @param {number} X - The X position on the map
+ * @param {number} Y - The Y position on the map
+ * @returns {object} - The object at the position
+ */
+declare function ChatRoomMapGetObjectAtPos(X: number, Y: number): object;
+/**
  * Apply a wall "3D" effect on the curent map
  * @param {number} X - The X position on the map
  * @param {number} Y - The Y position on the map
@@ -71,6 +78,15 @@ declare function ChatRoomMapFloorWallEffect(X: number, Y: number): number;
  */
 declare function ChatRoomMapCollision(): void;
 /**
+ * Returns TRUE if there's a character at an X and Y position that's wearing a specific asset name & group
+ * @param {number} X - The X position on the screen
+ * @param {number} Y - The Y position on the screen
+ * @param {string} AssetName - The width size of the drawn map
+ * @param {AssetGroupName} AssetGroup - The height size of the drawn map
+ * @returns {boolean} - TRUE if a character wearing this item is found
+ */
+declare function ChatRoomMapCharAtPosIsWearing(X: number, Y: number, AssetName: string, AssetGroup: AssetGroupName): boolean;
+/**
  * Draw the map grid and character on screen
  * @param {number} Left - The X position on the screen
  * @param {number} Top - The Y position on the screen
@@ -80,7 +96,7 @@ declare function ChatRoomMapCollision(): void;
  */
 declare function ChatRoomMapDrawGrid(Left: number, Top: number, Width: number, Height: number): void;
 /**
- * Sets the next update flag for the room if it's not already set, the delay is 3 seconds
+ * Sets the next update flag for the room if it's not already set, the delay is 5 seconds
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapUpdateFlag(): void;
@@ -128,10 +144,16 @@ declare function ChatRoomMapCanEnterTile(X: number, Y: number): number;
  */
 declare function ChatRoomMapMove(D: string): void;
 /**
- * Handles keyboard keys in the chat room map screen
+ * Undoes the changes made to the map, from the latest backup in the stack
  * @returns {void} - Nothing
  */
-declare function ChatRoomMapKeyDown(): void;
+declare function ChatRoomMapUndo(): void;
+/**
+ * Handles keyboard keys in the chat room map screen
+ * @param {KeyboardEvent} Event - The event that triggered this
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapKeyDown(Event: KeyboardEvent): void;
 /**
  * Mouse down event is used to draw on screen and handle the tiles buttons
  * @returns {void} - Nothing
@@ -178,6 +200,7 @@ declare var ChatRoomMapEditStarted: boolean;
 declare var ChatRoomMapEditObject: any;
 declare var ChatRoomMapEditSelection: any[];
 declare var ChatRoomMapEditRange: number;
+declare var ChatRoomMapEditBackup: any[];
 declare var ChatRoomMapUpdateRoomNext: any;
 declare var ChatRoomMapUpdatePlayerNext: any;
 declare var ChatRoomMapUpdateLastMapDataNext: any;

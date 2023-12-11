@@ -229,9 +229,7 @@ type AssetGroupItemName =
 	'ItemMouth3' | 'ItemNeck' | 'ItemNeckAccessories' | 'ItemNeckRestraints' |
 	'ItemNipples' | 'ItemNipplesPiercings' | 'ItemNose' | 'ItemPelvis' |
 	'ItemTorso' | 'ItemTorso2'| 'ItemVulva' | 'ItemVulvaPiercings' |
-	'ItemHandheld' |
-
-	'ItemHidden' /* TODO: investigate, not a real group */
+	'ItemHandheld'
 	;
 
 type AssetGroupScriptName = 'ItemScript';
@@ -878,6 +876,14 @@ interface Asset {
 
 type ItemBundle = ServerItemBundle;
 
+/** A tuple-based version of {@link ItemBundle} */
+type WardrobeItemBundle = [
+	Name: string,
+	Group: AssetGroupName,
+	Color?: ItemColor,
+	Property?: ItemProperties,
+];
+
 /** An AppearanceBundle is whole minified appearance of a character */
 type AppearanceBundle = ItemBundle[];
 
@@ -1433,7 +1439,7 @@ interface Character {
 }
 
 interface ExtensionSettings {
-
+	[key: string]: any;
 }
 
 interface PlayerCharacter extends Character {
@@ -1521,6 +1527,9 @@ interface PlayerCharacter extends Character {
 		AllowTints: boolean;
 	};
 	/** The chat room we were previous in. Used for relog room re-creation */
+	// TODO: the fact that this is set *might* be used to also fold the "relog" enabled checks
+	// If we have a chatroom, then we relog to it. If we don't, then the player didn't have the
+	// setting enabled in the first place
 	LastChatRoom?: ChatRoomSettings;
 	RestrictionSettings?: {
 		BypassStruggle: boolean;
@@ -3293,6 +3302,8 @@ interface CraftingItemSelected {
 	Lock: Asset | null;
 	/** Whether the crafted item should be private or not. */
 	Private: boolean;
+	/** @deprectated superceded by {@link TypeRecord} */
+	Type: null | string;
 	/**
 	 * A record for extended items mapping screen names to option indices.
 	 * @see {@link ItemProperties.TypeRecord}
