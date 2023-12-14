@@ -25,7 +25,7 @@
     // Emit additional JavaScript to ease support for importing CommonJS modules.
     // This enables `allowSyntheticDefaultImports` for type compatibility
     "esModuleInterop": true,
-    "lib": ["es2018", "dom"],
+    "lib": ["es2020", "dom"],
     "downlevelIteration": true
   }
 }
