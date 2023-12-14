@@ -207,6 +207,7 @@ declare var ChatRoomMapUpdateLastMapDataNext: any;
 declare var ChatRoomMapFocusedCharacter: any;
 declare var ChatRoomMapBaseMovementSpeed: number;
 declare var ChatRoomMapMovement: any;
+declare var ChatRoomMapEventLoaded: boolean;
 declare var ChatRoomMapTypeList: string[];
 declare var ChatRoomMapTileList: {
     ID: number;

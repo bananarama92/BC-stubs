@@ -2,6 +2,9 @@ name: Generate stubs
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -20,6 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.head_ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -62,10 +68,11 @@ jobs:
       - name: Push artifacts
         run: |
           BC_VERSION=$(python get_bc_version.py Bondage-College/BondageClub/Scripts/Game.js)
+          rm -rf Bondage-College
+
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add bc/*
-          rm -rf Bondage-College
           git status
           git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $BC_URL" -m "Branch: \`$BC_BRANCH\`" -m "Commit: \`$BC_HASH\`"
           git push
