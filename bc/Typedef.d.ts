@@ -2296,8 +2296,9 @@ interface ExpressionQueueItem {
  */
 interface ItemPropertiesBase {
 	/**
-	 * @deprecated
-	 * A string (or `null`) denoting the state of an extended item. How the type-string translate to concrete properties depends on the Archetype in question.
+	 * A string (or `null`) denoting the state of an extended item.
+	 * How the type-string translate to concrete properties depends on the Archetype in question.
+	 * @deprecated Superseded by {@link ItemPropertiesBase.TypeRecord}. Old type strings can be convert to records via {@link ExtendedItemTypeToRecord}.
 	 */
 	Type?: string;
 	/** A record mapping screen names to option indices. */
@@ -3261,7 +3262,7 @@ interface CraftingItem {
 	Private: boolean;
 	/**
 	 * The type of the crafted item; only relevant for extended items and should be an empty string otherwise.
-	 * @deprecated - superseded by {@link CraftingItem.TypeRecord}
+	 * @deprecated superseded by {@link CraftingItem.TypeRecord}. Old type strings can be convert to records via {@link ExtendedItemTypeToRecord}.
 	 * @see {@link ItemProperties.Type}
 	 */
 	Type?: string | null;
@@ -3302,7 +3303,7 @@ interface CraftingItemSelected {
 	Lock: Asset | null;
 	/** Whether the crafted item should be private or not. */
 	Private: boolean;
-	/** @deprectated superceded by {@link TypeRecord} */
+	/** @deprectated superceded by {@link CraftingItemSelected.TypeRecord}. Old type strings can be convert to records via {@link ExtendedItemTypeToRecord}. */
 	Type: null | string;
 	/**
 	 * A record for extended items mapping screen names to option indices.
