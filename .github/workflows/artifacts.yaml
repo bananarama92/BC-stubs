@@ -2,16 +2,23 @@ name: Generate stubs
 
 on:
   workflow_dispatch:
+    inputs:
+      repo:
+        description: Repository
+        required: false
+        default: https://gitgud.io/bananarama92/Bondage-College.git
+        type: string
+      branch:
+        description: Branch
+        required: false
+        default: typtyptyp
+        type: string
   pull_request:
     branches:
       - main
 
 permissions:
   contents: write
-
-env:
-  BC_URL: https://gitgud.io/bananarama92/Bondage-College.git
-  BC_BRANCH: typtyptyp
 
 # Allow one concurrent deployment
 concurrency:
@@ -34,7 +41,7 @@ jobs:
 
       - name: Clone BC
         run: |
-          git clone $BC_URL --depth=1 --branch=$BC_BRANCH
+          git clone ${{ inputs.repo }} --depth=1 --branch=${{ inputs.branch }}
           cd Bondage-College
           echo "BC_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
@@ -74,5 +81,5 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add bc/*
           git status
-          git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $BC_URL" -m "Branch: \`$BC_BRANCH\`" -m "Commit: \`$BC_HASH\`"
+          git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: ${{ inputs.repo }}" -m "Branch: \`${{ inputs.branch }}\`" -m "Commit: \`$BC_HASH\`"
           git push
