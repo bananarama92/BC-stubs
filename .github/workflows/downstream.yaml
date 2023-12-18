@@ -52,7 +52,7 @@ jobs:
           cp Scripts/Messages.d.ts dist/Messages.d.ts
           cp Assets/Female3DCG/Female3DCG_Types.d.ts dist/Female3DCG_Types.d.ts
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: Bondage-College/BondageClub/dist/**/*.d.ts
