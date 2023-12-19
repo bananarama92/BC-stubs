@@ -570,11 +570,8 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	AllowBlock?: AssetGroupItemName[];
 	AllowHide?: AssetGroupItemName[];
 	AllowHideItem?: string[];
-	/**
-	 * @deprecated
-	 * Only still used by the slave collar.
-	 */
-	AllowTypes?: string[];
+	/** @deprecated */
+	AllowTypes?: never;
 	CreateLayerTypes?: string[];
 	AllowTighten?: boolean;
 	DefaultColor?: ItemColor;
