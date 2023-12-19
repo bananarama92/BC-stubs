@@ -977,6 +977,7 @@ declare namespace DialogEffectIcons {
     let GetEffectIcons: (effects: EffectName[], prop?: CraftingPropertyType) => InventoryIcon[];
     function _GetGagIcon(effect: EffectName, prop?: CraftingPropertyType): InventoryIcon;
     function _GetBlindIcon(effect: EffectName, prop?: CraftingPropertyType): InventoryIcon;
+    function _GetDeafIcon(effect: EffectName): InventoryIcon;
     let _GagLevelToIcon: (level?: number) => InventoryIcon;
     let _BlindLevelToIcon: (level?: number) => InventoryIcon;
 }

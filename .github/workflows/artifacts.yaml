@@ -29,6 +29,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Parse input
+        run: |
+          case "${{ github.event_name }}" in
+            "pull_request")
+              echo "REPO_NAME=https://gitgud.io/bananarama92/Bondage-College.git" >> $GITHUB_ENV
+              echo "REPO_BRANCH=typtyptyp" >> $GITHUB_ENV
+              ;;
+            "workflow_dispatch")
+              echo "REPO_NAME=${{ inputs.repo }}" >> $GITHUB_ENV
+              echo "REPO_BRANCH=${{ inputs.branch }}" >> $GITHUB_ENV
+              ;;
+            *)
+              exit 1;;
+          esac
+
       - uses: actions/checkout@v4
         with:
           repository: ${{ github.repository }}
@@ -41,7 +56,7 @@ jobs:
 
       - name: Clone BC
         run: |
-          git clone ${{ inputs.repo }} --depth=1 --branch=${{ inputs.branch }}
+          git clone $REPO_NAME --depth=1 --branch=$REPO_BRANCH
           cd Bondage-College
           echo "BC_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
@@ -81,5 +96,5 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add bc/*
           git status
-          git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: ${{ inputs.repo }}" -m "Branch: \`${{ inputs.branch }}\`" -m "Commit: \`$BC_HASH\`"
+          git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $REPO_NAME" -m "Branch: \`$REPO_BRANCH\`" -m "Commit: \`$BC_HASH\`"
           git push
