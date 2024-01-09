@@ -10,7 +10,7 @@ interface ServerAccountImmutableData {
 	Creation: number;
 	Ownership?: ServerOwnership;
 	Lovership?: ServerLovership[];
-	ActivePose?: string[];
+	ActivePose?: readonly string[];
 	Pose?: any;
 }
 
@@ -37,7 +37,7 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	GameplaySettings?: any;
 	ArousalSettings?: any;
 	OnlineSharedSettings?: any;
-	Game?: ServerChatRoomGame;
+	Game?: CharacterGameParameters;
 	LabelColor?: string;
 	Appearance?: ServerAppearanceBundle;
 	Description?: string;
@@ -54,6 +54,12 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	SavedColors?: object[]; /* HSVColor[] */
 	ChatSearchFilterTerms?: string;
 	Difficulty?: { Level: number; LastChange: number };
+	MapData?: { X: number, Y: number };
+}
+
+interface ServerMapDataResponse {
+	MemberNumber: number;
+	MapData: { X: number, Y: number };
 }
 
 type ServerAccountDataSynced = Omit<ServerAccountData, "Money" | "FriendList">;
@@ -118,17 +124,19 @@ type ServerChatRoomData = {
 	BlockCategory: ServerChatRoomBlockCategory[];
 	Language: ServerChatRoomLanguage;
 	Space: ServerChatRoomSpace;
-	MapData: {
-		Type?: string;
-		Tiles?: string;
-		Objects?: string;
-	};
+	MapData?: ServerChatRoomMapData;
 	Custom: {
 		ImageURL?: string;
 		ImageFilter?: string;
 		MusicURL?: string;
 	};
 	Character: ServerAccountDataSynced[];
+}
+
+interface ServerChatRoomMapData {
+	Type: string;
+	Tiles: string;
+	Objects: string;
 }
 
 /**
@@ -552,6 +560,15 @@ interface ShockEventDictionaryEntry {
 }
 
 /**
+ * A metadata dictionary entry sent with a shock event message including a shock intensity representing the strength
+ * of the shock. This is used to determine the severity of any visual or gameplay effects the shock may have.
+ */
+interface SuctionEventDictionaryEntry {
+	/** The intensity of the suction - must be a non-negative number */
+	SuctionLevel: number;
+}
+
+/**
  * A metadata dictionary entry indicating that the message has been generated due to an automated event. Can be used
  * to filter out what might otherwise be spammy chat messages (these include things like automatic vibrator intensity
  * changes and events & messages triggered by some futuristic items).
@@ -601,6 +618,7 @@ type ChatMessageDictionaryEntry =
 	| AssetReferenceDictionaryEntry
 	| ActivityAssetReferenceDictionaryEntry
 	| ShockEventDictionaryEntry
+	| SuctionEventDictionaryEntry
 	| AutomaticEventDictionaryEntry
 	| ActivityCounterDictionaryEntry
 	| AssetGroupNameDictionaryEntry
@@ -829,6 +847,7 @@ interface ServerToClientEvents {
 	ChatRoomSyncPose: (data: ServerCharacterPoseResponse) => void;
 	ChatRoomSyncArousal: (data: ServerCharacterArousalResponse) => void;
 	ChatRoomSyncItem: (data: ServerChatRoomSyncItemResponse) => void;
+	ChatRoomSyncMapData: (data: ServerMapDataResponse) => void;
 
 	ChatRoomUpdateResponse: (data: ServerChatRoomUpdateResponse) => void;
 
@@ -863,6 +882,7 @@ interface ClientToServerEvents {
 	ChatRoomCharacterPoseUpdate: (data: ServerCharacterPoseUpdate) => void;
 	ChatRoomCharacterArousalUpdate: (data: ServerCharacterArousalUpdate) => void;
 	ChatRoomCharacterItemUpdate: (data: ServerCharacterItemUpdate) => void;
+	ChatRoomCharacterMapDataUpdate: (data: ChatRoomMapPos) => void;
 
 	ChatRoomAdmin: (data: ServerChatRoomAdminRequest) => void;
 	ChatRoomAllowItem: (data: ServerChatRoomAllowItemRequest) => void;

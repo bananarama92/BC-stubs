@@ -56,17 +56,17 @@ declare function CharacterLoadSimple(AccName: string): Character;
 /**
  * Sets up an online character
  * @param {Character} Char - Online character to set up
- * @param {object} data - Character data received
+ * @param {ServerAccountDataSynced} data - Character data received
  * @param {number} SourceMemberNumber - Source number of the refresh
  */
-declare function CharacterOnlineRefresh(Char: Character, data: object, SourceMemberNumber: number): void;
+declare function CharacterOnlineRefresh(Char: Character, data: ServerAccountDataSynced, SourceMemberNumber: number): void;
 /**
  * Loads an online character and flags it for a refresh if any data was changed
- * @param {object} data - Character data received
+ * @param {ServerAccountDataSynced} data - Character data received
  * @param {number} SourceMemberNumber - Source number of the load trigger
  * @returns {Character} - The reloaded character
  */
-declare function CharacterLoadOnline(data: object, SourceMemberNumber: number): Character;
+declare function CharacterLoadOnline(data: ServerAccountDataSynced, SourceMemberNumber: number): Character;
 /**
  * Deletes an NPC from the buffer
  * @param {string} NPCType - Account name of the npc to delete

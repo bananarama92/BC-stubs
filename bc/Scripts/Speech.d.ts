@@ -104,6 +104,16 @@ declare function stripDiacriticsFromCharacter(character: string, gagEffect: numb
  */
 declare function isAccentedOrLatinCharacter(character: string): boolean;
 /**
+ * Returns the index where the OOC part of a message starts as well as it's length.
+ * Attention: Currently this function does not detect the end of OOC messages properly to mimic the old behaviour before it was introduced. So "length" ALWAYS ranges from the opening parenthesis to the end of the message!!!
+ * @param {string} Message - The message to check
+ * @returns {{ start: number, length: number }} start - Contains the starting position of the OOC section of Message (Without OOC section, this references past the end of Message); length - contains the length of the OOC section of Message
+ */
+declare function SpeechGetOOCRange(Message: string): {
+    start: number;
+    length: number;
+};
+/**
  * The core of the speech garble function, usable without being tied to a specific character
  * @param {number} GagEffect - The gag level of the speech
  * @param {string} CD - The character's dialog to alter
