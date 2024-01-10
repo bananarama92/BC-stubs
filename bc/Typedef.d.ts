@@ -1328,7 +1328,7 @@ interface Character {
 	Description?: string;
 	OnlineSharedSettings?: CharacterOnlineSharedSettings;
 	Game?: CharacterGameParameters;
-	MapData?: ChatRoomMapPos;
+	MapData?: ChatRoomMapData;
 	BlackList: number[];
 	RunScripts?: boolean;
 	HasScriptedAssets?: boolean;
@@ -1343,7 +1343,7 @@ interface Character {
 	Status?: string | null;
 	StatusTimer?: number;
 	Crafting?: (null | CraftingItem)[];
-	LastMapData?: ChatRoomMapPos;
+	LastMapData?: ChatRoomMapData;
 }
 
 interface CharacterGameParameters {
@@ -3793,6 +3793,11 @@ type ChatRoomMapPos = {
 	Y: number;
 }
 
+type ChatRoomMapData = {
+	Pos: ChatRoomMapPos
+	PrivateState: Record<string, Object>
+}
+
 type ChatRoomMapDirection = "" | "R" | "L" | "D" | "U";
 
 type ChatRoomMapObjectType = (
@@ -3811,6 +3816,7 @@ interface ChatRoomMapDoodad {
 	Style: string;
 	OccupiedStyle?: "WoodOpen" | "MetalOpen";
 	CanEnter?: (direction: ChatRoomMapDirection) => boolean;
+	OnEnter?: () => void;
 }
 
 interface ChatRoomMapTile extends ChatRoomMapDoodad {
@@ -3833,6 +3839,7 @@ interface ChatRoomMapObject extends ChatRoomMapDoodad {
 	AssetName?: string;
 	BlockVision?: boolean;
 	BlockHearing?: boolean;
+	IsVisible?: () => boolean;
 }
 
 interface ChatRoomMapMovement {

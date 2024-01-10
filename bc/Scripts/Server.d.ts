@@ -294,12 +294,9 @@ declare namespace ServerAccountDataSyncedValidate {
         ScriptPermissions: ScriptPermissions;
         WheelFortune: string;
     };
-    function MapData(arg: Partial<{
-        X: number;
-        Y: number;
-    }>, C: Character): {
-        X: number;
-        Y: number;
+    function MapData(arg: Partial<ChatRoomMapData>, C: Character): {
+        X: any;
+        Y: any;
     };
     function Crafting(arg: string, C: Character): CraftingItem[];
     function Game(arg: Partial<CharacterGameParameters>, C: Character): {

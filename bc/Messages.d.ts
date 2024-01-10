@@ -54,12 +54,12 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	SavedColors?: object[]; /* HSVColor[] */
 	ChatSearchFilterTerms?: string;
 	Difficulty?: { Level: number; LastChange: number };
-	MapData?: { X: number, Y: number };
+	MapData?: ChatRoomMapData;
 }
 
 interface ServerMapDataResponse {
 	MemberNumber: number;
-	MapData: { X: number, Y: number };
+	MapData: ChatRoomMapPos;
 }
 
 type ServerAccountDataSynced = Omit<ServerAccountData, "Money" | "FriendList">;

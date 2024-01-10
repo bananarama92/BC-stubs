@@ -16,9 +16,15 @@ declare function ChatRoomMapHasSuperPowers(): boolean;
 declare function ChatRoomMapInitialize(mode: ChatRoomMapType): ServerChatRoomMapData;
 /**
  * Initializes the player map data to its default blank state
- * @returns {ChatRoomMapPos}
+ * @param {Character} C - The character to be initialized
+ * @returns {ChatRoomMapData}
  */
-declare function ChatRoomMapInitializeCharacter(): ChatRoomMapPos;
+declare function ChatRoomMapInitializeCharacter(C: Character): ChatRoomMapData;
+/**
+ * Performs cleanup when leaving the chat room map
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapLeave(): void;
 /**
  * Activates the chat room map
  * @returns {void} - Nothing
@@ -310,7 +316,6 @@ declare var ChatRoomMapSuperPowersActive: boolean;
 declare var ChatRoomMapBaseMovementSpeed: number;
 /** @type {null | ChatRoomMapMovement} */
 declare var ChatRoomMapMovement: null | ChatRoomMapMovement;
-declare var ChatRoomMapEventLoaded: boolean;
 /** @type {ChatRoomMapType[]} */
 declare var ChatRoomMapTypeList: ChatRoomMapType[];
 declare var ChatRoomMapUpdatePlayerTime: number;
@@ -319,6 +324,6 @@ declare var ChatRoomMapVisibilityMask: boolean[];
 /** @type {boolean[]} */
 declare var ChatRoomMapAudibilityMask: boolean[];
 /** @type {ChatRoomMapTile[]} */
-declare var ChatRoomMapTileList: ChatRoomMapTile[];
+declare const ChatRoomMapTileList: ChatRoomMapTile[];
 /** @type {ChatRoomMapObject[]} */
-declare var ChatRoomMapObjectList: ChatRoomMapObject[];
+declare const ChatRoomMapObjectList: ChatRoomMapObject[];
