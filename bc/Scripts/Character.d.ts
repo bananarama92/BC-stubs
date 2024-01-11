@@ -425,6 +425,24 @@ declare function CharacterScriptRefresh(C: Character): void;
  * @param {Character} C
  */
 declare function CharacterScriptRemove(C: Character): void;
+/**
+ * Sets a new pose for the character
+ * @param {Character} C - Character for which to set the pose
+ * @param {null | AssetPoseName} poseName - Name of the pose to set as active or `null` to return to the default pose
+ * @param {boolean} [forceChange=false] - TRUE if the set pose(s) should overwrite current active pose(s)
+ * @returns {void} - Nothing
+ * @deprecated - Deprecated alias for {@link PoseSetActive}
+ */
+declare function CharacterSetActivePose(C: Character, poseName: null | AssetPoseName, forceChange?: boolean): void;
+/**
+ * Checks whether the given character can change to the named pose (without aid by default).
+ * @param {Character} C - The character to check
+ * @param {AssetPoseName} poseName - The name of the pose to check for
+ * @returns {boolean} - Returns true if the character has no conflicting items and is not prevented from changing to
+ * the provided pose
+ * @deprecated Superseded by {@link PoseCanChangeUnaided}
+ */
+declare function CharacterCanChangeToPose(C: Character, poseName: AssetPoseName): boolean;
 /** @type Character[] */
 declare var Character: Character[];
 declare var CharacterNextId: number;
@@ -442,21 +460,3 @@ declare const CharacterBlurLevels: Map<BlurEffectName, number>;
  * @type {Record<"ONLINE"|"NPC"|"SIMPLE", CharacterType>}
  */
 declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE", CharacterType>;
-/**
- * Sets a new pose for the character
- * @param {Character} C - Character for which to set the pose
- * @param {null | AssetPoseName} poseName - Name of the pose to set as active or `null` to return to the default pose
- * @param {boolean} [ForceChange=false] - TRUE if the set pose(s) should overwrite current active pose(s)
- * @returns {void} - Nothing
- * @deprecated - Deprecated alias for {@link PoseSetActive}
- */
-declare var CharacterSetActivePose: typeof PoseSetActive;
-/**
- * Checks whether the given character can change to the named pose (without aid by default).
- * @param {Character} C - The character to check
- * @param {AssetPoseName} poseName - The name of the pose to check for
- * @returns {boolean} - Returns true if the character has no conflicting items and is not prevented from changing to
- * the provided pose
- * @deprecated Superseded by {@link PoseCanChangeUnaided}
- */
-declare var CharacterCanChangeToPose: typeof PoseCanChangeUnaided;
