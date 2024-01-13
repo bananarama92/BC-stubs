@@ -319,6 +319,7 @@ declare var ChatRoomMapMovement: null | ChatRoomMapMovement;
 /** @type {ChatRoomMapType[]} */
 declare var ChatRoomMapTypeList: ChatRoomMapType[];
 declare var ChatRoomMapUpdatePlayerTime: number;
+declare const ChatRoomMapPerceptionRaycastOffset: 0.4999;
 /** @type {boolean[]} */
 declare var ChatRoomMapVisibilityMask: boolean[];
 /** @type {boolean[]} */

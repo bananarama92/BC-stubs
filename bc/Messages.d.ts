@@ -311,7 +311,7 @@ type ServerAccountBeepResponse = {
 interface ServerChatRoomSearchRequest {
     Query: string;
     Space?: ServerChatRoomSpace[] | ServerChatRoomSpace;
-    Game?: string;
+    Game?: ServerChatRoomGame;
     FullRooms?: boolean;
     Ignore?: string[];
     Language: string;
@@ -326,7 +326,7 @@ interface ServerChatRoomSearchData {
     MemberLimit: number;
     Description: string;
     BlockCategory: string[];
-    Game: string;
+    Game: ServerChatRoomGame;
     Friends: ServerFriendInfo[];
     Space: ServerChatRoomSpace;
 	MapType?: string;
@@ -373,6 +373,11 @@ interface ServerChatRoomJoinRequest {
 }
 
 interface ServerChatRoomSyncMessage extends ServerChatRoomData {
+	Character: ServerAccountDataSynced[];
+	SourceMemberNumber: number;
+}
+
+interface ServerChatRoomSyncPropertiesMessage extends ServerChatRoomData {
 	SourceMemberNumber: number;
 }
 
@@ -766,7 +771,7 @@ interface ServerCharacterPoseUpdate {
 
 interface ServerCharacterPoseResponse {
     MemberNumber: number;
-    Pose: string[];
+    Pose: readonly string[];
 }
 
 interface ServerCharacterArousalUpdate {
@@ -816,6 +821,7 @@ interface ServerChatRoomAllowItemResponse {
 
 interface ServerToClientEvents {
 	ServerInfo: (data: ServerInfoMessage) => void;
+	ServerMessage: (data: string) => void;
 	ForceDisconnect: (data: ServerForceDisconnectMessage) => void;
 
 	CreationResponse: (data: ServerAccountCreateResponse) => void;
@@ -840,7 +846,7 @@ interface ServerToClientEvents {
 	ChatRoomSyncCharacter: (data: ServerChatRoomSyncCharacterResponse) => void;
 	ChatRoomSyncMemberJoin: (data: ServerChatRoomSyncMemberJoinResponse) => void;
 	ChatRoomSyncMemberLeave: (data: ServerChatRoomLeaveResponse) => void;
-	ChatRoomSyncRoomProperties: (data: ServerChatRoomSyncMessage) => void;
+	ChatRoomSyncRoomProperties: (data: ServerChatRoomSyncPropertiesMessage) => void;
 	ChatRoomSyncReorderPlayers: (data: ServerChatRoomReorderResponse) => void;
 	ChatRoomSyncSingle: (data: ServerChatRoomSyncCharacterResponse) => void;
 	ChatRoomSyncExpression: (data: ServerCharacterExpressionResponse) => void;
