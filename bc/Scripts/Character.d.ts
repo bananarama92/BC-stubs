@@ -243,11 +243,11 @@ declare function CharacterFullRandomRestrain(C: Character, Ratio?: "FEW" | "LOT"
  * @param {ExpressionGroupName | "Eyes1"} AssetGroup - Asset group for the expression
  * @param {null | ExpressionName} Expression - Name of the expression to use
  * @param {number} [Timer] - Optional: time the expression will last
- * @param {string|string[]} [Color] - Optional: color of the expression to set
+ * @param {ItemColor} [Color] - Optional: color of the expression to set
  * @param {boolean} [fromQueue] - Internal: used to skip queuing the expression change if it comes from the queued expressions
  * @returns {void} - Nothing
  */
-declare function CharacterSetFacialExpression(C: Character, AssetGroup: ExpressionGroupName | "Eyes1", Expression: null | ExpressionName, Timer?: number, Color?: string | string[], fromQueue?: boolean): void;
+declare function CharacterSetFacialExpression(C: Character, AssetGroup: ExpressionGroupName | "Eyes1", Expression: null | ExpressionName, Timer?: number, Color?: ItemColor, fromQueue?: boolean): void;
 /**
  * Resets the character's facial expression to the default
  * @param {Character} C - Character for which to reset the expression of
