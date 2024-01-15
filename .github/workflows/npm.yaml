@@ -16,16 +16,20 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: npm install && npm ci
+      - name: install bc-stubs
+        run: |
+          npm install && npm ci
+          cd bc_data
+          npm install && npm ci
 
-      - name: Publish pre-release
-        if: 'github.event.prerelease'
-        run: npm publish --tag beta
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish release
-        if: '!github.event.prerelease'
+      - name: Publish release bc-stubs
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish release bc-data
+        run: |
+          cd bc_data
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_BC_DATA }}

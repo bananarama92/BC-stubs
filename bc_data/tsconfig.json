@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "ES2021",
+		"lib": ["ES2021"],
+		"types": ["node"],
+		"checkJs": true,
+		"strict": true
+	},
+	"include": [
+		"../bc/Female3DCG_Types.d.ts",
+		"../bc/Typedef.d.ts",
+		"scripts/*.js"
+	]
+}

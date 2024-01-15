@@ -87,6 +87,12 @@ jobs:
         run: |
           npm list
 
+      - name: Update BC-data
+        run: |
+          cd bc_data
+          npm install
+          node --unhandled-rejections=strict scripts/update_assets --root=bc
+
       - name: Push artifacts
         run: |
           BC_VERSION=$(python get_bc_version.py Bondage-College/BondageClub/Scripts/Game.js)
@@ -95,6 +101,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add bc/*
+          git add bc_data/assetVersion.json
           git status
           git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $REPO_NAME" -m "Branch: \`$REPO_BRANCH\`" -m "Commit: \`$BC_HASH\`"
           git push

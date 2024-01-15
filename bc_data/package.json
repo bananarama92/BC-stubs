@@ -1,0 +1,27 @@
+{
+  "name": "bc-data",
+  "version": "100.0.0-Beta.3.1",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bananarama92/BC-stubs.git"
+  },
+  "author": "bananarama92 <bananarama921@outlook.com>",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "assetVersion.json"
+  ],
+  "description": "Miscellaneous data extracted from BC",
+  "bugs": {
+    "url": "https://github.com/bananarama92/BC-stubs/issues"
+  },
+  "homepage": "https://github.com/bananarama92/BC-stubs/bc-data#readme",
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@types/node": "^20.11.2",
+    "minimist": "^1.2.8",
+    "@types/minimist": "^1.2.5"
+  }
+}
