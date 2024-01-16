@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/bananarama92/BC-stubs/issues"
   },
-  "homepage": "https://github.com/bananarama92/BC-stubs/bc-data#readme",
+  "homepage": "https://github.com/bananarama92/BC-stubs/tree/main/bc_data#readme",
   "devDependencies": {
     "typescript": "^5.2.2",
     "@types/node": "^20.11.2",
