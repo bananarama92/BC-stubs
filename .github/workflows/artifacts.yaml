@@ -91,7 +91,7 @@ jobs:
         run: |
           cd bc_data
           npm install
-          node --unhandled-rejections=strict scripts/update_assets --root=bc
+          node --unhandled-rejections=strict scripts/assetVersion --root="../Bondage-College/BondageClub"
 
       - name: Push artifacts
         run: |

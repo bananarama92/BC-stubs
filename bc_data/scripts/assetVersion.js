@@ -7,7 +7,7 @@ const HELP = `\
 Script for updating "asset_version.json" with new assets.
 
 Usage:
-node update_assets --root="bla/bla/BondageClub/"
+node scripts/assetVersion --root="bla/bla/BondageClub/"
 
 Options:
 	-h, --help          Show help
@@ -97,12 +97,20 @@ function runVM(root) {
  */
 function updateJSON(jsonPath, assetDefs, version) {
 	/** @type {VersionRecord} */
-	const data = JSON.parse(fs.readFileSync(jsonPath, { encoding: "utf-8" }));
-	if (data === null || typeof data !== "object") {
-		throw new Error(`Invalid "${jsonPath}" JSON content`);
+	let data;
+	if (fs.existsSync(jsonPath)) {
+		console.log(`Parsing old "${jsonPath}" file`);
+		data = JSON.parse(fs.readFileSync(jsonPath, { encoding: "utf-8" }) || "{}");
+		if (data === null || typeof data !== "object" || Array.isArray(data)) {
+			throw new Error(`Invalid "${jsonPath}" JSON content`);
+		}
+	} else {
+		data = /** @type {VersionRecord} */({});
+		console.log(`No old "${jsonPath}" file`);
 	}
 
 	assetDefs.sort((a, b) => a.Group.localeCompare(b.Group));
+	const newAssets = [];
 	const dataSorted = /** @type {VersionRecord} */({});
 	for (const { Group, Asset } of assetDefs) {
 		const assetNames = Asset.map(a => typeof a === "string" ? a : a.Name).sort();
@@ -110,9 +118,18 @@ function updateJSON(jsonPath, assetDefs, version) {
 			const versionOld = data[Group]?.[name];
 			dataSorted[Group] ??= {};
 			dataSorted[Group][name] = versionOld ?? version;
+			if (versionOld == null) {
+				newAssets.push(`${Group}${name}`);
+			}
 		}
 	}
 
+	if (newAssets.length > 0) {
+		const assets = newAssets.length > 30 ? [...newAssets.slice(0, 30), "..."] : newAssets;
+		console.log(`Adding ${newAssets.length} new assets:`, assets);
+	} else {
+		console.log("No new assets");
+	}
 	fs.writeFileSync(jsonPath, JSON.stringify(dataSorted, undefined, 4), { encoding: "utf-8" });
 }
 
@@ -126,13 +143,8 @@ function parseVersion(version) {
 	let versionInt = NaN;
 	if (versionArray === null) {
 		throw new Error(`Invalid BC version: "${versionArray}"`);
-	} else if (versionArray[2] !== undefined) {
-		// We're in the beta; strip the "Beta*" suffix
-		versionInt = Number.parseInt(versionArray[1]);
 	} else {
-		// We're not in the beta; increment the version by 1 as the actual BC `GameVersion`
-		// is only increment at the start of the beta and not during the monthly dev cycle
-		versionInt = Number.parseInt(versionArray[1]) + 1;
+		versionInt = Number.parseInt(versionArray[1]);
 	}
 
 	if (Number.isNaN(versionInt)) {
@@ -155,5 +167,5 @@ function parseVersion(version) {
 
 	const context = runVM(kwargs.root);
 	const version = parseVersion(context.version);
-	updateJSON("./asset_version.json", context.assetDefs, version);
+	updateJSON("./assetVersion.json", context.assetDefs, version);
 })();

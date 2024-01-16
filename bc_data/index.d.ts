@@ -1,7 +1,7 @@
 import * as data from "./assetVersion.json";
 
 /**
- * A record containing the BC version (starting from R99) in which each asset was added.
+ * A record containing the BC version (starting from >R98) in which each asset was added.
  *
  * The record consists of asset group names, mapped to asset names, which in turn are mapped to their respective BC version.
  */
