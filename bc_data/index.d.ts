@@ -5,5 +5,5 @@ import * as data from "./assetVersion.json";
  *
  * The record consists of asset group names, mapped to asset names, which in turn are mapped to their respective BC version.
  */
-declare const assetVersion: { [k in keyof typeof data]: Record<string, `R${number}`> };
+declare const assetVersion: { readonly [k in keyof typeof data]: Readonly<Record<string, `R${number}`>> };
 export { assetVersion };
