@@ -3,7 +3,8 @@
   "include": ["Assets", "Audio", "Backgrounds", "Icons", "Screens", "Scripts"],
   // Specifies an array of filenames or patterns that should be skipped when resolving include.
   "exclude": [
-    "Screens/MiniGame/KinkyDungeon"
+    "Screens/MiniGame/KinkyDungeon",
+    "Scripts/MessagesPatch.d.ts"
   ],
 
   "compilerOptions": {
