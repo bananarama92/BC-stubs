@@ -13,6 +13,11 @@ on:
         required: false
         default: typtyptyp
         type: string
+      version:
+        description: BC version (optional)
+        required: false
+        default:
+        type: string
   pull_request:
     branches:
       - main
@@ -35,10 +40,12 @@ jobs:
             "pull_request")
               echo "REPO_NAME=https://gitgud.io/bananarama92/Bondage-College.git" >> $GITHUB_ENV
               echo "REPO_BRANCH=typtyptyp" >> $GITHUB_ENV
+              echo "BC_VERSION=''" >> $GITHUB_ENV
               ;;
             "workflow_dispatch")
               echo "REPO_NAME=${{ inputs.repo }}" >> $GITHUB_ENV
               echo "REPO_BRANCH=${{ inputs.branch }}" >> $GITHUB_ENV
+              echo "BC_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
               ;;
             *)
               exit 1;;
@@ -91,7 +98,7 @@ jobs:
         run: |
           cd bc_data
           npm install
-          node --unhandled-rejections=strict scripts/assetVersion --root="../Bondage-College/BondageClub"
+          node --unhandled-rejections=strict scripts/assetVersion --root="../Bondage-College/BondageClub" --bc_version="$BC_VERSION"
 
       - name: Push artifacts
         run: |
