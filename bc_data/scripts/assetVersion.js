@@ -10,8 +10,9 @@ Usage:
 node scripts/assetVersion --root="bla/bla/BondageClub/"
 
 Options:
-	-h, --help          Show help
-	--root <path>       The BC root directory
+	-h, --help              Show help
+	--root <path>           The BC root directory
+	--bc_version <version>  The (optional) BC version. Extract the version from the BC directory if not provided
 `;
 
 const NEEDED_FILES = [
@@ -28,9 +29,10 @@ const GAME_VERSION_FORMAT = /^R([0-9]+)(?:(Alpha|Beta)([0-9]+)?)?$/;
  * @template {Record<string, any>} T
  * @param {import("minimist").ParsedArgs} argv The unparsed command line arguments
  * @param {Readonly<T>} template A record containing *all* allowed keys and their default values
+ * @param {(keyof T)[]} optional A list of optional keys
  * @returns {T}
  */
-function validateArgv(argv, template) {
+function validateArgv(argv, template, optional=[]) {
 	const { _, ...kwargs } = argv;
 
 	/** @type {string[]} */
@@ -47,10 +49,11 @@ function validateArgv(argv, template) {
 		}
 	}
 
+	const missingKeys = Object.entries(ret).filter(([k, v]) => !optional.includes(k) && !v).map(([k]) => k);
 	if (invalidArguments.length > 0) {
 		throw new Error(`Found ${invalidArguments.length} unknown arguments: ${invalidArguments.join()}`);
-	} else if (!Object.values(ret).some(Boolean)) {
-		throw new Error(`Expected at least one argument`);
+	} else if (missingKeys.length) {
+		throw new Error(`Found ${missingKeys.length} missing arguments: ${missingKeys.join(", ")}`);
 	}
 	return ret;
 }
@@ -126,7 +129,7 @@ function updateJSON(jsonPath, assetDefs, version) {
 
 	if (newAssets.length > 0) {
 		const assets = newAssets.length > 30 ? [...newAssets.slice(0, 30), "..."] : newAssets;
-		console.log(`Adding ${newAssets.length} new assets:`, assets);
+		console.log(`Adding ${newAssets.length} new ${version} assets:`, assets);
 	} else {
 		console.log("No new assets");
 	}
@@ -142,23 +145,23 @@ function parseVersion(version) {
 
 	let versionInt = NaN;
 	if (versionArray === null) {
-		throw new Error(`Invalid BC version: "${versionArray}"`);
+		throw new Error(`Invalid BC version: "${version}"`);
 	} else {
 		versionInt = Number.parseInt(versionArray[1]);
 	}
 
 	if (Number.isNaN(versionInt)) {
-		throw new Error(`Invalid BC version: "${versionArray}"`);
+		throw new Error(`Invalid BC version: "${version}"`);
 	}
 	return `R${versionInt}`;
 }
 
 (function () {
-	const kwargsTemplate = { root: "", help: false, h: false };
+	const kwargsTemplate = { bc_version: "", root: "", help: false, h: false };
 	const kwargs = validateArgv(minimist(
 		process.argv.slice(2),
-		{ string: ["root"], alias: { "h": "help" } },
-	), kwargsTemplate);
+		{ string: ["root", "bc_version"], alias: { "h": "help" } },
+	), kwargsTemplate, ["bc_version", "help", "h"]);
 
 	if (kwargs.help) {
 		console.log(HELP);
@@ -166,6 +169,6 @@ function parseVersion(version) {
 	}
 
 	const context = runVM(kwargs.root);
-	const version = parseVersion(context.version);
+	const version = parseVersion(kwargs.bc_version || context.version);
 	updateJSON("./assetVersion.json", context.assetDefs, version);
 })();
