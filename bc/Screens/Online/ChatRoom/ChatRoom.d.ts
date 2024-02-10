@@ -1,4 +1,16 @@
 /**
+ * Activates the chat room view with the passed name
+ * @param {string} viewName - The name of the view to activate
+ * @returns {void}
+ */
+declare function ChatRoomActivateView(viewName: string): void;
+/**
+ * Indicates if the chat room view with the passed name is active or not
+ * @param {string} viewName - The name of the view to check
+ * @returns {boolean} - TRUE if the chat room character view is active, false if not
+ */
+declare function ChatRoomIsViewActive(viewName: string): boolean;
+/**
  * Checks if the player can add the current character to her whitelist.
  * @returns {boolean} - TRUE if the current character is not in the player's whitelist nor blacklist.
  */
@@ -230,15 +242,14 @@ declare function ChatRoomCanAssistStand(): boolean;
  */
 declare function ChatRoomCanAssistKneel(): boolean;
 /**
-* Checks if the player character can attempt to stand up. This is different than CurrentCharacter.CanKneel() because it
-* listens for the current active pose, but it forces the player to do a minigame.
+ * Checks if the player character is kneeling and can stand up.
+ * Will return true if there are any available transitions from {@link PoseAllKneeling} to {@link PoseAllStanding}.
  * @returns {boolean} - Whether or not the player character can stand
  */
 declare function ChatRoomCanAttemptStand(): boolean;
 /**
- * Checks if the player character can attempt to get down on her knees. This is different than
- * CurrentCharacter.CanKneel() because it listens for the current active pose, but it forces the player to do a
- * minigame.
+ * Checks if the player character is standing and can kneel down.
+ * Will return true if there are any available transitions from {@link PoseAllStanding} to {@link PoseAllKneeling}.
  * @returns {boolean} - Whether or not the player character can stand
  */
 declare function ChatRoomCanAttemptKneel(): boolean;
@@ -345,29 +356,6 @@ declare function ChatRoomUpdateDisplay(): void;
  */
 declare function DrawStatus(C: Character, X: number, Y: number, Zoom: number): void;
 /**
- * Iterate over a room's characters
- *
- * This function takes a callback it will call for each character in turn after having
- * calculated their respective drawing parameters (location), accounting for the smooth zoom effect
- * @param {(charIdx: number, charX: number, charY: number, space: number, zoom: number) => boolean | void} callback
- */
-declare function ChatRoomLoopCharacters(callback: (charIdx: number, charX: number, charY: number, space: number, zoom: number) => boolean | void): void;
-/**
- * Draws the chatroom characters.
- * @returns {void} - Nothing.
- */
-declare function ChatRoomDrawCharacter(): void;
-/**
- * Draw the background of a chat room
- * @param {string} Background - The name of the background image file
- * @param {number} Y - The starting Y co-ordinate of the image
- * @param {number} Zoom - The zoom factor based on the number of characters
- * @param {number} DarkFactor - The value (0 = fully visible, 1 = black) to tint the background
- * @param {boolean} InvertRoom - Whether the background image should be inverted
- * @returns {void} - Nothing
- */
-declare function ChatRoomDrawBackground(Background: string, Y: number, Zoom: number, DarkFactor: number, InvertRoom: boolean): void;
-/**
  * Draws the status icons of a character
  * @param {Character} C The target character
  * @param {number} CharX Character's X position on canvas
@@ -375,26 +363,6 @@ declare function ChatRoomDrawBackground(Background: string, Y: number, Zoom: num
  * @param {number} Zoom Room zoom
  */
 declare function ChatRoomDrawCharacterStatusIcons(C: Character, CharX: number, CharY: number, Zoom: number): void;
-/**
- * Draws any overlays on top of character
- * @param {Character} C The target character
- * @param {number} CharX Character's X position on canvas
- * @param {number} CharY Character's Y position on canvas
- * @param {number} Zoom Room zoom
- * @param {number} Pos Index of target character
- */
-declare function ChatRoomDrawCharacterOverlay(C: Character, CharX: number, CharY: number, Zoom: number, Pos: number): void;
-/**
- * Called when character is clicked
- * @param {Character} C The target character
- * @param {number} CharX Character's X position on canvas
- * @param {number} CharY Character's Y position on canvas
- * @param {number} Zoom Room zoom
- * @param {number} ClickX Click X postion relative to character, without zoom
- * @param {number} ClickY Click Y postion relative to character, without zoom
- * @param {number} Pos Index of target character
- */
-declare function ChatRoomClickCharacter(C: Character, CharX: number, CharY: number, Zoom: number, ClickX: number, ClickY: number, Pos: number): void;
 /**
  * Select the character (open dialog) and clear other chatroom displays.
  * @param {Character} C - The character to focus on. Does nothing if null.
@@ -497,6 +465,11 @@ declare function ChatRoomStatusUpdate(Status: string | null): void;
  */
 declare function ChatRoomStatusUpdateTalk(Key: KeyboardEvent): void;
 /**
+ * Handler called when the chat input field changes
+ * @param {Event} event
+ */
+declare function ChatRoomChatInputChangeHandler(event: Event): void;
+/**
  * Checks if status has expired or is otherwise no longer valid and resets status if so
  * @returns {void} - Nothing.
  */
@@ -516,6 +489,11 @@ declare function ChatRoomCustomizationRun(): void;
  * @returns {void} - Nothing.
  */
 declare function ChatRoomRun(): void;
+/**
+ * Runs the arousal overlay.
+ * @returns {boolean} - Returns true if the orgasm overlay is active and false otherwise.
+ */
+declare function ChatRoomDrawArousalOverlay(): boolean;
 /**
  * Draws the chat room menu buttons
  * @returns {void} - Nothing
@@ -543,9 +521,10 @@ declare function ChatRoomMouseMove(event: any): void;
 declare function ChatRoomMouseWheel(event: any): void;
 /**
  * Handles clicks the chatroom screen.
+ * @param {MouseEvent | TouchEvent} event
  * @returns {void} - Nothing.
  */
-declare function ChatRoomClick(): void;
+declare function ChatRoomClick(event: MouseEvent | TouchEvent): void;
 /**
  * Process chat room menu button clicks
  * @returns {void} - Nothing
@@ -1290,8 +1269,6 @@ declare var ChatRoomQuestGiven: number[];
 declare var ChatRoomSpace: ServerChatRoomSpace;
 /** @type {ServerChatRoomGame} */
 declare var ChatRoomGame: ServerChatRoomGame;
-/** @type {null | number} */
-declare var ChatRoomMoveTarget: null | number;
 declare var ChatRoomHelpSeen: boolean;
 declare var ChatRoomAllowCharacterUpdate: boolean;
 declare var ChatRoomStruggleAssistBonus: number;
@@ -1316,8 +1293,12 @@ declare var ChatRoomChatLogRect: RectTuple;
  * @type {RectTuple}
  */
 declare var ChatRoomChatInputRect: RectTuple;
+/**
+ * Default position of the chat input length label
+ * @type {RectTuple}
+ */
+declare var ChatRoomChatLengthLabelRect: RectTuple;
 declare var ChatRoomChatHidden: boolean;
-declare var ChatRoomCharacterCount: number;
 /**
  * The chatroom characters that were drawn in the last frame.
  * Used for limiting the "fov". Characters come from {@link ChatRoomCharacter}
@@ -1351,6 +1332,16 @@ declare var ChatRoomTargetDirty: boolean;
 declare var ChatRoomCustomized: boolean;
 declare var ChatRoomCustomBackground: string;
 declare var ChatRoomCustomFilter: string;
+/**
+ * The list of chat room views
+ * @type {Record<string, ChatRoomView>}
+ */
+declare var ChatRoomViews: Record<string, ChatRoomView>;
+/**
+ * The active chat room view
+ * @type {ChatRoomView}
+ */
+declare var ChatRoomActiveView: ChatRoomView;
 /**
  * Chances of a chat message popping up reminding you of some stimulation.
  *
@@ -1424,11 +1415,6 @@ declare namespace ChatRoomFontSizes {
     let Medium: number;
     let Large: number;
 }
-declare var ChatRoomCharacterX_Upper: number;
-declare var ChatRoomCharacterX_Lower: number;
-declare var ChatRoomCharacterZoom: number;
-declare var ChatRoomSlideWeight: number;
-declare var ChatRoomCharacterInitialize: boolean;
 /** Sets whether an add/remove for one list automatically triggers an add/remove for another list */
 declare function ChatRoomListOperationTriggers(): {
     list: number[];

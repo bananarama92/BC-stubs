@@ -172,7 +172,7 @@ type EffectName =
 	GagEffectName | BlindEffectName | BlurEffectName | DeafEffectName |
 	"Freeze" | "BlockWardrobe" | "Block" | "Mounted" |
 	"CuffedFeet" | "CuffedLegs" | "CuffedArms" | "IsChained" | "FixedHead" | "MergedFingers" |
-	"Shackled" | "Tethered" | "Enclose" | "OneWayEnclose" | "OnBed" | "Lifted" | "Suspended" |
+	"Shackled" | "Tethered" | "MapImmobile" | "Enclose" | "OneWayEnclose" | "OnBed" | "Lifted" | "Suspended" |
 	"Slow" | "FillVulva" | "VulvaShaft" | "IsPlugged" |
 	"Egged" | "Vibrating" |
 	"Edged" | "DenialMode" | "RuinOrgasms" |
@@ -235,7 +235,7 @@ type AssetGroupItemName =
 type AssetGroupScriptName = 'ItemScript';
 
 type AssetGroupBodyName =
-	ExpressionGroupName | 'BodyLower' | 'BodyUpper' | 'Bra' | 'Bracelet' | 'Cloth' |
+	ExpressionGroupName | 'BodyLower' | 'BodyUpper' | 'BodyMarkings' | 'Bra' | 'Bracelet' | 'Cloth' |
 	'ClothAccessory' | 'ClothLower' | 'Corset' | 'EyeShadow' | 'FacialHair' | 'Garters' | 'Glasses' | 'Gloves' |
 	'HairAccessory1' | 'HairAccessory2' | 'HairAccessory3' | 'HairBack' |
 	'HairFront' | 'FacialHair' | 'Hands' | 'Hat' | 'Head' | 'Height' | 'Jewelry' | 'LeftAnklet' | 'LeftHand' | 'Mask' |
@@ -1261,6 +1261,7 @@ interface Character {
 	IsOwnedByPlayer: () => boolean;
 	IsOwner: () => boolean;
 	IsKneeling: () => boolean;
+	IsStanding: () => boolean;
 	IsNaked: () => boolean;
 	IsDeaf: () => boolean;
 	IsGagged: () => boolean;
@@ -1493,139 +1494,21 @@ interface ExtensionSettings {
 
 interface PlayerCharacter extends Character {
 	// PreferenceInitPlayer() must be updated with defaults, when adding a new setting
-	ChatSettings?: {
-		ColorActions: boolean;
-		ColorActivities: boolean;
-		ColorEmotes: boolean;
-		ColorNames: boolean;
-		ColorTheme: ChatColorThemeType;
-		DisplayTimestamps: boolean;
-		EnterLeave: ChatEnterLeaveType;
-		FontSize: ChatFontSizeType;
-		MemberNumbers: ChatMemberNumbersType;
-		MuStylePoses: boolean;
-		ShowActivities: boolean;
-		ShowAutomaticMessages: boolean;
-		ShowBeepChat: boolean;
-		ShowChatHelp: boolean;
-		ShrinkNonDialogue: boolean;
-		WhiteSpace: "" | "Preserve";
-		/** @deprecated */
-		AutoBanBlackList?: any;
-		/** @deprecated */
-		AutoBanGhostList?: any;
-		/** @deprecated */
-		SearchFriendsFirst?: any;
-		/** @deprecated */
-		DisableAnimations?: any;
-		/** @deprecated */
-		SearchShowsFullRooms?: any;
-		CensoredWordsList: string;
-		CensoredWordsLevel: number;
-	};
-	VisualSettings?: {
-		ForceFullHeight?: boolean;
-		UseCharacterInPreviews?: boolean;
-		MainHallBackground?: string;
-		PrivateRoomBackground?: string;
-	};
-	AudioSettings?: {
-		Volume: number;
-		MusicVolume: number;
-		PlayBeeps: boolean;
-		/** Play items sounds in chatrooms */
-		PlayItem: boolean;
-		/** Play sounds only if the player is involved */
-		PlayItemPlayerOnly: boolean;
-		Notifications: boolean;
-	};
-	ControllerSettings?: {
-		ControllerSensitivity: number;
-		ControllerDeadZone: number;
-		ControllerA: number;
-		ControllerB: number;
-		ControllerX: number;
-		ControllerY: number;
-		ControllerStickUpDown: number;
-		ControllerStickLeftRight: number;
-		ControllerStickRight: number;
-		ControllerStickDown: number;
-		ControllerDPadUp: number;
-		ControllerDPadDown: number;
-		ControllerDPadLeft: number;
-		ControllerDPadRight: number;
-		ControllerActive: boolean;
-	};
-	GameplaySettings?: {
-		SensDepChatLog: SettingsSensDepName;
-		BlindDisableExamine: boolean;
-		DisableAutoRemoveLogin: boolean;
-		ImmersionLockSetting: boolean;
-		EnableSafeword: boolean;
-		DisableAutoMaid: boolean;
-		OfflineLockedRestrained: boolean;
-	};
-	ImmersionSettings?: {
-		BlockGaggedOOC: boolean;
-		StimulationEvents: boolean;
-		ReturnToChatRoom: boolean;
-		ReturnToChatRoomAdmin: boolean;
-		ChatRoomMapLeaveOnExit: boolean;
-		SenseDepMessages: boolean;
-		ChatRoomMuffle: boolean;
-		BlindAdjacent: boolean;
-		AllowTints: boolean;
-	};
+	ChatSettings?: ChatSettingsType;
+	VisualSettings?: VisualSettingsType;
+	AudioSettings?: AudioSettingsType;
+	ControllerSettings?: ControllerSettingsType;
+	GameplaySettings?: GameplaySettingsType;
+	ImmersionSettings?: ImmersionSettingsType;
 	/** The chat room we were previous in. Used for relog room re-creation */
 	// TODO: the fact that this is set *might* be used to also fold the "relog" enabled checks
 	// If we have a chatroom, then we relog to it. If we don't, then the player didn't have the
 	// setting enabled in the first place
 	LastChatRoom?: ChatRoomSettings;
-	RestrictionSettings?: {
-		BypassStruggle: boolean;
-		SlowImmunity: boolean;
-		BypassNPCPunishments: boolean;
-	};
+	RestrictionSettings?: RestrictionSettingsType;
 	OnlineSettings?: PlayerOnlineSettings;
-	GraphicsSettings?: {
-		Font: GraphicsFontName;
-		InvertRoom: boolean;
-		StimulationFlashes: boolean;
-		DoBlindFlash: boolean;
-		AnimationQuality: number;
-		StimulationFlash: boolean;
-		SmoothZoom: boolean;
-		CenterChatrooms: boolean;
-		AllowBlur: boolean;
-	}
-	NotificationSettings?: {
-		/** @deprecated */
-		Audio?: boolean;
-		Beeps: NotificationSetting;
-		/** @deprecated */
-		Chat?: any;
-		ChatMessage: NotificationSetting & {
-			/** @deprecated */
-			IncludeActions?: any;
-			Mention?: boolean;
-			Normal?: boolean;
-			Whisper?: boolean;
-			Activity?: boolean;
-		};
-		/** @deprecated */
-		ChatActions?: any;
-		ChatJoin: NotificationSetting & {
-			/** @deprecated */
-			Enabled?: any;
-			Owner?: boolean;
-			Lovers?: boolean;
-			Friendlist?: boolean;
-			Subs?: boolean;
-		};
-		Disconnect: NotificationSetting;
-		Larp: NotificationSetting;
-		Test: NotificationSetting;
-	};
+	GraphicsSettings?: GraphicsSettingsType;
+	NotificationSettings?: NotificationSettingsType;
 	GhostList?: number[];
 	Wardrobe?: ItemBundle[][];
 	WardrobeCharacterNames?: string[];
@@ -1635,13 +1518,151 @@ interface PlayerCharacter extends Character {
 	FriendNames?: Map<number, string>;
 	SubmissivesList?: Set<number>;
 	ChatSearchFilterTerms?: string;
-	GenderSettings: {
-		HideShopItems: GenderSetting;
-		AutoJoinSearch: GenderSetting;
-	};
+	GenderSettings: GenderSettingsType;
 	/** The list of items we got confiscated in the Prison */
 	ConfiscatedItems?: { Group: AssetGroupName, Name: string }[];
 	ExtensionSettings: ExtensionSettings;
+}
+
+interface GenderSettingsType {
+	HideShopItems: GenderSetting;
+	AutoJoinSearch: GenderSetting;
+}
+
+interface NotificationSettingsType {
+	/** @deprecated */
+	Audio?: boolean;
+	Beeps: NotificationSetting;
+	/** @deprecated */
+	Chat?: any;
+	ChatMessage: NotificationSetting & {
+		/** @deprecated */
+		IncludeActions?: any;
+		Mention?: boolean;
+		Normal?: boolean;
+		Whisper?: boolean;
+		Activity?: boolean;
+	};
+	/** @deprecated */
+	ChatActions?: any;
+	ChatJoin: NotificationSetting & {
+		/** @deprecated */
+		Enabled?: any;
+		Owner?: boolean;
+		Lovers?: boolean;
+		Friendlist?: boolean;
+		Subs?: boolean;
+	};
+	Disconnect: NotificationSetting;
+	Larp: NotificationSetting;
+	Test: NotificationSetting;
+}
+
+interface GraphicsSettingsType {
+	Font: GraphicsFontName;
+	InvertRoom: boolean;
+	StimulationFlashes: boolean;
+	DoBlindFlash: boolean;
+	AnimationQuality: number;
+	StimulationFlash: boolean;
+	SmoothZoom: boolean;
+	CenterChatrooms: boolean;
+	AllowBlur: boolean;
+}
+
+interface RestrictionSettingsType {
+	BypassStruggle: boolean;
+	SlowImmunity: boolean;
+	BypassNPCPunishments: boolean;
+}
+
+interface ImmersionSettingsType {
+	BlockGaggedOOC: boolean;
+	StimulationEvents: boolean;
+	ReturnToChatRoom: boolean;
+	ReturnToChatRoomAdmin: boolean;
+	ChatRoomMapLeaveOnExit: boolean;
+	SenseDepMessages: boolean;
+	ChatRoomMuffle: boolean;
+	BlindAdjacent: boolean;
+	AllowTints: boolean;
+}
+
+interface ControllerSettingsType {
+	ControllerSensitivity: number;
+	ControllerDeadZone: number;
+	ControllerA: number;
+	ControllerB: number;
+	ControllerX: number;
+	ControllerY: number;
+	ControllerStickUpDown: number;
+	ControllerStickLeftRight: number;
+	ControllerStickRight: number;
+	ControllerStickDown: number;
+	ControllerDPadUp: number;
+	ControllerDPadDown: number;
+	ControllerDPadLeft: number;
+	ControllerDPadRight: number;
+	ControllerActive: boolean;
+}
+
+interface ChatSettingsType {
+	ColorActions: boolean;
+	ColorActivities: boolean;
+	ColorEmotes: boolean;
+	ColorNames: boolean;
+	ColorTheme: ChatColorThemeType;
+	DisplayTimestamps: boolean;
+	EnterLeave: ChatEnterLeaveType;
+	FontSize: ChatFontSizeType;
+	MemberNumbers: ChatMemberNumbersType;
+	MuStylePoses: boolean;
+	ShowActivities: boolean;
+	ShowAutomaticMessages: boolean;
+	ShowBeepChat: boolean;
+	ShowChatHelp: boolean;
+	ShrinkNonDialogue: boolean;
+	WhiteSpace: "" | "Preserve";
+	/** @deprecated */
+	AutoBanBlackList?: any;
+	/** @deprecated */
+	AutoBanGhostList?: any;
+	/** @deprecated */
+	SearchFriendsFirst?: any;
+	/** @deprecated */
+	DisableAnimations?: any;
+	/** @deprecated */
+	SearchShowsFullRooms?: any;
+	CensoredWordsList: string;
+	CensoredWordsLevel: number;
+}
+
+interface GameplaySettingsType {
+	SensDepChatLog: SettingsSensDepName;
+	BlindDisableExamine: boolean;
+	DisableAutoRemoveLogin: boolean;
+	ImmersionLockSetting: boolean;
+	EnableSafeword: boolean;
+	DisableAutoMaid: boolean;
+	OfflineLockedRestrained: boolean;
+}
+
+interface AudioSettingsType {
+	Volume: number;
+	MusicVolume: number;
+	PlayBeeps: boolean;
+	/** Play items sounds in chatrooms */
+	PlayItem: boolean;
+	/** Play sounds only if the player is involved */
+	PlayItemPlayerOnly: boolean;
+	Notifications: boolean;
+}
+
+interface VisualSettingsType {
+	ForceFullHeight?: boolean;
+	UseCharacterInPreviews?: boolean;
+	MainHallBackground?: string;
+	PrivateRoomBackground?: string;
 }
 
 /**
@@ -1662,16 +1683,18 @@ interface PlayerOnlineSettings {
 
 /** Pandora Player extension */
 interface PlayerCharacter {
-	Infiltration?: {
-		Punishment?: {
-			Minutes: number;
-			Timer?: number;
-			Background: string;
-			Difficulty: number;
-			FightDone?: boolean;
-		}
-		Perks?: string;
+	Infiltration?: InfiltrationType;
+}
+
+interface InfiltrationType {
+	Punishment?: {
+		Minutes: number;
+		Timer?: number;
+		Background: string;
+		Difficulty: number;
+		FightDone?: boolean;
 	}
+	Perks?: string;
 }
 
 /** Kinky Dungeon Player extension */
@@ -3786,6 +3809,25 @@ interface PreviewDrawOptions {
 
 // #region Chat Room Maps
 
+interface ChatRoomView {
+	Activate?: () => void;
+	Deactivate?: () => void;
+	Run: () => void;
+	Draw: () => void;
+	DrawUi: () => void;
+	DisplayMessage: (data: ServerChatRoomMessage, msg: string, SenderCharacter: Character, metadata: IChatRoomMessageMetadata) => string|null;
+	Click?: (event: MouseEvent | TouchEvent) => void;
+	MouseDown?: (event: MouseEvent | TouchEvent) => void;
+	MouseUp?: (event: MouseEvent | TouchEvent) => void;
+	MouseMove?: (event: MouseEvent | TouchEvent) => void;
+	MouseWheel?: (event: MouseEvent | TouchEvent) => void;
+	KeyDown?: (event: KeyboardEvent) => boolean;
+	SyncRoomProperties?: (data: ServerChatRoomSyncMessage) => void;
+	CanStartWhisper?: (C: Character) => boolean;
+	CanLeave?: () => boolean;
+	Screenshot: () => void;
+}
+
 type ChatRoomMapType = "Always" | "Hybrid" | "Never";
 
 type ChatRoomMapPos = {
@@ -3803,6 +3845,7 @@ type ChatRoomMapDirection = "" | "R" | "L" | "D" | "U";
 type ChatRoomMapObjectType = (
 	"FloorDecoration"
 	| "FloorDecorationThemed"
+	| "FloorDecorationParty"
 	| "FloorItem"
 	| "FloorObstacle"
 	| "WallDecoration"
@@ -3868,5 +3911,207 @@ declare const CharacterItemsHavePoseType: never;
 declare const CharacterLoadPose: never;
 /** @deprecated superseded by {@link PoseToMapping} */
 declare const AssetPoseToMapping: never;
+
+// ChatRoom variables deprecated in R101
+/** @deprecated - Use {@link ChatRoomCharacterViewInitialize} instead! */
+declare const ChatRoomCharacterInitialize: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewX_Upper} instead! */
+declare const ChatRoomCharacterX_Upper: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewX_Lower} instead! */
+declare const ChatRoomCharacterX_Lower: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewZoom} instead! */
+declare const ChatRoomCharacterZoom: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewSlideWeight} instead! */
+declare const ChatRoomSlideWeight: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewCharacterCount} instead! */
+declare const ChatRoomCharacterCount: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewMoveTarget} instead! */
+declare const ChatRoomMoveTarget: never;
+
+// ChatRoom functions deprecated in R101
+/** @deprecated - Use {@link ChatRoomCharacterViewShowMapButton} instead! */
+declare const ChatRoomMapButton: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewDraw} instead! */
+declare const ChatRoomDrawCharacter: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewDrawBackground} instead! */
+declare const ChatRoomDrawBackground: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewLoopCharacters} instead! */
+declare const ChatRoomLoopCharacters: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewDrawOverlay} instead! */
+declare const ChatRoomDrawCharacterOverlay: never;
+/** @deprecated - Use {@link ChatRoomCharacterViewClickCharacter} instead! */
+declare const ChatRoomClickCharacter: never;
+
+// ChatRoomMap variables deprecated in R101
+/** @deprecated - Use {@link ChatRoomIsViewActive} and {@link ChatRoomActivateView} instead! */
+declare const ChatRoomMapVisible: never;
+/** @deprecated - Use {@link ChatRoomMapViewWidth} instead! */
+declare const ChatRoomMapWidth: never;
+/** @deprecated - Use {@link ChatRoomMapViewWidth} instead! */
+declare const ChatRoomMapHeight: never;
+/** @deprecated - Use {@link ChatRoomMapViewPerceptionRange} instead! */
+declare const ChatRoomMapViewRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewPerceptionRangeMin} instead! */
+declare const ChatRoomMapViewRangeMin: never;
+/** @deprecated - Use {@link ChatRoomMapViewPerceptionRangeMax} instead! */
+declare const ChatRoomMapViewRangeMax: never;
+/** @deprecated - Use {@link ChatRoomMapViewObjectStartID} instead! */
+declare const ChatRoomMapObjectStartID: never;
+/** @deprecated - Use {@link ChatRoomMapViewObjectEntryID} instead! */
+declare const ChatRoomMapObjectEntryID: never;
+/** @deprecated - Use {@link ChatRoomMapViewEditMode} instead! */
+declare const ChatRoomMapEditMode: never;
+/** @deprecated - Use {@link ChatRoomMapViewEditSubMode} instead! */
+declare const ChatRoomMapEditSubMode: never;
+/** @deprecated - Use {@link ChatRoomMapViewEditStarted} instead! */
+declare const ChatRoomMapEditStarted: never;
+/** @deprecated - Use {@link ChatRoomMapViewEditObject} instead! */
+declare const ChatRoomMapEditObject: never;
+/** @deprecated - Use {@link ChatRoomMapViewEditSelection} instead! */
+declare const ChatRoomMapEditSelection: never;
+/** @deprecated - Use {@link ChatRoomMapViewEditRange} instead! */
+declare const ChatRoomMapEditRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewEditBackup} instead! */
+declare const ChatRoomMapEditBackup: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdateRoomNext} instead! */
+declare const ChatRoomMapUpdateRoomNext: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdatePlayerNext} instead! */
+declare const ChatRoomMapUpdatePlayerNext: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdateLastMapDataNext} instead! */
+declare const ChatRoomMapUpdateLastMapDataNext: never;
+/** @deprecated - Use {@link ChatRoomMapViewFocusedCharacter} instead! */
+declare const ChatRoomMapFocusedCharacter: never;
+/** @deprecated - Use {@link ChatRoomMapViewSuperPowersActive} instead! */
+declare const ChatRoomMapSuperPowersActive: never;
+/** @deprecated - Use {@link ChatRoomMapViewBaseMovementSpeed} instead! */
+declare const ChatRoomMapBaseMovementSpeed: never;
+/** @deprecated - Use {@link ChatRoomMapViewMovement} instead! */
+declare const ChatRoomMapMovement: never;
+/** @deprecated - Use {@link ChatRoomMapViewTypeList} instead! */
+declare const ChatRoomMapTypeList: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdatePlayerTime} instead! */
+declare const ChatRoomMapUpdatePlayerTime: never;
+/** @deprecated - Use {@link ChatRoomMapViewPerceptionRaycastOffset} instead! */
+declare const ChatRoomMapPerceptionRaycastOffset: never;
+/** @deprecated - Use {@link ChatRoomMapViewWhisperRange} instead! */
+declare const ChatRoomMapWhisperRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewInteractionRange} instead! */
+declare const ChatRoomMapInteractionRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewRemoteRange} instead! */
+declare const ChatRoomMapRemoteRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewVisibilityMask} instead! */
+declare const ChatRoomMapVisibilityMask: never;
+/** @deprecated - Use {@link ChatRoomMapViewAudibilityMask} instead! */
+declare const ChatRoomMapAudibilityMask: never;
+/** @deprecated - Use {@link ChatRoomMapViewTileList} instead! */
+declare const ChatRoomMapTileList: never;
+/** @deprecated - Use {@link ChatRoomMapViewObjectList} instead! */
+declare const ChatRoomMapObjectList: never;
+
+// ChatRoomMap functions deprecated in R101
+/** @deprecated - Use {@link ChatRoomMapViewHasSuperPowers} instead! */
+declare const ChatRoomMapHasSuperPowers: never;
+/** @deprecated - Use {@link ChatRoomMapViewInitialize} instead! */
+declare const ChatRoomMapInitialize: never;
+/** @deprecated - Use {@link ChatRoomMapViewInitializeCharacter} instead! */
+declare const ChatRoomMapInitializeCharacter: never;
+/** @deprecated - Use {@link ChatRoomMapViewValidatePos} instead! */
+declare const ChatRoomMapValidatePos: never;
+/** @deprecated - Use {@link ChatRoomMapViewLeave} instead! */
+declare const ChatRoomMapLeave: never;
+/** @deprecated - Use {@link ChatRoomMapViewActivate} instead! */
+declare const ChatRoomMapActivate: never;
+/** @deprecated - Use {@link ChatRoomMapViewDeactivate} instead! */
+declare const ChatRoomMapDeactivate: never;
+/** @deprecated - Use {@link ChatRoomMapViewIsActive} instead! */
+declare const ChatRoomMapIsActive: never;
+/** @deprecated - Use {@link ChatRoomMapViewRun} instead! */
+declare const ChatRoomMapRun: never;
+/** @deprecated - Use {@link ChatRoomMapViewCanLeave} instead! */
+declare const ChatRoomMapCanLeave: never;
+/** @deprecated - Use {@link ChatRoomMapViewSyncRoomProperties} instead! */
+declare const ChatRoomMapSyncRoomProperties: never;
+/** @deprecated - Use {@link ChatRoomMapViewIndexToCoordinates} instead! */
+declare const ChatRoomMapIndexToCoordinates: never;
+/** @deprecated - Use {@link ChatRoomMapViewCoordinatesToIndex} instead! */
+declare const ChatRoomMapCoordinatesToIndex: never;
+/** @deprecated - Use {@link ChatRoomMapViewCalculatePerceptionMasks} instead! */
+declare const ChatRoomMapCalculatePerceptionMasks: never;
+/** @deprecated - Use {@link ChatRoomMapViewGetSightRange} instead! */
+declare const ChatRoomMapGetSightRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewGetHearingRange} instead! */
+declare const ChatRoomMapGetHearingRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewCharacterIsVisible} instead! */
+declare const ChatRoomMapCharacterIsVisible: never;
+/** @deprecated - Use {@link ChatRoomMapViewCharacterIsHearable} instead! */
+declare const ChatRoomMapCharacterIsHearable: never;
+/** @deprecated - Use {@link ChatRoomMapViewCharacterOnWhisperRange} instead! */
+declare const ChatRoomMapCharacterOnWhisperRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewCharacterOnInteractionRange} instead! */
+declare const ChatRoomMapCharacterOnInteractionRange: never;
+/** @deprecated - Use {@link ChatRoomMapViewFindWallEffectTile} instead! */
+declare const ChatRoomMapFindWallEffectTile: never;
+/** @deprecated - Use {@link ChatRoomMapViewIsWall} instead! */
+declare const ChatRoomMapIsWall: never;
+/** @deprecated - Use {@link ChatRoomMapViewGetTileAtPos} instead! */
+declare const ChatRoomMapGetTileAtPos: never;
+/** @deprecated - Use {@link ChatRoomMapViewGetObjectAtPos} instead! */
+declare const ChatRoomMapGetObjectAtPos: never;
+/** @deprecated - Use {@link ChatRoomMapViewCanEnterWall} instead! */
+declare const ChatRoomMapCanEnterWall: never;
+/** @deprecated - Use {@link ChatRoomMapViewWallEffect} instead! */
+declare const ChatRoomMapWallEffect: never;
+/** @deprecated - Use {@link ChatRoomMapViewFloorWallEffect} instead! */
+declare const ChatRoomMapFloorWallEffect: never;
+/** @deprecated - Use {@link ChatRoomMapViewCollision} instead! */
+declare const ChatRoomMapCollision: never;
+/** @deprecated - Use {@link ChatRoomMapViewGetCharacterAtPos} instead! */
+declare const ChatRoomMapGetCharacterAtPos: never;
+/** @deprecated - Use {@link ChatRoomMapViewGetEntryFlagPosition} instead! */
+declare const ChatRoomMapGetEntryFlagPosition: never;
+/** @deprecated - Use {@link ChatRoomMapViewDrawGrid} instead! */
+declare const ChatRoomMapDrawGrid: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdateFlag} instead! */
+declare const ChatRoomMapUpdateFlag: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdatePlayerFlag} instead! */
+declare const ChatRoomMapUpdatePlayerFlag: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdateRoomSync} instead! */
+declare const ChatRoomMapUpdateRoomSync: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdatePlayerSync} instead! */
+declare const ChatRoomMapUpdatePlayerSync: never;
+/** @deprecated - Use {@link ChatRoomMapViewSyncMapData} instead! */
+declare const ChatRoomSyncMapData: never;
+/** @deprecated - Use {@link ChatRoomMapViewUpdateLastMapDataSync} instead! */
+declare const ChatRoomMapUpdateLastMapDataSync: never;
+/** @deprecated - Use {@link ChatRoomMapViewMovementProcess} instead! */
+declare const ChatRoomMapMovementProcess: never;
+/** @deprecated - Use {@link ChatRoomMapViewLeash} instead! */
+declare const ChatRoomMapLeash: never;
+/** @deprecated - Use {@link ChatRoomMapViewDraw} instead! */
+declare const ChatRoomMapDraw: never;
+/** @deprecated - Use {@link ChatRoomMapViewCanEnterTile} instead! */
+declare const ChatRoomMapCanEnterTile: never;
+/** @deprecated - Use {@link ChatRoomMapViewMove} instead! */
+declare const ChatRoomMapMove: never;
+/** @deprecated - Use {@link ChatRoomMapViewUndo} instead! */
+declare const ChatRoomMapUndo: never;
+/** @deprecated - Use {@link ChatRoomMapViewKeyDown} instead! */
+declare const ChatRoomMapKeyDown: never;
+/** @deprecated - Use {@link ChatRoomMapViewClick} instead! */
+declare const ChatRoomMapClick: never;
+/** @deprecated - Use {@link ChatRoomMapViewMouseDown} instead! */
+declare const ChatRoomMapMouseDown: never;
+/** @deprecated - Use {@link ChatRoomMapViewMouseMove} instead! */
+declare const ChatRoomMapMouseMove: never;
+/** @deprecated - Use {@link ChatRoomMapViewMouseUp} instead! */
+declare const ChatRoomMapMouseUp: never;
+/** @deprecated - Use {@link ChatRoomMapViewMouseWheel} instead! */
+declare const ChatRoomMapMouseWheel: never;
+/** @deprecated - Use {@link ChatRoomMapVirewCopy} instead! */
+declare const ChatRoomMapCopy: never;
+/** @deprecated - Use {@link ChatRoomMapViewPaste} instead! */
+declare const ChatRoomMapPaste: never;
+/** @deprecated - Use {@link ChatRoomMapViewWhisperValid} instead! */
+declare const ChatRoomMapWhisperValid: never;
 
 // #end region

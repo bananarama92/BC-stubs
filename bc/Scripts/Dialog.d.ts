@@ -100,14 +100,16 @@ declare function DialogLogQuery<T extends keyof LogNameType>(LogType: LogNameTyp
 declare function DialogAllowItem(Allow: string): boolean;
 /**
  * Returns the value of the AllowItem flag of a given character
+ * @param {string | Character} C - The character whose flag should be returned.
+ * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {boolean} - The value of the given character's AllowItem flag
  */
-declare function DialogDoAllowItem(): boolean;
+declare function DialogDoAllowItem(C: string | Character): boolean;
 /**
  * Returns TRUE if the AllowItem flag doesn't allow putting an item on the current character
  * @returns {boolean} - The reversed value of the given character's AllowItem flag
  */
-declare function DialogDontAllowItemPermission(): boolean;
+declare function DialogDontAllowItemPermission(C: any): boolean;
 /**
  * Returns TRUE if no item can be used by the player on the current character because of the map distance
  * @returns {boolean} - TRUE if distance is too far (more than 1 tile)

@@ -10,8 +10,8 @@ interface ServerAccountImmutableData {
 	Creation: number;
 	Ownership?: ServerOwnership;
 	Lovership?: ServerLovership[];
-	ActivePose?: readonly string[];
-	Pose?: any;
+	ActivePose?: readonly AssetPoseName[];
+	Pose?: readonly AssetPoseName[];
 }
 
 interface ServerAccountData extends ServerAccountImmutableData {
@@ -21,40 +21,55 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	 */
 	Lover?: string;
 	Money: number;
-	Log?: any;
+	Log?: LogRecord[];
 	GhostList?: MemberNumber[];
 	BlackList: MemberNumber[];
 	FriendList: MemberNumber[];
 	WhiteList: MemberNumber[];
 	ItemPermission: number;
-	Skill?: any;
+	Skill?: Skill[];
 	Reputation?: { Type: string, Value: number }[];
-	Wardrobe?: any;
-	WardrobeCharacterNames?: any;
-	ChatSettings?: any;
-	VisualSettings?: any;
-	AudioSettings?: any;
-	GameplaySettings?: any;
-	ArousalSettings?: any;
-	OnlineSharedSettings?: any;
+	Wardrobe?: string;
+	WardrobeCharacterNames?: string[];
+	ChatSettings?: ChatSettingsType;
+	VisualSettings?: VisualSettingsType;
+	AudioSettings?: AudioSettingsType;
+	GameplaySettings?: GameplaySettingsType;
+	ArousalSettings?: ArousalSettingsType;
+	OnlineSharedSettings?: CharacterOnlineSharedSettings;
 	Game?: CharacterGameParameters;
 	LabelColor?: string;
 	Appearance?: ServerAppearanceBundle;
 	Description?: string;
-	BlockItems?: any[];
-	LimitedItems?: any[];
-	FavoriteItems?: any[];
-	HiddenItems?: any;
-	Title?: string;
+	BlockItems?: ItemPermissionsPacked | ItemPermissions[];
+	LimitedItems?: ItemPermissionsPacked | ItemPermissions[];
+	FavoriteItems?: ItemPermissionsPacked | ItemPermissions[];
+	HiddenItems?: ItemPermissions[];
+	Title?: TitleName;
 	Nickname?: string;
 	Crafting?: string;
-	Inventory?: string;
+	Inventory?: string | Partial<Record<AssetGroupName, string[]>>;
 	AssetFamily?: "Female3DCG";
-	Infiltration?: object; /* PlayerCharacter.Infiltration */
-	SavedColors?: object[]; /* HSVColor[] */
+	Infiltration?: InfiltrationType;
+	SavedColors?: HSVColor[];
 	ChatSearchFilterTerms?: string;
 	Difficulty?: { Level: number; LastChange: number };
 	MapData?: ChatRoomMapData;
+	PrivateCharacter?: ServerPrivateCharacterData[];
+	SavedExpressions?: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
+	ConfiscatedItems?: { Group: AssetGroupName, Name: string }[];
+	RoomCreateLanguage?: ServerChatRoomLanguage;
+	RoomSearchLanguage?: "" | ServerChatRoomLanguage;
+	LastMapData?: null | ChatRoomMapData;
+	LastChatRoom?: null | ServerChatRoomSettings;
+	ControllerSettings?: ControllerSettingsType;
+	ImmersionSettings?: ImmersionSettingsType;
+	RestrictionSettings?: RestrictionSettingsType;
+	OnlineSettings?: PlayerOnlineSettings;
+	GraphicsSettings?: GraphicsSettingsType;
+	NotificationSettings?: NotificationSettingsType;
+	GenderSettings?: GenderSettingsType;
+	ExtensionSettings?: ExtensionSettings;
 }
 
 interface ServerMapDataResponse {
@@ -91,6 +106,22 @@ interface ServerItemBundle {
 	Color?: ItemColor;
 	Property?: ItemProperties;
 	Craft?: CraftingItem;
+}
+
+interface ServerPrivateCharacterData {
+	Name: string;
+	Love: number;
+	Title: TitleName;
+	Trait: NPCTrait[];
+	Cage: boolean;
+	Owner: string;
+	Lover: string;
+	AssetFamily: "Female3DCG";
+	Appearance: ServerAppearanceBundle;
+	AppearanceFull: ServerAppearanceBundle;
+	ArousalSettings: ArousalSettingsType;
+	Event: NPCTrait[];
+	FromPandora?: boolean;
 }
 
 /** An AppearanceBundle is whole minified appearance of a character */
@@ -135,6 +166,7 @@ type ServerChatRoomData = {
 
 interface ServerChatRoomMapData {
 	Type: string;
+	Fog?: boolean;
 	Tiles: string;
 	Objects: string;
 }

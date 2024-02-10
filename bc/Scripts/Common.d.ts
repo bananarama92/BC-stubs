@@ -376,11 +376,6 @@ declare function CommonIsInteger(value: unknown, min?: number, max?: number): va
  */
 declare function CommonIsFinite(value: unknown, min?: number, max?: number): value is number;
 /**
- * Return whether BC is running in a browser environment (as opposed to Node.js as used for the test suite).
- * @returns {boolean}
- */
-declare function IsBrowser(): boolean;
-/**
  * A version of {@link Array.isArray} more friendly towards readonly arrays.
  * @param {unknown} arg - The to-be validated object
  * @returns {arg is readonly unknown[]} Whether the passed object is a (potentially readonly) array
@@ -523,6 +518,40 @@ declare function CommonKeyMove(event: KeyboardEvent, allowArrowKeys?: boolean): 
 declare function CommonHas<T>(obj: {
     has: (key: T) => boolean;
 }, key: unknown): key is T;
+/**
+ * Defines a property with the given name and the passed setter and getter
+ * @example
+ * CommonDeprecate(
+ * 	"OldFunc",
+ * 	function NewFunc (a, b) { return a + b; },
+ * );
+ * @template {any} T
+ * @param {string} propertyName - The name for the new property
+ * @param {()=>T} getter - The getter function for the property
+ * @param {(T)=>void} setter - The setter function for the property
+ */
+declare function CommonProperty<T extends unknown>(propertyName: string, getter?: () => T, setter?: (T: any) => void): void;
+/**
+ * Assign a function to the passed namespace, creating a deprecated and non-deprecated symbol.
+ * Both symbols will are in fact get/set wrappers around the same object, enforcing that `namespace[oldName] === namespace[callback.name]` *always* holds.
+ * @example
+ * CommonDeprecateFunction(
+ * 	"OldFunc",
+ * 	function NewFunc (a, b) { return a + b; },
+ * );
+ * @template {(...any) => any} T
+ * @param {string} oldName - The old (deprecated) name of the symbol
+ * @param {T} callback - The function with its new name
+ * @param {Record<string, any>} namespace - The namespace wherein the new and old names will be stored
+ */
+declare function CommonDeprecateFunction<T extends (...any: any[]) => any>(oldName: string, callback: T, namespace?: Record<string, any>): void;
+/**
+ * Capitalize the first character of the passed string.
+ * @template {string} T
+ * @param {T} string
+ * @returns {Capitalize<T>}
+ */
+declare function CommonCapitalize<T extends string>(string: T): Capitalize<T>;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {number|string} */
