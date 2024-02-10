@@ -5,10 +5,10 @@
 declare function GameClubCardGetStatus(): OnlineGameStatus;
 /**
  * Set the current state of online Club Card.
- * @param {OnlineGameStatus} s
+ * @param {OnlineGameStatus} NewStatus
  * @returns {void}
  */
-declare function GameClubCardSetStatus(s: OnlineGameStatus): void;
+declare function GameClubCardSetStatus(NewStatus: OnlineGameStatus): void;
 /**
  * Checks if the character is an admin for the room/game.
  * @param {Character} C - Character to check for
@@ -117,9 +117,10 @@ declare function GameClubCardProcess(Packet: ServerChatRoomGameResponse): void;
 /**
  * Syncs the online data with all players
  * @param {string} Progress - The progress status to push (default to action)
+ * @param {boolean} LocalPlayerOnly - If true, send only the local player. Otherwise, send both.
  * @returns {void} - Nothing
  */
-declare function GameClubCardSyncOnlineData(Progress?: string): void;
+declare function GameClubCardSyncOnlineData(Progress?: string, LocalPlayerOnly?: boolean): void;
 /**
  * When the game ends, we go back to the online chat room
  * @returns {void} - Nothing

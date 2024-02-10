@@ -8,6 +8,7 @@
 declare function ExtendedItemCreateCallback<T extends any[], RT>(data: ExtendedItemData<any>, name: string, originalFunction: ExtendedItemCallback<T, RT>): void;
 /**
  * Construct the extended item's archetypical callbacks and place them in the main namespace.
+ * Also sets {@link Asset.DynamicAfterDraw}, {@link Asset.DynamicScriptDraw} and/or {@link Asset.DynamicAfterDraw} if the appropriate callback is passed.
  * @template {ExtendedItemOption} T
  * @param {ExtendedItemData<T>} data - The extended item data
  * @param {ExtendedItemCallbackStruct<T>} defaults - The default archetypical callbacks

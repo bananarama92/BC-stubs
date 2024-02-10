@@ -337,17 +337,23 @@ declare function PlatformCastTeleport(C: any): void;
  */
 declare function PlatformCastHeal(C: any): void;
 /**
- * Handles keys pressed
- * @param {Object} e - The key pressed
+ * Handles the keys pressed to move, attack or jump
+ * @param {string} Code - The key code pressed
  * @returns {void} - Nothing
  */
-declare function PlatformEventKeyDown(e: any): void;
+declare function PlatformEventKeyDown(Code: string): void;
+/**
+ * Handles keys pressed
+ * @param {Object} e - The key pressed
+ * @returns {boolean} - TRUE if we handled the key pressed
+ */
+declare function PlatformKeyDown(e: any): boolean;
 /**
  * Handles keys released
  * @param {Object} e - The key released
  * @returns {void} - Nothing
  */
-declare function PlatformEventKeyUp(e: any): void;
+declare function PlatformKeyUp(e: any): void;
 /**
  * Handles the controller inputs
  * @param {Object} Buttons - The buttons pressed on the controller
@@ -384,7 +390,7 @@ declare var PlatformRoom: any;
 declare var PlatformMusic: any;
 declare var PlatformAllowAudio: boolean;
 declare var PlatformGravitySpeed: number;
-declare var PlatformLastKeyCode: number;
+declare var PlatformLastKeyCode: string;
 declare var PlatformLastKeyTime: number;
 declare var PlatformExperienceForLevel: number[];
 declare var PlatformShowHitBox: boolean;

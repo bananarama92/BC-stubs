@@ -13,7 +13,7 @@ declare function PlatformProfileGetFreePerk(): number;
  */
 declare function PlatformProfileDrawArrow(SX: number, SY: number, TX: number, TY: number): void;
 /**
- * Loads the screen and removes the key listeners
+ * Loads the screen
  * @returns {void} - Nothing
  */
 declare function PlatformProfileLoad(): void;

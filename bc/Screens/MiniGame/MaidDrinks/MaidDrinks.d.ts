@@ -53,9 +53,9 @@ declare function MaidDrinksMiss(): void;
 declare function MaidDrinksDoMove(MoveType: number): void;
 /**
  * Handles key presses during the maid drinks mini game. (Both keyboard and mobile)
- * @returns {void} - Nothing
+ * @returns {boolean} - TRUE if the key is handled by the key down event
  */
-declare function MaidDrinksKeyDown(): void;
+declare function MaidDrinksKeyDown(): boolean;
 /**
  * Handles clicks during the maid drinks mini game (only on mobile, to replace the keyboard)
  * @returns {void} - Nothing

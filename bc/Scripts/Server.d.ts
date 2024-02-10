@@ -217,15 +217,16 @@ declare var ServerAccountPasswordRegex: RegExp;
 declare var ServerAccountResetNumberRegex: RegExp;
 declare var ServerCharacterNameRegex: RegExp;
 declare var ServerCharacterNicknameRegex: RegExp;
+declare var ServerChatMessageMaxLength: number;
 declare const ServerScriptMessage: string;
 declare const ServerScriptWarningStyle: string;
 /** @readonly */
 declare var ServerAccountUpdate: {
     /**
      * @private
-     * @type {Map<string, object>}
+     * @type {Map<keyof ServerAccountUpdateRequest, any>}
      */
-    Queue: Map<string, object>;
+    Queue: Map<keyof ServerAccountUpdateRequest, any>;
     /**
      * @private
      * @type {null | ReturnType<typeof setTimeout>}
@@ -240,10 +241,10 @@ declare var ServerAccountUpdate: {
     SyncToServer(): void;
     /**
      * Queues a data to be synced at a later time
-     * @param {object} Data
-     * @param {true} [Force] - force immediate sync to server
+     * @param {ServerAccountUpdateRequest} Data
+     * @param {boolean} [Force] - force immediate sync to server
      */
-    QueueData(Data: object, Force?: true): void;
+    QueueData(Data: ServerAccountUpdateRequest, Force?: boolean): void;
 };
 /** Ratelimit: Max number of messages per interval */
 declare var ServerSendRateLimit: number;
@@ -260,10 +261,10 @@ declare const ServerSendRateLimitQueue: SendRateLimitQueueItem[];
 /** @type {number[]} */
 declare let ServerSendRateLimitTimes: number[];
 declare namespace ServerAccountDataSyncedValidate {
-    function Title(arg: string, C: Character): TitleName;
+    function Title(arg: Partial<TitleName>, C: Character): Partial<TitleName>;
     function Nickname(arg: string, C: Character): string;
     function ItemPermission(arg: number, C: Character): 0 | 2 | 1 | 3 | 4 | 5;
-    function ArousalSettings(arg: Partial<any>, C: Character): {
+    function ArousalSettings(arg: Partial<ArousalSettingsType>, C: Character): {
         Active: ArousalActiveName;
         Visible: ArousalVisibleName;
         ShowOtherMeter: boolean;
@@ -284,7 +285,7 @@ declare namespace ServerAccountDataSyncedValidate {
         OrgasmCount: number;
         DisableAdvancedVibes: boolean;
     };
-    function OnlineSharedSettings(arg: Partial<any>, C: Character): {
+    function OnlineSharedSettings(arg: Partial<CharacterOnlineSharedSettings>, C: Character): {
         AllowFullWardrobeAccess: boolean;
         BlockBodyCosplay: boolean;
         AllowPlayerLeashing: boolean;
@@ -293,10 +294,6 @@ declare namespace ServerAccountDataSyncedValidate {
         ItemsAffectExpressions: boolean;
         ScriptPermissions: ScriptPermissions;
         WheelFortune: string;
-    };
-    function MapData(arg: Partial<ChatRoomMapData>, C: Character): {
-        X: any;
-        Y: any;
     };
     function Crafting(arg: string, C: Character): CraftingItem[];
     function Game(arg: Partial<CharacterGameParameters>, C: Character): {
@@ -320,9 +317,9 @@ declare namespace ServerAccountDataSyncedValidate {
         Type: string;
         Value: number;
     }[], C: Character): Reputation[];
-    function BlockItems(arg: any[], C: Character): ItemPermissions[];
-    function LimitedItems(arg: any[], C: Character): ItemPermissions[];
-    function FavoriteItems(arg: any[], C: Character): ItemPermissions[];
+    function BlockItems(arg: Partial<ItemPermissions[] | Partial<Record<AssetGroupName, Record<string, string[]>>>>, C: Character): ItemPermissions[];
+    function LimitedItems(arg: Partial<ItemPermissions[] | Partial<Record<AssetGroupName, Record<string, string[]>>>>, C: Character): ItemPermissions[];
+    function FavoriteItems(arg: Partial<ItemPermissions[] | Partial<Record<AssetGroupName, Record<string, string[]>>>>, C: Character): ItemPermissions[];
     function WhiteList(arg: number[], C: Character): number[];
     function BlackList(arg: number[], C: Character): number[];
 }
