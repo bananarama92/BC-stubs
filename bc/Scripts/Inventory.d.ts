@@ -44,9 +44,9 @@ declare function InventoryDeleteGroup(C: Character, group: AssetGroupName, push?
 * Loads the current inventory for a character, can be loaded from an object of Name/Group or a compressed array using
 * LZString
 * @param {Character} C - The character on which we should load the inventory
-* @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly AssetGroupName[]>>} Inventory - An array of Name / Group of items to load
+* @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>} Inventory - An array of Name / Group of items to load
 */
-declare function InventoryLoad(C: Character, Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly AssetGroupName[]>>): void;
+declare function InventoryLoad(C: Character, Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>): void;
 /**
 * Checks if the character has the inventory available
 * @param {Character} C - The character on which we should remove the item
@@ -247,6 +247,12 @@ declare function InventoryRemove(C: Character, AssetGroup: AssetGroupName, Refre
 * @returns {boolean} - TRUE if the group is blocked
 */
 declare function InventoryGroupIsBlockedForCharacter(C: Character, GroupName?: AssetGroupItemName, Activity?: boolean): boolean;
+/**
+ * Returns TRUE if no item can be used by the player on the character because of the map distance
+ * @param {Character} C - The character on which we validate the distance
+ * @returns {boolean} - TRUE if distance is too far
+ */
+declare function InventoryIsBlockedByDistance(C: Character): boolean;
 /**
 * Returns TRUE if the body area is blocked by an owner rule
 * @param {Character} C - The character on which we validate the group

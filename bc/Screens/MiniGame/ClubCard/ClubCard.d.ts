@@ -78,6 +78,13 @@ declare function ClubCardUpgradeLevel(CCPlayer: any): void;
  * @param {string} CardName - The name of the card
  * @returns {boolean} - TRUE if at least one card with that name is present
  */
+declare function ClubCardEventNameIsInEvents(CCPlayer: ClubCardPlayer, CardName: string): boolean;
+/**
+ * Returns TRUE if a card (by name) is currently present on a board
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {string} CardName - The name of the card
+ * @returns {boolean} - TRUE if at least one card with that name is present
+ */
 declare function ClubCardNameIsOnBoard(CCPlayer: ClubCardPlayer, CardName: string): boolean;
 /**
  * Returns TRUE if a card (by group) is currently present on a board
@@ -100,6 +107,12 @@ declare function ClubCardGroupOnBoardCount(CCPlayer: ClubCardPlayer, GroupName: 
  * @returns {void} - Nothing
  */
 declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
+/**
+ * Removes several cards from player time events
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {String[]} ListOfCardNames - The names of the cards to remove
+ */
+declare function ClubCardRemoveCardsFromEventByName(CCPlayer: ClubCardPlayer, ListOfCardNames: string[]): void;
 /**
  * Removes a card from a player time events
  * @param {ClubCardPlayer} CCPlayer - The club card player

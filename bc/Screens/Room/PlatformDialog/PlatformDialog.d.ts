@@ -68,10 +68,10 @@ declare function PlatformDialogAlterProperty(CharacterName: string, Property: st
 declare function PlatformDialogProcess(): void;
 /**
  * When the user presses keys in the dialog screen
- * @param {object | number} Key - The key or keyCode pressed
- * @returns {void} - Nothing
+ * @param {object | string} Key - The key or keyCode pressed
+ * @returns {boolean} - Always TRUE to let the engine know the key press was handled
  */
-declare function PlatformDialogKeyDown(Key: object | number): void;
+declare function PlatformDialogKeyDown(Key: object | string): boolean;
 /**
  * Exits the dialog and returns to the game
  * @returns {void} - Nothing

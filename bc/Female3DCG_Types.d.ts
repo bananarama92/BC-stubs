@@ -573,6 +573,13 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	/** @deprecated */
 	AllowTypes?: never;
 	CreateLayerTypes?: string[];
+	/**
+	 * Whether an item can be tightened or not.
+	 *
+	 * Defaults to `false` unless one of the following two conditions are met:
+	 * * The item is considered a restraint (see {@link AssetDefinition.IsRestraint})
+	 * * The items difficulty is larger than zero (see {@link AssetDefinition.Difficulty})
+	 */
 	AllowTighten?: boolean;
 	DefaultColor?: ItemColor;
 	Audio?: string;

@@ -179,6 +179,11 @@ declare function MaidQuartersMiniGameStart(GameType: string, Difficulty: number)
  */
 declare function MaidQuartersMiniGameEnd(): void;
 /**
+ * Rewards the player with the latex maid outfit
+ * @returns {void} - Nothing
+ */
+declare function MaidQuartersGetLatexMaid(): void;
+/**
  * When an ordinary  mini game / maid chore is successful, the player gets paid and the maid reputation increases
  * @returns {void} - Nothing
  */
