@@ -68,7 +68,7 @@ declare function PlatformPartyActivate(CharacterName: string): void;
  */
 declare function PlatformPartyBuild(): void;
 /**
- * Loads the screen, adds listeners for keys
+ * When the platform screen is loaded
  * @returns {void} - Nothing
  */
 declare function PlatformLoad(): void;
