@@ -190,6 +190,11 @@ declare function ClubCardGetReward(): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardEndTurn(Draw?: boolean | null): void;
+/**
+ * Checks that the focused card is still in the Player's hand
+ * and defocuses it if not.
+ */
+declare function ClubCardDefocusCardIfDiscarded(): void;
 declare function ClubCardCheckVictory(CCPlayer: any): boolean;
 /**
  * Returns the number of cards that can be played in one turn by a player
