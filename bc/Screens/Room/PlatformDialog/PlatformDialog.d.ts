@@ -147,6 +147,7 @@ declare var PlatformDialogBackground: any;
 declare var PlatformDialogText: any;
 declare var PlatformDialogAnswer: any;
 declare var PlatformDialogAnswerPosition: number;
+declare var PlatformDialogAnswerLength: number;
 declare var PlatformDialogReply: any;
 declare var PlatformDialogGoto: any;
 declare var PlatformDialogCharacterDisplay: any;
