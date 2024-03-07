@@ -13,11 +13,7 @@ declare function DojoStruggleRun(): void;
  * @returns {void} - Nothing
  */
 declare function DojoStruggleClick(): void;
-/**
- * Handles key presses during the dojo struggle mini game. A space bar is handled just like a click is.  The C cheat key has a little less impulse.
- * @returns {void} - Nothing
- */
-declare function DojoStruggleKeyDown(): void;
+declare function DojoStruggleKeyDown(event: KeyboardEvent): boolean;
 declare var DojoStruggleBackground: string;
 declare var DojoStrugglePosition: number;
 declare var DojoStruggleImpulse: number;

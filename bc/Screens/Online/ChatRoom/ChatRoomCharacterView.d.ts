@@ -3,10 +3,12 @@
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
 declare function ChatRoomCharacterViewIsActive(): boolean;
+/**
+ * Run handler for the chat room character view
+ */
 declare function ChatRoomCharacterViewRun(): void;
 /**
  * Alter the received message to what will be displayed in the chat log
- *
  * @param {ServerChatRoomMessage} data
  * @param {string} msg
  * @param {Character} SenderCharacter
@@ -51,17 +53,22 @@ declare function ChatRoomCharacterViewClickCharacter(C: Character, CharX: number
  * @returns {void} - Nothing.
  */
 declare function ChatRoomCharacterViewDraw(): void;
+/**
+ * Draws extra controls on the character view UI
+ * @returns {void} - Nothing
+ */
 declare function ChatRoomCharacterViewDrawUi(): void;
 /**
  * Draw the background of a chat room
  * @param {string} Background - The name of the background image file
  * @param {number} Y - The starting Y co-ordinate of the image
- * @param {number} Zoom - The zoom factor based on the number of characters
- * @param {number} DarkFactor - The value (0 = fully visible, 1 = black) to tint the background
- * @param {boolean} InvertRoom - Whether the background image should be inverted
+ * @param {number} zoom - The zoom factor based on the number of characters
+ * @param {number} darken - The value (0 = fully visible, 1 = black) to tint the background
+ * @param {boolean} inverted - Whether the background image should be inverted
+ * @deprecated Use {@link DrawRoomBackground} instead
  * @returns {void} - Nothing
  */
-declare function ChatRoomCharacterViewDrawBackground(Background: string, Y: number, Zoom: number, DarkFactor: number, InvertRoom: boolean): void;
+declare function ChatRoomCharacterViewDrawBackground(Background: string, Y: number, zoom: number, darken: number, inverted: boolean): void;
 /**
  * Iterate over a room's characters
  *
@@ -85,8 +92,13 @@ declare var ChatRoomCharacterViewX_Upper: number;
 declare var ChatRoomCharacterViewX_Lower: number;
 declare var ChatRoomCharacterViewZoom: number;
 declare var ChatRoomCharacterViewCharacterCount: number;
+declare var ChatRoomCharacterViewCharacterCountTotal: number;
 /** @type {null | number} */
 declare var ChatRoomCharacterViewMoveTarget: null | number;
+declare var ChatRoomCharacterViewOffset: number;
+declare const ChatRoomCharacterViewWidth: number;
+declare const ChatRoomCharacterViewHeight: 1000;
+declare const ChatRoomCharacterViewCharactersPerRow: 5;
 /**
  * The name of the chat room character view.
  * @type {string}

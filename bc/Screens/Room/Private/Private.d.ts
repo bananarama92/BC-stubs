@@ -462,10 +462,10 @@ declare function PrivateGetSecurity(): void;
 declare function PrivateCancelSecurity(): void;
 /**
  * Loads a given private room character.
- * @param {number} C - Index of the private character to load.
+ * @param {PrivateCharacterData} data - The packed character data recieved from the server
  * @returns {boolean} - Update required.
  */
-declare function PrivateLoadCharacter(C: number): boolean;
+declare function PrivateLoadCharacter(data: PrivateCharacterData): boolean;
 /**
  * Triggered when a new character is added to the player's private room.
  * @param {NPCCharacter} Template - The base of the character, includes the name and appearance.
@@ -480,10 +480,16 @@ declare function PrivateAddCharacter(Template: NPCCharacter, Archetype?: "" | NP
  */
 declare function PrivateGetCurrentID(): number;
 /**
- * Triggered when the player kicks out a character.
+ * Triggered when the player kicks out a character from the dialog
  * @returns {void} - Nothing.
  */
 declare function PrivateKickOut(): void;
+/**
+ * Triggered when the player kicks out a character.
+ * @param {Character} C
+ * @returns {void} - Nothing.
+ */
+declare function PrivateKickCharacterOut(C: Character): void;
 /**
  * Triggered when the player tells a NPC to change.
  * @param {string} NewCloth - The new appearance to dress the NPC with
@@ -752,13 +758,17 @@ declare function PrivateClubCardDoConsequence(Act: string, LoveFactor: string): 
  * @returns {void} - Nothing.
  */
 declare function PrivateClubCardKinkyConsequence(Eyes: ExpressionName, Strip: string): void;
+/**
+ * Checks if the player owns a private room, there's a spot left and they're not locked out of it.
+ */
+declare function PrivateHasEmptySlot(): boolean;
 declare var PrivateBackground: string;
 /** @type {null | NPCCharacter} */
 declare var PrivateVendor: null | NPCCharacter;
 /** @type {NPCCharacter[]} */
 declare var PrivateCharacter: NPCCharacter[];
 declare var PrivateCharacterOffset: number;
-declare var PrivateCharacterToSave: number;
+declare var PrivateCharacterShouldSync: boolean;
 declare var PrivateCharacterMax: number;
 declare var PrivateReleaseTimer: number;
 declare var PrivateActivity: string;

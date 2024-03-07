@@ -409,7 +409,9 @@ declare let AppearanceWardrobeReorderList: any[];
 declare let AppearanceWardrobeReorderMode: WardrobeReorderType;
 declare const CanvasUpperOverflow: 700;
 declare const CanvasLowerOverflow: 150;
+/** The draw width of the character canvas */
 declare const CanvasDrawWidth: 500;
+/** The draw height of the character canvas */
 declare const CanvasDrawHeight: number;
 declare namespace AppearancePermissionColors {
     let red: string[];

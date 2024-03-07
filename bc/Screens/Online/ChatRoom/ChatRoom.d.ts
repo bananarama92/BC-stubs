@@ -501,30 +501,50 @@ declare function ChatRoomDrawArousalOverlay(): boolean;
 declare function ChatRoomMenuDraw(): void;
 /**
  * Redirects the Mouse Down event to the map if needed
+ * @param {MouseEvent | TouchEvent} event
  * @returns {void} - Nothing
  */
-declare function ChatRoomMouseDown(event: any): void;
+declare function ChatRoomMouseDown(event: MouseEvent | TouchEvent): void;
 /**
  * Redirects the Mouse Up event to the map if needed
+ * @param {MouseEvent | TouchEvent} event
  * @returns {void} - Nothing
  */
-declare function ChatRoomMouseUp(event: any): void;
+declare function ChatRoomMouseUp(event: MouseEvent | TouchEvent): void;
 /**
  * Redirects the Mouse Move event to the map if needed
+ * @param {MouseEvent | TouchEvent} event
  * @returns {void} - Nothing
  */
-declare function ChatRoomMouseMove(event: any): void;
+declare function ChatRoomMouseMove(event: MouseEvent | TouchEvent): void;
 /**
  * Redirects the Mouse Wheel event to the map if needed
+ * @param {MouseEvent | TouchEvent} event
  * @returns {void} - Nothing
  */
-declare function ChatRoomMouseWheel(event: any): void;
+declare function ChatRoomMouseWheel(event: MouseEvent | TouchEvent): void;
 /**
  * Handles clicks the chatroom screen.
  * @param {MouseEvent | TouchEvent} event
  * @returns {void} - Nothing.
  */
 declare function ChatRoomClick(event: MouseEvent | TouchEvent): void;
+/**
+ * The handler for the "Kneel" top menu button
+ */
+declare function ChatRoomToggleKneel(): void;
+/**
+ * The handler for the "Wardrobe" button
+ */
+declare function ChatRoomOpenWardrobeScreen(): void;
+/**
+ * The handler for the "Profile" button
+ */
+declare function ChatRoomOpenInformationScreen(): void;
+/**
+ * The handler for the "Admin" button
+ */
+declare function ChatRoomOpenAdminScreen(): void;
 /**
  * Process chat room menu button clicks
  * @returns {void} - Nothing
@@ -563,6 +583,7 @@ declare function ChatRoomProcessSlowLeave(): void;
  * @param {boolean} clearCharacters - Whether the online character cache should be cleared
  */
 declare function ChatRoomLeave(clearCharacters?: boolean): void;
+declare function ChatRoomCommonKeyDown(event: KeyboardEvent): boolean;
 /**
  * Handles keyboard shortcuts in the chatroom screen.
  * @param {KeyboardEvent} event - The event that triggered this

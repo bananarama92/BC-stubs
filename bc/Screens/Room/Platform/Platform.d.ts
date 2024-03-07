@@ -356,10 +356,10 @@ declare function PlatformKeyDown(e: any): boolean;
 declare function PlatformKeyUp(e: any): void;
 /**
  * Handles the controller inputs
- * @param {Object} Buttons - The buttons pressed on the controller
+ * @param {readonly GamepadButton[]} buttons - The buttons pressed on the controller
  * @returns {boolean} - Always TRUE to indicate that the controller is handled
  */
-declare function PlatformController(Buttons: any): boolean;
+declare function PlatformController(buttons: readonly GamepadButton[]): boolean;
 /**
  * Handles the touched regions for mobile play
  * @returns {void}
@@ -398,7 +398,8 @@ declare var PlatformMessage: any;
 declare var PlatformHeal: any;
 declare var PlatformEvent: any[];
 declare var PlatformDrawUpArrow: any[];
-declare var PlatformButtons: any;
+/** @type {readonly GamepadButton[]} */
+declare var PlatformButtons: readonly GamepadButton[];
 declare var PlatformRunDirection: string;
 declare var PlatformRunTime: number;
 /** @type {null | TouchList} */

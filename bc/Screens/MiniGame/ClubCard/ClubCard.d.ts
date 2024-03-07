@@ -363,7 +363,7 @@ declare function ClubCardRun(): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardClick(): void;
-declare function ClubCardKeyDown(event: any): void;
+declare function ClubCardKeyDown(event: KeyboardEvent): boolean;
 declare var ClubCardBackground: string;
 declare var ClubCardLog: any[];
 declare var ClubCardLogText: string;

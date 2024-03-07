@@ -1,10 +1,4 @@
 /**
- * An object defining which genders a setting is active for
- * @typedef {object} GenderSetting
- * @property {boolean} Female - Whether the setting is active for female cases
- * @property {boolean} Male - Whether the setting is active for male cases
- */
-/**
  * Compares the arousal preference level and returns TRUE if that level is met, or an higher level is met
  * @param {Character} C - The player who performs the sexual activity
  * @param {ArousalActiveName} Level - The name of the level ("Inactive", "NoMeter", "Manual", "Hybrid", "Automatic")
@@ -522,6 +516,35 @@ declare function PreferenceGetPreviousIndex(List: readonly unknown[], Index: num
  * @returns {number} - The index of the next item in the array, or 0 if the array is currently at the last item
  */
 declare function PreferenceGetNextIndex(List: readonly unknown[], Index: number): number;
+/**
+ * Registers a new extension setting to the preference screen
+ * @param {PreferenceExtensionsSettingItem} Setting - The extension setting to register
+ * @returns {void} - Nothing
+ */
+declare function PreferenceRegisterExtensionSetting(Setting: PreferenceExtensionsSettingItem): void;
+/**
+ * Handles the loading of the preference subscreen for extensions
+ * @returns {void} - Nothing
+ */
+declare function PreferenceSubscreenExtensionsLoad(): void;
+/**
+ * Runs and draws the preference subscreen for extensions
+ * @returns {void} - Nothing
+ */
+declare function PreferenceSubscreenExtensionsRun(): void;
+/**
+ * Handles clicks in the preference subscreen for extensions
+ * @returns {void} - Nothing
+ */
+declare function PreferenceSubscreenExtensionsClick(): void;
+declare function PreferenceSubscreenExtensionsUnload(): void;
+declare function PreferenceSubscreenExtensionsExit(): void;
+/**
+ * Exit the preference subscreen for extensions, should be called when
+ * leaving custom menu of extensions if the extension exits the menu from itself.
+ * @returns {void} - Nothing
+ */
+declare function PreferenceSubscreenExtensionsClear(): void;
 declare var PreferenceBackground: string;
 declare var PreferenceMessage: string;
 declare var PreferenceSafewordConfirm: boolean;
@@ -614,7 +637,6 @@ declare var PreferenceGraphicsPowerModeIndex: null | number;
 /** @type {null | WebGLContextAttributes} */
 declare var PreferenceGraphicsWebGLOptions: null | WebGLContextAttributes;
 declare var PreferenceGraphicsAnimationQualityList: number[];
-declare var PreferenceCalibrationStage: number;
 /** @type {string[]} */
 declare var PreferenceCensoredWordsList: string[];
 declare var PreferenceCensoredWordsOffset: number;
@@ -627,6 +649,12 @@ declare let PreferenceScriptTimeoutHandle: null | ReturnType<typeof setTimeout>;
 /** @type {null | number} */
 declare let PreferenceScriptTimer: null | number;
 declare let PreferenceScriptWarningAccepted: boolean;
+/** @type {Record<string,PreferenceExtensionsSettingItem>} */
+declare let PreferenceExtensionsSettings: Record<string, PreferenceExtensionsSettingItem>;
+/** @type {PreferenceExtensionsMenuButtonInfo[]} */
+declare let PreferenceExtensionsDisplay: PreferenceExtensionsMenuButtonInfo[];
+/** @type {PreferenceExtensionsSettingItem | null}*/
+declare let PreferenceExtensionsCurrent: PreferenceExtensionsSettingItem | null;
 declare const ScriptPermissionLevel: Readonly<{
     SELF: "Self";
     OWNER: "Owner";
@@ -738,17 +766,4 @@ declare var PreferenceOnlineSharedSettingsValidate: {
     ItemsAffectExpressions: (arg: boolean, C: Character) => boolean;
     ScriptPermissions: (arg: ScriptPermissions, C: Character) => ScriptPermissions;
     WheelFortune: (arg: string, C: Character) => string;
-};
-/**
- * An object defining which genders a setting is active for
- */
-type GenderSetting = {
-    /**
-     * - Whether the setting is active for female cases
-     */
-    Female: boolean;
-    /**
-     * - Whether the setting is active for male cases
-     */
-    Male: boolean;
 };

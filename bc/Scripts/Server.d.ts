@@ -28,11 +28,11 @@ declare function ServerInfo(data: {
 /**
  * Callback used when we are disconnected from the server, try to enter the reconnection mode (relog screen) if the
  * user was logged in
- * @param {*} data - Error to log
+ * @param {ServerForceDisconnectMessage} [data] - Error to log
  * @param {boolean} [close=false] - close the transport
  * @returns {void} - Nothing
  */
-declare function ServerDisconnect(data: any, close?: boolean): void;
+declare function ServerDisconnect(data?: ServerForceDisconnectMessage, close?: boolean): void;
 /**
  * Returns whether the player is currently in a chatroom or viewing a subscreen while in a chatroom
  * @returns {boolean} - True if in a chatroom
@@ -167,11 +167,11 @@ declare function ServerPrivateCharacterSync(): void;
 declare function ServerAccountQueryResult(data: ServerAccountQueryResponse): void;
 /**
  * Callback used to parse received information related to a beep from another account
- * @param {object} data - Data object containing the beep object which contain at the very least a name and a member
+ * @param {ServerAccountBeepResponse} data - Data object containing the beep object which contain at the very least a name and a member
  *     number
  * @returns {void} - Nothing
  */
-declare function ServerAccountBeep(data: object): void;
+declare function ServerAccountBeep(data: ServerAccountBeepResponse): void;
 /** Draws the last beep sent by the server if the timer is still valid, used during the drawing process */
 declare function ServerDrawBeep(): void;
 /** Handles a click on the beep rectangle if mail is included */
@@ -263,7 +263,7 @@ declare let ServerSendRateLimitTimes: number[];
 declare namespace ServerAccountDataSyncedValidate {
     function Title(arg: Partial<TitleName>, C: Character): Partial<TitleName>;
     function Nickname(arg: string, C: Character): string;
-    function ItemPermission(arg: number, C: Character): 0 | 2 | 1 | 3 | 4 | 5;
+    function ItemPermission(arg: Partial<0 | 2 | 1 | 3 | 4 | 5>, C: Character): 0 | 2 | 1 | 3 | 4 | 5;
     function ArousalSettings(arg: Partial<ArousalSettingsType>, C: Character): {
         Active: ArousalActiveName;
         Visible: ArousalVisibleName;
@@ -314,7 +314,7 @@ declare namespace ServerAccountDataSyncedValidate {
     };
     function Lovership(arg: ServerLovership[], C: Character): Lovership[];
     function Reputation(arg: {
-        Type: string;
+        Type: ReputationType;
         Value: number;
     }[], C: Character): Reputation[];
     function BlockItems(arg: Partial<ItemPermissions[] | Partial<Record<AssetGroupName, Record<string, string[]>>>>, C: Character): ItemPermissions[];

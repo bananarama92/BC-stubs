@@ -7,6 +7,7 @@ interface ServerAccountImmutableData {
 	ID: string;
 	MemberNumber: MemberNumber;
 	Name: string;
+	AccountName: string;
 	Creation: number;
 	Ownership?: ServerOwnership;
 	Lovership?: ServerLovership[];
@@ -26,9 +27,9 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	BlackList: MemberNumber[];
 	FriendList: MemberNumber[];
 	WhiteList: MemberNumber[];
-	ItemPermission: number;
+	ItemPermission: 0 | 1 | 2 | 3 | 4 | 5;
 	Skill?: Skill[];
-	Reputation?: { Type: string, Value: number }[];
+	Reputation?: { Type: ReputationType, Value: number }[];
 	Wardrobe?: string;
 	WardrobeCharacterNames?: string[];
 	ChatSettings?: ChatSettingsType;
@@ -48,6 +49,7 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	Title?: TitleName;
 	Nickname?: string;
 	Crafting?: string;
+	/** String-based values have been deprecated as of BondageProjects/Bondage-College#2138 */
 	Inventory?: string | Partial<Record<AssetGroupName, string[]>>;
 	AssetFamily?: "Female3DCG";
 	Infiltration?: InfiltrationType;
@@ -61,7 +63,31 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	RoomCreateLanguage?: ServerChatRoomLanguage;
 	RoomSearchLanguage?: "" | ServerChatRoomLanguage;
 	LastMapData?: null | ChatRoomMapData;
-	LastChatRoom?: null | ServerChatRoomSettings;
+	// Unfortunately can't @deprecated individual union members
+	/** String-based values have been deprecated and are superseded by {@link ServerChatRoomSettings} objects */
+	LastChatRoom?: null | ServerChatRoomSettings | string;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomDesc?: string;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomAdmin?: string;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomBan?: string;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomBG?: string;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomSize?: number;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomPrivate?: boolean;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomBlockCategory?: ServerChatRoomBlockCategory[];
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomSpace?: ServerChatRoomSpace;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomLanguage?: ServerChatRoomLanguage;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomCustom?: ServerChatRoomData["Custom"];
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomMapData?: ServerChatRoomMapData;
 	ControllerSettings?: ControllerSettingsType;
 	ImmersionSettings?: ImmersionSettingsType;
 	RestrictionSettings?: RestrictionSettingsType;
@@ -70,7 +96,37 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	NotificationSettings?: NotificationSettingsType;
 	GenderSettings?: GenderSettingsType;
 	ExtensionSettings?: ExtensionSettings;
+	FriendNames?: string;
+	SubmissivesList?: string;
+	KinkyDungeonExploredLore?: unknown[];
 }
+
+// TODO: Add `Lover` after figuring out why {@link ServerPlayerSync} still passes this field to the server
+/** A union of all deprecated {@link ServerAccountData} fields */
+type ServerAccountDataDeprecations = (
+	"LastChatRoomDesc"
+	| "LastChatRoomAdmin"
+	| "LastChatRoomBan"
+	| "LastChatRoomBG"
+	| "LastChatRoomSize"
+	| "LastChatRoomPrivate"
+	| "LastChatRoomBlockCategory"
+	| "LastChatRoomSpace"
+	| "LastChatRoomLanguage"
+	| "LastChatRoomCustom"
+	| "LastChatRoomMapData"
+);
+
+/**
+ * A {@link ServerAccountData} variant with all deprecated members set to `never`.
+ *
+ * Use of this type over {@link ServerAccountData} is recommended when sending data *to* the server.
+ */
+type ServerAccountDataNoDeprecated = ServerAccountData & { [k in ServerAccountDataDeprecations]?: never } & {
+	// Fields with one or more deprecated union members removed
+	LastChatRoom?: null | ServerChatRoomSettings;
+	Inventory?: Partial<Record<AssetGroupName, string[]>>;
+};
 
 interface ServerMapDataResponse {
 	MemberNumber: number;
@@ -226,7 +282,7 @@ interface ServerInfoMessage {
 
 type ServerForceDisconnectMessage = "ErrorRateLimited" | "ErrorDuplicatedLogin";
 
-interface ServerAccountUpdateRequest extends Partial<ServerAccountData> {}
+interface ServerAccountUpdateRequest extends Partial<ServerAccountDataNoDeprecated> {}
 
 interface ServerAccountUpdateEmailRequest {
 	EmailOld: string;

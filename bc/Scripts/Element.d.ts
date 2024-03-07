@@ -84,9 +84,9 @@ declare function ElementCloseAllSelect(elmnt: object): void;
 /**
  * Creates a new div element in the main document. Does not create a new element if there is already an existing one with the same ID
  * @param {string} ID - The id of the div tag to create.
- * @returns {void} - Nothing
+ * @returns {HTMLElement} - The created (or pre-existing) div element
  */
-declare function ElementCreateDiv(ID: string): void;
+declare function ElementCreateDiv(ID: string): HTMLElement;
 /**
  * Removes an element from the main document
  * @param {string} ID - The id of the tag to remove from the document.

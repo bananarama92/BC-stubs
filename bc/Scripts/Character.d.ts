@@ -1,17 +1,16 @@
 /**
  * Loads a character into the buffer, creates it if it does not exist
- * @param {number} CharacterID - ID of the character
  * @param {IAssetFamily} CharacterAssetFamily - Name of the asset family of the character
- * @param {CharacterType} [Type=CharacterType.ONLINE] - The character type
+ * @param {CharacterType} Type - The character type
+ * @param {string} CharacterID - An unique identifier for the character
  * @returns {Character} - The newly loaded character
  */
-declare function CharacterReset(CharacterID: number, CharacterAssetFamily: IAssetFamily, Type?: CharacterType): Character;
+declare function CharacterCreate(CharacterAssetFamily: IAssetFamily, Type: CharacterType, CharacterID: string): Character;
 /**
  * Attributes a random name for the character, does not select a name in use
- * @param {Character} C - Character for which to attribute a name
- * @returns {void} - Nothing
+ * @returns {string} - Nothing
  */
-declare function CharacterRandomName(C: Character): void;
+declare function CharacterGenerateRandomName(): string;
 /**
  * Substitute name and pronoun fields in dialog.
  * @param {Character} C - Character for which to build the dialog
@@ -43,16 +42,17 @@ declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo): void;
 declare function CharacterArchetypeClothes(C: Character, Archetype: "Maid" | "Mistress" | "Employee", ForceColor?: string): void;
 /**
  * Loads an NPC into the character array. The appearance is randomized, and a type can be provided to dress them in a given style.
- * @param {string} NPCType - Archetype of the NPC
+ * @param {string} CharacterID - The unique identifier for the NPC
+ * @param {string} [NPCType] - The dialog used by the NPC.  Defaults to CharacterID if not specified.
  * @returns {NPCCharacter} - The randomly generated NPC
  */
-declare function CharacterLoadNPC(NPCType: string): NPCCharacter;
+declare function CharacterLoadNPC(CharacterID: string, NPCType?: string, module?: ModuleType, screen?: string): NPCCharacter;
 /**
  * Create a minimal character object
- * @param {string} AccName - The account name to give to the character
+ * @param {string} CharacterID - The account name to give to the character
  * @returns {Character} - The created character
  */
-declare function CharacterLoadSimple(AccName: string): Character;
+declare function CharacterLoadSimple(CharacterID: string): Character;
 /**
  * Sets up an online character
  * @param {Character} Char - Online character to set up
@@ -68,11 +68,11 @@ declare function CharacterOnlineRefresh(Char: Character, data: ServerAccountData
  */
 declare function CharacterLoadOnline(data: ServerAccountDataSynced, SourceMemberNumber: number): Character;
 /**
- * Deletes an NPC from the buffer
- * @param {string} NPCType - Account name of the npc to delete
+ * Deletes a character from the cached list of characters
+ * @param {Character} C - The character to remove from the character cache
  * @returns {void} - Nothing
  */
-declare function CharacterDelete(NPCType: string): void;
+declare function CharacterDelete(C: Character): void;
 /**
  * Deletes all online characters from the character array
  * @returns {void} - Nothing
@@ -242,7 +242,7 @@ declare function CharacterFullRandomRestrain(C: Character, Ratio?: "FEW" | "LOT"
  * @param {Character} C - Character for which to set the expression of
  * @param {ExpressionGroupName | "Eyes1"} AssetGroup - Asset group for the expression
  * @param {null | ExpressionName} Expression - Name of the expression to use
- * @param {number} [Timer] - Optional: time the expression will last. Will send a null expression to expression queue. If expression to set is null, this is ignored.
+ * @param {number} [Timer] - Optional: time the expression will last, in seconds. Will send a null expression to expression queue. If expression to set is null, this is ignored.
  * @param {ItemColor} [Color] - Optional: color of the expression to set
  * @param {boolean} [fromQueue] - Internal: used to skip queuing the expression change if it comes from the queued expressions
  * @returns {void} - Nothing

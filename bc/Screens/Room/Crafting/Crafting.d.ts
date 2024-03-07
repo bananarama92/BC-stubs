@@ -74,16 +74,16 @@ declare function CraftingSaveServer(): void;
 declare function CraftingDeserialize(craftString: string): null | CraftingItem;
 /**
  * Deserialize and unpack the crafting data from the server.
- * @param {string | (null | CraftingItem)[]} Data The serialized crafting data
+ * @param {string | (null | CraftingItem)[]} Data The serialized crafting data or already-decompressed crafting item list
  * @returns {(null | CraftingItem)[]}
  */
 declare function CraftingDecompressServerData(Data: string | (null | CraftingItem)[]): (null | CraftingItem)[];
 /**
  * Loads the server packet and creates the crafting array for the player
- * @param {string} Packet - The packet
+ * @param {string | (null | CraftingItem)[]} Packet - The packet or already-decompressed crafting item list
  * @returns {void} - Nothing
  */
-declare function CraftingLoadServer(Packet: string): void;
+declare function CraftingLoadServer(Packet: string | (null | CraftingItem)[]): void;
 /**
  * Advance to the next crafting reordering mode, or set the mode to the specified value.
  * @param {CraftingReorderType} newmode - The mode to set.  If null, advance to next mode.

@@ -36,16 +36,6 @@ declare function AssetParsePosePrerequisite({ SetPose, AllowActivePose, Effect, 
     AllowActivePose?: AssetPoseName[];
 };
 /**
- * Construct the items extended item config, merging via {@link AssetArchetypeConfig.CopyConfig} if required.
- * Potentially updates the passed {@link AssetArchetypeConfig} object inplace.
- * @param {Asset} A - The asset to configure
- * @param {AssetArchetypeConfig} config - The extended item configuration of the base item
- * @param {ExtendedItemMainConfig} extendedConfig - The extended item configuration object for the asset's family
- * @returns {null | AssetArchetypeConfig} - The oiginally passed base item configuration, potentially updated inplace.
- * Returns `null` insstead if an error was encountered.
- */
-declare function AssetBuildConfig(A: Asset, config: AssetArchetypeConfig, extendedConfig: ExtendedItemMainConfig): null | AssetArchetypeConfig;
-/**
  * Constructs extended item functions for an asset, if extended item configuration exists for the asset.
  * Updates the passed config inplace if {@link ExtendedItem.CopyConfig} is present.
  * @param {Asset} A - The asset to configure
@@ -215,9 +205,37 @@ declare var AssetGroupMap: Map<AssetGroupName, AssetGroup>;
 declare var Pose: Pose[];
 /** A record mapping pose names to their respective {@link Pose}. */
 declare const PoseRecord: Record<AssetPoseName, Pose>;
+declare namespace PoseCategoryPriority {
+    let BodyAddon: number;
+    let BodyLower: number;
+    let BodyFull: number;
+    let BodyHands: number;
+    let BodyUpper: number;
+}
 /** @type {Map<AssetGroupName, AssetGroup[]>} */
 declare var AssetActivityMirrorGroups: Map<AssetGroupName, AssetGroup[]>;
 declare namespace PoseType {
     let HIDE: "Hide";
     let DEFAULT: "";
 }
+declare namespace AssetResolveCopyConfig {
+    export function _AssignBuyGroup(configList: readonly {
+        BuyGroup?: string;
+        Value?: number;
+        Name?: string;
+    }[]): void;
+    export function _Resolve<T extends {
+        CopyConfig?: {
+            GroupName?: AssetGroupName;
+            AssetName: string;
+        };
+        BuyGroup?: string;
+        Value?: number;
+        Name?: string;
+    }>(config: T, assetName: string, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Record<string, T>>>, configType: string, configValidator?: AssetCopyConfigValidator<T>, setBuyGroup?: boolean): T;
+    export let _ExtendedValidator: AssetCopyConfigValidator<AssetArchetypeConfig>;
+    export function AssetDefinition_1(assetDef: AssetDefinition, groupName: AssetGroupName, assetRecord: Partial<Record<AssetGroupName, Record<string, AssetDefinition>>>): AssetDefinition;
+    export { AssetDefinition_1 as AssetDefinition };
+    export function ExtendedItemConfig(asset: Asset, config: AssetArchetypeConfig, extendedConfig: Partial<Record<AssetGroupName, ExtendedItemGroupConfig>>): AssetArchetypeConfig;
+}
+type AssetCopyConfigValidator<T> = (config: T, superConfig: T, key: string, superKey: string) => boolean;

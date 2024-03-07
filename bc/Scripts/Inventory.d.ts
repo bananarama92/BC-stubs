@@ -55,12 +55,13 @@ declare function InventoryLoad(C: Character, Inventory: string | readonly ItemBu
 */
 declare function InventoryAvailable(C: Character, InventoryName: string | '*', InventoryGroup: AssetGroupName): boolean;
 /**
-* Returns an error message if a prerequisite clashes with the character's items and clothes
-* @param {Character} C - The character on which we check for prerequisites
-* @param {AssetPrerequisite} Prerequisite - The name of the prerequisite
-* @returns {string} - The error tag, can be converted to an error message
-*/
-declare function InventoryPrerequisiteMessage(C: Character, Prerequisite: AssetPrerequisite): string;
+ * Returns an error message if a prerequisite clashes with the character's items and clothes
+ * @param {Character} C - The character on which we check for prerequisites
+ * @param {AssetPrerequisite} Prerequisite - The name of the prerequisite
+ * @param {null | Asset} asset - The asset (if any) for whom the prerequisite is checked
+ * @returns {string} - The error tag, can be converted to an error message
+ */
+declare function InventoryPrerequisiteMessage(C: Character, Prerequisite: AssetPrerequisite, asset?: null | Asset): string;
 /**
  * Prerequisite utility function that returns TRUE if the given character has an item equipped in the provided group
  * whose name matches one of the names in the provided list.
@@ -109,13 +110,6 @@ declare function InventoryDoItemsExposeGroup(C: Character, TargetGroup: AssetGro
  * @returns {boolean} - TRUE if the character has any item equipped in any of the named groups, FALSE otherwise.
  */
 declare function InventoryHasItemInAnyGroup(C: Character, GroupList: readonly AssetGroupName[]): boolean;
-/**
- * Check if there are any gags with prerequisites that block the new gag from being applied
- * @param {Character} C - The character on which we check for prerequisites
- * @param {readonly AssetPrerequisite[]} BlockingPrereqs - The prerequisites we check for on lower gags
- * @returns {string} - Returns the prerequisite message if the gag is blocked, or an empty string if not
- */
-declare function InventoryPrerequisiteConflictingGags(C: Character, BlockingPrereqs: readonly AssetPrerequisite[]): string;
 /**
  * Returns TRUE if we can add the item, no other items must block that prerequisite
  * @param {Character} C - The character on which we check for prerequisites
@@ -293,7 +287,7 @@ declare function InventoryItemIsPickable(Item: Item): boolean;
  * @returns {(ItemProperties & Asset & AssetGroup)[Name] | undefined} - The value of the requested property for the given item.
  * Returns either undefined, an empty array or object if the property or the item itself does not exist.
  */
-declare function InventoryGetItemProperty<Name extends "Block" | "BlockRemotes" | "OpenPermission" | "OpenPermissionArm" | "OpenPermissionLeg" | "OpenPermissionChastity" | "Hide" | "Name" | "Gender" | "BuyGroup" | "AllowLock" | "IsLock" | "PickDifficulty" | "OwnerOnly" | "LoverOnly" | "FamilyOnly" | "AllowTighten" | "DrawLocks" | "CustomBlindBackground" | "CraftGroup" | "AllowLockType" | "CharacterRestricted" | "AllowRemoveExclusive" | "ArousalZone" | "Difficulty" | "SelfBondage" | "SelfUnlock" | "RemoveTime" | "AlwaysInteract" | "IsRestraint" | "ParentItem" | "Enable" | "Visible" | "NotVisibleOnScreen" | "Wear" | "Activity" | "AllowActivity" | "ActivityAudio" | "ActivityExpression" | "AllowActivityOn" | "PrerequisiteBuyGroups" | "Bonus" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "WhitelistActivePose" | "Value" | "ExclusiveUnlock" | "RemoveAtLogin" | "LayerVisibility" | "RemoveTimer" | "MaxTimer" | "Prerequisite" | "Extended" | "AlwaysExtend" | "ExpressionTrigger" | "RemoveItemOnRemove" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "AllowTypes" | "CreateLayerTypes" | "DefaultColor" | "Audio" | "Category" | "Fetish" | "OverrideBlinking" | "DialogSortOverride" | "DynamicDescription" | "DynamicPreviewImage" | "DynamicAllowInventoryAdd" | "DynamicName" | "DynamicGroupName" | "DynamicActivity" | "DynamicAudio" | "DynamicBeforeDraw" | "DynamicAfterDraw" | "DynamicScriptDraw" | "AllowColorizeAll" | "AvailableLocations" | "OverrideHeight" | "FullAlpha" | "MirrorExpression" | "Layer" | "Attribute" | "HideItemAttribute" | "PreviewIcons" | "Tint" | "DefaultTint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "FreezeActivePose" | "AllowExpression" | "Random" | "BodyCosplay" | "HideForPose" | "Alpha" | "ColorSuffix" | "FixedPosition" | "Opacity" | "MinOpacity" | "MaxOpacity" | "InheritColor" | "AllowPose" | "PoseMapping" | "AllowColorize" | "Group" | "Text" | "Padding" | "TypeRecord" | "Door" | "Type" | "Expression" | "Mode" | "Intensity" | "State" | "Modules" | "HeightModifier" | "OverridePriority" | "ItemMemberNumber" | "LockedBy" | "LockMemberNumber" | "Password" | "LockPickSeed" | "CombinationNumber" | "MemberNumberListKeys" | "Hint" | "LockSet" | "RemoveItem" | "RemoveOnUnlock" | "ShowTimer" | "EnableRandomInput" | "MemberNumberList" | "InflateLevel" | "SuctionLevel" | "Text2" | "Text3" | "LockButt" | "HeartRate" | "AutoPunish" | "AutoPunishUndoTime" | "AutoPunishUndoTimeSetting" | "OriginalSetting" | "BlinkState" | "Option" | "PunishStruggle" | "PunishStruggleOther" | "PunishOrgasm" | "PunishStandup" | "PunishActivity" | "PunishSpeech" | "PunishRequiredSpeech" | "PunishRequiredSpeechWord" | "PunishProhibitedSpeech" | "PunishProhibitedSpeechWords" | "NextShockTime" | "PublicModeCurrent" | "PublicModePermission" | "TriggerValues" | "AccessMode" | "ShockLevel" | "InsertedBeads" | "ShowText" | "TriggerCount" | "OrgasmCount" | "RuinedOrgasmCount" | "TimeWorn" | "TimeSinceLastOrgasm" | "Iterations" | "Revert" | "UnHide" | "Texts" | "TargetAngle" | "PortalLinkCode" | "Underwear" | "Asset" | "Clothing" | "AllowNone" | "AllowCustomize" | "ParentSize" | "ParentColor" | "Zone" | "MirrorGroup" | "PreviewZone" | "MirrorActivitiesFrom" | "HasPreviewImages" | "HasType" | "ParentGroupName" | "DrawingLeft" | "DrawingTop" | "Description" | "WearTime" | "DrawingPriority" | "ZoomModifier" | "ColorableLayerCount" | "Archetype" | "AllowTint" | "Family" | "IsDefault" | "ColorSchema" | "DrawingBlink" | "IsAppearance" | "IsItem" | "IsScript">(Item: Item, PropertyName: Name, CheckGroup?: boolean): (ItemProperties & Asset & AssetGroup)[Name];
+declare function InventoryGetItemProperty<Name extends "Block" | "BlockRemotes" | "OpenPermission" | "OpenPermissionArm" | "OpenPermissionLeg" | "OpenPermissionChastity" | "Hide" | "Name" | "Gender" | "BuyGroup" | "AllowLock" | "IsLock" | "PickDifficulty" | "OwnerOnly" | "LoverOnly" | "FamilyOnly" | "AllowTighten" | "DrawLocks" | "CustomBlindBackground" | "CraftGroup" | "AllowLockType" | "CharacterRestricted" | "AllowRemoveExclusive" | "ArousalZone" | "Difficulty" | "SelfBondage" | "SelfUnlock" | "RemoveTime" | "AlwaysInteract" | "IsRestraint" | "ParentItem" | "Enable" | "Visible" | "NotVisibleOnScreen" | "Wear" | "Activity" | "AllowActivity" | "ActivityAudio" | "ActivityExpression" | "AllowActivityOn" | "Bonus" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "WhitelistActivePose" | "Value" | "NeverSell" | "ExclusiveUnlock" | "RemoveAtLogin" | "LayerVisibility" | "RemoveTimer" | "MaxTimer" | "Prerequisite" | "Extended" | "AlwaysExtend" | "ExpressionTrigger" | "RemoveItemOnRemove" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "AllowTypes" | "CreateLayerTypes" | "DefaultColor" | "Audio" | "Category" | "Fetish" | "OverrideBlinking" | "DialogSortOverride" | "DynamicDescription" | "DynamicPreviewImage" | "DynamicAllowInventoryAdd" | "DynamicName" | "DynamicGroupName" | "DynamicActivity" | "DynamicAudio" | "DynamicBeforeDraw" | "DynamicAfterDraw" | "DynamicScriptDraw" | "AllowColorizeAll" | "AvailableLocations" | "OverrideHeight" | "FullAlpha" | "MirrorExpression" | "Layer" | "Attribute" | "HideItemAttribute" | "PreviewIcons" | "Tint" | "DefaultTint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "FreezeActivePose" | "AllowExpression" | "Random" | "BodyCosplay" | "HideForPose" | "Alpha" | "ColorSuffix" | "FixedPosition" | "Opacity" | "MinOpacity" | "MaxOpacity" | "InheritColor" | "AllowPose" | "PoseMapping" | "AllowColorize" | "Group" | "Text" | "Padding" | "TypeRecord" | "Door" | "Type" | "Expression" | "Mode" | "Intensity" | "State" | "Modules" | "HeightModifier" | "OverridePriority" | "ItemMemberNumber" | "LockedBy" | "LockMemberNumber" | "Password" | "LockPickSeed" | "CombinationNumber" | "MemberNumberListKeys" | "Hint" | "LockSet" | "RemoveItem" | "RemoveOnUnlock" | "ShowTimer" | "EnableRandomInput" | "MemberNumberList" | "InflateLevel" | "SuctionLevel" | "Text2" | "Text3" | "LockButt" | "HeartRate" | "AutoPunish" | "AutoPunishUndoTime" | "AutoPunishUndoTimeSetting" | "OriginalSetting" | "BlinkState" | "Option" | "PunishStruggle" | "PunishStruggleOther" | "PunishOrgasm" | "PunishStandup" | "PunishActivity" | "PunishSpeech" | "PunishRequiredSpeech" | "PunishRequiredSpeechWord" | "PunishProhibitedSpeech" | "PunishProhibitedSpeechWords" | "NextShockTime" | "PublicModeCurrent" | "PublicModePermission" | "TriggerValues" | "AccessMode" | "ShockLevel" | "InsertedBeads" | "ShowText" | "TriggerCount" | "OrgasmCount" | "RuinedOrgasmCount" | "TimeWorn" | "TimeSinceLastOrgasm" | "Iterations" | "Revert" | "UnHide" | "Texts" | "TargetAngle" | "PortalLinkCode" | "Underwear" | "Asset" | "Clothing" | "AllowNone" | "AllowCustomize" | "ParentSize" | "ParentColor" | "Zone" | "MirrorGroup" | "PreviewZone" | "MirrorActivitiesFrom" | "HasPreviewImages" | "HasType" | "ParentGroupName" | "DrawingLeft" | "DrawingTop" | "Description" | "WearTime" | "DrawingPriority" | "ZoomModifier" | "ColorableLayerCount" | "Archetype" | "AllowTint" | "Family" | "IsDefault" | "ColorSchema" | "DrawingBlink" | "IsAppearance" | "IsItem" | "IsScript">(Item: Item, PropertyName: Name, CheckGroup?: boolean): (ItemProperties & Asset & AssetGroup)[Name];
 /**
  * Apply an item's expression trigger to a character if able
  * @param {Character} C - The character to update
@@ -511,6 +505,21 @@ declare function InventoryShockExpression(C: Character): void;
  * object
  */
 declare function InventoryExtractLockProperties(property: ItemProperties): ItemProperties;
+declare namespace InventoryPrerequisiteConflicts {
+    let GagPriorities: Partial<Record<AssetGroupName, number>>;
+    function _GagCheck<T extends "Block" | "Hide" | "NotVisibleOnScreen" | "AllowActivity" | "ActivityAudio" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "WhitelistActivePose" | "Prerequisite" | "ExpressionTrigger" | "RemoveItemOnRemove" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "AllowTypes" | "CreateLayerTypes" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Layer" | "Attribute" | "HideItemAttribute" | "PreviewIcons" | "Tint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "FreezeActivePose" | "AllowExpression" | "HideForPose" | "Alpha" | "AllowPose" | "Modules" | "MemberNumberList" | "UnHide" | "Texts" | "Asset" | "Zone" | "PreviewZone" | "HasType" | "ColorSchema">(fieldName: T, C: Character, blockingPrereqs: PropertiesArray[T], asset?: Asset, options?: {
+        errMessage?: string;
+        invert?: boolean;
+    }): string;
+    function GagPrerequisite(C: Character, blockingPrereqs: readonly AssetPrerequisite[], asset?: Asset, options?: {
+        errMessage?: string;
+        invert?: boolean;
+    }): string;
+    function GagEffect(C: Character, blockingEffects: readonly EffectName[], asset?: Asset, options?: {
+        errMessage?: string;
+        invert?: boolean;
+    }): string;
+}
 /** @satisfies {Set<keyof PropertiesArray>} */
 declare const PropertiesArrayLike: Set<"Block" | "Hide" | "AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "Prerequisite" | "ExpressionTrigger" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "AllowExpression" | "Alpha" | "MemberNumberList" | "UnHide" | "Texts">;
 /** @satisfies {Set<keyof PropertiesRecord>} */
