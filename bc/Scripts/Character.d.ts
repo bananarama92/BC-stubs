@@ -460,3 +460,8 @@ declare const CharacterBlurLevels: Map<BlurEffectName, number>;
  * @type {Record<"ONLINE"|"NPC"|"SIMPLE", CharacterType>}
  */
 declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE", CharacterType>;
+/**
+ * A record mapping screen names to functions for returning {@link CharacterGetCurrent} characters.
+ * @type {Record<string, () => null | Character>}
+ */
+declare var CharacterGetCurrentHandlers: Record<string, () => null | Character>;

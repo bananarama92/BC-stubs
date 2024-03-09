@@ -247,7 +247,7 @@ interface ExpressionNameMap {
 	Emoticon: (
 		null | "Afk" | "Whisper" | "Sleep" | "Hearts" | "Tear" | "Hearing" | "Confusion" | "Exclamation" |
 		"Annoyed" | "Read" | "RaisedHand" | "Spectator" | "ThumbsDown" | "ThumbsUp" | "LoveRope" |
-		"LoveGag" | "LoveLock" | "Wardrobe" | "Gaming" | "Coffee" | "Fork"
+		"LoveGag" | "LoveLock" | "Wardrobe" | "Gaming" | "Coffee" | "Fork" | "Music"
 	),
 }
 
@@ -4088,8 +4088,6 @@ interface ShopItem {
 	readonly SortPriority: number,
 	/** Whether an item should never be able to be sold */
 	readonly NeverSell: boolean,
-	/** Whether the asset is available with the current {@link Shop2InitVars.Filters} settings */
-	Filter: boolean,
 	/** Whether the asset can be bought; `false` implies that it can be sold */
 	Buy: boolean,
 }

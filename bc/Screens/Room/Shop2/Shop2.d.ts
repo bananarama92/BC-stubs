@@ -54,6 +54,13 @@ declare const Shop2Vars: VariableContainer<{
      * @type {boolean}
      */
     DisplayDropdown: boolean;
+    /**
+     * A record mapping filter ID to filter callbacks.
+     * Each callback is expected to return a list denoting for which modes the item is to-be shown.
+     * Note that an item will only be shown if the respective mode is included in the output list of every callback.
+     * @type {Record<string, (item: ShopItem) => ("Buy" | "Sell" | "Preview")[]>}
+     */
+    Filters: Record<string, (item: ShopItem) => ("Buy" | "Sell" | "Preview")[]>;
 }, {
     /**
      * Get the maximum number of pages for the current {@link Shop2Vars.Mode}.
@@ -87,24 +94,10 @@ declare const Shop2InitVars: VariableContainer<{
      */
     PreviousScreen: null | [module: ModuleType, screen: string];
     /**
-     * Whether the shop screen has been initialized or not.
-     * Useful in `Load` for identifying whether we're loading or reloading a (sub-)scren.
-     * @type {boolean}
-     */
-    Init: boolean;
-    /**
      * Super set of all items that be bought or sold
      * @type {readonly ShopItem[]}
      */
     Items: readonly ShopItem[];
-    /**
-     * The currently active item filters in the shop
-     * @type {{ Keyword: string, Groups: Set<AssetGroupName> }}
-     */
-    Filters: {
-        Keyword: string;
-        Groups: Set<AssetGroupName>;
-    };
 }, {
     /** The shop background */
     Background: string;
@@ -139,8 +132,8 @@ declare namespace Shop2 {
     function _AssetElementRun(time: number, x: number, y: number, w: number, h: number, assetIndex: number): void;
     function _AssetElementClick(event: MouseEvent | TouchEvent, assetIndex: number): void;
     function _GenerateAssetElements(): Record<string, ShopScreenFunctions>;
-    function _ApplyAssetFilter(): void;
-    function _ToggleCheckbox(groupDescription: string): void;
+    function ApplyItemFilters(): void;
+    function _SetCheckboxFilters(): void;
     let DrawPriceRibbon: (label: string, x: number, y: number, w: number, color?: string) => void;
     function ParseAssets(assets: readonly Asset[]): ShopItem[];
     let Elements: Record<string, ShopScreenFunctions>;

@@ -384,6 +384,26 @@ declare function PrivateCanPlayClubCard(): boolean;
  */
 declare function PrivateClubCardVictoryModeActive(): boolean;
 /**
+ * Returns true if the Player can talk and the friend can interact
+ * @returns {boolean} - True if Player can ask and the friend can interact
+ */
+declare function PrivateCanAskforAction(): boolean;
+/**
+ * Returns true if the Player can talk but the friend can not interact
+ * @returns {boolean} - True if Player can ask and the friend can not interact
+ */
+declare function PrivateCannotAskforAction(): boolean;
+/**
+ * Returns true if the Player can not talk and the friend can interact
+ * @returns {boolean} - True if Player can not ask and the friend can interact
+ */
+declare function PrivateCanTryforAction(): boolean;
+/**
+ * Returns true if the Player can not talk and the friend can not interact
+ * @returns {boolean} - True if Player can not ask and the friend can not interact
+ */
+declare function PrivateCannotTryforAction(): boolean;
+/**
  * Loads the private room screen and the vendor NPC.
  * @returns {void} - Nothing.
  */
