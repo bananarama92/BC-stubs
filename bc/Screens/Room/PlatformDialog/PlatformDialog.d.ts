@@ -66,12 +66,7 @@ declare function PlatformDialogAlterProperty(CharacterName: string, Property: st
  * @returns {void} - Nothing
  */
 declare function PlatformDialogProcess(): void;
-/**
- * When the user presses keys in the dialog screen
- * @param {object | string} Key - The key or keyCode pressed
- * @returns {boolean} - Always TRUE to let the engine know the key press was handled
- */
-declare function PlatformDialogKeyDown(Key: object | string): boolean;
+declare function PlatformDialogKeyDown(event: KeyboardEvent): boolean;
 /**
  * Exits the dialog and returns to the game
  * @returns {void} - Nothing
@@ -90,10 +85,10 @@ declare function PlatformDialogClick(): void;
 declare function PlatformDialogGetCharacter(Name: string): any;
 /**
  * Handles the controller inputs
- * @param {Object} Buttons - The buttons pressed on the controller
+ * @param {readonly GamepadButton[]} buttons - The buttons pressed on the controller
  * @returns {boolean} - Always TRUE to indicate that the controller is handled
  */
-declare function PlatformDialogController(Buttons: any): boolean;
+declare function PlatformDialogController(buttons: readonly GamepadButton[]): boolean;
 /**
  * Returns TRUE if the party leader (Melody) has a specific social perk
  * @param {String} PerkName - The name of the perk
@@ -154,6 +149,7 @@ declare var PlatformDialogCharacterDisplay: any;
 declare var PlatformDialogPosition: number;
 declare var PlatformDialogCharacter: any;
 declare var PlatformDialogAudio: any;
+declare var PlatformDialogControllerHandle: boolean;
 declare var PlatformDialogAudioStyle: string[];
 declare var PlatformDialogCharacterTemplate: ({
     Name: string;

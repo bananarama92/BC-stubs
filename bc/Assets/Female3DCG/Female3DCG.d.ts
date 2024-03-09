@@ -536,12 +536,9 @@ declare var ActivityFemale3DCG: Activity[];
 declare let ActivityFemale3DCGOrdering: ActivityName[];
 /**
  * 3D Custom Girl based fetishes
- * @type {{Name: FetishName; GetFactor(C: Character): number; }[]}
+ * @type {Fetish[]}
  */
-declare var FetishFemale3DCG: {
-    Name: FetishName;
-    GetFactor(C: Character): number;
-}[];
+declare var FetishFemale3DCG: Fetish[];
 /**
  * A set with all available fetish names.
  */

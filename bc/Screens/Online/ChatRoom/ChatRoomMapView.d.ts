@@ -266,7 +266,7 @@ declare function ChatRoomMapViewMovementProcess(): void;
  */
 declare function ChatRoomMapViewLeash(): void;
 /**
- * Draws the map and characters of the chat room map
+ * Draws the map and characters of the chat room map on the left side of the screen
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewDraw(): void;

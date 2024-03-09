@@ -360,8 +360,9 @@ declare function DialogIsInWardrobe(): boolean;
  */
 declare function DialogLeaveItemMenu(): void;
 /**
- * Leaves the item menu of the focused item. Constructs a function name from the
- * item's asset group name and the item's name and tries to call that.
+ * Leaves the item menu of the focused item (be it the extended item- or tighten/loosen menu) and
+ * perform any screen-specific setup for {@link CurrentScreen}.
+ * @see {@link DialogLeaveFocusItemHandlers} Namespace with helper functions for setting up new screens
  */
 declare function DialogLeaveFocusItem(): void;
 /**
@@ -990,6 +991,10 @@ declare var DialogFavoriteStateDetails: FavoriteState[];
  * @type {readonly DialogSelfMenuOptionType[]}
  */
 declare var DialogSelfMenuOptions: readonly DialogSelfMenuOptionType[];
+declare namespace DialogLeaveFocusItemHandlers {
+    let DialogTightenLoosenItem: Record<string, (item: Item) => void>;
+    let DialogFocusItem: Record<string, (item: Item) => void>;
+}
 declare namespace DialogEffectIcons {
     let Table: Partial<Record<InventoryIcon, readonly EffectName[]>>;
     function GetIcons(item: Item): InventoryIcon[];

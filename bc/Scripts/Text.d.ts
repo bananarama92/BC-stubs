@@ -17,6 +17,11 @@ declare function TextLoad(TextGroup?: string): void;
  * @param {string} TextGroup
  */
 declare function TextPrefetch(Module: string, TextGroup: string): void;
+/**
+ * Trigger the caching of a specific file into the text cache
+ * @param {string} file
+ */
+declare function TextPrefetchFile(file: string): void;
 /** @type {TextCache | null} */
 declare let TextScreenCache: TextCache | null;
 /** @type {Map<string, TextCache>} */

@@ -46,11 +46,7 @@ declare function MagicPuzzleTransitionToColor(startingColor: HexColor, targetCol
  * @returns {void} - Nothing
  */
 declare function MagicPuzzleClick(): void;
-/**
- * Handles the key press in the mini game, the C key for cheats adds 5 seconds to the enemy timer
- * @returns {void} - Nothing
- */
-declare function MagicPuzzleKeyDown(): void;
+declare function MagicPuzzleKeyDown(event: KeyboardEvent): boolean;
 /**
  * When the magic puzzle must end
  * @returns {void} - Nothing

@@ -10,9 +10,10 @@ declare function MiniGameStart(GameType: string, Difficulty: number | string, Re
 declare function MiniGameEnd(): void;
 /**
  * Checks if the C key is being pressed and if cheats are available
+ * @param {KeyboardEvent} event
  * @returns {boolean} - TRUE if C and cheats are allowed
  */
-declare function MiniGameCheatKeyDown(): boolean;
+declare function MiniGameCheatKeyDown(event: KeyboardEvent): boolean;
 declare var MiniGameType: string;
 declare var MiniGameVictory: boolean;
 declare var MiniGamePerfect: boolean;

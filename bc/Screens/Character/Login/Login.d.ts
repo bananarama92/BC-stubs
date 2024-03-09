@@ -33,15 +33,11 @@ declare function LoginRun(): void;
  *
  * TODO: only typed items are supported.
  *
- * @param {Record<string, string[]>} Inventory - The server-provided inventory object
- * @param {{Group: AssetGroupName, Name: string, Property?: any}[]} Appearance - The server-provided appearance object
- * @param {CraftingItem[]} Crafting - The server-provided, uncompressed crafting data
+ * @param {Partial<Record<AssetGroupName, string[]>>} Inventory - The server-provided inventory object
+ * @param {ItemBundle[]} Appearance - The server-provided appearance object
+ * @param {readonly CraftingItem[]} Crafting - The server-provided, uncompressed crafting data
  */
-declare function LoginPerformInventoryFixups(Inventory: Record<string, string[]>, Appearance: {
-    Group: AssetGroupName;
-    Name: string;
-    Property?: any;
-}[], Crafting: CraftingItem[]): void;
+declare function LoginPerformInventoryFixups(Inventory: Partial<Record<AssetGroupName, string[]>>, Appearance: ItemBundle[], Crafting: readonly CraftingItem[]): void;
 /**
  * Make sure the slave collar is equipped or unequipped based on the owner
  * @returns {void} Nothing
@@ -116,11 +112,11 @@ declare function LoginExtremeItemSettings(applyDefaults: boolean): void;
 declare function LoginQueue(Pos: number): void;
 /**
  * Handles player login response data
- * @param {object | string} C - The Login response data - this will either be the player's character data if the
+ * @param {ServerLoginResponse} C - The Login response data - this will either be the player's character data if the
  * login was successful, or a string error message if the login failed.
  * @returns {void} Nothing
  */
-declare function LoginResponse(C: object | string): void;
+declare function LoginResponse(C: ServerLoginResponse): void;
 /** Check if the player's browser has ES2020 support */
 declare function LoginCheckES2020(): void;
 /**
@@ -128,11 +124,7 @@ declare function LoginCheckES2020(): void;
  * @returns {void} Nothing
  */
 declare function LoginClick(): void;
-/**
- * Handles player keyboard events on the character login screen, "enter" will login
- * @returns {void} Nothing
- */
-declare function LoginKeyDown(): void;
+declare function LoginKeyDown(event: KeyboardEvent): boolean;
 /**
  * Attempt to log the user in based on their input username and password
  * @returns {void} Nothing
@@ -176,7 +168,8 @@ declare var LoginThankYouNext: number;
 declare var LoginSubmitted: boolean;
 declare var LoginIsRelog: boolean;
 declare var LoginErrorMessage: string;
-declare var LoginCharacter: any;
+/** @type {NPCCharacter} */
+declare var LoginCharacter: NPCCharacter;
 declare let LoginTextCacheUnsubscribeCallback: any;
 /**
  * The list of item fixups to apply on login.

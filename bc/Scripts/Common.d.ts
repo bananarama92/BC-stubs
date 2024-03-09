@@ -349,9 +349,11 @@ declare function CommonIsObject(value: unknown): value is Record<string, unknown
  * @todo JSON serialization will break things like functions, Sets and Maps.
  * @template T
  * @param {T} obj
+ * @param {null | ((this: any, key: string, value: any) => any)} replacer
+ * @param {null | ((this: any, key: string, value: any) => any)} reviver
  * @returns {T}
  */
-declare function CommonCloneDeep<T>(obj: T): T;
+declare function CommonCloneDeep<T>(obj: T, reviver?: (this: any, key: string, value: any) => any, replacer?: (this: any, key: string, value: any) => any): T;
 /**
  * Type guard which checks that a value is a non-negative (i.e. positive or zero) integer
  * @param {unknown} value - The value to test
@@ -415,7 +417,15 @@ declare function CommonIncludes<T>(array: readonly T[], searchElement: unknown, 
  */
 declare function CommonFromEntries<KT extends string, VT>(iterable: Iterable<[key: KT, value: VT]>): Record<KT, VT>;
 /**
- * Automatically generate a grid based on parameters.
+ * Automatically generate grid coordinates based on parameters.
+ * @param {number} nItems - The upper bound to the number of grid points; fewer can be returned if they do not all fit on the grid
+ * @param {CommonGenerateGridParameters} grid - The grid parameters
+ * @returns {RectTuple[]} - A list of grid coordinates with a length of `<= nItems`
+ * @see {@link CommonGenerateGrid}
+ */
+declare function CommonGenerateGridCoords(nItems: number, grid: CommonGenerateGridParameters): RectTuple[];
+/**
+ * Automatically generate a grid based on parameters and apply a callback to each grid point.
  *
  * This function takes a list of items, grid parameters, and a callback to manage
  * creating a grid of them. It'll find the best value for margins between each cell,
@@ -429,7 +439,7 @@ declare function CommonFromEntries<KT extends string, VT>(iterable: Iterable<[ke
  * @param {number} offset
  * @param {CommonGenerateGridParameters} grid
  * @param {CommonGenerateGridCallback<T>} callback
- * @returns {number}
+ * @returns {number} - The (offsetted) index for which the callback evaluated to `true`, or `-1` if no elements satisfy the testing
  */
 declare function CommonGenerateGrid<T>(items: readonly T[], offset: number, grid: CommonGenerateGridParameters, callback: CommonGenerateGridCallback<T>): number;
 /**
@@ -440,7 +450,7 @@ declare function CommonGenerateGrid<T>(items: readonly T[], offset: number, grid
  * @param {Iterable<KeyType>} keys - The to-be removed keys from the record
  * @returns {Omit<RecordType, KeyType>}
  */
-declare function CommonOmit<KeyType_1 extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: Iterable<KeyType_1>): Omit<RecordType, KeyType_1>;
+declare function CommonOmit<KeyType extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: Iterable<KeyType>): Omit<RecordType, KeyType>;
 /**
  * Create a copy of the passed record with all specified keys removed
  * @template {keyof RecordType} KeyType
@@ -449,7 +459,7 @@ declare function CommonOmit<KeyType_1 extends keyof RecordType, RecordType exten
  * @param {Iterable<KeyType>} keys - The to-be removed keys from the record
  * @returns {Pick<RecordType, KeyType>}
  */
-declare function CommonPick<KeyType_1 extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: Iterable<KeyType_1>): Pick<RecordType, KeyType_1>;
+declare function CommonPick<KeyType extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: Iterable<KeyType>): Pick<RecordType, KeyType>;
 /**
  * Iterate through the passed iterable and yield index/value pairs.
  * @template T
@@ -492,6 +502,11 @@ declare function CommonObjectEqual<T>(rec1: T, rec2: unknown): rec2 is T;
  */
 declare function CommonObjectIsSubset<T>(subRec: unknown, superRec: T): subRec is Partial<T>;
 /**
+ * Returns the object with keys and values reversed
+ * @param {object} obj
+ */
+declare function CommonObjectFlip(obj: object): {};
+/**
  * Parse the passed stringified JSON data and catch any exceptions.
  * Exceptions will cause the function to return `undefined`.
  * @param {string} data
@@ -522,8 +537,8 @@ declare function CommonHas<T>(obj: {
  * Defines a property with the given name and the passed setter and getter
  * @example
  * CommonDeprecate(
- * 	"OldFunc",
- * 	function NewFunc (a, b) { return a + b; },
+ *  "OldFunc",
+ *  function NewFunc (a, b) { return a + b; },
  * );
  * @template {any} T
  * @param {string} propertyName - The name for the new property
@@ -536,8 +551,8 @@ declare function CommonProperty<T extends unknown>(propertyName: string, getter?
  * Both symbols will are in fact get/set wrappers around the same object, enforcing that `namespace[oldName] === namespace[callback.name]` *always* holds.
  * @example
  * CommonDeprecateFunction(
- * 	"OldFunc",
- * 	function NewFunc (a, b) { return a + b; },
+ *  "OldFunc",
+ *  function NewFunc (a, b) { return a + b; },
  * );
  * @template {(...any) => any} T
  * @param {string} oldName - The old (deprecated) name of the symbol
@@ -552,9 +567,26 @@ declare function CommonDeprecateFunction<T extends (...any: any[]) => any>(oldNa
  * @returns {Capitalize<T>}
  */
 declare function CommonCapitalize<T extends string>(string: T): Capitalize<T>;
+/**
+ * Construct an object for holding arbitrary (user-specified) values with a mechanism to reset them to a default
+ * @template T1
+ * @template [T2={}]
+ * @param {T1} defaults - Default values that should be restored upon reset
+ * @param {null | T2} extraVars - Extra values that should *not* affected by resets
+ * @param {null | { replacer?: (this: any, key: string, value: any) => any, reviver?: (this: any, key: string, value: any) => any }} resetCallbacks - Extra callbacks for affecting the deep cloning process on reset.
+ * Generally only relevant if one of the fields contains non-JSON-serializible data.
+ * @returns {VariableContainer<T1, T2>} - The newly created object
+ */
+declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: T2, resetCallbacks?: {
+    replacer?: (this: any, key: string, value: any) => any;
+    reviver?: (this: any, key: string, value: any) => any;
+}): VariableContainer<T1, T2>;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
-/** @type {number|string} */
+/**
+ * @type {number|string}
+ * @deprecated Use the keyboard handler's `event` parameter instead
+ */
 declare var KeyPress: number | string;
 /** @type {ModuleType} */
 declare var CurrentModule: ModuleType;
@@ -565,7 +597,11 @@ declare var CurrentScreenFunctions: ScreenFunctions;
 /** @type {Character|NPCCharacter|null} */
 declare var CurrentCharacter: Character | NPCCharacter | null;
 declare var CurrentOnlinePlayers: number;
-/** A per-screen ratio of how darkened the background must be */
+/**
+ * A per-screen ratio of how darkened the background must be
+ *
+ * 1 is bright, 0 is pitch black
+ */
 declare var CurrentDarkFactor: number;
 declare var CommonIsMobile: boolean;
 /** @type {Record<string, string[][]>} */

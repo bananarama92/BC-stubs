@@ -345,10 +345,30 @@ declare function DrawProgressBar(x: number, y: number, w: number, h: number, val
  */
 declare function DrawLineCorner(x0: number, y0: number, x1: number, y1: number, x2: number, y2: number, lineWidth?: number, color?: string): void;
 /**
- * Gets the player's custom background based on type
- * @returns {string} - Custom background if applicable, otherwise ""
+ * Gets a character's custom background from the assets it wears
+ *
+ * @param {Character} C - The character to get the background for
+ * @returns {string | undefined} - Path to the custom background, or undefined if none
  */
-declare function DrawGetCustomBackground(): string;
+declare function DrawGetCustomBackground(C: Character): string | undefined;
+/**
+ * Draws a background image onto the MainCanvas, applying zoom and visual effects
+ * @param {string} URL The background image to use
+ * @param {Rect} bounds The location to draw the background in
+ * @param {object} [opts] The background drawing options
+ * @param {number} [opts.zoom=1.0] The zoom level to use
+ * @param {boolean} [opts.inverted=false] Whether the background should be flipped upside-down
+ * @param {number} [opts.blur=1.0] How blurry the background is
+ * @param {number} [opts.darken=0.0] How darkened the background is (1 is bright, 0 is pitch black)
+ * @param {RGBAColor[]} [opts.tints] Tints to apply to the background
+ */
+declare function DrawRoomBackground(URL: string, bounds: Rect, opts?: {
+    zoom?: number;
+    inverted?: boolean;
+    blur?: number;
+    darken?: number;
+    tints?: RGBAColor[];
+}): void;
 /**
  * Perform a global screen flash effect when a blindfold gets removed
  * @param {number} intensity - The player's blind level before the removal
@@ -368,6 +388,15 @@ declare function DrawFlashScreen(Color: string, Duration: number, Intensity: num
  * @returns {string} - alpha of screen flash
  */
 declare function DrawGetScreenFlashAlpha(FlashTime: number): string;
+/**
+ * Gets how dark the screen should be.
+ *
+ * The darkness factor varies with blindness level. Some screens also have
+ * a natural darkening effect on them.
+ *
+ * @returns {number} 1 is bright, 0 is pitch black
+ */
+declare function DrawGetDarkFactor(): number;
 /**
  * Constantly looping draw process. Draws beeps, handles the screen size, handles the current blindfold state and draws the current screen.
  * @param {number} time - The current time for frame
@@ -465,10 +494,43 @@ declare function DrawCharacterSegment(C: Character, Left: number, Top: number, W
  */
 declare function DrawImageTrapezify(image: HTMLCanvasElement | HTMLImageElement, targetCanvas: HTMLCanvasElement, topToBottomRatio: number, x?: number, y?: number): void;
 /**
+ * Make a new rect from a 4-tuple
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ * @returns {Rect}
+ */
+declare function RectMakeRect(x: number, y: number, w: number, h: number): Rect;
+/**
+ * Convert a rect into a 4-tuple
+ * @param {Rect} rect
+ * @returns {RectTuple}
+ */
+declare function RectGetFrame(rect: Rect): RectTuple;
+/**
+ * Offsets a rect by the given amount
+ * @param {Rect} rect
+ * @param {number} dX
+ * @param {number} dY
+ * @returns {Rect}
+ */
+declare function RectOffset(rect: Rect, dX: number, dY: number): Rect;
+/**
+ * Scale a rect in one direction
+ * @param {Rect} rect
+ * @param {number} wScale
+ * @param {number} hScale
+ * @returns {Rect}
+ */
+declare function RectScale(rect: Rect, wScale: number, hScale: number): Rect;
+/**
  * The main game canvas where everything will be drawn
  * @type {CanvasRenderingContext2D}
  */
 declare let MainCanvas: CanvasRenderingContext2D;
+declare const MainCanvasWidth: 2000;
+declare const MainCanvasHeight: 1000;
 /**
  * Temporary GPU-based canvas
  * @type {CanvasRenderingContext2D}

@@ -61,6 +61,11 @@ interface HTMLElement {
 	removeAttribute(qualifiedName: string): void;
 }
 
+interface GamepadButton {
+	/** Whether the button was pressed the last input event */
+	repeat: boolean;
+}
+
 interface RGBColor {
 	r: number;
 	g: number;
@@ -70,6 +75,8 @@ interface RGBColor {
 interface RGBAColor extends RGBColor {
 	a: number;
 }
+
+type Rect = { x: number, y: number, w: number, h: number };
 
 /** A 4-tuple with X & Y coordinates, width and height */
 type RectTuple = [X: number, Y: number, W: number, H: number];
@@ -93,9 +100,34 @@ interface CommonGenerateGridParameters {
 	itemWidth: number,
 	/** Height of one grid item */
 	itemHeight: number,
+	/**
+	 * Margin of one grid item in the X direction.
+	 * Not giving a value will calculate a margin from the item's size and the grid size
+	 */
+	itemMarginX?: number;
+	/**
+	 * Margin of one grid item in the Y direction
+	 * Not giving a value will calculate a margin from the item's size and the grid size
+	 */
+	itemMarginY?: number;
+	/**
+	 * The direction the items are layed out
+	 * @default "horizontal"
+	 */
+	direction?: "horizontal" | "vertical";
 }
 
 type CommonGenerateGridCallback<T> = (item: T, x: number, y: number, width: number, height: number) => boolean;
+
+/**
+ * An object for holding arbitrary values with a mechanism to reset them to a default
+ */
+type VariableContainer<T1, T2> = T1 & T2 & {
+	/** Default values that should be restored to the container upon calling {@link Reset} */
+	readonly Defaults: Readonly<T1>,
+	/** Restore the container to its default state */
+	readonly Reset: () => void,
+}
 
 //#endregion
 
@@ -215,7 +247,7 @@ interface ExpressionNameMap {
 	Emoticon: (
 		null | "Afk" | "Whisper" | "Sleep" | "Hearts" | "Tear" | "Hearing" | "Confusion" | "Exclamation" |
 		"Annoyed" | "Read" | "RaisedHand" | "Spectator" | "ThumbsDown" | "ThumbsUp" | "LoveRope" |
-		"LoveGag" | "LoveLock" | "Wardrobe" | "Gaming" | "Coffee" | "Fork"
+		"LoveGag" | "LoveLock" | "Wardrobe" | "Gaming" | "Coffee" | "Fork" | "Music"
 	),
 }
 
@@ -350,7 +382,7 @@ type GraphicsFontName =
 type PreferenceSubscreenName =
 	"General" | "Difficulty" | "Restriction" | "Chat" | "CensoredWords" | "Audio" | "Arousal" |
 	"Security" | "Online" | "Visibility" | "Immersion" | "Graphics" | "Controller" | "Notifications" |
-	"Gender" | "Scripts"
+	"Gender" | "Scripts" | "Extensions"
 	;
 
 type FetishName =
@@ -774,7 +806,6 @@ interface Asset {
 	readonly ActivityExpression: Readonly<Partial<Record<ActivityName, readonly ExpressionTrigger[]>>>;
 	readonly AllowActivityOn?: readonly AssetGroupItemName[];
 	readonly BuyGroup?: string;
-	readonly PrerequisiteBuyGroups?: readonly string[];
 	readonly Effect: readonly EffectName[];
 	readonly Bonus?: AssetBonusName;
 	readonly Block?: readonly AssetGroupItemName[];
@@ -794,6 +825,7 @@ interface Asset {
 	/** @deprecated Use {@link Asset.AllowActivePose} instead */
 	readonly WhitelistActivePose?: never;
 	readonly Value: number;
+	readonly NeverSell: boolean;
 	readonly Difficulty: number;
 	readonly SelfBondage: number;
 	readonly SelfUnlock: boolean;
@@ -984,7 +1016,20 @@ interface Item {
 
 type FavoriteIcon = "Favorite" | "FavoriteBoth" | "FavoritePlayer";
 type ItemEffectIcon = "BlindLight" | "BlindNormal" | "BlindHeavy" | "DeafLight" | "DeafNormal" | "DeafHeavy" | "GagLight" | "GagNormal" | "GagHeavy" | "GagTotal";
-type InventoryIcon = FavoriteIcon | ItemEffectIcon | "AllowedLimited" | "Handheld" | "Locked" | "LoverOnly" | "FamilyOnly" | "OwnerOnly" | "Unlocked" | AssetLockType;
+type ShopIcon = "Extended" | "BuyGroup";
+type InventoryIcon = (
+	FavoriteIcon
+	| ItemEffectIcon
+	| "AllowedLimited"
+	| "Handheld"
+	| "Locked"
+	| "LoverOnly"
+	| "FamilyOnly"
+	| "OwnerOnly"
+	| "Unlocked"
+	| AssetLockType
+	| ShopIcon
+);
 
 interface InventoryItem {
 	Group: AssetGroupName;
@@ -1135,19 +1180,61 @@ interface DialogInfo {
 	name: string;
 }
 
+/** The packed representation of a Private Room NPC */
+interface PrivateCharacterData {
+	Name: string;
+	Love: number;
+	Title: TitleName;
+	Trait: NPCTrait[];
+	Cage: boolean;
+	Owner: string;
+	Lover: string;
+	AssetFamily: "Female3DCG";
+	Appearance: AppearanceBundle,
+	AppearanceFull: AppearanceBundle,
+	ArousalSettings: Character["ArousalSettings"];
+	Event: NPCTrait[];
+	FromPandora?: boolean;
+}
+
 interface Character {
+	/**
+	 * The character's cache slot ID in the Character array
+	 *
+	 * Usually meaningless, except that ID 0 is always the player,
+	 * but please use `IsPlayer()` instead of checking that.
+	 */
 	ID: number;
-	/** Only on `Player` */
-	OnlineID?: string;
+	/**
+	 * The unique identifier for the character
+	 *
+	 * A value of `""` indicates the player before the login happens
+	 */
+	CharacterID: string;
+	/** The type of character: online, npc, or simple */
 	Type: CharacterType;
+	/**
+	 * The character's account name
+	 *
+	 * Note that it's only meaningful for the logged in player as the server never provides account names.
+	 * Online characters will use `"Online-"` plus their character ID, NPCs will have their dialog identifier,
+	 * and simple characters set it to CharacterID.
+	 */
+	AccountName: string;
 	/**
 	 * The character's loaded dialog info
 	 */
 	DialogInfo?: DialogInfo;
+	/**
+	 * A deprecated identifier for online characters
+	 * Only exists on the player, has the same value as their character ID.
+	 * @deprecated
+	 */
+	OnlineID?: string;
+	/** The asset family used by the character */
+	AssetFamily: IAssetFamily;
 	Name: string;
 	Nickname?: string;
-	AssetFamily: IAssetFamily;
-	AccountName: string;
 	Owner: string;
 	Lover: string;
 	Money: number;
@@ -1345,6 +1432,11 @@ interface Character {
 	StatusTimer?: number;
 	Crafting?: (null | CraftingItem)[];
 	LastMapData?: ChatRoomMapData;
+	/**
+	 * The custom background to use for the current room
+	 * Only valid on {@link Player}
+	 */
+	CustomBackground?: string;
 }
 
 interface CharacterGameParameters {
@@ -1399,14 +1491,9 @@ interface NPCCharacter extends Character {
 	Domination?: number;
 }
 
-/** College */
+/** College & Asylum */
 interface NPCCharacter {
 	GoneAway?: boolean;
-}
-
-/** Asylum */
-interface NPCCharacter {
-	RunAway?: boolean;
 }
 
 /** Movie Studio */
@@ -1492,6 +1579,21 @@ interface ExtensionSettings {
 	[key: string]: any;
 }
 
+interface ControllerSettingsOld {
+	ControllerA: number;
+	ControllerB: number;
+	ControllerX: number;
+	ControllerY: number;
+	ControllerStickUpDown: number;
+	ControllerStickLeftRight: number;
+	ControllerStickRight: number;
+	ControllerStickDown: number;
+	ControllerDPadUp: number;
+	ControllerDPadDown: number;
+	ControllerDPadLeft: number;
+	ControllerDPadRight: number;
+}
+
 interface PlayerCharacter extends Character {
 	// PreferenceInitPlayer() must be updated with defaults, when adding a new setting
 	ChatSettings?: ChatSettingsType;
@@ -1522,6 +1624,14 @@ interface PlayerCharacter extends Character {
 	/** The list of items we got confiscated in the Prison */
 	ConfiscatedItems?: { Group: AssetGroupName, Name: string }[];
 	ExtensionSettings: ExtensionSettings;
+}
+
+/** A type defining which genders a setting is active for */
+interface GenderSetting {
+	/** Whether the setting is active for female cases */
+	Female: boolean;
+	/** Whether the setting is active for male cases */
+	Male: boolean;
 }
 
 interface GenderSettingsType {
@@ -1588,22 +1698,15 @@ interface ImmersionSettingsType {
 	AllowTints: boolean;
 }
 
+type ControllerButton = typeof ControllerButton[keyof typeof ControllerButton];
+type ControllerAxis = typeof ControllerAxis[keyof typeof ControllerAxis];
+
 interface ControllerSettingsType {
+	ControllerActive: boolean;
 	ControllerSensitivity: number;
 	ControllerDeadZone: number;
-	ControllerA: number;
-	ControllerB: number;
-	ControllerX: number;
-	ControllerY: number;
-	ControllerStickUpDown: number;
-	ControllerStickLeftRight: number;
-	ControllerStickRight: number;
-	ControllerStickDown: number;
-	ControllerDPadUp: number;
-	ControllerDPadDown: number;
-	ControllerDPadLeft: number;
-	ControllerDPadRight: number;
-	ControllerActive: boolean;
+	Buttons: Record<ControllerButton, number>;
+	Axis: Record<ControllerAxis, number>;
 }
 
 interface ChatSettingsType {
@@ -3710,6 +3813,73 @@ interface ArousalSettingsType {
 	DisableAdvancedVibes: boolean;
 }
 
+/** Preference Menu info for extensions settings*/
+interface PreferenceExtensionsSettingItem {
+	/**
+	 * The identifier of the extension.
+	 * This is used to identify the extension and should be unique.
+	 */
+	Identifier: string;
+
+	/**
+	 * The button text for the button of extension.
+	 * If it's a Function, it will be called once when entering
+	 * the extension setting menu. Use the return value as button text.
+	 */
+	ButtonText: string | (()=>string);
+
+	/**
+	 * The image path of the extension, and is passed
+	 * into {@link DrawButton} for creating the HTMLImageElement
+	 * that is needed for drawing the Button image.
+	 * If it's a Function, it will be called once when entering
+	 * the extension setting menu. Use the return value as image
+	 * path.
+	 * If it's undefined, there will be no image for the button
+	 */
+	Image?: string | (()=>string);
+
+	/** Handles loading on entering the extension setting */
+	load?: () => void;
+
+	/** Handles the clicks of the extension setting */
+	click: () => void;
+
+	/** Handles the run and draws of the extension setting */
+	run: () => void;
+
+	/**
+	 * Handles the unloading of the extension setting, typically
+	 * from {@link CommonSetScreen}, when the player is disconnected.
+	 * If it's undefined, there will be no unloading for the extension
+	 * setting.
+	 * Remind to check those HTML elements that are created in the
+	 * extension setting, and hide/remove them from the DOM.
+	 * Note that HTML elements with `HideOnPopup` class will be hidden
+	 * automatically when a popup is shown.
+	 */
+	unload?: () => void;
+
+	/**
+	 * Handles the exits of the extension setting, typically when
+	 * user press `Esc` key.
+	 * If a extension wants to exit the menu by itself
+	 * (clicking `exit` button, etc.), the extension should call
+	 * `PreferenceSubscreenExtensionsClear`.
+	 * @returns If it returns `true`, the extension setting will be unload.
+	 * And `unload` will be called once if it's defined and then main extension
+	 * setting page is shown.
+	 */
+	exit: () => boolean | void;
+}
+
+/** Preference Menu info for extensions settings*/
+type PreferenceExtensionsMenuButtonInfo = {
+	Button: string;
+	Image?: string;
+	click: () => void;
+}
+
 // #end region
 
 // #region fortune wheel
@@ -3895,6 +4065,35 @@ interface ChatRoomMapMovement {
 
 // #endregion
 
+// #region shop
+
+/** The current shop mode */
+type ShopMode = "Buy" | "Sell" | "Preview" | "Color" | "Extended";
+
+/** The current dressing state of the preview character */
+type ShopClothesMode = "Clothes" | "Underwear" | "Cosplay" | "Nude";
+
+interface ShopScreenFunctions extends Omit<Partial<ScreenFunctions>, "Run"> {
+	Run(time: number, ...coords: RectTuple): void,
+	/** Coordinates associated with a particular to-be drawn/clicked element */
+	Coords: RectTuple,
+	/** A set of shop modes for which the screen functions must be active */
+	Mode: Set<ShopMode>,
+}
+
+interface ShopItem {
+	/** The underlying asset */
+	readonly Asset: Asset,
+	/** The assets sorting priority within the asset list; lower values take priority */
+	readonly SortPriority: number,
+	/** Whether an item should never be able to be sold */
+	readonly NeverSell: boolean,
+	/** Whether the asset can be bought; `false` implies that it can be sold */
+	Buy: boolean,
+}
+
+// #endregion
+
 // #region deprecation
 
 /** @deprecated superseded by {@link PoseAvailable} */
@@ -3911,207 +4110,5 @@ declare const CharacterItemsHavePoseType: never;
 declare const CharacterLoadPose: never;
 /** @deprecated superseded by {@link PoseToMapping} */
 declare const AssetPoseToMapping: never;
-
-// ChatRoom variables deprecated in R101
-/** @deprecated - Use {@link ChatRoomCharacterViewInitialize} instead! */
-declare const ChatRoomCharacterInitialize: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewX_Upper} instead! */
-declare const ChatRoomCharacterX_Upper: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewX_Lower} instead! */
-declare const ChatRoomCharacterX_Lower: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewZoom} instead! */
-declare const ChatRoomCharacterZoom: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewSlideWeight} instead! */
-declare const ChatRoomSlideWeight: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewCharacterCount} instead! */
-declare const ChatRoomCharacterCount: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewMoveTarget} instead! */
-declare const ChatRoomMoveTarget: never;
-
-// ChatRoom functions deprecated in R101
-/** @deprecated - Use {@link ChatRoomCharacterViewShowMapButton} instead! */
-declare const ChatRoomMapButton: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewDraw} instead! */
-declare const ChatRoomDrawCharacter: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewDrawBackground} instead! */
-declare const ChatRoomDrawBackground: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewLoopCharacters} instead! */
-declare const ChatRoomLoopCharacters: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewDrawOverlay} instead! */
-declare const ChatRoomDrawCharacterOverlay: never;
-/** @deprecated - Use {@link ChatRoomCharacterViewClickCharacter} instead! */
-declare const ChatRoomClickCharacter: never;
-
-// ChatRoomMap variables deprecated in R101
-/** @deprecated - Use {@link ChatRoomIsViewActive} and {@link ChatRoomActivateView} instead! */
-declare const ChatRoomMapVisible: never;
-/** @deprecated - Use {@link ChatRoomMapViewWidth} instead! */
-declare const ChatRoomMapWidth: never;
-/** @deprecated - Use {@link ChatRoomMapViewWidth} instead! */
-declare const ChatRoomMapHeight: never;
-/** @deprecated - Use {@link ChatRoomMapViewPerceptionRange} instead! */
-declare const ChatRoomMapViewRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewPerceptionRangeMin} instead! */
-declare const ChatRoomMapViewRangeMin: never;
-/** @deprecated - Use {@link ChatRoomMapViewPerceptionRangeMax} instead! */
-declare const ChatRoomMapViewRangeMax: never;
-/** @deprecated - Use {@link ChatRoomMapViewObjectStartID} instead! */
-declare const ChatRoomMapObjectStartID: never;
-/** @deprecated - Use {@link ChatRoomMapViewObjectEntryID} instead! */
-declare const ChatRoomMapObjectEntryID: never;
-/** @deprecated - Use {@link ChatRoomMapViewEditMode} instead! */
-declare const ChatRoomMapEditMode: never;
-/** @deprecated - Use {@link ChatRoomMapViewEditSubMode} instead! */
-declare const ChatRoomMapEditSubMode: never;
-/** @deprecated - Use {@link ChatRoomMapViewEditStarted} instead! */
-declare const ChatRoomMapEditStarted: never;
-/** @deprecated - Use {@link ChatRoomMapViewEditObject} instead! */
-declare const ChatRoomMapEditObject: never;
-/** @deprecated - Use {@link ChatRoomMapViewEditSelection} instead! */
-declare const ChatRoomMapEditSelection: never;
-/** @deprecated - Use {@link ChatRoomMapViewEditRange} instead! */
-declare const ChatRoomMapEditRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewEditBackup} instead! */
-declare const ChatRoomMapEditBackup: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdateRoomNext} instead! */
-declare const ChatRoomMapUpdateRoomNext: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdatePlayerNext} instead! */
-declare const ChatRoomMapUpdatePlayerNext: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdateLastMapDataNext} instead! */
-declare const ChatRoomMapUpdateLastMapDataNext: never;
-/** @deprecated - Use {@link ChatRoomMapViewFocusedCharacter} instead! */
-declare const ChatRoomMapFocusedCharacter: never;
-/** @deprecated - Use {@link ChatRoomMapViewSuperPowersActive} instead! */
-declare const ChatRoomMapSuperPowersActive: never;
-/** @deprecated - Use {@link ChatRoomMapViewBaseMovementSpeed} instead! */
-declare const ChatRoomMapBaseMovementSpeed: never;
-/** @deprecated - Use {@link ChatRoomMapViewMovement} instead! */
-declare const ChatRoomMapMovement: never;
-/** @deprecated - Use {@link ChatRoomMapViewTypeList} instead! */
-declare const ChatRoomMapTypeList: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdatePlayerTime} instead! */
-declare const ChatRoomMapUpdatePlayerTime: never;
-/** @deprecated - Use {@link ChatRoomMapViewPerceptionRaycastOffset} instead! */
-declare const ChatRoomMapPerceptionRaycastOffset: never;
-/** @deprecated - Use {@link ChatRoomMapViewWhisperRange} instead! */
-declare const ChatRoomMapWhisperRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewInteractionRange} instead! */
-declare const ChatRoomMapInteractionRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewRemoteRange} instead! */
-declare const ChatRoomMapRemoteRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewVisibilityMask} instead! */
-declare const ChatRoomMapVisibilityMask: never;
-/** @deprecated - Use {@link ChatRoomMapViewAudibilityMask} instead! */
-declare const ChatRoomMapAudibilityMask: never;
-/** @deprecated - Use {@link ChatRoomMapViewTileList} instead! */
-declare const ChatRoomMapTileList: never;
-/** @deprecated - Use {@link ChatRoomMapViewObjectList} instead! */
-declare const ChatRoomMapObjectList: never;
-
-// ChatRoomMap functions deprecated in R101
-/** @deprecated - Use {@link ChatRoomMapViewHasSuperPowers} instead! */
-declare const ChatRoomMapHasSuperPowers: never;
-/** @deprecated - Use {@link ChatRoomMapViewInitialize} instead! */
-declare const ChatRoomMapInitialize: never;
-/** @deprecated - Use {@link ChatRoomMapViewInitializeCharacter} instead! */
-declare const ChatRoomMapInitializeCharacter: never;
-/** @deprecated - Use {@link ChatRoomMapViewValidatePos} instead! */
-declare const ChatRoomMapValidatePos: never;
-/** @deprecated - Use {@link ChatRoomMapViewLeave} instead! */
-declare const ChatRoomMapLeave: never;
-/** @deprecated - Use {@link ChatRoomMapViewActivate} instead! */
-declare const ChatRoomMapActivate: never;
-/** @deprecated - Use {@link ChatRoomMapViewDeactivate} instead! */
-declare const ChatRoomMapDeactivate: never;
-/** @deprecated - Use {@link ChatRoomMapViewIsActive} instead! */
-declare const ChatRoomMapIsActive: never;
-/** @deprecated - Use {@link ChatRoomMapViewRun} instead! */
-declare const ChatRoomMapRun: never;
-/** @deprecated - Use {@link ChatRoomMapViewCanLeave} instead! */
-declare const ChatRoomMapCanLeave: never;
-/** @deprecated - Use {@link ChatRoomMapViewSyncRoomProperties} instead! */
-declare const ChatRoomMapSyncRoomProperties: never;
-/** @deprecated - Use {@link ChatRoomMapViewIndexToCoordinates} instead! */
-declare const ChatRoomMapIndexToCoordinates: never;
-/** @deprecated - Use {@link ChatRoomMapViewCoordinatesToIndex} instead! */
-declare const ChatRoomMapCoordinatesToIndex: never;
-/** @deprecated - Use {@link ChatRoomMapViewCalculatePerceptionMasks} instead! */
-declare const ChatRoomMapCalculatePerceptionMasks: never;
-/** @deprecated - Use {@link ChatRoomMapViewGetSightRange} instead! */
-declare const ChatRoomMapGetSightRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewGetHearingRange} instead! */
-declare const ChatRoomMapGetHearingRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewCharacterIsVisible} instead! */
-declare const ChatRoomMapCharacterIsVisible: never;
-/** @deprecated - Use {@link ChatRoomMapViewCharacterIsHearable} instead! */
-declare const ChatRoomMapCharacterIsHearable: never;
-/** @deprecated - Use {@link ChatRoomMapViewCharacterOnWhisperRange} instead! */
-declare const ChatRoomMapCharacterOnWhisperRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewCharacterOnInteractionRange} instead! */
-declare const ChatRoomMapCharacterOnInteractionRange: never;
-/** @deprecated - Use {@link ChatRoomMapViewFindWallEffectTile} instead! */
-declare const ChatRoomMapFindWallEffectTile: never;
-/** @deprecated - Use {@link ChatRoomMapViewIsWall} instead! */
-declare const ChatRoomMapIsWall: never;
-/** @deprecated - Use {@link ChatRoomMapViewGetTileAtPos} instead! */
-declare const ChatRoomMapGetTileAtPos: never;
-/** @deprecated - Use {@link ChatRoomMapViewGetObjectAtPos} instead! */
-declare const ChatRoomMapGetObjectAtPos: never;
-/** @deprecated - Use {@link ChatRoomMapViewCanEnterWall} instead! */
-declare const ChatRoomMapCanEnterWall: never;
-/** @deprecated - Use {@link ChatRoomMapViewWallEffect} instead! */
-declare const ChatRoomMapWallEffect: never;
-/** @deprecated - Use {@link ChatRoomMapViewFloorWallEffect} instead! */
-declare const ChatRoomMapFloorWallEffect: never;
-/** @deprecated - Use {@link ChatRoomMapViewCollision} instead! */
-declare const ChatRoomMapCollision: never;
-/** @deprecated - Use {@link ChatRoomMapViewGetCharacterAtPos} instead! */
-declare const ChatRoomMapGetCharacterAtPos: never;
-/** @deprecated - Use {@link ChatRoomMapViewGetEntryFlagPosition} instead! */
-declare const ChatRoomMapGetEntryFlagPosition: never;
-/** @deprecated - Use {@link ChatRoomMapViewDrawGrid} instead! */
-declare const ChatRoomMapDrawGrid: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdateFlag} instead! */
-declare const ChatRoomMapUpdateFlag: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdatePlayerFlag} instead! */
-declare const ChatRoomMapUpdatePlayerFlag: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdateRoomSync} instead! */
-declare const ChatRoomMapUpdateRoomSync: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdatePlayerSync} instead! */
-declare const ChatRoomMapUpdatePlayerSync: never;
-/** @deprecated - Use {@link ChatRoomMapViewSyncMapData} instead! */
-declare const ChatRoomSyncMapData: never;
-/** @deprecated - Use {@link ChatRoomMapViewUpdateLastMapDataSync} instead! */
-declare const ChatRoomMapUpdateLastMapDataSync: never;
-/** @deprecated - Use {@link ChatRoomMapViewMovementProcess} instead! */
-declare const ChatRoomMapMovementProcess: never;
-/** @deprecated - Use {@link ChatRoomMapViewLeash} instead! */
-declare const ChatRoomMapLeash: never;
-/** @deprecated - Use {@link ChatRoomMapViewDraw} instead! */
-declare const ChatRoomMapDraw: never;
-/** @deprecated - Use {@link ChatRoomMapViewCanEnterTile} instead! */
-declare const ChatRoomMapCanEnterTile: never;
-/** @deprecated - Use {@link ChatRoomMapViewMove} instead! */
-declare const ChatRoomMapMove: never;
-/** @deprecated - Use {@link ChatRoomMapViewUndo} instead! */
-declare const ChatRoomMapUndo: never;
-/** @deprecated - Use {@link ChatRoomMapViewKeyDown} instead! */
-declare const ChatRoomMapKeyDown: never;
-/** @deprecated - Use {@link ChatRoomMapViewClick} instead! */
-declare const ChatRoomMapClick: never;
-/** @deprecated - Use {@link ChatRoomMapViewMouseDown} instead! */
-declare const ChatRoomMapMouseDown: never;
-/** @deprecated - Use {@link ChatRoomMapViewMouseMove} instead! */
-declare const ChatRoomMapMouseMove: never;
-/** @deprecated - Use {@link ChatRoomMapViewMouseUp} instead! */
-declare const ChatRoomMapMouseUp: never;
-/** @deprecated - Use {@link ChatRoomMapViewMouseWheel} instead! */
-declare const ChatRoomMapMouseWheel: never;
-/** @deprecated - Use {@link ChatRoomMapVirewCopy} instead! */
-declare const ChatRoomMapCopy: never;
-/** @deprecated - Use {@link ChatRoomMapViewPaste} instead! */
-declare const ChatRoomMapPaste: never;
-/** @deprecated - Use {@link ChatRoomMapViewWhisperValid} instead! */
-declare const ChatRoomMapWhisperValid: never;
-
-// #end region
+/** @deprecated superseded by {@link InventoryPrerequisiteConflicts.GagPrerequisite} */
+declare const InventoryPrerequisiteConflictingGags: never;

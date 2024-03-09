@@ -1,9 +1,11 @@
+declare function BackgroundsTextGet(msg: any): string;
 /**
  * Builds the selectable background arrays based on the tags supplied
  * @param {readonly BackgroundTag[]} BackgroundTagList - An array of string of all the tags to load
  * @returns {string[]} - The list of all background names
  */
 declare function BackgroundsGenerateList(BackgroundTagList: readonly BackgroundTag[]): string[];
+declare const BackgroundsStringsPath: "Backgrounds/Backgrounds.csv";
 declare const BackgroundsTagNone: "Filter by tag";
 declare const BackgroundsTagIndoor: "Indoor";
 declare const BackgroundsTagOutdoor: "Outdoor";
