@@ -98,6 +98,13 @@ declare const Shop2InitVars: VariableContainer<{
      * @type {readonly ShopItem[]}
      */
     Items: readonly ShopItem[];
+    /**
+     * A record mapping {@link AssetGroup.Description} to a list with all respective (shop-elligble) group names.
+     *
+     * Note that keys will vary based on the users active language.
+     * @type {Record<string, Set<AssetGroupName>>}
+     */
+    GroupDescriptions: Record<string, Set<AssetGroupName>>;
 }, {
     /** The shop background */
     Background: string;
@@ -121,13 +128,12 @@ declare namespace Shop2Consts {
         Value: number;
         Assets: readonly ItemBundle[];
     }>;
-    let GroupDescriptions: Record<string, AssetGroupName[]>;
     let Keys: Set<string>;
     let Remotes: Set<string>;
 }
 declare namespace Shop2 {
     function _PopulateBuyGroups(): void;
-    function _PopulateGroupDescriptions(): void;
+    function _PopulateGroupDescriptions(assets: readonly ShopItem[]): void;
     function _PopulateKeysAndRemotes(): void;
     function _AssetElementRun(time: number, x: number, y: number, w: number, h: number, assetIndex: number): void;
     function _AssetElementClick(event: MouseEvent | TouchEvent, assetIndex: number): void;
