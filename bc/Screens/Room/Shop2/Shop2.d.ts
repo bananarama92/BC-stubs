@@ -99,12 +99,12 @@ declare const Shop2InitVars: VariableContainer<{
      */
     Items: readonly ShopItem[];
     /**
-     * A record mapping {@link AssetGroup.Description} to a list with all respective (shop-elligble) group names.
+     * A record mapping group category descriptions, to {@link AssetGroup.Description} to a set with all respective (shop-elligble) group names.
      *
      * Note that keys will vary based on the users active language.
-     * @type {Record<string, Set<AssetGroupName>>}
+     * @type {Record<string, Record<string, Set<AssetGroupName>>>}
      */
-    GroupDescriptions: Record<string, Set<AssetGroupName>>;
+    GroupDescriptions: Record<string, Record<string, Set<AssetGroupName>>>;
 }, {
     /** The shop background */
     Background: string;
