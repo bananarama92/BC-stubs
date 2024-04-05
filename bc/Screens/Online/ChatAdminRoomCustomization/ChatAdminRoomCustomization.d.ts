@@ -18,11 +18,11 @@ declare function ChatAdminRoomCustomizationLoad(): void;
 declare function ChatAdminRoomCustomizationPlayMusic(Music: string): void;
 /**
  * Runs the customization on the current screen, can be called from elsewhere
- * @param {object} Custom - The customazation to apply
+ * @param {ServerChatRoomCustomData} Custom - The customazation to apply
  * @param {boolean} Draw - If we must draw directly or keep values to be used by online chat rooms
  * @returns {void} - Nothing
  */
-declare function ChatAdminRoomCustomizationProcess(Custom: object, Draw: boolean): void;
+declare function ChatAdminRoomCustomizationProcess(Custom: ServerChatRoomCustomData, Draw: boolean): void;
 /**
  * When the chat Admin Custom screen runs, draws the screen
  * @returns {void} - Nothing

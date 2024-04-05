@@ -74,7 +74,7 @@ declare var BackgroundSelectionSelect: string;
 declare var BackgroundSelectionSize: number;
 declare var BackgroundSelectionOffset: number;
 /** @type {null | ((selection: string) => void)} */
-declare var BackgroundSelectionCallback: (selection: string) => void;
+declare var BackgroundSelectionCallback: null | ((selection: string) => void);
 /** @type {"" | ModuleType} */
 declare var BackgroundSelectionPreviousModule: "" | ModuleType;
 declare var BackgroundSelectionPreviousScreen: string;
