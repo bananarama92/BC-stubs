@@ -119,8 +119,9 @@ declare function CraftingExit(): void;
  * Applies the craft to all matching items
  * @param {CraftingItem} Craft
  * @param {Asset} Item
+ * @returns {Asset | boolean}
  */
-declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): false | Asset;
+declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): Asset | boolean;
 /**
  * Builds the item list from the player inventory, filters by the search box content
  * @returns {void} - Nothing

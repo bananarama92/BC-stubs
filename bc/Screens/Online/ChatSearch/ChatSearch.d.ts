@@ -144,7 +144,7 @@ declare function ChatSearchResponse(data: ServerChatRoomSearchResponse): void;
  * @param {ServerChatRoomSearchData} searchData - The (potentially) to-be censored search result
  * @returns {null | { DisplayName: string, Description: string }} - The censored name and description or, if fully censored, return `null` instead
  */
-declare function ChatSearchCensor(searchData: ServerChatRoomSearchData): {
+declare function ChatSearchCensor(searchData: ServerChatRoomSearchData): null | {
     DisplayName: string;
     Description: string;
 };

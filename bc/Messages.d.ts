@@ -227,6 +227,13 @@ interface ServerChatRoomMapData {
 	Objects: string;
 }
 
+interface ServerChatRoomCustomData {
+	ImageURL?: string;
+	ImageFilter?: string;
+	MusicURL?: string;
+	SizeMode?: number
+}
+
 /**
  * A chatroom's settings
  *

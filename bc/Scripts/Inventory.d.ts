@@ -213,7 +213,7 @@ declare function InventoryWearRandom(C: Character, GroupName: AssetGroupName, Di
  * @param {null | Character} [C_Source] - The character setting the new item option. If `null`, assume that it is _not_ the player character.
  * @returns {Item | null} - The equipped item (if any)
  */
-declare function InventoryRandomExtend(C: Character, GroupName: AssetGroupName, C_Source?: null | Character): Item;
+declare function InventoryRandomExtend(C: Character, GroupName: AssetGroupName, C_Source?: null | Character): Item | null;
 /**
  * Select a random asset from a group, narrowed to the most preferable available options (i.e
  * unblocked/visible/unlimited) based on their binary "rank"

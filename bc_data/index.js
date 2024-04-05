@@ -1,2 +1,3 @@
 import * as assetVersion from "./assetVersion.json";
-export { assetVersion };
+import * as assetID from "./assetID.json";
+export { assetVersion, assetID };

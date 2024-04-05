@@ -998,11 +998,11 @@ declare namespace DialogLeaveFocusItemHandlers {
 declare namespace DialogEffectIcons {
     let Table: Partial<Record<InventoryIcon, readonly EffectName[]>>;
     function GetIcons(item: Item): InventoryIcon[];
-    let GetEffectIcons: (effects: EffectName[], prop?: CraftingPropertyType) => InventoryIcon[];
+    let GetEffectIcons: (effects: EffectName[], prop?: CraftingPropertyType) => null | InventoryIcon[];
     function _GetGagIcon(effect: EffectName, prop?: CraftingPropertyType): InventoryIcon;
     function _GetBlindIcon(effect: EffectName, prop?: CraftingPropertyType): InventoryIcon;
     function _GetDeafIcon(effect: EffectName): InventoryIcon;
-    let _GagLevelToIcon: (level?: number) => InventoryIcon;
-    let _BlindLevelToIcon: (level?: number) => InventoryIcon;
+    let _GagLevelToIcon: (level?: number) => null | InventoryIcon;
+    let _BlindLevelToIcon: (level?: number) => null | InventoryIcon;
 }
 declare function DialogMouseWheel(Event: any): boolean;

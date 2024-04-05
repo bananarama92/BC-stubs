@@ -678,7 +678,7 @@ declare namespace PreferenceActivityEnjoymentDefault {
     let Other: ArousalFactor;
 }
 declare namespace PreferenceActivityEnjoymentValidate {
-    let Name_1: (arg: ActivityName, C: Character) => ActivityName;
+    let Name_1: (arg: ActivityName, C: Character) => undefined | ActivityName;
     export { Name_1 as Name };
     export function Self_1(arg: ArousalFactor, C: Character): ArousalFactor;
     export { Self_1 as Self };
@@ -707,7 +707,7 @@ declare namespace PreferenceArousalZoneDefault {
     export let Orgasm: boolean;
 }
 declare namespace PreferenceArousalZoneValidate {
-    let Name_4: (arg: AssetGroupName, C: Character) => AssetGroupItemName;
+    let Name_4: (arg: AssetGroupName, C: Character) => undefined | AssetGroupItemName;
     export { Name_4 as Name };
     export function Factor_2(arg: ArousalFactor, C: Character): ArousalFactor;
     export { Factor_2 as Factor };

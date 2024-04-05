@@ -353,7 +353,7 @@ declare function CommonIsObject(value: unknown): value is Record<string, unknown
  * @param {null | ((this: any, key: string, value: any) => any)} reviver
  * @returns {T}
  */
-declare function CommonCloneDeep<T>(obj: T, reviver?: (this: any, key: string, value: any) => any, replacer?: (this: any, key: string, value: any) => any): T;
+declare function CommonCloneDeep<T>(obj: T, reviver?: null | ((this: any, key: string, value: any) => any), replacer?: null | ((this: any, key: string, value: any) => any)): T;
 /**
  * Type guard which checks that a value is a non-negative (i.e. positive or zero) integer
  * @param {unknown} value - The value to test
@@ -577,7 +577,7 @@ declare function CommonCapitalize<T extends string>(string: T): Capitalize<T>;
  * Generally only relevant if one of the fields contains non-JSON-serializible data.
  * @returns {VariableContainer<T1, T2>} - The newly created object
  */
-declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: T2, resetCallbacks?: {
+declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: T2, resetCallbacks?: null | {
     replacer?: (this: any, key: string, value: any) => any;
     reviver?: (this: any, key: string, value: any) => any;
 }): VariableContainer<T1, T2>;
