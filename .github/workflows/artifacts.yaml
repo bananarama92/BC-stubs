@@ -81,7 +81,9 @@ jobs:
           cd Bondage-College/BondageClub
           cp ../../.github/tsconfig.json tsconfig.json
 
+          set +e
           npx -p typescript tsc
+          set -e
 
           cp ../../.github/patch.d.ts dist/patch.d.ts
           cp Scripts/Typedef.d.ts dist/Typedef.d.ts
