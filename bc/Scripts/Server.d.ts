@@ -278,7 +278,7 @@ declare namespace ServerAccountDataSyncedValidate {
         VibratorLevel: 0 | 2 | 1 | 3 | 4;
         ChangeTime: number;
         Activity: ActivityEnjoyment[];
-        Zone: ArousalZone[];
+        Zone: string;
         Fetish: ArousalFetish[];
         OrgasmTimer: number;
         OrgasmStage: 0 | 2 | 1;

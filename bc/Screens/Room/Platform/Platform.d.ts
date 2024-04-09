@@ -1,5 +1,5 @@
 /**
- * Loads a room and it's parameters
+ * Creates a character in the current room and returns it
  * @param {String} CharacterName - The character name to load
  * @param {String} StatusName - The status of that character
  * @param {Number} X - The X position of the character
@@ -233,10 +233,17 @@ declare function PlatformProcessProjectile(Time: number): void;
  */
 declare function PlatformProjectile(C: any, LongShot: boolean): void;
 /**
+ * Binds a target character by the source character
+ * @param {Object} Source - The source character that's doing the bondage
+ * @param {Object} Target - The target character that's getting bound
+ * @returns {void} - Nothing
+ */
+declare function PlatformBindTarget(Source: any, Target: any): void;
+/**
  * Draw scenery + all characters, apply X and Y forces
  * @returns {void} - Nothing
  */
-declare function PlatformDraw(): void;
+declare function PlatformDrawGame(): void;
 /**
  * Draws all the buttons on the right side of the screen for extra lovers/Ds interactions
  * @returns {void} - Nothing
@@ -397,6 +404,9 @@ declare var PlatformShowHitBox: boolean;
 declare var PlatformMessage: any;
 declare var PlatformHeal: any;
 declare var PlatformEvent: any[];
+declare var PlatformTempEvent: any[];
+declare var PlatformPlayerIdleTimer: any;
+declare var PlatformPlayerIdleLast: string;
 declare var PlatformDrawUpArrow: any[];
 /** @type {readonly GamepadButton[]} */
 declare var PlatformButtons: readonly GamepadButton[];
@@ -411,6 +421,7 @@ declare var PlatformJumpPhase: string;
 declare var PlatformParty: any[];
 declare var PlatformRegen: number;
 declare var PlatformCooldown: any[];
+declare var PlatformHeartEffect: boolean;
 declare namespace PlatformTimedScreenFilter {
     let End: number;
     let Filter: string;
@@ -445,6 +456,7 @@ declare var PlatformTemplate: ({
     DamageAudio: string[];
     DownAudio: string[];
     BindAudio: string[];
+    IdleAudio: string[];
     Animation: {
         Name: string;
         Cycle: number[];
@@ -467,14 +479,13 @@ declare var PlatformTemplate: ({
     ProjectileDamage?: undefined;
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
-    OnBind?: undefined;
     JumpOdds?: undefined;
-    LootOdds?: undefined;
     RunOdds?: undefined;
+    ProjectileOdds?: undefined;
+    LootOdds?: undefined;
+    OnBind?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
-    ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -499,6 +510,7 @@ declare var PlatformTemplate: ({
     DamageAudio: string[];
     DownAudio: string[];
     BindAudio: string[];
+    IdleAudio: string[];
     Animation: ({
         Name: string;
         Cycle: number[];
@@ -547,14 +559,13 @@ declare var PlatformTemplate: ({
     ProjectileDamage?: undefined;
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
-    OnBind?: undefined;
     JumpOdds?: undefined;
-    LootOdds?: undefined;
     RunOdds?: undefined;
+    ProjectileOdds?: undefined;
+    LootOdds?: undefined;
+    OnBind?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
-    ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -583,6 +594,7 @@ declare var PlatformTemplate: ({
     DamageAudio: string[];
     DownAudio: string[];
     BindAudio: string[];
+    IdleAudio: string[];
     Animation: ({
         Name: string;
         Cycle: number[];
@@ -613,14 +625,93 @@ declare var PlatformTemplate: ({
     })[];
     Magic?: undefined;
     MagicPerLevel?: undefined;
-    OnBind?: undefined;
     JumpOdds?: undefined;
-    LootOdds?: undefined;
     RunOdds?: undefined;
+    ProjectileOdds?: undefined;
+    LootOdds?: undefined;
+    OnBind?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
-    ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
+} | {
+    Name: string;
+    Status: string;
+    Perk: string;
+    PerkName: string[];
+    Health: number;
+    HealthPerLevel: number;
+    Width: number;
+    Height: number;
+    HitBox: number[];
+    JumpHitBox: number[];
+    JumpForce: number;
+    RunSpeed: number;
+    WalkSpeed: number;
+    CrawlSpeed: number;
+    Projectile: number;
+    ProjectileName: string;
+    ProjectileType: string;
+    ProjectileDamage: number[];
+    JumpOdds: number;
+    RunOdds: number;
+    ProjectileOdds: number;
+    ProjectileTime: number;
+    CollisionDamage: number;
+    ExperienceValue: number;
+    DamageBackOdds: number;
+    DamageKnockForce: number;
+    LootOdds: number;
+    DamageAudio: string[];
+    DownAudio: string[];
+    BindAudio: string[];
+    IdleAudio: string[];
+    Animation: {
+        Name: string;
+        Cycle: number[];
+        Speed: number;
+    }[];
+    Attack: ({
+        Name: string;
+        HitBox: number[];
+        HitAnimation: number[];
+        StartAudio: string[];
+        HitAudio: string[];
+        Damage: number[];
+        Speed: number;
+        JumpForce?: undefined;
+    } | {
+        Name: string;
+        HitBox: number[];
+        HitAnimation: number[];
+        HitAudio: string[];
+        Damage: number[];
+        Speed: number;
+        StartAudio?: undefined;
+        JumpForce?: undefined;
+    } | {
+        Name: string;
+        HitBox: number[];
+        HitAnimation: number[];
+        StartAudio: string[];
+        HitAudio: string[];
+        Damage: number[];
+        Speed: number;
+        JumpForce: number;
+    } | {
+        Name: string;
+        Speed: number;
+        HitBox?: undefined;
+        HitAnimation?: undefined;
+        StartAudio?: undefined;
+        HitAudio?: undefined;
+        Damage?: undefined;
+        JumpForce?: undefined;
+    })[];
+    OnBind: () => void;
+    Magic?: undefined;
+    MagicPerLevel?: undefined;
+    ProjectileHitAudio?: undefined;
+    DamageFaceOdds?: undefined;
+    StandAttackSlowOdds?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -648,6 +739,7 @@ declare var PlatformTemplate: ({
     DamageAudio?: undefined;
     DownAudio?: undefined;
     BindAudio?: undefined;
+    IdleAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
@@ -657,14 +749,13 @@ declare var PlatformTemplate: ({
     ProjectileDamage?: undefined;
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
-    OnBind?: undefined;
     JumpOdds?: undefined;
-    LootOdds?: undefined;
     RunOdds?: undefined;
+    ProjectileOdds?: undefined;
+    LootOdds?: undefined;
+    OnBind?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
-    ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -692,6 +783,7 @@ declare var PlatformTemplate: ({
     DamageAudio?: undefined;
     DownAudio?: undefined;
     BindAudio?: undefined;
+    IdleAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
@@ -701,14 +793,13 @@ declare var PlatformTemplate: ({
     ProjectileDamage?: undefined;
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
-    OnBind?: undefined;
     JumpOdds?: undefined;
-    LootOdds?: undefined;
     RunOdds?: undefined;
+    ProjectileOdds?: undefined;
+    LootOdds?: undefined;
+    OnBind?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
-    ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -737,6 +828,7 @@ declare var PlatformTemplate: ({
     DamageAudio?: undefined;
     DownAudio?: undefined;
     BindAudio?: undefined;
+    IdleAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
@@ -747,12 +839,11 @@ declare var PlatformTemplate: ({
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
     JumpOdds?: undefined;
-    LootOdds?: undefined;
     RunOdds?: undefined;
+    ProjectileOdds?: undefined;
+    LootOdds?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
-    ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -783,6 +874,7 @@ declare var PlatformTemplate: ({
     DamageAudio?: undefined;
     DownAudio?: undefined;
     BindAudio?: undefined;
+    IdleAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
@@ -793,10 +885,9 @@ declare var PlatformTemplate: ({
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
     RunOdds?: undefined;
+    ProjectileOdds?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
-    ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -828,6 +919,7 @@ declare var PlatformTemplate: ({
     DamageAudio?: undefined;
     DownAudio?: undefined;
     BindAudio?: undefined;
+    IdleAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
@@ -837,10 +929,9 @@ declare var PlatformTemplate: ({
     ProjectileDamage?: undefined;
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
+    ProjectileOdds?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
-    ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -872,6 +963,7 @@ declare var PlatformTemplate: ({
     DamageAudio?: undefined;
     DownAudio?: undefined;
     BindAudio?: undefined;
+    IdleAudio?: undefined;
     Attack?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
@@ -882,9 +974,8 @@ declare var PlatformTemplate: ({
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
     JumpOdds?: undefined;
-    StandAttackSlowOdds?: undefined;
     ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
+    StandAttackSlowOdds?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -945,6 +1036,7 @@ declare var PlatformTemplate: ({
     DamageAudio?: undefined;
     DownAudio?: undefined;
     BindAudio?: undefined;
+    IdleAudio?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
     Projectile?: undefined;
@@ -954,7 +1046,6 @@ declare var PlatformTemplate: ({
     ProjectileTime?: undefined;
     ProjectileHitAudio?: undefined;
     ProjectileOdds?: undefined;
-    ProjectileBothSides?: undefined;
 } | {
     Name: string;
     Status: string;
@@ -995,58 +1086,11 @@ declare var PlatformTemplate: ({
     DamageAudio?: undefined;
     DownAudio?: undefined;
     BindAudio?: undefined;
+    IdleAudio?: undefined;
     Magic?: undefined;
     MagicPerLevel?: undefined;
     ProjectileHitAudio?: undefined;
     JumpOdds?: undefined;
-    DamageFaceOdds?: undefined;
-    StandAttackSlowOdds?: undefined;
-    ProjectileBothSides?: undefined;
-} | {
-    Name: string;
-    Status: string;
-    Health: number;
-    Width: number;
-    Height: number;
-    HitBox: number[];
-    JumpHitBox: number[];
-    JumpForce: number;
-    WalkSpeed: number;
-    CrawlSpeed: number;
-    Projectile: number;
-    ProjectileName: string;
-    ProjectileType: string;
-    ProjectileDamage: number[];
-    JumpOdds: number;
-    ProjectileOdds: number;
-    ProjectileTime: number;
-    ProjectileBothSides: boolean;
-    CollisionDamage: number;
-    ExperienceValue: number;
-    DamageBackOdds: number;
-    DamageKnockForce: number;
-    LootOdds: number;
-    Animation: {
-        Name: string;
-        Cycle: number[];
-        Speed: number;
-    }[];
-    Attack: {
-        Name: string;
-        Speed: number;
-    }[];
-    OnBind: () => void;
-    Perk?: undefined;
-    PerkName?: undefined;
-    HealthPerLevel?: undefined;
-    RunSpeed?: undefined;
-    DamageAudio?: undefined;
-    DownAudio?: undefined;
-    BindAudio?: undefined;
-    Magic?: undefined;
-    MagicPerLevel?: undefined;
-    ProjectileHitAudio?: undefined;
-    RunOdds?: undefined;
     DamageFaceOdds?: undefined;
     StandAttackSlowOdds?: undefined;
 })[];
@@ -1718,12 +1762,8 @@ declare var PlatformRoomList: ({
         ToX: number;
         ToFaceLeft: boolean;
     }[];
-    Character: {
-        Name: string;
-        Status: string;
-        X: number;
-    }[];
     Heal?: undefined;
+    Character?: undefined;
     BackgroundFilter?: undefined;
 } | {
     Name: string;

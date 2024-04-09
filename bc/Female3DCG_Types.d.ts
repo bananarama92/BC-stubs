@@ -210,6 +210,9 @@ interface AssetCommonPropertiesGroupAsset {
 	 */
 	IsRestraint?: boolean;
 
+	// Zero or more if this group is an arousal zone that must be saved and synced between players
+	ArousalZoneID?: number;
+
 	/**
 	 * Is the asset considered body cosplay?
 	 *

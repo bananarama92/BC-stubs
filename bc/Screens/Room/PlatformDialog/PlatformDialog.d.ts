@@ -25,7 +25,7 @@ declare function PlatformDialogLoad(): void;
  * Draws the dialog character, text & answers
  * @returns {void} - Nothing
  */
-declare function PlatformDialogDraw(): void;
+declare function PlatformDialogDrawDialog(): void;
 /**
  * Runs and draws the screen.
  * @returns {void} - Nothing
@@ -132,6 +132,24 @@ declare function PlatformDialogIsSlaveOfCharacter(Char1: string, Char2: string):
  * @returns {boolean} - TRUE if lover
  */
 declare function PlatformDialogIsOwner(Name: string): boolean;
+/**
+ * Returns TRUE if the character doesn't have any lover
+ * @param {String} Name - The name of a character
+ * @returns {boolean} - TRUE if no lover
+ */
+declare function PlatformDialogCharacterIsSingle(Name: string): boolean;
+/**
+ * Returns 0 if the source character and target character are not in a relationship, 1 if lover or slave, 2 if lover and slave
+ * @param {String} SourceName - The source character name to evaluate
+ * @param {String} TargetName - The target character name to evaluate
+ * @returns {number} - TRUE if lover
+ */
+declare function PlatformDialogLoverAndSlaveFactor(SourceName: string, TargetName: string): number;
+/**
+ * Called each time a relationship changes through dialog
+ * @returns {void} - Nothing
+ */
+declare function PlatformDialogRelationshipChange(): void;
 /**
  * Called manually to output the full dialog text to the console for text proofing
  * @returns {void} - Nothing
@@ -1754,6 +1772,273 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
+    Dialog: ({
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Goto: string;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Goto?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character: ({
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        } | {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X?: undefined;
+        })[];
+        Background?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Goto: string;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio?: undefined;
+            AudioStyle?: undefined;
+            Goto?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Background?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Entry: () => void;
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Entry: () => void;
+        ID: string;
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Background?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    })[];
+    Exit?: undefined;
+} | {
+    Name: string;
+    Music: string;
+    Dialog: ({
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Goto: string;
+            AudioStyle?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Goto?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character: ({
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        } | {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X?: undefined;
+        })[];
+        Background?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Entry: () => void;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        ID: string;
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Background?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+    } | {
+        Entry: () => void;
+        Background?: undefined;
+        Character?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        ID: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Background?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+    } | {
+        Entry: () => void;
+        ID: string;
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Background?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    })[];
+    Exit?: undefined;
+} | {
+    Name: string;
+    Music: string;
     Exit: () => void;
     Dialog: ({
         Text: string;
@@ -2995,6 +3280,152 @@ declare var PlatformDialogData: ({
     Exit: () => void;
     Dialog: ({
         Background: string;
+        Entry: () => void;
+        Character?: undefined;
+        Text?: undefined;
+        AudioStyle?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+        Prerequisite?: undefined;
+    } | {
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Background?: undefined;
+        Entry?: undefined;
+        Text?: undefined;
+        AudioStyle?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+        Prerequisite?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+        Prerequisite?: undefined;
+    } | {
+        Text: string;
+        AudioStyle: string;
+        Audio: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+        Prerequisite?: undefined;
+    } | {
+        Text: string;
+        AudioStyle: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Love?: undefined;
+            Domination?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Love: number;
+            Domination: number;
+        })[];
+        Background?: undefined;
+        Entry?: undefined;
+        Character?: undefined;
+        ID?: undefined;
+        Prerequisite?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+        Prerequisite?: undefined;
+    } | {
+        Text: string;
+        AudioStyle: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Script: () => void;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination?: undefined;
+            Script?: undefined;
+        })[];
+        Background?: undefined;
+        Entry?: undefined;
+        Character?: undefined;
+        ID?: undefined;
+        Prerequisite?: undefined;
+    } | {
+        ID: string;
+        Prerequisite: () => boolean;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Entry?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    })[];
+} | {
+    Name: string;
+    Music: string;
+    Exit: () => void;
+    Dialog: ({
+        Background: string;
         Character: {
             Name: string;
             Status: string;
@@ -3405,6 +3836,13 @@ declare var PlatformDialogData: ({
     } | {
         Text: string;
         Audio: string;
+        Background?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
         AudioStyle: string;
         Background?: undefined;
         Character?: undefined;
@@ -3458,13 +3896,6 @@ declare var PlatformDialogData: ({
         }[];
         Text?: undefined;
         Audio?: undefined;
-        AudioStyle?: undefined;
-        Answer?: undefined;
-    } | {
-        Text: string;
-        Audio: string;
-        Background?: undefined;
-        Character?: undefined;
         AudioStyle?: undefined;
         Answer?: undefined;
     } | {
@@ -4247,9 +4678,9 @@ declare var PlatformDialogData: ({
     } | {
         Text: string;
         Audio: string;
+        AudioStyle: string;
         Background?: undefined;
         Character?: undefined;
-        AudioStyle?: undefined;
         Answer?: undefined;
     } | {
         Text: string;
@@ -4292,6 +4723,13 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         Character?: undefined;
         AudioStyle?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
     })[];
     Exit?: undefined;
 } | {
@@ -4366,20 +4804,392 @@ declare var PlatformDialogData: ({
     } | {
         Text: string;
         Audio: string;
+        AudioStyle: string;
         Answer: ({
             Text: string;
             Reply: string;
             Audio: string;
+            AudioStyle: string;
+            Domination: number;
+            Love: number;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            AudioStyle?: undefined;
+            Love?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Domination: number;
+            Love?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Domination: number;
+            Love: number;
+            Perk: boolean;
+            Audio?: undefined;
+            AudioStyle?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Love: number;
+            AudioStyle: string;
+            Domination?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love?: undefined;
             AudioStyle?: undefined;
         } | {
             Text: string;
             Reply: string;
             Audio: string;
             AudioStyle: string;
+            Love?: undefined;
+            Domination?: undefined;
         })[];
         Background?: undefined;
         Character?: undefined;
         AudioStyle?: undefined;
+    })[];
+    Exit?: undefined;
+} | {
+    Name: string;
+    Music: string;
+    Dialog: ({
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Background?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love: number;
+            AudioStyle: string;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            AudioStyle: string;
+            Love?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love: number;
+            Perk: boolean;
+            AudioStyle?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Background?: undefined;
+        Answer?: undefined;
+    })[];
+    Exit?: undefined;
+} | {
+    Name: string;
+    Music: string;
+    Dialog: ({
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Animation: string;
+            Y: number;
+        }[];
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Love: number;
+            Domination?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Love: number;
+            Domination: number;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Love: number;
+            Domination: number;
+            Perk: boolean;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Domination: number;
+            Love: number;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love: number;
+            Domination?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    })[];
+    Exit?: undefined;
+} | {
+    Name: string;
+    Music: string;
+    Dialog: ({
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Love: number;
+            Script?: undefined;
+        } | {
+            Text: string;
+            Script: () => void;
+            Reply?: undefined;
+            Love?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Entry?: undefined;
+    } | {
+        Character: {
+            Name: string;
+            Status: string;
+            Animation: string;
+            Y: number;
+        }[];
+        Background?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love: number;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love: number;
+            Perk: boolean;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+        Entry?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love: number;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Domination: number;
+            Audio?: undefined;
+            Love?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love: number;
+            Perk: boolean;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Entry?: undefined;
+    } | {
+        Background: string;
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Entry?: undefined;
+    } | {
+        Entry: () => void;
+        Background?: undefined;
+        Character?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
     })[];
     Exit?: undefined;
 } | {
@@ -4673,6 +5483,175 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
+    Exit: () => void;
+    Dialog: ({
+        Background: string;
+        Entry: () => void;
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Text: string;
+        Audio: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Background?: undefined;
+        Entry?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination?: undefined;
+            Love?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love: number;
+            Perk: boolean;
+        })[];
+        Background?: undefined;
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Background?: undefined;
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love: number;
+            Script: () => void;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            Love?: undefined;
+            Script?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Domination: number;
+            Audio?: undefined;
+            Love?: undefined;
+            Script?: undefined;
+        })[];
+        Background?: undefined;
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        ID?: undefined;
+    } | {
+        ID: string;
+        Prerequisite: () => boolean;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Background?: undefined;
+        Entry?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    })[];
+} | {
+    Name: string;
+    Music: string;
     Dialog: ({
         Entry: () => void;
         Character: {
@@ -6216,6 +7195,600 @@ declare var PlatformDialogData: ({
         Audio?: undefined;
         Answer?: undefined;
         AudioStyle?: undefined;
+        Prerequisite?: undefined;
+    })[];
+    Exit?: undefined;
+} | {
+    Name: string;
+    Music: string;
+    Dialog: ({
+        Entry: () => void;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Love?: undefined;
+            Goto?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Love: number;
+            Goto: string;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Perk: boolean;
+            Goto: string;
+            Love?: undefined;
+        })[];
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Answer?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Answer?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Entry: () => void;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Text: string;
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        ID?: undefined;
+    } | {
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love: number;
+            Domination?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Domination: number;
+            Love?: undefined;
+        })[];
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Background?: undefined;
+        ID?: undefined;
+    } | {
+        ID: string;
+        Entry: () => void;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+        AudioStyle?: undefined;
+        Background?: undefined;
+    })[];
+    Exit?: undefined;
+} | {
+    Name: string;
+    Music: string;
+    Dialog: ({
+        Entry: () => void;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Domination?: undefined;
+            Goto?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Domination: number;
+            Goto: string;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Perk: boolean;
+            Goto: string;
+            Domination?: undefined;
+        })[];
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Entry: () => void;
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            AudioStyle?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Domination?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Domination: number;
+            Audio?: undefined;
+            AudioStyle?: undefined;
+        })[];
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love: number;
+            Domination: number;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love?: undefined;
+            Domination?: undefined;
+        })[];
+        Entry?: undefined;
+        Prerequisite?: undefined;
+        AudioStyle?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        ID: string;
+        Entry: () => void;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+    })[];
+    Exit?: undefined;
+} | {
+    Name: string;
+    Music: string;
+    Dialog: ({
+        Entry: () => void;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Domination?: undefined;
+            Goto?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Domination: number;
+            Goto: string;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Perk: boolean;
+            Goto: string;
+            Domination?: undefined;
+        })[];
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Entry?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Domination: number;
+        } | {
+            Text: string;
+            Reply: string;
+            Domination?: undefined;
+        })[];
+        Entry?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Entry: () => void;
+        Text: string;
+        Audio: string;
+        AudioStyle: string;
+        Character?: undefined;
+        Answer?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Entry?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+            X: number;
+        }[];
+        Entry?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love: number;
+            Domination?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love?: undefined;
+            Domination?: undefined;
+            Perk?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love: number;
+            Domination: number;
+            Perk: boolean;
+        })[];
+        Entry?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Prerequisite?: undefined;
+        ID?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Text: string;
+        Audio: string;
+        Entry?: undefined;
+        Character?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
+        ID?: undefined;
+    } | {
+        ID: string;
+        Entry: () => void;
+        Character?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        AudioStyle?: undefined;
+        Answer?: undefined;
         Prerequisite?: undefined;
     })[];
     Exit?: undefined;

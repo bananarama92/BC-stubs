@@ -356,18 +356,18 @@ declare function DrawGetCustomBackground(C: Character): string | undefined;
  * @param {string} URL The background image to use
  * @param {Rect} bounds The location to draw the background in
  * @param {object} [opts] The background drawing options
- * @param {number} [opts.zoom=1.0] The zoom level to use
  * @param {boolean} [opts.inverted=false] Whether the background should be flipped upside-down
  * @param {number} [opts.blur=1.0] How blurry the background is
  * @param {number} [opts.darken=0.0] How darkened the background is (1 is bright, 0 is pitch black)
  * @param {RGBAColor[]} [opts.tints] Tints to apply to the background
+ * @param {DrawingResizeMode} [opts.sizeMode] The method of resizing the background
  */
 declare function DrawRoomBackground(URL: string, bounds: Rect, opts?: {
-    zoom?: number;
     inverted?: boolean;
     blur?: number;
     darken?: number;
     tints?: RGBAColor[];
+    sizeMode?: DrawingResizeMode;
 }): void;
 /**
  * Perform a global screen flash effect when a blindfold gets removed
@@ -403,6 +403,11 @@ declare function DrawGetDarkFactor(): number;
  * @returns {void} - Nothing
  */
 declare function DrawProcess(time: number): void;
+/**
+ * Returns whether a chat room data custom background will be shown
+ * @returns {boolean}
+ */
+declare function DrawShowChatRoomCustomBackground(): boolean;
 /**
  * Handles drawing the screen flash effects
  * @returns {void}
@@ -566,6 +571,15 @@ declare var DrawHoverElements: Function[];
  */
 declare var DrawCanvasPosition: RectTuple;
 /**
+ * An enum for the method for resizing custom backgrounds
+ */
+type DrawingResizeMode = number;
+declare namespace DrawingResizeMode {
+    let Fill: number;
+    let FillOriginalRatio: number;
+    let ShowFullOriginalRatio: number;
+}
+/**
  * Gets the text size needed to fit inside a given width according to the current font.
  * This function is memoized because <code>MainCanvas.measureText(Text)</code> is a major resource hog.
  * @param {string} Text - Text to draw
@@ -580,3 +594,11 @@ declare var DrawScreenFlashStrength: number;
 declare const DrawAssetPreviewDefaultWidth: 225;
 /** The default height of item previews */
 declare const DrawAssetPreviewDefaultHeight: 275;
+/**
+ * Transform a rectangle to fit partially or wholly inside another. E.g. an image onto a background canvas
+ * @param {Rect} sourceRect Source rectangle, to be resized and/or trimmed
+ * @param {Rect} destRect Destination rectangle, the available space to contain the result
+ * @param {DrawingResizeMode} sizeMode - How to transform sourceRect - whether to keep original aspect ratio and allow/prevent overflow
+ * @returns {[RectTuple, RectTuple]} The subsection of the sourceRect to take and the rectangle to map it to
+ */
+declare const RectFitIntoRect: MemoizedFunction<(sourceRect: Rect, destRect: Rect, sizeMode: number) => [sourceRectTuple: RectTuple, destRectTuple: RectTuple]>;

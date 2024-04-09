@@ -70,9 +70,10 @@ declare function CharacterLoadOnline(data: ServerAccountDataSynced, SourceMember
 /**
  * Deletes a character from the cached list of characters
  * @param {Character} C - The character to remove from the character cache
+ * @param {boolean} ClearCache - If we must clear the CSV cache or not (default to true)
  * @returns {void} - Nothing
  */
-declare function CharacterDelete(C: Character): void;
+declare function CharacterDelete(C: Character, ClearCache?: boolean): void;
 /**
  * Deletes all online characters from the character array
  * @returns {void} - Nothing

@@ -36,11 +36,11 @@ declare function ActivityGetGroupOrMirror(family: IAssetFamily, groupname: Asset
 declare function ActivityGetAllMirrorGroups(family: IAssetFamily, groupName: AssetGroupName): AssetGroup[];
 /**
  * Check if any activities are possible for a character's given group.
- * @param {Character} char - The character on which the check is done
- * @param {AssetGroupItemName} groupname - The group to check access on
+ * @param {Character} C - The character on which the check is done
+ * @param {AssetGroupName} GroupName - The group to check access on
  * @returns {boolean} Whether any activity is possible
  */
-declare function ActivityPossibleOnGroup(char: Character, groupname: AssetGroupItemName): boolean;
+declare function ActivityPossibleOnGroup(C: Character, GroupName: AssetGroupName): boolean;
 /**
  * Check whether a given activity can be performed on a group
  * @param {Character} char - The character being targeted

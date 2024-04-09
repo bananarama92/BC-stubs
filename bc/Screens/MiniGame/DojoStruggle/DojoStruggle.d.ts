@@ -13,6 +13,11 @@ declare function DojoStruggleRun(): void;
  * @returns {void} - Nothing
  */
 declare function DojoStruggleClick(): void;
+/**
+ * Handles mouse down during the dojo struggle mini game
+ * @returns {void} - Nothing
+ */
+declare function DojoStruggleMouseDown(): void;
 declare function DojoStruggleKeyDown(event: KeyboardEvent): boolean;
 declare var DojoStruggleBackground: string;
 declare var DojoStrugglePosition: number;

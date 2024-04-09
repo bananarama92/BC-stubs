@@ -29,6 +29,12 @@ declare function PreferenceGetFetishFactor(C: Character, Type: FetishName): Arou
  */
 declare function PreferenceSetActivityFactor(C: Character, Type: ActivityName, Self: boolean, Factor: ArousalFactor): void;
 /**
+ * Validates the character arousal object and converts it's objects to compressed string if needed
+ * @param {number} Factor - The
+ * @returns {string} - A string of 1 char that represents the compressed zone
+ */
+declare function PreferenceArousalZoneToChar(Factor: number, Orgasm: any): string;
+/**
  * Gets the corresponding arousal zone definition from a player's preferences (if the group's activities are mirrored,
  * returns the arousal zone definition for the mirrored group).
  * @param {Character} C - The character for whom to get the arousal zone
@@ -47,11 +53,11 @@ declare function PreferenceGetZoneFactor(C: Character, ZoneName: AssetGroupItemN
 /**
  * Sets the love factor for a specific body zone on the player
  * @param {Character} C - The character, for whom the love factor of a particular zone should be set
- * @param {AssetGroupItemName} Zone - The name of the zone, the factor should be set for
+ * @param {AssetGroupItemName} ZoneName - The name of the zone, the factor should be set for
  * @param {ArousalFactor} Factor - The factor of the zone (0 is horrible, 2 is normal, 4 is great)
  * @returns {void} - Nothing
  */
-declare function PreferenceSetZoneFactor(C: Character, Zone: AssetGroupItemName, Factor: ArousalFactor): void;
+declare function PreferenceSetZoneFactor(C: Character, ZoneName: AssetGroupItemName, Factor: ArousalFactor): void;
 /**
  * Determines, if a player can reach on orgasm from a particular zone
  * @param {Character} C - The character whose ability to orgasm we check
@@ -545,6 +551,12 @@ declare function PreferenceSubscreenExtensionsExit(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenExtensionsClear(): void;
+/**
+ * Validates the character arousal object and converts it's objects to compressed string if needed
+ * @param {Character} C - The character to check
+ * @returns {void} - Nothing
+ */
+declare function PreferenceValidateArousalData(C: Character): void;
 declare var PreferenceBackground: string;
 declare var PreferenceMessage: string;
 declare var PreferenceSafewordConfirm: boolean;
@@ -604,6 +616,8 @@ declare var PreferenceArousalActivityFactorSelf: ArousalFactor;
 declare var PreferenceArousalActivityFactorOther: ArousalFactor;
 /** @type {ArousalFactor} */
 declare var PreferenceArousalZoneFactor: ArousalFactor;
+declare var PreferenceArousalZoneCount: number;
+declare var PreferenceArousalZoneDefaultCompressedString: string;
 /** @type {null | FetishName[]} */
 declare var PreferenceArousalFetishList: null | FetishName[];
 declare var PreferenceArousalFetishIndex: number;
@@ -655,6 +669,8 @@ declare let PreferenceExtensionsSettings: Record<string, PreferenceExtensionsSet
 declare let PreferenceExtensionsDisplay: PreferenceExtensionsMenuButtonInfo[];
 /** @type {PreferenceExtensionsSettingItem | null}*/
 declare let PreferenceExtensionsCurrent: PreferenceExtensionsSettingItem | null;
+declare const PreferenceChatPageList: number[];
+declare let PreferenceChatPageIndex: number;
 declare const ScriptPermissionLevel: Readonly<{
     SELF: "Self";
     OWNER: "Owner";
@@ -739,7 +755,7 @@ declare var PreferenceArousalSettingsValidate: {
     VibratorLevel: (arg: 0 | 2 | 1 | 3 | 4, C: Character) => 0 | 2 | 1 | 3 | 4;
     ChangeTime: (arg: number, C: Character) => number;
     Activity: (arg: ActivityEnjoyment[], C: Character) => ActivityEnjoyment[];
-    Zone: (arg: ArousalZone[], C: Character) => ArousalZone[];
+    Zone: (arg: string, C: Character) => string;
     Fetish: (arg: ArousalFetish[], C: Character) => ArousalFetish[];
     OrgasmTimer: (arg: number, C: Character) => number;
     OrgasmStage: (arg: 0 | 2 | 1, C: Character) => 0 | 2 | 1;

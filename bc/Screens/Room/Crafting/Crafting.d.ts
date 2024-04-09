@@ -1,4 +1,11 @@
 /**
+ * Construct a record mapping all crafting-valid asset names to a list of matching elligble assets.
+ * Elligble assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
+ * @see {@link CraftingAssets}
+ * @returns {Record<string, Asset[]>}
+ */
+declare function CraftingAssetsPopulate(): Record<string, Asset[]>;
+/**
  * Returns TRUE if a crafting item has an effect from a list or allows that effect
  * @param {Asset} Item - The item asset to validate
  * @param {EffectName[]} Effect - The list of effects to validate
@@ -119,9 +126,8 @@ declare function CraftingExit(): void;
  * Applies the craft to all matching items
  * @param {CraftingItem} Craft
  * @param {Asset} Item
- * @returns {Asset | boolean}
  */
-declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): Asset | boolean;
+declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): boolean;
 /**
  * Builds the item list from the player inventory, filters by the search box content
  * @returns {void} - Nothing
@@ -132,9 +138,10 @@ declare function CraftingItemListBuild(): void;
  * @param {CraftingItem} Craft - The crafted item properties or `null`
  * @param {Asset | null} asset - The matching Asset. Will be extracted from the player inventory if `null`
  * @param {boolean} Warn - Whether a warning should logged whenever the crafting validation fails
+ * @param {boolean} checkPlayerInventory - Whether or not the player must own the crafted item's underlying asset
  * @return {CraftingStatusType} - One of the {@link CraftingStatusType} status codes; 0 denoting an unrecoverable validation error
  */
-declare function CraftingValidate(Craft: CraftingItem, asset?: Asset | null, Warn?: boolean): CraftingStatusType;
+declare function CraftingValidate(Craft: CraftingItem, asset?: Asset | null, Warn?: boolean, checkPlayerInventory?: boolean): CraftingStatusType;
 /** The background of the crafting screen. */
 declare var CraftingBackground: string;
 /**
@@ -186,6 +193,15 @@ declare let CraftingReorderMode: CraftingReorderType;
  * @type {null | TextCache}
  */
 declare let CraftingLayerNames: null | TextCache;
+/**
+ * A record mapping all crafting-valid asset names to a list of matching elligble assets.
+ *
+ * Elligble assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
+ *
+ * The first asset in each list is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
+ * @type {Record<string, Asset[]>}
+ */
+declare let CraftingAssets: Record<string, Asset[]>;
 /** The separator used between different crafted items when serializing them. */
 declare const CraftingSerializeItemSep: "§";
 /** The separator used between fields within a single crafted item when serializing them. */

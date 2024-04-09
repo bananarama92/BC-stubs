@@ -51,6 +51,11 @@ declare function PlatformProfileRun(): void;
  */
 declare function PlatformProfileBuyPerk(PerkNum: number): void;
 /**
+ * Resets all perks allocated for the current character, the "Apprentice" perk cannot reset
+ * @returns {void} - Nothing
+ */
+declare function PlatformProfileResetPerk(): void;
+/**
  * Handles clicks in the screen
  * @returns {void} - Nothing
  */

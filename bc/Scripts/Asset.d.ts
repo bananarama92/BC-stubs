@@ -214,6 +214,11 @@ declare namespace PoseCategoryPriority {
 }
 /** @type {Map<AssetGroupName, AssetGroup[]>} */
 declare var AssetActivityMirrorGroups: Map<AssetGroupName, AssetGroup[]>;
+/**
+ * A record mapping all {@link Asset.IsLock} asset names to their respective assets.
+ * @type {Record<AssetLockType, Asset>}
+ */
+declare const AssetLocks: Record<AssetLockType, Asset>;
 declare namespace PoseType {
     let HIDE: "Hide";
     let DEFAULT: "";

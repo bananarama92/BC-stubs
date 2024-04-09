@@ -81,7 +81,9 @@ jobs:
           cd Bondage-College/BondageClub
           cp ../../.github/tsconfig.json tsconfig.json
 
+          set +e
           npx -p typescript tsc
+          set -e
 
           cp ../../.github/patch.d.ts dist/patch.d.ts
           cp Scripts/Typedef.d.ts dist/Typedef.d.ts
@@ -99,6 +101,7 @@ jobs:
           cd bc_data
           npm install
           node --unhandled-rejections=strict scripts/assetVersion --root="../Bondage-College/BondageClub" --bc_version="$BC_VERSION"
+          node --unhandled-rejections=strict scripts/assetID --root="../Bondage-College/BondageClub"
 
       - name: Push artifacts
         run: |
@@ -109,6 +112,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add bc/*
           git add bc_data/assetVersion.json
+          git add bc_data/assetID.json
           git status
           git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $REPO_NAME" -m "Branch: \`$REPO_BRANCH\`" -m "Commit: \`$BC_HASH\`"
           git push

@@ -25,6 +25,7 @@ declare namespace E {
     let FillVulva: "FillVulva";
     let VulvaShaft: "VulvaShaft";
     let IsPlugged: "IsPlugged";
+    let ForcedErection: "ForcedErection";
     let Egged: "Egged";
     let Vibrating: "Vibrating";
     let Edged: "Edged";

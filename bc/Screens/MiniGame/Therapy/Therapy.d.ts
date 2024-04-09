@@ -24,6 +24,11 @@ declare function TherapyDoMove(MoveType: number): void;
  * @returns {void} - Nothing
  */
 declare function TherapyClick(): void;
+/**
+ * Handles mouse downs in the therapy mini game
+ * @returns {void} - Nothing
+ */
+declare function TherapyMouseDown(): void;
 declare function TherapyKeyDown(event: KeyboardEvent): boolean;
 declare var TherapyBackground: string;
 /** @type {null | NPCCharacter} */

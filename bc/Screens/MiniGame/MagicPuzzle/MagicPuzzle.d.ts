@@ -5,14 +5,17 @@
 declare function MagicPuzzleLoad(): void;
 /**
  * Returns the time in seconds with 3 digits milliseconds
- * @returns {void} - Nothing
+ * @param {number} Time
+ * @returns {string} - Formatted string
  */
-declare function MagicPuzzleTime(Time: any): void;
+declare function MagicPuzzleTime(Time: number): string;
 /**
  * Validates where the puzzle square is, validated 4 times for each end of the square
+ * @param {number} X - X coordinate
+ * @param {number} Y - Y coordinate
  * @returns {void} - Nothing
  */
-declare function MagicPuzzleValidate(X: any, Y: any): void;
+declare function MagicPuzzleValidate(X: number, Y: number): void;
 /**
  * Prevents cheats in the mini-game by validating the last X and Y positions
  * @returns {void} - Nothing
@@ -46,6 +49,11 @@ declare function MagicPuzzleTransitionToColor(startingColor: HexColor, targetCol
  * @returns {void} - Nothing
  */
 declare function MagicPuzzleClick(): void;
+/**
+ * Handles mouse downs during the mini game, to start it
+ * @returns {void} - Nothing
+ */
+declare function MagicPuzzleMouseDown(): void;
 declare function MagicPuzzleKeyDown(event: KeyboardEvent): boolean;
 /**
  * When the magic puzzle must end
@@ -58,7 +66,7 @@ declare var MagicPuzzleFinish: number;
 declare var MagicPuzzleSize: number;
 declare var MagicPuzzleSpell: number;
 declare var MagicPuzzleAutoExit: boolean;
-declare var MagicPuzzleStarted: boolean;
+declare var MagicPuzzleCanStart: boolean;
 declare var MagicPuzzleTimer: number;
 declare var MagicPuzzleLastMouseX: number;
 declare var MagicPuzzleLastMouseY: number;

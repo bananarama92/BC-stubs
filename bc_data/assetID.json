@@ -17,7 +17,8 @@
     "BodyMarkings": {
         "id": 2,
         "assets": {
-            "WombTattoos": 0
+            "WombTattoos": 0,
+            "BodyWritings": 1
         }
     },
     "BodyUpper": {
@@ -95,7 +96,8 @@
             "LaceBands": 3,
             "LesBand": 4,
             "SpikeBands": 5,
-            "Wristband": 6
+            "Wristband": 6,
+            "WristWatch": 7
         }
     },
     "Cloth": {
@@ -178,7 +180,8 @@
             "VirginKiller1": 74,
             "WeddingDress1": 75,
             "WeddingDress2": 76,
-            "Yukata1": 77
+            "Yukata1": 77,
+            "CustomTShirt": 78
         }
     },
     "ClothAccessory": {
@@ -208,7 +211,8 @@
             "StudentOutfit3Bow3": 21,
             "StudentOutfit3Scarf": 22,
             "WombTattoos": 23,
-            "ZipperBelt": 24
+            "ZipperBelt": 24,
+            "BodyWritings": 25
         }
     },
     "ClothLower": {
@@ -591,7 +595,12 @@
             "HairBack8": 74,
             "HairBack9": 75,
             "HairBack9b": 76,
-            "HairNone": 77
+            "HairNone": 77,
+            "HairBack58": 78,
+            "HairBack58b": 79,
+            "HairBack59": 80,
+            "HairBack60": 81,
+            "HairBack61": 82
         }
     },
     "HairFront": {
@@ -683,7 +692,10 @@
             "HairFront8": 83,
             "HairFront8b": 84,
             "HairFront9": 85,
-            "HairFront9b": 86
+            "HairFront9b": 86,
+            "HairFront54": 87,
+            "HairFront55": 88,
+            "HairFront56": 89
         }
     },
     "Hands": {
@@ -851,7 +863,8 @@
             "WrappedBlanket": 71,
             "WristShackles": 72,
             "Yoke": 73,
-            "Zipties": 74
+            "Zipties": 74,
+            "CollarMetalcuffs": 75
         }
     },
     "ItemBoots": {
@@ -879,7 +892,8 @@
             "ToeCuffs": 19,
             "ToeTape": 20,
             "ToeTie": 21,
-            "Zipties": 22
+            "Zipties": 22,
+            "TormentHeels": 23
         }
     },
     "ItemBreast": {
@@ -1130,7 +1144,8 @@
             "PawMittens": 7,
             "PolishedMittens": 8,
             "PonyMittensBinder": 9,
-            "SmoothLeatherMittens1": 10
+            "SmoothLeatherMittens1": 10,
+            "ElbowLengthMittens": 11
         }
     },
     "ItemHead": {
@@ -1253,7 +1268,8 @@
             "Slime": 19,
             "SturdyLeatherBelts": 20,
             "Tentacles": 21,
-            "Zipties": 22
+            "Zipties": 22,
+            "FrogtieMetalCuffs": 23
         }
     },
     "ItemMisc": {
@@ -1457,7 +1473,33 @@
             "Tentacles": 58,
             "WebGag": 59,
             "WiffleGag": 60,
-            "XLBoneGag": 61
+            "XLBoneGag": 61,
+            "Ball": 62,
+            "BambooGag": 63,
+            "BigMouth": 64,
+            "CaneGag": 65,
+            "ChopstickGag": 66,
+            "ClothStuffing": 67,
+            "CropGag": 68,
+            "DeepthroatGag": 69,
+            "DentalGag": 70,
+            "DildoPlugGag": 71,
+            "DogMuzzleExposed": 72,
+            "FunnelGag": 73,
+            "HookGagMask": 74,
+            "LargeDildo": 75,
+            "LatexSheathGag": 76,
+            "MilkBottle": 77,
+            "OTNPlugGag": 78,
+            "PacifierGag": 79,
+            "PantyStuffing": 80,
+            "PlugGag": 81,
+            "PumpGag": 82,
+            "RegularSleepingPill": 83,
+            "SockStuffing": 84,
+            "TechnoGag": 85,
+            "TonguePiercingGag": 86,
+            "TongueStrapGag": 87
         }
     },
     "ItemMouth3": {
@@ -1524,7 +1566,33 @@
             "Tentacles": 58,
             "WebGag": 59,
             "WiffleGag": 60,
-            "XLBoneGag": 61
+            "XLBoneGag": 61,
+            "Ball": 62,
+            "BambooGag": 63,
+            "BigMouth": 64,
+            "CaneGag": 65,
+            "ChopstickGag": 66,
+            "ClothStuffing": 67,
+            "CropGag": 68,
+            "DeepthroatGag": 69,
+            "DentalGag": 70,
+            "DildoPlugGag": 71,
+            "DogMuzzleExposed": 72,
+            "FunnelGag": 73,
+            "HookGagMask": 74,
+            "LargeDildo": 75,
+            "LatexSheathGag": 76,
+            "MilkBottle": 77,
+            "OTNPlugGag": 78,
+            "PacifierGag": 79,
+            "PantyStuffing": 80,
+            "PlugGag": 81,
+            "PumpGag": 82,
+            "RegularSleepingPill": 83,
+            "SockStuffing": 84,
+            "TechnoGag": 85,
+            "TonguePiercingGag": 86,
+            "TongueStrapGag": 87
         }
     },
     "ItemNeck": {
@@ -1807,7 +1875,8 @@
             "VibratingLatexPanties": 26,
             "VibratorRemote": 27,
             "WandBelt": 28,
-            "WiredEgg": 29
+            "WiredEgg": 29,
+            "FullCasingCage": 30
         }
     },
     "ItemVulvaPiercings": {
@@ -1825,7 +1894,8 @@
             "TapedClitEgg": 9,
             "UrethralSound": 10,
             "VibeEggGlans": 11,
-            "VibeHeartClitPiercing": 12
+            "VibeHeartClitPiercing": 12,
+            "CockRingLeash": 13
         }
     },
     "Jewelry": {
