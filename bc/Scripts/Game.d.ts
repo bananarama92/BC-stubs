@@ -1,9 +1,26 @@
 declare function GameStart(): void;
+declare function GameHandleError(): void;
+/**
+ * Callback to requestAnimationFrame.
+ * @param {number} Timestamp
+ * @returns {void}
+ */
+declare function GameAnimationFrame(Timestamp: number): void;
+/**
+ * Periodically called in the background with low frequency, so the game doesn't freeze, even if the user switches to a different tab.
+ * @returns {void}
+ */
+declare function GameFallbackTimer(): void;
 /**
  * Main game running state, runs the drawing
  * @param {number} Timestamp
  */
-declare function GameRun(Timestamp: number): void;
+declare function GameRunNormal(Timestamp: number): void;
+/**
+ * Main game running state, when in the background. Skips drawing if possible.
+ * @param {number} Timestamp
+ */
+declare function GameRunBackground(Timestamp: number): void;
 /**
  * When the user presses a key, we send the KeyDown event to the current screen if it can accept it
  * @param {KeyboardEvent} event
@@ -54,14 +71,16 @@ declare function GameMouseLeave(event: MouseEvent): void;
 /** @deprecated */
 declare function KeyDown(event: any): void;
 /** @deprecated */
-declare function MainRun(Timestamp: any): void;
-/** @deprecated */
 declare function Click(event: any): void;
 /** @deprecated */
 declare function LoseFocus(event: any): void;
 /** BC's version */
 declare var GameVersion: string;
 declare const GameVersionFormat: RegExp;
+/** @type {number | null} */
+declare var GameAnimationFrameId: number | null;
+/** @type {Worker | null} */
+declare var GameWorker: Worker | null;
 declare var CommonVersionUpdated: boolean;
 /** @type {TouchList | null} */
 declare var CommonTouchList: TouchList | null;

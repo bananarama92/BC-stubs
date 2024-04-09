@@ -280,6 +280,16 @@ declare function ManagementCannotBeClubSlaveLoverLock(): boolean;
  */
 declare function ManagementCannotBeClubSlaveFamilyLock(): boolean;
 /**
+ * Checks if the player can complete her contract and is not kneeling
+ * @returns  {boolean} - TRUE if both the Player can complete her contract but is not kneeling
+ */
+declare function ManagementCompleteContract(): boolean;
+/**
+ * Checks if the player can complete her contract and is kneeling
+ * @returns  {boolean} - TRUE if both the Player can complete her contract and is kneeling
+ */
+declare function ManagementKneelingCompleteContract(): boolean;
+/**
  * Checks if the player can kiss the current NPC.
  * @returns {boolean} - TRUE if both the NPC and the player can talk.
  */

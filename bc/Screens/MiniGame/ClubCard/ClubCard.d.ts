@@ -185,6 +185,14 @@ declare function ClubCardAddPlayer(Char: Character, Cont: string, Cards: any[]):
  */
 declare function ClubCardGetReward(): void;
 /**
+ * Runs the before/after turn end handlers
+ * @param {ClubCardPlayer} CCPlayer - The player whose turn is ending
+ * @param {ClubCardPlayer} Opponent - The other player
+ * @param {boolean} Before - true to run BeforeTurnEnd handlers, false to run AfterEndTurn handlers
+ * @returns {void}
+  */
+declare function ClubCardRunTurnEndHandlers(CCPlayer: ClubCardPlayer, Opponent: ClubCardPlayer, Before: boolean): void;
+/**
  * When a turn ends, we move to the next player
  * @param {boolean|null} Draw - If the end of turn was triggered by a draw
  * @returns {void} - Nothing
@@ -388,5 +396,17 @@ declare var ClubCardLevelCost: number[];
 declare var ClubCardPlayer: ClubCardPlayer[];
 declare var ClubCardOnlinePlayerMemberNumber1: number;
 declare var ClubCardOnlinePlayerMemberNumber2: number;
-/** @type {ClubCard[]} */
+/**
+ * The card definitions
+ *
+ * The BeforeTurnEnd hooks are run before regular fame and money are calculated and
+ * are a good place to remove cards so they don't add fame/money that turn. Most
+ * cards should prefer this hook instead of AfterTurnEnd (including ones that just
+ * add extra money / fame).
+ *
+ * The AfterTurnEnd hooks run after this, and can be used to adjust the total amount
+ * of money / fame gained that turn.
+ *
+ * @type {ClubCard[]}
+ */
 declare var ClubCardList: ClubCard[];

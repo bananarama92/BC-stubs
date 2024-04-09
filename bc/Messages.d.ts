@@ -212,11 +212,7 @@ type ServerChatRoomData = {
 	Language: ServerChatRoomLanguage;
 	Space: ServerChatRoomSpace;
 	MapData?: ServerChatRoomMapData;
-	Custom: {
-		ImageURL?: string;
-		ImageFilter?: string;
-		MusicURL?: string;
-	};
+	Custom: ServerChatRoomCustomData;
 	Character: ServerAccountDataSynced[];
 }
 

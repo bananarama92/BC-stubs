@@ -48,7 +48,7 @@ declare function WheelFortuneLoad(): void;
  * Draws the full lucky wheel
  * @returns {void} - Nothing
  */
-declare function WheelFortuneDraw(FullWheel: any, Pos: any, MaxPos: any, X: any, Y: any, Zoom: any): void;
+declare function WheelFortuneDrawWheel(FullWheel: any, Pos: any, MaxPos: any, X: any, Y: any, Zoom: any): void;
 /**
  * Runs the lucky wheel mini game
  * @returns {void} - Nothing

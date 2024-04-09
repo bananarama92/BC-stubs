@@ -32,6 +32,3 @@ declare var RelogData: null | {
     Module: ModuleType;
     Character: Character;
 };
-/** @type {HTMLDivElement | null} */
-declare var RelogChatLog: HTMLDivElement | null;
-declare var RelogInputText: string;

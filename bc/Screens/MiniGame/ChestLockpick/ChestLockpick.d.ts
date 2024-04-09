@@ -9,6 +9,11 @@ declare function ChestLockpickLoad(): void;
  */
 declare function ChestLockpickRun(): void;
 /**
+ * Handles mouse down during the mini game
+ * @returns {void} - Nothing
+ */
+declare function ChestLockpickMouseDown(): void;
+/**
  * Handles clicks during the mini game
  * @returns {void} - Nothing
  */

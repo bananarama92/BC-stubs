@@ -616,6 +616,12 @@ declare function ChatRoomSendLocal(Content: string, Timeout?: number): void;
  */
 declare function ChatRoomSendEmote(msg: string): void;
 /**
+ * Sends message as attempt emote. Emote can be failed or succeeded.
+ * @param {string} msg - Emote message
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomSendAttemptEmote(msg: string): void;
+/**
  * Publishes common player actions (add, remove, swap) to the rest of the chatroom.
  *
  * Note that this will *not* update the server database,
@@ -1222,6 +1228,7 @@ declare function ChatRoomDataChanged(): boolean;
 declare function ChatRoomRefreshFontSize(): void;
 /**
  * Checks if the message can be sent as chat or the player should be warned
+ * @deprecated No replacement; OOC should always be allowed through
  * @param {string} Message - User input
  * @param {Character} WhisperTarget
  * @returns {boolean}
@@ -1353,6 +1360,7 @@ declare var ChatRoomTargetDirty: boolean;
 declare var ChatRoomCustomized: boolean;
 declare var ChatRoomCustomBackground: string;
 declare var ChatRoomCustomFilter: string;
+declare var ChatRoomCustomSizeMode: any;
 /**
  * The list of chat room views
  * @type {Record<string, ChatRoomView>}

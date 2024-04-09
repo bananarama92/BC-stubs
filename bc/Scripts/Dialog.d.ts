@@ -449,9 +449,10 @@ declare function DialogInventorySort(): void;
  * Returns TRUE if the crafted item can be used on a character, validates for owners and lovers
  * @param {Character} C - The character whose inventory must be built
  * @param {CraftingItem} Craft - The crafting properties of the item
+ * @param {Asset} A - The items asset
  * @returns {Boolean} - TRUE if we can use it
  */
-declare function DialogCanUseCraftedItem(C: Character, Craft: CraftingItem): boolean;
+declare function DialogCanUseCraftedItem(C: Character, Craft: CraftingItem, A: Asset): boolean;
 /**
  * Returns TRUE if the player can use owner locks on the target character
  * @param {Character} target - The target to (potentially) lock
@@ -851,6 +852,7 @@ declare function DialogActualNameForGroup(C: Character, G: AssetGroup): string;
 declare function DialogStruggleStart(C: Character, Action: DialogStruggleActionType, PrevItem: Item, NextItem: Item): void;
 declare function DialogStruggleStop(character: Character, game: StruggleKnownMinigames, data: StruggleCompletionData): void;
 declare function DialogKeyDown(event: KeyboardEvent): boolean;
+declare function DialogMouseDown(event: MouseEvent | TouchEvent): void;
 declare var DialogText: string;
 declare var DialogTextDefault: string;
 declare var DialogTextDefaultTimer: number;

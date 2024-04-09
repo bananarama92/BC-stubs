@@ -206,7 +206,7 @@ type EffectName =
 	"CuffedFeet" | "CuffedLegs" | "CuffedArms" | "IsChained" | "FixedHead" | "MergedFingers" |
 	"Shackled" | "Tethered" | "MapImmobile" | "Enclose" | "OneWayEnclose" | "OnBed" | "Lifted" | "Suspended" |
 	"Slow" | "FillVulva" | "VulvaShaft" | "IsPlugged" |
-	"Egged" | "Vibrating" |
+	"Egged" | "Vibrating" | "ForcedErection" |
 	"Edged" | "DenialMode" | "RuinOrgasms" |
 	"Remote" | "UseRemote" | "BlockRemotes" |
 	"Lock" | "NotSelfPickable" |
@@ -309,7 +309,7 @@ type AssetLockType =
 type CraftingPropertyType =
 	"Normal" | "Large" | "Small" | "Thick" | "Thin" | "Secure" | "Loose" | "Decoy" |
 	"Malleable" | "Rigid" | "Simple" | "Puzzling" | "Painful" | "Comfy" | "Strong" |
-	"Flexible" | "Nimble" | "Arousing" | "Dull"
+	"Flexible" | "Nimble" | "Arousing" | "Dull" | "Heavy" | "Light"
 	;
 
 type AssetAttribute =
@@ -326,10 +326,10 @@ type PosePrerequisite = `Can${AssetPoseName}`;
 
 type AssetPrerequisite =
 	PosePrerequisite | "AccessBreast" | "AccessBreastSuitZip" | "AccessButt" | "AccessFullPenis" | "AccessMouth" | "AccessTorso" | "AccessVulva" | "AccessCrotch" |
-	"BlockedMouth" | "ButtEmpty" | "CanBeCeilingTethered" | "CanCoverVulva" | "CanHaveErection" | "CanKneel" | "CannotBeSuited" | "CannotHaveWand" |
+	"BlockedMouth" | "ButtEmpty" | "CanBeCeilingTethered" | "CanCoverVulva" | "CanHaveErection" | "CanBeLimp" | "CanKneel" | "CannotBeSuited" | "CannotHaveWand" |
 	"ClitEmpty" | "Collared" | "CuffedArms" | "CuffedArmsOrEmpty" | "CuffedFeet" | "CuffedFeetOrEmpty" | "CuffedLegs" | "CuffedLegsOrEmpty" |
 	"DisplayFrame" | "EyesEmpty" | "GagCorset" | "GagFlat" | "GagUnique" | "GasMask" | "HasBreasts" | "HasFlatChest" | "HasPenis" | "HasVagina" |
-	"HoodEmpty" | "NakedFeet" | "NakedHands" | "NeedsHarness" | "NeedsNippleRings" | "NoChastityCage" | "NoClothLower" | "NoItemArms" |
+	"HoodEmpty" | "NakedFeet" | "NakedHands" | "NeedsHarness" | "NeedsNippleRings" | "NoChastityCage" | "NoErection" | "NoClothLower" | "NoItemArms" |
 	"NoItemFeet" | "NoItemHands" | "NoItemLegs" | "NoMaidTray" | "NoOuterClothes" | "NotChained" | "NotChaste" | "NotKneeling" |
 	"NotLifted" | "NotMasked" | "NotMounted" | "NotProtrudingFromMouth" | "NotSuspended" | "OnBed" |
 	"RemotesAllowed" | "VulvaEmpty"
@@ -368,6 +368,7 @@ type ArousalAffectStutterName = "None" | "Arousal" | "Vibration" | "All";
  * @see {@link CommonKeyMove}
  */
 type KeyboardEventListener = (event: KeyboardEvent) => boolean;
+type MouseEventListener = ScreenFunctions["MouseDown"];
 
 type SettingsSensDepName = "SensDepLight" | "Normal" | "SensDepNames" | "SensDepTotal" | "SensDepExtreme";
 type SettingsVFXName = "VFXInactive" | "VFXSolid" | "VFXAnimatedTemp" | "VFXAnimated";
@@ -398,16 +399,17 @@ type BackgroundTag =
 
 // NOTE: `NPCArchetype` is for NPC's only
 type TitleName =
-	NPCArchetype | "None" | "Mistress" | "ClubSlave" | "Maid" | "HeadMaid" | "BondageMaid" | "Kidnapper" |
+	NPCArchetype | "None" | "Mistress" | "Master" | "Mistree" | "ClubSlave" | "Maid" | "HeadMaid" | "BondageMaid" | "Kidnapper" |
 	"MasterKidnapper" | "Patient" | "PermanentPatient" | "EscapedPatient" | "Nurse" | "Doctor" |
-	"LadyLuck" | "Patron" | "CollegeStudent" |"Nawashi" | "Houdini" | "PonyAlicorn" |
+	"LadyLuck" | "LordFortune" | "Patron" | "CollegeStudent" |"Nawashi" | "Houdini" | "PonyAlicorn" |
 	"PonyPegasus" | "PonyUnicorn" | "PonyWild" | "PonyHot" | "PonyWarm" | "PonyCold" | "PonyFarm" |
 	"PonyFoal" | "InfilrationMole" | "InfilrationInfiltrator" | "InfilrationAgent" |
 	"InfilrationOperative" | "InfilrationSuperspy" | "MagicSchoolWizard" | "MagicSchoolMagus" |
 	"MagicSchoolMagician" | "MagicSchoolSorcerer" | "MagicSchoolSage" | "MagicSchoolOracle" |
-	"MagicSchoolWitch" | "MagicSchoolWarlock" | "Duchess" | "LittleOne" | "Baby" | "DL" |
-	"BondageBaby" | "Switch" | "Kitten" | "Puppy" | "Foxy" | "Bunny" | "Doll" | "Demon" | "Angel" |
-	"Succubus" | "GoodGirl" | "GoodSlaveGirl" | "GoodSlave" | "Drone"
+	"MagicSchoolWitch" | "MagicSchoolWarlock" | "Duchess" | "Duke" | "LittleOne" | "Baby" | "DL" |
+	"BondageBaby" | "Switch" | "Princess" |	"Prince" | "Liege" | "Majesty" | "Missy" | "Sissy" | "Tomboy" | "Femboy" | "GoodOne" |
+	"Pet" |	"Brat" | "Kitten" | "Puppy" | "Foxy" | "Bunny" | "Doll" | "Demon" | "Angel" | "Alien" | "Captain" |
+	"Succubus" | "Incubus" | "Concubus" | "GoodGirl" | "GoodBoy" | "GoodSlaveGirl" | "GoodSlaveBoy" | "GoodSlave" | "Drone"
 	;
 
 type MagicSchoolHouse = "Maiestas" | "Vincula" | "Amplector" | "Corporis";
@@ -647,6 +649,7 @@ interface AssetGroup {
 
 	readonly MirrorActivitiesFrom?: AssetGroupItemName;
 	readonly ArousalZone?: AssetGroupItemName;
+	readonly ArousalZoneID?: number;
 
 	/** A dict mapping colors to custom filename suffices.
 	The "HEX_COLOR" key is special-cased to apply to all color hex codes. */
@@ -1113,6 +1116,8 @@ interface ScreenFunctions {
 	Load?(): void;
 	/** Called when this screen is being replaced */
 	Unload?(): void;
+	/** Called each frame when the screen needs to be drawn. */
+	Draw?() : void;
 	/**
 	 * Called when screen size or position changes or after screen load
 	 * @param {boolean} load - If the reason for call was load (`true`) or window resize (`false`)
@@ -1637,6 +1642,7 @@ interface GenderSetting {
 interface GenderSettingsType {
 	HideShopItems: GenderSetting;
 	AutoJoinSearch: GenderSetting;
+	HideTitles: GenderSetting;
 }
 
 interface NotificationSettingsType {
@@ -1684,10 +1690,12 @@ interface RestrictionSettingsType {
 	BypassStruggle: boolean;
 	SlowImmunity: boolean;
 	BypassNPCPunishments: boolean;
+	NoSpeechGarble: boolean;
 }
 
 interface ImmersionSettingsType {
-	BlockGaggedOOC: boolean;
+	/** @deprecated Removed as it prevents players from having the possibility of using OOC to discuss the scene */
+	BlockGaggedOOC: never;
 	StimulationEvents: boolean;
 	ReturnToChatRoom: boolean;
 	ReturnToChatRoomAdmin: boolean;
@@ -1738,6 +1746,8 @@ interface ChatSettingsType {
 	SearchShowsFullRooms?: any;
 	CensoredWordsList: string;
 	CensoredWordsLevel: number;
+	/** Whether to preserve the chat log when switching rooms */
+	PreserveChat: boolean;
 }
 
 interface GameplaySettingsType {
@@ -2355,7 +2365,9 @@ interface AssetDefinitionProperties {
 	 */
 	OverridePriority?: AssetLayerOverridePriority;
 	/**
-	 * The default color of the item
+	 * The default color of the item.
+	 * Used by extended items that need one of their layers to have a different per-type default color
+	 * FIXME: That should be hoisted in the extended config, since it's set by the definition and {@link Item.Color} should be the actual colors used
 	 * @see {@link Asset.DefaultColor}
 	 */
 	DefaultColor?: ItemColor;
@@ -3516,8 +3528,14 @@ interface CraftingItemSelected {
 	Description: string;
 	/** The comma-separated color(s) of the item. */
 	Color: string;
-	/** The name of the crafted item. */
-	Asset: Asset | null;
+	/** The names of the crafted item's supported assets. */
+	Assets: readonly Asset[];
+	/**
+	 * The first member of the {@link CraftingItemSelected.Assets} array.
+	 *
+	 * The asset is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
+	 */
+	get Asset(): Asset | undefined;
 	/** The crafted item propery. */
 	Property: CraftingPropertyType;
 	/** The lock as equiped on the item or, if absent, `null`. */
@@ -3547,8 +3565,8 @@ interface CraftingItemSelected {
  * @property {CraftingStatusType} - The {@link CraftingStatusType} code for when the validation fails
  */
 interface CratingValidationStruct {
-	Validate: (Craft: CraftingItem, Asset: Asset | null) => boolean;
-	GetDefault: (Craft: CraftingItem, Asset: Asset | null) => any;
+	Validate: (craft: CraftingItem, asset: Asset | null, checkPlayerInventory?: boolean) => boolean;
+	GetDefault: (craft: CraftingItem, asset: Asset | null, checkPlayerInventory?: boolean) => any;
 	StatusCode: CraftingStatusType;
 }
 
@@ -3805,7 +3823,8 @@ interface ArousalSettingsType {
 	VibratorLevel: 0 | 1 | 2 | 3 | 4;
 	ChangeTime: number;
 	Activity: ActivityEnjoyment[];
-	Zone: ArousalZone[];
+	//Zone: ArousalZone[];
+	Zone: string;
 	Fetish: ArousalFetish[];
 	OrgasmTimer?: number;
 	OrgasmStage?: 0 | 1 | 2;
@@ -3920,8 +3939,10 @@ interface ClubCard {
 	GlowTimer?: number;
 	GlowColor?: string;
 	OnPlay?: (C: ClubCardPlayer) => void;
-	OnTurnEnd?: (C: ClubCardPlayer) => void;
-	OnOpponentTurnEnd?: (C: ClubCardPlayer) => void;
+	BeforeTurnEnd?: (C: ClubCardPlayer) => void;
+	AfterTurnEnd?: (C: ClubCardPlayer) => void;
+	BeforeOpponentTurnEnd?: (C: ClubCardPlayer) => void;
+	AfterOpponentTurnEnd?: (C: ClubCardPlayer) => void;
 	CanPlay?: (C: ClubCardPlayer) => boolean;
 }
 
@@ -4016,6 +4037,7 @@ type ChatRoomMapObjectType = (
 	"FloorDecoration"
 	| "FloorDecorationThemed"
 	| "FloorDecorationParty"
+	| "FloorDecorationCamping"
 	| "FloorItem"
 	| "FloorObstacle"
 	| "WallDecoration"
@@ -4112,3 +4134,7 @@ declare const CharacterLoadPose: never;
 declare const AssetPoseToMapping: never;
 /** @deprecated superseded by {@link InventoryPrerequisiteConflicts.GagPrerequisite} */
 declare const InventoryPrerequisiteConflictingGags: never;
+/** @deprecated the chat log is now hidden via {@link ChatRoomHideElements}; use {@link ChatRoomShowElements} to unhide it */
+declare const RelogChatLog: never;
+/** @deprecated the chat log is now hidden via {@link ChatRoomHideElements}; use {@link ChatRoomShowElements} to unhide it */
+declare const RelogInputText: never;

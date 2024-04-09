@@ -77,26 +77,19 @@ declare function isChineseCharacter(character: string): boolean;
  */
 declare function doChineseGarbling(character: string, gagLevel: number): string;
 /**
- * A helper method to check if the character parsed in is one of the following: ' .?!~-。？！，'
- * Note: last 4 punctuations are commonly used in CJK languages.
+ * Return whether the passed character belongs to either the unicode Symbol, Punctuation or Separator category.
  * @param {string} character - The character needs to be checked.
- * @returns {boolean} - true if containing one of the following: ' .?!~-', otherwise false.
+ * @returns {boolean} - Whether the passed character is equivalent to one of aforementioned punctuation characters
  */
-declare function isStandardPunctuationOrSpace(character: string): boolean;
-/**
- * A helper method to check if the character parsed in is one of the following: ' .?!~-_'"。？！，'
- * This one was created for lower gag levels or baby talk. So any and all punction can be added to it.
- * @param {string} character - The character needs to be checked.
- * @returns {boolean} - true if containing one of the following: ' .?!~-_'"。？！，', otherwise false.
- */
-declare function isAnyPunctuationOrSpace(character: string): boolean;
+declare function isPunctuationOrSpace(character: string): boolean;
 /**
  * Helper method to strip diacritics from characters.
  * @param {string} character - character that needs to be stripped.
  * @param {Number} gagEffect - The current gag effect level.
+ * @param {boolean} capitalize - Whether to returned character should be capitalized or not
  * @returns {string} - character that being stripped after garbling.
  */
-declare function stripDiacriticsFromCharacter(character: string, gagEffect: number): string;
+declare function stripDiacriticsFromCharacter(character: string, gagEffect: number, capitalize: boolean): string;
 /**
  * check if the character is one of the following: áàãâéèêíìîõóòôúùûñç
  * @param {string} character - The character needs to be checked.
