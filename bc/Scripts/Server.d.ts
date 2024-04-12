@@ -246,6 +246,14 @@ declare var ServerAccountUpdate: {
      */
     QueueData(Data: ServerAccountUpdateRequest, Force?: boolean): void;
 };
+declare namespace ServerPlayerChatRoom {
+    let callbacks: ((screen: string) => boolean)[];
+    /**
+     * Register one or more screenname and/or callback for determining whether the player is in a chat room.
+     * @param {ServerChatRoomChecksOptions[]} options
+     */
+    function register(...options: ServerChatRoomChecksOptions[]): void;
+}
 /** Ratelimit: Max number of messages per interval */
 declare var ServerSendRateLimit: number;
 /** Ratelimit: Length of the rate-limit window, in msec */
@@ -328,6 +336,10 @@ declare namespace ServerAccountDataSyncedValidate {
  * for appearance items.
  */
 type AppearanceDiffMap = Partial<Record<AssetGroupName, Item[]>>;
+type ServerChatRoomChecksOptions = {
+    screen?: string;
+    callback?: () => boolean;
+};
 /**
  * Queued messages waiting to be sent
  */
