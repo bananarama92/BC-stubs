@@ -26,7 +26,18 @@ declare function StruggleProgressGetOperation(C: Character, PrevItem: Item, Next
  * @returns {boolean} - TRUE if it's allowed
  */
 declare function StruggleAllowLoosen(): boolean;
-declare function StruggleKeyDown(event: KeyboardEvent): boolean;
+declare function StruggleKeyDown(event: KeyboardEvent): boolean; /**
+ * Starts the given struggle minigame.
+ *
+ * This function initializes the common state and calls the requested minigame
+ * setup function.
+ *
+ * @param {Character} C - The character currently doing the struggling, either on itself (ie. as Player), or on someone else.
+ * @param {StruggleKnownMinigames} MiniGame - The minigame to start
+ * @param {Item | null} PrevItem - The item currently being present on the character, or null if none
+ * @param {Item} NextItem - The item currently being added on the character, or null if it's a removal
+ * @param {StruggleCompletionCallback} Completion - A callback that will be called when the minigame ends
+ */
 declare function StruggleMouseDown(event: MouseEvent | TouchEvent): void;
 /**
  * Handles the minigames' Click event, whether on the selection screen or in the minigame themselves.

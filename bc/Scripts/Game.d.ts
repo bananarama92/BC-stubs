@@ -80,4 +80,5 @@ declare var GameWorker: Worker | null;
 declare var CommonVersionUpdated: boolean;
 /** @type {TouchList | null} */
 declare var CommonTouchList: TouchList | null;
+declare const DEFAULT_FRAMERATE: 60;
 declare var GameMouseIsDown: boolean;
