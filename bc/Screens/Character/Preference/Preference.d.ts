@@ -651,6 +651,7 @@ declare var PreferenceGraphicsPowerModeIndex: null | number;
 /** @type {null | WebGLContextAttributes} */
 declare var PreferenceGraphicsWebGLOptions: null | WebGLContextAttributes;
 declare var PreferenceGraphicsAnimationQualityList: number[];
+declare var PreferenceGraphicsFrameLimit: number[];
 /** @type {string[]} */
 declare var PreferenceCensoredWordsList: string[];
 declare var PreferenceCensoredWordsOffset: number;

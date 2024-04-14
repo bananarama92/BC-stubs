@@ -1684,6 +1684,9 @@ interface GraphicsSettingsType {
 	SmoothZoom: boolean;
 	CenterChatrooms: boolean;
 	AllowBlur: boolean;
+	ShowFPS: boolean;
+	/** 0 means unlimited */
+	MaxFPS: number;
 }
 
 interface RestrictionSettingsType {
