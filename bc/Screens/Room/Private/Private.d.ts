@@ -561,11 +561,6 @@ declare function PrivateShowTrialHours(): void;
  */
 declare function PrivateActivityRun(LoveFactor: number): void;
 /**
- * Checks if the player is owned. (In general)
- * @returns {boolean} - Returns TRUE if the player has an owner.
- */
-declare function PrivatePlayerIsOwned(): boolean;
-/**
  * Checks if an NPC in the private room can be restrained by another.
  * @returns {boolean} - Returns TRUE if someone else in the room can be restrained by the player's owner, keep that target in a variable to be used later
  */

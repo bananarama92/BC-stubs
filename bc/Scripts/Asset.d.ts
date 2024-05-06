@@ -193,6 +193,12 @@ declare function AssetLayerSort(layers: AssetLayer[]): AssetLayer[];
  * @returns {string[]} See {@link Asset.DefaultColor}
  */
 declare function AssetParseDefaultColor(colorableLayerCount: number, fillValue: string, color?: string | readonly string[]): string[];
+/**
+ * Get the translated string for an asset-specific message
+ * @param {string} msg
+ * @returns {string}
+ */
+declare function AssetTextGet(msg: string): string;
 /** @type {Asset[]} */
 declare var Asset: Asset[];
 /** @type {AssetGroup[]} */
@@ -243,4 +249,5 @@ declare namespace AssetResolveCopyConfig {
     export { AssetDefinition_1 as AssetDefinition };
     export function ExtendedItemConfig(asset: Asset, config: AssetArchetypeConfig, extendedConfig: Partial<Record<AssetGroupName, ExtendedItemGroupConfig>>): AssetArchetypeConfig;
 }
+declare const AssetStringsPath: "Assets/Female3DCG/AssetStrings.csv";
 type AssetCopyConfigValidator<T> = (config: T, superConfig: T, key: string, superKey: string) => boolean;

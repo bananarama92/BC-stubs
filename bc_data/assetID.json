@@ -84,7 +84,8 @@
             "StuddedHarness": 46,
             "Swimsuit1": 47,
             "Swimsuit2": 48,
-            "Swimsuit3": 49
+            "Swimsuit3": 49,
+            "LeatherVestSuit": 50
         }
     },
     "Bracelet": {
@@ -181,7 +182,9 @@
             "WeddingDress1": 75,
             "WeddingDress2": 76,
             "Yukata1": 77,
-            "CustomTShirt": 78
+            "CustomTShirt": 78,
+            "NunRobes": 79,
+            "YuletideVelvetWarmth": 80
         }
     },
     "ClothAccessory": {
@@ -212,7 +215,8 @@
             "StudentOutfit3Scarf": 22,
             "WombTattoos": 23,
             "ZipperBelt": 24,
-            "BodyWritings": 25
+            "BodyWritings": 25,
+            "BowBackAccessory": 26
         }
     },
     "ClothLower": {
@@ -464,7 +468,10 @@
             "UnicornHorn": 35,
             "WeddingVeil1": 36,
             "WolfEars1": 37,
-            "WolfEars2": 38
+            "WolfEars2": 38,
+            "CowEars": 39,
+            "Horns4": 40,
+            "Horns5": 41
         }
     },
     "HairAccessory2": {
@@ -496,7 +503,10 @@
             "SuccubusHorns": 23,
             "UnicornHorn": 24,
             "WolfEars1": 25,
-            "WolfEars2": 26
+            "WolfEars2": 26,
+            "CowEars": 27,
+            "Horns4": 28,
+            "Horns5": 29
         }
     },
     "HairAccessory3": {
@@ -600,7 +610,9 @@
             "HairBack58b": 79,
             "HairBack59": 80,
             "HairBack60": 81,
-            "HairBack61": 82
+            "HairBack61": 82,
+            "HairBack62": 83,
+            "HairBack63": 84
         }
     },
     "HairFront": {
@@ -695,7 +707,8 @@
             "HairFront9b": 86,
             "HairFront54": 87,
             "HairFront55": 88,
-            "HairFront56": 89
+            "HairFront56": 89,
+            "HairFront57": 90
         }
     },
     "Hands": {
@@ -747,7 +760,8 @@
             "Tiara1": 37,
             "Veil1": 38,
             "Veil2": 39,
-            "WitchHat1": 40
+            "WitchHat1": 40,
+            "NunVeil": 41
         }
     },
     "Head": {
@@ -893,7 +907,8 @@
             "ToeTape": 20,
             "ToeTie": 21,
             "Zipties": 22,
-            "TormentHeels": 23
+            "TormentHeels": 23,
+            "StrictPonyBoots": 24
         }
     },
     "ItemBreast": {
@@ -1240,7 +1255,9 @@
             "SpaceMask": 47,
             "TechnoHelmet1": 48,
             "VacHood": 49,
-            "ZipperHood": 50
+            "ZipperHood": 50,
+            "Fu": 51,
+            "Paperbag": 52
         }
     },
     "ItemLegs": {
@@ -1876,7 +1893,8 @@
             "VibratorRemote": 27,
             "WandBelt": 28,
             "WiredEgg": 29,
-            "FullCasingCage": 30
+            "FullCasingCage": 30,
+            "LatexNulge": 31
         }
     },
     "ItemVulvaPiercings": {
@@ -2120,7 +2138,8 @@
             "ThighBoots": 34,
             "ThighHighLatexHeels": 35,
             "WesternBoots": 36,
-            "WoollyBootsTall": 37
+            "WoollyBootsTall": 37,
+            "StrictPonyBoots": 38
         }
     },
     "Socks": {
@@ -2149,7 +2168,8 @@
             "Stockings2": 20,
             "Stockings3": 21,
             "Stockings4": 22,
-            "VSocks1": 23
+            "VSocks1": 23,
+            "YuletideVelvetWarmth": 24
         }
     },
     "SocksLeft": {
@@ -2270,7 +2290,9 @@
             "Tentacles": 21,
             "WolfTailStrap1": 22,
             "WolfTailStrap2": 23,
-            "WolfTailStrap3": 24
+            "WolfTailStrap3": 24,
+            "DragonTailStrap2Left": 25,
+            "DragonTailStrap2Right": 26
         }
     },
     "Wings": {

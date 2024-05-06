@@ -385,6 +385,12 @@ declare function PlatformHasPerk(C: any, Perk: any): boolean;
  * @returns {boolean} - TRUE if active
  */
 declare function PlatformCooldownActive(Name: string): boolean;
+/**
+ * Sets Bondage Brawl in standalone mode, not requiring any login from BC
+ * @returns {void} - Nothing
+ */
+declare function PlatformRunStandalone(): void;
+declare var PlatformRunStandaloneMode: boolean;
 declare var PlatformChar: any[];
 declare var PlatformFocusCharacter: any;
 declare var PlatformPlayer: any;

@@ -517,9 +517,10 @@ declare function DialogDrawSavedExpressionsMenu(): void;
 declare function DialogClickSavedExpressionsMenu(): void;
 /**
  * Build the initial state of the pose menu
+ * @param {Character} [C] The character for whom {@link DialogActivePoses} whill be constructed; defaults to {@link CurrentCharacter}
  * @returns {void} - Nothing
  */
-declare function DialogLoadPoseMenu(): void;
+declare function DialogLoadPoseMenu(C?: Character): void;
 /**
  * Handles the Click events in the Dialog Screen
  * @returns {boolean} - Whether a button was clicked
@@ -739,6 +740,15 @@ declare function DialogSelfMenuDraw(C: Character): void;
  * @param {Character} C - The currently focused character
  */
 declare function DialogSelfMenuClick(C: Character): void;
+/**
+ * Draw the pagination buttons to the side of the inventory grid
+ */
+declare function DialogPaginateDraw(): void;
+/**
+ * Handle clicks of the pagination buttons
+ * @returns {boolean} - Whether a pgination button was clicked
+ */
+declare function DialogPaginateClick(): boolean;
 /**
  * Draws the initial Dialog screen.
  *

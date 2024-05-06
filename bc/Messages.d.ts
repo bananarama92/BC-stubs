@@ -184,7 +184,7 @@ interface ServerPrivateCharacterData {
 type ServerAppearanceBundle = ServerItemBundle[];
 
 type ServerChatRoomSpace = "X" | "" | "M" | "Asylum";
-type ServerChatRoomLanguage = "EN" | "DE" | "FR" | "ES" | "CN" | "RU";
+type ServerChatRoomLanguage = "EN" | "DE" | "FR" | "ES" | "CN" | "RU" | "UA";
 type ServerChatRoomGame = "" | "ClubCard" | "LARP" | "MagicBattle" | "GGTS";
 type ServerChatRoomBlockCategory =
 	/** Those are known as AssetCategory to the client */
@@ -703,6 +703,17 @@ interface ActivityNameDictionaryEntry {
 	ActivityName: ActivityName;
 }
 
+/**
+ * A dictionary entry with metadata about the chat message transmitted.
+ *
+ * Send with Chat and Whisper-type messages to inform the other side about the
+ * garbling and potentially ungarbled string if provided.
+ */
+interface MessageEffectEntry {
+	Effects: SpeechTransformName[];
+	Original: string;
+}
+
 type ChatMessageDictionaryEntry =
 	| CharacterReferenceDictionaryEntry
 	| SourceCharacterDictionaryEntry
@@ -718,7 +729,8 @@ type ChatMessageDictionaryEntry =
 	| AutomaticEventDictionaryEntry
 	| ActivityCounterDictionaryEntry
 	| AssetGroupNameDictionaryEntry
-	| ActivityNameDictionaryEntry;
+	| ActivityNameDictionaryEntry
+	| MessageEffectEntry;
 
 type ChatMessageDictionary = ChatMessageDictionaryEntry[];
 

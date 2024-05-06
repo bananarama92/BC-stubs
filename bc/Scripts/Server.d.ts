@@ -285,9 +285,9 @@ declare namespace ServerAccountDataSyncedValidate {
         ProgressTimer: number;
         VibratorLevel: 0 | 2 | 1 | 3 | 4;
         ChangeTime: number;
-        Activity: ActivityEnjoyment[];
+        Activity: string;
         Zone: string;
-        Fetish: ArousalFetish[];
+        Fetish: string;
         OrgasmTimer: number;
         OrgasmStage: 0 | 2 | 1;
         OrgasmCount: number;
@@ -297,6 +297,7 @@ declare namespace ServerAccountDataSyncedValidate {
         AllowFullWardrobeAccess: boolean;
         BlockBodyCosplay: boolean;
         AllowPlayerLeashing: boolean;
+        AllowRename: boolean;
         DisablePickingLocksOnSelf: boolean;
         GameVersion: string;
         ItemsAffectExpressions: boolean;

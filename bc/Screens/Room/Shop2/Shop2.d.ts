@@ -1,9 +1,15 @@
 declare function Shop2Load(): void;
 declare function Shop2Click(event: MouseEvent | TouchEvent): void;
+declare function Shop2Draw(): void;
 declare function Shop2Run(time: number): void;
 declare function Shop2Unload(): void;
 declare function Shop2Exit(): void;
 declare var Shop2Background: string;
+declare namespace ShopDropdownState {
+    let NONE: "None";
+    let GROUP: "Group";
+    let POSE: "Pose";
+}
 /**
  * Namespace with shop-specific variables that are expected to mutate over the course of the (sub-)screens lifetime
  * @namespace
@@ -50,10 +56,10 @@ declare const Shop2Vars: VariableContainer<{
      */
     PreviewItems: ShopItem[];
     /**
-     * Whether the group-selection dropdown menu should be displayed
-     * @type {boolean}
+     * The currently active dropdown menu
+     * @type {ShopDropdownState}
      */
-    DisplayDropdown: boolean;
+    DropdownState: ShopDropdownState;
     /**
      * A record mapping filter ID to filter callbacks.
      * Each callback is expected to return a list denoting for which modes the item is to-be shown.
@@ -135,11 +141,13 @@ declare namespace Shop2 {
     function _PopulateBuyGroups(): void;
     function _PopulateGroupDescriptions(assets: readonly ShopItem[]): void;
     function _PopulateKeysAndRemotes(): void;
-    function _AssetElementRun(time: number, x: number, y: number, w: number, h: number, assetIndex: number): void;
+    function _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
     function _AssetElementClick(event: MouseEvent | TouchEvent, assetIndex: number): void;
     function _GenerateAssetElements(): Record<string, ShopScreenFunctions>;
     function ApplyItemFilters(): void;
     function _SetCheckboxFilters(): void;
+    function _UpdatePoseButtons(): void;
+    function _ClickDropdown(): void;
     let DrawPriceRibbon: (label: string, x: number, y: number, w: number, color?: string) => void;
     function ParseAssets(assets: readonly Asset[]): ShopItem[];
     let Elements: Record<string, ShopScreenFunctions>;

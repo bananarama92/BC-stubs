@@ -149,6 +149,7 @@ declare function AppearanceGroupAllowed(C: Character, GroupName: string): boolea
  * @returns {void} - Nothing
  */
 declare function AppearanceRun(): void;
+declare function AppearanceResize(load: boolean): void;
 /**
  * Calculates the background color of the preview image for and item
  * @param {Character} C - The character whose appearance we are viewing

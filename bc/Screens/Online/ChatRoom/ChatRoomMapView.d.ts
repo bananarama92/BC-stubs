@@ -337,6 +337,7 @@ declare function ChatRoomMapViewCopy(): void;
 declare function ChatRoomMapViewPaste(Param: string): void;
 /**
  * Make sure the whisper target is still valid on the map, and leave whipser mode if needed
+ * @deprecated Unused
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewWhisperValid(): void;
