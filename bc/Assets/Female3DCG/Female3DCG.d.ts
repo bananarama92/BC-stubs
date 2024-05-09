@@ -537,6 +537,7 @@ declare var ActivityFemale3DCG: Activity[];
 declare let ActivityFemale3DCGOrdering: ActivityName[];
 /**
  * 3D Custom Girl based fetishes
+ * Modify PreferenceArousalFetishDefaultCompressedString if you add a new fetish
  * @type {Fetish[]}
  */
 declare var FetishFemale3DCG: Fetish[];

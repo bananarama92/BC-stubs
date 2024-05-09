@@ -27,6 +27,12 @@ declare function ElementCreateForm(ID: string): HTMLFormElement;
  */
 declare function ElementCreateTextArea(ID: string, form?: HTMLFormElement): HTMLTextAreaElement;
 /**
+ * Blur event listener for `number`-based `<input>` elements that automatically sanitizes the input value the moment the element is deselected.
+ * @this {HTMLInputElement}
+ * @param {FocusEvent} event
+ */
+declare function ElementNumberInputBlur(this: HTMLInputElement, event: FocusEvent): void;
+/**
  * Creates a new text input element in the main document.Does not create a new element if there is already an existing one with the same ID
  * @param {string} ID - The id of the input tag to create.
  * @param {string} Type - Type of the input tag to create.

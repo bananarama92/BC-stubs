@@ -33,6 +33,7 @@ declare function CraftingUpdatePreview(): void;
  * @returns {void} - Nothing
  */
 declare function CraftingRun(): void;
+declare function CraftingResize(load: boolean): void;
 /**
  * Update {@link CraftingSelectedItem.ItemProperties} with a select few properties from the passed item.
  * @param {Item} item - The item whose properties should be coppied.
@@ -46,20 +47,17 @@ declare function CraftingUpdateFromItem(item: Item): void;
  */
 declare function CraftingModeSet(NewMode: CraftingMode): void;
 /**
- * @this {HTMLInputElement}
- * @returns {void};
- */
-declare function CraftingPriorityKeyUp(this: HTMLInputElement): void;
-/**
  * When the color or type field is updated manually, we update the preview image
+ * @param {Event} ev
  * @returns {void} - Nothing
  */
-declare function CraftingKeyUp(): void;
+declare function CraftingKeyUp(ev: Event): void;
 /**
  * Helper function for parsing the `InputPriority` HTML element.
- * @returns {number | null}
+ * @param {Event} ev
+ * @returns {number | undefined}
  */
-declare function CraftingParsePriorityElement(): number | null;
+declare function CraftingParsePriorityElement(ev: Event): number | undefined;
 /**
  * Serialize a single crafted item into a string in order to prepare it for server saving
  * @param {CraftingItem} craft The crafted item
@@ -96,11 +94,7 @@ declare function CraftingLoadServer(Packet: string | (null | CraftingItem)[]): v
  * @param {CraftingReorderType} newmode - The mode to set.  If null, advance to next mode.
  */
 declare function CraftingReorderModeSet(newmode?: CraftingReorderType): void;
-/**
- * Handles clicks in the crafting room.
- * @returns {void} - Nothing
- */
-declare function CraftingClick(): void;
+declare function CraftingClick(event: MouseEvent | TouchEvent): void;
 /**
  * Refreshes the preview model with a slight delay so the item color process is done
  * @returns {void} - Nothing
@@ -181,18 +175,12 @@ declare let CraftingPreview: Character | null;
 declare let CraftingNakedPreview: boolean;
 /** Whether exiting the crafting menu should return you to the chatroom or, otherwise, the main hall. */
 declare let CraftingReturnToChatroom: boolean;
-/** Pagination offset used for the `Priority` {@link CraftingMode}. */
-declare let CraftingOverridePriorityOffset: number;
 /** List of item indices collected for swapping.
  * @type {number[]}
  */
 declare let CraftingReorderList: number[];
 /** @type {CraftingReorderType} */
 declare let CraftingReorderMode: CraftingReorderType;
-/**
- * @type {null | TextCache}
- */
-declare let CraftingLayerNames: null | TextCache;
 /**
  * A record mapping all crafting-valid asset names to a list of matching elligble assets.
  *

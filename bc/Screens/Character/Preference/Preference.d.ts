@@ -14,13 +14,6 @@ declare function PreferenceArousalAtLeast(C: Character, Level: ArousalActiveName
  */
 declare function PreferenceGetActivityFactor(C: Character, Type: ActivityName, Self: boolean): ArousalFactor;
 /**
- * Gets the factor of a fetish for the player
- * @param {Character} C - The character to query
- * @param {FetishName} Type - The name of the fetish
- * @returns {ArousalFactor} - Returns the love factor of the fetish for the character (0 is horrible, 2 is normal, 4 is great)
- */
-declare function PreferenceGetFetishFactor(C: Character, Type: FetishName): ArousalFactor;
-/**
  * Sets the love factor of a sexual activity for the character
  * @param {Character} C - The character for whom the activity factor should be set
  * @param {ActivityName} Type - The type of the activity that is performed
@@ -29,11 +22,34 @@ declare function PreferenceGetFetishFactor(C: Character, Type: FetishName): Arou
  */
 declare function PreferenceSetActivityFactor(C: Character, Type: ActivityName, Self: boolean, Factor: ArousalFactor): void;
 /**
+ * Gets the factor of a fetish for the player, "2" for normal is default if factor isn't found
+ * @param {Character} C - The character to query
+ * @param {FetishName} Type - The name of the fetish
+ * @returns {ArousalFactor} - Returns the love factor of the fetish for the character (0 is horrible, 2 is normal, 4 is great)
+ */
+declare function PreferenceGetFetishFactor(C: Character, Type: FetishName): ArousalFactor;
+/**
+ * Sets the arousal factor of a fetish for a character
+ * @param {Character} C - The character to set
+ * @param {FetishName} Type - The name of the fetish
+ * @param {ArousalFactor} Type - New arousal factor for that fetish (0 is horrible, 2 is normal, 4 is great)
+ * @returns {void} - Nothing
+ */
+declare function PreferenceSetFetishFactor(C: Character, Type: FetishName, Factor: any): void;
+/**
  * Validates the character arousal object and converts it's objects to compressed string if needed
- * @param {number} Factor - The
+ * @param {number} Factor - The factor of enjoyability from 0 (turn off) to 4 (very high)
+ * @param {boolean} Orgasm - Whether the zone can give an orgasm
  * @returns {string} - A string of 1 char that represents the compressed zone
  */
-declare function PreferenceArousalZoneToChar(Factor: number, Orgasm: any): string;
+declare function PreferenceArousalFactorToChar(Factor?: number, Orgasm?: boolean): string;
+/**
+ * Validates the character arousal object and converts it's objects to compressed string if needed
+ * @param {number} Factor1 - The first factor of enjoyability from 0 (turn off) to 4 (very high)
+ * @param {number} Factor2 - The second factor of enjoyability from 0 (turn off) to 4 (very high)
+ * @returns {string} - A string of 1 char that represents the compressed zone
+ */
+declare function PreferenceArousalTwoFactorToChar(Factor1?: number, Factor2?: number): string;
 /**
  * Gets the corresponding arousal zone definition from a player's preferences (if the group's activities are mirrored,
  * returns the arousal zone definition for the mirrored group).
@@ -616,8 +632,9 @@ declare var PreferenceArousalActivityFactorSelf: ArousalFactor;
 declare var PreferenceArousalActivityFactorOther: ArousalFactor;
 /** @type {ArousalFactor} */
 declare var PreferenceArousalZoneFactor: ArousalFactor;
-declare var PreferenceArousalZoneCount: number;
+declare var PreferenceArousalActivityDefaultCompressedString: string;
 declare var PreferenceArousalZoneDefaultCompressedString: string;
+declare var PreferenceArousalFetishDefaultCompressedString: string;
 /** @type {null | FetishName[]} */
 declare var PreferenceArousalFetishList: null | FetishName[];
 declare var PreferenceArousalFetishIndex: number;
@@ -755,9 +772,9 @@ declare var PreferenceArousalSettingsValidate: {
     ProgressTimer: (arg: number, C: Character) => number;
     VibratorLevel: (arg: 0 | 2 | 1 | 3 | 4, C: Character) => 0 | 2 | 1 | 3 | 4;
     ChangeTime: (arg: number, C: Character) => number;
-    Activity: (arg: ActivityEnjoyment[], C: Character) => ActivityEnjoyment[];
+    Activity: (arg: string, C: Character) => string;
     Zone: (arg: string, C: Character) => string;
-    Fetish: (arg: ArousalFetish[], C: Character) => ArousalFetish[];
+    Fetish: (arg: string, C: Character) => string;
     OrgasmTimer: (arg: number, C: Character) => number;
     OrgasmStage: (arg: 0 | 2 | 1, C: Character) => 0 | 2 | 1;
     OrgasmCount: (arg: number, C: Character) => number;
@@ -778,6 +795,7 @@ declare var PreferenceOnlineSharedSettingsValidate: {
     AllowFullWardrobeAccess: (arg: boolean, C: Character) => boolean;
     BlockBodyCosplay: (arg: boolean, C: Character) => boolean;
     AllowPlayerLeashing: (arg: boolean, C: Character) => boolean;
+    AllowRename: (arg: boolean, C: Character) => boolean;
     DisablePickingLocksOnSelf: (arg: boolean, C: Character) => boolean;
     GameVersion: (arg: string, C: Character) => string;
     ItemsAffectExpressions: (arg: boolean, C: Character) => boolean;

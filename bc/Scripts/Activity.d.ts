@@ -37,10 +37,10 @@ declare function ActivityGetAllMirrorGroups(family: IAssetFamily, groupName: Ass
 /**
  * Check if any activities are possible for a character's given group.
  * @param {Character} C - The character on which the check is done
- * @param {AssetGroupName} GroupName - The group to check access on
+ * @param {AssetGroupItemName} GroupName - The group to check access on
  * @returns {boolean} Whether any activity is possible
  */
-declare function ActivityPossibleOnGroup(C: Character, GroupName: AssetGroupName): boolean;
+declare function ActivityPossibleOnGroup(C: Character, GroupName: AssetGroupItemName): boolean;
 /**
  * Check whether a given activity can be performed on a group
  * @param {Character} char - The character being targeted
@@ -51,12 +51,12 @@ declare function ActivityPossibleOnGroup(C: Character, GroupName: AssetGroupName
 declare function ActivityHasValidTarget(char: Character, act: Activity, group: AssetGroup): boolean;
 /**
  * Check that an activity is permitted by an actor's settings.
- * @param {Activity} activity - The activity to consider
- * @param {Character|PlayerCharacter} character - The character to check with
- * @param {boolean} onOther - Whether we look at doing to or being done on
+ * @param {Activity} A - The activity to consider
+ * @param {Character|PlayerCharacter} C - The character to check with
+ * @param {boolean} Other - Whether we look at doing to or being done on
  * @returns {boolean} whether the activity is permitted
  */
-declare function ActivityCheckPermissions(activity: Activity, character: Character | PlayerCharacter, onOther: boolean): boolean;
+declare function ActivityCheckPermissions(A: Activity, C: Character | PlayerCharacter, Other: boolean): boolean;
 /**
  * Check that that a given prerequisite is met.
  * @param {ActivityPrerequisite} prereq - The prerequisite to consider

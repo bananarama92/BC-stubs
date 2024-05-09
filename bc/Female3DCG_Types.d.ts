@@ -1,6 +1,7 @@
 /** The definition of a fetish */
 interface Fetish {
 	Name: FetishName;
+	FetishID: number;
 	GetFactor(C: Character): number;
 }
 

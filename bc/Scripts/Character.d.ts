@@ -377,11 +377,16 @@ declare function CharacterTransferItem(FromC: Character, ToC: Character, Group: 
  */
 declare function CharacterHasArousalEnabled(C: Character): boolean;
 /**
- * Removes all ownership and owner-only data
+ * Clears a character's ownership.
+ *
+ * If the character is the player, this will also cleanup rules,
+ * owner-locked items, and trigger a server ownership break-up.
+ *
  * @param {Character} C - The character breaking from their owner
+ * @param {boolean} push - Whether to push the data to the server
  * @returns {void} - Nothing.
  */
-declare function CharacterClearOwnership(C: Character): void;
+declare function CharacterClearOwnership(C: Character, push?: boolean): void;
 /**
  * Returns the nickname of a character, or the name if the nickname isn't valid
  * Also validates if the character is a GGTS drone to alter her name

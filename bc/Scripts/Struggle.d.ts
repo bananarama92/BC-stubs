@@ -26,18 +26,7 @@ declare function StruggleProgressGetOperation(C: Character, PrevItem: Item, Next
  * @returns {boolean} - TRUE if it's allowed
  */
 declare function StruggleAllowLoosen(): boolean;
-declare function StruggleKeyDown(event: KeyboardEvent): boolean; /**
- * Starts the given struggle minigame.
- *
- * This function initializes the common state and calls the requested minigame
- * setup function.
- *
- * @param {Character} C - The character currently doing the struggling, either on itself (ie. as Player), or on someone else.
- * @param {StruggleKnownMinigames} MiniGame - The minigame to start
- * @param {Item | null} PrevItem - The item currently being present on the character, or null if none
- * @param {Item} NextItem - The item currently being added on the character, or null if it's a removal
- * @param {StruggleCompletionCallback} Completion - A callback that will be called when the minigame ends
- */
+declare function StruggleKeyDown(event: KeyboardEvent): boolean;
 declare function StruggleMouseDown(event: MouseEvent | TouchEvent): void;
 /**
  * Handles the minigames' Click event, whether on the selection screen or in the minigame themselves.
@@ -276,6 +265,41 @@ declare function StruggleLockPickProgressGetOperation(C: Character, Item: Item):
  * @returns {void} - Nothing
  */
 declare function StruggleLockPickSetup(C: Character, Item: Item): void;
+/**
+ * Starts the online chat room struggle progress
+ * @returns {void} - Nothing
+ */
+declare function StruggleChatRoomStart(): void;
+/**
+ * Starts the loosen progress bar
+ * @returns {void} - Nothing
+ */
+declare function StruggleChatRoomLoosenStart(): void;
+/**
+ * Ends the loosen progress bar, reducing the difficulty to struggle
+ * @returns {void} - Nothing
+ */
+declare function StruggleChatRoomLoosenComplete(): void;
+/**
+ * Restores the previous expressions and ends the struggling
+ * @returns {void} - Nothing
+ */
+declare function StruggleChatRoomEndAmination(): void;
+/**
+ * Ends the online chat room struggle progress
+ * @returns {void} - Nothing
+ */
+declare function StruggleChatRoomStop(): void;
+/**
+ * Ends the online chat room struggle progress, interrupted by another player
+ * @returns {void} - Nothing
+ */
+declare function StruggleChatRoomInterrupt(): void;
+/**
+ * Ends the online chat room struggle progress
+ * @returns {void} - Nothing
+ */
+declare function StruggleChatRoomSuccess(): void;
 /** @type {null | number[]} */
 declare var StruggleLockPickOrder: null | number[];
 /** @type {null | boolean[]} */

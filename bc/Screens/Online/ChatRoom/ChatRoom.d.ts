@@ -259,6 +259,11 @@ declare function ChatRoomCanAttemptKneel(): boolean;
  */
 declare function ChatRoomCanStopSlowPlayer(): boolean;
 /**
+ * Checks if the player can interrupt another character from struggling.
+ * @returns {boolean} - TRUE if the player can do it
+ */
+declare function ChatRoomCanInterruptOnlineStruggle(): boolean;
+/**
  * Checks if the player can grab the targeted player's leash
  * @returns {boolean} - TRUE if the player can interact and is allowed to interact with the current character.
  */
@@ -381,12 +386,14 @@ declare function ChatRoomCheckRelationships(): void;
 declare function ChatRoomFirstTimeHelp(): void;
 /**
  * Sets the current whisper target and flags a target update
- * @param {number} MemberNumber - The target member number to set
+ * @param {number} MemberNumber - The target member number to set. -1 to unselect
  * @returns {void} - Nothing
  */
 declare function ChatRoomSetTarget(MemberNumber: number): void;
 /**
  * Updates the chat input's placeholder text to reflect the current whisper target
+ *
+ * @deprecated No-oped in R104, automatically handled when the target is set
  * @returns {void} - Nothing.
  */
 declare function ChatRoomTarget(): void;
@@ -495,6 +502,11 @@ declare function ChatRoomRun(): void;
  */
 declare function ChatRoomDrawArousalOverlay(): boolean;
 /**
+ * Draws the chat room struggle progress bar and buttons
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomStruggleDraw(): void;
+/**
  * Draws the chat room menu buttons
  * @returns {void} - Nothing
  */
@@ -602,6 +614,32 @@ declare function ChatRoomScrollHistory(up: boolean): void;
  * @returns {void} - Nothing.
  */
 declare function ChatRoomSendChat(): void;
+/**
+ * Send a player message to the server
+ *
+ * This function automatically formats and sends the message with all the information
+ * needed to reconstruct it on the receiver.
+ *
+ * @param {"Chat"|"Whisper"} type
+ * @param {string} msg
+ */
+declare function ChatRoomGenerateChatRoomChatMessage(type: "Chat" | "Whisper", msg: string): {
+    Content: string;
+    Type: "Whisper" | "Chat";
+    Dictionary: ChatMessageDictionary;
+};
+/**
+ * Send a specific chat message to the room
+ * @param {string} msg
+ * @returns
+ */
+declare function ChatRoomSendChatMessage(msg: string): boolean;
+/**
+ * Send a whisper to a specific character
+ * @param {number} targetNumber
+ * @param {string} msg
+ */
+declare function ChatRoomSendWhisper(targetNumber: number, msg: string): boolean | "target-gone" | "target-out-of-range";
 /**
  * Sends message to user with HTML tags
  * @param {string} Content - InnerHTML for the message
@@ -970,6 +1008,11 @@ declare function ChatRoomKneelStandAssist(): void;
  */
 declare function ChatRoomStopLeave(): void;
 /**
+ * Triggered when a character interrupt online struggles on another character.
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomOnlineStruggleInterrupt(): void;
+/**
  * Sends an administrative command to the server for the chat room from the character dialog.
  * @param {"Move"|"Kick"|"Ban"} ActionType - Type of action performed.
  * @param {boolean | string} [Publish=true] - Whether or not the action should be published.
@@ -1075,6 +1118,16 @@ declare function ChatRoomGetLoverRule(RuleType: LogNameType["LoverRule"]): boole
  * @returns {boolean}
  */
 declare function ChatRoomGetOwnerRule(RuleType: LogNameType["OwnerRule"]): boolean;
+/**
+ * Return TRUE if the current character allows to change her own nickname by her owner
+ * @returns {boolean}
+ */
+declare function ChatRoomCanChangeNickname(): boolean;
+/**
+ * Enters the submissive character nickname edit/lock screen
+ * @returns {void}
+ */
+declare function ChatRoomChangeNickname(): void;
 /**
  * Gets a rule from the current character
  * @param {LogNameType["OwnerRule" | "LoverRule"]} RuleType - The name of the rule to retrieve.
@@ -1283,8 +1336,8 @@ declare var ChatRoomCharacter: Character[];
 declare var ChatRoomChatLog: ChatRoomChatLogEntry[];
 declare var ChatRoomLastMessage: string[];
 declare var ChatRoomLastMessageIndex: number;
-/** @type {null | number} */
-declare var ChatRoomTargetMemberNumber: null | number;
+/** @type {number} */
+declare var ChatRoomTargetMemberNumber: number;
 /** @type {ChatRoomOwnershipOption} */
 declare var ChatRoomOwnershipOption: ChatRoomOwnershipOption;
 /** @type {ChatRoomLovershipOption} */
@@ -1301,6 +1354,7 @@ declare var ChatRoomHelpSeen: boolean;
 declare var ChatRoomAllowCharacterUpdate: boolean;
 declare var ChatRoomStruggleAssistBonus: number;
 declare var ChatRoomStruggleAssistTimer: number;
+declare var ChatRoomStruggleData: any;
 /**
  * The timer started when a slowed player attempts to leave
  * @type {number}
@@ -1356,7 +1410,6 @@ declare var ChatRoomLeashPlayer: number | null;
  * @type {string}
  */
 declare var ChatRoomJoinLeash: string;
-declare var ChatRoomTargetDirty: boolean;
 declare var ChatRoomCustomized: boolean;
 declare var ChatRoomCustomBackground: string;
 declare var ChatRoomCustomFilter: string;
@@ -1462,6 +1515,7 @@ declare namespace ChatRoomResizeManager {
     function ChatRoomResizeEvent(): void;
     function ChatRoomResizeEventsEnd(): void;
 }
+declare const ChatRoomUIElementNames: string[];
 declare let ChatRoomStatusDeadKeys: string[];
 /** When slowed, we can't leave quicker than this */
 declare const ChatRoomSlowLeaveMinTime: 5000;
