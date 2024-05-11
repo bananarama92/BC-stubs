@@ -4143,7 +4143,7 @@ interface ChatRoomMapMovement {
 // #region shop
 
 /** The current shop mode */
-type ShopMode = "Buy" | "Sell" | "Preview" | "Color" | "Extended";
+type ShopMode = "Buy" | "Sell" | "Preview" | "Color" | "Extended" | "Layering";
 
 /** The current dressing state of the preview character */
 type ShopClothesMode = "Clothes" | "Underwear" | "Cosplay" | "Nude";

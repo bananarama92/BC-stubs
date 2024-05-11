@@ -2,6 +2,7 @@ declare function Shop2Load(): void;
 declare function Shop2Click(event: MouseEvent | TouchEvent): void;
 declare function Shop2Draw(): void;
 declare function Shop2Run(time: number): void;
+declare function Shop2Resize(load: boolean): void;
 declare function Shop2Unload(): void;
 declare function Shop2Exit(): void;
 declare var Shop2Background: string;
