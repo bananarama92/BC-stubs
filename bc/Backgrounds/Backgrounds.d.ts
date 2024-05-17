@@ -1,4 +1,9 @@
-declare function BackgroundsTextGet(msg: any): string;
+/**
+ * Returns the localized name for a given background
+ * @param {string} msg
+ * @returns {string}
+ */
+declare function BackgroundsTextGet(msg: string): string;
 /**
  * Builds the selectable background arrays based on the tags supplied
  * @param {readonly BackgroundTag[]} BackgroundTagList - An array of string of all the tags to load
