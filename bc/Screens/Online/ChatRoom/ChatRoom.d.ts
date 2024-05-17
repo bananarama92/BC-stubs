@@ -622,12 +622,9 @@ declare function ChatRoomSendChat(): void;
  *
  * @param {"Chat"|"Whisper"} type
  * @param {string} msg
+ * @return {ServerChatRoomMessage}
  */
-declare function ChatRoomGenerateChatRoomChatMessage(type: "Chat" | "Whisper", msg: string): {
-    Content: string;
-    Type: "Whisper" | "Chat";
-    Dictionary: ChatMessageDictionary;
-};
+declare function ChatRoomGenerateChatRoomChatMessage(type: "Chat" | "Whisper", msg: string): ServerChatRoomMessage;
 /**
  * Send a specific chat message to the room
  * @param {string} msg

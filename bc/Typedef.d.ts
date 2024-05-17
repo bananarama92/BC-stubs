@@ -469,6 +469,19 @@ interface StimulationEvent {
 	TalkChance?: number;
 }
 
+type StimulationEventType = "CrotchRope" | "Talk" | "Vibe" | "Inflated" | "Wiggling" | "PlugFront" | "PlugBack" | "PlugBoth";
+
+interface StimulationEventItem {
+	/** The item that caused the stimulation event */
+    item: Item;
+	/** The type of stimulation event */
+    event: StimulationEventType;
+	/** The chance of the event occurring */
+    chance: number;
+	/** Arousal booost from the event */
+    arousal: number;
+}
+
 interface ChatRoomChatLogEntry {
 	Chat: string;
 	Garbled: string;
