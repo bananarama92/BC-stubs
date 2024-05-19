@@ -53,13 +53,6 @@ declare namespace Layering {
      * @param {Event} event
      */
     function _AssetInputListener(event: Event): void;
-    /**
-     * Event listener for `blur` events of number-based input elements.
-     * Sanitizes the elements value upon deselecting the element.
-     * @private
-     * @param {HTMLInputElement} elem
-     */
-    function _BlurListener(elem: HTMLInputElement): void;
     let _CharacterRefresh: typeof CharacterRefresh;
     /**
      * Event listener for `click` events of the reset button
