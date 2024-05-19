@@ -1447,6 +1447,7 @@ interface Character {
 	IsEdged: () => boolean;
 	IsPlayer: () => this is PlayerCharacter;
 	IsBirthday: () => boolean;
+    IsSiblingOfCharacter: (C: Character) => boolean;
 	IsFamilyOfPlayer: () => boolean;
 	IsInFamilyOfMemberNumber: (MemberNum: number) => boolean;
 	IsOnline: () => this is Character;

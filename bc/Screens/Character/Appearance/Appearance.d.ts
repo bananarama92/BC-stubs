@@ -150,6 +150,7 @@ declare function AppearanceGroupAllowed(C: Character, GroupName: string): boolea
  */
 declare function AppearanceRun(): void;
 declare function AppearanceResize(load: boolean): void;
+declare function AppearanceKeyDown(event: KeyboardEvent): boolean;
 /**
  * Calculates the background color of the preview image for and item
  * @param {Character} C - The character whose appearance we are viewing
