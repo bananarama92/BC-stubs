@@ -57,7 +57,7 @@ declare function CommonGetRetry(Path: string, Callback: (this: XMLHttpRequest, x
 declare function CommonMouseDown(event: any): void;
 declare function CommonMouseUp(event: any): void;
 declare function CommonMouseMove(event: any): void;
-declare function CommonMouseWheel(event: any): void;
+declare function CommonMouseWheel(event: WheelEvent): void;
 /**
  * Catches the clicks on the main screen and forwards it to the current screen click function if it exists, otherwise it sends it to the dialog click function
  * @param {MouseEvent | TouchEvent} event - The event that triggered this
@@ -245,19 +245,6 @@ declare function CommonMemoize<T extends (...args: any) => any>(func: T, argConv
  * @returns {void} - Nothing
  */
 declare function CommonTakePhoto(Left: number, Top: number, Width: number, Height: number): void;
-/**
- * Takes an array of items and converts it to record format
- * @param {readonly ItemPermissions[]} arr The array of items
- * @returns {ItemPermissionsPacked} Output in object foramat
- */
-declare function CommonPackItemArray(arr: readonly ItemPermissions[]): ItemPermissionsPacked;
-/**
- * Takes an record format of items and converts it to array.
- * @note This function *must* be able to handle unsantized data as received from the server
- * @param {ItemPermissionsPacked} rec Object defining items
- * @return {ItemPermissions[]} The array of items
- */
-declare function CommonUnpackItemArray(rec: ItemPermissionsPacked): ItemPermissions[];
 /**
  * Compares two version numbers and returns -1/0/1 if Other number is smaller/same/larger than Current one
  * @param {string} Current Current version number

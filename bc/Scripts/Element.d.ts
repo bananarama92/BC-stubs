@@ -13,6 +13,12 @@ declare function ElementValue(ID: string, Value?: string): string;
  */
 declare function ElementContent(ID: string, Content?: string): string;
 /**
+ * @template {keyof HTMLElementScalarTagNameMap} T
+ * @param {null | HTMLOptions<T>} options - Options for customizing the element
+ * @returns {HTMLElementTagNameMap[T]} - The created element
+ */
+declare function ElementCreate<T extends keyof HTMLElementTagNameMap>(options: HTMLOptions<T>): HTMLElementTagNameMap[T];
+/**
  * Creates a new from element in the main document.
  *
  * @param {string} ID - The id of the form to create
@@ -22,10 +28,10 @@ declare function ElementCreateForm(ID: string): HTMLFormElement;
 /**
  * Creates a new text area element in the main document. Does not create a new element if there is already an existing one with the same ID
  * @param {string} ID - The id of the text area to create.
- * @param {HTMLFormElement} [form] - The form the element belongs to
+ * @param {HTMLElement} [form] - The form the element belongs to
  * @returns {HTMLTextAreaElement}
  */
-declare function ElementCreateTextArea(ID: string, form?: HTMLFormElement): HTMLTextAreaElement;
+declare function ElementCreateTextArea(ID: string, form?: HTMLElement): HTMLTextAreaElement;
 /**
  * Blur event listener for `number`-based `<input>` elements that automatically sanitizes the input value the moment the element is deselected.
  * @this {HTMLInputElement}
@@ -38,10 +44,10 @@ declare function ElementNumberInputBlur(this: HTMLInputElement, event: FocusEven
  * @param {string} Type - Type of the input tag to create.
  * @param {string} Value - Value of the input tag to create.
  * @param {string | number} [MaxLength] - Maximum input tag of the input to create.
- * * @param {HTMLFormElement} [form] - The form the element belongs to
+ * @param {Node} [form] - The form the element belongs to
  * @returns {HTMLInputElement} - The created HTML input element
  */
-declare function ElementCreateInput(ID: string, Type: string, Value: string, MaxLength?: string | number, form?: HTMLFormElement): HTMLInputElement;
+declare function ElementCreateInput(ID: string, Type: string, Value: string, MaxLength?: string | number, form?: Node): HTMLInputElement;
 /**
  * Creates a new range input element in the main document. Does not create a new element if there is already an
  * existing one with the same id
@@ -74,13 +80,13 @@ declare function ElementCreateRangeInput(id: string, value: number, min: number,
  * What this function cannot handle at the moment:
  * - The size is always set to 1
  * - Multiple selects are impossible
- * @param {string} ID - The name of the select item. The outer div will get this name, for positioning. The select
+ * @param {string} id - The name of the select item. The outer div will get this name, for positioning. The select
  * tag will get the name ID+"-select"
  * @param {readonly string[]} Options - The list of options for the current select statement
- * @param {EventListenerOrEventListenerObject} [ClickEventListener=null] - An event listener to be called, when the value of the drop down box changes
- * @returns {void} - Nothing
+ * @param {null | ((this: HTMLSelectElement, event: Event) => any)} [ClickEventListener=null] - An event listener to be called, when the value of the drop down box changes
+ * @returns {HTMLDivElement} - The created element
  */
-declare function ElementCreateDropdown(ID: string, Options: readonly string[], ClickEventListener?: EventListenerOrEventListenerObject): void;
+declare function ElementCreateDropdown(id: string, Options: readonly string[], ClickEventListener?: null | ((this: HTMLSelectElement, event: Event) => any)): HTMLDivElement;
 /**
  * Closes all select boxes in the current document, except the current select box
  * @param {object} elmnt - The select box to exclude from the closing
@@ -90,9 +96,9 @@ declare function ElementCloseAllSelect(elmnt: object): void;
 /**
  * Creates a new div element in the main document. Does not create a new element if there is already an existing one with the same ID
  * @param {string} ID - The id of the div tag to create.
- * @returns {HTMLElement} - The created (or pre-existing) div element
+ * @returns {HTMLDivElement} - The created (or pre-existing) div element
  */
-declare function ElementCreateDiv(ID: string): HTMLElement;
+declare function ElementCreateDiv(ID: string): HTMLDivElement;
 /**
  * Removes an element from the main document
  * @param {string} ID - The id of the tag to remove from the document.
@@ -185,3 +191,93 @@ declare function ElementFocus(ID: string): void;
  * @param {boolean} ShouldDisplay - TRUE if we are toggling on the elements, FALSE if we are hiding them.
  */
 declare function ElementToggleGeneratedElements(Screen: string, ShouldDisplay: boolean): void;
+/**
+ * Construct a search-based `<input>` element that offers suggestions based on the passed callbacks output.
+ *
+ * The search suggestions are constructed lazily once the search input is focused.
+ * @example
+ * <input type="search" id={id} list={`${id}-datalist`}>
+ *     <datalist id={`${id}-datalist`}>
+ *         <option value="..." />
+ *         ...
+ *     </datalist>
+ * </input>
+ * @param {string} id - The ID of the to-be created search input; `${id}-datalist` will be assigned the search input's datalist
+ * @param {() => Iterable<string>} dataCallback - A callback returning all values that will be converted into a datalist `<option>`
+ * @param {Object} [options]
+ * @param {null | string} [options.value] - Value of the search input
+ * @param {null | Node} [options.parent] - The parent element of the search input; defaults to {@link document.body}
+ * @param {null | number} [options.maxLength] - Maximum input length of the search input
+ * @returns {HTMLInputElement} - The newly created search input
+ */
+declare function ElementCreateSearchInput(id: string, dataCallback: () => Iterable<string>, options?: {
+    value?: null | string;
+    parent?: null | Node;
+    maxLength?: null | number;
+}): HTMLInputElement;
+declare namespace ElementCheckboxDropdown {
+    /**
+     * @param {string} idPrefix
+     * @param {string} idSuffix
+     * @param {string} spanText
+     * @param {(this: HTMLInputElement, event: Event) => void} listener
+     * @param {boolean} checked
+     * @returns {HTMLOptions<"label">}
+     */
+    function _CreateCheckboxPair(idPrefix: string, idSuffix: string, spanText: string, listener: (this: HTMLInputElement, event: Event) => void, checked?: boolean): HTMLOptions<"label">;
+    /**
+     * Construct a dropdown menu with labeled checkboxes
+     * @param {string} id - The ID of the element
+     * @param {readonly string[]} checkboxList - The checkbox labels
+     * @param {(this: HTMLInputElement, event: Event) => void} eventListener - The event listener to-be attached to all checkboxes
+     * @param {Object} [options]
+     * @param {HTMLElement} [options.parent] - The parent element of the dropdown menu; defaults to {@link document.body}
+     * @param {boolean} [options.checked] - Whether all checkboxes should be initially checked
+     * @returns {HTMLDivElement} - The created dropdown menu
+     */
+    function FromList(id: string, checkboxList: readonly string[], eventListener: (this: HTMLInputElement, event: Event) => void, options?: {
+        parent?: HTMLElement;
+        checked?: boolean;
+    }): HTMLDivElement;
+    /**
+     * Construct a dropdown menu with labeled checkboxes, each group of checkboxes having a header associated with them
+     * @param {string} id - The ID of the element
+     * @param {Record<string, readonly string[]>} checkboxRecord - The checkbox labels
+     * @param {(this: HTMLInputElement, event: Event) => void} eventListener - The event listener to-be attached to all checkboxes
+     * @param {Object} [options]
+     * @param {HTMLElement} [options.parent] - The parent element of the dropdown menu; defaults to {@link document.body}
+     * @param {boolean} [options.checked] - Whether all checkboxes should be initially checked
+     * @returns {HTMLDivElement} - The created dropdown menu
+     */
+    function FromRecord(id: string, checkboxRecord: Record<string, readonly string[]>, eventListener: (this: HTMLInputElement, event: Event) => void, options?: {
+        parent?: HTMLElement;
+        checked?: boolean;
+    }): HTMLDivElement;
+}
+declare namespace ElementButton {
+    let _PositionMapping: Readonly<{
+        left: "button-tooltip-left";
+        right: "button-tooltip-right";
+        top: "button-tooltip-top";
+        bottom: "button-tooltip-bottom";
+    }>;
+    let _TouchStart: (this: HTMLButtonElement, event: Event) => Promise<void>;
+    let _TouchEnd: (this: HTMLButtonElement, event: Event) => Promise<void>;
+    let _MouseDown: (this: HTMLButtonElement, event: MouseEvent) => Promise<void>;
+    let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
+    let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
+    function Create(id: string, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: {
+        tooltip?: string | Node;
+        tooltipPosition?: "left" | "top" | "bottom" | "right";
+    }, htmlOptions?: Partial<Record<"button" | "tooltip", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+}
+declare namespace ElementMenu {
+    export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;
+    export { _KeyDown_1 as _KeyDown };
+    export function Create_1(id: string, menuItems: readonly (string | Node | HTMLOptions<keyof HTMLElementTagNameMap>)[], options?: {
+        direction?: "ltr" | "rtl";
+    }, htmlOptions?: Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>): HTMLDivElement;
+    export { Create_1 as Create };
+    export function AppendButton(div: HTMLDivElement, menuitem: HTMLElement): void;
+    export function PrependItem(div: HTMLDivElement, menuitem: HTMLElement): void;
+}

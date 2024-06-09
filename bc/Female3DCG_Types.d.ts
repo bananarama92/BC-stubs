@@ -435,8 +435,12 @@ interface AssetCommonPropertiesAssetLayer {
 
 /** Input interface for constructing {@link Asset} objects. */
 interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetCommonPropertiesAssetLayer, AssetCommonPropertiesGroupAssetLayer {
+
 	/** The asset's internal name. */
 	Name: string,
+
+	/** The asset's InventoryID to be synced with the server and other players */
+	InventoryID?: number,
 
 	/**
 	 * The group name and asset name of a configuration to copy.
@@ -543,7 +547,7 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	 * A value of -1 makes the asset unavailable, a value of 0 makes it always available.
 	 */
 	Value?: number;
-
+	
 	/**
 	 * Whether an item should never be able to be sold.
 	 *

@@ -5652,6 +5652,214 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
+    Exit: () => void;
+    Dialog: ({
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+            AudioStyle?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Domination: number;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination?: undefined;
+            AudioStyle?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle?: undefined;
+            Love?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love: number;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+    })[];
+} | {
+    Name: string;
+    Music: string;
+    Exit: () => void;
+    Dialog: ({
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Text?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Character?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: ({
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle: string;
+            Love: number;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            AudioStyle?: undefined;
+            Love?: undefined;
+        } | {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Love: number;
+            AudioStyle?: undefined;
+        })[];
+        Background?: undefined;
+        Character?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: {
+            Text: string;
+            Reply: string;
+            Audio: string;
+            Domination: number;
+        }[];
+        Background?: undefined;
+        Character?: undefined;
+    })[];
+} | {
+    Name: string;
+    Music: string;
+    Exit: () => void;
+    Dialog: ({
+        Background: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Entry?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Text: string;
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Background?: undefined;
+        Entry?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Prerequisite: () => boolean;
+        Entry: () => void;
+        Background?: undefined;
+        Character?: undefined;
+        Text?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Character: {
+            Name: string;
+            Status: string;
+            Pose: string;
+        }[];
+        Background?: undefined;
+        Prerequisite?: undefined;
+        Text?: undefined;
+        Entry?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Background?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Entry?: undefined;
+        Audio?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Background?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Entry?: undefined;
+        Answer?: undefined;
+    } | {
+        Text: string;
+        Audio: string;
+        Answer: {
+            Text: string;
+            Reply: string;
+            Audio: string;
+        }[];
+        Background?: undefined;
+        Character?: undefined;
+        Prerequisite?: undefined;
+        Entry?: undefined;
+    })[];
+} | {
+    Name: string;
+    Music: string;
     Dialog: ({
         Entry: () => void;
         Character: {

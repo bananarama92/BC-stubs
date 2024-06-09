@@ -268,7 +268,8 @@
             "Tutu": 43,
             "Waspie1": 44,
             "Waspie2": 45,
-            "Waspie3": 46
+            "Waspie3": 46,
+            "SatinSkirt": 47
         }
     },
     "Corset": {
@@ -424,7 +425,8 @@
             "LatexShortGloves": 12,
             "MistressGloves": 13,
             "SeethroughSuit": 14,
-            "WarmGloves": 15
+            "WarmGloves": 15,
+            "OperaGloves": 16
         }
     },
     "HairAccessory1": {
@@ -922,7 +924,8 @@
             "OrnateChastityBra": 5,
             "PolishedChastityBra": 6,
             "Ribbons": 7,
-            "TickleBra": 8
+            "TickleBra": 8,
+            "ChastityPlate": 9
         }
     },
     "ItemButt": {
@@ -1031,7 +1034,9 @@
             "WoodenHorse": 55,
             "WoodenRack": 56,
             "WoodenStocks": 57,
-            "X-Cross": 58
+            "X-Cross": 58,
+            "GlueFloor": 59,
+            "OneBarGirl": 60
         }
     },
     "ItemEars": {
@@ -1143,7 +1148,8 @@
             "Vibrator": 58,
             "WartenbergWheel": 59,
             "Whip": 60,
-            "WhipPaddle": 61
+            "WhipPaddle": 61,
+            "GlueTube": 62
         }
     },
     "ItemHands": {
@@ -1160,7 +1166,8 @@
             "PolishedMittens": 8,
             "PonyMittensBinder": 9,
             "SmoothLeatherMittens1": 10,
-            "ElbowLengthMittens": 11
+            "ElbowLengthMittens": 11,
+            "GlueMittens": 12
         }
     },
     "ItemHead": {
@@ -1423,7 +1430,8 @@
             "TongueStrapGag": 84,
             "WebGag": 85,
             "WiffleGag": 86,
-            "XLBoneGag": 87
+            "XLBoneGag": 87,
+            "GlueGag": 88
         }
     },
     "ItemMouth2": {
@@ -1516,7 +1524,8 @@
             "SockStuffing": 84,
             "TechnoGag": 85,
             "TonguePiercingGag": 86,
-            "TongueStrapGag": 87
+            "TongueStrapGag": 87,
+            "GlueGag": 88
         }
     },
     "ItemMouth3": {
@@ -1755,7 +1764,8 @@
             "NosePlugs": 4,
             "NoseRing": 5,
             "PigNose": 6,
-            "PigNoseHook": 7
+            "PigNoseHook": 7,
+            "GlueNose": 8
         }
     },
     "ItemPelvis": {
@@ -2001,7 +2011,8 @@
             "NecklaceButterfly": 14,
             "NecklaceKey": 15,
             "NecklaceLock": 16,
-            "NecklaceRope": 17
+            "NecklaceRope": 17,
+            "PearlNecklace1": 18
         }
     },
     "Nipples": {

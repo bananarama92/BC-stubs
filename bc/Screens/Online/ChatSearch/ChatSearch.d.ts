@@ -218,7 +218,14 @@ declare var ChatSearchResult: (ServerChatRoomSearchData & {
 })[];
 /** @type {typeof ChatSearchResult} */
 declare var ChatSearchHiddenResult: typeof ChatSearchResult;
-declare var ChatSearchLastSearchDataJSON: string;
+/** @type {null | { Query: string, Language: "" | ServerChatRoomLanguage, Space: ServerChatRoomSpace, Game: ServerChatRoomGame, FullRooms: boolean }} */
+declare var ChatSearchLastSearchDataJSON: null | {
+    Query: string;
+    Language: "" | ServerChatRoomLanguage;
+    Space: ServerChatRoomSpace;
+    Game: ServerChatRoomGame;
+    FullRooms: boolean;
+};
 declare var ChatSearchLastQuerySearchTime: number;
 declare var ChatSearchLastQueryJoin: string;
 declare var ChatSearchLastQueryJoinTime: number;

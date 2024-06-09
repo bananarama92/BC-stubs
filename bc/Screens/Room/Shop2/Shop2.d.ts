@@ -4,6 +4,7 @@ declare function Shop2Draw(): void;
 declare function Shop2Run(time: number): void;
 declare function Shop2Resize(load: boolean): void;
 declare function Shop2Unload(): void;
+declare function Shop2MouseWheel(event: WheelEvent): void;
 declare function Shop2Exit(): void;
 declare var Shop2Background: string;
 declare namespace ShopDropdownState {
@@ -33,9 +34,10 @@ declare const Shop2Vars: VariableContainer<{
     Push: boolean;
     /**
      * The current shop mode
+     * @private
      * @type {ShopMode}
      */
-    Mode: ShopMode;
+    _Mode: ShopMode;
     /**
      * The current dressing state of the preview character
      * @type {ShopClothesMode}
@@ -69,6 +71,11 @@ declare const Shop2Vars: VariableContainer<{
      */
     Filters: Record<string, (item: ShopItem) => ("Buy" | "Sell" | "Preview")[]>;
 }, {
+    /**
+     * The current shop mode
+     * @type {ShopMode}
+     */
+    Mode: ShopMode;
     /**
      * Get the maximum number of pages for the current {@link Shop2Vars.Mode}.
      * @type {number}

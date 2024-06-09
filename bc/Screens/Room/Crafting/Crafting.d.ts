@@ -41,6 +41,11 @@ declare function CraftingResize(load: boolean): void;
  */
 declare function CraftingUpdateFromItem(item: Item): void;
 /**
+ * Return a list of all searchable asset names.
+ * @returns {string[]}
+ */
+declare function CraftingGetAllAssetNames(): string[];
+/**
  * Sets the new mode and creates or removes the inputs
  * @param {CraftingMode} NewMode - The new mode to set
  * @returns {void} - Nothing

@@ -54,6 +54,19 @@ declare function ServerPlayerSync(): void;
  */
 declare function ServerPlayerInventorySync(): void;
 /**
+ * Unpack the all item permissions into the quartet of blocked, limited, favorited and hidden item object
+ * @param {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} permissionItems - The packed item permission data
+ * @returns {Pick<ServerAccountUpdateRequest, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">} - The unpacked item permission data
+ */
+declare function ServerPackItemPermissions(permissionItems: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>): Pick<ServerAccountUpdateRequest, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">;
+/**
+ * Unpack the quartet of blocked, limited, favorited and hidden item permissions into a single object
+ * @param {Pick<Partial<ServerAccountDataSynced>, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">} data - The item permission data as received from the server
+ * @param {Character} C - The character in question
+ * @returns {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} - The packed item permission data
+ */
+declare function ServerUnPackItemPermissions(data: Pick<Partial<ServerAccountDataSynced>, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">, C: Character): Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
+/**
  * Syncs player's favorite, blocked, limited and hidden items to the server
  * @returns {void} - Nothing
  */
@@ -326,9 +339,6 @@ declare namespace ServerAccountDataSyncedValidate {
         Type: ReputationType;
         Value: number;
     }[], C: Character): Reputation[];
-    function BlockItems(arg: Partial<ItemPermissions[] | Partial<Record<AssetGroupName, Record<string, string[]>>>>, C: Character): ItemPermissions[];
-    function LimitedItems(arg: Partial<ItemPermissions[] | Partial<Record<AssetGroupName, Record<string, string[]>>>>, C: Character): ItemPermissions[];
-    function FavoriteItems(arg: Partial<ItemPermissions[] | Partial<Record<AssetGroupName, Record<string, string[]>>>>, C: Character): ItemPermissions[];
     function WhiteList(arg: number[], C: Character): number[];
     function BlackList(arg: number[], C: Character): number[];
 }
