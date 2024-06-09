@@ -152,12 +152,6 @@ declare function AssetGetActivity(family: IAssetFamily, name: ActivityName): Act
  */
 declare function AssetActivitiesForGroup(family: IAssetFamily, groupname: AssetGroupName, onSelf?: "self" | "other" | "any"): Activity[];
 /**
- * Cleans the given array of assets of any items that no longer exists
- * @param {readonly ItemPermissions[]} AssetArray - The arrays of items to clean
- * @returns {ItemPermissions[]} - The cleaned up array
- */
-declare function AssetCleanArray(AssetArray: readonly ItemPermissions[]): ItemPermissions[];
-/**
  * Gets an asset group by the asset family name and group name
  * @template {AssetGroupName} T
  * @param {IAssetFamily} Family - The asset family that the group belongs to (Ignored until other family is added)
@@ -199,6 +193,54 @@ declare function AssetParseDefaultColor(colorableLayerCount: number, fillValue: 
  * @returns {string}
  */
 declare function AssetTextGet(msg: string): string;
+/**
+ * Shows a console warning for all missing Inventory IDs in the Female3DCG assets
+ * @returns {void} - Nothing
+ */
+declare function AssetInventoryIDMissing(): void;
+/**
+ * Shows a console warning for all Inventory IDs in the Female3DCG assets that are unnecessary assigned
+ * @returns {void} - Nothing
+ */
+declare function AssetInventoryIDUnnecessary(): void;
+/**
+ * Shows a console warning for all Inventory IDs where the BuyGroup is creating a conflict
+ * @param {string} GroupName - The group name to compare
+ * @param {string} AssetName - The asset name to compare
+ * @param {string} BuyGroup - The buying group to compare
+ * @param {number} InventoryID - The inventory ID to compare
+ * @returns {void} - Nothing
+ */
+declare function AssetInventoryIDBuyGroup(GroupName: string, AssetName: string, BuyGroup: string, InventoryID: number): void;
+/**
+ * Shows a console warning for all Inventory IDs where the BuyGroup is creating a conflict
+ * @returns {void} - Nothing
+ */
+declare function AssetInventoryIDBuyGroupSearch(): void;
+/**
+ * Shows a console warning for all Inventory IDs where the BuyGroup is creating a conflict
+ * @param {string} GroupName - The group name to compare
+ * @param {string} AssetName - The asset name to compare
+ * @param {number} InventoryID - The inventory ID to compare
+ * @returns {void} - Nothing
+ */
+declare function AssetInventoryIDDuplicated(GroupName: string, AssetName: string, InventoryID: number): void;
+/**
+ * Shows a console warning for all Inventory IDs that are duplicated out of a buy group
+ * @returns {void} - Nothing
+ */
+declare function AssetInventoryIDDuplicatedSearch(): void;
+/**
+ * Shows a console warning for all Inventory IDs that are duplicated out of a buy group
+ * @returns {void} - Nothing
+ */
+declare function AssetInventoryIDScenarioItem(): void;
+/**
+ * Validates that the InventoryID is setup properly in the Female3DCG assets
+ * Launched each time the game is started for assets maker to apply corrections
+ * Outputs all possible errors in the console log, it runs aynscronious
+ */
+declare function AssetInventoryIDValidate(): Promise<void>;
 /** @type {Asset[]} */
 declare var Asset: Asset[];
 /** @type {AssetGroup[]} */

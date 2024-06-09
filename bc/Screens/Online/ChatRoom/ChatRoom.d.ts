@@ -303,9 +303,9 @@ declare function DialogCanCallMaidsPunishmentOn(): boolean;
 declare function DialogCanCallMaidsPunishmentOff(): boolean;
 /**
  * Creates the chat room input elements.
- * @returns {void} - Nothing.
+ * @returns {HTMLDivElement}
  */
-declare function ChatRoomCreateElement(): void;
+declare function ChatRoomCreateElement(): HTMLDivElement;
 /** Hide the UI elements of the chatroom screen */
 declare function ChatRoomShowElements(): void;
 /** Show the UI elements of the chatroom screen */
@@ -414,10 +414,6 @@ declare function ChatRoomSetLastChatRoom(room: ChatRoom | null): void;
  * @returns {void} - Nothing.
  */
 declare function ChatRoomStimulationMessage(Action: StimulationAction): void;
-/**
- * Called when screen size or position changes or after screen load
- * @param {boolean} load - If the reason for call was load (`true`) or window resize (`false`)
- */
 declare function ChatRoomResize(load: boolean): void;
 /**
  * Draws arousal screen filter
@@ -473,9 +469,10 @@ declare function ChatRoomStatusUpdate(Status: string | null): void;
 declare function ChatRoomStatusUpdateTalk(Key: KeyboardEvent): void;
 /**
  * Handler called when the chat input field changes
+ * @this {HTMLTextAreaElement}
  * @param {Event} event
  */
-declare function ChatRoomChatInputChangeHandler(event: Event): void;
+declare function ChatRoomChatInputChangeHandler(this: HTMLTextAreaElement, event: Event): void;
 /**
  * Checks if status has expired or is otherwise no longer valid and resets status if so
  * @returns {void} - Nothing.
@@ -491,11 +488,7 @@ declare function ChatRoomCustomizationClear(): void;
  * @returns {void} - Nothing.
  */
 declare function ChatRoomCustomizationRun(): void;
-/**
- * Runs the chatroom screen.
- * @returns {void} - Nothing.
- */
-declare function ChatRoomRun(): void;
+declare function ChatRoomRun(time: number): void;
 /**
  * Runs the arousal overlay.
  * @returns {boolean} - Returns true if the orgasm overlay is active and false otherwise.
@@ -529,17 +522,7 @@ declare function ChatRoomMouseUp(event: MouseEvent | TouchEvent): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMouseMove(event: MouseEvent | TouchEvent): void;
-/**
- * Redirects the Mouse Wheel event to the map if needed
- * @param {MouseEvent | TouchEvent} event
- * @returns {void} - Nothing
- */
-declare function ChatRoomMouseWheel(event: MouseEvent | TouchEvent): void;
-/**
- * Handles clicks the chatroom screen.
- * @param {MouseEvent | TouchEvent} event
- * @returns {void} - Nothing.
- */
+declare function ChatRoomMouseWheel(event: WheelEvent): void;
 declare function ChatRoomClick(event: MouseEvent | TouchEvent): void;
 /**
  * The handler for the "Kneel" top menu button
@@ -557,11 +540,7 @@ declare function ChatRoomOpenInformationScreen(): void;
  * The handler for the "Admin" button
  */
 declare function ChatRoomOpenAdminScreen(): void;
-/**
- * Process chat room menu button clicks
- * @returns {void} - Nothing
- */
-declare function ChatRoomMenuClick(): void;
+declare function ChatRoomMenuClick(event: MouseEvent | TouchEvent): void;
 declare function ChatRoomAttemptStandMinigameEnd(): void;
 /**
  * Checks if the player can leave the chatroom.
@@ -838,15 +817,19 @@ declare function ChatRoomMessageRunHandlers(type: "pre" | "post", data: ServerCh
  */
 declare function ChatRoomMessage(data: ServerChatRoomMessage): void;
 /**
+ * @this {HTMLButtonElement}
+ */
+declare function ChatRoomMessageNameClick(this: HTMLButtonElement): void;
+/**
  * Update the Chat log with the recieved message
  *
  * @param {ServerChatRoomMessage} data
  * @param {string} msg
  * @param {Character} SenderCharacter
  * @param {IChatRoomMessageMetadata} metadata
- * @returns {void}
+ * @returns {HTMLDivElement}
  */
-declare function ChatRoomMessageDisplay(data: ServerChatRoomMessage, msg: string, SenderCharacter: Character, metadata: IChatRoomMessageMetadata): void;
+declare function ChatRoomMessageDisplay(data: ServerChatRoomMessage, msg: string, SenderCharacter: Character, metadata: IChatRoomMessageMetadata): HTMLDivElement;
 /**
  * Whether to replace message details which reveal information about an unseen/unheard character
  * @param {Character} C - The character whose identity should remain unknown
@@ -1028,12 +1011,6 @@ declare function ChatRoomAdminChatAction(ActionType: "Ban" | "Unban" | "Kick" | 
  * @returns {string} - The player's current local time as a string.
  */
 declare function ChatRoomCurrentTime(): string;
-/**
- * Gets a transparent version of the specified hex color.
- * @param {HexColor} Color - Hex color code.
- * @returns {string} - A transparent version of the specified hex color in the rgba format.
- */
-declare function ChatRoomGetTransparentColor(Color: HexColor): string;
 /**
  * Adds or removes an online member to/from a specific list. (From the dialog menu)
  * @param {"Add" | "Remove"} Operation - Operation to perform.
@@ -1364,19 +1341,24 @@ declare var ChatRoomSlowtimer: number;
 declare var ChatRoomSlowStop: boolean;
 /**
  * Default position of the chat log field
- * @type {RectTuple}
+ * @deprecated - superseded by and incorporated into {@link ChatRoomDivRect}
  */
-declare var ChatRoomChatLogRect: RectTuple;
+declare var ChatRoomChatLogRect: never;
 /**
  * Default position of the chat input field
- * @type {RectTuple}
+ * @deprecated - superseded by and incorporated into {@link ChatRoomDivRect}
  */
-declare var ChatRoomChatInputRect: RectTuple;
+declare var ChatRoomChatInputRect: never;
 /**
  * Default position of the chat input length label
+ * @deprecated - superseded by and incorporated into {@link ChatRoomDivRect}
+ */
+declare var ChatRoomChatLengthLabelRect: never;
+/**
+ * Default position of the entire chat panel
  * @type {RectTuple}
  */
-declare var ChatRoomChatLengthLabelRect: RectTuple;
+declare var ChatRoomDivRect: RectTuple;
 declare var ChatRoomChatHidden: boolean;
 /**
  * The chatroom characters that were drawn in the last frame.
@@ -1512,7 +1494,19 @@ declare namespace ChatRoomResizeManager {
     function ChatRoomResizeEvent(): void;
     function ChatRoomResizeEventsEnd(): void;
 }
-declare const ChatRoomUIElementNames: string[];
+declare namespace ChatRoomSep {
+    let ActiveElem: null | HTMLDivElement;
+    let _ClickCollapse: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
+    let _ClickScrollUp: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
+    function _GetDisplayName(button: HTMLButtonElement): string;
+    function Create(appendChat?: boolean): HTMLDivElement;
+    function GetDisplayName(roomSep: HTMLDivElement): string;
+    function IsCollapsed(roomSep: HTMLDivElement): boolean;
+    function Uncollapse(roomSep: HTMLDivElement): Promise<void>;
+    function Collapse(roomSep: HTMLDivElement): Promise<void>;
+    function SetRoomData(roomSep: HTMLDivElement, data: Pick<ServerChatRoomData, "Name" | "Private" | "Space">): Promise<void>;
+    function UpdateDisplayNames(): Promise<void>;
+}
 declare let ChatRoomStatusDeadKeys: string[];
 /** When slowed, we can't leave quicker than this */
 declare const ChatRoomSlowLeaveMinTime: 5000;

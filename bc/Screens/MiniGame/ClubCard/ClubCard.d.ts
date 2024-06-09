@@ -53,6 +53,13 @@ declare function ClubCardIsLiability(Card: ClubCard): boolean;
  */
 declare function ClubCardGetOpponent(CCPlayer?: ClubCardPlayer | null): ClubCardPlayer;
 /**
+ * Gets the opponent of the parameter player or the player that's not on it's turn if null
+ * @param {ClubCardPlayer} CCPlayer - The club card player or null
+ * @param {Number} turnCounter
+ * @returns {ClubCard[]} - The opponent
+ */
+declare function ClubCardGetCardsPlayedOnTurn(CCPlayer: ClubCardPlayer, turnCounter: number): ClubCard[];
+/**
  * Adds money to the club card player stats
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {Number} Amount - The amount to add
@@ -107,6 +114,13 @@ declare function ClubCardGroupOnBoardCount(CCPlayer: ClubCardPlayer, GroupName: 
  * @returns {void} - Nothing
  */
 declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
+/**
+ * Adds a card to a players hand
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {ClubCard} Card - The card object to add
+ * @returns {void} - Nothing
+ */
+declare function ClubCardAddToHand(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
 /**
  * Removes several cards from player time events
  * @param {ClubCardPlayer} CCPlayer - The club card player

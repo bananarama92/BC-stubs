@@ -41,7 +41,7 @@ declare function ChatRoomMapViewDeactivate(): void;
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
 declare function ChatRoomMapViewIsActive(): boolean;
-declare function ChatRoomMapViewRun(): void;
+declare function ChatRoomMapViewRun(time: number): void;
 /**
  * Alter the received message to what will be displayed in the chat log
  *
@@ -319,11 +319,7 @@ declare function ChatRoomMapViewMouseMove(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewMouseUp(): void;
-/**
- * Mouse wheel event is used to zoom the map
- * @returns {void} - Nothing
- */
-declare function ChatRoomMapViewMouseWheel(Event: any): void;
+declare function ChatRoomMapViewMouseWheel(event: WheelEvent): void;
 /**
  * Copies the current map in the clipboard.  Called from the chat field command "mapcopy"
  * @returns {void} - Nothing

@@ -88,11 +88,6 @@ declare function LoginCheatItems(): void;
  */
 declare function LoginValideBuyGroups(): void;
 /**
- * Checks if the player arrays contains any item that does not exists and saves them.
- * @returns {void} Nothing
- */
-declare function LoginValidateArrays(): void;
-/**
  * Makes sure the difficulty restrictions are applied to the player
  * @param {boolean} applyDefaults - If changing to the difficulty, set this to True to set LimitedItems to the default settings
  * @returns {void} Nothing
@@ -106,8 +101,13 @@ declare function LoginDifficulty(applyDefaults: boolean): void;
  */
 declare function LoginExtremeItemSettings(applyDefaults: boolean): void;
 /**
+ * Since InventoryData wasn't found (R104 and before), we load the inventory object directly
+ * @param {object} InventoryObject - The inventory object from the server
+ */
+declare function LoginLoadInventoryObject(InventoryObject: object): {};
+/**
  * Handles server response, when login has been queued
- * @param {number} Pos The position in queue
+ * @param {number} Pos - The position in queue
  */
 declare function LoginQueue(Pos: number): void;
 /**

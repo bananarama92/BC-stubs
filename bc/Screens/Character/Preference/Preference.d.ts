@@ -380,10 +380,11 @@ declare function PreferenceVisibilityHideChange(): void;
 declare function PreferenceVisibilityBlockChange(): void;
 /**
  * Adds or removes the current item to/from the list based on the new state of the corresponding checkbox
- * @param {ItemBundle[]} List - The list to add or remove the item from
+ * @param {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} permissionRecord - The record to add or remove the item from
  * @param {boolean} CheckSetting - The new true/false setting of the checkbox
+ * @param {"Hidden" | "Block"} Type
  */
-declare function PreferenceVisibilityCheckboxChanged(List: ItemBundle[], CheckSetting: boolean): void;
+declare function PreferenceVisibilityCheckboxChanged(permissionRecord: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>, CheckSetting: boolean, Type: "Hidden" | "Block"): void;
 /**
  * Saves changes to the settings, disposes of large lists & exits the visibility preference screen.
  * @param {boolean} SaveChanges - If TRUE, update HiddenItems and BlockItems for the account
@@ -573,6 +574,11 @@ declare function PreferenceSubscreenExtensionsClear(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceValidateArousalData(C: Character): void;
+/**
+ * Return a new object with default item permissions
+ * @returns {ItemPermissions} - The item permissions
+ */
+declare function PreferencePermissionGetDefault(): ItemPermissions;
 declare var PreferenceBackground: string;
 declare var PreferenceMessage: string;
 declare var PreferenceSafewordConfirm: boolean;
@@ -640,7 +646,16 @@ declare var PreferenceArousalFetishList: null | FetishName[];
 declare var PreferenceArousalFetishIndex: number;
 /** @type {ArousalFactor} */
 declare var PreferenceArousalFetishFactor: ArousalFactor;
-declare var PreferenceVisibilityGroupList: any[];
+/** @type {{ Group: AssetGroup, Assets: { Asset: Asset, Hidden: boolean, Blocked: boolean, Limited: boolean }[] }[]} */
+declare var PreferenceVisibilityGroupList: {
+    Group: AssetGroup;
+    Assets: {
+        Asset: Asset;
+        Hidden: boolean;
+        Blocked: boolean;
+        Limited: boolean;
+    }[];
+}[];
 declare var PreferenceVisibilityGroupIndex: number;
 declare var PreferenceVisibilityAssetIndex: number;
 declare var PreferenceVisibilityHideChecked: boolean;
@@ -648,10 +663,8 @@ declare var PreferenceVisibilityBlockChecked: boolean;
 declare var PreferenceVisibilityCanBlock: boolean;
 /** @type {null | Asset} */
 declare var PreferenceVisibilityPreviewAsset: null | Asset;
-/** @type {ItemPermissions[]} */
-declare var PreferenceVisibilityHiddenList: ItemPermissions[];
-/** @type {ItemPermissions[]} */
-declare var PreferenceVisibilityBlockList: ItemPermissions[];
+/** @type {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} */
+declare var PreferenceVisibilityRecord: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
 declare var PreferenceVisibilityResetClicked: boolean;
 /** @type {null | number} */
 declare var PreferenceDifficultyLevel: null | number;

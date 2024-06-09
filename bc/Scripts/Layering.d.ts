@@ -2,9 +2,11 @@ declare namespace Layering {
     let Character: null | Character;
     let Display: null | LayeringDisplay;
     let Item: null | Item;
+    let Readonly: boolean;
     const Asset: Asset;
     let OverridePriority: AssetLayerOverridePriority;
     let _PriorityDefault: undefined | AssetLayerOverridePriority;
+    let _Readonly: boolean;
     /**
      * Return whether the layering sub screen has currently been initialized (be it either active or unloaded)
      * @returns {boolean}
@@ -16,6 +18,7 @@ declare namespace Layering {
         buttonGrid: "layering-button-grid";
         resetButton: "layering-reset-button";
         exitButton: "layering-exit-button";
+        lockButton: "layering-lock-button";
         assetHeader: "layering-asset-header";
         assetGrid: "layering-asset-grid";
         layerHeader: "layering-layer-header";
@@ -56,9 +59,11 @@ declare namespace Layering {
     let _CharacterRefresh: typeof CharacterRefresh;
     /**
      * Event listener for `click` events of the reset button
+     * @this {HTMLButtonElement}
+     * @param {Event} ev
      * @private
      */
-    function _ResetClickListener(): void;
+    function _ResetClickListener(this: HTMLButtonElement, ev: Event): void;
     /**
      * Update the background colors of the `number`-based input elements, the color change depending on whether one is changing an asset- or layer-specific priority.
      * @private
@@ -81,6 +86,12 @@ declare namespace Layering {
      */
     function _GetDefaultPriority(): AssetLayerOverridePriority;
     /**
+     * Update all input elements and buttons with the passed {@link Layering.Readonly} status.
+     * @param {boolean} isReadonly
+     * @private
+     */
+    function _ApplyReadonly(isReadonly: boolean): void;
+    /**
      * Initialize the layering subscreen
      * @param {Item} item - The affected item
      * @param {Character} character - The item's owning character
@@ -89,7 +100,7 @@ declare namespace Layering {
      * A reload pushes any current changes towards the server and reinitializes all DOM elements.
      * @returns {HTMLDivElement} The div containing the layering subscreen
      */
-    function Init(item: Item, character: Character, display?: Partial<LayeringDisplay>, reload?: boolean): HTMLDivElement;
+    function Init(item: Item, character: Character, display?: Partial<LayeringDisplay>, reload?: boolean, readonly?: boolean): HTMLDivElement;
     function Load(): void;
     function Resize(load: boolean): void;
     function Unload(): void;

@@ -41,12 +41,22 @@ declare function InventoryDelete(C: Character, DelItemName: string, DelItemGroup
  */
 declare function InventoryDeleteGroup(C: Character, group: AssetGroupName, push?: boolean): InventoryItem[];
 /**
-* Loads the current inventory for a character, can be loaded from an object of Name/Group or a compressed array using
-* LZString
+* Loads the current inventory for a character, can be loaded from an object of Name/Group or a compressed array using LZString
 * @param {Character} C - The character on which we should load the inventory
 * @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>} Inventory - An array of Name / Group of items to load
 */
 declare function InventoryLoad(C: Character, Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>): void;
+/**
+* Loads the current inventory for a character, based on compressed data
+* @param {Character} C - The character on which we should load the inventory
+* @param {string} Data - The string of data to load
+*/
+declare function InventoryLoadCompressedData(C: Character, Data: string): void;
+/**
+* Creates the inventory data string from current inventory
+* @param {Character} C - The character on which we should load the inventory data string
+*/
+declare function InventoryDataBuild(C: Character): void;
 /**
 * Checks if the character has the inventory available
 * @param {Character} C - The character on which we should remove the item
@@ -288,7 +298,7 @@ declare function InventoryItemIsPickable(Item: Item): boolean;
  * @returns {(ItemProperties & Asset & AssetGroup)[Name] | undefined} - The value of the requested property for the given item.
  * Returns either undefined, an empty array or object if the property or the item itself does not exist.
  */
-declare function InventoryGetItemProperty<Name extends "Block" | "BlockRemotes" | "OpenPermission" | "OpenPermissionArm" | "OpenPermissionLeg" | "OpenPermissionChastity" | "Hide" | "Name" | "Gender" | "BuyGroup" | "AllowLock" | "IsLock" | "PickDifficulty" | "OwnerOnly" | "LoverOnly" | "FamilyOnly" | "AllowTighten" | "DrawLocks" | "CustomBlindBackground" | "CraftGroup" | "AllowLockType" | "CharacterRestricted" | "AllowRemoveExclusive" | "ArousalZone" | "Difficulty" | "SelfBondage" | "SelfUnlock" | "RemoveTime" | "AlwaysInteract" | "IsRestraint" | "ParentItem" | "Enable" | "Visible" | "NotVisibleOnScreen" | "Wear" | "Activity" | "AllowActivity" | "ActivityAudio" | "ActivityExpression" | "AllowActivityOn" | "Bonus" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "WhitelistActivePose" | "Value" | "NeverSell" | "ExclusiveUnlock" | "RemoveAtLogin" | "LayerVisibility" | "RemoveTimer" | "MaxTimer" | "Prerequisite" | "Extended" | "AlwaysExtend" | "ExpressionTrigger" | "RemoveItemOnRemove" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "AllowTypes" | "CreateLayerTypes" | "DefaultColor" | "Audio" | "Category" | "Fetish" | "OverrideBlinking" | "DialogSortOverride" | "DynamicDescription" | "DynamicPreviewImage" | "DynamicAllowInventoryAdd" | "DynamicName" | "DynamicGroupName" | "DynamicActivity" | "DynamicAudio" | "DynamicBeforeDraw" | "DynamicAfterDraw" | "DynamicScriptDraw" | "AllowColorizeAll" | "AvailableLocations" | "OverrideHeight" | "FullAlpha" | "MirrorExpression" | "Layer" | "Attribute" | "HideItemAttribute" | "PreviewIcons" | "Tint" | "DefaultTint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "FreezeActivePose" | "AllowExpression" | "Random" | "ArousalZoneID" | "BodyCosplay" | "HideForPose" | "Alpha" | "ColorSuffix" | "FixedPosition" | "Opacity" | "MinOpacity" | "MaxOpacity" | "InheritColor" | "AllowPose" | "PoseMapping" | "AllowColorize" | "Group" | "Text" | "Padding" | "TypeRecord" | "Door" | "Type" | "Expression" | "Mode" | "Intensity" | "State" | "Modules" | "HeightModifier" | "OverridePriority" | "ItemMemberNumber" | "LockedBy" | "LockMemberNumber" | "Password" | "LockPickSeed" | "CombinationNumber" | "MemberNumberListKeys" | "Hint" | "LockSet" | "RemoveItem" | "RemoveOnUnlock" | "ShowTimer" | "EnableRandomInput" | "MemberNumberList" | "InflateLevel" | "SuctionLevel" | "Text2" | "Text3" | "LockButt" | "HeartRate" | "AutoPunish" | "AutoPunishUndoTime" | "AutoPunishUndoTimeSetting" | "OriginalSetting" | "BlinkState" | "Option" | "PunishStruggle" | "PunishStruggleOther" | "PunishOrgasm" | "PunishStandup" | "PunishActivity" | "PunishSpeech" | "PunishRequiredSpeech" | "PunishRequiredSpeechWord" | "PunishProhibitedSpeech" | "PunishProhibitedSpeechWords" | "NextShockTime" | "PublicModeCurrent" | "PublicModePermission" | "TriggerValues" | "AccessMode" | "ShockLevel" | "InsertedBeads" | "ShowText" | "TriggerCount" | "OrgasmCount" | "RuinedOrgasmCount" | "TimeWorn" | "TimeSinceLastOrgasm" | "Iterations" | "Revert" | "UnHide" | "Texts" | "TargetAngle" | "PortalLinkCode" | "Underwear" | "Asset" | "Clothing" | "AllowNone" | "AllowCustomize" | "ParentSize" | "ParentColor" | "Zone" | "MirrorGroup" | "PreviewZone" | "MirrorActivitiesFrom" | "HasPreviewImages" | "HasType" | "ParentGroupName" | "DrawingLeft" | "DrawingTop" | "Description" | "WearTime" | "DrawingPriority" | "ZoomModifier" | "ColorableLayerCount" | "Archetype" | "AllowTint" | "Family" | "IsDefault" | "ColorSchema" | "DrawingBlink" | "IsAppearance" | "IsItem" | "IsScript">(Item: Item, PropertyName: Name, CheckGroup?: boolean): (ItemProperties & Asset & AssetGroup)[Name];
+declare function InventoryGetItemProperty<Name extends "Block" | "BlockRemotes" | "OpenPermission" | "OpenPermissionArm" | "OpenPermissionLeg" | "OpenPermissionChastity" | "Hide" | "Name" | "InventoryID" | "Gender" | "BuyGroup" | "AllowLock" | "IsLock" | "PickDifficulty" | "OwnerOnly" | "LoverOnly" | "FamilyOnly" | "AllowTighten" | "DrawLocks" | "CustomBlindBackground" | "CraftGroup" | "AllowLockType" | "CharacterRestricted" | "AllowRemoveExclusive" | "ArousalZone" | "Difficulty" | "SelfBondage" | "SelfUnlock" | "RemoveTime" | "AlwaysInteract" | "IsRestraint" | "ParentItem" | "Enable" | "Visible" | "NotVisibleOnScreen" | "Wear" | "Activity" | "AllowActivity" | "ActivityAudio" | "ActivityExpression" | "AllowActivityOn" | "Bonus" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "WhitelistActivePose" | "Value" | "NeverSell" | "ExclusiveUnlock" | "RemoveAtLogin" | "LayerVisibility" | "RemoveTimer" | "MaxTimer" | "Prerequisite" | "Extended" | "AlwaysExtend" | "ExpressionTrigger" | "RemoveItemOnRemove" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "AllowTypes" | "CreateLayerTypes" | "DefaultColor" | "Audio" | "Category" | "Fetish" | "OverrideBlinking" | "DialogSortOverride" | "DynamicDescription" | "DynamicPreviewImage" | "DynamicAllowInventoryAdd" | "DynamicName" | "DynamicGroupName" | "DynamicActivity" | "DynamicAudio" | "DynamicBeforeDraw" | "DynamicAfterDraw" | "DynamicScriptDraw" | "AllowColorizeAll" | "AvailableLocations" | "OverrideHeight" | "FullAlpha" | "MirrorExpression" | "Layer" | "Attribute" | "HideItemAttribute" | "PreviewIcons" | "Tint" | "DefaultTint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "FreezeActivePose" | "AllowExpression" | "Random" | "ArousalZoneID" | "BodyCosplay" | "HideForPose" | "Alpha" | "ColorSuffix" | "FixedPosition" | "Opacity" | "MinOpacity" | "MaxOpacity" | "InheritColor" | "AllowPose" | "PoseMapping" | "AllowColorize" | "Group" | "Text" | "Padding" | "TypeRecord" | "Door" | "Option" | "Type" | "Expression" | "Mode" | "Intensity" | "State" | "Modules" | "HeightModifier" | "OverridePriority" | "ItemMemberNumber" | "LockedBy" | "LockMemberNumber" | "Password" | "LockPickSeed" | "CombinationNumber" | "MemberNumberListKeys" | "Hint" | "LockSet" | "RemoveItem" | "RemoveOnUnlock" | "ShowTimer" | "EnableRandomInput" | "MemberNumberList" | "InflateLevel" | "SuctionLevel" | "Text2" | "Text3" | "LockButt" | "HeartRate" | "AutoPunish" | "AutoPunishUndoTime" | "AutoPunishUndoTimeSetting" | "OriginalSetting" | "BlinkState" | "PunishStruggle" | "PunishStruggleOther" | "PunishOrgasm" | "PunishStandup" | "PunishActivity" | "PunishSpeech" | "PunishRequiredSpeech" | "PunishRequiredSpeechWord" | "PunishProhibitedSpeech" | "PunishProhibitedSpeechWords" | "NextShockTime" | "PublicModeCurrent" | "PublicModePermission" | "TriggerValues" | "AccessMode" | "ShockLevel" | "InsertedBeads" | "ShowText" | "TriggerCount" | "OrgasmCount" | "RuinedOrgasmCount" | "TimeWorn" | "TimeSinceLastOrgasm" | "Iterations" | "Revert" | "UnHide" | "Texts" | "TargetAngle" | "PortalLinkCode" | "Underwear" | "Archetype" | "Asset" | "Clothing" | "AllowNone" | "AllowCustomize" | "ParentSize" | "ParentColor" | "Zone" | "MirrorGroup" | "PreviewZone" | "MirrorActivitiesFrom" | "HasPreviewImages" | "HasType" | "ParentGroupName" | "DrawingLeft" | "DrawingTop" | "Description" | "WearTime" | "DrawingPriority" | "ZoomModifier" | "ColorableLayerCount" | "AllowTint" | "Family" | "IsDefault" | "ColorSchema" | "DrawingBlink" | "IsAppearance" | "IsItem" | "IsScript">(Item: Item, PropertyName: Name, CheckGroup?: boolean): (ItemProperties & Asset & AssetGroup)[Name];
 /**
  * Apply an item's expression trigger to a character if able
  * @param {Character} C - The character to update
@@ -415,13 +425,24 @@ declare function InventoryConfiscateRemote(): void;
 */
 declare function InventoryIsWorn(C: Character, AssetName: string, AssetGroup: AssetGroupName): boolean;
 /**
- * Toggles an item's permission for the player
- * @param {Item} Item - Appearance item to toggle
- * @param {string} [Type] - Type of the item to toggle
- * @param {boolean} [Worn] - True if the player is changing permissions for an item they're wearing or if it's the first option
+ * Set the item's permission to a specific value for the player.
+ * @param {AssetGroupName} groupName
+ * @param {string} assetName
+ * @param {ItemPermissionMode} permissionType
+ * @param {null | string} type - The relevant extended item option identifier of the item (if any)
+ * @param {boolean} push - Whether to push the permission changes to the server
  * @returns {void} - Nothing
  */
-declare function InventoryTogglePermission(Item: Item, Type?: string, Worn?: boolean): void;
+declare function InventorySetPermission(groupName: AssetGroupName, assetName: string, permissionType: ItemPermissionMode, type?: null | string, push?: boolean): void;
+/**
+ * Toggles an item's permission for the player
+ * @param {Item} Item - Appearance item to toggle
+ * @param {string} [Type] - The relevant extended item option identifier of the item (if any)
+ * @param {boolean} [Worn] - True if the player is changing permissions for an item they're wearing or if it's the first option
+ * @param {boolean} push - Whether to push the permission changes to the server
+ * @returns {void} - Nothing
+ */
+declare function InventoryTogglePermission(Item: Item, Type?: string, Worn?: boolean, push?: boolean): void;
 /**
 * Returns TRUE if a specific item / asset is blocked by the character item permissions
 * @param {Character} C - The character on which we check the permissions

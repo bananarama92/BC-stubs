@@ -31,11 +31,7 @@ declare function GameMouseDown(event: MouseEvent): void;
  * @param {MouseEvent} event
  */
 declare function GameMouseUp(event: MouseEvent): void;
-/**
- * If the user rolls the mouse wheel, we fire the mousewheel event for other screens
- * @param {MouseEvent} event
- */
-declare function GameMouseWheel(event: MouseEvent): void;
+declare function GameMouseWheel(event: WheelEvent): void;
 /**
  * If the user moves the mouse mouse, we keep the mouse position for other scripts and fire the mousemove event for other screens
  * @param {MouseEvent} event
