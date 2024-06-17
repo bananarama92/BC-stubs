@@ -75,10 +75,10 @@ declare function ClubCardPlayerAddMoney(CCPlayer: ClubCardPlayer, Amount: number
 declare function ClubCardPlayerAddFame(CCPlayer: ClubCardPlayer, Amount: number): void;
 /**
  * Raises the level of player
- * @param {Object} CCPlayer - The club card player
+ * @param {ClubCardPlayer} CCPlayer - The club card player
  * @returns {void} - Nothing
  */
-declare function ClubCardUpgradeLevel(CCPlayer: any): void;
+declare function ClubCardUpgradeLevel(CCPlayer: ClubCardPlayer): void;
 /**
  * Returns TRUE if a card (by name) is currently present on a board
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -101,6 +101,12 @@ declare function ClubCardNameIsOnBoard(CCPlayer: ClubCardPlayer, CardName: strin
  */
 declare function ClubCardGroupIsOnBoard(CCPlayer: ClubCardPlayer, GroupName: string): boolean;
 /**
+ * @param {ClubCard} card to evaluate group
+ * @param {string} GroupName group name to find
+ * @returns {boolean} - True if the card has the group
+ */
+declare function ClubCardCardHasGroup(card: ClubCard, GroupName: string): boolean;
+/**
  * Returns the number of cards of a specific group found on a board
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {string} GroupName - The name of the card group
@@ -114,6 +120,13 @@ declare function ClubCardGroupOnBoardCount(CCPlayer: ClubCardPlayer, GroupName: 
  * @returns {void} - Nothing
  */
 declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
+/**
+ * Gets the max effect a card should have depending on its "tier"/required level to play
+ * @param {ClubCard} Card
+ * @param {number} fame
+ * @returns {number} max effect card should have
+ */
+declare function ClubCardGetMaxEffectFromCard(Card: ClubCard, fame: number): number;
 /**
  * Adds a card to a players hand
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -161,6 +174,27 @@ declare function ClubCardSetGlow(Card: ClubCard, Color: string): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardPlayerDrawCard(CCPlayer: ClubCardPlayer, Amount?: number | null): void;
+/**
+ * Draw cards from the player deck into it's hand
+ * @param {ClubCardPlayer} CCPlayer - The club card player that draws the cards
+ * @param {string} group - The group to draw from
+ * @returns {boolean} - if cards were drawn or not
+ */
+declare function ClubCardPlayerDrawGroupCard(CCPlayer: ClubCardPlayer, group: string): boolean;
+/**
+ *
+ * @param {ClubCardPlayer} CCPlayer - The club card player that draws the cards
+ * @returns {void} - Nothing
+ *
+ */
+declare function ClubCardCheckDetectiveDraw(CCPlayer: ClubCardPlayer): void;
+/**
+ * Common place to handle Alvins effect on kidnapping and Restrain
+ * @param {ClubCardPlayer} CCPlayer
+ * @returns {void} - Nothing
+ *
+ */
+declare function ClubCardAlvinCondition(CCPlayer: ClubCardPlayer): void;
 /**
  * Removes cards from a player hand
  * @param {ClubCardPlayer} CCPlayer - The club card player that discards
@@ -402,7 +436,8 @@ declare var ClubCardTurnCardPlayed: number;
 declare var ClubCardTurnEndDraw: boolean;
 declare var ClubCardFameGoal: number;
 declare var ClubCardPopup: any;
-declare var ClubCardSelection: any;
+/** @type {ClubCard} */
+declare var ClubCardSelection: ClubCard;
 declare var ClubCardPending: any;
 declare var ClubCardLevelLimit: number[];
 declare var ClubCardLevelCost: number[];
