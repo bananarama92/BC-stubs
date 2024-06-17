@@ -28,8 +28,8 @@ declare function CommandCombine(add: ICommand | ICommand[]): void;
 /**
  * Parse the input chat message
  * @param {string} msg - Input string, cannot be empty
- * @returns {string|boolean} a de-escaped string if msg looks like an escaped
- *   command, true if a command successfully executed, false otherwise.
+ * @returns {string | boolean} a (de-escaped) string if msg looks like an normal message,
+ * true if a command successfully executed, false otherwise.
  */
 declare function CommandParse(msg: string): string | boolean;
 /**

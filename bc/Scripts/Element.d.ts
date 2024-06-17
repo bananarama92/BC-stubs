@@ -215,6 +215,16 @@ declare function ElementCreateSearchInput(id: string, dataCallback: () => Iterab
     parent?: null | Node;
     maxLength?: null | number;
 }): HTMLInputElement;
+/**
+ * Return whether an element is visible or not.
+ *
+ * Approximate polyfill of [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility),
+ * as its browser support is still somewhat limited (~88% at the time of writing).
+ * @param {Element} el - The element in question
+ * @param {CheckVisibilityOptions} [options] - Additional options to-be passed to `Element.checkVisibility()`
+ * @returns {boolean} - Whether the passed element is visible or not
+ */
+declare function ElementCheckVisibility(el: Element, options?: CheckVisibilityOptions): boolean;
 declare namespace ElementCheckboxDropdown {
     /**
      * @param {string} idPrefix

@@ -152,7 +152,7 @@ declare namespace Shop2 {
     function _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
     function _AssetElementClick(event: MouseEvent | TouchEvent, assetIndex: number): void;
     function _GenerateAssetElements(): Record<string, ShopScreenFunctions>;
-    function ApplyItemFilters(): void;
+    function ApplyItemFilters(clearDatalist?: boolean): void;
     function _SetCheckboxFilters(): void;
     function _UpdatePoseButtons(): void;
     function _ClickDropdown(): void;
