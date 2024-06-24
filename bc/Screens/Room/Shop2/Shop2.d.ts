@@ -165,5 +165,5 @@ declare namespace Shop2 {
      * @param {null | [module: ModuleType, screen: string]} screen - A 2-tuple containing the module and name of the previous screen
      * @param {null | readonly Asset[]} assets - A list of all assets that should appear in the shop
      */
-    function Init(background?: string, screen?: [module: ModuleType, screen: string], assets?: readonly Asset[]): void;
+    function Init(background?: null | string, screen?: null | [module: ModuleType, screen: string], assets?: null | readonly Asset[]): void;
 }

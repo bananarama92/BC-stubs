@@ -38,7 +38,7 @@ declare function ServerDisconnect(data?: ServerForceDisconnectMessage, close?: b
  * @returns {boolean} - True if in a chatroom
  */
 declare function ServerPlayerIsInChatRoom(): boolean;
-declare function ServerSend<Ev extends "AccountCreate" | "AccountLogin" | "PasswordReset" | "PasswordResetProcess" | "AccountUpdate" | "AccountUpdateEmail" | "AccountQuery" | "AccountBeep" | "AccountOwnership" | "AccountLovership" | "AccountDifficulty" | "AccountDisconnect" | "ChatRoomSearch" | "ChatRoomCreate" | "ChatRoomJoin" | "ChatRoomLeave" | "ChatRoomChat" | "ChatRoomCharacterUpdate" | "ChatRoomCharacterExpressionUpdate" | "ChatRoomCharacterPoseUpdate" | "ChatRoomCharacterArousalUpdate" | "ChatRoomCharacterItemUpdate" | "ChatRoomCharacterMapDataUpdate" | "ChatRoomAdmin" | "ChatRoomAllowItem" | "ChatRoomGame">(ev: Ev, ...args: Parameters<ClientToServerEvents[Ev]>): void;
+declare function ServerSend<Ev extends import("@socket.io/component-emitter").EventNames<ClientToServerEvents>>(ev: Ev, ...args: import("@socket.io/component-emitter").EventParams<ClientToServerEvents, Ev>): void;
 /**
  * Process the outgoing server messages queue
  */
@@ -296,13 +296,13 @@ declare namespace ServerAccountDataSyncedValidate {
         VFXFilter: SettingsVFXFilterName;
         Progress: number;
         ProgressTimer: number;
-        VibratorLevel: 0 | 2 | 1 | 3 | 4;
+        VibratorLevel: 0 | 1 | 2 | 3 | 4;
         ChangeTime: number;
         Activity: string;
         Zone: string;
         Fetish: string;
         OrgasmTimer: number;
-        OrgasmStage: 0 | 2 | 1;
+        OrgasmStage: 0 | 1 | 2;
         OrgasmCount: number;
         DisableAdvancedVibes: boolean;
     };

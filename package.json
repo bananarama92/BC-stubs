@@ -1,6 +1,6 @@
 {
   "name": "bc-stubs",
-  "version": "105.0.0",
+  "version": "105.0.1",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/bananarama92/BC-stubs.git"
@@ -19,10 +19,8 @@
   "homepage": "https://github.com/bananarama92/BC-stubs#readme",
   "dependencies": {
     "socket.io-client": "4.6.1",
-    "@types/lz-string": "1.3.34"
+    "@types/lz-string": "1.3.34",
+    "typescript": ">=5.5.0"
   },
-  "devDependencies": {
-    "typescript": "^5.4.4"
-  },
-  "typeScriptVersion": "^5.4.4"
+  "typeScriptVersion": "^5.5.2"
 }

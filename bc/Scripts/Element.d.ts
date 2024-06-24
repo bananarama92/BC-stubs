@@ -17,7 +17,7 @@ declare function ElementContent(ID: string, Content?: string): string;
  * @param {null | HTMLOptions<T>} options - Options for customizing the element
  * @returns {HTMLElementTagNameMap[T]} - The created element
  */
-declare function ElementCreate<T extends keyof HTMLElementTagNameMap>(options: HTMLOptions<T>): HTMLElementTagNameMap[T];
+declare function ElementCreate<T extends keyof HTMLElementScalarTagNameMap>(options: null | HTMLOptions<T>): HTMLElementTagNameMap[T];
 /**
  * Creates a new from element in the main document.
  *
@@ -276,17 +276,17 @@ declare namespace ElementButton {
     let _MouseDown: (this: HTMLButtonElement, event: MouseEvent) => Promise<void>;
     let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
-    function Create(id: string, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: {
-        tooltip?: string | Node;
-        tooltipPosition?: "left" | "top" | "bottom" | "right";
-    }, htmlOptions?: Partial<Record<"button" | "tooltip", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    function Create(id: null | string, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: {
+        tooltip?: null | string | Node;
+        tooltipPosition?: "left" | "right" | "top" | "bottom";
+    }, htmlOptions?: null | Partial<Record<"button" | "tooltip", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
 }
 declare namespace ElementMenu {
     export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;
     export { _KeyDown_1 as _KeyDown };
     export function Create_1(id: string, menuItems: readonly (string | Node | HTMLOptions<keyof HTMLElementTagNameMap>)[], options?: {
         direction?: "ltr" | "rtl";
-    }, htmlOptions?: Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>): HTMLDivElement;
+    }, htmlOptions?: null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>): HTMLDivElement;
     export { Create_1 as Create };
     export function AppendButton(div: HTMLDivElement, menuitem: HTMLElement): void;
     export function PrependItem(div: HTMLDivElement, menuitem: HTMLElement): void;

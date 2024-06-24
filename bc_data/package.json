@@ -1,6 +1,6 @@
 {
   "name": "bc-data",
-  "version": "105.0.0",
+  "version": "105.0.1",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/bananarama92/BC-stubs.git"
@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/bananarama92/BC-stubs/tree/main/bc_data#readme",
   "devDependencies": {
-    "typescript": "^5.4.4",
-    "@types/node": "^20.12.4",
+    "typescript": "^5.5.2",
+    "@types/node": "^20.14.8",
     "minimist": "^1.2.8",
     "@types/minimist": "^1.2.5"
   }

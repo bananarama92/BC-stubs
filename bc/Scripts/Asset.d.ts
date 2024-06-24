@@ -158,7 +158,7 @@ declare function AssetActivitiesForGroup(family: IAssetFamily, groupname: AssetG
  * @param {T} Group - The name of the asset group to find
  * @returns {AssetGroupMap[T] | null} - The asset group matching the provided family and group name
  */
-declare function AssetGroupGet<T extends AssetGroupName>(Family: IAssetFamily, Group: T): AssetGroupMap[T];
+declare function AssetGroupGet<T extends AssetGroupName>(Family: IAssetFamily, Group: T): AssetGroupMap[T] | null;
 /**
  * Utility function for retrieving the preview image directory path for an asset
  * @param {Asset} A - The asset whose preview path to retrieve
@@ -272,12 +272,12 @@ declare namespace PoseType {
     let DEFAULT: "";
 }
 declare namespace AssetResolveCopyConfig {
-    export function _AssignBuyGroup(configList: readonly {
+    function _AssignBuyGroup(configList: readonly {
         BuyGroup?: string;
         Value?: number;
         Name?: string;
     }[]): void;
-    export function _Resolve<T extends {
+    function _Resolve<T extends {
         CopyConfig?: {
             GroupName?: AssetGroupName;
             AssetName: string;
@@ -285,11 +285,10 @@ declare namespace AssetResolveCopyConfig {
         BuyGroup?: string;
         Value?: number;
         Name?: string;
-    }>(config: T, assetName: string, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Record<string, T>>>, configType: string, configValidator?: AssetCopyConfigValidator<T>, setBuyGroup?: boolean): T;
-    export let _ExtendedValidator: AssetCopyConfigValidator<AssetArchetypeConfig>;
-    export function AssetDefinition_1(assetDef: AssetDefinition, groupName: AssetGroupName, assetRecord: Partial<Record<AssetGroupName, Record<string, AssetDefinition>>>): AssetDefinition;
-    export { AssetDefinition_1 as AssetDefinition };
-    export function ExtendedItemConfig(asset: Asset, config: AssetArchetypeConfig, extendedConfig: Partial<Record<AssetGroupName, ExtendedItemGroupConfig>>): AssetArchetypeConfig;
+    }>(config: T, assetName: string, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Record<string, T>>>, configType: string, configValidator?: null | AssetCopyConfigValidator<T>, setBuyGroup?: boolean): null | T;
+    let _ExtendedValidator: AssetCopyConfigValidator<AssetArchetypeConfig>;
+    function AssetDefinition(assetDef: AssetDefinition, groupName: AssetGroupName, assetRecord: Partial<Record<AssetGroupName, Record<string, AssetDefinition>>>): null | AssetDefinition;
+    function ExtendedItemConfig(asset: Asset, config: AssetArchetypeConfig, extendedConfig: ExtendedItemMainConfig): null | AssetArchetypeConfig;
 }
 declare const AssetStringsPath: "Assets/Female3DCG/AssetStrings.csv";
 type AssetCopyConfigValidator<T> = (config: T, superConfig: T, key: string, superKey: string) => boolean;
