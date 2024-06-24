@@ -742,10 +742,7 @@ declare namespace PreferenceArousalFetishDefault {
  * @type {{ [k in keyof ArousalFetish]: (arg: ArousalFetish[k], C: Character) => ArousalFetish[k] }}
  * @namespace
  */
-declare var PreferenceArousalFetishValidate: {
-    Name: (arg: FetishName, C: Character) => FetishName;
-    Factor: (arg: ArousalFactor, C: Character) => ArousalFactor;
-};
+declare var PreferenceArousalFetishValidate: { [k in keyof ArousalFetish]: (arg: ArousalFetish[k], C: Character) => ArousalFetish[k]; };
 declare namespace PreferenceArousalZoneDefault {
     let Name_3: AssetGroupItemName | undefined;
     export { Name_3 as Name };
@@ -772,27 +769,7 @@ declare var PreferenceArousalSettingsDefault: Required<ArousalSettingsType>;
  * @type {{ [k in keyof Required<ArousalSettingsType>]: (arg: ArousalSettingsType[k], C: Character) => ArousalSettingsType[k] }}
  * @namespace
  */
-declare var PreferenceArousalSettingsValidate: {
-    Active: (arg: ArousalActiveName, C: Character) => ArousalActiveName;
-    Visible: (arg: ArousalVisibleName, C: Character) => ArousalVisibleName;
-    ShowOtherMeter: (arg: boolean, C: Character) => boolean;
-    AffectExpression: (arg: boolean, C: Character) => boolean;
-    AffectStutter: (arg: ArousalAffectStutterName, C: Character) => ArousalAffectStutterName;
-    VFX: (arg: SettingsVFXName, C: Character) => SettingsVFXName;
-    VFXVibrator: (arg: SettingsVFXVibratorName, C: Character) => SettingsVFXVibratorName;
-    VFXFilter: (arg: SettingsVFXFilterName, C: Character) => SettingsVFXFilterName;
-    Progress: (arg: number, C: Character) => number;
-    ProgressTimer: (arg: number, C: Character) => number;
-    VibratorLevel: (arg: 0 | 2 | 1 | 3 | 4, C: Character) => 0 | 2 | 1 | 3 | 4;
-    ChangeTime: (arg: number, C: Character) => number;
-    Activity: (arg: string, C: Character) => string;
-    Zone: (arg: string, C: Character) => string;
-    Fetish: (arg: string, C: Character) => string;
-    OrgasmTimer: (arg: number, C: Character) => number;
-    OrgasmStage: (arg: 0 | 2 | 1, C: Character) => 0 | 2 | 1;
-    OrgasmCount: (arg: number, C: Character) => number;
-    DisableAdvancedVibes: (arg: boolean, C: Character) => boolean;
-};
+declare var PreferenceArousalSettingsValidate: { [k in keyof Required<ArousalSettingsType>]: (arg: ArousalSettingsType[k], C: Character) => ArousalSettingsType[k]; };
 /**
  * Namespace with default values for {@link CharacterOnlineSharedSettings} properties.
  * @type {CharacterOnlineSharedSettings}
@@ -804,14 +781,4 @@ declare var PreferenceOnlineSharedSettingsDefault: CharacterOnlineSharedSettings
  * @type {{ [k in keyof Required<CharacterOnlineSharedSettings>]: (arg: CharacterOnlineSharedSettings[k], C: Character) => CharacterOnlineSharedSettings[k] }}
  * @namespace
  */
-declare var PreferenceOnlineSharedSettingsValidate: {
-    AllowFullWardrobeAccess: (arg: boolean, C: Character) => boolean;
-    BlockBodyCosplay: (arg: boolean, C: Character) => boolean;
-    AllowPlayerLeashing: (arg: boolean, C: Character) => boolean;
-    AllowRename: (arg: boolean, C: Character) => boolean;
-    DisablePickingLocksOnSelf: (arg: boolean, C: Character) => boolean;
-    GameVersion: (arg: string, C: Character) => string;
-    ItemsAffectExpressions: (arg: boolean, C: Character) => boolean;
-    ScriptPermissions: (arg: ScriptPermissions, C: Character) => ScriptPermissions;
-    WheelFortune: (arg: string, C: Character) => string;
-};
+declare var PreferenceOnlineSharedSettingsValidate: { [k in keyof Required<CharacterOnlineSharedSettings>]: (arg: CharacterOnlineSharedSettings[k], C: Character) => CharacterOnlineSharedSettings[k]; };

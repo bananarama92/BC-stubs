@@ -91,7 +91,7 @@ declare function DialogFullRandomRestrain(C: string | Character): void;
  * @param {T} LogGroup - The name of the log group
  * @returns {boolean} - Returns true, if a specific log is registered
  */
-declare function DialogLogQuery<T extends keyof LogNameType>(LogType: LogNameType[T], LogGroup: T): boolean;
+declare function DialogLogQuery<T extends LogGroupType>(LogType: LogNameType[T], LogGroup: T): boolean;
 /**
  * Sets the AllowItem flag on the current character
  * @param {string} Allow - The flag to set. Either "TRUE" or "FALSE"
@@ -1011,9 +1011,9 @@ declare namespace DialogEffectIcons {
     let Table: Partial<Record<InventoryIcon, readonly EffectName[]>>;
     function GetIcons(item: Item): InventoryIcon[];
     let GetEffectIcons: (effects: EffectName[], prop?: CraftingPropertyType) => null | InventoryIcon[];
-    function _GetGagIcon(effect: EffectName, prop?: CraftingPropertyType): InventoryIcon;
-    function _GetBlindIcon(effect: EffectName, prop?: CraftingPropertyType): InventoryIcon;
-    function _GetDeafIcon(effect: EffectName): InventoryIcon;
+    function _GetGagIcon(effect: EffectName, prop?: CraftingPropertyType): null | InventoryIcon;
+    function _GetBlindIcon(effect: EffectName, prop?: CraftingPropertyType): null | InventoryIcon;
+    function _GetDeafIcon(effect: EffectName): undefined | InventoryIcon;
     let _GagLevelToIcon: (level?: number) => null | InventoryIcon;
     let _BlindLevelToIcon: (level?: number) => null | InventoryIcon;
 }

@@ -150,7 +150,7 @@ declare function CommonEmailIsValid(Email: string): boolean;
  * @param {number} index
  * @returns {undefined|T}
  */
-declare function CommonRemoveItemFromList<T>(list: T[], index: number): T;
+declare function CommonRemoveItemFromList<T>(list: T[], index: number): undefined | T;
 /**
  * Removes random item from list and returns it
  * @template T
@@ -455,7 +455,7 @@ declare function CommonPick<KeyType extends keyof RecordType, RecordType extends
  * @param {number} step - The step size in which the index is incremented
  * @returns {Generator<[index: number, value: T], void>}
  */
-declare function CommonEnumerate<T>(iterable: Iterable<T>, start?: number, step?: number): Generator<[index: number, value: T], void, any>;
+declare function CommonEnumerate<T>(iterable: Iterable<T>, start?: number, step?: number): Generator<[index: number, value: T], void>;
 /**
  * Return a value clamped to a minimum and maximum
  * @param {number} value
@@ -555,7 +555,7 @@ declare function CommonProperty<T extends unknown>(propertyName: string, getter?
  * @param {T} callback - The function with its new name
  * @param {Record<string, any>} namespace - The namespace wherein the new and old names will be stored
  */
-declare function CommonDeprecateFunction<T extends (...any: any[]) => any>(oldName: string, callback: T, namespace?: Record<string, any>): void;
+declare function CommonDeprecateFunction<T extends (...any: any) => any>(oldName: string, callback: T, namespace?: Record<string, any>): void;
 /**
  * Capitalize the first character of the passed string.
  * @template {string} T
@@ -573,7 +573,7 @@ declare function CommonCapitalize<T extends string>(string: T): Capitalize<T>;
  * Generally only relevant if one of the fields contains non-JSON-serializible data.
  * @returns {VariableContainer<T1, T2>} - The newly created object
  */
-declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: T2, resetCallbacks?: null | {
+declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: null | T2, resetCallbacks?: null | {
     replacer?: (this: any, key: string, value: any) => any;
     reviver?: (this: any, key: string, value: any) => any;
 }): VariableContainer<T1, T2>;

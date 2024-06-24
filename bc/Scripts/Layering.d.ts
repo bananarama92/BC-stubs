@@ -84,7 +84,7 @@ declare namespace Layering {
      * @private
      * @returns {undefined | AssetLayerOverridePriority}
      */
-    function _GetDefaultPriority(): AssetLayerOverridePriority;
+    function _GetDefaultPriority(): undefined | AssetLayerOverridePriority;
     /**
      * Update all input elements and buttons with the passed {@link Layering.Readonly} status.
      * @param {boolean} isReadonly
@@ -100,7 +100,7 @@ declare namespace Layering {
      * A reload pushes any current changes towards the server and reinitializes all DOM elements.
      * @returns {HTMLDivElement} The div containing the layering subscreen
      */
-    function Init(item: Item, character: Character, display?: Partial<LayeringDisplay>, reload?: boolean, readonly?: boolean): HTMLDivElement;
+    function Init(item: Item, character: Character, display?: null | Partial<LayeringDisplay>, reload?: boolean, readonly?: boolean): HTMLDivElement;
     function Load(): void;
     function Resize(load: boolean): void;
     function Unload(): void;

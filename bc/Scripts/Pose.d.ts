@@ -65,8 +65,8 @@ declare const PoseAllKneeling: readonly ("Kneel" | "KneelingSpread")[];
  */
 declare const PoseAllStanding: readonly ("BaseLower" | "LegsClosed" | "LegsOpen" | "Spread")[];
 declare namespace PoseToMapping {
-    function Array(poses: readonly AssetPoseName[], warningPrefix?: string): Partial<Record<keyof AssetPoseMap, AssetPoseName[]>>;
-    function Scalar(poses: readonly AssetPoseName[], warningPrefix?: string): Partial<Record<keyof AssetPoseMap, AssetPoseName>>;
+    function Array(poses: readonly AssetPoseName[], warningPrefix?: null | string): Partial<Record<AssetPoseCategory, AssetPoseName[]>>;
+    function Scalar(poses: readonly AssetPoseName[], warningPrefix?: null | string): Partial<Record<AssetPoseCategory, AssetPoseName>>;
 }
 declare namespace PoseChangeStatus {
     let NEVER: 0;
