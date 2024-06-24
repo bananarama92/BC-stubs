@@ -85,6 +85,7 @@ jobs:
           npx -p typescript tsc
           set -e
 
+          cp ../../.github/lzstring.d.ts dist/lzstring.d.ts
           cp Scripts/Typedef.d.ts dist/Typedef.d.ts
           cp Scripts/Messages.d.ts dist/Messages.d.ts
           cp Assets/Female3DCG/Female3DCG_Types.d.ts dist/Female3DCG_Types.d.ts
