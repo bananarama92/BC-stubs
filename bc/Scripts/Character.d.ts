@@ -35,11 +35,11 @@ declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo): void;
 /**
  * Sets the clothes based on a character archetype
  * @param {Character} C - Character to set the clothes for
- * @param {"Maid" | "Mistress" | "Employee"} Archetype - Archetype to determine the clothes to put on
+ * @param {"Maid" | "Mistress" | "Employee" | "AnimeGirl"} Archetype - Archetype to determine the clothes to put on
  * @param {string} [ForceColor] - Color to use for the added clothes
  * @returns {void} - Nothing
  */
-declare function CharacterArchetypeClothes(C: Character, Archetype: "Maid" | "Mistress" | "Employee", ForceColor?: string): void;
+declare function CharacterArchetypeClothes(C: Character, Archetype: "Maid" | "Mistress" | "Employee" | "AnimeGirl", ForceColor?: string): void;
 /**
  * Loads an NPC into the character array. The appearance is randomized, and a type can be provided to dress them in a given style.
  * @param {string} CharacterID - The unique identifier for the NPC
@@ -170,9 +170,10 @@ declare function CharacterIsInUnderwear(C: Character): boolean;
 /**
  * Removes all appearance items from the character
  * @param {Character} C - Character to undress
+ * @param {boolean} refresh - Whether to refresh the character afterwards and push changes to the server database
  * @returns {void} - Nothing
  */
-declare function CharacterNaked(C: Character): void;
+declare function CharacterNaked(C: Character, refresh?: boolean): void;
 /**
  * Dresses the given character in random underwear
  * @param {Character} C - Character to randomly dress
@@ -216,9 +217,10 @@ declare function CharacterReleaseNoLock(C: Character): void;
 /**
  * Removes all items except for clothing and slave collars from the character
  * @param {Character} C - Character to release
+ * @param {boolean} refresh - Whether to refresh the character afterwards and push changes to the server database
  * @returns {void} - Nothing
  */
-declare function CharacterReleaseTotal(C: Character): void;
+declare function CharacterReleaseTotal(C: Character, refresh?: boolean): void;
 /**
  * Gets the bonus amount of a given type for a given character (Kidnap league)
  * @param {Character} C - Character for which we want to get the bonus amount

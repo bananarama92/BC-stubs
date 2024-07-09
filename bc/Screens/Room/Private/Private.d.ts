@@ -404,6 +404,17 @@ declare function PrivateCanTryforAction(): boolean;
  */
 declare function PrivateCannotTryforAction(): boolean;
 /**
+ * Returns TRUE if the current character is an anime girl / superheroine
+ * @returns {boolean} - TRUE if archetype is AnimeGirl
+ */
+declare function PrivateIsAnimeGirl(): boolean;
+/**
+ * Returns a random item that could be bought from the store as a gift that the player could receive by a NPC
+ * @param {boolean} Restraint - TRUE if we must return an item that's a restraint
+ * @returns {Asset} - The item asset that can be given
+ */
+declare function PrivateGetPossibleGift(Restraint: boolean): Asset;
+/**
  * Loads the private room screen and the vendor NPC.
  * @returns {void} - Nothing.
  */
@@ -698,7 +709,7 @@ declare function PrivateGetBed(Type: "White" | "Black" | "Pink"): void;
  * When the player exits the private room
  * @returns {void} - Nothing.
  */
-declare function PrivateExit(Type: any): void;
+declare function PrivateExit(): void;
 /**
  * When the player joins the NPC in bed
  * @returns {void} - Nothing.
@@ -777,6 +788,72 @@ declare function PrivateClubCardKinkyConsequence(Eyes: ExpressionName, Strip: st
  * Checks if the player owns a private room, there's a spot left and they're not locked out of it.
  */
 declare function PrivateHasEmptySlot(): boolean;
+/**
+ * Resets the possible gifts given by NPCs
+ */
+declare function PrivateGiftReset(): void;
+/**
+ * Gives the NPC gift to the player, a new gift will come between 1 and 6 days
+ * @param {string} GiftType - Regular or Restraint
+ * @returns {void} - Nothing.
+ */
+declare function PrivateGiftGet(GiftType: string): void;
+/**
+ * Uses the NPC gift on the player
+ * @param {string} GiftType - Regular or Restraint
+ * @returns {void} - Nothing.
+ */
+declare function PrivateGiftUse(GiftType: string): void;
+/**
+ * When the player meets her owner randomly in the main hall
+ * @returns {void} - Nothing.
+ */
+declare function PrivateOwnerInMainHall(): void;
+/**
+ * The owner can ungag the player and it can affect the love factor
+ * @param {number} LoveFactor - Amount of love to gain or lose.
+ * @returns {void} - Nothing.
+ */
+declare function PrivatePlayerUngag(LoveFactor: number): void;
+/**
+ * The owner can do some activities with the player from the main hall
+ * @returns {void} - Nothing.
+ */
+declare function PrivateStartOwnerHallActivity(): void;
+/**
+ * Owner in Main Hall - When the player returns to her private room with her owner
+ * @returns {void} - Nothing.
+ */
+declare function PrivateOwnerHallReturnToPrivate(): void;
+/**
+ * Owner in Main Hall - Restrains the player with a factor
+ * @param {"FEW"|"LOT"|"ALL"} BondageType - The type of bondage to apply
+ * @returns {void} - Nothing.
+ */
+declare function PrivateOwnerHallBondage(BondageType: "FEW" | "LOT" | "ALL"): void;
+/**
+ * Owner in Main Hall - Strips the player
+ * @returns {void} - Nothing.
+ */
+declare function PrivateOwnerHallNaked(): void;
+/**
+ * Owner in Main Hall - Change collar and leash the player
+ * @returns {void} - Nothing.
+ */
+declare function PrivateOwnerHallLeash(): void;
+/**
+ * Owner in Main Hall - Changes the background and can bind/gag the player
+ * @param {string} Background - The new background to setup
+ * @param {string} Action - The action to perform
+ * @returns {void} - Nothing.
+ */
+declare function PrivateOwnerHallBackground(Background: string, Action: string): void;
+/**
+ * Owner in Main Hall - Ends the parade and can do an extra action
+ * @param {string} Action - The action to perform
+ * @returns {void} - Nothing.
+ */
+declare function PrivateOwnerHallParadeEnd(Action: string): void;
 declare var PrivateBackground: string;
 /** @type {null | NPCCharacter} */
 declare var PrivateVendor: null | NPCCharacter;
@@ -804,3 +881,6 @@ declare var PrivateBeltList: string[];
 declare var PrivateEntryEvent: boolean;
 declare var PrivateClubCardVictoryMode: boolean;
 declare var PrivateClubCardDefeatConsequence: string[];
+declare var PrivateGiftRegular: any;
+declare var PrivateGiftRestraint: any;
+declare var PrivateBaseDecay: number;

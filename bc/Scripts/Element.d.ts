@@ -14,10 +14,10 @@ declare function ElementValue(ID: string, Value?: string): string;
 declare function ElementContent(ID: string, Content?: string): string;
 /**
  * @template {keyof HTMLElementScalarTagNameMap} T
- * @param {null | HTMLOptions<T>} options - Options for customizing the element
+ * @param {HTMLOptions<T>} options - Options for customizing the element
  * @returns {HTMLElementTagNameMap[T]} - The created element
  */
-declare function ElementCreate<T extends keyof HTMLElementScalarTagNameMap>(options: null | HTMLOptions<T>): HTMLElementTagNameMap[T];
+declare function ElementCreate<T extends keyof HTMLElementScalarTagNameMap>(options: HTMLOptions<T>): HTMLElementTagNameMap[T];
 /**
  * Creates a new from element in the main document.
  *
@@ -186,7 +186,7 @@ declare function ElementIsScrolledToEnd(ID: string): boolean;
  */
 declare function ElementFocus(ID: string): void;
 /**
- * Toggles HTML elements that were created by a given screen. When toggled off, they are hidden (not removed)
+ * Toggles (non-nested) HTML elements that were created by a given screen. When toggled off, they are hidden (not removed)
  * @param {string} Screen - Screen for which to hide the elements generated
  * @param {boolean} ShouldDisplay - TRUE if we are toggling on the elements, FALSE if we are hiding them.
  */
