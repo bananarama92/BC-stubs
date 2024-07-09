@@ -102,9 +102,9 @@ type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 	/** The elements parent (if any) to which it will be attached (see {@link HTMLElement.parentElement}). */
 	parent?: Node;
 	/** A list of CSS classes to-be assigned to the element (see {@link HTMLElement.classList}). */
-	classList?: readonly string[];
+	classList?: readonly (null | undefined | string)[];
 	/** Any to-be added child elements. */
-	children?: (string | Node | HTMLOptions<keyof HTMLElementTagNameMap>)[];
+	children?: (null | undefined | string | Node | HTMLOptions<keyof HTMLElementTagNameMap>)[];
 	/** The {@link HTMLElement.innerHTML} of the element; will be assigned before appending children */
 	innerHTML?: string;
 };
@@ -453,7 +453,7 @@ type BackgroundTag =
 // NOTE: `NPCArchetype` is for NPC's only
 type TitleName =
 	NPCArchetype | "None" | "Mistress" | "Master" | "Mistree" | "ClubSlave" | "Maid" | "HeadMaid" | "BondageMaid" | "Kidnapper" |
-	"MasterKidnapper" | "Patient" | "PermanentPatient" | "EscapedPatient" | "Nurse" | "Doctor" |
+	"MasterKidnapper" | "Patient" | "PermanentPatient" | "EscapedPatient" | "Nurse" | "Doctor" | "AnimeBoy" |
 	"LadyLuck" | "LordFortune" | "Patron" | "CollegeStudent" |"Nawashi" | "Houdini" | "PonyAlicorn" |
 	"PonyPegasus" | "PonyUnicorn" | "PonyWild" | "PonyHot" | "PonyWarm" | "PonyCold" | "PonyFarm" |
 	"PonyFoal" | "InfilrationMole" | "InfilrationInfiltrator" | "InfilrationAgent" |
@@ -1574,7 +1574,7 @@ type NPCArchetype =
 	/* Pandora Special */
 	"Victim"|"Target"|"Chest"|
 	// Misc
-	"Dominatrix" | "Nurse" | "Submissive" | "Mistress" | "Patient" | "Maid" | "Mistress" | "Maiestas" | "Vincula" | "Amplector" | "Corporis"
+	"Dominatrix" | "Nurse" | "Submissive" | "Mistress" | "Patient" | "Maid" | "Mistress" | "Maiestas" | "Vincula" | "Amplector" | "Corporis" | "AnimeGirl"
 	;
 
 /** NPC Character extension */
@@ -3620,6 +3620,11 @@ interface CraftingItem {
 	 * @see {@link ItemProperties.TypeRecord}
 	 */
 	TypeRecord?: null | TypeRecord;
+	/**
+	 * Whether the crafting item is elligble for use.
+	 * Only relevant if the player is the craft's owner but do they not own the underlying item (_e.g._ due to an inventory wipe).
+	 */
+	Disabled?: boolean;
 }
 
 /**
