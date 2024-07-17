@@ -409,6 +409,11 @@ declare function PrivateCannotTryforAction(): boolean;
  */
 declare function PrivateIsAnimeGirl(): boolean;
 /**
+ * Returns TRUE if the current character is a rope bunny
+ * @returns {boolean} - TRUE if archetype is Bunny
+ */
+declare function PrivateIsBunny(): boolean;
+/**
  * Returns a random item that could be bought from the store as a gift that the player could receive by a NPC
  * @param {boolean} Restraint - TRUE if we must return an item that's a restraint
  * @returns {Asset} - The item asset that can be given

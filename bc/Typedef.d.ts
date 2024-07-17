@@ -1574,7 +1574,7 @@ type NPCArchetype =
 	/* Pandora Special */
 	"Victim"|"Target"|"Chest"|
 	// Misc
-	"Dominatrix" | "Nurse" | "Submissive" | "Mistress" | "Patient" | "Maid" | "Mistress" | "Maiestas" | "Vincula" | "Amplector" | "Corporis" | "AnimeGirl"
+	"Dominatrix" | "Nurse" | "Submissive" | "Mistress" | "Patient" | "Maid" | "Mistress" | "Maiestas" | "Vincula" | "Amplector" | "Corporis" | "AnimeGirl" | "Bunny"
 	;
 
 /** NPC Character extension */

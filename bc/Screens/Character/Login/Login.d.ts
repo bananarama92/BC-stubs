@@ -108,8 +108,14 @@ declare function LoginLoadInventoryObject(InventoryObject: object): {};
 /**
  * Handles server response, when login has been queued
  * @param {number} Pos - The position in queue
+ * @returns {void} Nothing
  */
 declare function LoginQueue(Pos: number): void;
+/**
+ * Fixes the Owner property on the player object if it's wrongly set
+ * @returns {void} Nothing
+ */
+declare function LoginFixOwner(): void;
 /**
  * Handles player login response data
  * @param {ServerLoginResponse} C - The Login response data - this will either be the player's character data if the

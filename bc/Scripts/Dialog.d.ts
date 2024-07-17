@@ -1010,7 +1010,7 @@ declare namespace DialogLeaveFocusItemHandlers {
 declare namespace DialogEffectIcons {
     let Table: Partial<Record<InventoryIcon, readonly EffectName[]>>;
     function GetIcons(item: Item): InventoryIcon[];
-    let GetEffectIcons: (effects: EffectName[], prop?: CraftingPropertyType) => null | InventoryIcon[];
+    let GetEffectIcons: (effects: Iterable<EffectName>, prop?: CraftingPropertyType) => null | InventoryIcon[];
     function _GetGagIcon(effect: EffectName, prop?: CraftingPropertyType): null | InventoryIcon;
     function _GetBlindIcon(effect: EffectName, prop?: CraftingPropertyType): null | InventoryIcon;
     function _GetDeafIcon(effect: EffectName): undefined | InventoryIcon;
