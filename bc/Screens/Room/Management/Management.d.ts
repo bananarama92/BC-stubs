@@ -210,6 +210,16 @@ declare function ManagementCannotBreakUpLoverNPC(L: number): boolean;
  */
 declare function ManagementIsClubSlave(): boolean;
 /**
+ * Checks if the player can start a regular chat with a club slave.
+ * @returns {boolean} - TRUE if the player can start a regular
+ */
+declare function ManagementCanStartClubSlaveTalk(): boolean;
+/**
+ * Checks if the player can start a chat with a bunny club slave.
+ * @returns {boolean} - TRUE if the player can start a regular
+ */
+declare function ManagementCanStartBunnyTalk(): boolean;
+/**
  * Checks if the player is wearing a slave collar.
  * @returns {boolean} - TRUE if the player is wearing a slave collar.
  */
