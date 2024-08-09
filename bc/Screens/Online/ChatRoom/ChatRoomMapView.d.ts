@@ -365,6 +365,8 @@ declare var ChatRoomMapViewUpdatePlayerNext: null | number;
 declare var ChatRoomMapViewUpdateLastMapDataNext: null | number;
 /** @type {null | Character} */
 declare var ChatRoomMapViewFocusedCharacter: null | Character;
+declare var ChatRoomMapViewFocusedCharacterX: number;
+declare var ChatRoomMapViewFocusedCharacterY: number;
 declare var ChatRoomMapViewSuperPowersActive: boolean;
 declare var ChatRoomMapViewBaseMovementSpeed: number;
 /** @type {null | ChatRoomMapMovement} */

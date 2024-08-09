@@ -155,7 +155,7 @@ declare namespace Shop2 {
     function ApplyItemFilters(clearDatalist?: boolean): void;
     function _SetCheckboxFilters(): void;
     function _UpdatePoseButtons(): void;
-    function _ClickDropdown(): void;
+    function _ClickDropdown(id: string): void;
     let DrawPriceRibbon: (label: string, x: number, y: number, w: number, color?: string) => void;
     function ParseAssets(assets: readonly Asset[]): ShopItem[];
     let Elements: Record<string, ShopScreenFunctions>;
