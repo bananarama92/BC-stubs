@@ -208,10 +208,10 @@ declare function AssetInventoryIDUnnecessary(): void;
  * @param {string} GroupName - The group name to compare
  * @param {string} AssetName - The asset name to compare
  * @param {string} BuyGroup - The buying group to compare
- * @param {number} InventoryID - The inventory ID to compare
+ * @param {number | undefined} InventoryID - The inventory ID to compare
  * @returns {void} - Nothing
  */
-declare function AssetInventoryIDBuyGroup(GroupName: string, AssetName: string, BuyGroup: string, InventoryID: number): void;
+declare function AssetInventoryIDBuyGroup(GroupName: string, AssetName: string, BuyGroup: string, InventoryID: number | undefined): void;
 /**
  * Shows a console warning for all Inventory IDs where the BuyGroup is creating a conflict
  * @returns {void} - Nothing
