@@ -298,7 +298,8 @@ interface ExpressionNameMap {
 	Emoticon: (
 		null | "Afk" | "Whisper" | "Sleep" | "Hearts" | "Tear" | "Hearing" | "Confusion" | "Exclamation" |
 		"Annoyed" | "Read" | "RaisedHand" | "Spectator" | "ThumbsDown" | "ThumbsUp" | "LoveRope" |
-		"LoveGag" | "LoveLock" | "Wardrobe" | "Gaming" | "Coffee" | "Fork" | "Music"
+		"LoveGag" | "LoveLock" | "Wardrobe" | "Gaming" | "Coffee" | "Fork" | "Music" | "Car" | "Hanger" | 
+		"Call" | "Lightbulb" | "Warning" | "BrokenHeart" | "Drawing" | "Coding" | "TV" | "Bathing"
 	),
 }
 
@@ -369,6 +370,7 @@ type AssetAttribute =
 	"Skirt" | "SuitLower" | "UpperLarge" |
 	"ShortHair" | "SmallEars" | "NoEars" | "NoseRing" | "HoodieFix" |
 	"CanAttachMittens" |
+	"IsChestHarness" | "IsHipHarness" |
 	"PenisLayer" | "PussyLayer" | "GenitaliaCover" | "Pussy1" | "Pussy2" | "Pussy3" |
 	"CagePlastic2" | "CageTechno" | "CageFlat" |
 	"FuturisticRecolor" | "FuturisticRecolorDisplay" |
@@ -380,9 +382,11 @@ type PosePrerequisite = `Can${AssetPoseName}`;
 type AssetPrerequisite =
 	PosePrerequisite | "AccessBreast" | "AccessBreastSuitZip" | "AccessButt" | "AccessFullPenis" | "AccessMouth" | "AccessTorso" | "AccessVulva" | "AccessCrotch" |
 	"BlockedMouth" | "ButtEmpty" | "CanBeCeilingTethered" | "CanCoverVulva" | "CanHaveErection" | "CanBeLimp" | "CanKneel" | "CannotBeSuited" | "CannotHaveWand" |
+	"CanAttachMittens" |
 	"ClitEmpty" | "Collared" | "CuffedArms" | "CuffedArmsOrEmpty" | "CuffedFeet" | "CuffedFeetOrEmpty" | "CuffedLegs" | "CuffedLegsOrEmpty" |
 	"DisplayFrame" | "EyesEmpty" | "GagCorset" | "GagFlat" | "GagUnique" | "GasMask" | "HasBreasts" | "HasFlatChest" | "HasPenis" | "HasVagina" |
-	"HoodEmpty" | "NakedFeet" | "NakedHands" | "NeedsHarness" | "NeedsNippleRings" | "NoChastityCage" | "NoErection" | "NoClothLower" | "NoItemArms" |
+	"HoodEmpty" | "NakedFeet" | "NakedHands" | "NeedsChestHarness" | "NeedsHipHarness" | "NeedsNippleRings" |
+	"NoChastityCage" | "NoErection" | "NoClothLower" | "NoItemArms" |
 	"NoItemFeet" | "NoItemHands" | "NoItemLegs" | "NoMaidTray" | "NoOuterClothes" | "NotChained" | "NotChaste" | "NotKneeling" |
 	"NotLifted" | "NotMasked" | "NotMounted" | "NotProtrudingFromMouth" | "NotSuspended" | "OnBed" |
 	"RemotesAllowed" | "VulvaEmpty"
@@ -1481,6 +1485,7 @@ interface Character {
 	IsAssFull: () => boolean;
 	IsFixedHead: () => boolean;
 	GetDeafLevel: () => number;
+	CanPickLocks: () => boolean;
 	IsEdged: () => boolean;
 	IsPlayer: () => this is PlayerCharacter;
 	IsBirthday: () => boolean;
@@ -1574,7 +1579,7 @@ type NPCArchetype =
 	/* Pandora Special */
 	"Victim"|"Target"|"Chest"|
 	// Misc
-	"Dominatrix" | "Nurse" | "Submissive" | "Mistress" | "Patient" | "Maid" | "Mistress" | "Maiestas" | "Vincula" | "Amplector" | "Corporis" | "AnimeGirl" | "Bunny"
+	"Dominatrix" | "Nurse" | "Submissive" | "Mistress" | "Patient" | "Maid" | "Mistress" | "Maiestas" | "Vincula" | "Amplector" | "Corporis" | "AnimeGirl" | "Bunny" | "Succubus"
 	;
 
 /** NPC Character extension */
@@ -1897,6 +1902,7 @@ interface PlayerOnlineSettings {
 	ShowStatus?: boolean;
 	EnableAfkTimer: boolean;
 	ShowRoomCustomization: 0 | 1 | 2 | 3; // 0 - Never, 1 - No by default, 2 - Yes by default, 3 - Always
+	FriendListAutoRefresh: boolean;
 }
 
 /** Pandora Player extension */
@@ -4142,6 +4148,7 @@ type ChatRoomMapObjectType = (
 	| "FloorDecorationThemed"
 	| "FloorDecorationParty"
 	| "FloorDecorationCamping"
+	| "FloorDecorationExpanding"
 	| "FloorItem"
 	| "FloorObstacle"
 	| "WallDecoration"
@@ -4172,6 +4179,8 @@ interface ChatRoomMapObject extends ChatRoomMapDoodad {
 	Left?: number;
 	Width?: number;
 	Height?: number;
+	Transparency?: number;
+	TransparencyCutoutHeight?: number;
 	Exit?: boolean;
 	Unique?: boolean;
 	AssetGroup?: AssetGroupItemName;
@@ -4179,6 +4188,7 @@ interface ChatRoomMapObject extends ChatRoomMapDoodad {
 	BlockVision?: boolean;
 	BlockHearing?: boolean;
 	IsVisible?: () => boolean;
+	BuildImageName?: (X, Y) => string;
 }
 
 interface ChatRoomMapMovement {

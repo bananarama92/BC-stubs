@@ -18,6 +18,8 @@ declare namespace Layering {
         buttonGrid: "layering-button-grid";
         resetButton: "layering-reset-button";
         exitButton: "layering-exit-button";
+        hideButton: "layering-hide-button";
+        hideTooltip: "layering-hide-button-tooltip";
         lockButton: "layering-lock-button";
         assetHeader: "layering-asset-header";
         assetGrid: "layering-asset-grid";
@@ -64,6 +66,13 @@ declare namespace Layering {
      * @private
      */
     function _ResetClickListener(this: HTMLButtonElement, ev: Event): void;
+    /**
+     * Event listener for `click` events of the show hidden layers button
+     * @this {HTMLButtonElement}
+     * @param {Event} ev
+     * @private
+     */
+    function _ShowLayersClickListener(this: HTMLButtonElement, ev: Event): void;
     /**
      * Update the background colors of the `number`-based input elements, the color change depending on whether one is changing an asset- or layer-specific priority.
      * @private

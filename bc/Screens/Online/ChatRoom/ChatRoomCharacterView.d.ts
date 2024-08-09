@@ -45,7 +45,6 @@ declare function ChatRoomCharacterViewShowMapButton(): boolean;
  * @param {number} Zoom Room zoom
  * @param {number} ClickX Click X postion relative to character, without zoom
  * @param {number} ClickY Click Y postion relative to character, without zoom
- * @param {number} Pos Index of target character
  */
 declare function ChatRoomCharacterViewClickCharacter(C: Character, CharX: number, CharY: number, Zoom: number, ClickX: number, ClickY: number): void;
 /**

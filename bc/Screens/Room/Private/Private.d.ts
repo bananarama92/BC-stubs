@@ -414,6 +414,11 @@ declare function PrivateIsAnimeGirl(): boolean;
  */
 declare function PrivateIsBunny(): boolean;
 /**
+ * Returns TRUE if the current character is a succubus
+ * @returns {boolean} - TRUE if archetype is succubus
+ */
+declare function PrivateIsSuccubus(): boolean;
+/**
  * Returns a random item that could be bought from the store as a gift that the player could receive by a NPC
  * @param {boolean} Restraint - TRUE if we must return an item that's a restraint
  * @returns {Asset} - The item asset that can be given

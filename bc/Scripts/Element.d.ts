@@ -180,6 +180,16 @@ declare function ElementGetScrollPercentage(ID: string): (number | null);
  */
 declare function ElementIsScrolledToEnd(ID: string): boolean;
 /**
+ * Sets the scroll position of an element to a specified percentage of its scrollable content.
+ * Ideally scroll percentage should be gotten with {@link ElementGetScrollPercentage}
+ *
+ * @param {string} ID
+ * @param {number} scrollPercentage
+ * @param {ScrollBehavior} scrollBehavior
+ * @returns {void}
+ */
+declare function ElementSetScrollPercentage(ID: string, scrollPercentage: number, scrollBehavior?: ScrollBehavior): void;
+/**
  * Gives focus to a specified existing element for non-mobile users.
  * @param {string} ID - The id of the element to give focus to.
  * @returns {void} - Nothing
@@ -271,14 +281,17 @@ declare namespace ElementButton {
         top: "button-tooltip-top";
         bottom: "button-tooltip-bottom";
     }>;
-    let _TouchStart: (this: HTMLButtonElement, event: Event) => Promise<void>;
-    let _TouchEnd: (this: HTMLButtonElement, event: Event) => Promise<void>;
-    let _MouseDown: (this: HTMLButtonElement, event: MouseEvent) => Promise<void>;
     let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
+    let _Click: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => void;
+    function _QueryDFS(root: Element, query: string, filter: (el: Element) => boolean): Generator<Element, void>;
+    let _ClickRadio: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickCheckbox: (this: HTMLButtonElement, ev: Event) => void;
     function Create(id: null | string, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: {
         tooltip?: null | string | Node;
         tooltipPosition?: "left" | "right" | "top" | "bottom";
+        role?: "radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox";
+        noStyling?: boolean;
     }, htmlOptions?: null | Partial<Record<"button" | "tooltip", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
 }
 declare namespace ElementMenu {
