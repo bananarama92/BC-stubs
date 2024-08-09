@@ -298,7 +298,7 @@ interface ExpressionNameMap {
 	Emoticon: (
 		null | "Afk" | "Whisper" | "Sleep" | "Hearts" | "Tear" | "Hearing" | "Confusion" | "Exclamation" |
 		"Annoyed" | "Read" | "RaisedHand" | "Spectator" | "ThumbsDown" | "ThumbsUp" | "LoveRope" |
-		"LoveGag" | "LoveLock" | "Wardrobe" | "Gaming" | "Coffee" | "Fork" | "Music" | "Car" | "Hanger" | 
+		"LoveGag" | "LoveLock" | "Wardrobe" | "Gaming" | "Coffee" | "Fork" | "Music" | "Car" | "Hanger" |
 		"Call" | "Lightbulb" | "Warning" | "BrokenHeart" | "Drawing" | "Coding" | "TV" | "Bathing"
 	),
 }
@@ -4188,7 +4188,7 @@ interface ChatRoomMapObject extends ChatRoomMapDoodad {
 	BlockVision?: boolean;
 	BlockHearing?: boolean;
 	IsVisible?: () => boolean;
-	BuildImageName?: (X, Y) => string;
+	BuildImageName?: (X: number, Y: number) => string;
 }
 
 interface ChatRoomMapMovement {
