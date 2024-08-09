@@ -81,14 +81,13 @@ jobs:
           cd Bondage-College/BondageClub
           cp ../../.github/tsconfig.json tsconfig.json
 
+          mkdir -p dist/NativeDeclarations
+          find Assets/ -iname "*.d.ts" -not -path "./Scripts/lib/*" -not -path "./Tools/*" -exec cp {} dist/NativeDeclarations/ \;
+
           set +e
           npx -p typescript tsc
           set -e
 
-          cp ../../.github/lzstring.d.ts dist/lzstring.d.ts
-          cp Scripts/Typedef.d.ts dist/Typedef.d.ts
-          cp Scripts/Messages.d.ts dist/Messages.d.ts
-          cp Assets/Female3DCG/Female3DCG_Types.d.ts dist/Female3DCG_Types.d.ts
           rm -rf ../../bc
           mv dist ../../bc
 
