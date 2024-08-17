@@ -1282,7 +1282,8 @@
             "VacHood": 49,
             "ZipperHood": 50,
             "Fu": 51,
-            "Paperbag": 52
+            "Paperbag": 52,
+            "RubberMask": 53
         }
     },
     "ItemLegs": {
