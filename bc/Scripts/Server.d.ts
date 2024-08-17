@@ -62,10 +62,13 @@ declare function ServerPackItemPermissions(permissionItems: Partial<Record<`${As
 /**
  * Unpack the quartet of blocked, limited, favorited and hidden item permissions into a single object
  * @param {Pick<Partial<ServerAccountDataSynced>, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">} data - The item permission data as received from the server
- * @param {Character} C - The character in question
- * @returns {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} - The packed item permission data
+ * @param {boolean} onExtreme - If the expected difficulty is Extreme
+ * @returns {{ permissions: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>; shouldSync: boolean }} - The packed item permission data
  */
-declare function ServerUnPackItemPermissions(data: Pick<Partial<ServerAccountDataSynced>, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">, C: Character): Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
+declare function ServerUnPackItemPermissions(data: Pick<Partial<ServerAccountDataSynced>, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">, onExtreme: boolean): {
+    permissions: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
+    shouldSync: boolean;
+};
 /**
  * Syncs player's favorite, blocked, limited and hidden items to the server
  * @returns {void} - Nothing
