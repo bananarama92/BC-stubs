@@ -25,7 +25,6 @@ declare function CraftingShowScreen(FromChatRoom: boolean): void;
 declare function CraftingLoad(): void;
 /**
  * Update the crafting character preview image, applies the item on all possible body parts
- * @returns {void} - Nothing
  */
 declare function CraftingUpdatePreview(): void;
 /**
@@ -34,6 +33,7 @@ declare function CraftingUpdatePreview(): void;
  */
 declare function CraftingRun(): void;
 declare function CraftingResize(load: boolean): void;
+declare function CraftingUnload(): void;
 /**
  * Update {@link CraftingSelectedItem.ItemProperties} with a select few properties from the passed item.
  * @param {Item} item - The item whose properties should be coppied.
@@ -51,18 +51,6 @@ declare function CraftingGetAllAssetNames(): string[];
  * @returns {void} - Nothing
  */
 declare function CraftingModeSet(NewMode: CraftingMode): void;
-/**
- * When the color or type field is updated manually, we update the preview image
- * @param {Event} ev
- * @returns {void} - Nothing
- */
-declare function CraftingKeyUp(ev: Event): void;
-/**
- * Helper function for parsing the `InputPriority` HTML element.
- * @param {Event} ev
- * @returns {number | undefined}
- */
-declare function CraftingParsePriorityElement(ev: Event): number | undefined;
 /**
  * Serialize a single crafted item into a string in order to prepare it for server saving
  * @param {CraftingItem} craft The crafted item
@@ -116,11 +104,14 @@ declare function CraftingConvertSelectedToItem(): CraftingItem;
  * @returns {CraftingItemSelected}
  */
 declare function CraftingConvertItemToSelected(Craft: CraftingItem): CraftingItemSelected;
+/** Restore the DOM elements of the `Name` subscreen to their default state. */
+declare function CraftingExitResetElements(): void;
 /**
  * When the player exits the crafting room
+ * @param {boolean} allowPanelClose - Whether an exit call in the `Name` mode is allowed to close the side panels before performing a proper exit of the subscreen
  * @returns {void} - Nothing
  */
-declare function CraftingExit(): void;
+declare function CraftingExit(allowPanelClose?: boolean): void;
 /**
  * Applies the craft to all matching items
  * @param {CraftingItem} Craft
@@ -129,9 +120,9 @@ declare function CraftingExit(): void;
 declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): boolean;
 /**
  * Builds the item list from the player inventory, filters by the search box content
- * @returns {void} - Nothing
+ * @returns {Asset[]} - Nothing
  */
-declare function CraftingItemListBuild(): void;
+declare function CraftingItemListBuild(): Asset[];
 /**
  * Validate and sanitinize crafting properties of the passed item inplace.
  * @param {CraftingItem} Craft - The crafted item properties or `null`
@@ -146,9 +137,6 @@ declare var CraftingBackground: string;
 /**
  * The active subscreen within the crafting screen:
  * * `"Slot"`: The main crafting screens wherein the {@link CraftingItem} is selected, created or destroyed.
- * * `"Item"`: The item selection screen wherein the underlying {@link Asset} is selected.
- * * `"Property"`: The {@link CraftingPropertyType} selection screen.
- * * `"Lock"`: The {@link CraftingLockList} selection screen.
  * * `"Name"`: The main menu wherein the crafted item is customized, allowing for the specification of names, descriptions, colors, extended item types, _etc._
  * * `"Color"`: A dedicated coloring screen for the crafted item.
  * * `"Extended"`: The extended item menu.
@@ -164,13 +152,14 @@ declare let CraftingSlot: number;
  * @type {CraftingItemSelected | null}
  */
 declare let CraftingSelectedItem: CraftingItemSelected | null;
-/** An offset used for the pagination of {@link CraftingItemList} and all crafted items. */
+/** An offset used for the pagination of {@link Player.Crafting}. */
 declare let CraftingOffset: number;
 /**
  * A list of all assets valid for crafting, potentially filtered by a user-provided keyword.
- * @type {Asset[]}
+ * @type {never}
+ * @deprecated
  */
-declare let CraftingItemList: Asset[];
+declare let CraftingItemList: never;
 /**
  * The character used for the crafting preview.
  * @type {Character | null}
@@ -232,6 +221,76 @@ declare const CraftingLockList: readonly (AssetLockType | "")[];
  * @type {Set<keyof ItemProperties>}
  */
 declare const CraftingPropertyExclude: Set<keyof ItemProperties>;
+declare namespace CraftingID {
+    let root: "crafting-screen";
+    let topBar: "crafting-top-bar";
+    let header: "crafting-header";
+    let menuBar: "crafting-menu-bar";
+    let downloadButton: "crafting-download-button";
+    let uploadButton: "crafting-upload-button";
+    let acceptButton: "crafting-accept-button";
+    let cancelButton: "crafting-cancel-button";
+    let exitButton: "crafting-exit-button";
+    let leftPanel: "crafting-left-panel";
+    let assetButton: "crafting-asset-button";
+    let assetPanel: "crafting-asset-panel";
+    let assetGrid: "crafting-asset-grid";
+    let assetSearch: "crafting-asset-search";
+    let assetHeader: "crafting-asset-header";
+    let padlockButton: "crafting-padlock-button";
+    let padlockPanel: "crafting-padlock-panel";
+    let padlockGrid: "crafting-padlock-grid";
+    let padlockSearch: "crafting-padlock-search";
+    let padlockHeader: "crafting-padlock-header";
+    let propertyButton: "crafting-property-button";
+    let propertyPanel: "crafting-property-panel";
+    let propertyGrid: "crafting-property-grid";
+    let propertySearch: "crafting-property-search";
+    let propertyHeader: "crafting-property-header";
+    let centerPanel: "crafting-center-panel";
+    let undressButton: "crafting-undress-button";
+    let rightPanel: "crafting-right-panel";
+    let nameInput: "crafting-name-input";
+    let nameLabel: "crafting-name-label";
+    let descriptionInput: "crafting-description-input";
+    let descriptionLabel: "crafting-description-label";
+    let colorsButton: "crafting-colors-button";
+    let colorsInput: "crafting-colors-input";
+    let colorsLabel: "crafting-colors-label";
+    let layeringInput: "crafting-layering-input";
+    let layeringButton: "crafting-layering-button";
+    let layeringLabel: "crafting-layering-label";
+    let privateCheckbox: "crafting-private-checkbox";
+    let privateLabel: "crafting-private-label";
+    let extendedButton: "crafting-extended-button";
+    let extendedLabel: "crafting-extended-label";
+}
+declare namespace CraftingEventListeners {
+    let _ClickPrivate: (this: HTMLInputElement, ev: Event) => void;
+    let _InputLayering: (this: HTMLInputElement, ev: Event) => void;
+    let _ChangeName: (this: HTMLInputElement, ev: Event) => void;
+    let _ChangeDescription: (this: HTMLTextAreaElement, ev: Event) => void;
+    let _ChangeColor: (this: HTMLInputElement, ev: Event) => void;
+    let _ClickExtended: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickLayering: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickColors: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickUndress: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickAccept: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickExit: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickUpload: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickDownload: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickExpand: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickProperty: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickPadlock: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickAsset: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickRadio: (this: HTMLButtonElement, ev: Event) => void;
+    let _InputSearch: (this: HTMLInputElement, ev: Event) => Promise<void>;
+}
+declare namespace CraftingElements {
+    function _SearchInputGetDataList(controls: string): () => string[];
+    function _SearchInput(id: string, controls: string, placeholder: string): HTMLInputElement;
+    function _RadioButton(id: string, onClick: (this: HTMLButtonElement, ev: Event) => any, assetImage?: null | Asset, dataAttributes?: null | Partial<Record<string, string | number | boolean>>, label?: null | string, children?: null | readonly (string | Node)[], asset?: null | Asset, first?: boolean): HTMLButtonElement;
+}
 /**
  * A record with tools for validating {@link CraftingItem} properties.
  * @type {Record<keyof CraftingItem, CratingValidationStruct>}

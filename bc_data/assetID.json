@@ -480,7 +480,8 @@
             "WolfEars2": 38,
             "CowEars": 39,
             "Horns4": 40,
-            "Horns5": 41
+            "Horns5": 41,
+            "CyberneticEars1": 42
         }
     },
     "HairAccessory2": {
@@ -717,7 +718,8 @@
             "HairFront54": 87,
             "HairFront55": 88,
             "HairFront56": 89,
-            "HairFront57": 90
+            "HairFront57": 90,
+            "HairFront58": 91
         }
     },
     "Hands": {

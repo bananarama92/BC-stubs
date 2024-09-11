@@ -526,6 +526,11 @@ declare function PrivateGetCurrentID(): number;
  */
 declare function PrivateKickOut(): void;
 /**
+ * Triggered when the player kicks out her owner, breaking the ownership
+ * @returns {void} - Nothing.
+ */
+declare function PrivateKickOutOwner(): void;
+/**
  * Triggered when the player kicks out a character.
  * @param {Character} C
  * @returns {void} - Nothing.
