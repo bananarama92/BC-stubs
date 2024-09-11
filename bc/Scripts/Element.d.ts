@@ -235,6 +235,8 @@ declare function ElementCreateSearchInput(id: string, dataCallback: () => Iterab
  * @returns {boolean} - Whether the passed element is visible or not
  */
 declare function ElementCheckVisibility(el: Element, options?: CheckVisibilityOptions): boolean;
+/** @satisfies {ElementNoParent} */
+declare const ElementNoParent: 0;
 declare namespace ElementCheckboxDropdown {
     /**
      * @param {string} idPrefix
@@ -275,24 +277,43 @@ declare namespace ElementCheckboxDropdown {
     }): HTMLDivElement;
 }
 declare namespace ElementButton {
-    let _PositionMapping: Readonly<{
+    let _TooltipPositions: Readonly<{
         left: "button-tooltip-left";
         right: "button-tooltip-right";
         top: "button-tooltip-top";
         bottom: "button-tooltip-bottom";
     }>;
+    let _LabelPositions: Readonly<{
+        top: "button-label-top";
+        center: "button-label-center";
+        bottom: "button-label-bottom";
+    }>;
     let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _Click: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => void;
+    let _MouseUp: (this: HTMLButtonElement) => void;
     function _QueryDFS(root: Element, query: string, filter: (el: Element) => boolean): Generator<Element, void>;
     let _ClickRadio: (this: HTMLButtonElement, ev: Event) => void;
+    function _KeyDownRadio(this: HTMLElement, ev: KeyboardEvent): void;
     let _ClickCheckbox: (this: HTMLButtonElement, ev: Event) => void;
+    function _ParseImage(id: string, img?: string, options?: Omit<HTMLOptions<"img">, "tag">): HTMLImageElement;
+    function _ParseLabel(id: string, label?: string, position?: "top" | "center" | "bottom", options?: Omit<HTMLOptions<"label">, "tag">): HTMLLabelElement;
+    function _ParseIcons(id: string, icons?: readonly InventoryIcon[]): null | {
+        iconGrid: HTMLDivElement;
+        tooltip: HTMLUListElement;
+    };
+    function _ParseTooltip(id: string, position?: "left" | "right" | "top" | "bottom", children?: readonly (null | string | Node | HTMLOptions<any>)[], options?: Omit<HTMLOptions<"div">, "tag">): null | HTMLDivElement;
     function Create(id: null | string, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: {
-        tooltip?: null | string | Node;
+        tooltip?: null | string | Node | readonly (null | string | Node)[];
         tooltipPosition?: "left" | "right" | "top" | "bottom";
+        label?: string;
+        labelPosition?: "top" | "center" | "bottom";
+        image?: string;
+        icons?: readonly InventoryIcon[];
         role?: "radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox";
         noStyling?: boolean;
-    }, htmlOptions?: null | Partial<Record<"button" | "tooltip", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+        disabled?: boolean;
+    }, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
 }
 declare namespace ElementMenu {
     export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;

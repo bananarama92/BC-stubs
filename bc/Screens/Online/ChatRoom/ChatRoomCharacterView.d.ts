@@ -82,9 +82,8 @@ declare function ChatRoomCharacterViewLoopCharacters(callback: (charIdx: number,
  * @param {number} CharX Character's X position on canvas
  * @param {number} CharY Character's Y position on canvas
  * @param {number} Zoom Room zoom
- * @param {number} Pos Index of target character
  */
-declare function ChatRoomCharacterViewDrawOverlay(C: Character, CharX: number, CharY: number, Zoom: number, Pos: number): void;
+declare function ChatRoomCharacterViewDrawOverlay(C: Character, CharX: number, CharY: number, Zoom: number): void;
 declare var ChatRoomCharacterViewInitialize: boolean;
 declare var ChatRoomCharacterViewSlideWeight: number;
 declare var ChatRoomCharacterViewX_Upper: number;

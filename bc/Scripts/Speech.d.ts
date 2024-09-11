@@ -22,27 +22,6 @@ declare function SpeechGetEffectGagLevel(Effect: readonly EffectName[]): number;
  */
 declare function SpeechGetGagLevel(C: Character, AssetGroups: readonly AssetGroupItemName[]): number;
 /**
- * Gets the cumulative gag level of a character
- * @deprecated - superseded by {@link SpeechTransformGagGarbleIntensity}
- * @param {Character} C - The character, whose assets are used for the check
- * @param {boolean} [NoDeaf=false] - Whether or not deafness affects the dialogue
- * @returns {number} - Returns the total gag effect of the character's assets
- */
-declare function SpeechGetTotalGagLevel(C: Character, NoDeaf?: boolean): number;
-/**
- * Processes the character's speech, anything between parentheses isn't touched.
- *
- * Effects alter the speech differently according to a character's language.
- * Effects that can be applied are the following: gag talk, baby talk and stuttering.
- *
- * @deprecated - superseded by {@link SpeechTransformProcess}
- * @param {Character} C - The character, whose dialog might need to be altered
- * @param {string} CD - The character's dialog to alter
- * @param {boolean} [NoDeaf=false] - Whether or not deafness affects the dialogue
- * @returns {string} - Returns the dialog after speech effects were processed (Garbling, Stuttering, Baby talk)
- */
-declare function SpeechGarble(C: Character, CD: string, NoDeaf?: boolean): string;
-/**
  * Core speech-transform function
  * @param {Character} C
  * @param {string} text
@@ -169,15 +148,6 @@ declare function SpeechTransformDeafenIntensity(C: Character): number;
  */
 declare function SpeechTransformGagGarble(text: string, intensity: number, ignoreOOC?: boolean): string;
 /**
- * The core of the speech garble function, usable without being tied to a specific character
- * @deprecated
- * @param {number} GagEffect - The gag level of the speech
- * @param {string} CD - The character's dialog to alter
- * @param {boolean} IgnoreOOC
- * @return {string} - Garbled text
- */
-declare function SpeechGarbleByGagLevel(GagEffect: number, CD: string, IgnoreOOC?: boolean): string;
-/**
  * Check if the stutter talk speech transform should apply
  * @param {Character} C
  * @returns {boolean}
@@ -197,14 +167,6 @@ declare function SpeechTransformStutterIntensity(C: Character): number;
  */
 declare function SpeechTransformStutter(text: string, intensity: number): string;
 /**
- * Makes the character stutter if she has a vibrating item and/or is aroused. Stuttering based on arousal is toggled in the character's settings.
- * @deprecated
- * @param {Character} C - The character, whose dialog might need to be altered
- * @param {string} CD - The character's dialog to alter
- * @returns {string} - Returns the dialog after the stuttering factor was applied
- */
-declare function SpeechStutter(C: Character, CD: string): string;
-/**
  * Check if the baby talk string transform effect should apply
  * @param {Character} C
  */
@@ -217,14 +179,6 @@ declare function SpeechTransformShouldBabyTalk(C: Character): boolean;
  */
 declare function SpeechTransformBabyTalk(text: string): string;
 /**
- * Makes the character talk like a Baby when she has drunk regression milk
- * @deprecated
- * @param {Character} C - The character, whose dialog needs to be altered
- * @param {string} CD - The character's dialog to alter
- * @returns {string} - Returns the dialog after baby talk was applied
- */
-declare function SpeechBabyTalk(C: Character, CD: string): string;
-/**
  * Anonymize character names from a string, replacing them with "Someone".
  *
  * Used as part of sensory-deprivation processing.
@@ -233,6 +187,52 @@ declare function SpeechBabyTalk(C: Character, CD: string): string;
  * @param {readonly Character[]} characters
  */
 declare function SpeechAnonymize(msg: string, characters: readonly Character[]): string;
+/**
+ * Gets the cumulative gag level of a character
+ * @deprecated - superseded by {@link SpeechTransformGagGarbleIntensity}
+ * @param {Character} C - The character, whose assets are used for the check
+ * @param {boolean} [NoDeaf=false] - Whether or not deafness affects the dialogue
+ * @returns {number} - Returns the total gag effect of the character's assets
+ */
+declare function SpeechGetTotalGagLevel(C: Character, NoDeaf?: boolean): number;
+/**
+ * Processes the character's speech, anything between parentheses isn't touched.
+ *
+ * Effects alter the speech differently according to a character's language.
+ * Effects that can be applied are the following: gag talk, baby talk and stuttering.
+ *
+ * @deprecated - superseded by {@link SpeechTransformProcess}
+ * @param {Character} C - The character, whose dialog might need to be altered
+ * @param {string} CD - The character's dialog to alter
+ * @param {boolean} [NoDeaf=false] - Whether or not deafness affects the dialogue
+ * @returns {string} - Returns the dialog after speech effects were processed (Garbling, Stuttering, Baby talk)
+ */
+declare function SpeechGarble(C: Character, CD: string, NoDeaf?: boolean): string;
+/**
+ * Makes the character talk like a Baby when she has drunk regression milk
+ * @deprecated
+ * @param {Character} C - The character, whose dialog needs to be altered
+ * @param {string} CD - The character's dialog to alter
+ * @returns {string} - Returns the dialog after baby talk was applied
+ */
+declare function SpeechBabyTalk(C: Character, CD: string): string;
+/**
+ * The core of the speech garble function, usable without being tied to a specific character
+ * @deprecated
+ * @param {number} GagEffect - The gag level of the speech
+ * @param {string} CD - The character's dialog to alter
+ * @param {boolean} IgnoreOOC
+ * @return {string} - Garbled text
+ */
+declare function SpeechGarbleByGagLevel(GagEffect: number, CD: string, IgnoreOOC?: boolean): string;
+/**
+ * Makes the character stutter if she has a vibrating item and/or is aroused. Stuttering based on arousal is toggled in the character's settings.
+ * @deprecated
+ * @param {Character} C - The character, whose dialog might need to be altered
+ * @param {string} CD - The character's dialog to alter
+ * @returns {string} - Returns the dialog after the stuttering factor was applied
+ */
+declare function SpeechStutter(C: Character, CD: string): string;
 declare const chineseRegex: RegExp;
 declare const chineseRandomGarbledSound: string[];
 declare namespace SpeechGagLevelLookup {
