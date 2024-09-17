@@ -297,7 +297,7 @@ declare namespace ElementButton {
     function _KeyDownRadio(this: HTMLElement, ev: KeyboardEvent): void;
     let _ClickCheckbox: (this: HTMLButtonElement, ev: Event) => void;
     function _ParseImage(id: string, img?: string, options?: Omit<HTMLOptions<"img">, "tag">): HTMLImageElement;
-    function _ParseLabel(id: string, label?: string, position?: "top" | "center" | "bottom", options?: Omit<HTMLOptions<"label">, "tag">): HTMLLabelElement;
+    function _ParseLabel(id: string, label?: string, position?: "top" | "center" | "bottom", options?: Omit<HTMLOptions<"span">, "tag">): HTMLSpanElement;
     function _ParseIcons(id: string, icons?: readonly InventoryIcon[]): null | {
         iconGrid: HTMLDivElement;
         tooltip: HTMLUListElement;
