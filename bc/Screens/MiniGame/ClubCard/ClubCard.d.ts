@@ -117,9 +117,16 @@ declare function ClubCardGroupOnBoardCount(CCPlayer: ClubCardPlayer, GroupName: 
  * Removes a card from a player board
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {ClubCard} Card - The card object to remove
+ * @param {boolean|null} DontDiscard - If the card dont need to go to the discard pile
  * @returns {void} - Nothing
  */
-declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
+declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard, DontDiscard?: boolean | null): void;
+/**
+ * Gets the updated cost for a player to level up
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @returns {number} The cost to level up
+ */
+declare function ClubCardCalculateLevelCost(CCPlayer: ClubCardPlayer): number;
 /**
  * Gets the max effect a card should have depending on its "tier"/required level to play
  * @param {ClubCard} Card
@@ -177,10 +184,34 @@ declare function ClubCardPlayerDrawCard(CCPlayer: ClubCardPlayer, Amount?: numbe
 /**
  * Draw cards from the player deck into it's hand
  * @param {ClubCardPlayer} CCPlayer - The club card player that draws the cards
- * @param {string} group - The group to draw from
+ * @param {string[]} groups - The group to draw from
+ * @param {number | undefined} level - The level
  * @returns {boolean} - if cards were drawn or not
  */
-declare function ClubCardPlayerDrawGroupCard(CCPlayer: ClubCardPlayer, group: string): boolean;
+declare function ClubCardPlayerDrawGroupCard(CCPlayer: ClubCardPlayer, groups: string[], level: number | undefined): boolean;
+/**
+ * Summon cards from the player deck into it's board
+ * @param {ClubCardPlayer} CCPlayer - The club card player that summons the cards
+ * @param {string[]} groups - The group to summon from
+ * @param {number} amount - The amount of cards to summon
+ * @param {number | undefined} level - The level of the cards if needed
+ * @returns {boolean} - if cards were summoned or not
+ */
+declare function ClubCardPlayerSummonGroupCardFromDeck(CCPlayer: ClubCardPlayer, groups: string[], amount: number, level: number | undefined): boolean;
+/**
+ * Play a card from an effect
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {ClubCard} card - The card to play
+ * @returns {void} - Nothing
+ */
+declare function ClubCardSummonCard(CCPlayer: ClubCardPlayer, card: ClubCard): void;
+/**
+ * Returns TRUE if a specific card can be summoned by the player
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {ClubCard} Card - The card to play
+ * @returns {boolean} - TRUE if the card can be summoned
+ */
+declare function ClubCardCanSummonCard(CCPlayer: ClubCardPlayer, Card: ClubCard): boolean;
 /**
  *
  * @param {ClubCardPlayer} CCPlayer - The club card player that draws the cards
@@ -298,6 +329,19 @@ declare function ClubCardCanSelectCard(CCPlayer: ClubCardPlayer, Card: ClubCard)
  */
 declare function ClubCardPlayCard(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
 /**
+ * When it adds a card to a player's board, check if there is an effect on board that needs to be triggered.
+ * @param {ClubCardPlayer} CCPlayer - The target player
+ * @param {ClubCard} Card - The card that was played
+ * @returns {void} - Nothing
+ */
+declare function ClubCardOnCardPlayedHandler(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
+/**
+ * When it adds a card to a player's board, it updates for all index cards.
+ * @param {ClubCardPlayer} Target - The target player
+ * @returns {void} - Nothing
+ */
+declare function ClubCardUpdateBoardCardsIndex(Target: ClubCardPlayer): void;
+/**
  * When a player selects a card that's a prerequisite for another card
  * @param {ClubCard} Card - The card to play
  * @returns {void} - Nothing
@@ -362,6 +406,12 @@ declare function ClubCardRenderBubble(Value: number, X: number, Y: number, W: nu
  */
 declare function ClubCardGetGroupText(Group: any[]): string;
 /**
+   * Updated the text by mask, for InnerHTML
+   * @param {String} text -Normal Card Text
+   * @returns {String} -  Updated for InnerHTML Card Text
+   */
+declare function ClubCardGetFormatTextForInnerHTML(text: string): string;
+/**
  * Draw the club card player hand on screen, show only sleeves if not controlled by player
  * @param {ClubCard|Number} Card - The card to draw
  * @param {number} X - The X on screen position
@@ -394,6 +444,16 @@ declare function ClubCardRenderBoard(CCPlayer: any, X: number, Y: number, W: num
  */
 declare function ClubCardRenderHand(CCPlayer: ClubCardPlayer, X: number, Y: number, W: number, H: number): void;
 /**
+ * Draw the discard pile on screen
+ * @param {ClubCardPlayer} CCPlayer - The club card player that draws it's discard pile
+ * @param {number} X - The X on screen position
+ * @param {number} Y - The Y on screen position
+ * @param {number} W - The width of the discard pile window
+ * @param {number} H - The height of the discard pile window
+ * @returns {void} - Nothing
+ */
+declare function ClubCardRenderDiscardPile(CCPlayer: ClubCardPlayer, X: number, Y: number, W: number, H: number): void;
+/**
  * Shows the status text on the bottom right
  * @param {string} Text - The status text to show
  * @returns {void} - Nothing
@@ -423,8 +483,12 @@ declare function ClubCardKeyDown(event: KeyboardEvent): boolean;
 declare var ClubCardBackground: string;
 declare var ClubCardLog: any[];
 declare var ClubCardLogText: string;
+declare var ClubCardOldLogText: string;
 declare var ClubCardLogScroll: boolean;
 declare var ClubCardColor: string[];
+declare var ClubCardFameTextColor: string;
+declare var ClubCardMoneyTextColor: string;
+declare var ClubCardIsStartTurnAddedLog: boolean;
 declare var ClubCardOpponent: any;
 declare var ClubCardOpponentDeck: any[];
 declare var ClubCardReward: any;

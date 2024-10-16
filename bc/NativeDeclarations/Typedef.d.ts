@@ -734,6 +734,9 @@ interface AssetGroup {
 	readonly Effect: readonly EffectName[];
 	readonly MirrorGroup: AssetGroupName | "";
 	readonly RemoveItemOnRemove: readonly Readonly<{ Group: AssetGroupItemName; Name: string; TypeRecord?: TypeRecord }>[];
+	readonly EditOpacity: boolean;
+	readonly MinOpacity: number;
+	readonly MaxOpacity: number;
 	readonly DrawingPriority: number;
 	readonly DrawingLeft: TopLeft.Data;
 	readonly DrawingTop: TopLeft.Data;
@@ -970,6 +973,7 @@ interface Asset {
 	readonly Opacity: number;
 	readonly MinOpacity: number;
 	readonly MaxOpacity: number;
+	readonly EditOpacity: boolean;
 	readonly Audio?: string;
 	readonly Category?: readonly AssetCategory[];
 	readonly Fetish?: readonly FetishName[];
@@ -2605,7 +2609,7 @@ interface AssetDefinitionProperties {
 	 * The asset's draw opacity
 	 * @see {@link Asset.Opacity}
 	 */
-	Opacity?: number;
+	Opacity?: number | array<number>;
 
 	/**
 	 * A custom background for this option that overrides the default
@@ -3766,6 +3770,7 @@ interface ItemColorStateType {
 	colorInputWidth: number;
 	colorInputX: number;
 	colorInputY: number;
+	editOpacity: boolean;
 	exportButtonX: number;
 	importButtonX: number;
 	resetButtonX: number;
@@ -4085,6 +4090,7 @@ interface WheelFortuneOptionType {
 interface ClubCard {
 	ID: number;
 	Name: string;
+	ArrayIndex?: number;
 	Type?: string;
 	Title?: string;
 	Text?: string;
@@ -4108,6 +4114,22 @@ interface ClubCard {
 	BeforeOpponentTurnEnd?: (C: ClubCardPlayer) => void;
 	AfterOpponentTurnEnd?: (C: ClubCardPlayer) => void;
 	CanPlay?: (C: ClubCardPlayer) => boolean;
+	/**
+	 * @param C Player that owns the card and played a card
+	 * @param Card that was played
+	 */
+	onPlayedCard?: (C: ClubCardPlayer, Card: ClubCard) => void;
+	/**
+	 * @param C player that owns the card (not the one who played it in this case)
+	 * @param Card the card that was played
+	 */
+	onOpponentPlayedCard?: (C: ClubCardPlayer, Card: ClubCard) => void;
+	/**
+	 * Hook to run when card is removed from the board.
+	 * @param C Player that owns the card
+	 */
+	onLeaveClub?: (C: ClubCardPlayer) => void;
+	turnStart?: (C: ClubCardPlayer) => void;
 }
 
 interface ClubCardPlayer {
@@ -4120,6 +4142,7 @@ interface ClubCardPlayer {
 	Hand: ClubCard[];
 	Board: ClubCard[];
 	Event: ClubCard[];
+	DiscardPile: ClubCard[];
 	Level: number;
 	Money: number;
 	Fame: number;

@@ -116,6 +116,7 @@ declare const PreferenceSubscreens: PreferenceSubscreen[];
 declare var PreferencePageCurrent: number;
 /** @type {Record<string,PreferenceExtensionsSettingItem>} */
 declare let PreferenceExtensionsSettings: Record<string, PreferenceExtensionsSettingItem>;
+declare let PreferenceDidAddOldStyleScreens: boolean;
 declare namespace PreferenceActivityEnjoymentDefault {
     let Name: ActivityName | undefined;
     let Self: ArousalFactor;

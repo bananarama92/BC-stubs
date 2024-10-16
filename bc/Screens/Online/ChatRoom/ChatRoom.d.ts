@@ -1316,6 +1316,7 @@ declare var ChatRoomTargetMemberNumber: number;
 declare var ChatRoomOwnershipOption: ChatRoomOwnershipOption;
 /** @type {ChatRoomLovershipOption} */
 declare var ChatRoomLovershipOption: ChatRoomLovershipOption;
+/** @deprecated Check whether ChatRoomData is set or not instead */
 declare var ChatRoomPlayerCanJoin: boolean;
 declare var ChatRoomMoneyForOwner: number;
 /** @type {number[]} */

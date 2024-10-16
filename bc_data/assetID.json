@@ -18,7 +18,8 @@
         "id": 2,
         "assets": {
             "WombTattoos": 0,
-            "BodyWritings": 1
+            "BodyWritings": 1,
+            "FaceScars": 2
         }
     },
     "BodyUpper": {
@@ -218,7 +219,10 @@
             "WombTattoos": 23,
             "ZipperBelt": 24,
             "BodyWritings": 25,
-            "BowBackAccessory": 26
+            "BowBackAccessory": 26,
+            "LargeNeckFur": 27,
+            "SmallNeckFur": 28,
+            "SpikyNeckFur": 29
         }
     },
     "ClothLower": {
@@ -481,7 +485,9 @@
             "CowEars": 39,
             "Horns4": 40,
             "Horns5": 41,
-            "CyberneticEars1": 42
+            "CyberneticEars1": 42,
+            "Onihorns": 43,
+            "SkunkEars": 44
         }
     },
     "HairAccessory2": {
@@ -516,7 +522,9 @@
             "WolfEars2": 26,
             "CowEars": 27,
             "Horns4": 28,
-            "Horns5": 29
+            "Horns5": 29,
+            "Onihorns": 30,
+            "SkunkEars": 31
         }
     },
     "HairAccessory3": {
@@ -622,7 +630,8 @@
             "HairBack60": 81,
             "HairBack61": 82,
             "HairBack62": 83,
-            "HairBack63": 84
+            "HairBack63": 84,
+            "ScalyBackHair": 85
         }
     },
     "HairFront": {
@@ -719,7 +728,11 @@
             "HairFront55": 88,
             "HairFront56": 89,
             "HairFront57": 90,
-            "HairFront58": 91
+            "HairFront58": 91,
+            "HairFront59": 92,
+            "HairFront60": 93,
+            "HairFront61": 94,
+            "ScalyHair": 95
         }
     },
     "Hands": {
@@ -1285,7 +1298,8 @@
             "ZipperHood": 50,
             "Fu": 51,
             "Paperbag": 52,
-            "RubberMask": 53
+            "RubberMask": 53,
+            "CustomBallHood": 54
         }
     },
     "ItemLegs": {
@@ -2012,7 +2026,13 @@
             "ShinobiMask": 24,
             "SwimCap": 25,
             "VenetianMask": 26,
-            "RubberMask": 27
+            "RubberMask": 27,
+            "AngelMask": 28,
+            "AnimalNoses": 29,
+            "DemonMask": 30,
+            "EldritchMask": 31,
+            "FaceScars": 32,
+            "NecromancerHelmet": 33
         }
     },
     "Mouth": {
@@ -2340,7 +2360,9 @@
             "WolfTailStrap2": 23,
             "WolfTailStrap3": 24,
             "DragonTailStrap2Left": 25,
-            "DragonTailStrap2Right": 26
+            "DragonTailStrap2Right": 26,
+            "LatexFoxTail": 27,
+            "SkunkTail": 28
         }
     },
     "Wings": {

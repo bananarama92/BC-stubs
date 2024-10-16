@@ -1129,7 +1129,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
     } | {
         TextScript: () => "Is it you Melody?  Are you a zombie?" | "Hey!  I'm Edlaran, a wood elf, are you a zombie?";
-        AudioScript: () => "12" | "11";
+        AudioScript: () => "11" | "12";
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
