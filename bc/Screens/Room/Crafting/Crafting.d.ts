@@ -264,12 +264,22 @@ declare namespace CraftingID {
     let privateLabel: "crafting-private-label";
     let extendedButton: "crafting-extended-button";
     let extendedLabel: "crafting-extended-label";
+    let asciiDescriptionCheckbox: "crafting-ascii-description-checkbox";
+    let asciidescriptionLabel: "crafting-ascii-description-label";
+}
+declare namespace CraftingDescription {
+    let ExtendedDescriptionMarker: "\0";
+    let Pattern: RegExp;
+    let PatternASCII: RegExp;
+    function Decode(description: string): string;
+    function Encode(description: string): string;
 }
 declare namespace CraftingEventListeners {
     let _ClickPrivate: (this: HTMLInputElement, ev: Event) => void;
     let _InputLayering: (this: HTMLInputElement, ev: Event) => void;
     let _ChangeName: (this: HTMLInputElement, ev: Event) => void;
     let _ChangeDescription: (this: HTMLTextAreaElement, ev: Event) => void;
+    let _InputDescription: (this: HTMLTextAreaElement, ev: Event) => void;
     let _ChangeColor: (this: HTMLInputElement, ev: Event) => void;
     let _ClickExtended: (this: HTMLButtonElement, ev: Event) => void;
     let _ClickLayering: (this: HTMLButtonElement, ev: Event) => void;
@@ -285,6 +295,7 @@ declare namespace CraftingEventListeners {
     let _ClickAsset: (this: HTMLButtonElement, ev: Event) => void;
     let _ClickRadio: (this: HTMLButtonElement, ev: Event) => void;
     let _InputSearch: (this: HTMLInputElement, ev: Event) => Promise<void>;
+    let _ClickAsciiDescription: (this: HTMLInputElement, ev: Event) => void;
 }
 declare namespace CraftingElements {
     function _SearchInputGetDataList(controls: string): () => string[];

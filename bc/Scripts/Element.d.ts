@@ -6,6 +6,14 @@
  */
 declare function ElementValue(ID: string, Value?: string): string;
 /**
+ * Disable all clickable elements within `root` for the given duration.
+ * @param {Element} root - The root element
+ * @param {null | string} [query] - The query for identifying all clickable elements within `root`
+ * @param {number} [timeout] - The timeout in ms
+ * @returns {number} - The timeout ID as returned by {@link setTimeout}
+ */
+declare function ElementClickTimeout(root: Element, query?: null | string, timeout?: number): number;
+/**
  * Handles the content of a HTML element. It sets the content of the element when the Content parameter is provided or it returns the value when the parameter is omitted
  * @param {string} ID - The id of the element for which we want to get/set the value.
  * @param {string} [Content] - The content/inner HTML to give to the element (if applicable)
