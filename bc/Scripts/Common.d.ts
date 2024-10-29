@@ -591,11 +591,23 @@ declare var Player: PlayerCharacter;
  * @deprecated Use the keyboard handler's `event` parameter instead
  */
 declare var KeyPress: number | string;
-/** @type {ModuleType} */
+/**
+ * @readonly
+ * @type {ModuleType}
+ * @see {@link CommonSetScreen} - The function responsible for managing this variable
+ */
 declare var CurrentModule: ModuleType;
-/** @type {string} */
+/**
+ * @readonly
+ * @type {string}
+ * @see {@link CommonSetScreen} - The function responsible for managing this variable
+ */
 declare var CurrentScreen: string;
-/** @type {ScreenFunctions} */
+/**
+ * @readonly
+ * @type {ScreenFunctions}
+ * @see {@link CommonSetScreen} - The function responsible for managing this variable
+ */
 declare var CurrentScreenFunctions: ScreenFunctions;
 /** @type {Character|NPCCharacter|null} */
 declare var CurrentCharacter: Character | NPCCharacter | null;
