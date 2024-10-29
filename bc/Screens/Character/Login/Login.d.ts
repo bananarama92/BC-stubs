@@ -158,10 +158,6 @@ declare function LoginUpdateMessage(): void;
  * @returns {string} The key of the message to display
  */
 declare function LoginGetMessageKey(): string;
-/**
- * Exit function - called when leaving the login page
- * @returns {void} - Nothing
- */
 declare function LoginExit(): void;
 declare var LoginBackground: string;
 declare var LoginMessage: string;

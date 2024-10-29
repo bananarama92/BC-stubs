@@ -66,10 +66,6 @@ declare function GameLARPStartProcess(): void;
  * @returns {void} - Nothing
  */
 declare function GameLARPClick(): void;
-/**
- * Triggered when the player exits the LARP info screen.
- * @returns {void} - Nothing
- */
 declare function GameLARPExit(): void;
 /**
  * Checks if a LARP match can be launched. The player must be an admin and two different teams must be selected.

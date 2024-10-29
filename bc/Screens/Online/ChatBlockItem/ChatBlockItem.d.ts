@@ -13,10 +13,6 @@ declare function ChatBlockItemRun(): void;
  * @returns {void} - Nothing
  */
 declare function ChatBlockItemClick(): void;
-/**
- * Handles exiting from the screen
- * @returns {void} - Nothing
- */
 declare function ChatBlockItemExit(): void;
 declare var ChatBlockItemBackground: string;
 /** @type {ServerChatRoomBlockCategory[]} */

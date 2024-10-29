@@ -19,10 +19,6 @@ declare function PasswordResetResponse(msg: ServerPasswordResetResponse): void;
  * @returns {void} Nothing
  */
 declare function PasswordResetClick(): void;
-/**
- * Sends the player back to the login screen
- * @returns {void} Nothing
- */
 declare function PasswordResetExit(): void;
 declare var PasswordResetBackground: string;
 declare var PasswordResetMessage: string;

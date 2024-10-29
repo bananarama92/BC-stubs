@@ -80,6 +80,7 @@ declare function WheelFortuneMouseUp(): void;
  * @returns {void} - Nothing
  */
 declare function WheelFortuneResult(): void;
+declare function WheelFortuneKeyDown(event: KeyboardEvent): boolean;
 /**
  * When the mini exits
  * @returns {void} - Nothing

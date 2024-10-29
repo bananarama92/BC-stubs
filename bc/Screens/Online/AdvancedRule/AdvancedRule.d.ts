@@ -19,10 +19,6 @@ declare function AdvancedRuleRun(): void;
  * @returns {void} - Nothing
  */
 declare function AdvancedRuleClick(): void;
-/**
- * Handles exiting from the screen, updates the sub rules
- * @returns {void} - Nothing
- */
 declare function AdvancedRuleExit(): void;
 declare var AdvancedRuleBackground: string;
 /** @type {null | Character | NPCCharacter} */

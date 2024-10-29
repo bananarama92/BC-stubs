@@ -15,11 +15,6 @@ declare function PreferenceRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceClick(): void;
-/**
- * Is called when the player exits the preference screen. All settings of the preference screen are sent to the server.
- * If the player is in a subscreen, they exit to the main preferences menu instead.
- * @returns {void} - Nothing
- */
 declare function PreferenceExit(): void;
 /**
  * Exit from a specific subscreen by running its handler and checking its validity

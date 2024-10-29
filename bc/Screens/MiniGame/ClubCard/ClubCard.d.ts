@@ -10,20 +10,50 @@ declare function ClubCardIsOnline(): boolean;
 declare function ClubCardIsPlaying(): boolean;
 /**
  * Adds a text entry to the game log
- * @param {string} LogEntry - The club card player
+ * @param {ClubCardMessage[]} LogEntry - Message Packet with message and messageType
  * @param {boolean} Push - The club card player
  * @returns {void} - Nothing
  */
-declare function ClubCardLogAdd(LogEntry: string, Push?: boolean): void;
+declare function ClubCardLogAdd(LogEntry: ClubCardMessage[], Push?: boolean): void;
+/**
+ * Adds a message to the message storage.
+ * @param {string} Message
+ * @param {string} MessageType -  ClubCardStartTurnType
+ */
+declare function ClubCardMessagePacketAdd(Message: string, MessageType: string): void;
+/**
+ * Function for sending system messages or player messages in chat log.
+ * @param {string} Message
+ * @param {string} MessageType
+ */
+declare function ClubCardOneMessagePacketSend(Message: string, MessageType: string, Push?: boolean): void;
+/**
+ * Function to merge a huge number of Rope Slave and Living Art posts into one.
+ * @param {ClubCardMessage[]} MessagePacket
+ * @returns
+ */
+declare function ClubCardProcessingRopeSlaveLivingArt(MessagePacket: ClubCardMessage[]): ClubCardMessage[];
+/**
+ * Send Message Packet in Chat Log
+ * @param {ClubCardMessage[]} MessagePacket
+ */
+declare function ClubCardMessagePacketSend(MessagePacket: ClubCardMessage[]): void;
+/**
+ * Returns a packet with messages of the selected type and deletes them from the storage.
+ * @param {string[]} MessageTypes - Message Types for filter;
+ * @returns {ClubCardMessage[]}
+ */
+declare function ClubCardGetLogPacket(MessageTypes: string[]): ClubCardMessage[];
 /**
  * Publishes an action to the log and replaces all the tags
+ * @param {string} MessageType - Message Type
  * @param {string} Text - The text to fetch
  * @param {ClubCardPlayer|null} CCPlayer - The source player
  * @param {number|null} Amount - The amount linked to the action
  * @param {ClubCard|null} Card - The card linked to the action
- * @returns {void} - Nothing
+ * @returns {void}
  */
-declare function ClubCardLogPublish(Text: string, CCPlayer?: ClubCardPlayer | null, Amount?: number | null, Card?: ClubCard | null): void;
+declare function ClubCardLogGetDataPacket(MessageType: string, Text: string, CCPlayer?: ClubCardPlayer | null, Amount?: number | null, Card?: ClubCard | null): void;
 /**
  * Creates a popop in the middle of the board that pauses the game
  * @param {string} Mode - The popup mode "DECK", "TEXT" or "YESNO"
@@ -118,9 +148,10 @@ declare function ClubCardGroupOnBoardCount(CCPlayer: ClubCardPlayer, GroupName: 
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {ClubCard} Card - The card object to remove
  * @param {boolean|null} DontDiscard - If the card dont need to go to the discard pile
+ * @param {string} [MessageType=ClubCardMessageType.PLAYERCARDSLEFT]
  * @returns {void} - Nothing
  */
-declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard, DontDiscard?: boolean | null): void;
+declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard, DontDiscard?: boolean | null, MessageType?: string): void;
 /**
  * Gets the updated cost for a player to level up
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -272,11 +303,17 @@ declare function ClubCardGetReward(): void;
   */
 declare function ClubCardRunTurnEndHandlers(CCPlayer: ClubCardPlayer, Opponent: ClubCardPlayer, Before: boolean): void;
 /**
+ * @param {string} StartType
+ * StartType = ClubCardStartTurnType.BUNKRUPT because otherwise the bankruptcy function won't work.
+ */
+declare function ClubCardStartTurn(StartType?: string): void;
+/**
  * When a turn ends, we move to the next player
  * @param {boolean|null} Draw - If the end of turn was triggered by a draw
  * @returns {void} - Nothing
  */
 declare function ClubCardEndTurn(Draw?: boolean | null): void;
+declare function ClubCardCheckEventAndCardExpired(): void;
 /**
  * Checks that the focused card is still in the Player's hand
  * and defocuses it if not.
@@ -465,6 +502,16 @@ declare function ClubCardStatusText(Text: string): void;
  */
 declare function ClubCardRenderPanel(): void;
 /**
+ * Function to create and add system or player messages to document.getElementById(“CCLog”).
+ * @param {ClubCardMessage} MessageItem - Message
+ */
+declare function ClubCardCreateOneDivContainer(MessageItem: ClubCardMessage): void;
+/**
+ * Function for creating and filling a container with all objects for a stroke by index.
+ * @param {ClubCardMessage} MessageItem - Message
+ */
+declare function ClubCardCreateTurnDivContainer(MessageItem: ClubCardMessage): void;
+/**
  * Renders the popup on the top of the game board
  * @returns {void} - Nothing
  */
@@ -481,14 +528,9 @@ declare function ClubCardRun(): void;
 declare function ClubCardClick(): void;
 declare function ClubCardKeyDown(event: KeyboardEvent): boolean;
 declare var ClubCardBackground: string;
-declare var ClubCardLog: any[];
-declare var ClubCardLogText: string;
-declare var ClubCardOldLogText: string;
-declare var ClubCardLogScroll: boolean;
 declare var ClubCardColor: string[];
 declare var ClubCardFameTextColor: string;
 declare var ClubCardMoneyTextColor: string;
-declare var ClubCardIsStartTurnAddedLog: boolean;
 declare var ClubCardOpponent: any;
 declare var ClubCardOpponentDeck: any[];
 declare var ClubCardReward: any;
@@ -509,6 +551,36 @@ declare var ClubCardLevelCost: number[];
 declare var ClubCardPlayer: ClubCardPlayer[];
 declare var ClubCardOnlinePlayerMemberNumber1: number;
 declare var ClubCardOnlinePlayerMemberNumber2: number;
+/** @type {ClubCardMessage[]} */
+declare var ClubCardLog: ClubCardMessage[];
+/** @type {ClubCardMessage[]} */
+declare var ClubCardRenderLog: ClubCardMessage[];
+declare var ClubCardLogScroll: boolean;
+/** @type {ClubCardMessage[]} */
+declare let ClubCardMessageStorage: ClubCardMessage[];
+declare const ClubCardMessageType: Readonly<{
+    STARTTURNINFO: "StartTurnInfo";
+    STARTTURNEVENT: "StartTurnEvent";
+    ACTION: "Actions";
+    CARDEFFECT: "CardsEffect";
+    KNOTEVENT: "KnotEvent";
+    TURNENDEFFECT: "TurnEndEffect";
+    FAMEMONEYINFO: "FameMoneyInfo";
+    VICTORYINFO: "VictoryInfo";
+    PREREQUISTITE: "Prerequisite";
+    ACTIONSEPARATOR: "ActionSeparator";
+    SYSTEM: "SystemMessage";
+    PLAYERSMESSAGE: "PlayersMessage";
+}>;
+declare const ClubCardStartTurnType: Readonly<{
+    PLAYCARD: "PlayCard";
+    DRAWENDTURN: "DrawAndEndTurn";
+    BANKRUPT: "Bankrupt";
+    UPGRADELEVEL: "UpgradeLevel";
+    ENDTURN: "EndTurn";
+}>;
+/** @type {boolean} Variable to check if the start function of the turn has already been called or not. */
+declare let ClubCardIsStartTurn: boolean;
 /**
  * The card definitions
  *

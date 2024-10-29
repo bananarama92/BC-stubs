@@ -154,10 +154,6 @@ declare function AsylumEntranceKidnapNurseBribe(BribeAmount: string, BribeOdds: 
  * @returns {void} - Nothing
  */
 declare function AsylumEntranceKidnapNurseTransferToRoom(): void;
-/**
- * When the player leaves the kidnap nurse
- * @returns {void} - Nothing
- */
 declare function AsylumEntranceKidnapNurseExit(): void;
 /**
  * When the escaped player walks back to the asylum

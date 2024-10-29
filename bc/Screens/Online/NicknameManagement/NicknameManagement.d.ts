@@ -13,12 +13,9 @@ declare function NicknameManagementRun(): void;
  * @returns {void} - Nothing
  */
 declare function NicknameManagementClick(): void;
-/**
- * Handles exiting from the screen, updates the sub rules
- * @param {boolean} Save - Received rule data object.
- * @returns {void} - Nothing
- */
-declare function NicknameManagementExit(Save?: boolean): void;
+/** Save the currently specified nickname */
+declare function NicknameManagementSave(): void;
+declare function NicknameManagementExit(): void;
 declare var NicknameManagementBackground: string;
 /** @type {null | Character | NPCCharacter} */
 declare var NicknameManagementTarget: null | Character | NPCCharacter;

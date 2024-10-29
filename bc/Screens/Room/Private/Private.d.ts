@@ -512,9 +512,11 @@ declare function PrivateLoadCharacter(data: PrivateCharacterData): boolean;
  * @param {NPCCharacter} Template - The base of the character, includes the name and appearance.
  * @param {"" | NPCArchetype} [Archetype] - The type of character such as maid or mistress.
  * @param {boolean} [CustomData=false] - Whether or not the character has non-random traits.
+ * @param {null | ModuleType} [Module]
+ * @param {null | string} [Screen]
  * @returns {NPCCharacter} - The new private room character.
  */
-declare function PrivateAddCharacter(Template: NPCCharacter, Archetype?: "" | NPCArchetype, CustomData?: boolean): NPCCharacter;
+declare function PrivateAddCharacter(Template: NPCCharacter, Archetype?: "" | NPCArchetype, CustomData?: boolean, Module?: null | ModuleType, Screen?: null | string): NPCCharacter;
 /**
  * Gets the index of a given private room character.
  * @returns {number} - Index of the NPC inside the private characters array.
@@ -720,10 +722,8 @@ declare function PrivateNPCCheat(Type: any): void;
  * @returns {void} - Nothing.
  */
 declare function PrivateGetBed(Type: "White" | "Black" | "Pink"): void;
-/**
- * When the player exits the private room
- * @returns {void} - Nothing.
- */
+declare function PrivateBedKeyDown(event: KeyboardEvent): boolean;
+declare function PrivateBedKeyDown(event: KeyboardEvent): boolean;
 declare function PrivateExit(): void;
 /**
  * When the player joins the NPC in bed

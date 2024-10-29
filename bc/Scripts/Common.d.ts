@@ -577,6 +577,13 @@ declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: 
     replacer?: (this: any, key: string, value: any) => any;
     reviver?: (this: any, key: string, value: any) => any;
 }): VariableContainer<T1, T2>;
+/**
+ * Return whether the passed key press is triggered by an Esc press that would normally result in an `...Exit()` call.
+ * @param {KeyboardEvent} event
+ * @returns {boolean}
+ * @see {@link GameKeyDown}
+ */
+declare function CommonEscPressed(event: KeyboardEvent): boolean;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /**

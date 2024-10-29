@@ -106,12 +106,8 @@ declare function CraftingConvertSelectedToItem(): CraftingItem;
 declare function CraftingConvertItemToSelected(Craft: CraftingItem): CraftingItemSelected;
 /** Restore the DOM elements of the `Name` subscreen to their default state. */
 declare function CraftingExitResetElements(): void;
-/**
- * When the player exits the crafting room
- * @param {boolean} allowPanelClose - Whether an exit call in the `Name` mode is allowed to close the side panels before performing a proper exit of the subscreen
- * @returns {void} - Nothing
- */
-declare function CraftingExit(allowPanelClose?: boolean): void;
+declare function CraftingKeyDown(event: KeyboardEvent): boolean;
+declare function CraftingExit(): void;
 /**
  * Applies the craft to all matching items
  * @param {CraftingItem} Craft

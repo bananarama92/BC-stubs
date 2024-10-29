@@ -2609,7 +2609,7 @@ interface AssetDefinitionProperties {
 	 * The asset's draw opacity
 	 * @see {@link Asset.Opacity}
 	 */
-	Opacity?: number | number[];
+	Opacity?: number | Array<number>;
 
 	/**
 	 * A custom background for this option that overrides the default
@@ -4150,6 +4150,13 @@ interface ClubCardPlayer {
 	LastMoneyPerTurn?: number;
 	ClubCardTurnCounter: number;
 	CardsPlayedThisTurn: Record<number, ClubCard[]>
+}
+
+interface ClubCardMessage {
+	Message: string,
+	MessageType: string,
+	PlayerName: string,
+	TurnCounter:  number
 }
 
 // #region drawing
