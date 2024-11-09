@@ -14,7 +14,7 @@ Options:
 	--bc_version <version>  The (optional) BC version. Extract the version from the BC directory if not provided
 `;
 
-const GAME_VERSION_FORMAT = /^R([0-9]+)(?:(Alpha|Beta)([0-9]+)?)?$/;
+const GAME_VERSION_FORMAT = /R([0-9]+)/;
 
 /**
  * @typedef {`R${number}`} BCVersion
