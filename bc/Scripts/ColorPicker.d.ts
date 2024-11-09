@@ -39,6 +39,12 @@ declare function ColorPickerGetCoordinates(Event: MouseEvent | TouchEvent): {
  * @param {MouseEvent|TouchEvent} Event - The touch/mouse event
  * @returns {void} - Nothing
  */
+declare function ColorPickerPickOpacity(Event: MouseEvent | TouchEvent): void;
+/**
+ * Sets the picked hue based on the Event coordinates on the canvas
+ * @param {MouseEvent|TouchEvent} Event - The touch/mouse event
+ * @returns {void} - Nothing
+ */
 declare function ColorPickerPickHue(Event: MouseEvent | TouchEvent): void;
 /**
  * Sets the picked saturation (SV) based on the Event coordinates on the canvas

@@ -18,10 +18,6 @@ declare function ForbiddenWordsRun(): void;
  * @returns {void} - Nothing
  */
 declare function ForbiddenWordsClick(): void;
-/**
- * Handles exiting from the screen, updates the sub rules
- * @returns {void} - Nothing
- */
 declare function ForbiddenWordsExit(): void;
 declare var ForbiddenWordsBackground: string;
 /** @type {null | Character } */

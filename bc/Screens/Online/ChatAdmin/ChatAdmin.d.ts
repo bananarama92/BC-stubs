@@ -13,10 +13,6 @@ declare function ChatAdminRun(): void;
  * @returns {void} - Nothing
  */
 declare function ChatAdminClick(): void;
-/**
- * Handles exiting from the admin screen, removes the inputs and resets the state of the variables
- * @returns {void} - Nothing
- */
 declare function ChatAdminExit(): void;
 /**
  * Handles the reception of the server response after attempting to update a chatroom: Leaves the admin screen or shows an error message

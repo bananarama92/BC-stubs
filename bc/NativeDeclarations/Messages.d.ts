@@ -815,7 +815,7 @@ interface ServerChatRoomGameCardGameStartRequest {
 	Player2: number;
 }
 
-type ServerChatRoomGameCardGameActionRequest = { GameProgress: "Action" } & ({ CCLog: string } | { CCData: any });
+type ServerChatRoomGameCardGameActionRequest = { GameProgress: "Action" } & ({ CCLog: any } | { CCData: any });
 
 type ServerChatRoomGameCardGameUpdateRequest = ServerChatRoomGameCardGameStartRequest | ServerChatRoomGameCardGameQueryRequest | ServerChatRoomGameCardGameActionRequest;
 
@@ -845,7 +845,7 @@ interface ServerChatRoomGameResponse extends ServerChatRoomMessageBase {
 		Player1?: number;
 		Player2?: number;
 		CCData: [any];
-		CCLog: string;
+		CCLog: [any];
 	};
     RNG: number;
 }

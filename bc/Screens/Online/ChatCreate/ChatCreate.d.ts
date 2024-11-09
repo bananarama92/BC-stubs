@@ -1,23 +1,8 @@
-/**
- * Loads the chat creation screen properties and creates the inputs
- * @returns {void} - Nothing
- */
 declare function ChatCreateLoad(): void;
-/**
- * When the chat creation screen runs, draws the screen
- * @returns {void} - Nothing
- */
-declare function ChatCreateRun(): void;
-/**
- * Handles the click events on the chat creation screen. Is called from CommonClick()
- * @returns {void} - Nothing
- */
-declare function ChatCreateClick(): void;
+declare function ChatCreateUnload(): void;
+declare function ChatCreateRun(time: number): void;
+declare function ChatCreateClick(event: MouseEvent | TouchEvent): void;
 declare function ChatCreateKeyDown(event: KeyboardEvent): boolean;
-/**
- * Handles exiting from the chat creation screen, removes the inputs and resets the state of the variable
- * @returns {void} - Nothing
- */
 declare function ChatCreateExit(): void;
 /**
  * Handles the reception of the server response after attempting to create a chatroom: shows the error message, if applicable

@@ -34,10 +34,6 @@ declare function ChatAdminRoomCustomizationRun(): void;
  * @returns {void} - Nothing
  */
 declare function ChatAdminRoomCustomizationClick(): void;
-/**
- * Handles exiting from the admin custom screen, removes the inputs
- * @returns {void} - Nothing
- */
 declare function ChatAdminRoomCustomizationExit(): void;
 declare var ChatAdminRoomCustomizationBackground: string;
 /** @type {ServerChatRoomCustomData} */
