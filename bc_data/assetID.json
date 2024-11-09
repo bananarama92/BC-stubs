@@ -732,7 +732,9 @@
             "HairFront59": 92,
             "HairFront60": 93,
             "HairFront61": 94,
-            "ScalyHair": 95
+            "ScalyHair": 95,
+            "HairFront62a": 96,
+            "HairFront62b": 97
         }
     },
     "Hands": {
@@ -906,7 +908,8 @@
             "Yoke": 73,
             "Zipties": 74,
             "CollarMetalcuffs": 75,
-            "ArmbinderSuit": 76
+            "ArmbinderSuit": 76,
+            "BedMetalCuffs": 77
         }
     },
     "ItemBoots": {
@@ -1109,7 +1112,10 @@
             "SuspensionCuffs": 25,
             "Tentacles": 26,
             "WoodenCuffs": 27,
-            "Zipties": 28
+            "Zipties": 28,
+            "HeelBinders": 29,
+            "KneeOvernighter": 30,
+            "MassiveAnkleCuffs": 31
         }
     },
     "ItemHandheld": {
@@ -1199,7 +1205,8 @@
             "SmoothLeatherMittens1": 10,
             "ElbowLengthMittens": 11,
             "GlueMittens": 12,
-            "HempRopeCuffs": 13
+            "HempRopeCuffs": 13,
+            "FullMittens": 14
         }
     },
     "ItemHead": {
@@ -1468,7 +1475,9 @@
             "XLBoneGag": 87,
             "GlueGag": 88,
             "QualityHarnessGag": 89,
-            "GenitalGag": 90
+            "GenitalGag": 90,
+            "OverfilledGag": 91,
+            "PremiumMuzzle": 92
         }
     },
     "ItemMouth2": {
@@ -1564,7 +1573,9 @@
             "TongueStrapGag": 87,
             "GlueGag": 88,
             "QualityHarnessGag": 89,
-            "GenitalGag": 90
+            "GenitalGag": 90,
+            "OverfilledGag": 91,
+            "PremiumMuzzle": 92
         }
     },
     "ItemMouth3": {
@@ -1658,7 +1669,9 @@
             "TechnoGag": 85,
             "TonguePiercingGag": 86,
             "TongueStrapGag": 87,
-            "QualityHarnessGag": 88
+            "QualityHarnessGag": 88,
+            "OverfilledGag": 89,
+            "PremiumMuzzle": 90
         }
     },
     "ItemNeck": {
@@ -1707,7 +1720,9 @@
             "SpikedChoker": 40,
             "SteelPostureCollar": 41,
             "StrictPostureCollar": 42,
-            "TechnoCollar": 43
+            "TechnoCollar": 43,
+            "MoonCollar": 44,
+            "SunCollar": 45
         }
     },
     "ItemNeckAccessories": {
@@ -1984,7 +1999,8 @@
             "BandAnklet": 0,
             "LegFur": 1,
             "Ribbon": 2,
-            "Ribbon1": 3
+            "Ribbon1": 3,
+            "HeelBinders": 4
         }
     },
     "LeftHand": {
@@ -2152,7 +2168,8 @@
             "BandAnklet": 0,
             "LegFur": 1,
             "Ribbon": 2,
-            "Ribbon1": 3
+            "Ribbon1": 3,
+            "HeelBinders": 4
         }
     },
     "RightHand": {
@@ -2207,7 +2224,8 @@
             "WoollyBootsTall": 37,
             "StrictPonyBoots": 38,
             "AnimeGirlBoots": 39,
-            "CustomHeels": 40
+            "CustomHeels": 40,
+            "FullLegBoots": 41
         }
     },
     "Socks": {
@@ -2237,7 +2255,8 @@
             "Stockings3": 21,
             "Stockings4": 22,
             "VSocks1": 23,
-            "YuletideVelvetWarmth": 24
+            "YuletideVelvetWarmth": 24,
+            "LongFishnets": 25
         }
     },
     "SocksLeft": {
@@ -2263,7 +2282,8 @@
             "Stockings2": 17,
             "Stockings3": 18,
             "Stockings4": 19,
-            "VSocks1": 20
+            "VSocks1": 20,
+            "HeelBinders": 21
         }
     },
     "SocksRight": {
@@ -2289,7 +2309,8 @@
             "Stockings2": 17,
             "Stockings3": 18,
             "Stockings4": 19,
-            "VSocks1": 20
+            "VSocks1": 20,
+            "HeelBinders": 21
         }
     },
     "Suit": {
@@ -2328,7 +2349,8 @@
             "Stockings1": 13,
             "Stockings2": 14,
             "Stockings3": 15,
-            "Stockings4": 16
+            "Stockings4": 16,
+            "LongFishnets": 17
         }
     },
     "TailStraps": {

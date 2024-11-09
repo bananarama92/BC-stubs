@@ -14,11 +14,11 @@ Options:
 	--bc_version <version>  The (optional) BC version. Extract the version from the BC directory if not provided
 `;
 
-const GAME_VERSION_FORMAT = /^R([0-9]+)(?:(Alpha|Beta)([0-9]+)?)?$/;
+const GAME_VERSION_FORMAT = /R([0-9]+)/;
 
 /**
  * @typedef {`R${number}`} BCVersion
- * @typedef {Record<AssetGroupName, Record<string, BCVersion>>} VersionRecord
+ * @typedef {Partial<Record<AssetGroupName, Partial<Record<string, BCVersion>>>>} VersionRecord
  */
 
 /**
@@ -27,6 +27,7 @@ const GAME_VERSION_FORMAT = /^R([0-9]+)(?:(Alpha|Beta)([0-9]+)?)?$/;
  * @param {BCVersion} version
  */
 function updateJSON(jsonPath, assetDefs, version) {
+	// Load all pre-existing data
 	/** @type {VersionRecord} */
 	let data;
 	if (fs.existsSync(jsonPath)) {
@@ -40,6 +41,7 @@ function updateJSON(jsonPath, assetDefs, version) {
 		console.log(`No old "${jsonPath}" file`);
 	}
 
+	// Update the JSON data with all new assets
 	assetDefs.sort((a, b) => a.Group.localeCompare(b.Group));
 	const newAssets = [];
 	const dataSorted = /** @type {VersionRecord} */({});
@@ -57,9 +59,13 @@ function updateJSON(jsonPath, assetDefs, version) {
 
 	if (newAssets.length > 0) {
 		const assets = newAssets.length > 30 ? [...newAssets.slice(0, 30), "..."] : newAssets;
-		console.log(`Adding ${newAssets.length} new ${version} assets:`, assets);
+		console.log(
+			`Adding ${newAssets.length} new ${version} assets:`,
+			JSON.stringify(assets, undefined, 4),
+			"\n",
+		);
 	} else {
-		console.log("No new assets");
+		console.log("No new assets", "\n");
 	}
 	fs.writeFileSync(jsonPath, JSON.stringify(dataSorted, undefined, 4), { encoding: "utf-8" });
 }

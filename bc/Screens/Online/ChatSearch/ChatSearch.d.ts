@@ -1,18 +1,7 @@
-/**
- * Loads the chat search screen properties, creates the inputs and loads up the first 24 rooms.
- * @returns {void} - Nothing
- */
 declare function ChatSearchLoad(): void;
-/**
- * When the chat Search screen runs, draws the screen
- * @returns {void} - Nothing
- */
-declare function ChatSearchRun(): void;
-/**
- * Handles the click events on the chat search screen. Is called from CommonClick()
- * @returns {void} - Nothing
- */
-declare function ChatSearchClick(): void;
+declare function ChatSearchUnload(): void;
+declare function ChatSearchRun(time: number): void;
+declare function ChatSearchClick(event: MouseEvent | TouchEvent): void;
 /**
  * Draws buttons and text for selection of room space.
  * @returns {void} - Nothing
@@ -54,10 +43,6 @@ declare function ChatSearchSaveLanguageAndFilterTerms(): void;
  */
 declare function ChatSearchLoadLanguageAndFilterTerms(): void;
 declare function ChatSearchKeyDown(event: KeyboardEvent): boolean;
-/**
- * Handles exiting from the chat search screen, removes the input.
- * @returns {void} - Nothing
- */
 declare function ChatSearchExit(): void;
 /**
  * Draws the filter mode help screen: just text and a back button.

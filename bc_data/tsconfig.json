@@ -8,8 +8,7 @@
 		"strict": true
 	},
 	"include": [
-		"../bc/Female3DCG_Types.d.ts",
-		"../bc/Typedef.d.ts",
+		"../bc/NativeDeclarations/**.d.ts",
 		"scripts/*.js"
 	]
 }

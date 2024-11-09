@@ -19,16 +19,13 @@ declare function RelogKeyDown(event: KeyboardEvent): boolean;
  * @returns {void} Nothing
  */
 declare function RelogSend(): void;
-/**
- * Sends the player back to the main login screen
- * @returns {void} Nothing
- */
 declare function RelogExit(): void;
 declare var RelogBackground: string;
 declare var RelogCanvas: HTMLCanvasElement;
-/** @type {null | { Screen: string, Module: ModuleType, Character: Character }} */
+/** @type {null | { Screen: string, Module: ModuleType, Character: Character, ChatRoomName: string | null}} */
 declare var RelogData: null | {
     Screen: string;
     Module: ModuleType;
     Character: Character;
+    ChatRoomName: string | null;
 };

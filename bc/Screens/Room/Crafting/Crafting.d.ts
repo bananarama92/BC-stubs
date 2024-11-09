@@ -108,8 +108,8 @@ declare function CraftingConvertItemToSelected(Craft: CraftingItem): CraftingIte
 declare function CraftingExitResetElements(): void;
 /**
  * When the player exits the crafting room
+ * @satisfies {ScreenFunctions["Exit"]}
  * @param {boolean} allowPanelClose - Whether an exit call in the `Name` mode is allowed to close the side panels before performing a proper exit of the subscreen
- * @returns {void} - Nothing
  */
 declare function CraftingExit(allowPanelClose?: boolean): void;
 /**
@@ -264,6 +264,8 @@ declare namespace CraftingID {
     let privateLabel: "crafting-private-label";
     let extendedButton: "crafting-extended-button";
     let extendedLabel: "crafting-extended-label";
+    let tightenButton: "crafting-tighten-button";
+    let tightenLabel: "crafting-tighten-label";
     let asciiDescriptionCheckbox: "crafting-ascii-description-checkbox";
     let asciidescriptionLabel: "crafting-ascii-description-label";
 }
@@ -282,6 +284,7 @@ declare namespace CraftingEventListeners {
     let _InputDescription: (this: HTMLTextAreaElement, ev: Event) => void;
     let _ChangeColor: (this: HTMLInputElement, ev: Event) => void;
     let _ClickExtended: (this: HTMLButtonElement, ev: Event) => void;
+    let _ClickTighten: (this: HTMLButtonElement, ev: Event) => void;
     let _ClickLayering: (this: HTMLButtonElement, ev: Event) => void;
     let _ClickColors: (this: HTMLButtonElement, ev: Event) => void;
     let _ClickUndress: (this: HTMLButtonElement, ev: Event) => void;

@@ -244,10 +244,6 @@ declare function AppearanceClick(): void;
  * @returns {void} - Nothing
  */
 declare function AppearanceMenuClick(C: Character): void;
-/**
- * Handle the exiting of the appearance screen. The function name is created dynamically.
- * @returns {void} - Nothing
- */
 declare function AppearanceExit(): void;
 /**
  * Common cleanup that must happen when the appearance editor closes

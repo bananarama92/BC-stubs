@@ -44,9 +44,11 @@ declare function CharacterArchetypeClothes(C: Character, Archetype: "Maid" | "Mi
  * Loads an NPC into the character array. The appearance is randomized, and a type can be provided to dress them in a given style.
  * @param {string} CharacterID - The unique identifier for the NPC
  * @param {string} [NPCType] - The dialog used by the NPC.  Defaults to CharacterID if not specified.
+ * @param {null | ModuleType} module
+ * @param {null | string} screen
  * @returns {NPCCharacter} - The randomly generated NPC
  */
-declare function CharacterLoadNPC(CharacterID: string, NPCType?: string, module?: ModuleType, screen?: string): NPCCharacter;
+declare function CharacterLoadNPC(CharacterID: string, NPCType?: string, module?: null | ModuleType, screen?: null | string): NPCCharacter;
 /**
  * Create a minimal character object
  * @param {string} CharacterID - The account name to give to the character

@@ -14,7 +14,7 @@ Options:
 `;
 
 /**
- * @typedef {Record<AssetGroupName, { id: number, assets: Record<string, number> }>} IDRecord
+ * @typedef {Partial<Record<AssetGroupName, { id: number, assets: Record<string, number> }>>} IDRecord
  */
 
 /**
@@ -75,9 +75,14 @@ function updateJSON(jsonPath, assetDefs) {
 	if (newAssets.length > 0 || newGroups.length > 0) {
 		const assets = newAssets.length > 30 ? [...newAssets.slice(0, 30), "..."] : newAssets;
 		const groups = newGroups.length > 30 ? [...newGroups.slice(0, 30), "..."] : newGroups;
-		console.log(`Adding ${newAssets.length} new assets and ${newGroups.length} new groups\nassets:`, assets, "\ngroups:", groups);
+		console.log(
+			`Adding ${newAssets.length} new assets and ${newGroups.length} new groups",
+			"\nassets:`, JSON.stringify(assets, undefined, 4),
+			"\ngroups:", JSON.stringify(groups, undefined, 4),
+			"\n",
+		);
 	} else {
-		console.log("No new assets or groups");
+		console.log("No new assets or groups", "\n");
 	}
 	fs.writeFileSync(jsonPath, JSON.stringify(data, undefined, 4), { encoding: "utf-8" });
 }

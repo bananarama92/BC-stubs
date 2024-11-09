@@ -48,10 +48,6 @@ declare function GameClubCardRun(): void;
  * @returns {void} - Nothing
  */
 declare function GameClubCardClick(): void;
-/**
- * Triggered when the player exits the Club Card config screen.
- * @returns {void} - Nothing
- */
 declare function GameClubCardExit(): void;
 /**
  * Checks there's 1 player in slot 1 and slot 2 so we can start the game.

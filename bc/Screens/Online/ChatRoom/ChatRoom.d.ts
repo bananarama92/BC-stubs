@@ -415,6 +415,7 @@ declare function ChatRoomSetLastChatRoom(room: ChatRoom | null): void;
  */
 declare function ChatRoomStimulationMessage(Action: StimulationAction): void;
 declare function ChatRoomResize(load: boolean): void;
+declare function ChatRoomUnload(): void;
 /**
  * Draws arousal screen filter
  * @param {number} y1 - Y to draw filter at.

@@ -299,7 +299,8 @@ declare namespace ElementButton {
     let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _Click: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => void;
-    let _MouseUp: (this: HTMLButtonElement) => void;
+    let _MouseDown: (this: HTMLButtonElement, ev: Event) => void;
+    let _MouseUp: (this: HTMLButtonElement, ev: Event) => void;
     function _QueryDFS(root: Element, query: string, filter: (el: Element) => boolean): Generator<Element, void>;
     let _ClickRadio: (this: HTMLButtonElement, ev: Event) => void;
     function _KeyDownRadio(this: HTMLElement, ev: KeyboardEvent): void;

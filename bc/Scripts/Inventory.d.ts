@@ -146,11 +146,11 @@ declare function InventoryGet(C: Character, AssetGroup: AssetGroupName): Item | 
 * @param {AssetGroupItemName} GroupName - The name of the asset group to scan
 * @param {CraftingItem} Craft - The crafted properties to apply
 * @param {Boolean} Refresh - TRUE if we must refresh the character
-* @param {Boolean} ApplyColor - TRUE if the items color must be (re-)applied
+* @param {Boolean} PreConfigureItem - TRUE if the default, pre-configured item state of the crafted item must be (re-)applied
 * @param {Boolean} CraftWarn - Whether a warning should logged whenever the crafting validation fails
 * @returns {void}
 */
-declare function InventoryCraft(Source: Character, Target: Character, GroupName: AssetGroupItemName, Craft: CraftingItem, Refresh: boolean, ApplyColor?: boolean, CraftWarn?: boolean): void;
+declare function InventoryCraft(Source: Character, Target: Character, GroupName: AssetGroupItemName, Craft: CraftingItem, Refresh: boolean, PreConfigureItem?: boolean, CraftWarn?: boolean): void;
 /**
 * Returns the number of items on a character with a specific property
 * @param {Character} C - The character to validate
