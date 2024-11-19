@@ -45,10 +45,40 @@ declare function TextItemPropertyRevert({ textNames }: TextItemData, item: Item)
  */
 declare const TextItemDataLookup: Record<string, TextItemData>;
 declare namespace TextItem {
+    /**
+     * Init function for items with text input fields.
+     * @param {TextItemData} data
+     * @param {Character} C — The character that has the item equiped
+     * @param {Item} item — The item in question
+     * @param {boolean} push - Whether to push to changes to the server
+     * @param {boolean} refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
+     * @returns {boolean} Whether properties were updated or not
+     */
     function Init({ asset, font, baselineProperty, maxLength }: TextItemData, C: Character, item: Item, push?: boolean, refresh?: boolean): boolean;
+    /**
+     * Load function for items with text input fields.
+     * @param {TextItemData} data
+     */
     function Load(data: TextItemData): void;
+    /**
+     * Draw handler for extended item screens with text input fields.
+     * @param {TextItemData} data - The items extended item data
+     */
     function Draw(data: TextItemData): void;
+    /**
+     * Exit function for items with text input fields.
+     * @param {TextItemData} data - The items extended item data
+     * @param {boolean} publishAction - Whether
+     */
     function Exit(data: TextItemData, publishAction?: boolean): void;
+    /**
+     * PublishAction function for items with text input fields.
+     * @param {TextItemData} data - The items extended item data
+     * @param {Character} C - The character in question
+     * @param {Item} item - The item in question
+     * @param {TextItemOption} newOption
+     * @param {TextItemOption} previousOption
+     */
     function PublishAction(data: TextItemData, C: Character, item: Item, newOption: TextItemOption, previousOption: TextItemOption): void;
 }
 /**

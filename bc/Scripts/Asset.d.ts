@@ -272,11 +272,28 @@ declare namespace PoseType {
     let DEFAULT: "";
 }
 declare namespace AssetResolveCopyConfig {
+    /**
+     * Take an (ordered) list of `CopyConfig`-referenced configs and group them all together in a `BuyGroup`.
+     * The buygroup's name will either be extracted from the configs if present, or alternatively use the `Name` of the top-most config.
+     * @param {readonly { BuyGroup?: string, Value?: number, Name?: string }[]} configList
+     */
     function _AssignBuyGroup(configList: readonly {
         BuyGroup?: string;
         Value?: number;
         Name?: string;
     }[]): void;
+    /**
+     * Merge the passed config with all it's to-be copied super configs (per its `CopyConfig` settings)
+     * @template {{ CopyConfig?: { GroupName?: AssetGroupName, AssetName: string }, BuyGroup?: string, Value?: number, Name?: string }} T
+     * @param {T} config - The (extended) asset config
+     * @param {string} assetName - The name of the corresponding asset
+     * @param {AssetGroupName} groupName - The name of the corresponding asset group
+     * @param {Partial<Record<AssetGroupName, Record<string, T>>>} configRecord - A (nested) record containing the configs of all assets
+     * @param {string} configType - The name of the config type. Used for error reporting
+     * @param {null | AssetCopyConfigValidator<T>} configValidator - An optional validator for comparing the config with its to-be copied counterpart(s)
+     * @param {boolean} setBuyGroup - Whether to automatically assign a buygroup to the config and, if required, all `CopyConfig`-referenced super configs
+     * @returns {null | T} - The original config merged with its to-be copied super configs. Returns `null` if an error is encountered.
+     */
     function _Resolve<T extends {
         CopyConfig?: {
             GroupName?: AssetGroupName;
@@ -286,8 +303,24 @@ declare namespace AssetResolveCopyConfig {
         Value?: number;
         Name?: string;
     }>(config: T, assetName: string, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Record<string, T>>>, configType: string, configValidator?: null | AssetCopyConfigValidator<T>, setBuyGroup?: boolean): null | T;
-    let _ExtendedValidator: AssetCopyConfigValidator<AssetArchetypeConfig>;
+    function _ExtendedValidator(config: AssetArchetypeConfig, superConfig: AssetArchetypeConfig, key: string, superKey: string): boolean;
+    /**
+     * Construct the items asset config, merging via {@link AssetDefinition.CopyConfig} if required.
+     * @param {AssetDefinition} assetDef - The asset definition
+     * @param {AssetGroupName} groupName - The name of the asset group
+     * @param {Partial<Record<AssetGroupName, Record<string, AssetDefinition>>>} assetRecord - A record containg all asset definitions
+     * @returns {null | AssetDefinition} - The oiginally passed base item configuration.
+     * Returns `null` insstead if an error was encountered.
+     */
     function AssetDefinition(assetDef: AssetDefinition, groupName: AssetGroupName, assetRecord: Partial<Record<AssetGroupName, Record<string, AssetDefinition>>>): null | AssetDefinition;
+    /**
+     * Construct the items extended item config, merging via {@link AssetArchetypeConfig.CopyConfig} if required.
+     * @param {Asset} asset - The asset to configure
+     * @param {AssetArchetypeConfig} config - The extended item configuration of the base item
+     * @param {ExtendedItemMainConfig} extendedConfig - The extended item configuration object for the asset's family
+     * @returns {null | AssetArchetypeConfig} - The oiginally passed base item configuration.
+     * Returns `null` instead if an error was encountered.
+     */
     function ExtendedItemConfig(asset: Asset, config: AssetArchetypeConfig, extendedConfig: ExtendedItemMainConfig): null | AssetArchetypeConfig;
 }
 declare const AssetStringsPath: "Assets/Female3DCG/AssetStrings.csv";

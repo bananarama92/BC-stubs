@@ -298,20 +298,75 @@ declare namespace ElementButton {
     }>;
     let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
-    let _Click: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => void;
-    let _MouseDown: (this: HTMLButtonElement, ev: Event) => void;
-    let _MouseUp: (this: HTMLButtonElement, ev: Event) => void;
+    function _Click(this: HTMLButtonElement, ev: MouseEvent | TouchEvent): void;
+    function _MouseDown(this: HTMLButtonElement, ev: Event): void;
+    function _MouseUp(this: HTMLButtonElement, ev: Event): void;
     function _QueryDFS(root: Element, query: string, filter: (el: Element) => boolean): Generator<Element, void>;
-    let _ClickRadio: (this: HTMLButtonElement, ev: Event) => void;
+    function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
+    /**
+     * @this {HTMLElement}
+     * @param {KeyboardEvent} ev
+     */
     function _KeyDownRadio(this: HTMLElement, ev: KeyboardEvent): void;
-    let _ClickCheckbox: (this: HTMLButtonElement, ev: Event) => void;
+    function _ClickCheckbox(this: HTMLButtonElement, ev: Event): void;
+    /**
+     * @private
+     * @param {string} id
+     * @param {string} [img]
+     * @param {Omit<HTMLOptions<"img">, "tag">} [options]
+     * @returns {HTMLImageElement}
+     */
     function _ParseImage(id: string, img?: string, options?: Omit<HTMLOptions<"img">, "tag">): HTMLImageElement;
+    /**
+     * @private
+     * @param {string} id
+     * @param {string} [label]
+     * @param {"top" | "center" | "bottom"} [position]
+     * @param {Omit<HTMLOptions<"span">, "tag">} [options]
+     * @returns {HTMLSpanElement}
+     */
     function _ParseLabel(id: string, label?: string, position?: "top" | "center" | "bottom", options?: Omit<HTMLOptions<"span">, "tag">): HTMLSpanElement;
+    /**
+     * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
+     * @param {string} id - The ID of the parent element
+     * @param {readonly InventoryIcon[]} [icons] - The (optional) list of icons
+     * @returns {null | { iconGrid: HTMLDivElement, tooltip: HTMLUListElement }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
+     */
     function _ParseIcons(id: string, icons?: readonly InventoryIcon[]): null | {
         iconGrid: HTMLDivElement;
         tooltip: HTMLUListElement;
     };
+    /**
+     * @private
+     * @param {string} id
+     * @param {"left" | "right" | "top" | "bottom"} [position]
+     * @param {readonly (null | string | Node | HTMLOptions<any>)[]} [children]
+     * @param {Omit<HTMLOptions<"div">, "tag">} [options]
+     * @returns {null | HTMLDivElement}
+     */
     function _ParseTooltip(id: string, position?: "left" | "right" | "top" | "bottom", children?: readonly (null | string | Node | HTMLOptions<any>)[], options?: Omit<HTMLOptions<"div">, "tag">): null | HTMLDivElement;
+    /**
+     * Create a button with a tooltip
+     *
+     * @example
+     * <button id={id}>
+     *     <div id={`${id}-tooltip`} />
+     * </button>
+     * @param {null | string} id - The ID of the to-be created search button
+     * @param {(this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any} onClick - The click event listener to-be attached to the tooltip
+     * @param {Object} [options]
+     * @param {null | string | Node | readonly (null | string | Node)[]} [options.tooltip] - Optional tooltip content. If not supplied then one should manually prepend it to the tooltip later
+     * @param {"left" | "right" | "top" | "bottom"} [options.tooltipPosition] - The position of the tooltip w.r.t. the button
+     * @param {string} [options.label]
+     * @param {"top" | "center" | "bottom"} [options.labelPosition]
+     * @param {string} [options.image]
+     * @param {readonly InventoryIcon[]} [options.icons]
+     * @param {"radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox"} [options.role] - The role of the button. All accepted values are currently special-cased in order to set role-specific event listeners and/or attributes.
+     * @param {boolean} [options.noStyling] - Whether to limit the default styling of the button's border and background
+     * @param {boolean} [options.disabled] - Whether the button should be disabled or not
+     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the either the button or tooltip
+     * @returns {HTMLButtonElement} - The created button
+     */
     function Create(id: null | string, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: {
         tooltip?: null | string | Node | readonly (null | string | Node)[];
         tooltipPosition?: "left" | "right" | "top" | "bottom";
@@ -327,10 +382,43 @@ declare namespace ElementButton {
 declare namespace ElementMenu {
     export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;
     export { _KeyDown_1 as _KeyDown };
-    export function Create_1(id: string, menuItems: readonly (string | Node | HTMLOptions<keyof HTMLElementTagNameMap>)[], options?: {
+    /**
+     * Construct a menubar of button elements
+     * @example
+     * <div id={id} role="menubar">
+     *     <button role="menuitem" />
+     *     <input role="menuitem" type="text" />
+     *     <button role="menuitem" aria-haspopup="menu">
+     *         <div style={ display: "none" }>
+     *             <button role="menuitem" />
+     *             <button role="menuitem" />
+     *             ...
+     *         </div>
+     *     </button>
+     *     ...
+     * </div>
+     * @param {string} id - The menu's ID
+     * @param {readonly (string | Node | HTMLOptions<keyof HTMLElementTagNameMap>)[]} menuItems - The menu's content.
+     * Any `<button>` element without a role (regardless of nesting) will be assigned the `menuitem` role and thus be elligble for menu-style navigation.
+     * Buttons that open a sub-menu _must_ have the `aria-haspopup: "menu"` attribute set and must be able to do so via a click action.
+     * @param {Object} [options]
+     * @param {"ltr" | "rtl"} [options.direction] - The direction of the menu. Should match the value of the CSS `direction` property if provided
+     * @param {null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @returns {HTMLDivElement} - The menu
+     */
+    export function Create(id: string, menuItems: readonly (string | Node | HTMLOptions<keyof HTMLElementTagNameMap>)[], options?: {
         direction?: "ltr" | "rtl";
     }, htmlOptions?: null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>): HTMLDivElement;
-    export { Create_1 as Create };
+    /**
+     * Append a menuitem to the passed menubar
+     * @param {HTMLDivElement} div - The menubar
+     * @param {HTMLElement} menuitem - The to-be prepended menuitem
+     */
     export function AppendButton(div: HTMLDivElement, menuitem: HTMLElement): void;
-    export function PrependItem(div: HTMLDivElement, menuitem: HTMLElement): void;
+    export let div: any;
+    export { menuitem };
+}
+declare var _: any;
+declare namespace menuitem {
+    let role: string;
 }

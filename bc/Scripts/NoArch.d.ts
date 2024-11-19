@@ -28,7 +28,22 @@ declare function NoArchCreateNoArchItemData(asset: Asset, { DialogPrefix, ChatTa
  */
 declare const NoArchItemDataLookup: Record<string, NoArchItemData>;
 declare namespace NoArch {
+    /**
+     * @param {ExtendedItemData<any>} data
+     * @param {Character} C — The character that has the item equiped
+     * @param {Item} item — The item in question
+     * @param {boolean} push - Whether to push to changes to the server
+     * @param {boolean} refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
+     * @returns {boolean} Whether properties were updated or not
+     */
     function Init(data: ExtendedItemData<any>, C: Character, item: Item, push?: boolean, refresh?: boolean): boolean;
+    /**
+     * @param {ExtendedItemData<any>} data
+     */
     function Draw(data: ExtendedItemData<any>): void;
+    /**
+     * @param {ExtendedItemData<any>} data
+     * @returns {boolean} Whether a button was clicked or not
+     */
     function Click(data: ExtendedItemData<any>): boolean;
 }
