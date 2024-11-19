@@ -187,9 +187,46 @@ declare const VibratorModeDataLookup: Record<string, VibratingItemData>;
  */
 declare const VibratorModeUpdate: Partial<Record<VibratorMode, (data: VibratingItemData, C: Character, item: Item, persistentData: VibratorModePersistentData) => void>>;
 declare namespace VibratorModeStateUpdate {
+    /**
+     * Vibrator update function for vibrator state machine modes in the Default state
+     * @param {Character} C - The character that the item is equipped on
+     * @param {number} arousal - The current arousal of the character
+     * @param {number} timeSinceLastChange - The time in milliseconds since the vibrator intensity was last changed
+     * @param {VibratorIntensity} oldIntensity - The current intensity of the vibrating item
+     * @param {readonly VibratorModeState[]} transitionsFromDefault - The possible vibrator states that may be transitioned to from
+     * the default state
+     * @returns {StateAndIntensity} - The updated state and intensity of the vibrator
+     */
     function Default(C: Character, arousal: number, timeSinceLastChange: number, oldIntensity: VibratorIntensity, transitionsFromDefault: readonly VibratorModeState[]): StateAndIntensity;
+    /**
+     * Vibrator update function for vibrator state machine modes in the Deny state
+     * @param {Character} C - The character that the item is equipped on
+     * @param {number} arousal - The current arousal of the character
+     * @param {number} timeSinceLastChange - The time in milliseconds since the vibrator intensity was last changed
+     * @param {VibratorIntensity} oldIntensity - The current intensity of the vibrating item
+     * the default state
+     * @returns {StateAndIntensity} - The updated state and intensity of the vibrator
+     */
     function Deny(C: Character, arousal: number, timeSinceLastChange: number, oldIntensity: VibratorIntensity): StateAndIntensity;
+    /**
+     * Vibrator update function for vibrator state machine modes in the Orgasm state
+     * @param {Character} C - The character that the item is equipped on
+     * @param {number} arousal - The current arousal of the character
+     * @param {number} timeSinceLastChange - The time in milliseconds since the vibrator intensity was last changed
+     * @param {VibratorIntensity} oldIntensity - The current intensity of the vibrating item
+     * the default state
+     * @returns {StateAndIntensity} - The updated state and intensity of the vibrator
+     */
     function Orgasm(C: Character, arousal: number, timeSinceLastChange: number, oldIntensity: VibratorIntensity): StateAndIntensity;
+    /**
+     * Vibrator update function for vibrator state machine modes in the Rest state
+     * @param {Character} C - The character that the item is equipped on
+     * @param {number} arousal - The current arousal of the character
+     * @param {number} timeSinceLastChange - The time in milliseconds since the vibrator intensity was last changed
+     * @param {VibratorIntensity} oldIntensity - The current intensity of the vibrating item
+     * the default state
+     * @returns {StateAndIntensity} - The updated state and intensity of the vibrator
+     */
     function Rest(C: Character, arousal: number, timeSinceLastChange: number, oldIntensity: VibratorIntensity): StateAndIntensity;
 }
 type VibratorModePersistentData = {

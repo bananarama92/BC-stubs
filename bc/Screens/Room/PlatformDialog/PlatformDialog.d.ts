@@ -634,7 +634,7 @@ declare var PlatformDialogData: ({
         TextScript?: undefined;
         AudioScript?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -757,7 +757,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
         Entry?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Audio: string;
         Character: {
@@ -1128,8 +1128,8 @@ declare var PlatformDialogData: ({
         AudioStyle?: undefined;
         Answer?: undefined;
     } | {
-        TextScript: () => "Is it you Melody?  Are you a zombie?" | "Hey!  I'm Edlaran, a wood elf, are you a zombie?";
-        AudioScript: () => "11" | "12";
+        TextScript(): "Is it you Melody?  Are you a zombie?" | "Hey!  I'm Edlaran, a wood elf, are you a zombie?";
+        AudioScript(): "11" | "12";
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -1284,7 +1284,7 @@ declare var PlatformDialogData: ({
             Script?: undefined;
         } | {
             Text: string;
-            Script: () => void;
+            Script(): void;
             Reply?: undefined;
             Audio?: undefined;
             AudioStyle?: undefined;
@@ -1465,7 +1465,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -1751,7 +1751,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -1879,7 +1879,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Background?: undefined;
         Character?: undefined;
@@ -1888,7 +1888,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         ID: string;
         Text: string;
         Character: {
@@ -1978,7 +1978,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         Text: string;
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Audio?: undefined;
@@ -1999,7 +1999,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         Entry?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -2022,7 +2022,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         Entry?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         ID: string;
         Text: string;
         Character: {
@@ -2059,7 +2059,7 @@ declare var PlatformDialogData: ({
             Script?: undefined;
         } | {
             Text: string;
-            Script: () => void;
+            Script(): void;
             Reply?: undefined;
         })[];
         Background?: undefined;
@@ -2847,8 +2847,8 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        TextScript: () => "My dear Olivia, together we are unstoppable." | "Olivia, I'm glad we are in this mess together." | "Little lady, I'll be there to lock you up every night." | "Olivia, I'll be there to protect you." | "Lady Olivia, your maid will be there to serve and obey you.  (You do a maid curtsy.)" | "Lady Olivia, I'll be there to help you.";
-        AudioScript: () => "81" | "82" | "83" | "84" | "85" | "86";
+        TextScript(): "My dear Olivia, together we are unstoppable." | "Olivia, I'm glad we are in this mess together." | "Little lady, I'll be there to lock you up every night." | "Olivia, I'll be there to protect you." | "Lady Olivia, your maid will be there to serve and obey you.  (You do a maid curtsy.)" | "Lady Olivia, I'll be there to help you.";
+        AudioScript(): "81" | "82" | "83" | "84" | "85" | "86";
         Character: {
             Name: string;
             Status: string;
@@ -2862,7 +2862,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -2955,7 +2955,7 @@ declare var PlatformDialogData: ({
     Exit: () => void;
     Dialog: ({
         Background: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -3061,7 +3061,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
     } | {
         ID: string;
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -3074,7 +3074,7 @@ declare var PlatformDialogData: ({
         AudioStyle?: undefined;
         Answer?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -3095,7 +3095,7 @@ declare var PlatformDialogData: ({
     Exit: () => void;
     Dialog: ({
         Background: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -3182,7 +3182,7 @@ declare var PlatformDialogData: ({
             Audio: string;
             AudioStyle: string;
             Love: number;
-            Script: () => void;
+            Script(): void;
             Perk?: undefined;
         } | {
             Text: string;
@@ -3232,7 +3232,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
     } | {
         ID: string;
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -3245,7 +3245,7 @@ declare var PlatformDialogData: ({
         AudioStyle?: undefined;
         Answer?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -3259,7 +3259,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -3280,7 +3280,7 @@ declare var PlatformDialogData: ({
     Exit: () => void;
     Dialog: ({
         Background: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         AudioStyle?: undefined;
@@ -3363,7 +3363,7 @@ declare var PlatformDialogData: ({
             Reply: string;
             Audio: string;
             Domination: number;
-            Script: () => void;
+            Script(): void;
         } | {
             Text: string;
             Reply: string;
@@ -3378,7 +3378,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
     } | {
         ID: string;
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -3391,7 +3391,7 @@ declare var PlatformDialogData: ({
         AudioStyle?: undefined;
         Answer?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -3406,7 +3406,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -3658,7 +3658,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         AudioStyle?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -3671,7 +3671,7 @@ declare var PlatformDialogData: ({
         Answer: ({
             Text: string;
             Reply: string;
-            Script: () => void;
+            Script(): void;
             Domination?: undefined;
             Love?: undefined;
         } | {
@@ -3707,7 +3707,7 @@ declare var PlatformDialogData: ({
         Text: string;
         Audio: string;
         AudioStyle: string;
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Answer?: undefined;
@@ -3790,7 +3790,7 @@ declare var PlatformDialogData: ({
         Audio: string;
         Answer: ({
             Text: string;
-            Script: () => void;
+            Script(): void;
             Domination?: undefined;
             Love?: undefined;
             Reply?: undefined;
@@ -3798,12 +3798,12 @@ declare var PlatformDialogData: ({
             Text: string;
             Domination: number;
             Love: number;
-            Script: () => void;
+            Script(): void;
             Reply?: undefined;
         } | {
             Text: string;
             Reply: string;
-            Script: () => void;
+            Script(): void;
             Domination?: undefined;
             Love?: undefined;
         })[];
@@ -3943,10 +3943,10 @@ declare var PlatformDialogData: ({
             Status: string;
             Pose: string;
         }[];
-        Entry: () => void;
+        Entry(): void;
         TextScript?: undefined;
     } | {
-        TextScript: () => "(The crate is open and empty.)" | "(It's too dangerous to inspect the crate while it's guarded.)";
+        TextScript(): "(The crate is open and empty.)" | "(It's too dangerous to inspect the crate while it's guarded.)";
         Background?: undefined;
         Character?: undefined;
         Entry?: undefined;
@@ -3982,10 +3982,10 @@ declare var PlatformDialogData: ({
         Answer: ({
             Text: string;
             Reply: string;
-            Script: () => void;
+            Script(): void;
         } | {
             Text: string;
-            Script: () => void;
+            Script(): void;
             Reply?: undefined;
         })[];
         Background?: undefined;
@@ -4050,7 +4050,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -4214,7 +4214,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -4446,7 +4446,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text?: undefined;
         Character?: undefined;
         Audio?: undefined;
@@ -4518,7 +4518,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -4579,7 +4579,7 @@ declare var PlatformDialogData: ({
         Text: string;
         Answer: ({
             Text: string;
-            Script: () => void;
+            Script(): void;
             Reply?: undefined;
         } | {
             Text: string;
@@ -4609,7 +4609,7 @@ declare var PlatformDialogData: ({
         Audio?: undefined;
         Entry?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Background?: undefined;
         Character?: undefined;
@@ -5089,7 +5089,7 @@ declare var PlatformDialogData: ({
             Script?: undefined;
         } | {
             Text: string;
-            Script: () => void;
+            Script(): void;
             Reply?: undefined;
             Love?: undefined;
         })[];
@@ -5183,7 +5183,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         Entry?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -5198,7 +5198,7 @@ declare var PlatformDialogData: ({
     Exit: () => void;
     Dialog: ({
         Background: string;
-        Entry: () => void;
+        Entry(): void;
         Prerequisite?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -5207,7 +5207,7 @@ declare var PlatformDialogData: ({
         AudioStyle?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         Character: {
@@ -5294,7 +5294,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -5307,7 +5307,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         AudioStyle?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -5328,7 +5328,7 @@ declare var PlatformDialogData: ({
     Exit: () => void;
     Dialog: ({
         Background: string;
-        Entry: () => void;
+        Entry(): void;
         Prerequisite?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -5337,7 +5337,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         Character: {
@@ -5351,7 +5351,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -5452,7 +5452,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -5465,7 +5465,7 @@ declare var PlatformDialogData: ({
         AudioStyle?: undefined;
         Answer?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -5486,7 +5486,7 @@ declare var PlatformDialogData: ({
     Exit: () => void;
     Dialog: ({
         Background: string;
-        Entry: () => void;
+        Entry(): void;
         Prerequisite?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -5495,7 +5495,7 @@ declare var PlatformDialogData: ({
         AudioStyle?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         Character: {
@@ -5583,7 +5583,7 @@ declare var PlatformDialogData: ({
             Audio: string;
             Domination: number;
             Love: number;
-            Script: () => void;
+            Script(): void;
         } | {
             Text: string;
             Reply: string;
@@ -5607,7 +5607,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -5620,7 +5620,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         AudioStyle?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -5635,7 +5635,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Character: {
             Name: string;
             Status: string;
@@ -5783,7 +5783,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -5797,7 +5797,7 @@ declare var PlatformDialogData: ({
         Audio?: undefined;
         Answer?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Character: {
             Name: string;
@@ -5809,8 +5809,8 @@ declare var PlatformDialogData: ({
         Audio?: undefined;
         Answer?: undefined;
     } | {
-        Prerequisite: () => boolean;
-        Entry: () => void;
+        Prerequisite(): boolean;
+        Entry(): void;
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -5861,7 +5861,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -5876,7 +5876,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Character: {
             Name: string;
@@ -5891,7 +5891,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Entry?: undefined;
         Character?: undefined;
@@ -5963,7 +5963,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -5978,7 +5978,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -6061,7 +6061,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -6075,7 +6075,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -6115,7 +6115,7 @@ declare var PlatformDialogData: ({
             Reply: string;
             Audio: string;
             AudioStyle: string;
-            Script: () => void;
+            Script(): void;
             Goto?: undefined;
         } | {
             Text: string;
@@ -6130,7 +6130,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6154,7 +6154,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -6167,7 +6167,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -6181,7 +6181,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6259,7 +6259,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6310,7 +6310,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6320,7 +6320,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -6333,7 +6333,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -6406,7 +6406,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6442,7 +6442,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Character?: undefined;
         Audio?: undefined;
@@ -6466,7 +6466,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -6479,7 +6479,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -6519,7 +6519,7 @@ declare var PlatformDialogData: ({
             Reply: string;
             Audio: string;
             AudioStyle: string;
-            Script: () => void;
+            Script(): void;
             Goto?: undefined;
         } | {
             Text: string;
@@ -6548,7 +6548,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6567,7 +6567,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -6580,7 +6580,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -6595,7 +6595,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Character: {
             Name: string;
@@ -6610,7 +6610,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Entry?: undefined;
         Character?: undefined;
@@ -6672,7 +6672,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6687,7 +6687,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -6798,7 +6798,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -6812,7 +6812,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -6842,7 +6842,7 @@ declare var PlatformDialogData: ({
             Reply: string;
             Audio: string;
             AudioStyle: string;
-            Script: () => void;
+            Script(): void;
             Goto?: undefined;
         } | {
             Text: string;
@@ -6858,7 +6858,7 @@ declare var PlatformDialogData: ({
         AudioStyle?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6891,7 +6891,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -6904,7 +6904,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -6918,7 +6918,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -6932,7 +6932,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         Character: {
@@ -7019,7 +7019,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Audio: string;
         Character?: undefined;
@@ -7069,7 +7069,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7102,7 +7102,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -7115,7 +7115,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -7129,7 +7129,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7207,7 +7207,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         Character: {
@@ -7221,7 +7221,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Audio: string;
         Character?: undefined;
@@ -7230,7 +7230,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7305,7 +7305,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -7318,7 +7318,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -7348,7 +7348,7 @@ declare var PlatformDialogData: ({
             Reply: string;
             Audio: string;
             AudioStyle: string;
-            Script: () => void;
+            Script(): void;
             Goto?: undefined;
         } | {
             Text: string;
@@ -7378,7 +7378,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7397,7 +7397,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         Audio?: undefined;
@@ -7410,7 +7410,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -7425,7 +7425,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Character: {
             Name: string;
@@ -7502,7 +7502,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7517,7 +7517,7 @@ declare var PlatformDialogData: ({
         Background?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -7592,7 +7592,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -7606,7 +7606,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -7620,7 +7620,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7698,7 +7698,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7707,7 +7707,7 @@ declare var PlatformDialogData: ({
         Answer?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7804,7 +7804,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Prerequisite?: undefined;
         Text?: undefined;
@@ -7817,7 +7817,7 @@ declare var PlatformDialogData: ({
     Name: string;
     Music: string;
     Dialog: ({
-        Entry: () => void;
+        Entry(): void;
         Character: {
             Name: string;
             Status: string;
@@ -7890,7 +7890,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7916,7 +7916,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
         ID?: undefined;
     } | {
-        Entry: () => void;
+        Entry(): void;
         Text: string;
         Audio: string;
         AudioStyle: string;
@@ -7981,7 +7981,7 @@ declare var PlatformDialogData: ({
         Prerequisite?: undefined;
         ID?: undefined;
     } | {
-        Prerequisite: () => boolean;
+        Prerequisite(): boolean;
         Text: string;
         Audio: string;
         Entry?: undefined;
@@ -7991,7 +7991,7 @@ declare var PlatformDialogData: ({
         ID?: undefined;
     } | {
         ID: string;
-        Entry: () => void;
+        Entry(): void;
         Character?: undefined;
         Text?: undefined;
         Audio?: undefined;

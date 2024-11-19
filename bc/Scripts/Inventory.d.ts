@@ -529,14 +529,46 @@ declare function InventoryShockExpression(C: Character): void;
 declare function InventoryExtractLockProperties(property: ItemProperties): ItemProperties;
 declare namespace InventoryPrerequisiteConflicts {
     let GagPriorities: Partial<Record<AssetGroupName, number>>;
+    /**
+     * @private
+     * @template {keyof PropertiesArray} T
+     * @param {T} fieldName
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {PropertiesArray[T]} blockingPrereqs - The prerequisites we check for on lower gags
+     * @param {Asset} asset - The new gag
+     * @param {Object} options
+     * @param {string} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {string} - Returns the error message if the gag is blocked, or an empty string if not
+     */
     function _GagCheck<T extends keyof PropertiesArray>(fieldName: T, C: Character, blockingPrereqs: PropertiesArray[T], asset?: Asset, options?: {
         errMessage?: string;
         invert?: boolean;
     }): string;
+    /**
+     * Check if there are any lower gags with prerequisites that block the new gag from being applied
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {readonly AssetPrerequisite[]} blockingPrereqs - The prerequisites we check for on lower gags
+     * @param {Asset} asset - The new gag
+     * @param {Object} options
+     * @param {string} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {string} - Returns the error message if the gag is blocked, or an empty string if not
+     */
     function GagPrerequisite(C: Character, blockingPrereqs: readonly AssetPrerequisite[], asset?: Asset, options?: {
         errMessage?: string;
         invert?: boolean;
     }): string;
+    /**
+     * Check if there are any lower gags with effects that block the new gag from being applied
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {readonly EffectName[]} blockingEffects - The prerequisites we check for on lower gags
+     * @param {Asset} asset - The new gag
+     * @param {Object} options
+     * @param {string} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {string} - Returns the error message if the gag is blocked, or an empty string if not
+     */
     function GagEffect(C: Character, blockingEffects: readonly EffectName[], asset?: Asset, options?: {
         errMessage?: string;
         invert?: boolean;

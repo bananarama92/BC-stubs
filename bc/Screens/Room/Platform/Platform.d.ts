@@ -438,7 +438,7 @@ declare var PlatformInventoryList: {
     Name: string;
     DisplayName: string;
     Description: string;
-    OnGive: (Char: any) => void;
+    OnGive(Char: any): void;
 }[];
 declare var PlatformTemplate: ({
     Name: string;
@@ -724,7 +724,7 @@ declare var PlatformTemplate: ({
         Damage?: undefined;
         JumpForce?: undefined;
     })[];
-    OnBind: () => void;
+    OnBind(): void;
     Magic?: undefined;
     MagicPerLevel?: undefined;
     ProjectileHitAudio?: undefined;
@@ -889,7 +889,7 @@ declare var PlatformTemplate: ({
         Cycle: number[];
         Speed: number;
     }[];
-    OnBind: () => void;
+    OnBind(): void;
     Perk?: undefined;
     PerkName?: undefined;
     HealthPerLevel?: undefined;
@@ -949,7 +949,7 @@ declare var PlatformTemplate: ({
         Cycle: number[];
         Speed: number;
     }[];
-    OnBind: () => void;
+    OnBind(): void;
     Perk?: undefined;
     PerkName?: undefined;
     HealthPerLevel?: undefined;
@@ -997,7 +997,7 @@ declare var PlatformTemplate: ({
         Cycle: number[];
         Speed: number;
     }[];
-    OnBind: () => void;
+    OnBind(): void;
     Perk?: undefined;
     PerkName?: undefined;
     HealthPerLevel?: undefined;
@@ -1044,7 +1044,7 @@ declare var PlatformTemplate: ({
         Cycle: number[];
         Speed: number;
     }[];
-    OnBind: () => void;
+    OnBind(): void;
     Perk?: undefined;
     PerkName?: undefined;
     HealthPerLevel?: undefined;
@@ -1123,7 +1123,7 @@ declare var PlatformTemplate: ({
         Damage: number[];
         Speed: number;
     }[];
-    OnBind: () => void;
+    OnBind(): void;
     Perk?: undefined;
     PerkName?: undefined;
     HealthPerLevel?: undefined;
@@ -1175,7 +1175,7 @@ declare var PlatformTemplate: ({
         Name: string;
         Speed: number;
     }[];
-    OnBind: () => void;
+    OnBind(): void;
     Perk?: undefined;
     PerkName?: undefined;
     HealthPerLevel?: undefined;
@@ -1318,7 +1318,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     Music: string;
@@ -1346,7 +1346,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     AlternateBackground: string;
@@ -1402,7 +1402,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     Music: string;
@@ -1426,7 +1426,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     Music: string;
@@ -1450,7 +1450,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     AlternateBackground: string;
@@ -1474,7 +1474,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     Music: string;
@@ -1498,7 +1498,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     Music: string;
@@ -1526,7 +1526,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     BackgroundFilter: string;
@@ -1554,7 +1554,7 @@ declare var PlatformRoomList: ({
     AlternateBackground?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     BackgroundFilter: string;
@@ -1606,7 +1606,7 @@ declare var PlatformRoomList: ({
     AlternateBackground?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     BackgroundFilter: string;
@@ -1630,7 +1630,7 @@ declare var PlatformRoomList: ({
     AlternateBackground?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     BackgroundFilter: string;
@@ -1743,7 +1743,7 @@ declare var PlatformRoomList: ({
     Name: string;
     Background: string;
     Music: string;
-    Entry: () => void;
+    Entry(): void;
     Text?: undefined;
     Width?: undefined;
     Height?: undefined;
@@ -1775,7 +1775,7 @@ declare var PlatformRoomList: ({
     Background: string;
     AlternateBackground: string;
     Music: string;
-    Entry: () => void;
+    Entry(): void;
     Width: number;
     Height: number;
     LimitLeft: number;
@@ -1795,7 +1795,7 @@ declare var PlatformRoomList: ({
     BackgroundFilter?: undefined;
 } | {
     Name: string;
-    Entry: () => void;
+    Entry(): void;
     Text: string;
     Background: string;
     Music: string;
@@ -1837,7 +1837,7 @@ declare var PlatformRoomList: ({
     Background: string;
     AlternateBackground: string;
     Music: string;
-    Entry: () => void;
+    Entry(): void;
     Width: number;
     Height: number;
     LimitLeft: number;
@@ -1865,7 +1865,7 @@ declare var PlatformRoomList: ({
     Background: string;
     AlternateBackground: string;
     Music: string;
-    Entry: () => void;
+    Entry(): void;
     Width: number;
     Height: number;
     LimitLeft: number;
@@ -1892,7 +1892,7 @@ declare var PlatformRoomList: ({
     Height: number;
     LimitRight: number;
     Heal: number;
-    Entry: () => void;
+    Entry(): void;
     Door: {
         Name: string;
         FromX: number;
@@ -1933,7 +1933,7 @@ declare var PlatformRoomList: ({
         ToX: number;
         ToFaceLeft?: undefined;
     })[];
-    Entry: () => void;
+    Entry(): void;
     Character: {
         Name: string;
         Status: string;
@@ -2007,7 +2007,7 @@ declare var PlatformRoomList: ({
         ToX: number;
         ToFaceLeft?: undefined;
     })[];
-    Entry: () => void;
+    Entry(): void;
     LimitLeft?: undefined;
     LimitRight?: undefined;
     Heal?: undefined;

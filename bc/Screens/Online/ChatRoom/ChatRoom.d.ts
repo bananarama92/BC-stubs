@@ -1500,9 +1500,30 @@ declare namespace ChatRoomSep {
     let ActiveElem: null | HTMLDivElement;
     let _ClickCollapse: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
     let _ClickScrollUp: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
+    /**
+     * Return a {@link HTMLElement.InnerHTML} representation of the passed button's room name
+     * @private
+     * @param {HTMLButtonElement} button
+     * @returns {string}
+     */
     function _GetDisplayName(button: HTMLButtonElement): string;
+    /**
+     * Create a dividing element serving as seperator for different chat rooms
+     * @param {boolean} appendChat - Whether to assign {@link ChatRoomSep.ActiveElem} and append the returned `<div>` to the chat log
+     * @returns {HTMLDivElement} - The created `<div>` element
+     */
     function Create(appendChat?: boolean): HTMLDivElement;
+    /**
+     * Return a {@link HTMLElement.innerHTML} representation of the separators room name
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     * @returns {string}
+     */
     function GetDisplayName(roomSep: HTMLDivElement): string;
+    /**
+     * Return whether the passed room separator is collapsed OR NOT
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     * @returns {boolean}
+     */
     function IsCollapsed(roomSep: HTMLDivElement): boolean;
     function Uncollapse(roomSep: HTMLDivElement): Promise<void>;
     function Collapse(roomSep: HTMLDivElement): Promise<void>;

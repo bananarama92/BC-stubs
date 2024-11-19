@@ -273,36 +273,74 @@ declare namespace CraftingDescription {
     let ExtendedDescriptionMarker: "\0";
     let Pattern: RegExp;
     let PatternASCII: RegExp;
+    /**
+     * Decode and return the passed string if it consists of UTF16-encoded UTF8 characters.
+     *
+     * Encoded strings must be marked with a leading {@link CraftingDescription.ExtendedDescriptionMarker}; unencoded strings are returned unmodified.
+     * @param {string} description - The to-be decoded string
+     * @returns {string} - The decoded string
+     */
     function Decode(description: string): string;
+    /**
+     * Encode the passed crafted item description, extracting all UTF8 characters and encoding up to two of them into a single UTF16 character.
+     *
+     * The first character is marked with {@link CraftingDescription.ExtendedDescriptionMarker}
+     * @param {string} description - The initial length <=398 string of UTF8 characters
+     * @returns {string} - The length <=200 string of UTF16-encoded UTF8 characters
+     */
     function Encode(description: string): string;
 }
 declare namespace CraftingEventListeners {
-    let _ClickPrivate: (this: HTMLInputElement, ev: Event) => void;
-    let _InputLayering: (this: HTMLInputElement, ev: Event) => void;
-    let _ChangeName: (this: HTMLInputElement, ev: Event) => void;
-    let _ChangeDescription: (this: HTMLTextAreaElement, ev: Event) => void;
-    let _InputDescription: (this: HTMLTextAreaElement, ev: Event) => void;
-    let _ChangeColor: (this: HTMLInputElement, ev: Event) => void;
-    let _ClickExtended: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickTighten: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickLayering: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickColors: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickUndress: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickAccept: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickExit: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickUpload: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickDownload: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickExpand: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickProperty: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickPadlock: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickAsset: (this: HTMLButtonElement, ev: Event) => void;
-    let _ClickRadio: (this: HTMLButtonElement, ev: Event) => void;
+    function _ClickPrivate(this: HTMLInputElement, ev: Event): void;
+    function _InputLayering(this: HTMLInputElement, ev: Event): void;
+    function _ChangeName(this: HTMLInputElement, ev: Event): void;
+    function _ChangeDescription(this: HTMLTextAreaElement, ev: Event): void;
+    function _InputDescription(this: HTMLTextAreaElement, ev: Event): void;
+    function _ChangeColor(this: HTMLInputElement, ev: Event): void;
+    function _ClickExtended(this: HTMLButtonElement, ev: Event): void;
+    function _ClickTighten(this: HTMLButtonElement, ev: Event): void;
+    function _ClickLayering(this: HTMLButtonElement, ev: Event): void;
+    function _ClickColors(this: HTMLButtonElement, ev: Event): void;
+    function _ClickUndress(this: HTMLButtonElement, ev: Event): void;
+    function _ClickAccept(this: HTMLButtonElement, ev: Event): void;
+    function _ClickExit(this: HTMLButtonElement, ev: Event): void;
+    function _ClickUpload(this: HTMLButtonElement, ev: Event): void;
+    function _ClickDownload(this: HTMLButtonElement, ev: Event): void;
+    function _ClickExpand(this: HTMLButtonElement, ev: Event): void;
+    function _ClickProperty(this: HTMLButtonElement, ev: Event): void;
+    function _ClickPadlock(this: HTMLButtonElement, ev: Event): void;
+    function _ClickAsset(this: HTMLButtonElement, ev: Event): void;
+    function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
     let _InputSearch: (this: HTMLInputElement, ev: Event) => Promise<void>;
-    let _ClickAsciiDescription: (this: HTMLInputElement, ev: Event) => void;
+    function _ClickAsciiDescription(this: HTMLInputElement, ev: Event): void;
 }
 declare namespace CraftingElements {
+    /**
+     * @private
+     * @param {string} controls
+     * @returns {() => string[]}
+     */
     function _SearchInputGetDataList(controls: string): () => string[];
+    /**
+     * @private
+     * @param {string} id
+     * @param {string} controls
+     * @param {string} placeholder
+     * @returns {HTMLInputElement}
+     */
     function _SearchInput(id: string, controls: string, placeholder: string): HTMLInputElement;
+    /**
+     * @private
+     * @param {string} id
+     * @param {(this: HTMLButtonElement, ev: Event) => any} onClick
+     * @param {null | Asset} assetImage
+     * @param {null | Partial<Record<string, string | number | boolean>>} dataAttributes
+     * @param {null | string} label
+     * @param {null | readonly (string | Node)[]} children
+     * @param {null | Asset} asset
+     * @param {boolean} first
+     * @returns {HTMLButtonElement}
+     */
     function _RadioButton(id: string, onClick: (this: HTMLButtonElement, ev: Event) => any, assetImage?: null | Asset, dataAttributes?: null | Partial<Record<string, string | number | boolean>>, label?: null | string, children?: null | readonly (string | Node)[], asset?: null | Asset, first?: boolean): HTMLButtonElement;
 }
 /**

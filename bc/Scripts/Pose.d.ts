@@ -65,7 +65,20 @@ declare const PoseAllKneeling: readonly ("Kneel" | "KneelingSpread")[];
  */
 declare const PoseAllStanding: readonly ("BaseLower" | "LegsClosed" | "LegsOpen" | "Spread")[];
 declare namespace PoseToMapping {
+    /**
+     * Unflatten a pose name array, converting it into a record mapping pose categories to aforementioned pose names
+     * @param {readonly AssetPoseName[]} poses - The to-be unflattened pose array
+     * @param {null | string} warningPrefix - A prefix to-be prepended to any warning messages
+     * @returns {Partial<Record<AssetPoseCategory, AssetPoseName[]>>}
+     */
     function Array(poses: readonly AssetPoseName[], warningPrefix?: null | string): Partial<Record<AssetPoseCategory, AssetPoseName[]>>;
+    /**
+     * Unflatten a pose name array, converting it into a record mapping pose categories to a single pose.
+     * A warning will be logged if multiple poses within the same category are present.
+     * @param {readonly AssetPoseName[]} poses - The to-be unflattened pose array
+     * @param {null | string} warningPrefix - A prefix to-be prepended to any warning messages
+     * @returns {Partial<Record<AssetPoseCategory, AssetPoseName>>}
+     */
     function Scalar(poses: readonly AssetPoseName[], warningPrefix?: null | string): Partial<Record<AssetPoseCategory, AssetPoseName>>;
 }
 declare namespace PoseChangeStatus {

@@ -174,8 +174,8 @@ declare var LoginErrorMessage: string;
 declare var LoginCharacter: NPCCharacter;
 declare let LoginTextCacheUnsubscribeCallback: any;
 declare namespace LoginEventListeners {
-    let _KeyDownInputName: (this: HTMLInputElement, ev: KeyboardEvent) => void;
-    let _KeyDownInputPassword: (this: HTMLInputElement, ev: KeyboardEvent) => void;
+    function _KeyDownInputName(this: HTMLInputElement, ev: KeyboardEvent): void;
+    function _KeyDownInputPassword(this: HTMLInputElement, ev: KeyboardEvent): void;
 }
 /**
  * The list of item fixups to apply on login.

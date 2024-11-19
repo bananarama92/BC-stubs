@@ -146,17 +146,68 @@ declare namespace Shop2Consts {
     let Remotes: Set<string>;
 }
 declare namespace Shop2 {
+    /**
+     * Populate {@link Shop2Consts.BuyGroups} with buy groups.
+     * @private
+     */
     function _PopulateBuyGroups(): void;
+    /**
+     * Populate {@link Shop2InitVars.GroupDescriptions} with group descriptions and all corresponding group names
+     * @param {readonly ShopItem[]} assets
+     * @private
+     */
     function _PopulateGroupDescriptions(assets: readonly ShopItem[]): void;
+    /**
+     * Populate {@link Shop2Consts.Keys} and {@link Shop2Consts.Remote} with the name of all asset keys and remotes.
+     * @private
+     */
     function _PopulateKeysAndRemotes(): void;
+    /**
+     * Draw function for a single item in the shop
+     * @param {number} x
+     * @param {number} y
+     * @param {number} w
+     * @param {number} h
+     * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
+     * @satisfies {ShopScreenFunctions["Draw"]}
+     * @private
+     */
     function _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
+    /**
+     * Click function for a single item in the shop
+     * @param {MouseEvent | TouchEvent} event
+     * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
+     * @satisfies {ShopScreenFunctions["Click"]}
+     * @private
+     */
     function _AssetElementClick(event: MouseEvent | TouchEvent, assetIndex: number): void;
+    /**
+     * Construct screen functions for the <=12 items displayed in the shop.
+     * @returns {Record<string, ShopScreenFunctions>}
+     */
     function _GenerateAssetElements(): Record<string, ShopScreenFunctions>;
+    /**
+     * Filter the buy, sell and preview items in {@link Shop2Vars} based on the {@link Shop2Vars.Filters} settings,
+     * clipping the current {@link Shop2Vars.Page} if required.
+     * @param {boolean} clearDatalist - Whether the search bars datalist should be cleared (and thus be recomputed on a focus event)
+     */
     function ApplyItemFilters(clearDatalist?: boolean): void;
+    /** Click handler for the group-selection checkboxes */
     function _SetCheckboxFilters(): void;
+    /**
+     * Update the state of all pose-buttons, disabling or selecting them if so required.
+     */
     function _UpdatePoseButtons(): void;
+    /**
+     * @param {string} id
+     */
     function _ClickDropdown(id: string): void;
-    let DrawPriceRibbon: (label: string, x: number, y: number, w: number, color?: string) => void;
+    function DrawPriceRibbon(label: string, x: number, y: number, w: number, color?: string): void;
+    /**
+     * Convert the passed asset list into a list consisting of shop items
+     * @param {readonly Asset[]} assets - The assets in question
+     * @returns {ShopItem[]} - The shop items constructed from the passed assets
+     */
     function ParseAssets(assets: readonly Asset[]): ShopItem[];
     let Elements: Record<string, ShopScreenFunctions>;
     /**

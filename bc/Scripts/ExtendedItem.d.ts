@@ -411,6 +411,19 @@ declare var ExtendedItemPermissionMode: boolean;
 declare var ExtendedItemSubscreen: string | null;
 declare function ExtendedItemGatherOptions(item: Item): ExtendedItemOptionUnion[];
 declare namespace ExtendedItemTighten {
+    /**
+     * Draw function for tightening/loosening.
+     * @param {ExtendedItemData<any>} data The extended item data
+     * @param {Item} item The item in question
+     * @param {RectTuple} buttonCoords A 4-tuple with the buttons coordinates
+     */
     function Draw({ asset }: ExtendedItemData<any>, item: Item, buttonCoords: RectTuple): void;
+    /**
+     * Click function for tightening/loosening.
+     * @param {ExtendedItemData<any>} data The extended item data
+     * @param {Item} item The item in question
+     * @param {RectTuple} buttonCoords A 4-tuple with the buttons coordinates
+     * @returns {boolean} Whether the button was clicked or not
+     */
     function Click({ asset }: ExtendedItemData<any>, item: Item, buttonCoords: RectTuple): boolean;
 }
