@@ -13,15 +13,11 @@ import itertools
 import os
 import re
 
-PATTERN = re.compile(r"([a-zA-Z0-9_]+)\: function( )?([a-zA-Z0-9_]+)?( )?\(")
+PATTERN = re.compile(r"([a-zA-Z0-9_]+)(\s+)?\:(\s+)?function(\s+)?([a-zA-Z0-9_]+)?(\s+)?\(")
 
 
 def _replacer(match: re.Match[str]) -> str:
-    groups = match.groups()
-    if (groups[2] is None or groups[2] == groups[0]):
-        return f"{match.groups()[0]}("
-    else:
-        return ""
+    return f"{match.groups()[0]}("
 
 
 def main(root: str | os.PathLike[str]) -> None:

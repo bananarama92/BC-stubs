@@ -256,7 +256,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -356,7 +356,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -467,7 +467,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -732,8 +732,8 @@ declare var PlatformDialogData: ({
         TextScript?: undefined;
         AudioScript?: undefined;
     } | {
-        TextScript: () => "Can I have my orgasm Lady Olivia?" | "It's time for the climax.";
-        AudioScript: () => "O221" | "O222";
+        TextScript(): "Can I have my orgasm Lady Olivia?" | "It's time for the climax.";
+        AudioScript(): "O221" | "O222";
         Background?: undefined;
         Character?: undefined;
         Text?: undefined;
@@ -742,8 +742,8 @@ declare var PlatformDialogData: ({
         ID?: undefined;
         Entry?: undefined;
     } | {
-        TextScript: () => "Yes, you can have your orgasm my maid." | "(She smiles and watches you carefully.)";
-        AudioScript: () => string;
+        TextScript(): "Yes, you can have your orgasm my maid." | "(She smiles and watches you carefully.)";
+        AudioScript(): string;
         Character: {
             Name: string;
             Status: string;
@@ -817,7 +817,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -890,7 +890,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -921,7 +921,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -1113,7 +1113,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -1245,7 +1245,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -1359,7 +1359,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -1684,7 +1684,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -2039,7 +2039,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Text: string;
         Background: string;
@@ -2101,7 +2101,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Text: string;
         Audio: string;
@@ -2253,7 +2253,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Text: string;
         Audio: string;
@@ -2773,7 +2773,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -2952,7 +2952,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Entry(): void;
@@ -3092,7 +3092,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Entry(): void;
@@ -3277,7 +3277,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Entry(): void;
@@ -3423,7 +3423,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -3553,7 +3553,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: ({
@@ -3814,7 +3814,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Text: string;
         Background: string;
@@ -4232,7 +4232,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Text: string;
         Character?: undefined;
@@ -5195,7 +5195,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Entry(): void;
@@ -5325,7 +5325,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Entry(): void;
@@ -5483,7 +5483,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Entry(): void;
@@ -5652,7 +5652,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {
@@ -5721,7 +5721,7 @@ declare var PlatformDialogData: ({
 } | {
     Name: string;
     Music: string;
-    Exit: () => void;
+    Exit(): void;
     Dialog: ({
         Background: string;
         Character: {

@@ -415,10 +415,10 @@ declare namespace ElementMenu {
      * @param {HTMLElement} menuitem - The to-be prepended menuitem
      */
     export function AppendButton(div: HTMLDivElement, menuitem: HTMLElement): void;
-    export let div: any;
-    export { menuitem };
-}
-declare var _: any;
-declare namespace menuitem {
-    let role: string;
+    /**
+     * Prepend a menuitem to the passed menubar
+     * @param {HTMLDivElement} div - The menubar
+     * @param {HTMLElement} menuitem - The to-be prepended menuitem
+     */
+    export function PrependItem(div: HTMLDivElement, menuitem: HTMLElement): void;
 }
