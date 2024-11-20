@@ -271,6 +271,7 @@ declare namespace PoseType {
     let HIDE: "Hide";
     let DEFAULT: "";
 }
+declare const layers: any[];
 declare namespace AssetResolveCopyConfig {
     /**
      * Take an (ordered) list of `CopyConfig`-referenced configs and group them all together in a `BuyGroup`.
