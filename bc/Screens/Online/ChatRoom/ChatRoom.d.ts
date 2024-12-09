@@ -113,10 +113,30 @@ declare function ChatRoomCanGiveMoneyForOwner(): boolean;
  */
 declare function ChatRoomPlayerIsAdmin(): boolean;
 /**
+ * Checks if the player is currently in focus mode (non-empty {@link ChatRoomDrawFocusList})
+ * @returns {boolean} - TRUE if the player is in focus mode
+ */
+declare function ChatRoomPlayerIsInDrawFocus(): boolean;
+/**
  * Checks if the current character is an admin of the chatroom.
  * @returns {boolean} - TRUE if the current character is an admin.
  */
 declare function ChatRoomCurrentCharacterIsAdmin(): boolean;
+/**
+ * Checks if the player is in the chatroom whitelist.
+ * @returns {boolean} - TRUE if the player is in the chatroom whitelist.
+ */
+declare function ChatRoomPlayerIsWhitelisted(): boolean;
+/**
+ * Checks if the current character is in the chatroom whitelist.
+ * @returns {boolean} - TRUE if the current character is in the chatroom whitelist.
+ */
+declare function ChatRoomCurrentCharacterIsWhitelisted(): boolean;
+/**
+ * Checks if the current character is in the player's focuslist (/focus).
+ * @returns {boolean} - TRUE if the current character is in the player's focuslist.
+ */
+declare function ChatRoomCurrentCharacterInDrawFocusList(): boolean;
 /**
  * Checks if the room allows the photograph feature to be used.
  * @returns {boolean} - TRUE if the player can take a photo.
@@ -576,11 +596,6 @@ declare function ChatRoomProcessSlowLeave(): void;
  */
 declare function ChatRoomLeave(clearCharacters?: boolean): void;
 declare function ChatRoomCommonKeyDown(event: KeyboardEvent): boolean;
-/**
- * Handles keyboard shortcuts in the chatroom screen.
- * @param {KeyboardEvent} event - The event that triggered this
- * @returns {boolean} - Nothing.
- */
 declare function ChatRoomKeyDown(event: KeyboardEvent): boolean;
 /**
  * Scroll through the chat history
@@ -1002,11 +1017,11 @@ declare function ChatRoomOnlineStruggleInterrupt(): void;
 declare function ChatRoomAdminAction(ActionType: "Move" | "Kick" | "Ban", Publish?: boolean | string): void;
 /**
  * Sends an administrative command to the server from the chat text field.
- * @param {"Ban"|"Unban"|"Kick"|"Promote"|"Demote"} ActionType - Type of action performed.
+ * @param {"Ban"|"Unban"|"Kick"|"Promote"|"Demote"|"Whitelist"|"Unwhitelist"} ActionType - Type of action performed.
  * @param {string} Argument - Target number of the action.
  * @returns {void} - Nothing
  */
-declare function ChatRoomAdminChatAction(ActionType: "Ban" | "Unban" | "Kick" | "Promote" | "Demote", Argument: string): void;
+declare function ChatRoomAdminChatAction(ActionType: "Ban" | "Unban" | "Kick" | "Promote" | "Demote" | "Whitelist" | "Unwhitelist", Argument: string): void;
 /**
  * Gets the player's current time as a string.
  * @returns {string} - The player's current local time as a string.
@@ -1015,10 +1030,10 @@ declare function ChatRoomCurrentTime(): string;
 /**
  * Adds or removes an online member to/from a specific list. (From the dialog menu)
  * @param {"Add" | "Remove"} Operation - Operation to perform.
- * @param {"WhiteList" | "FriendList" | "BlackList" | "GhostList"} ListType - Name of the list to alter. (Whitelist, friendlist, blacklist, ghostlist)
+ * @param {"WhiteList" | "FriendList" | "BlackList" | "GhostList" | "DrawFocusList"} ListType - Name of the list to alter. (Whitelist, friendlist, blacklist, ghostlist, drawfocuslist)
  * @returns {void} - Nothing
  */
-declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: "WhiteList" | "FriendList" | "BlackList" | "GhostList"): void;
+declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: "WhiteList" | "FriendList" | "BlackList" | "GhostList" | "DrawFocusList"): void;
 /**
  * Adds or removes an online member to/from a specific list from a typed message.
  * @param {number[]|null} List - List to add to or remove from.
@@ -1035,6 +1050,23 @@ declare function ChatRoomListManipulation(List: number[] | null, Adding: boolean
  * @returns {void} - Nothing
  */
 declare function ChatRoomListUpdate(list: number[], adding: boolean, memberNumber: number): void;
+/**
+ * Adds a list of character(s) into the Focus List
+ * @param {Character[]} characters - Characters to add
+ * @param {boolean} [enableMessage=true] - If enabled, will tell (warn) the user when the focus feature becomes enabled (empty -> non-empty)
+ * @returns {Character[]} - Characters that were actually added (not already in the list)
+ */
+declare function ChatRoomDrawFocusListAdd(characters: Character[], enableMessage?: boolean): Character[];
+/**
+ * Removes a list of character(s) from the Focus List
+ * @param {Character[]} characters - Characters to remove
+ * @returns {Character[]} - Characters that were actually removed (were in the list)
+ */
+declare function ChatRoomDrawFocusListRemove(characters: Character[]): Character[];
+/**
+ * Clears the Focus List
+ */
+declare function ChatRoomDrawFocusListClear(): void;
 /**
  * Handles reception of data pertaining to if applying an item is allowed.
  * @param {ServerChatRoomAllowItemResponse} data - Data object containing if the player is allowed to interact with a character.
@@ -1161,20 +1193,25 @@ declare function ChatRoomSafewordRevert(): void;
 declare function ChatRoomSafewordRelease(): void;
 /**
  * Concatenates the list of users to ban.
- * @param {boolean} IncludesBlackList - Adds the blacklist to the banlist
- * @param {boolean} IncludesGhostList - Adds the ghostlist to the banlist
+ * @param {("BlackList" | "GhostList")[]} [IncludesTypes] - The types of lists to concatenate to the banlist
  * @param {readonly number[]} [ExistingList] - The existing Banlist, if applicable
  * @returns {number[]} Complete array of members to ban
  */
-declare function ChatRoomConcatenateBanList(IncludesBlackList: boolean, IncludesGhostList: boolean, ExistingList?: readonly number[]): number[];
+declare function ChatRoomConcatenateBanList(IncludesTypes?: ("BlackList" | "GhostList")[], ExistingList?: readonly number[]): number[];
+/**
+ * Concatenates the list of users for the whitelist.
+ * @param {("Owner" | "Lovers" | "Friends" | "Whitelist")[]} [IncludesTypes] - The types of lists to concatenate to the whitelist
+ * @param {readonly number[]} [ExistingList] - The existing Whitelist, if applicable
+ * @returns {number[]} Complete array of whitelisted members
+ */
+declare function ChatRoomConcatenateWhitelist(IncludesTypes?: ("Owner" | "Lovers" | "Friends" | "Whitelist")[], ExistingList?: readonly number[]): number[];
 /**
  * Concatenates the list of users for Admin list.
- * @param {boolean} IncludesOwner - Adds the owner to the admin list
- * @param {boolean} IncludesLovers - Adds lovers to the admin list
+ * @param {("Owner" | "Lovers")[]} [IncludesTypes] - The types of lists to concatenate to the adminlist
  * @param {readonly number[]} [ExistingList] - The existing Admin list, if applicable
  * @returns {number[]} Complete array of admin members
  */
-declare function ChatRoomConcatenateAdminList(IncludesOwner: boolean, IncludesLovers: boolean, ExistingList?: readonly number[]): number[];
+declare function ChatRoomConcatenateAdminList(IncludesTypes?: ("Owner" | "Lovers")[], ExistingList?: readonly number[]): number[];
 /**
  * Handles a request from another player to read the player's log entries that they are permitted to read. Lovers and
  * owners can read certain entries from the player's log.
@@ -1368,6 +1405,18 @@ declare var ChatRoomChatHidden: boolean;
  * @type {Character[]}
  */
 declare var ChatRoomCharacterDrawlist: Character[];
+/**
+ * If non-empty, ChatRoomCharacterDrawlist will be filtered (after immersion removals) to only include the player and these character(s).
+ * Used for the /focus command. List will be automatically removed if characters are removed from the room.
+ * @type {Character[]}
+ */
+declare var ChatRoomDrawFocusList: Character[];
+/**
+ * The list of characters currently impacted (not drawn) by sensory deprivation in the chat room
+ * Used as a check for whether to apply further sense dep effects to a given character (i.e. name removal, message, hiding, etc). Characters from {@link ChatRoomCharacter}
+ * @type {Character[]}
+ */
+declare var ChatRoomImpactedBySenseDep: Character[];
 declare var ChatRoomSenseDepBypass: boolean;
 declare var ChatRoomGetUpTimer: number;
 /**

@@ -185,9 +185,9 @@ declare let CraftingReorderMode: CraftingReorderType;
  */
 declare let CraftingAssets: Record<string, Asset[]>;
 /** The separator used between different crafted items when serializing them. */
-declare const CraftingSerializeItemSep: "§";
+declare const CraftingSerializeItemSep: "\u00A7";
 /** The separator used between fields within a single crafted item when serializing them. */
-declare const CraftingSerializeFieldSep: "¶";
+declare const CraftingSerializeFieldSep: "\u00B6";
 /**
  * Regexp pattern for sanitizing to-be serialized crafted item string data by finding all
  * special separator characters (see {@link CraftingSerializeItemSep} and {@link CraftingSerializeFieldSep}).
@@ -333,15 +333,15 @@ declare namespace CraftingElements {
      * @private
      * @param {string} id
      * @param {(this: HTMLButtonElement, ev: Event) => any} onClick
-     * @param {null | Asset} assetImage
-     * @param {null | Partial<Record<string, string | number | boolean>>} dataAttributes
+     * @param {null | Asset} asset
+     * @param {null | Partial<Record<string, string | number | boolean>>} attributes
      * @param {null | string} label
      * @param {null | readonly (string | Node)[]} children
      * @param {null | Asset} asset
      * @param {boolean} first
      * @returns {HTMLButtonElement}
      */
-    function _RadioButton(id: string, onClick: (this: HTMLButtonElement, ev: Event) => any, assetImage?: null | Asset, dataAttributes?: null | Partial<Record<string, string | number | boolean>>, label?: null | string, children?: null | readonly (string | Node)[], asset?: null | Asset, first?: boolean): HTMLButtonElement;
+    function _RadioButton(id: string, onClick: (this: HTMLButtonElement, ev: Event) => any, asset: null | Asset, attributes?: null | Partial<Record<string, string | number | boolean>>, label?: null | string, children?: null | readonly (string | Node)[], first?: boolean): HTMLButtonElement;
 }
 /**
  * A record with tools for validating {@link CraftingItem} properties.

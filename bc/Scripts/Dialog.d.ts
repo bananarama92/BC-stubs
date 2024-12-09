@@ -431,9 +431,10 @@ declare function DialogCanInspectLock(Item: Item): boolean;
 /**
  * Builds the possible dialog activity options based on the character settings
  * @param {Character} C - The character for which to build the activity dialog options
+ * @param {boolean} reload - Perform a {@link DialogMenu.Reload} hard reset of the active `activities` mode
  * @return {void} - Nothing
  */
-declare function DialogBuildActivities(C: Character): void;
+declare function DialogBuildActivities(C: Character, reload?: boolean): void;
 /**
  * Build the buttons in the top menu
  * @param {Character} C - The character for whom the dialog is prepared
@@ -477,9 +478,10 @@ declare function DialogCanUseFamilyLockOn(target: Character): boolean;
  * @param {Character} C - The character whose inventory must be built
  * @param {boolean} [resetOffset=false] - The offset to be at, if specified.
  * @param {boolean} [locks=false] - If TRUE we build a list of locks instead.
+ * @param {boolean} reload - Perform a {@link DialogMenu.Reload} hard reset of the active `items`, `locking` or `permissions` mode
  * @returns {void} - Nothing
  */
-declare function DialogInventoryBuild(C: Character, resetOffset?: boolean, locks?: boolean): void;
+declare function DialogInventoryBuild(C: Character, resetOffset?: boolean, locks?: boolean, reload?: boolean): void;
 /**
  * Create a stringified list of the group and the assets currently in the dialog inventory
  * @param {Character} C - The character the dialog inventory has been built for
@@ -542,17 +544,40 @@ declare function DialogPublishAction(C: Character, Action: string, ClickItem: It
  */
 declare function DialogAllowItemClick(CurrentItem: Item, ClickItem: Item): boolean;
 /**
- * Handles clicks on an item
+ * Handles `permissions`-mode clicks on an item
  * @param {DialogInventoryItem} ClickItem - The item that is clicked
- * @returns {void} - Nothing
+ * @param {null | Item} CurrentItem
+ * @returns {ItemPermissionMode} - Nothing
  */
-declare function DialogItemClick(ClickItem: DialogInventoryItem): void;
+declare function DialogPermissionsClick(ClickItem: DialogInventoryItem, CurrentItem?: null | Item): ItemPermissionMode;
+/**
+ * Handles `locking`-mode clicks on an item
+ * @param {DialogInventoryItem} ClickedLock - The item that is clicked
+ * @param {Character} C
+ * @param {null | Item} CurrentItem
+ */
+declare function DialogLockingClick(ClickedLock: DialogInventoryItem, C: Character, CurrentItem?: null | Item): void;
+/**
+ * Handles `items`-mode clicks on an item
+ * @param {DialogInventoryItem} ClickItem - The item that is clicked
+ * @param {Character} C - The target character
+ * @param {null | Item} CurrentItem - The equipped item (if any)
+ */
+declare function DialogItemClick(ClickItem: DialogInventoryItem, C: Character, CurrentItem?: null | Item): void;
+/**
+ *
+ * @param {Character} C
+ * @param {ItemActivity} clickedActivity
+ * @param {null | Item} equippedItem
+ */
+declare function DialogActivityClick(C: Character, clickedActivity: ItemActivity, equippedItem: null | Item): void;
 /**
  * Toggle permission of an item in the dialog inventory list
  * @param {DialogInventoryItem} item
  * @param {boolean} worn - True if the player is changing permissions for an item they're wearing
+ * @returns {ItemPermissionMode} The new item permission
  */
-declare function DialogInventoryTogglePermission(item: DialogInventoryItem, worn: boolean): void;
+declare function DialogInventoryTogglePermission(item: DialogInventoryItem, worn: boolean): ItemPermissionMode;
 /**
  * Changes the dialog mode and perform the initial setup.
  *
@@ -566,11 +591,8 @@ declare function DialogChangeMode(mode: DialogMenuMode, reset?: boolean): void;
  * @param {AssetItemGroup|string} Group - The group that should gain focus.
  */
 declare function DialogChangeFocusToGroup(C: Character, Group: AssetItemGroup | string): void;
-/**
- * Handles the click in the dialog screen
- * @returns {void} - Nothing
- */
-declare function DialogClick(): void;
+declare function DialogClick(event: MouseEvent | TouchEvent): void;
+declare function DialogResize(load: boolean): void;
 /**
  * Returns whether the clicked co-ordinates are inside the asset zone
  * @param {Character} C - The character the click is on
@@ -615,20 +637,22 @@ declare function DialogFindFacialExpressionMenuGroup(ExpressionGroup: Expression
  * Displays the given text for 5 seconds
  * @param {string} status - The text to be displayed
  * @param {number} timer - the number of milliseconds to display the message for
+ * @param {null | { asset?: Asset, group?: AssetGroup, C?: Character }} replace - Attempt to perform replacements within the `status` text
  * @returns {void} - Nothing
  */
-declare function DialogSetStatus(status: string, timer?: number): void;
+declare function DialogSetStatus(status: string, timer?: number, replace?: null | {
+    asset?: Asset;
+    group?: AssetGroup;
+    C?: Character;
+}): void;
 /**
- * Clears the current status message.
- *
- * @param {boolean} clearDefault Whether to also clear the default status.
+ * Timer handler for managing timed dialog statuses.
+ * @param {Element} elem - The relevant `span.dialog-status` element
+ * @satisfies {TimerHandler}
  */
-declare function DialogStatusClear(clearDefault?: boolean): void;
-/**
- * Draws the current dialog status
- *
- */
-declare function DialogStatusDraw(C: any): void;
+declare function DialogStatusTimerHandler(elem: Element): void;
+/** Clears the current status message. */
+declare function DialogStatusClear(): void;
 /**
  * Shows the extended item menu for a given item, if possible.
  * Therefore a dynamic function name is created and then called.
@@ -653,6 +677,7 @@ declare function DialogChangeItemColor(C: Character, Color: string): void;
 /**
  * Draw the list of activities
  *
+ * @deprecated - See {@link DialogMenuMapping.activities.Load} and {@link DialogMenuMapping.activities.Reload} for the new DOM-based menu
  * @param {Character} C - The character currently focused in the dialog.
  * @returns {void} - Nothing
  */
@@ -677,15 +702,9 @@ declare function DialogGetMenuButtonColor(ButtonName: DialogMenuButton): string;
  */
 declare function DialogIsMenuButtonDisabled(ButtonName: DialogMenuButton): boolean;
 /**
- * Draw the item menu dialog
- * @param {Character} C - The character on which the item is used
- * @param {Item} Item - The item that was used
- * @returns {void} - Nothing
- */
-declare function DialogDrawCrafting(C: Character, Item: Item): void;
-/**
  * Draw the list of items
  *
+ * @deprecated - See {@link DialogMenuMapping.items.Load} and {@link DialogMenuMapping.items.Reload} for the new DOM-based menu
  * @param {Character} C - The character currently focused in the dialog.
  * @returns {void} - Nothing
  */
@@ -740,42 +759,8 @@ declare function DialogSelfMenuDraw(C: Character): void;
  * @param {Character} C - The currently focused character
  */
 declare function DialogSelfMenuClick(C: Character): void;
-/**
- * Draw the pagination buttons to the side of the inventory grid
- */
-declare function DialogPaginateDraw(): void;
-/**
- * Handle clicks of the pagination buttons
- * @returns {boolean} - Whether a pgination button was clicked
- */
-declare function DialogPaginateClick(): boolean;
-/**
- * Draws the initial Dialog screen.
- *
- * This is the main handler for drawing the Dialog UI, which activates
- * when the player clicks on herself or another player.
- *
- * @returns {void} - Nothing
- */
+declare function DialogLoad(): void;
 declare function DialogDraw(): void;
-/**
- * Changes to previous dialog page
- */
-declare function DialogMenuPrev(): void;
-/**
- * Changes to next dialog page
- */
-declare function DialogMenuNext(): void;
-/**
- * Draw a single line of text with an optional item preview icon.
- *
- * This function is used when the character's group is somehow unavailable.
- *
- * @param {Character} C - The character currently being interacted with
- * @param {Item} [item] - The (optional) item in the currently selected group
- * @param {string} msg - The explanation message to draw
- */
-declare function DialogDrawItemMessage(C: Character, msg: string, item?: Item): void;
 /**
  * Draw the menu for changing facial expressions
  * @returns {void} - Nothing
@@ -863,9 +848,12 @@ declare function DialogStruggleStart(C: Character, Action: DialogStruggleActionT
 declare function DialogStruggleStop(character: Character, game: StruggleKnownMinigames, data: StruggleCompletionData): void;
 declare function DialogKeyDown(event: KeyboardEvent): boolean;
 declare function DialogMouseDown(event: MouseEvent | TouchEvent): void;
-declare var DialogText: string;
-declare var DialogTextDefault: string;
-declare var DialogTextDefaultTimer: number;
+/** @deprecated - Superseded by `span.dialog-status`. */
+declare var DialogText: never;
+/** @deprecated  - Superseded by `span.dialog-status[data-default]`.*/
+declare var DialogTextDefault: never;
+/** @deprecated  - Superseded by `span.dialog-status[data-timeout-id]`.*/
+declare var DialogTextDefaultTimer: never;
 /** The duration temporary status message show up for, in ms
  * @type {number}
  */
@@ -1022,4 +1010,299 @@ declare namespace DialogEffectIcons {
     function _GagLevelToIcon(level?: number): null | InventoryIcon;
     function _BlindLevelToIcon(level?: number): null | InventoryIcon;
 }
-declare function DialogMouseWheel(Event: any): boolean;
+/**
+ * Base class for managing various {@link DialogMenu} subscreens.
+ * @template {string} [ModeType=string] - The name of the mode associated with this instance (_e.g._ {@link DialogMenuMode})
+ * @template {DialogInventoryItem | ItemActivity | null} [ClickedObj=any] - The underlying item or activity object of the clicked grid buttons (if applicable)
+ * @abstract
+ * @extends {Omit<ScreenFunctions, "Run">}
+ */
+declare class DialogMenu<ModeType extends string = string, ClickedObj extends DialogInventoryItem | ItemActivity | null = any> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: ModeType);
+    /**
+     * An object containg all DOM element IDs referenced in the {@link DialogMenu} subclass.
+     * @abstract
+     * @readonly
+     * @type {Readonly<Record<string, string> & { root: string, status?: string, grid?: string, icon?: string }>}
+     */
+    readonly ids: Readonly<Record<string, string> & {
+        root: string;
+        status?: string;
+        grid?: string;
+        icon?: string;
+    }>;
+    /**
+     * An object containg all event listeners referenced in the {@link DialogMenu} subclass.
+     * @readonly
+     * @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>}
+     */
+    readonly eventListeners: {
+        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+    };
+    /**
+     * The name of the mode associated with this instance (see {@link DialogMenuMode}).
+     * @readonly
+     * @type {ModeType}
+     */
+    readonly mode: ModeType;
+    /**
+     * An object mapping IDs to {@link DialogMenu.GetClickStatus} helper functions.
+     * Used for evaluating the error statuses of item clicks.
+     *
+     * Additional checks can be freely added here.
+     * @abstract
+     * @readonly
+     * @type {Record<string, DialogMenu<string, ClickedObj>["GetClickStatus"]>}
+     */
+    readonly clickStatusCallbacks: Record<string, DialogMenu<string, ClickedObj>["GetClickStatus"]>;
+    /**
+     * See {@link DialogMenu.shape}
+     * @private
+     * @type {null | RectTuple}
+     */
+    private _shape;
+    set shape(value: RectTuple);
+    /**
+     * Get or set the position & shape of the current subscreen as defined by the root element.
+     *
+     * Performs a {@link DialogMenu.Resize} if a new shape is assigned.
+     */
+    get shape(): RectTuple;
+    /**
+     * The default position & shape of the current subscreen as defined by the root element.
+     *
+     * See {@link DialogMenu.shape}.
+     * @readonly
+     * @satisfies {Readonly<RectTuple>}
+     */
+    readonly defaultShape: readonly [1115, 120, 885, 855];
+    /**
+     * See {@link DialogMenu.C}
+     * @private
+     * @type {null | Character}
+     */
+    private _C;
+    set C(value: Character);
+    /**
+     * Get or set the currently selected character.
+     *
+     * Performs a hard {@link DialogMenu.Reload} if a new character is assigned.
+     */
+    get C(): Character;
+    /**
+     * See {@link DialogMenu.focusGroup}.
+     * @private
+     * @type {null | AssetItemGroup}
+     */
+    private _focusGroup;
+    set focusGroup(value: AssetItemGroup);
+    /**
+     * Get or set the currently selected group.
+     *
+     * Performs a hard {@link DialogMenu.Reload} if a new focus group is assigned.
+     */
+    get focusGroup(): AssetItemGroup;
+    /**
+     * Initialize the {@link DialogMenu} subscreen.
+     *
+     * Serves as a {@link ScreenFunctions["Load"]} wrapper with added parameters.
+     * @param {Character} C The character in question
+     * @param {AssetItemGroup} focusGroup The focused item group
+     * @param {null | { shape?: RectTuple }} style Misc styling for the subscreen
+     * @returns {null | HTMLDivElement} The div containing the dialog subscreen root element or `null` if the screen failed to initialize
+     */
+    Init(C: Character, focusGroup: AssetItemGroup, style?: null | {
+        shape?: RectTuple;
+    }): null | HTMLDivElement;
+    Load(): void;
+    /**
+     * Construct and return the (unpopulated) {@link DialogMenu.ids.root} element.
+     * @abstract
+     * @returns {HTMLElement}
+     */
+    _Load(): HTMLElement;
+    Unload(): void;
+    Click(event: MouseEvent | TouchEvent): void;
+    Draw(): void;
+    Resize(load: boolean): void;
+    Exit(): void;
+    KeyDown(event: KeyboardEvent): boolean;
+    /**
+     * Reload the subscreen, updating the DOM elements and, if required, re-assigning the character and focus group.
+     * @param {null | Character} C - The selected character; defaults to {@link DialogMenu.C} and will update the property inplace otherwise
+     * @param {null | AssetItemGroup} focusGroup - The selected group; defaults to {@link DialogMenu.focusGroup} and will update the property inplace otherwise
+     * @param {null | DialogMenu.ReloadOptions} [options] - Further customization options
+     * @returns {Promise<boolean>} - Whether an update was triggered or aborted
+     */
+    Reload(C?: null | Character, focusGroup?: null | AssetItemGroup, options?: null | DialogMenu.ReloadOptions): Promise<boolean>;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} status
+     * @param {Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">} options
+     */
+    _ReloadStatus(root: HTMLElement, status: HTMLElement, options: Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.grid} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} buttonGrid
+     * @param {Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">} options
+     */
+    _ReloadButtonGrid(root: HTMLElement, buttonGrid: HTMLElement, options: Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.icon} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} icon
+     * @param {Pick<DialogMenu.ReloadOptions, never>} options
+     */
+    _ReloadIcon(root: HTMLElement, icon: HTMLElement, options: Pick<DialogMenu.ReloadOptions, never>): void;
+    /**
+     * Return an error status (if any) for when an item or activity is clicked.
+     *
+     * Error statuses are used for evaluating whether the relevant grid buttons must be disabled or not.
+     * @param {Character} C - The target character
+     * @param {ClickedObj} clickedObj - The item that is clicked
+     * @param {null | Item} equippedItem - The item that is equipped (if any)
+     * @returns {null | string} - The error status or `null` if everything is ok
+     */
+    GetClickStatus(C: Character, clickedObj: ClickedObj, equippedItem?: null | Item): null | string;
+    /**
+     * Return the underlying item or activity object of the passed grid button.
+     * @abstract
+     * @param {HTMLButtonElement} button - The clicked button
+     * @returns {ClickedObj | undefined} - The button's underlying item or activity object
+     */
+    _GetClickedObject(button: HTMLButtonElement): ClickedObj | undefined;
+    /**
+     * Helper function for handling the clicks of succesfully validated grid button clicks.
+     * @abstract
+     * @param {HTMLButtonElement} button - The clicked button
+     * @param {Character} C - The target character
+     * @param {ClickedObj} clickedObj - The buttons underlying object (item or activity)
+     * @param {null | Item} equippedItem - The currently equipped item
+     * @returns {void}
+     */
+    _ClickButton(button: HTMLButtonElement, C: Character, clickedObj: ClickedObj, equippedItem: null | Item): void;
+}
+/**
+ * @template {string} T
+ * @extends {DialogMenu<T, DialogInventoryItem>}
+ */
+declare class _DialogItemMenu<T extends string> extends DialogMenu<T, DialogInventoryItem> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: T);
+    ids: Readonly<{
+        root: "dialog-inventory";
+        status: "dialog-inventory-status";
+        grid: "dialog-inventory-grid";
+        icon: "dialog-inventory-icon";
+    }>;
+    /** @satisfies {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: {
+        InventoryBlockedOrLimited: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        InventoryDisallow: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        CanInteract: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        InventoryGroupIsAvailable: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        AsylumGGTSControlItem: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        DialogAllowItemClick: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        DialogCanUnlock: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        InventoryChatRoomAllow: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        SelfBondage: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+    };
+}
+/**
+ * @template {string} T
+ * @extends {DialogMenu<T, DialogInventoryItem>}
+ */
+declare class _DialogLockingMenu<T extends string> extends DialogMenu<T, DialogInventoryItem> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: T);
+    ids: Readonly<{
+        root: "dialog-locking";
+        status: "dialog-locking-status";
+        grid: "dialog-locking-grid";
+    }>;
+    /** @satisfies {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: {
+        InventoryBlockedOrLimited: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item) => string;
+        CurrentItem: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item) => string;
+        InventoryDoesItemAllowLock: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item) => string;
+    };
+}
+/**
+ * @template {string} T
+ * @extends {DialogMenu<T, DialogInventoryItem>}
+ */
+declare class _DialogPermissionMenu<T extends string> extends DialogMenu<T, DialogInventoryItem> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: T);
+    ids: Readonly<{
+        root: "dialog-permission";
+        status: "dialog-permission-status";
+        grid: "dialog-permission-grid";
+    }>;
+    /** @type {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"];
+}
+/**
+ * @template {string} T
+ * @extends {DialogMenu<T, ItemActivity>}
+ */
+declare class _DialogActivitiesMenu<T extends string> extends DialogMenu<T, ItemActivity> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: T);
+    ids: Readonly<{
+        root: "dialog-activity";
+        status: "dialog-activity-status";
+        grid: "dialog-activity-grid";
+    }>;
+    /** @type {DialogMenu<T, ItemActivity>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: DialogMenu<T, ItemActivity>["clickStatusCallbacks"];
+}
+/**
+ * @template {string} T
+ * @extends {DialogMenu<T, null>}
+ */
+declare class _DialogCraftedMenu<T extends string> extends DialogMenu<T, null> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: T);
+    ids: Readonly<{
+        root: "dialog-crafted";
+        status: "dialog-crafted-status";
+        icon: "dialog-crafted-icon";
+        footer: "dialog-crafted-footer";
+        info: "dialog-crafted-info";
+        description: "dialog-crafted-description";
+        private: "dialog-crafted-private";
+        name: "dialog-crafted-name";
+        property: "dialog-crafted-property";
+        crafter: "dialog-crafted-crafter";
+    }>;
+    /** @type {DialogMenu["clickStatusCallbacks"]} */
+    clickStatusCallbacks: DialogMenu["clickStatusCallbacks"];
+}
+declare namespace DialogMenuMapping {
+    let activities: _DialogActivitiesMenu<"activities">;
+    let crafted: _DialogCraftedMenu<"crafted">;
+    let items: _DialogItemMenu<"items">;
+    let locked: _DialogItemMenu<"locked">;
+    let locking: _DialogLockingMenu<"locking">;
+    let permissions: _DialogPermissionMenu<"permissions">;
+}

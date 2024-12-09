@@ -293,11 +293,6 @@ declare function ChatRoomMapViewMove(D: "West" | "East" | "North" | "South"): vo
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewUndo(): void;
-/**
- * Handles keyboard keys in the chat room map screen
- * @param {KeyboardEvent} event - The event that triggered this
- * @returns {boolean} - Nothing
- */
 declare function ChatRoomMapViewKeyDown(event: KeyboardEvent): boolean;
 /**
  * Handles clicks the chatroom screen view.

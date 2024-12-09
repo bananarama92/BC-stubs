@@ -153,6 +153,13 @@ interface AssetCommonPropertiesGroupAssetLayer {
 	PoseMapping?: AssetPoseMapping;
 
 	/**
+	 * Let assets inherit the group's pose mapping on an individual pose by pose basis, rather than inheriting the pose mapping as a whole (_i.e._ all or nothing).
+	 *
+	 * @default false
+	 */
+	InheritPoseMappingFields?: boolean;
+
+	/**
 	 * Whether that layer is colorized
 	 *
 	 * @default true
@@ -807,6 +814,16 @@ interface AssetLayerDefinition extends AssetCommonPropertiesGroupAssetLayer, Ass
 
 	MirrorExpression?: AssetGroupName;
 	PoseMapping?: AssetPoseMapping;
+	/** Let layer inherit the asset's pose mapping on an individual pose by pose basis, rather than inheriting the pose mapping as a whole (_i.e._ all or nothing) */
+	InheritPoseMappingFields?: boolean;
+
+	/**
+	 * Copy the pose mapping of another layer.
+	 *
+	 * Serves as the pose mapping equivalent of {@link AssetLayerDefinition.CopyLayerColor}.
+	 */
+	CopyLayerPoseMapping?: string;
+
 	CreateLayerTypes?: string[];
 	/* Specifies that this layer should not be drawn if the character is wearing any item with the given attributes */
 	HideForAttribute?: AssetAttribute[];

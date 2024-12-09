@@ -13,7 +13,7 @@ import itertools
 import os
 import re
 
-PATTERN = re.compile(r"([a-zA-Z0-9_]+)(\s+)?\:(\s+)?function(\s+)?([a-zA-Z0-9_]+)?(\s+)?\(")
+PATTERN = re.compile(r"([a-zA-Z0-9_]+)\:(\s+)?function(\s+)?([a-zA-Z0-9_]+)?(\s+)?\(")
 
 
 def _replacer(match: re.Match[str]) -> str:
