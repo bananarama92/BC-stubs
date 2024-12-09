@@ -56,14 +56,25 @@ declare class TextCache {
      * Creates a new TextCache from the provided CSV file path.
      * @param {string} path - The path to the CSV lookup file for this TextCache instance
      */
-    constructor(path: string, _build_cache?: boolean);
+    constructor(path: string);
+    /** @type {string} */
     path: string;
-    language: string;
+    /** @type {ServerChatRoomLanguage | "TW"} */
+    language: ServerChatRoomLanguage | "TW";
     /** @type {Record<string, string>} */
     cache: Record<string, string>;
     /** @type {((cache?: TextCache) => void)[]} */
     rebuildListeners: ((cache?: TextCache) => void)[];
+    /**
+     * Whether the cache has finished building.
+     * @type {boolean}
+     */
     loaded: boolean;
+    /**
+     * Promised object used for building the cache (see {@link TextCache.loaded}).
+     * @type {Promise<TextCache>}
+     */
+    loadedPromise: Promise<TextCache>;
     log(msg: any): void;
     /**
      * Return the basename of the cached file
@@ -84,13 +95,14 @@ declare class TextCache {
      * initial construction, or after a language change).
      * @param {(cache?: TextCache) => void} callback - The callback to register
      * @param {boolean} [immediate] - Whether or not the callback should be called on registration
-     * @returns {Function} - A callback function which can be used to unsubscribe the added listener
+     * @returns {() => void} - A callback function which can be used to unsubscribe the added listener
      */
-    onRebuild(callback: (cache?: TextCache) => void, immediate?: boolean): Function;
+    onRebuild(callback: (cache?: TextCache) => void, immediate?: boolean): () => void;
     /**
-     * Kicks off a build of the text lookup cache
+     * Kicks off a build of the text lookup cache.
+     * @returns {Promise<TextCache>} - Promised object that returns the original text cache
      */
-    buildCache(): Promise<void>;
+    buildCache(): Promise<TextCache>;
     /**
      * Fetches and parses the CSV file for this TextCache
      * @returns {Promise<string[][]>} - A promise resolving to an array of string arrays, corresponding to lines of CSV values in the CSV

@@ -119,7 +119,8 @@ declare function CharacterLoadCanvas(C: Character): void;
  */
 declare function CharacterLoadCanvasAll(): void;
 /**
- * Sets the current character to have a dialog with
+ * Sets the current character to have a dialog with.
+ *
  * @param {Character} C - Character to have a conversation with
  * @returns {void} - Nothing
  */

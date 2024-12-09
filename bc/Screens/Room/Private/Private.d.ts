@@ -667,10 +667,10 @@ declare function PrivateNPCInteraction(LoveFactor: number): void;
 declare function PrivateSlaveMarketStart(AuctionType: "Rent" | "Sell"): void;
 /**
  * Triggered when the player selects how to improve her slave.
- * @param {string} Type - Trait to improve.
+ * @param {NPCTraitType} Type - Trait to improve.
  * @returns {void} - Nothing.
  */
-declare function PrivateSlaveImproveSelect(Type: string): void;
+declare function PrivateSlaveImproveSelect(Type: NPCTraitType): void;
 /**
  * Triggered when the player's slave is sent to the asylum to have a trait corrected. (The higher the value, the slower it raises)
  * @returns {void} - Nothing.
@@ -886,7 +886,8 @@ declare var PrivatePunishment: string;
 declare var PrivatePunishmentList: string[];
 /** @type {null | NPCCharacter} */
 declare var PrivateCharacterNewClothes: null | NPCCharacter;
-declare var PrivateSlaveImproveType: string;
+/** @type {NPCTraitType | null} */
+declare var PrivateSlaveImproveType: NPCTraitType | null;
 declare var PrivateNextLoveYou: number;
 declare var PrivateLoverActivity: string;
 declare var PrivateLoverActivityList: string[];

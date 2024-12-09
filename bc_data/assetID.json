@@ -19,7 +19,8 @@
         "assets": {
             "WombTattoos": 0,
             "BodyWritings": 1,
-            "FaceScars": 2
+            "FaceScars": 2,
+            "FacePaints": 3
         }
     },
     "BodyUpper": {
@@ -222,7 +223,8 @@
             "BowBackAccessory": 26,
             "LargeNeckFur": 27,
             "SmallNeckFur": 28,
-            "SpikyNeckFur": 29
+            "SpikyNeckFur": 29,
+            "LeatherBeltCloth": 30
         }
     },
     "ClothLower": {
@@ -487,7 +489,8 @@
             "Horns5": 41,
             "CyberneticEars1": 42,
             "Onihorns": 43,
-            "SkunkEars": 44
+            "SkunkEars": 44,
+            "AquaticEars": 45
         }
     },
     "HairAccessory2": {
@@ -524,7 +527,8 @@
             "Horns4": 28,
             "Horns5": 29,
             "Onihorns": 30,
-            "SkunkEars": 31
+            "SkunkEars": 31,
+            "AquaticEars": 32
         }
     },
     "HairAccessory3": {
@@ -1206,7 +1210,8 @@
             "ElbowLengthMittens": 11,
             "GlueMittens": 12,
             "HempRopeCuffs": 13,
-            "FullMittens": 14
+            "FullMittens": 14,
+            "LatexBondageMitts": 15
         }
     },
     "ItemHead": {
@@ -1763,7 +1768,8 @@
             "CollarRopeMedium": 6,
             "CollarRopeShort": 7,
             "PetPost": 8,
-            "Post": 9
+            "Post": 9,
+            "Bedchain": 10
         }
     },
     "ItemNipples": {
@@ -2143,7 +2149,8 @@
             "Thong": 45,
             "WrapPanties1": 46,
             "ZipPanties1": 47,
-            "HipHarness": 48
+            "HipHarness": 48,
+            "WaistLegHarness": 49
         }
     },
     "Pronouns": {
@@ -2225,7 +2232,8 @@
             "StrictPonyBoots": 38,
             "AnimeGirlBoots": 39,
             "CustomHeels": 40,
-            "FullLegBoots": 41
+            "FullLegBoots": 41,
+            "IndoorSlippers": 42
         }
     },
     "Socks": {
@@ -2256,7 +2264,8 @@
             "Stockings4": 22,
             "VSocks1": 23,
             "YuletideVelvetWarmth": 24,
-            "LongFishnets": 25
+            "LongFishnets": 25,
+            "RippedPantyhose": 26
         }
     },
     "SocksLeft": {
@@ -2350,7 +2359,8 @@
             "Stockings2": 14,
             "Stockings3": 15,
             "Stockings4": 16,
-            "LongFishnets": 17
+            "LongFishnets": 17,
+            "RippedPantyhose": 18
         }
     },
     "TailStraps": {
@@ -2403,6 +2413,68 @@
             "SuccubusFeather": 10,
             "SuccubusWings": 11,
             "DragonWings": 12
+        }
+    },
+    "AnkletLeft": {
+        "id": 78,
+        "assets": {
+            "BandAnklet": 0,
+            "HeelBinders": 1,
+            "LegFur": 2,
+            "Ribbon": 3,
+            "Ribbon1": 4
+        }
+    },
+    "AnkletRight": {
+        "id": 79,
+        "assets": {
+            "BandAnklet": 0,
+            "HeelBinders": 1,
+            "LegFur": 2,
+            "Ribbon": 3,
+            "Ribbon1": 4
+        }
+    },
+    "ArmsLeft": {
+        "id": 80,
+        "assets": {
+            "": 0
+        }
+    },
+    "ArmsRight": {
+        "id": 81,
+        "assets": {
+            "": 0
+        }
+    },
+    "HandAccessoryLeft": {
+        "id": 82,
+        "assets": {
+            "CatsuitGloves": 0,
+            "Claws": 1,
+            "Fingernails": 2,
+            "Rings": 3
+        }
+    },
+    "HandAccessoryRight": {
+        "id": 83,
+        "assets": {
+            "CatsuitGloves": 0,
+            "Claws": 1,
+            "Fingernails": 2,
+            "Rings": 3
+        }
+    },
+    "HandsLeft": {
+        "id": 84,
+        "assets": {
+            "": 0
+        }
+    },
+    "HandsRight": {
+        "id": 85,
+        "assets": {
+            "": 0
         }
     }
 }
