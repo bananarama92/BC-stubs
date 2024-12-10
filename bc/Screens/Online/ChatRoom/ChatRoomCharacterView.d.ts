@@ -21,7 +21,7 @@ declare function ChatRoomCharacterViewDisplayMessage(data: ServerChatRoomMessage
  * @returns {void} - Nothing.
  */
 declare function ChatRoomCharacterViewClick(event: any): void;
-declare function ChatRoomCharacterViewKeyDown(event: any): boolean;
+declare function ChatRoomCharacterViewKeyDown(event: KeyboardEvent): boolean;
 /**
  * Returns TRUE if the player can leave
  * @returns {boolean} - True if the player can leave

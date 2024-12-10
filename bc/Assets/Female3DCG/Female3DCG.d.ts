@@ -111,7 +111,7 @@ declare namespace AssetPoseMapping {
         let Hogtied_1: "Hogtied";
         export { Hogtied_1 as Hogtied };
         export let OverTheHead: "OverTheHead";
-        export let TapedHands: "TapedHands";
+        export let TapedHands: "";
         export let Yoked: "Yoked";
     }
     namespace Bra {
@@ -207,29 +207,47 @@ declare namespace AssetPoseMapping {
         let Yoked_4: "Yoked";
         export { Yoked_4 as Yoked };
     }
-    namespace Hands {
+    namespace HandsLeft {
         let AllFours_8: "AllFours";
         export { AllFours_8 as AllFours };
         let BackBoxTie_4: "Hide";
         export { BackBoxTie_4 as BackBoxTie };
-        let BackCuffs_4: "Hide";
+        let BackCuffs_4: "BackCuffs";
         export { BackCuffs_4 as BackCuffs };
         let BackElbowTouch_4: "Hide";
         export { BackElbowTouch_4 as BackElbowTouch };
         let Hogtied_9: "Hide";
         export { Hogtied_9 as Hogtied };
-        let OverTheHead_4: "Hide";
+        let OverTheHead_4: "OverTheHead";
         export { OverTheHead_4 as OverTheHead };
         let TapedHands_3: "TapedHands";
         export { TapedHands_3 as TapedHands };
-        let Yoked_5: "Hide";
+        let Yoked_5: "Yoked";
         export { Yoked_5 as Yoked };
     }
-    namespace ItemBoots {
-        let AllFours_9: "Hide";
+    namespace HandsRight {
+        let AllFours_9: "AllFours";
         export { AllFours_9 as AllFours };
-        let Hogtied_10: "Hogtied";
+        let BackBoxTie_5: "Hide";
+        export { BackBoxTie_5 as BackBoxTie };
+        let BackCuffs_5: "BackCuffs";
+        export { BackCuffs_5 as BackCuffs };
+        let BackElbowTouch_5: "Hide";
+        export { BackElbowTouch_5 as BackElbowTouch };
+        let Hogtied_10: "Hide";
         export { Hogtied_10 as Hogtied };
+        let OverTheHead_5: "OverTheHead";
+        export { OverTheHead_5 as OverTheHead };
+        let TapedHands_4: "TapedHands";
+        export { TapedHands_4 as TapedHands };
+        let Yoked_6: "Yoked";
+        export { Yoked_6 as Yoked };
+    }
+    namespace ItemBoots {
+        let AllFours_10: "Hide";
+        export { AllFours_10 as AllFours };
+        let Hogtied_11: "Hogtied";
+        export { Hogtied_11 as Hogtied };
         let Kneel_3: "Kneel";
         export { Kneel_3 as Kneel };
         let KneelingSpread_3: "KneelingSpread";
@@ -238,104 +256,104 @@ declare namespace AssetPoseMapping {
         export { LegsClosed_3 as LegsClosed };
     }
     namespace ItemBreast {
-        let AllFours_10: "AllFours";
-        export { AllFours_10 as AllFours };
+        let AllFours_11: "AllFours";
+        export { AllFours_11 as AllFours };
     }
     namespace ItemFeet {
-        let AllFours_11: "Hide";
-        export { AllFours_11 as AllFours };
-        let Hogtied_11: "Hide";
-        export { Hogtied_11 as Hogtied };
+        let AllFours_12: "Hide";
+        export { AllFours_12 as AllFours };
+        let Hogtied_12: "Hide";
+        export { Hogtied_12 as Hogtied };
         let Kneel_4: "Hide";
         export { Kneel_4 as Kneel };
         let KneelingSpread_4: "Hide";
         export { KneelingSpread_4 as KneelingSpread };
     }
     namespace ItemHandheld {
-        let AllFours_12: "Hide";
-        export { AllFours_12 as AllFours };
-        let BackBoxTie_5: "Hide";
-        export { BackBoxTie_5 as BackBoxTie };
-        let BackCuffs_5: "Hide";
-        export { BackCuffs_5 as BackCuffs };
-        let BackElbowTouch_5: "Hide";
-        export { BackElbowTouch_5 as BackElbowTouch };
-        let Hogtied_12: "Hide";
-        export { Hogtied_12 as Hogtied };
-        let OverTheHead_5: "Hide";
-        export { OverTheHead_5 as OverTheHead };
-        let Yoked_6: "Hide";
-        export { Yoked_6 as Yoked };
-    }
-    namespace ItemHands {
-        let AllFours_13: "AllFours";
+        let AllFours_13: "Hide";
         export { AllFours_13 as AllFours };
-        let Hogtied_13: "Hide";
-        export { Hogtied_13 as Hogtied };
         let BackBoxTie_6: "Hide";
         export { BackBoxTie_6 as BackBoxTie };
+        let BackCuffs_6: "Hide";
+        export { BackCuffs_6 as BackCuffs };
         let BackElbowTouch_6: "Hide";
         export { BackElbowTouch_6 as BackElbowTouch };
-        let BackCuffs_6: "BackCuffs";
-        export { BackCuffs_6 as BackCuffs };
-        let OverTheHead_6: "OverTheHead";
+        let Hogtied_13: "Hide";
+        export { Hogtied_13 as Hogtied };
+        let OverTheHead_6: "Hide";
         export { OverTheHead_6 as OverTheHead };
-        let Yoked_7: "Yoked";
+        let Yoked_7: "Hide";
         export { Yoked_7 as Yoked };
     }
-    namespace ItemLegs {
-        let AllFours_14: "Hide";
+    namespace ItemHands {
+        let AllFours_14: "AllFours";
         export { AllFours_14 as AllFours };
         let Hogtied_14: "Hide";
         export { Hogtied_14 as Hogtied };
+        let BackBoxTie_7: "Hide";
+        export { BackBoxTie_7 as BackBoxTie };
+        let BackElbowTouch_7: "Hide";
+        export { BackElbowTouch_7 as BackElbowTouch };
+        let BackCuffs_7: "BackCuffs";
+        export { BackCuffs_7 as BackCuffs };
+        let OverTheHead_7: "OverTheHead";
+        export { OverTheHead_7 as OverTheHead };
+        let Yoked_8: "Yoked";
+        export { Yoked_8 as Yoked };
+    }
+    namespace ItemLegs {
+        let AllFours_15: "Hide";
+        export { AllFours_15 as AllFours };
+        let Hogtied_15: "Hide";
+        export { Hogtied_15 as Hogtied };
         let Kneel_5: "Kneel";
         export { Kneel_5 as Kneel };
     }
     namespace ItemNipples {
-        let AllFours_15: "AllFours";
-        export { AllFours_15 as AllFours };
-    }
-    namespace ItemNipplesPiercings {
         let AllFours_16: "AllFours";
         export { AllFours_16 as AllFours };
     }
-    namespace ItemPelvis {
-        let AllFours_17: "Hide";
+    namespace ItemNipplesPiercings {
+        let AllFours_17: "AllFours";
         export { AllFours_17 as AllFours };
-        let Hogtied_15: "Hide";
-        export { Hogtied_15 as Hogtied };
     }
-    namespace ItemTorso2 {
-        let AllFours_18: "AllFours";
+    namespace ItemPelvis {
+        let AllFours_18: "Hide";
         export { AllFours_18 as AllFours };
-        let Hogtied_16: "Hogtied";
+        let Hogtied_16: "Hide";
         export { Hogtied_16 as Hogtied };
     }
-    namespace ItemTorso {
+    namespace ItemTorso2 {
         let AllFours_19: "AllFours";
         export { AllFours_19 as AllFours };
         let Hogtied_17: "Hogtied";
         export { Hogtied_17 as Hogtied };
     }
-    namespace ItemVulva {
-        let AllFours_20: "Hide";
+    namespace ItemTorso {
+        let AllFours_20: "AllFours";
         export { AllFours_20 as AllFours };
-        let Hogtied_18: "Hide";
+        let Hogtied_18: "Hogtied";
         export { Hogtied_18 as Hogtied };
-        let Kneel_6: "Kneel";
-        export { Kneel_6 as Kneel };
     }
-    namespace ItemVulvaPiercings {
+    namespace ItemVulva {
         let AllFours_21: "Hide";
         export { AllFours_21 as AllFours };
         let Hogtied_19: "Hide";
         export { Hogtied_19 as Hogtied };
+        let Kneel_6: "Kneel";
+        export { Kneel_6 as Kneel };
     }
-    namespace LeftAnklet {
+    namespace ItemVulvaPiercings {
         let AllFours_22: "Hide";
         export { AllFours_22 as AllFours };
         let Hogtied_20: "Hide";
         export { Hogtied_20 as Hogtied };
+    }
+    namespace AnkletLeft {
+        let AllFours_23: "Hide";
+        export { AllFours_23 as AllFours };
+        let Hogtied_21: "Hide";
+        export { Hogtied_21 as Hogtied };
         let Kneel_7: "Hide";
         export { Kneel_7 as Kneel };
         let KneelingSpread_5: "Hide";
@@ -345,45 +363,45 @@ declare namespace AssetPoseMapping {
         let Spread_3: "Spread";
         export { Spread_3 as Spread };
     }
-    namespace LeftHand {
-        let AllFours_23: "AllFours";
-        export { AllFours_23 as AllFours };
-        let BackBoxTie_7: "BackBoxTie";
-        export { BackBoxTie_7 as BackBoxTie };
-        let BackCuffs_7: "BackCuffs";
-        export { BackCuffs_7 as BackCuffs };
-        let BackElbowTouch_7: "BackElbowTouch";
-        export { BackElbowTouch_7 as BackElbowTouch };
-        let Hogtied_21: "Hide";
-        export { Hogtied_21 as Hogtied };
-        let OverTheHead_7: "OverTheHead";
-        export { OverTheHead_7 as OverTheHead };
-        let TapedHands_4: "TapedHands";
-        export { TapedHands_4 as TapedHands };
-        let Yoked_8: "Yoked";
-        export { Yoked_8 as Yoked };
-    }
-    namespace Nipples {
-        let AllFours_24: "Hide";
+    namespace HandAccessoryLeft {
+        let AllFours_24: "AllFours";
         export { AllFours_24 as AllFours };
-    }
-    namespace Panties {
-        let AllFours_25: "Hide";
-        export { AllFours_25 as AllFours };
+        let BackBoxTie_8: "BackBoxTie";
+        export { BackBoxTie_8 as BackBoxTie };
+        let BackCuffs_8: "BackCuffs";
+        export { BackCuffs_8 as BackCuffs };
+        let BackElbowTouch_8: "BackElbowTouch";
+        export { BackElbowTouch_8 as BackElbowTouch };
         let Hogtied_22: "Hide";
         export { Hogtied_22 as Hogtied };
+        let OverTheHead_8: "OverTheHead";
+        export { OverTheHead_8 as OverTheHead };
+        let TapedHands_5: "TapedHands";
+        export { TapedHands_5 as TapedHands };
+        let Yoked_9: "Yoked";
+        export { Yoked_9 as Yoked };
     }
-    namespace Pussy {
+    namespace Nipples {
+        let AllFours_25: "Hide";
+        export { AllFours_25 as AllFours };
+    }
+    namespace Panties {
         let AllFours_26: "Hide";
         export { AllFours_26 as AllFours };
         let Hogtied_23: "Hide";
         export { Hogtied_23 as Hogtied };
     }
-    namespace RightAnklet {
+    namespace Pussy {
         let AllFours_27: "Hide";
         export { AllFours_27 as AllFours };
         let Hogtied_24: "Hide";
         export { Hogtied_24 as Hogtied };
+    }
+    namespace AnkletRight {
+        let AllFours_28: "Hide";
+        export { AllFours_28 as AllFours };
+        let Hogtied_25: "Hide";
+        export { Hogtied_25 as Hogtied };
         let Kneel_8: "Hide";
         export { Kneel_8 as Kneel };
         let KneelingSpread_6: "Hide";
@@ -393,29 +411,29 @@ declare namespace AssetPoseMapping {
         let Spread_4: "Spread";
         export { Spread_4 as Spread };
     }
-    namespace RightHand {
-        let AllFours_28: "AllFours";
-        export { AllFours_28 as AllFours };
-        let BackBoxTie_8: "BackBoxTie";
-        export { BackBoxTie_8 as BackBoxTie };
-        let BackCuffs_8: "BackCuffs";
-        export { BackCuffs_8 as BackCuffs };
-        let BackElbowTouch_8: "BackElbowTouch";
-        export { BackElbowTouch_8 as BackElbowTouch };
-        let Hogtied_25: "Hide";
-        export { Hogtied_25 as Hogtied };
-        let OverTheHead_8: "OverTheHead";
-        export { OverTheHead_8 as OverTheHead };
-        let TapedHands_5: "TapedHands";
-        export { TapedHands_5 as TapedHands };
-        let Yoked_9: "Yoked";
-        export { Yoked_9 as Yoked };
+    namespace HandAccessoryRight {
+        let AllFours_29: "AllFours";
+        export { AllFours_29 as AllFours };
+        let BackBoxTie_9: "BackBoxTie";
+        export { BackBoxTie_9 as BackBoxTie };
+        let BackCuffs_9: "BackCuffs";
+        export { BackCuffs_9 as BackCuffs };
+        let BackElbowTouch_9: "BackElbowTouch";
+        export { BackElbowTouch_9 as BackElbowTouch };
+        let Hogtied_26: "Hide";
+        export { Hogtied_26 as Hogtied };
+        let OverTheHead_9: "OverTheHead";
+        export { OverTheHead_9 as OverTheHead };
+        let TapedHands_6: "TapedHands";
+        export { TapedHands_6 as TapedHands };
+        let Yoked_10: "Yoked";
+        export { Yoked_10 as Yoked };
     }
     namespace Shoes {
-        let AllFours_29: "Hide";
-        export { AllFours_29 as AllFours };
-        let Hogtied_26: "Hogtied";
-        export { Hogtied_26 as Hogtied };
+        let AllFours_30: "Hide";
+        export { AllFours_30 as AllFours };
+        let Hogtied_27: "Hogtied";
+        export { Hogtied_27 as Hogtied };
         let Kneel_9: "Kneel";
         export { Kneel_9 as Kneel };
         let KneelingSpread_7: "KneelingSpread";
@@ -426,10 +444,10 @@ declare namespace AssetPoseMapping {
         export { Spread_5 as Spread };
     }
     namespace Socks {
-        let AllFours_30: "Hide";
-        export { AllFours_30 as AllFours };
-        let Hogtied_27: "Hogtied";
-        export { Hogtied_27 as Hogtied };
+        let AllFours_31: "Hide";
+        export { AllFours_31 as AllFours };
+        let Hogtied_28: "Hogtied";
+        export { Hogtied_28 as Hogtied };
         let Kneel_10: "Kneel";
         export { Kneel_10 as Kneel };
         let KneelingSpread_8: "KneelingSpread";
@@ -440,10 +458,10 @@ declare namespace AssetPoseMapping {
         export { Spread_6 as Spread };
     }
     namespace SocksLeft {
-        let AllFours_31: "Hide";
-        export { AllFours_31 as AllFours };
-        let Hogtied_28: "Hogtied";
-        export { Hogtied_28 as Hogtied };
+        let AllFours_32: "Hide";
+        export { AllFours_32 as AllFours };
+        let Hogtied_29: "Hogtied";
+        export { Hogtied_29 as Hogtied };
         let Kneel_11: "Kneel";
         export { Kneel_11 as Kneel };
         let KneelingSpread_9: "KneelingSpread";
@@ -454,10 +472,10 @@ declare namespace AssetPoseMapping {
         export { Spread_7 as Spread };
     }
     namespace SocksRight {
-        let AllFours_32: "Hide";
-        export { AllFours_32 as AllFours };
-        let Hogtied_29: "Hogtied";
-        export { Hogtied_29 as Hogtied };
+        let AllFours_33: "Hide";
+        export { AllFours_33 as AllFours };
+        let Hogtied_30: "Hogtied";
+        export { Hogtied_30 as Hogtied };
         let Kneel_12: "Kneel";
         export { Kneel_12 as Kneel };
         let KneelingSpread_10: "KneelingSpread";
@@ -468,28 +486,28 @@ declare namespace AssetPoseMapping {
         export { Spread_8 as Spread };
     }
     namespace Suit {
-        let AllFours_33: "Hide";
-        export { AllFours_33 as AllFours };
-        let BackBoxTie_9: "BackBoxTie";
-        export { BackBoxTie_9 as BackBoxTie };
-        let BackCuffs_9: "BackCuffs";
-        export { BackCuffs_9 as BackCuffs };
-        let BackElbowTouch_9: "BackElbowTouch";
-        export { BackElbowTouch_9 as BackElbowTouch };
-        let Hogtied_30: "Hogtied";
-        export { Hogtied_30 as Hogtied };
-        let OverTheHead_9: "OverTheHead";
-        export { OverTheHead_9 as OverTheHead };
-        let TapedHands_6: "TapedHands";
-        export { TapedHands_6 as TapedHands };
-        let Yoked_10: "Yoked";
-        export { Yoked_10 as Yoked };
-    }
-    namespace SuitLower {
         let AllFours_34: "Hide";
         export { AllFours_34 as AllFours };
+        let BackBoxTie_10: "BackBoxTie";
+        export { BackBoxTie_10 as BackBoxTie };
+        let BackCuffs_10: "BackCuffs";
+        export { BackCuffs_10 as BackCuffs };
+        let BackElbowTouch_10: "BackElbowTouch";
+        export { BackElbowTouch_10 as BackElbowTouch };
         let Hogtied_31: "Hogtied";
         export { Hogtied_31 as Hogtied };
+        let OverTheHead_10: "OverTheHead";
+        export { OverTheHead_10 as OverTheHead };
+        let TapedHands_7: "TapedHands";
+        export { TapedHands_7 as TapedHands };
+        let Yoked_11: "Yoked";
+        export { Yoked_11 as Yoked };
+    }
+    namespace SuitLower {
+        let AllFours_35: "Hide";
+        export { AllFours_35 as AllFours };
+        let Hogtied_32: "Hogtied";
+        export { Hogtied_32 as Hogtied };
         let Kneel_13: "Kneel";
         export { Kneel_13 as Kneel };
         let KneelingSpread_11: "KneelingSpread";
@@ -500,10 +518,10 @@ declare namespace AssetPoseMapping {
         export { Spread_9 as Spread };
     }
     namespace Wings {
-        let AllFours_35: "Hide";
-        export { AllFours_35 as AllFours };
-        let Hogtied_32: "Hide";
-        export { Hogtied_32 as Hogtied };
+        let AllFours_36: "Hide";
+        export { AllFours_36 as AllFours };
+        let Hogtied_33: "Hide";
+        export { Hogtied_33 as Hogtied };
     }
 }
 /**

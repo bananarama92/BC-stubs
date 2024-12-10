@@ -207,6 +207,18 @@ declare function InfiltrationClubCardStart(): void;
  * @returns {void} - Nothing
  */
 declare function InfiltrationClubCardEnd(): void;
+/**
+ * Starts the Pandora's padlock special mission, cannot be given randomly
+ * @param {string} Minutes - The number of minutes to lock the player
+ * @param {string} Amount - The money amount and infiltration skill gained
+ * @returns {void} - Nothing
+ */
+declare function InfiltrationPreparePenitentiary(Minutes: string, Amount: string): void;
+/**
+ * Starts the Pandora's padlock special mission, cannot be given randomly
+ * @returns {void} - Nothing
+ */
+declare function InfiltrationStartPenitentiary(): void;
 declare var InfiltrationBackground: string;
 /** @type {NPCCharacter} */
 declare var InfiltrationSupervisor: NPCCharacter;
@@ -226,3 +238,5 @@ declare var InfiltrationKidnapper: NPCCharacter;
 declare var InfiltrationPandoraPrisoner: NPCCharacter;
 /** @type {NPCCharacter} */
 declare var InfiltrationPartyPrisoner: NPCCharacter;
+declare var InfiltrationPenitentiaryMinutes: number;
+declare var InfiltrationPenitentiaryAmount: number;

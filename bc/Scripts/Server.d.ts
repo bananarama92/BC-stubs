@@ -239,17 +239,14 @@ declare const ServerScriptWarningStyle: string;
 /** @readonly */
 declare var ServerAccountUpdate: {
     /**
-     * @private
      * @type {Map<keyof ServerAccountUpdateRequest, any>}
      */
     Queue: Map<keyof ServerAccountUpdateRequest, any>;
     /**
-     * @private
      * @type {null | ReturnType<typeof setTimeout>}
      */
     Timeout: null | ReturnType<typeof setTimeout>;
     /**
-     * @private
      * @type {number}
      */
     Start: number;
@@ -327,6 +324,7 @@ declare namespace ServerAccountDataSyncedValidate {
         GGTS: GameGGTSParameters & Record<string, unknown>;
         Poker: Record<string, unknown>;
         ClubCard: GameClubCardParameters & Record<string, unknown>;
+        Prison: Record<string, unknown>;
     };
     function LabelColor(arg: string, C: Character): string;
     function Creation(arg: number, C: Character): number;
@@ -345,11 +343,6 @@ declare namespace ServerAccountDataSyncedValidate {
     function WhiteList(arg: number[], C: Character): number[];
     function BlackList(arg: number[], C: Character): number[];
 }
-/**
- * A map containing appearance item diffs, keyed according to the item group. Used to compare and validate before/after
- * for appearance items.
- */
-type AppearanceDiffMap = Partial<Record<AssetGroupName, Item[]>>;
 type ServerChatRoomChecksOptions = {
     screen?: string;
     callback?: () => boolean;

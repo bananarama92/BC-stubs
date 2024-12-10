@@ -7,12 +7,12 @@
 */
 declare function InventoryAdd(C: Character, NewItemName: string, NewItemGroup: AssetGroupName, Push?: boolean): void;
 /**
-* Adds multiple new items by group & name to the character inventory
-* @param {Character} C - The character that gets the new items added to her inventory
-* @param {readonly ItemBundle[]} NewItems - The new items to add
-* @param {Boolean} [Push=true] - Set to TRUE to push to the server, pushed by default
-*/
-declare function InventoryAddMany(C: Character, NewItems: readonly ItemBundle[], Push?: boolean): void;
+ * Adds multiple new items by group & name to the character inventory
+ * @param {Character} C - The character that gets the new items added to her inventory
+ * @param {InventoryBundle[]} NewItems - The new items to add
+ * @param {Boolean} [Push=true] - Set to TRUE to push to the server, pushed by default
+ */
+declare function InventoryAddMany(C: Character, NewItems: InventoryBundle[], Push?: boolean): void;
 /**
  * Creates a new item for a character based on asset group and name
  * @param {Character} C - The character to create the item for
@@ -41,22 +41,22 @@ declare function InventoryDelete(C: Character, DelItemName: string, DelItemGroup
  */
 declare function InventoryDeleteGroup(C: Character, group: AssetGroupName, push?: boolean): InventoryItem[];
 /**
-* Loads the current inventory for a character, can be loaded from an object of Name/Group or a compressed array using LZString
-* @param {Character} C - The character on which we should load the inventory
-* @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>} Inventory - An array of Name / Group of items to load
-*/
-declare function InventoryLoad(C: Character, Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>): void;
+ * Loads the current inventory for a character, can be loaded from an object of Name/Group or a compressed array using LZString
+ * @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>} Inventory - An array of Name / Group of items to load
+ * @return {InventoryBundle[]}
+ */
+declare function InventoryLoad(Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>, InventoryData: any): InventoryBundle[];
 /**
-* Loads the current inventory for a character, based on compressed data
-* @param {Character} C - The character on which we should load the inventory
-* @param {string} Data - The string of data to load
-*/
-declare function InventoryLoadCompressedData(C: Character, Data: string): void;
+ * Decompress inventory data into an item bundle
+ * @param {string} Data - The string of data to load
+ * @return {InventoryBundle[]}
+ */
+declare function InventoryLoadCompressedData(Data: string): InventoryBundle[];
 /**
 * Creates the inventory data string from current inventory
 * @param {Character} C - The character on which we should load the inventory data string
 */
-declare function InventoryDataBuild(C: Character): void;
+declare function InventoryDataBuild(C: Character): string;
 /**
 * Checks if the character has the inventory available
 * @param {Character} C - The character on which we should remove the item
@@ -120,6 +120,17 @@ declare function InventoryDoItemsExposeGroup(C: Character, TargetGroup: AssetGro
  * @returns {boolean} - TRUE if the character has any item equipped in any of the named groups, FALSE otherwise.
  */
 declare function InventoryHasItemInAnyGroup(C: Character, GroupList: readonly AssetGroupName[]): boolean;
+/**
+ * Returns an error message if we cannot add the item, no other items must block that prerequisite; `null` is returned otherwise
+ * @param {Character} C - The character on which we check for prerequisites
+ * @param {Asset} asset - The asset for which prerequisites should be checked. Any item equipped in the asset's group
+ * will be ignored for the purposes of the prerequisite check.
+ * @param {AssetPrerequisite | readonly AssetPrerequisite[]} [prerequisites=asset.Prerequisite] - An array of prerequisites or a string for a single
+ * prerequisite. If nothing is provided, the asset's default prerequisites will be used
+ * @param {readonly AssetPoseName[]} [allowActivePose=asset.AllowActivePose]
+ * @returns {string | null} - An error message (if any)
+ */
+declare function InventoryDisallow(C: Character, asset: Asset, prerequisites?: AssetPrerequisite | readonly AssetPrerequisite[], allowActivePose?: readonly AssetPoseName[]): string | null;
 /**
  * Returns TRUE if we can add the item, no other items must block that prerequisite
  * @param {Character} C - The character on which we check for prerequisites
@@ -245,13 +256,13 @@ declare function InventoryGetRandom(C: Character, GroupName: AssetGroupName, All
 */
 declare function InventoryRemove(C: Character, AssetGroup: AssetGroupName, Refresh?: boolean): void;
 /**
-* Returns TRUE if the body area (Asset Group) for a character is blocked and cannot be used
+* Returns TRUE if the body area (Asset Group) for a character is blocked for either restraints (default) or activities and cannot be used
 * @param {Character} C - The character on which we validate the group
-* @param {AssetGroupItemName} [GroupName] - The name of the asset group (body area), defaults to `C.FocusGroup`
+* @param {null | AssetGroupItemName} [GroupName] - The name of the asset group (body area), defaults to `C.FocusGroup`
 * @param {boolean} [Activity=false] - if TRUE check if activity is allowed on the asset group
 * @returns {boolean} - TRUE if the group is blocked
 */
-declare function InventoryGroupIsBlockedForCharacter(C: Character, GroupName?: AssetGroupItemName, Activity?: boolean): boolean;
+declare function InventoryGroupIsBlockedForCharacter(C: Character, GroupName?: null | AssetGroupItemName, Activity?: boolean): boolean;
 /**
  * Returns TRUE if no item can be used by the player on the character because of the map distance
  * @param {Character} C - The character on which we validate the distance
@@ -266,14 +277,25 @@ declare function InventoryIsBlockedByDistance(C: Character): boolean;
 */
 declare function InventoryGroupIsBlockedByOwnerRule(C: Character, GroupName?: AssetGroupName): boolean;
 /**
-* Returns TRUE if the body area (Asset Group) for a character is blocked and cannot be used
-* Similar to InventoryGroupIsBlockedForCharacter but also blocks groups on all characters if the player is enclosed.
-* @param {Character} C - The character on which we validate the group
-* @param {AssetGroupItemName} [GroupName] - The name of the asset group (body area)
-* @param {boolean} [Activity] - if TRUE check if activity is allowed on the asset group
-* @returns {boolean} - TRUE if the group is blocked
-*/
-declare function InventoryGroupIsBlocked(C: Character, GroupName?: AssetGroupItemName, Activity?: boolean): boolean;
+ * Returns an error message if the body area (Asset Group) for a character is blocked, and `null` otherwise.
+ *
+ * Similar to {@link InventoryGroupIsBlockedForCharacter} but also checks for map range and owner rules.
+ * @param {Character} C - The character on which we validate the group
+ * @param {null | AssetGroupItemName} [GroupName] - The name of the asset group (body area)
+ * @param {boolean} [Activity] - if TRUE check if activity is allowed on the asset group
+ * @returns {null | string} - The error message (if any)
+ */
+declare function InventoryGroupIsAvailable(C: Character, GroupName?: null | AssetGroupItemName, Activity?: boolean): null | string;
+/**
+ * Returns TRUE if the body area (Asset Group) for a character is blocked and cannot be used.
+ *
+ * Similar to {@link InventoryGroupIsBlockedForCharacter} but also checks for map range and owner rules.
+ * @param {Character} C - The character on which we validate the group
+ * @param {null | AssetGroupItemName} [GroupName] - The name of the asset group (body area)
+ * @param {boolean} [Activity] - if TRUE check if activity is allowed on the asset group
+ * @returns {boolean} - TRUE if the group is blocked
+ */
+declare function InventoryGroupIsBlocked(C: Character, GroupName?: null | AssetGroupItemName, Activity?: boolean): boolean;
 /**
 * Returns TRUE if an item has a specific effect
 * @param {Item} Item - The item from appearance that must be validated
@@ -384,11 +406,12 @@ declare function InventoryDoesItemAllowLock(item: Item): boolean;
  */
 declare function InventoryLock(C: Character, Item: Item | AssetGroupName, Lock: Item | AssetLockType, MemberNumber?: null | number | string, Update?: boolean): void;
 /**
-* Unlocks an item and removes all related properties
-* @param {Character} C - The character on which the item must be unlocked
-* @param {Item|AssetGroupItemName} Item - The item from appearance to unlock
-*/
-declare function InventoryUnlock(C: Character, Item: Item | AssetGroupItemName): void;
+ * Unlocks an item and removes all related properties
+ * @param {Character} C - The character on which the item must be unlocked
+ * @param {Item|AssetGroupItemName} Item - The item from appearance to unlock
+ * @param RefreshDialog — Refreshes the character dialog
+ */
+declare function InventoryUnlock(C: Character, Item: Item | AssetGroupItemName, refreshDialog?: boolean): void;
 /**
 * Applies a random lock on an item
 * @param {Character} C - The character on which the item must be locked
@@ -440,9 +463,9 @@ declare function InventorySetPermission(groupName: AssetGroupName, assetName: st
  * @param {string} [Type] - The relevant extended item option identifier of the item (if any)
  * @param {boolean} [Worn] - True if the player is changing permissions for an item they're wearing or if it's the first option
  * @param {boolean} push - Whether to push the permission changes to the server
- * @returns {void} - Nothing
+ * @returns {ItemPermissionMode} - The new item permission
  */
-declare function InventoryTogglePermission(Item: Item, Type?: string, Worn?: boolean, push?: boolean): void;
+declare function InventoryTogglePermission(Item: Item, Type?: string, Worn?: boolean, push?: boolean): ItemPermissionMode;
 /**
 * Returns TRUE if a specific item / asset is blocked by the character item permissions
 * @param {Character} C - The character on which we check the permissions

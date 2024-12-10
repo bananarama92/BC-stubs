@@ -19,25 +19,22 @@ declare function LoginLoad(): void;
  */
 declare function LoginRun(): void;
 /**
- * Perform the inventory and appearance fixups needed.
- *
- * This is called by the login code, after the player's item lists are set up
- * but before the inventory and appearance are loaded from the server's data,
- * and applies the specified asset fixups by swapping Old with New in the list
- * of owned items, in the various player item lists, and in the appearance.
- *
- * If you're only moving items around, it should work just fine as long as
- * the `Old` and `New` asset definitions are compatible.
- * If it's an asset merge (say 3 into one typed asset), it will either set
- * the fixed up item to the specified `Option` or the first one if unspecified.
- *
+ * Perform the inventory fixups needed.
+ * @param {InventoryBundle[]} Inventory - The server-provided inventory object
+ */
+declare function LoginPerformInventoryFixups(Inventory: InventoryBundle[]): void;
+/**
+ * Perform the appearance fixups needed.
  * TODO: only typed items are supported.
- *
- * @param {Partial<Record<AssetGroupName, string[]>>} Inventory - The server-provided inventory object
  * @param {ItemBundle[]} Appearance - The server-provided appearance object
+ * @return {boolean}
+ */
+declare function LoginPerformAppearanceFixups(Appearance: ItemBundle[]): boolean;
+/**
+ * Perform the crafting fixups needed
  * @param {readonly CraftingItem[]} Crafting - The server-provided, uncompressed crafting data
  */
-declare function LoginPerformInventoryFixups(Inventory: Partial<Record<AssetGroupName, string[]>>, Appearance: ItemBundle[], Crafting: readonly CraftingItem[]): void;
+declare function LoginPerformCraftingFixups(Crafting: readonly CraftingItem[]): void;
 /**
  * Make sure the slave collar is equipped or unequipped based on the owner
  * @returns {void} Nothing
@@ -101,11 +98,6 @@ declare function LoginDifficulty(applyDefaults: boolean): void;
  */
 declare function LoginExtremeItemSettings(applyDefaults: boolean): void;
 /**
- * Since InventoryData wasn't found (R104 and before), we load the inventory object directly
- * @param {object} InventoryObject - The inventory object from the server
- */
-declare function LoginLoadInventoryObject(InventoryObject: object): {};
-/**
  * Handles server response, when login has been queued
  * @param {number} Pos - The position in queue
  * @returns {void} Nothing
@@ -116,6 +108,11 @@ declare function LoginQueue(Pos: number): void;
  * @returns {void} Nothing
  */
 declare function LoginFixOwner(): void;
+/**
+ * Sets the player character info from the server data
+ * @param {Partial<ServerAccountData>} C
+ */
+declare function LoginSetupPlayer(C: Partial<ServerAccountData>): void;
 /**
  * Handles player login response data
  * @param {ServerLoginResponse} C - The Login response data - this will either be the player's character data if the
@@ -133,34 +130,32 @@ declare function LoginClick(): void;
 declare function LoginKeyDown(event: KeyboardEvent): boolean;
 /**
  * Attempt to log the user in based on their input username and password
+ * @param {string} Name
+ * @param {string} Password
  * @returns {void} Nothing
  */
-declare function LoginDoLogin(): void;
-/**
- * Sets the state of the login page to the submitted state
- * @returns {void} Nothing
- */
-declare function LoginSetSubmitted(): void;
+declare function LoginDoLogin(Name: string, Password: string): void;
 /**
  * Resets the login submission state
- * @param {string} [ErrorMessage] - the login error message to set if the login is invalid - if not specified, will clear the login error message
- * @param {boolean} [IsRelog=false] - whether or not we're on the relog screen
  * @returns {void} Nothing
  */
-declare function LoginStatusReset(ErrorMessage?: string, IsRelog?: boolean): void;
+declare function LoginStatusReset(): void;
 /**
- * Updates the message on the login page
- * @returns {void} Nothing
+ *
+ * @param {string} [ErrorMessage] - the login error message to set if the login is invalid - if not specified, will clear the login error message
  */
-declare function LoginUpdateMessage(): void;
+declare function LoginSetStatus(ErrorMessage?: string, reset?: boolean): void;
 /**
  * Retrieves the correct message key based on the current state of the login page
- * @returns {string} The key of the message to display
+ * @returns {string | null} The current login status, or null if we're not currently attempting to log in
  */
-declare function LoginGetMessageKey(): string;
+declare function LoginGetStatus(): string | null;
 declare function LoginExit(): void;
+/**
+ * Unload function - called when the login page unloads
+ */
+declare function LoginUnload(): void;
 declare var LoginBackground: string;
-declare var LoginMessage: string;
 /** @type {null | string[][]} */
 declare var LoginCredits: null | string[][];
 declare var LoginCreditsPosition: number;
@@ -168,11 +163,11 @@ declare var LoginThankYou: string;
 declare var LoginThankYouList: string[];
 declare var LoginThankYouNext: number;
 declare var LoginSubmitted: boolean;
-declare var LoginIsRelog: boolean;
+declare var LoginQueuePosition: number;
+/** The server login status */
 declare var LoginErrorMessage: string;
 /** @type {NPCCharacter} */
 declare var LoginCharacter: NPCCharacter;
-declare let LoginTextCacheUnsubscribeCallback: any;
 declare namespace LoginEventListeners {
     function _KeyDownInputName(this: HTMLInputElement, ev: KeyboardEvent): void;
     function _KeyDownInputPassword(this: HTMLInputElement, ev: KeyboardEvent): void;
@@ -180,16 +175,26 @@ declare namespace LoginEventListeners {
 /**
  * The list of item fixups to apply on login.
  *
- * @type {{ Old: {Group: AssetGroupName, Name: string}, New: {Group: AssetGroupName, Name: string, Option?: string} }[]}
+ * Those are applied by the login code, after the player's item lists are set up
+ * but before the inventory and appearance are loaded from the server's data,
+ * and applies the specified asset fixups by swapping Old with New in the list
+ * of owned items, in the various player item lists, and in the appearance.
+ *
+ * If you're only moving items around, it should work just fine as long as
+ * the `Old` and `New` asset definitions are compatible.
+ * If it's an asset merge (say 3 into one typed asset), it will either set
+ * the fixed up item to the specified `Option` or the first one if unspecified.
+ *
+ * @type {{ Old: { Group: string, Name: string | '*' }, New: { Group: AssetGroupName, Name?: string, Option?: string } }[]}
  */
 declare let LoginInventoryFixups: {
     Old: {
-        Group: AssetGroupName;
-        Name: string;
+        Group: string;
+        Name: string | "*";
     };
     New: {
         Group: AssetGroupName;
-        Name: string;
+        Name?: string;
         Option?: string;
     };
 }[];

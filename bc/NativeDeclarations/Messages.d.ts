@@ -72,6 +72,8 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
 	LastChatRoomAdmin?: string;
 	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
+	LastChatRoomWhitelist?: string;
+	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
 	LastChatRoomBan?: string;
 	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
 	LastChatRoomBG?: string;
@@ -196,7 +198,7 @@ interface ServerPrivateCharacterData {
 	Appearance: ServerAppearanceBundle;
 	AppearanceFull: ServerAppearanceBundle;
 	ArousalSettings: ArousalSettingsType;
-	Event: NPCTrait[];
+	Event: NPCEvent[];
 	FromPandora?: boolean;
 }
 
@@ -205,7 +207,7 @@ type ServerAppearanceBundle = ServerItemBundle[];
 
 type ServerChatRoomSpace = "X" | "" | "M" | "Asylum";
 type ServerChatRoomLanguage = "EN" | "DE" | "FR" | "ES" | "CN" | "RU" | "UA";
-type ServerChatRoomGame = "" | "ClubCard" | "LARP" | "MagicBattle" | "GGTS";
+type ServerChatRoomGame = "" | "ClubCard" | "LARP" | "MagicBattle" | "GGTS" | "Prison";
 type ServerChatRoomBlockCategory =
 	/** Those are known as AssetCategory to the client */
 	"Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" |
@@ -221,6 +223,7 @@ type ServerChatRoomData = {
 	Name: string;
 	Description: string;
 	Admin: number[];
+	Whitelist: number[];
 	Ban: number[];
 	Background: string;
 	/* FIXME: server actually expects a string there, but we cheat to make the typing simpler */
@@ -457,7 +460,7 @@ interface ServerChatRoomAdminUpdateRequest {
 
 interface ServerChatRoomAdminMoveRequest {
 	MemberNumber: number;
-	Action: "Move" | "MoveLeft" | "MoveRight" | "Kick" | "Ban" | "Unban" | "Promote" | "Demote" | "Shuffle";
+	Action: "Move" | "MoveLeft" | "MoveRight" | "Kick" | "Ban" | "Unban" | "Promote" | "Demote" | "Whitelist" | "Unwhitelist" | "Shuffle";
 	Publish?: boolean;
 }
 

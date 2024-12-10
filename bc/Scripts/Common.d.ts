@@ -54,15 +54,10 @@ declare function CommonGet(Path: string, Callback: (this: XMLHttpRequest, xhr: X
  * @returns {void} - Nothing
  */
 declare function CommonGetRetry(Path: string, Callback: (this: XMLHttpRequest, xhr: XMLHttpRequest) => void, RetriesLeft?: number): void;
-declare function CommonMouseDown(event: any): void;
-declare function CommonMouseUp(event: any): void;
-declare function CommonMouseMove(event: any): void;
+declare function CommonMouseDown(event: MouseEvent | TouchEvent): void;
+declare function CommonMouseUp(event: MouseEvent | TouchEvent): void;
+declare function CommonMouseMove(event: MouseEvent | TouchEvent): void;
 declare function CommonMouseWheel(event: WheelEvent): void;
-/**
- * Catches the clicks on the main screen and forwards it to the current screen click function if it exists, otherwise it sends it to the dialog click function
- * @param {MouseEvent | TouchEvent} event - The event that triggered this
- * @returns {void} - Nothing
- */
 declare function CommonClick(event: MouseEvent | TouchEvent): void;
 /**
  * Returns TRUE if a section of the screen is currently touched on a mobile device
@@ -74,13 +69,7 @@ declare function CommonClick(event: MouseEvent | TouchEvent): void;
  * @returns {boolean}
  */
 declare function CommonTouchActive(X: number, Y: number, W: number, H: number, TL?: TouchList): boolean;
-/**
- * Catches key presses on the main screen and forwards it to the current screen key down function if it exists, otherwise it sends it to the dialog key down function
- * @deprecated Use GameKeyDown instead
- * @param {KeyboardEvent} event - The event that triggered this
- * @returns {void} - Nothing
- */
-declare function CommonKeyDown(event: KeyboardEvent): void;
+declare function CommonKeyDown(event: KeyboardEvent): boolean;
 /**
  * Calls a basic dynamic function if it exists, for complex functions, use: CommonDynamicFunctionParams
  * @param {string} FunctionName - Name of the function to call
@@ -195,12 +184,13 @@ declare function CommonColorsEqual(C1: string | readonly string[], C2: string | 
 /**
  * Checks whether two arrays are equal. The arrays are considered equal if they have the same length and contain the same items in the same
  * order, as determined by === comparison
- * @param {readonly *[]} a1 - The first array to compare
+ * @template {readonly *[]} T
+ * @param {T} a1 - The first array to compare
  * @param {readonly *[]} a2 - The second array to compare
  * @param {boolean} [ignoreOrder] - Whether to ignore item order when considering equality
- * @returns {boolean} - TRUE if both arrays have the same length and contain the same items in the same order, FALSE otherwise
+ * @returns {a2 is T} - TRUE if both arrays have the same length and contain the same items in the same order, FALSE otherwise
  */
-declare function CommonArraysEqual(a1: readonly any[], a2: readonly any[], ignoreOrder?: boolean): boolean;
+declare function CommonArraysEqual<T extends readonly any[]>(a1: T, a2: readonly any[], ignoreOrder?: boolean): a2 is T;
 /**
  * Creates a debounced wrapper for the provided function with the provided wait time. The wrapped function will not be called as long as
  * the debounced function continues to be called. If the debounced function is called, and then not called again within the wait time, the
@@ -647,3 +637,28 @@ declare const CommonGetFont: MemoizedFunction<(size: any) => string>;
  * "Courier New", "Courier", monospace
  */
 declare const CommonGetFontName: MemoizedFunction<() => string>;
+declare namespace CommonKey {
+    let ALT: 1;
+    let CTRL: 2;
+    let META: 4;
+    let SHIFT: 8;
+    /**
+     * Check whether the expected key and all its modifiers were pressed
+     * @example
+     * // `Enter` without modifiers
+     * CommonKey(event, "Enter");
+     * // `Enter` with the `Ctrl` and `Shift` modifiers
+     * CommonKey(event, "Enter", CommonKey.SHIFT | CommonKey.CTRL);
+     * @param {KeyboardEvent} event - The keyboard event in question
+     * @param {string} key - The expected key (see {@link KeyboardEvent.key})
+     * @param {null | number} modifiers - An optional bit mask of all expected modifiers (see examples)
+     * @returns {boolean} - Whether the expected key and all its modifiers were pressed
+     */
+    function IsPressed(event: KeyboardEvent, key: string, modifiers?: null | number): boolean;
+    /**
+     * Return a bit mask with all modifiers in the passed keyboard event
+     * @param {KeyboardEvent} event - The keyboard event in question
+     * @returns {number} - The bitmask of keyboard modifiers
+     */
+    function GetModifiers(event: KeyboardEvent): number;
+}

@@ -19,7 +19,8 @@
         "assets": {
             "WombTattoos": 0,
             "BodyWritings": 1,
-            "FaceScars": 2
+            "FaceScars": 2,
+            "FacePaints": 3
         }
     },
     "BodyUpper": {
@@ -222,7 +223,8 @@
             "BowBackAccessory": 26,
             "LargeNeckFur": 27,
             "SmallNeckFur": 28,
-            "SpikyNeckFur": 29
+            "SpikyNeckFur": 29,
+            "LeatherBeltCloth": 30
         }
     },
     "ClothLower": {
@@ -392,7 +394,8 @@
             "GarterBelt2": 2,
             "GarterBelt3": 3,
             "Tentacles": 4,
-            "HipHarness": 5
+            "HipHarness": 5,
+            "WaistLegHarness": 6
         }
     },
     "Glasses": {
@@ -487,7 +490,8 @@
             "Horns5": 41,
             "CyberneticEars1": 42,
             "Onihorns": 43,
-            "SkunkEars": 44
+            "SkunkEars": 44,
+            "AquaticEars": 45
         }
     },
     "HairAccessory2": {
@@ -524,7 +528,9 @@
             "Horns4": 28,
             "Horns5": 29,
             "Onihorns": 30,
-            "SkunkEars": 31
+            "SkunkEars": 31,
+            "AquaticEars": 32,
+            "CyberneticEars1": 33
         }
     },
     "HairAccessory3": {
@@ -1206,7 +1212,8 @@
             "ElbowLengthMittens": 11,
             "GlueMittens": 12,
             "HempRopeCuffs": 13,
-            "FullMittens": 14
+            "FullMittens": 14,
+            "LatexBondageMitts": 15
         }
     },
     "ItemHead": {
@@ -1306,7 +1313,8 @@
             "Fu": 51,
             "Paperbag": 52,
             "RubberMask": 53,
-            "CustomBallHood": 54
+            "CustomBallHood": 54,
+            "Balloon": 55
         }
     },
     "ItemLegs": {
@@ -1477,7 +1485,8 @@
             "QualityHarnessGag": 89,
             "GenitalGag": 90,
             "OverfilledGag": 91,
-            "PremiumMuzzle": 92
+            "PremiumMuzzle": 92,
+            "XmasStickerGag": 93
         }
     },
     "ItemMouth2": {
@@ -1575,7 +1584,8 @@
             "QualityHarnessGag": 89,
             "GenitalGag": 90,
             "OverfilledGag": 91,
-            "PremiumMuzzle": 92
+            "PremiumMuzzle": 92,
+            "XmasStickerGag": 93
         }
     },
     "ItemMouth3": {
@@ -1671,7 +1681,8 @@
             "TongueStrapGag": 87,
             "QualityHarnessGag": 88,
             "OverfilledGag": 89,
-            "PremiumMuzzle": 90
+            "PremiumMuzzle": 90,
+            "XmasStickerGag": 91
         }
     },
     "ItemNeck": {
@@ -1763,7 +1774,8 @@
             "CollarRopeMedium": 6,
             "CollarRopeShort": 7,
             "PetPost": 8,
-            "Post": 9
+            "Post": 9,
+            "Bedchain": 10
         }
     },
     "ItemNipples": {
@@ -1853,7 +1865,8 @@
             "SteelChastityPanties": 24,
             "StraponPanties": 25,
             "StuddedChastityBelt": 26,
-            "HipHarness": 27
+            "HipHarness": 27,
+            "WaistLegHarness": 28
         }
     },
     "ItemScript": {
@@ -2143,7 +2156,8 @@
             "Thong": 45,
             "WrapPanties1": 46,
             "ZipPanties1": 47,
-            "HipHarness": 48
+            "HipHarness": 48,
+            "WaistLegHarness": 49
         }
     },
     "Pronouns": {
@@ -2225,7 +2239,8 @@
             "StrictPonyBoots": 38,
             "AnimeGirlBoots": 39,
             "CustomHeels": 40,
-            "FullLegBoots": 41
+            "FullLegBoots": 41,
+            "IndoorSlippers": 42
         }
     },
     "Socks": {
@@ -2256,7 +2271,8 @@
             "Stockings4": 22,
             "VSocks1": 23,
             "YuletideVelvetWarmth": 24,
-            "LongFishnets": 25
+            "LongFishnets": 25,
+            "RippedPantyhose": 26
         }
     },
     "SocksLeft": {
@@ -2350,7 +2366,8 @@
             "Stockings2": 14,
             "Stockings3": 15,
             "Stockings4": 16,
-            "LongFishnets": 17
+            "LongFishnets": 17,
+            "RippedPantyhose": 18
         }
     },
     "TailStraps": {
@@ -2403,6 +2420,68 @@
             "SuccubusFeather": 10,
             "SuccubusWings": 11,
             "DragonWings": 12
+        }
+    },
+    "AnkletLeft": {
+        "id": 78,
+        "assets": {
+            "BandAnklet": 0,
+            "HeelBinders": 1,
+            "LegFur": 2,
+            "Ribbon": 3,
+            "Ribbon1": 4
+        }
+    },
+    "AnkletRight": {
+        "id": 79,
+        "assets": {
+            "BandAnklet": 0,
+            "HeelBinders": 1,
+            "LegFur": 2,
+            "Ribbon": 3,
+            "Ribbon1": 4
+        }
+    },
+    "ArmsLeft": {
+        "id": 80,
+        "assets": {
+            "": 0
+        }
+    },
+    "ArmsRight": {
+        "id": 81,
+        "assets": {
+            "": 0
+        }
+    },
+    "HandAccessoryLeft": {
+        "id": 82,
+        "assets": {
+            "CatsuitGloves": 0,
+            "Claws": 1,
+            "Fingernails": 2,
+            "Rings": 3
+        }
+    },
+    "HandAccessoryRight": {
+        "id": 83,
+        "assets": {
+            "CatsuitGloves": 0,
+            "Claws": 1,
+            "Fingernails": 2,
+            "Rings": 3
+        }
+    },
+    "HandsLeft": {
+        "id": 84,
+        "assets": {
+            "": 0
+        }
+    },
+    "HandsRight": {
+        "id": 85,
+        "assets": {
+            "": 0
         }
     }
 }
