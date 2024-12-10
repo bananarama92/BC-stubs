@@ -227,9 +227,11 @@ declare function AsylumGGTSPunishmentTime(Minute: number): void;
 declare function AsylumGGTSStartPunishment(): void;
 /**
  * Returns TRUE if the item is controlled by GGTS, so the player should not have control.  The rules changes on level 3 and GGTS takes control throughout the asylum.
+ * @param {Character} C
+ * @param {Item} Item
  * @returns {boolean} - TRUE if the item is controlled by GGTS
  */
-declare function AsylumGGTSControlItem(C: any, Item: any): boolean;
+declare function AsylumGGTSControlItem(C: Character, Item: Item): boolean;
 /**
  * Checks if the has enough GGTS minutes to spend on different activities, for GGTS level 6 and up
  * @param {number} Minute - The number of minutes to compare

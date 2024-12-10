@@ -1,4 +1,24 @@
 {
+    "AnkletLeft": {
+        "BandAnklet": "R111",
+        "HeelBinders": "R111",
+        "LegFur": "R111",
+        "Ribbon": "R111",
+        "Ribbon1": "R111"
+    },
+    "AnkletRight": {
+        "BandAnklet": "R111",
+        "HeelBinders": "R111",
+        "LegFur": "R111",
+        "Ribbon": "R111",
+        "Ribbon1": "R111"
+    },
+    "ArmsLeft": {
+        "": "R111"
+    },
+    "ArmsRight": {
+        "": "R111"
+    },
     "Blush": {
         "Blush": "R98"
     },
@@ -10,6 +30,7 @@
     },
     "BodyMarkings": {
         "BodyWritings": "R103",
+        "FacePaints": "R111",
         "FaceScars": "R109",
         "WombTattoos": "R101"
     },
@@ -189,6 +210,7 @@
         "LargeBelt": "R98",
         "LargeNeckFur": "R109",
         "LatexApron": "R101",
+        "LeatherBeltCloth": "R111",
         "LeatherStraps": "R98",
         "Poncho": "R98",
         "Scarf": "R98",
@@ -339,7 +361,8 @@
         "GarterBelt2": "R98",
         "GarterBelt3": "R98",
         "HipHarness": "R107",
-        "Tentacles": "R98"
+        "Tentacles": "R98",
+        "WaistLegHarness": "R111"
     },
     "Glasses": {
         "CatGlasses": "R98",
@@ -382,6 +405,7 @@
     },
     "HairAccessory1": {
         "Antennae": "R98",
+        "AquaticEars": "R111",
         "BatWings": "R98",
         "BigLynxEars": "R98",
         "BunnyEars1": "R98",
@@ -429,11 +453,13 @@
     },
     "HairAccessory2": {
         "Antennae": "R98",
+        "AquaticEars": "R111",
         "BatWings": "R98",
         "BunnyEars1": "R98",
         "BunnyEars2": "R98",
         "CowEars": "R104",
         "CowHorns": "R98",
+        "CyberneticEars1": "R111",
         "DildocornHorn": "R98",
         "Ears1": "R98",
         "Ears2": "R98",
@@ -662,8 +688,23 @@
         "HairFront9b": "R98",
         "ScalyHair": "R109"
     },
-    "Hands": {
-        "Default": "R98"
+    "HandAccessoryLeft": {
+        "CatsuitGloves": "R111",
+        "Claws": "R111",
+        "Fingernails": "R111",
+        "Rings": "R111"
+    },
+    "HandAccessoryRight": {
+        "CatsuitGloves": "R111",
+        "Claws": "R111",
+        "Fingernails": "R111",
+        "Rings": "R111"
+    },
+    "HandsLeft": {
+        "": "R111"
+    },
+    "HandsRight": {
+        "": "R111"
     },
     "Hat": {
         "AnimeGirlTiara": "R106",
@@ -1084,6 +1125,7 @@
         "GlueMittens": "R105",
         "HempRopeCuffs": "R107",
         "HoofMittens": "R98",
+        "LatexBondageMitts": "R111",
         "LeatherMittens": "R98",
         "PaddedLeatherMittens": "R98",
         "PaddedMittens": "R98",
@@ -1130,6 +1172,7 @@
     },
     "ItemHood": {
         "AccentHood": "R98",
+        "Balloon": "R111",
         "BigMouthHood": "R101",
         "BlanketHood": "R98",
         "CanvasHood": "R98",
@@ -1345,7 +1388,8 @@
         "TongueStrapGag": "R98",
         "WebGag": "R98",
         "WiffleGag": "R98",
-        "XLBoneGag": "R98"
+        "XLBoneGag": "R98",
+        "XmasStickerGag": "R111"
     },
     "ItemMouth2": {
         "Ball": "R103",
@@ -1440,7 +1484,8 @@
         "TongueStrapGag": "R103",
         "WebGag": "R98",
         "WiffleGag": "R98",
-        "XLBoneGag": "R98"
+        "XLBoneGag": "R98",
+        "XmasStickerGag": "R111"
     },
     "ItemMouth3": {
         "Ball": "R103",
@@ -1533,7 +1578,8 @@
         "TongueStrapGag": "R103",
         "WebGag": "R98",
         "WiffleGag": "R98",
-        "XLBoneGag": "R98"
+        "XLBoneGag": "R98",
+        "XmasStickerGag": "R111"
     },
     "ItemNeck": {
         "AutoShockCollar": "R98",
@@ -1607,6 +1653,7 @@
         "Key": "R98"
     },
     "ItemNeckRestraints": {
+        "Bedchain": "R111",
         "ChainLeash": "R98",
         "CollarChainLong": "R98",
         "CollarChainMedium": "R98",
@@ -1694,7 +1741,8 @@
         "SleekLeatherChastityBelt": "R98",
         "SteelChastityPanties": "R98",
         "StraponPanties": "R98",
-        "StuddedChastityBelt": "R98"
+        "StuddedChastityBelt": "R98",
+        "WaistLegHarness": "R111"
     },
     "ItemScript": {
         "Script": "R98"
@@ -1815,19 +1863,6 @@
     "Jewelry": {
         "JewelrySet": "R98"
     },
-    "LeftAnklet": {
-        "BandAnklet": "R98",
-        "HeelBinders": "R110",
-        "LegFur": "R103",
-        "Ribbon": "R98",
-        "Ribbon1": "R98"
-    },
-    "LeftHand": {
-        "CatsuitGloves": "R100",
-        "Claws": "R99",
-        "Fingernails": "R99",
-        "Rings": "R98"
-    },
     "Mask": {
         "AngelMask": "R109",
         "AnimalNoses": "R109",
@@ -1944,6 +1979,7 @@
         "StringThong": "R98",
         "SunstripePanties1": "R98",
         "Thong": "R98",
+        "WaistLegHarness": "R111",
         "WrapPanties1": "R98",
         "ZipPanties1": "R98"
     },
@@ -1956,19 +1992,6 @@
         "Pussy1": "R98",
         "Pussy2": "R98",
         "Pussy3": "R98"
-    },
-    "RightAnklet": {
-        "BandAnklet": "R98",
-        "HeelBinders": "R110",
-        "LegFur": "R103",
-        "Ribbon": "R98",
-        "Ribbon1": "R98"
-    },
-    "RightHand": {
-        "CatsuitGloves": "R100",
-        "Claws": "R99",
-        "Fingernails": "R99",
-        "Rings": "R98"
     },
     "Shoes": {
         "AnimeGirlBoots": "R106",
@@ -1989,6 +2012,7 @@
         "Heels1": "R98",
         "Heels2": "R98",
         "Heels3": "R98",
+        "IndoorSlippers": "R111",
         "LatexAnkleShoes": "R98",
         "LatexHeels": "R98",
         "MaryShoes": "R102",
@@ -2026,6 +2050,7 @@
         "Pantyhose1": "R98",
         "Pantyhose2": "R98",
         "ReverseBunnySuit": "R98",
+        "RippedPantyhose": "R111",
         "Socks0": "R98",
         "Socks1": "R98",
         "Socks2": "R98",
@@ -2116,6 +2141,7 @@
         "PilotPanties": "R98",
         "PilotSuit": "R98",
         "ReverseBunnySuit": "R98",
+        "RippedPantyhose": "R111",
         "SeamlessCatsuit": "R98",
         "SeethroughSuit": "R98",
         "SeethroughSuitZip": "R98",

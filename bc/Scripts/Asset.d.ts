@@ -64,6 +64,14 @@ declare function AssetFindExtendedConfig(ExtendedConfig: ExtendedItemMainConfig,
  */
 declare function AssetMapLayer(Layer: AssetLayerDefinition, A: Asset, I: number): AssetLayer;
 /**
+ *
+ * @param {null | undefined | AssetPoseMapping} poseMapping
+ * @param {AssetPoseMapping} superPoseMapping
+ * @param {boolean} inheritFields
+ * @returns {AssetPoseMapping}
+ */
+declare function AssetParsePoseMapping(poseMapping: null | undefined | AssetPoseMapping, superPoseMapping: AssetPoseMapping, inheritFields?: boolean): AssetPoseMapping;
+/**
  * @param {AllowTypes.Definition} allowTypes
  * @returns {AllowTypes.Data}
  */
@@ -194,48 +202,6 @@ declare function AssetParseDefaultColor(colorableLayerCount: number, fillValue: 
  */
 declare function AssetTextGet(msg: string): string;
 /**
- * Shows a console warning for all missing Inventory IDs in the Female3DCG assets
- * @returns {void} - Nothing
- */
-declare function AssetInventoryIDMissing(): void;
-/**
- * Shows a console warning for all Inventory IDs in the Female3DCG assets that are unnecessary assigned
- * @returns {void} - Nothing
- */
-declare function AssetInventoryIDUnnecessary(): void;
-/**
- * Shows a console warning for all Inventory IDs where the BuyGroup is creating a conflict
- * @param {string} GroupName - The group name to compare
- * @param {string} AssetName - The asset name to compare
- * @param {string} BuyGroup - The buying group to compare
- * @param {number | undefined} InventoryID - The inventory ID to compare
- * @returns {void} - Nothing
- */
-declare function AssetInventoryIDBuyGroup(GroupName: string, AssetName: string, BuyGroup: string, InventoryID: number | undefined): void;
-/**
- * Shows a console warning for all Inventory IDs where the BuyGroup is creating a conflict
- * @returns {void} - Nothing
- */
-declare function AssetInventoryIDBuyGroupSearch(): void;
-/**
- * Shows a console warning for all Inventory IDs where the BuyGroup is creating a conflict
- * @param {string} GroupName - The group name to compare
- * @param {string} AssetName - The asset name to compare
- * @param {number} InventoryID - The inventory ID to compare
- * @returns {void} - Nothing
- */
-declare function AssetInventoryIDDuplicated(GroupName: string, AssetName: string, InventoryID: number): void;
-/**
- * Shows a console warning for all Inventory IDs that are duplicated out of a buy group
- * @returns {void} - Nothing
- */
-declare function AssetInventoryIDDuplicatedSearch(): void;
-/**
- * Shows a console warning for all Inventory IDs that are duplicated out of a buy group
- * @returns {void} - Nothing
- */
-declare function AssetInventoryIDScenarioItem(): void;
-/**
  * Validates that the InventoryID is setup properly in the Female3DCG assets
  * Launched each time the game is started for assets maker to apply corrections
  * Outputs all possible errors in the console log, it runs aynscronious
@@ -271,7 +237,6 @@ declare namespace PoseType {
     let HIDE: "Hide";
     let DEFAULT: "";
 }
-declare const layers: any[];
 declare namespace AssetResolveCopyConfig {
     /**
      * Take an (ordered) list of `CopyConfig`-referenced configs and group them all together in a `BuyGroup`.

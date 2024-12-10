@@ -266,10 +266,43 @@ declare function PandoraPlayerUngag(): void;
  */
 declare function PandoraPunishmentSentence(Minutes: string | number): void;
 /**
- * Starts the punishment
+ * Starts the single-player punishment
  * @returns {void} - Nothing
  */
 declare function PandoraPunishmentStart(): void;
+/**
+ * Prepares the multi-player punishment
+ * @returns {void} - Nothing
+ */
+declare function PandoraPenitentiaryPrepare(): void;
+/**
+ * Starts the multi-player punishment
+ * @param {number} Minutes - The number of minutes for the sentence
+ * @returns {void} - Nothing
+ */
+declare function PandoraPenitentiaryStart(Minutes: number): void;
+/**
+ * Checks if the current character is currently under Pandora Penitentiary sentence
+ * @param {Character} C - The character to evaluate
+ * @returns {boolean} - TRUE if sentence is active
+ */
+declare function PandoraPenitentiaryActive(C: Character): boolean;
+/**
+ * Called from MainHall and ChatSearch - Checks if we must create the Pandora prison and creates it
+ * @returns {void} - Nothing
+ */
+declare function PandoraPenitentiaryCreate(): void;
+/**
+ * Called from MainHall and ChatSearch - Checks if we must create the Pandora prison and creates it
+ * @param {object} Result - The result of the search
+ * @returns {void} - Nothing
+ */
+declare function PandoraPenitentiaryResult(Result: object): void;
+/**
+ * Runs the pandora prison events
+ * @returns {void} - Nothing
+ */
+declare function PandoraPenitentiaryRun(): void;
 /**
  * When an NPC pays the player for a service
  * @param {string} Amount - The paid amount
@@ -347,3 +380,5 @@ declare var PandoraChestCount: number;
 declare var PandoraPaint: boolean;
 declare var PandoraReverseMaidDone: number;
 declare var PandoraReverseMaidTotal: number;
+declare var PandoraPenitentiaryCreateTimer: number;
+declare var PandoraPenitentiaryActivityTimer: number;

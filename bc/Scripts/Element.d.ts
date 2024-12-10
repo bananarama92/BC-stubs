@@ -47,6 +47,12 @@ declare function ElementCreateTextArea(ID: string, form?: HTMLElement): HTMLText
  */
 declare function ElementNumberInputBlur(this: HTMLInputElement, event: FocusEvent): void;
 /**
+ * Wheel event listener for `number`-based `<input>` elements. Allows one to increment/decrement the value
+ * @this {HTMLInputElement}
+ * @param {WheelEvent} event
+ */
+declare function ElementNumberInputWheel(this: HTMLInputElement, event: WheelEvent): void;
+/**
  * Creates a new text input element in the main document.Does not create a new element if there is already an existing one with the same ID
  * @param {string} ID - The id of the input tag to create.
  * @param {string} Type - Type of the input tag to create.
@@ -329,12 +335,15 @@ declare namespace ElementButton {
     /**
      * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
      * @param {string} id - The ID of the parent element
-     * @param {readonly InventoryIcon[]} [icons] - The (optional) list of icons
-     * @returns {null | { iconGrid: HTMLDivElement, tooltip: HTMLUListElement }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
+     * @param {readonly (InventoryIcon | { iconSrc: string, tooltipText: string | Node })[]} [icons] - The (optional) list of icons
+     * @returns {null | { iconGrid: HTMLDivElement, tooltip: (string | HTMLElement)[] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
      */
-    function _ParseIcons(id: string, icons?: readonly InventoryIcon[]): null | {
+    function _ParseIcons(id: string, icons?: readonly (InventoryIcon | {
+        iconSrc: string;
+        tooltipText: string | Node;
+    })[]): null | {
         iconGrid: HTMLDivElement;
-        tooltip: HTMLUListElement;
+        tooltip: (string | HTMLElement)[];
     };
     /**
      * @private
@@ -346,38 +355,36 @@ declare namespace ElementButton {
      */
     function _ParseTooltip(id: string, position?: "left" | "right" | "top" | "bottom", children?: readonly (null | string | Node | HTMLOptions<any>)[], options?: Omit<HTMLOptions<"div">, "tag">): null | HTMLDivElement;
     /**
-     * Create a button with a tooltip
-     *
-     * @example
-     * <button id={id}>
-     *     <div id={`${id}-tooltip`} />
-     * </button>
+     * Create a generic button.
      * @param {null | string} id - The ID of the to-be created search button
      * @param {(this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any} onClick - The click event listener to-be attached to the tooltip
-     * @param {Object} [options]
-     * @param {null | string | Node | readonly (null | string | Node)[]} [options.tooltip] - Optional tooltip content. If not supplied then one should manually prepend it to the tooltip later
-     * @param {"left" | "right" | "top" | "bottom"} [options.tooltipPosition] - The position of the tooltip w.r.t. the button
-     * @param {string} [options.label]
-     * @param {"top" | "center" | "bottom"} [options.labelPosition]
-     * @param {string} [options.image]
-     * @param {readonly InventoryIcon[]} [options.icons]
-     * @param {"radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox"} [options.role] - The role of the button. All accepted values are currently special-cased in order to set role-specific event listeners and/or attributes.
-     * @param {boolean} [options.noStyling] - Whether to limit the default styling of the button's border and background
-     * @param {boolean} [options.disabled] - Whether the button should be disabled or not
-     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the either the button or tooltip
+     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
+     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
      * @returns {HTMLButtonElement} - The created button
      */
-    function Create(id: null | string, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: {
-        tooltip?: null | string | Node | readonly (null | string | Node)[];
-        tooltipPosition?: "left" | "right" | "top" | "bottom";
-        label?: string;
-        labelPosition?: "top" | "center" | "bottom";
-        image?: string;
-        icons?: readonly InventoryIcon[];
-        role?: "radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox";
-        noStyling?: boolean;
-        disabled?: boolean;
-    }, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    function Create(id: null | string, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    /**
+     * Create a button for an asset or item, including image, label and icons.
+     * @param {string} idPrefix - The ID of the to-be created search button
+     * @param {Asset | Item} asset - The asset (or item) for which to create a button
+     * @param {null | Character} C - The character wearing the asset/item (if any)
+     * @param {(this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any} onClick - The click event listener to-be attached to the tooltip
+     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
+     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
+     * @returns {HTMLButtonElement} - The created button
+     */
+    function CreateForAsset(idPrefix: string, asset: Asset | Item, C: null | Character, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    /**
+     * Create a button for an activity, including image, label and icons.
+     * @param {string} idPrefix - The ID of the to-be created search button
+     * @param {ItemActivity} activity - The activity for which to create a button
+     * @param {Character} C - The target character of the activity
+     * @param {(this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any} onClick - The click event listener to-be attached to the tooltip
+     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
+     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
+     * @returns {HTMLButtonElement} - The created button
+     */
+    function CreateForActivity(idPrefix: string, activity: ItemActivity, C: Character, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
 }
 declare namespace ElementMenu {
     export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;

@@ -4,7 +4,7 @@ declare namespace Layering {
     let Item: null | Item;
     let Readonly: boolean;
     const Asset: Asset;
-    let OverridePriority: AssetLayerOverridePriority;
+    let OverridePriority: undefined | AssetLayerOverridePriority;
     let _PriorityDefault: undefined | AssetLayerOverridePriority;
     let _Readonly: boolean;
     /**
