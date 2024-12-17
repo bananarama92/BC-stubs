@@ -382,3 +382,4 @@ declare var PandoraReverseMaidDone: number;
 declare var PandoraReverseMaidTotal: number;
 declare var PandoraPenitentiaryCreateTimer: number;
 declare var PandoraPenitentiaryActivityTimer: number;
+declare var PandoraPenitentiarySafewordRooms: any[];

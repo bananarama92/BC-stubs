@@ -1026,12 +1026,13 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
      * An object containg all DOM element IDs referenced in the {@link DialogMenu} subclass.
      * @abstract
      * @readonly
-     * @type {Readonly<Record<string, string> & { root: string, status?: string, grid?: string, icon?: string }>}
+     * @type {Readonly<Record<string, string> & { root: string, status?: string, grid?: string, paginate?: string, icon?: string }>}
      */
     readonly ids: Readonly<Record<string, string> & {
         root: string;
         status?: string;
         grid?: string;
+        paginate?: string;
         icon?: string;
     }>;
     /**
@@ -1042,6 +1043,8 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
     readonly eventListeners: {
         _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
         _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
     };
     /**
      * The name of the mode associated with this instance (see {@link DialogMenuMode}).
@@ -1079,7 +1082,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
      * @readonly
      * @satisfies {Readonly<RectTuple>}
      */
-    readonly defaultShape: readonly [1115, 120, 885, 855];
+    readonly defaultShape: readonly [1005, 120, 995, 857];
     /**
      * See {@link DialogMenu.C}
      * @private
@@ -1190,6 +1193,11 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
      * @returns {void}
      */
     _ClickButton(button: HTMLButtonElement, C: Character, clickedObj: ClickedObj, equippedItem: null | Item): void;
+    /**
+     * @param {string} id
+     * @returns {HTMLDivElement}
+     */
+    _ConstructPaginateButtons(id: string): HTMLDivElement;
 }
 /**
  * @template {string} T
@@ -1205,6 +1213,7 @@ declare class _DialogItemMenu<T extends string> extends DialogMenu<T, DialogInve
         status: "dialog-inventory-status";
         grid: "dialog-inventory-grid";
         icon: "dialog-inventory-icon";
+        paginate: "dialog-inventory-paginate";
     }>;
     /** @satisfies {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
     clickStatusCallbacks: {
@@ -1232,6 +1241,7 @@ declare class _DialogLockingMenu<T extends string> extends DialogMenu<T, DialogI
         root: "dialog-locking";
         status: "dialog-locking-status";
         grid: "dialog-locking-grid";
+        paginate: "dialog-locking-paginate";
     }>;
     /** @satisfies {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
     clickStatusCallbacks: {
@@ -1253,6 +1263,7 @@ declare class _DialogPermissionMenu<T extends string> extends DialogMenu<T, Dial
         root: "dialog-permission";
         status: "dialog-permission-status";
         grid: "dialog-permission-grid";
+        paginate: "dialog-permission-paginate";
     }>;
     /** @type {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
     clickStatusCallbacks: DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"];
@@ -1270,6 +1281,7 @@ declare class _DialogActivitiesMenu<T extends string> extends DialogMenu<T, Item
         root: "dialog-activity";
         status: "dialog-activity-status";
         grid: "dialog-activity-grid";
+        paginate: "dialog-activity-paginate";
     }>;
     /** @type {DialogMenu<T, ItemActivity>["clickStatusCallbacks"]} */
     clickStatusCallbacks: DialogMenu<T, ItemActivity>["clickStatusCallbacks"];
@@ -1294,6 +1306,7 @@ declare class _DialogCraftedMenu<T extends string> extends DialogMenu<T, null> {
         name: "dialog-crafted-name";
         property: "dialog-crafted-property";
         crafter: "dialog-crafted-crafter";
+        gap: "dialog-crafted-gap";
     }>;
     /** @type {DialogMenu["clickStatusCallbacks"]} */
     clickStatusCallbacks: DialogMenu["clickStatusCallbacks"];
