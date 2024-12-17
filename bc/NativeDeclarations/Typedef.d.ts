@@ -139,7 +139,7 @@ declare namespace ElementButton {
 		 *
 		 * Alternatively, one can directly pass the icon's {@link HTMLImageElement.src} and its tooltip component.
 		 */
-		icons?: readonly (null | InventoryIcon | { iconSrc: string, tooltipText: string | Node })[];
+		icons?: readonly (null | InventoryIcon | { iconSrc: string, tooltipText: string | Node, name: string })[];
 		/** The role of the button. All accepted values are currently special-cased in order to set role-specific event listeners and/or attributes. */
 		role?: "radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox";
 		/** Whether to limit the default styling of the button's border and background */
@@ -339,7 +339,7 @@ type EffectName =
 	"UnlockLoversPadlock" | "UnlockLoversTimerPadlock" |
 	"UnlockFamilyPadlock" | "UnlockMistressPadlock" | "UnlockMistressTimerPadlock" |
 	"UnlockPandoraPadlock" | "UnlockMetalCuffs" | "UnlockEscortAnkleCuffs" | "UnlockPortalPanties" |
-	"ProtrudingMouth" | "Wiggling"
+	"ProtrudingMouth" | "Wiggling" | "CanEdge"
 	;
 
 interface ExpressionNameMap {

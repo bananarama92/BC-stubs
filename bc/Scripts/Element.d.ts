@@ -335,10 +335,11 @@ declare namespace ElementButton {
     /**
      * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
      * @param {string} id - The ID of the parent element
-     * @param {readonly (InventoryIcon | { iconSrc: string, tooltipText: string | Node })[]} [icons] - The (optional) list of icons
+     * @param {readonly (InventoryIcon | { name: string, iconSrc: string, tooltipText: string | Node })[]} [icons] - The (optional) list of icons
      * @returns {null | { iconGrid: HTMLDivElement, tooltip: (string | HTMLElement)[] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
      */
     function _ParseIcons(id: string, icons?: readonly (InventoryIcon | {
+        name: string;
         iconSrc: string;
         tooltipText: string | Node;
     })[]): null | {
@@ -385,6 +386,14 @@ declare namespace ElementButton {
      * @returns {HTMLButtonElement} - The created button
      */
     function CreateForActivity(idPrefix: string, activity: ItemActivity, C: Character, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    /**
+     * Reload the icons of the passed {@link ElementButton.CreateForAsset} button based on the items & characters current state.
+     * @param {HTMLButtonElement} button - The button in question
+     * @param {Asset | Item} asset - The asset (or item) for linked to the button
+     * @param {null | Character} C - The character wearing the asset/item (if any)
+     * @returns {boolean} - Whether the icons were updated or not
+     */
+    function ReloadAssetIcons(button: HTMLButtonElement, asset: Asset | Item, C: null | Character): boolean;
 }
 declare namespace ElementMenu {
     export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;

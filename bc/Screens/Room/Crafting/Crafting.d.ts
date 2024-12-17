@@ -282,6 +282,12 @@ declare namespace CraftingDescription {
      */
     function Decode(description: string): string;
     /**
+     * Decode the passed string and return it as a list of valid {@link Element.append} nodes, converting `\n` characters into `<br>` elements.
+     * @param {string} description - The to-be decoded string
+     * @returns {(string | HTMLElement)[]} - The decoded string as a list of nodes
+     */
+    function DecodeToHTML(description: string): (string | HTMLElement)[];
+    /**
      * Encode the passed crafted item description, extracting all UTF8 characters and encoding up to two of them into a single UTF16 character.
      *
      * The first character is marked with {@link CraftingDescription.ExtendedDescriptionMarker}

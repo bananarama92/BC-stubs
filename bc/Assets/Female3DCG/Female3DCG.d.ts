@@ -92,6 +92,7 @@ declare namespace E {
     let DeafNormal: "DeafNormal";
     let DeafHeavy: "DeafHeavy";
     let DeafTotal: "DeafTotal";
+    let CanEdge: "CanEdge";
 }
 declare namespace AssetPoseMapping {
     namespace BodyLower {
