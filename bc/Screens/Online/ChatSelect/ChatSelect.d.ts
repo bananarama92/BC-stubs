@@ -26,6 +26,12 @@ declare function ChatSelectExit(): void;
  * @returns {boolean} - Whether the genders are allowed
  */
 declare function ChatSelectGendersAllowed(space: ServerChatRoomSpace, genders: AssetGender[]): boolean;
+/**
+ * @file This file handles the chat lobby space pre-selection screen
+ */
+/**
+ * Background image
+ */
 declare var ChatSelectBackground: string;
 /** @type {boolean} */
 declare var ChatSelectAllowedInFemaleOnly: boolean;

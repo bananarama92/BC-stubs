@@ -1045,6 +1045,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
         _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
         _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
         _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
     /**
      * The name of the mode associated with this instance (see {@link DialogMenuMode}).

@@ -336,7 +336,7 @@ declare namespace ElementButton {
      * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
      * @param {string} id - The ID of the parent element
      * @param {readonly (InventoryIcon | { name: string, iconSrc: string, tooltipText: string | Node })[]} [icons] - The (optional) list of icons
-     * @returns {null | { iconGrid: HTMLDivElement, tooltip: (string | HTMLElement)[] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
+     * @returns {null | { iconGrid: HTMLDivElement, tooltip: [string, HTMLElement, HTMLElement] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
      */
     function _ParseIcons(id: string, icons?: readonly (InventoryIcon | {
         name: string;
@@ -344,7 +344,7 @@ declare namespace ElementButton {
         tooltipText: string | Node;
     })[]): null | {
         iconGrid: HTMLDivElement;
-        tooltip: (string | HTMLElement)[];
+        tooltip: [string, HTMLElement, HTMLElement];
     };
     /**
      * @private

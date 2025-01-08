@@ -208,17 +208,30 @@ declare function InfiltrationClubCardStart(): void;
  */
 declare function InfiltrationClubCardEnd(): void;
 /**
+ * Checks if the role in parameter is the current player role
+ * @param {string} Role - The role to evaluate (I for Inmate, G for Guard)
+ * @returns {boolean} - TRUE if the role matches the parameter
+ */
+declare function InfiltrationPenitentiaryRoleIs(Role: string): boolean;
+/**
  * Starts the Pandora's padlock special mission, cannot be given randomly
  * @param {string} Minutes - The number of minutes to lock the player
  * @param {string} Amount - The money amount and infiltration skill gained
+ * @param {string} Role - The role to take (I for Inmate or G for Guard)
  * @returns {void} - Nothing
  */
-declare function InfiltrationPreparePenitentiary(Minutes: string, Amount: string): void;
+declare function InfiltrationPreparePenitentiary(Minutes: string, Amount: string, Role: string): void;
 /**
  * Starts the Pandora's padlock special mission, cannot be given randomly
+ * @param {string} Param - An optional NEW param to create a new room
  * @returns {void} - Nothing
  */
-declare function InfiltrationStartPenitentiary(): void;
+declare function InfiltrationStartPenitentiary(Param: string): void;
+/**
+ * When the player asks to be costumed as a guard
+ * @returns {void} - Nothing
+ */
+declare function InfiltrationGuardDressUp(): void;
 declare var InfiltrationBackground: string;
 /** @type {NPCCharacter} */
 declare var InfiltrationSupervisor: NPCCharacter;
@@ -240,3 +253,4 @@ declare var InfiltrationPandoraPrisoner: NPCCharacter;
 declare var InfiltrationPartyPrisoner: NPCCharacter;
 declare var InfiltrationPenitentiaryMinutes: number;
 declare var InfiltrationPenitentiaryAmount: number;
+declare var InfiltrationPenitentiaryRole: string;

@@ -866,8 +866,11 @@ declare function ChatRoomAddCharacterToChatRoom(newCharacter: Character, newRawC
  */
 declare function ChatRoomValidateProperties(obj: unknown): obj is ChatRoom;
 /**
- * Handles the reception of the new room data from the server.
- * @param {ServerChatRoomSyncMessage} data - Room object containing the updated chatroom data.
+ * Handles the reception of the data for a room we've just entered.
+ *
+ * This only happens once per ChatRoom "lifetime".
+ *
+ * @param {ServerChatRoomSyncMessage} data - Room object containing the new chatroom data.
  * @returns {void} - Nothing.
  */
 declare function ChatRoomSync(data: ServerChatRoomSyncMessage): void;

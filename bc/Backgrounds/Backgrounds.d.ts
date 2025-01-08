@@ -21,6 +21,7 @@ declare const BackgroundsTagClub: "Club & College";
 declare const BackgroundsTagHouse: "Regular house";
 declare const BackgroundsTagDungeon: "Dungeon";
 declare const BackgroundsTagAsylum: "Asylum";
+declare const BackgroundsTagPandora: "Pandora";
 /**
  * List of all tags to create online chat rooms
  * @constant
