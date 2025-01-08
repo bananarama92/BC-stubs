@@ -25,6 +25,7 @@ declare function BackgroundSelectionSort(a: {
  * @returns {void} - Nothing
  */
 declare function BackgroundSelectionLoad(): void;
+declare function BackgroundSelectionUnload(): void;
 /**
  * Handles input in the text box in the topmost row of the selection screen
  * and changes the offset of the background selection appropriately

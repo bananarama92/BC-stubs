@@ -10,6 +10,7 @@ declare function ChatAdminRoomCustomizationCommand(Property: "Image" | "Filter" 
  * @returns {void} - Nothing
  */
 declare function ChatAdminRoomCustomizationLoad(): void;
+declare function ChatAdminRoomCustomizationUnload(): void;
 /**
  * Plays or stop the background music
  * @param {string} Music - The URL of the music to play

@@ -114,10 +114,10 @@ declare function ChatSearchClickPermission(): void;
  * Shows a confirmation screen first, unless the only reason is "TempHidden".
  * This is called when clicking a room in the list and also, if a confirmation is shown, called again when the confirm button is clicked.
  *
- * @param {number} C - Index of the room within ChatSearchHiddenResult
+ * @param {ChatRoomSearchResult | number} C - Index of the room within ChatSearchHiddenResult
  * @param {boolean} Confirmed - False when clicking on room list, true when clicking Confirm button
  */
-declare function ChatSearchClickUnhideRoom(C: number, Confirmed: boolean): void;
+declare function ChatSearchClickUnhideRoom(C: ChatRoomSearchResult | number, Confirmed: boolean): boolean;
 /**
  * Handles the reception of the server response when joining a room or when getting banned/kicked
  * @param {ServerChatRoomSearchResponse} data - Response from the server
@@ -195,14 +195,15 @@ declare function ChatSearchMatchesTerms(Room: {
  * @returns {number} - Starting offset for ingored rooms
  */
 declare function ChatSearchCalculateIgnoredRoomsOffset(shownRooms: number): number;
+/**
+ * @file This file handles the chat lobby search & filter screen
+ */
+/** Background image */
 declare var ChatSearchBackground: string;
-/** @type {(ServerChatRoomSearchData & { DisplayName: string, Order: number })[]} */
-declare var ChatSearchResult: (ServerChatRoomSearchData & {
-    DisplayName: string;
-    Order: number;
-})[];
-/** @type {typeof ChatSearchResult} */
-declare var ChatSearchHiddenResult: typeof ChatSearchResult;
+/** @type {ChatRoomSearchResult[]} */
+declare var ChatSearchResult: ChatRoomSearchResult[];
+/** @type {ChatRoomSearchResult[]} */
+declare var ChatSearchHiddenResult: ChatRoomSearchResult[];
 /** @type {null | { Query: string, Language: "" | ServerChatRoomLanguage, Space: ServerChatRoomSpace, Game: ServerChatRoomGame, FullRooms: boolean }} */
 declare var ChatSearchLastSearchDataJSON: null | {
     Query: string;
@@ -215,9 +216,17 @@ declare var ChatSearchLastQuerySearchTime: number;
 declare var ChatSearchLastQueryJoin: string;
 declare var ChatSearchLastQueryJoinTime: number;
 declare var ChatSearchResultOffset: number;
-declare var ChatSearchRoomsPerPage: number;
+/** The room grid's left offset */
 declare var ChatSearchPageX: number;
+/** The room grid's top offset */
 declare var ChatSearchPageY: number;
+/**
+ * Layout parameters for the room grid
+ * @type {CommonGenerateGridParameters}
+ */
+declare var ChatSearchListParams: CommonGenerateGridParameters;
+/** Pre-calculated. Must be updated if you change the grid parameters */
+declare var ChatSearchRoomsPerPage: number;
 declare var ChatSearchMessage: string;
 declare var ChatSearchLeaveRoom: string;
 /** @type {ModuleType} */

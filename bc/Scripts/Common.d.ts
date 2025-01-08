@@ -661,4 +661,12 @@ declare namespace CommonKey {
      * @returns {number} - The bitmask of keyboard modifiers
      */
     function GetModifiers(event: KeyboardEvent): number;
+    /**
+     * A {@link ScreenFunctions.keydown} helper function for implementing the navigation key handling of scrollable elements.
+     * @param {HTMLElement} scrollableElem - The scrollable element
+     * @param {KeyboardEvent} event - The keydown event
+     * @param {(scrollableElem: HTMLElement) => number} getArrowScrollDistance - A callback for computing the (absolute) scroll distance for up/down arrow key presses
+     * @returns {boolean} - Whether a navigation key was (successfuly pressed)
+     */
+    function NavigationKeyDown(scrollableElem: HTMLElement, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: HTMLElement) => number): boolean;
 }

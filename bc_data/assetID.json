@@ -188,7 +188,8 @@
             "NunRobes": 79,
             "YuletideVelvetWarmth": 80,
             "AnimeGirl": 81,
-            "LatexHobbleDress": 82
+            "LatexHobbleDress": 82,
+            "RibbonCorset": 83
         }
     },
     "ClothAccessory": {
@@ -224,7 +225,10 @@
             "LargeNeckFur": 27,
             "SmallNeckFur": 28,
             "SpikyNeckFur": 29,
-            "LeatherBeltCloth": 30
+            "LeatherBeltCloth": 30,
+            "ComboBelt": 31,
+            "FaceWritings": 32,
+            "SatinScarf": 33
         }
     },
     "ClothLower": {
@@ -278,7 +282,8 @@
             "Waspie2": 45,
             "Waspie3": 46,
             "SatinSkirt": 47,
-            "ASRubberSkirt": 48
+            "ASRubberSkirt": 48,
+            "MidLegSkirt": 49
         }
     },
     "Corset": {
@@ -296,7 +301,8 @@
             "LeatherCorsetTop1": 9,
             "SteampunkCorsetTop1": 10,
             "Underbust": 11,
-            "TightCorset": 12
+            "TightCorset": 12,
+            "RibbonCorset": 13
         }
     },
     "Emoticon": {
@@ -395,7 +401,8 @@
             "GarterBelt3": 3,
             "Tentacles": 4,
             "HipHarness": 5,
-            "WaistLegHarness": 6
+            "WaistLegHarness": 6,
+            "ComboBelt": 7
         }
     },
     "Glasses": {
@@ -637,7 +644,30 @@
             "HairBack61": 82,
             "HairBack62": 83,
             "HairBack63": 84,
-            "ScalyBackHair": 85
+            "ScalyBackHair": 85,
+            "HairBack64": 86,
+            "HairBack65": 87,
+            "HairBack65b": 88,
+            "HairBack66": 89,
+            "HairBack67": 90,
+            "HairBack68": 91,
+            "HairBack69": 92,
+            "HairBack69b": 93,
+            "HairBack70": 94,
+            "HairBack70b": 95,
+            "HairBack71": 96,
+            "HairBack72": 97,
+            "HairBack73": 98,
+            "HairBack74": 99,
+            "HairBack75": 100,
+            "HairBack76": 101,
+            "HairBack76b": 102,
+            "HairBack77": 103,
+            "HairBack77b": 104,
+            "HairBack77c": 105,
+            "HairBack78": 106,
+            "HairBack78b": 107,
+            "HairBack78c": 108
         }
     },
     "HairFront": {
@@ -740,7 +770,9 @@
             "HairFront61": 94,
             "ScalyHair": 95,
             "HairFront62a": 96,
-            "HairFront62b": 97
+            "HairFront62b": 97,
+            "HairFront63": 98,
+            "HairFront64": 99
         }
     },
     "Hands": {
@@ -915,7 +947,8 @@
             "Zipties": 74,
             "CollarMetalcuffs": 75,
             "ArmbinderSuit": 76,
-            "BedMetalCuffs": 77
+            "BedMetalCuffs": 77,
+            "InflatableDress": 78
         }
     },
     "ItemBoots": {
@@ -945,7 +978,8 @@
             "ToeTie": 21,
             "Zipties": 22,
             "TormentHeels": 23,
-            "StrictPonyBoots": 24
+            "StrictPonyBoots": 24,
+            "BalletMittens": 25
         }
     },
     "ItemBreast": {
@@ -1073,7 +1107,8 @@
             "GlueFloor": 59,
             "OneBarGirl": 60,
             "Cement": 61,
-            "BrickWall": 62
+            "BrickWall": 62,
+            "PogoBall": 63
         }
     },
     "ItemEars": {
@@ -1253,7 +1288,8 @@
             "StuddedBlindfold": 31,
             "Tentacles": 32,
             "WebBlindfold": 33,
-            "RubberMask": 34
+            "RubberMask": 34,
+            "Kigu2Hood": 35
         }
     },
     "ItemHood": {
@@ -1314,7 +1350,8 @@
             "Paperbag": 52,
             "RubberMask": 53,
             "CustomBallHood": 54,
-            "Balloon": 55
+            "Balloon": 55,
+            "Kigu2Hood": 56
         }
     },
     "ItemLegs": {
@@ -1906,7 +1943,8 @@
             "ThinLeatherStraps": 25,
             "Underbust": 26,
             "HipHarness": 27,
-            "TightCorset": 28
+            "TightCorset": 28,
+            "RibbonCorset": 29
         }
     },
     "ItemTorso2": {
@@ -1940,7 +1978,8 @@
             "ThinLeatherStraps": 25,
             "Underbust": 26,
             "HipHarness": 27,
-            "TightCorset": 28
+            "TightCorset": 28,
+            "RibbonCorset": 29
         }
     },
     "ItemVulva": {
@@ -2061,7 +2100,8 @@
             "DemonMask": 30,
             "EldritchMask": 31,
             "FaceScars": 32,
-            "NecromancerHelmet": 33
+            "NecromancerHelmet": 33,
+            "Kigu2Hood": 34
         }
     },
     "Mouth": {
@@ -2094,7 +2134,8 @@
             "NecklaceLock": 16,
             "NecklaceRope": 17,
             "PearlNecklace1": 18,
-            "AnimeGirlNecklace": 19
+            "AnimeGirlNecklace": 19,
+            "SatinScarf": 20
         }
     },
     "Nipples": {
@@ -2240,7 +2281,8 @@
             "AnimeGirlBoots": 39,
             "CustomHeels": 40,
             "FullLegBoots": 41,
-            "IndoorSlippers": 42
+            "IndoorSlippers": 42,
+            "WitchShoes": 43
         }
     },
     "Socks": {
@@ -2482,6 +2524,14 @@
         "id": 85,
         "assets": {
             "": 0
+        }
+    },
+    "FaceMarkings": {
+        "id": 86,
+        "assets": {
+            "AnimalNoses": 0,
+            "FaceScars": 1,
+            "FaceWritings": 2
         }
     }
 }

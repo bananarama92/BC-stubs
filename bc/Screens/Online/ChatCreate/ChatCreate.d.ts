@@ -20,10 +20,6 @@ declare function ChatCreateRoom(): void;
  * @returns {void} - Nothing
  */
 declare function ChatCreateBlockItems(): void;
-/**
- * Removes all chatroom creation inputs
- */
-declare function ChatRoomCreateRemoveInput(): void;
 declare var ChatCreateBackground: string;
 declare var ChatCreateResult: any[];
 declare var ChatCreateMessage: string;

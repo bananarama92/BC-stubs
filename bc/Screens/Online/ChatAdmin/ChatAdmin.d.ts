@@ -3,6 +3,7 @@
  * @returns {void} - Nothing
  */
 declare function ChatAdminLoad(): void;
+declare function ChatAdminUnload(): void;
 /**
  * When the chat Admin screen runs, draws the screen
  * @returns {void} - Nothing

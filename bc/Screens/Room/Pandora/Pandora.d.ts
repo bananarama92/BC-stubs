@@ -278,15 +278,22 @@ declare function PandoraPenitentiaryPrepare(): void;
 /**
  * Starts the multi-player punishment
  * @param {number} Minutes - The number of minutes for the sentence
+ * @param {string} Role - The role to take (I for Inmate, G for guard)
  * @returns {void} - Nothing
  */
-declare function PandoraPenitentiaryStart(Minutes: number): void;
+declare function PandoraPenitentiaryStart(Minutes: number, Role: string): void;
 /**
- * Checks if the current character is currently under Pandora Penitentiary sentence
+ * Checks if the current character is currently a Pandora Penitentiary inmate (I)
  * @param {Character} C - The character to evaluate
- * @returns {boolean} - TRUE if sentence is active
+ * @returns {boolean} - TRUE if sentence is active and role is inmate
  */
-declare function PandoraPenitentiaryActive(C: Character): boolean;
+declare function PandoraPenitentiaryIsInmate(C: Character): boolean;
+/**
+ * Checks if the current character is currently a Pandora Penitentiary guard (G)
+ * @param {Character} C - The character to evaluate
+ * @returns {boolean} - TRUE if shift is active and role is guard
+ */
+declare function PandoraPenitentiaryIsGuard(C: Character): boolean;
 /**
  * Called from MainHall and ChatSearch - Checks if we must create the Pandora prison and creates it
  * @returns {void} - Nothing
@@ -299,10 +306,51 @@ declare function PandoraPenitentiaryCreate(): void;
  */
 declare function PandoraPenitentiaryResult(Result: object): void;
 /**
+ * Returns TRUE if the group is available for an Onlin Pandora Prison activity
+ * @param {Character} C - The character to evaluate
+ * @param {AssetGroupItemName} Group - The item group name
+ * @param {boolean} SkipBlock - If we should skip the GroupIsBlocked validation
+ * @returns {boolean} - TRUE if the group is available
+ */
+declare function PandoraGroupAvailable(C: Character, Group: AssetGroupItemName, SkipBlock?: boolean): boolean;
+/**
+ * Sets a proper minimal difficulty for the new item set in Online Pandora Prison
+ * @param {Character} C - The character to evaluate
+ * @param {AssetGroupItemName} Group - The item group name
+ * @param {number} Level - The infiltration level, the higher it gets the harder the difficulty will be
+ * @returns {void} - Nothing
+ */
+declare function PandoraPenitentiaryItemDifficulty(C: Character, Group: AssetGroupItemName, Level: number): void;
+/**
+ * Builds a list of all valid Pandora activities for the player
+ * @param {Character} C - The character to build a list for
+ * @returns {Array} - An array of all valid activities for the player
+ */
+declare function PandoraPenitentiaryBuildActivityList(C: Character): any[];
+/**
+ * Runs the selected activity inmate activity for the player
+ * @param {string} Activity - The activity to run
+ * @returns {void} - Nothing
+ */
+declare function PandoraPenitentiaryActivityRun(Activity: string): void;
+/**
  * Runs the pandora prison events
  * @returns {void} - Nothing
  */
 declare function PandoraPenitentiaryRun(): void;
+/**
+ * Runs the pandora command from the online chat box
+ * @param {string} Activity - The activity to validate
+ * @returns {void} - Nothing
+ */
+declare function PandoraPenitentiaryDoActivity(Activity: string): void;
+/**
+ * Called from chat room, processes hidden Pandora Prison messages
+ * @param {Character} SenderCharacter - The character sending the message
+ * @param {String} Interaction - The message sent
+ * @returns {Object} - Nothing to be used
+ */
+declare function PandoraPenitentiaryHiddenMessage(SenderCharacter: Character, Interaction: string): any;
 /**
  * When an NPC pays the player for a service
  * @param {string} Amount - The paid amount
@@ -381,5 +429,8 @@ declare var PandoraPaint: boolean;
 declare var PandoraReverseMaidDone: number;
 declare var PandoraReverseMaidTotal: number;
 declare var PandoraPenitentiaryCreateTimer: number;
+declare var PandoraPenitentiaryActivityList: string[];
 declare var PandoraPenitentiaryActivityTimer: number;
 declare var PandoraPenitentiarySafewordRooms: any[];
+declare var PandoraPenitentiaryCageList: string[];
+declare var PandoraPenitentiaryStartNewRoom: boolean;
