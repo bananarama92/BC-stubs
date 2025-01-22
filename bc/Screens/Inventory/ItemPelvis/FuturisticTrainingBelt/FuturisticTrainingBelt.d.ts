@@ -65,7 +65,8 @@ declare var FuturisticTrainingBeltModes: string[];
 declare var FuturisticTrainingBeltStates: string[];
 /** @type {ItemPropertiesCustom["PublicModeCurrent"]} */
 declare var FuturisticTrainingBeltSetMode: ItemPropertiesCustom["PublicModeCurrent"];
-declare var FuturisticTrainingBeltStandUpFlag: boolean;
+/** @deprecated */
+declare var FuturisticTrainingBeltStandUpFlag: never;
 declare var FuturisticTrainingBeltSpeechCharacterLimit: number;
 declare var FuturisticTrainingBeltRandomEdgeCycle: number;
 declare var FuturisticTrainingBeltRandomTeaseDurationMin: number;
