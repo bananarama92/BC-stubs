@@ -66,7 +66,10 @@ declare function InventoryItemPelvisModularChastityBeltCheckPunish(Item: Item, C
  * @returns {boolean}
  */
 declare function InventoryItemPelvisModularChastityBeltCheckStanding(PunishStandup: boolean, C: Character, isPlayerInChatRoom: boolean, ShockCooldown: number): boolean;
-declare function InventoryItemPelvisModularChastityBeltForceKneel(): void;
+/**
+ * @param {Character} C
+ */
+declare function InventoryItemPelvisModularChastityBeltForceKneel(C: Character): void;
 declare var InventoryItemPelvisModularChastityBeltVoiceTriggers: string[];
 /** @type {string[]} */
 declare var InventoryItemPelvisModularChastityBeltVoiceTriggerValues: string[];

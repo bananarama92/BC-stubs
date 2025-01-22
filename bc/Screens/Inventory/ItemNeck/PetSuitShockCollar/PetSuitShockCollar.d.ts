@@ -4,8 +4,9 @@ declare function InventoryItemNeckPetSuitShockCollarResetCount(): void;
 declare function AssetsItemNeckPetSuitShockCollarBeforeDraw(drawData: DynamicDrawingData<PetSuitShockCollarPersistentData>): DynamicBeforeDrawOverrides;
 /**
  * @param {Item} Item
+ * @param {Character} C
  */
-declare function InventoryPetSuitShockCollarCheckPunish(Item: Item): "" | "Struggle" | "Activity" | "StandUp";
+declare function InventoryPetSuitShockCollarCheckPunish(Item: Item, C: Character): "" | "Struggle" | "Activity" | "StandUp";
 /**
  * @param {DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>} data
  * @param {number} LastTime
