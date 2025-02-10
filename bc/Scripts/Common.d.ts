@@ -614,9 +614,9 @@ declare const CommonChatTags: Record<"SOURCE_CHAR" | "DEST_CHAR" | "DEST_CHAR_NA
  * second item is the generic fallback font family (e.g. sans-serif, serif,
  * etc.)
  * @constant
- * @type {Object.<String, [String[], String]>}
+ * @type {Record<String, [String[], String]>}
  */
-declare const CommonFontStacks: any;
+declare const CommonFontStacks: Record<string, [string[], string]>;
 /**
  * Memoized getter function. Returns a font string specifying the player's
  * preferred font and the provided size. This is memoized as it is called on

@@ -218,6 +218,8 @@ type VariableContainer<T1, T2> = T1 & T2 & {
 //#region Enums
 
 type ChatRoomSpaceLabel = "MIXED" | "FEMALE_ONLY" | "MALE_ONLY" | "ASYLUM";
+type ChatRoomVisibilityModeLabel = "PUBLIC" | "ADMIN_WHITELIST" | "ADMIN" | "UNLISTED";
+type ChatRoomAccessModeLabel = "PUBLIC" | "ADMIN_WHITELIST" | "ADMIN";
 
 type DialogMenuMode = (
 	"activities"
@@ -274,6 +276,22 @@ declare namespace DialogMenu {
 		 * Defaults to `true` if {@link ReloadOptions.reset} is specified.
 		 */
 		resetDialogItems?: boolean;
+	}
+
+	/** Internal {@link DialogMenu.Reload} parameters for dialog subscreens without a focus group */
+	interface ReloadParam {
+		root: HTMLElement;
+		C: Character;
+		currentC: Character;
+		textCache: TextCache;
+		focusGroup?: AssetItemGroup;
+		currentFocusGroup?: AssetItemGroup;
+	}
+
+	/** Internal {@link DialogMenu.Reload} parameters for dialog subscreens with a focus group */
+	interface ReloadFocusParam extends ReloadParam {
+		focusGroup: AssetItemGroup;
+		currentFocusGroup: AssetItemGroup;
 	}
 }
 
@@ -777,7 +795,10 @@ interface AssetGroup {
 	readonly Name: AssetGroupName;
 	readonly Description: string;
 	readonly Asset: readonly Asset[];
-	readonly ParentGroupName: AssetGroupName | null;
+	/** @deprecated - superseded by {@link ParentGroup} */
+	readonly ParentGroupName?: never;
+	/** An object mapping pose names to group names from which to inherit body sizes. */
+	readonly ParentGroup: ParentGroup.Data;
 	readonly Category: 'Appearance' | 'Item' | 'Script';
 	readonly IsDefault: boolean;
 	readonly IsRestraint: boolean;
@@ -889,9 +910,10 @@ interface AssetLayer {
 	readonly AllowTypes: AllowTypes.Data | null;
 	/** @deprecated - superceded by {@link CreateLayerTypes} */
 	readonly HasType?: never;
-	/** The name of the parent group for this layer. If null, the layer has no parent group. If
-	undefined, the layer inherits its parent group from it's asset/group. */
-	readonly ParentGroupName: AssetGroupName | null;
+	/** @deprecated - superseded by {@link ParentGroup} */
+	readonly ParentGroupName?: never;
+	/** An object mapping pose names to group names from which to inherit body sizes. */
+	readonly ParentGroup: ParentGroup.Data;
 	/** @deprecated - Superceded by {@link PoseMapping} */
 	readonly AllowPose?: never;
 	/** @deprecated - Superceded by {@link PoseMapping} */
@@ -971,7 +993,10 @@ interface Asset {
 	readonly Description: string;
 	readonly Group: AssetGroup;
 	readonly ParentItem?: string;
-	readonly ParentGroupName: AssetGroupName | null;
+	/** @deprecated - superseded by {@link ParentGroup} */
+	readonly ParentGroupName?: never;
+	/** An object mapping pose names to group names from which to inherit body sizes. */
+	readonly ParentGroup: ParentGroup.Data;
 	readonly Enable: boolean;
 	readonly Visible: boolean;
 	readonly NotVisibleOnScreen?: readonly string[];
@@ -4252,6 +4277,7 @@ interface ClubCard {
 	ExtraPlay?: number;
 	Group?: string[];
 	Location?: string;
+	Negated?: boolean;
 	GlowTimer?: number;
 	GlowColor?: string;
 	OnPlay?: (C: ClubCardPlayer) => void;
@@ -4276,6 +4302,7 @@ interface ClubCard {
 	 */
 	onLeaveClub?: (C: ClubCardPlayer) => void;
 	turnStart?: (C: ClubCardPlayer) => void;
+	onLevelUp?: (C: ClubCardPlayer) => void;
 }
 
 interface ClubCardPlayer {
@@ -4299,11 +4326,19 @@ interface ClubCardPlayer {
 }
 
 interface ClubCardMessage {
-	Message: string,
-	MessageType: string,
-	PlayerId: string,
-	TurnCounter:  number
+	TextGetKey: string;         // Localization key
+	MessageText?: string;		// Message Text
+    MessageType: string;        // Type of message (e.g., ACTION, SYSTEM, IMMEDIATE)
+    PlayerId: string;           // ID of the player who triggered the message
+    TurnCounter: number;        // Turn number when the message was created
+    Placeholders: {             // Dynamic data for text replacement
+        [key: string]: string | number;
+	};
+	PlayerName?: string;
+    SourcePlayer?: string;
+    OpponentPlayer?: string;
 }
+
 
 // #region drawing
 
@@ -4374,6 +4409,7 @@ type ChatRoomMapObjectType = (
 	| "FloorDecorationParty"
 	| "FloorDecorationCamping"
 	| "FloorDecorationExpanding"
+	| "FloorDecorationAnimal"
 	| "FloorItem"
 	| "FloorObstacle"
 	| "WallDecoration"

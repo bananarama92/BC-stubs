@@ -79,6 +79,7 @@
         "LeatherStrapBra1": "R98",
         "LeatherVestSuit": "R104",
         "MaidBra1": "R98",
+        "MeshTop": "R113",
         "OuvertPerl1": "R98",
         "Ribbons": "R98",
         "Sarashi1": "R98",
@@ -163,6 +164,7 @@
         "MaidOutfit1": "R98",
         "MaidOutfit2": "R98",
         "MaleTankTop1": "R98",
+        "MeshTop": "R113",
         "MistressTop": "R98",
         "NunRobes": "R104",
         "NurseUniform": "R98",
@@ -275,6 +277,7 @@
         "TennisSkirt1": "R98",
         "TulleSkirt": "R98",
         "Tutu": "R98",
+        "UtilityKilt": "R113",
         "Waspie1": "R98",
         "Waspie2": "R98",
         "Waspie3": "R98"
@@ -716,6 +719,7 @@
         "HairFront62b": "R110",
         "HairFront63": "R112",
         "HairFront64": "R112",
+        "HairFront65": "R113",
         "HairFront6b": "R98",
         "HairFront7": "R98",
         "HairFront7b": "R98",
@@ -905,6 +909,7 @@
         "BalletWedges": "R98",
         "FuturisticHeels": "R98",
         "FuturisticHeels2": "R98",
+        "HeellessHoof": "R113",
         "HighThighBoots": "R98",
         "LeatherFootMitts1": "R98",
         "LeatherToeCuffs": "R98",
@@ -984,6 +989,7 @@
         "BBQ": "R98",
         "Bed": "R98",
         "BondageBench": "R98",
+        "BoundBar": "R113",
         "BrickWall": "R107",
         "BurlapSack": "R98",
         "Cage": "R98",
@@ -1030,6 +1036,7 @@
         "Sybian": "R98",
         "TheDisplayFrame": "R98",
         "TheHangingFrame": "R101",
+        "Throne": "R113",
         "TransportWoodenBox": "R98",
         "Trolley": "R99",
         "VacBedDeluxe": "R98",
@@ -1338,6 +1345,7 @@
         "WoodenSign": "R98"
     },
     "ItemMouth": {
+        "AOMGag": "R113",
         "Ball": "R98",
         "BallGag": "R98",
         "BallGagMask": "R98",
@@ -1434,6 +1442,7 @@
         "XmasStickerGag": "R111"
     },
     "ItemMouth2": {
+        "AOMGag": "R113",
         "Ball": "R103",
         "BallGag": "R98",
         "BallGagMask": "R98",
@@ -1530,6 +1539,7 @@
         "XmasStickerGag": "R111"
     },
     "ItemMouth3": {
+        "AOMGag": "R113",
         "Ball": "R103",
         "BallGag": "R98",
         "BallGagMask": "R98",
@@ -2055,6 +2065,7 @@
         "FuturisticHeels2": "R98",
         "FuzzyBoots": "R98",
         "Geta": "R98",
+        "HeellessHoof": "R113",
         "Heels1": "R98",
         "Heels2": "R98",
         "Heels3": "R98",

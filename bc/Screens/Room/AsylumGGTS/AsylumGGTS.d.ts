@@ -265,7 +265,11 @@ declare function AsylumGGTSUngag(): void;
  */
 declare function AsylumGGTSTOrgasm(C: Character): void;
 /**
- * When the player resists an orgasm, there's a 50% chance the no-orgasm rule will be dropped
+ * When the player resists an orgasm, there's a chance the no-orgasm rule will be dropped
+ * The chance like this:
+ * Set the probability based on Willpower and ActivityOrgasmGameResistCount,
+ * where higher Willpower decreases the probability and higher ActivityOrgasmGameResistCount increases it.
+ * max chance = 0.9
  * @return {void} - TRUE if the character can change
  */
 declare function AsylumGGTSOrgasmResist(): void;

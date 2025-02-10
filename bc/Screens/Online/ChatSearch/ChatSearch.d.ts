@@ -204,14 +204,8 @@ declare var ChatSearchBackground: string;
 declare var ChatSearchResult: ChatRoomSearchResult[];
 /** @type {ChatRoomSearchResult[]} */
 declare var ChatSearchHiddenResult: ChatRoomSearchResult[];
-/** @type {null | { Query: string, Language: "" | ServerChatRoomLanguage, Space: ServerChatRoomSpace, Game: ServerChatRoomGame, FullRooms: boolean }} */
-declare var ChatSearchLastSearchDataJSON: null | {
-    Query: string;
-    Language: "" | ServerChatRoomLanguage;
-    Space: ServerChatRoomSpace;
-    Game: ServerChatRoomGame;
-    FullRooms: boolean;
-};
+/** @type {ServerChatRoomSearchRequest | null} */
+declare var ChatSearchLastSearchDataJSON: ServerChatRoomSearchRequest | null;
 declare var ChatSearchLastQuerySearchTime: number;
 declare var ChatSearchLastQueryJoin: string;
 declare var ChatSearchLastQueryJoinTime: number;

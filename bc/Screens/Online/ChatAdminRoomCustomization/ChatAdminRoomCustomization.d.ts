@@ -39,9 +39,12 @@ declare function ChatAdminRoomCustomizationExit(): void;
 declare var ChatAdminRoomCustomizationBackground: string;
 /** @type {ServerChatRoomCustomData} */
 declare var ChatAdminRoomCustomizationCurrent: ServerChatRoomCustomData;
-declare var ChatAdminRoomCustomizationMusic: any;
-declare var ChatAdminRoomCustomizationMode: any;
-declare var ChatAdminRoomCustomizationSizeMode: any;
+/** @type {null | HTMLAudioElement} */
+declare var ChatAdminRoomCustomizationMusic: null | HTMLAudioElement;
+/** @type {null | "MusicLibrary"} */
+declare var ChatAdminRoomCustomizationMode: null | "MusicLibrary";
+/** @type {number} */
+declare var ChatAdminRoomCustomizationSizeMode: number;
 declare var ChatAdminRoomCustomizationMusicLibrary: {
     Name: string;
     URL: string;

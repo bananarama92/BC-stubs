@@ -33,6 +33,9 @@ declare function NurseryReplaceSkill(): void;
 declare function NurseryPlayerChangeDress(): void;
 declare function NurseryPlayerChangeDressColor(): void;
 declare function NurseryPlayerRemoveDress(): void;
+/**
+ * Player gives an adorable ABDL reply
+ */
 declare function NurseryPlayerCuteRelpy(): void;
 declare function NurseryEscapeGate(): void;
 declare function NurseryPlayerForgiven(): void;

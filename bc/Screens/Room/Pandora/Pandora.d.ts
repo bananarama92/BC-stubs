@@ -324,9 +324,9 @@ declare function PandoraPenitentiaryItemDifficulty(C: Character, Group: AssetGro
 /**
  * Builds a list of all valid Pandora activities for the player
  * @param {Character} C - The character to build a list for
- * @returns {Array} - An array of all valid activities for the player
+ * @returns {readonly string[]} - An array of all valid activities for the player
  */
-declare function PandoraPenitentiaryBuildActivityList(C: Character): any[];
+declare function PandoraPenitentiaryBuildActivityList(C: Character): readonly string[];
 /**
  * Runs the selected activity inmate activity for the player
  * @param {string} Activity - The activity to run
@@ -348,9 +348,9 @@ declare function PandoraPenitentiaryDoActivity(Activity: string): void;
  * Called from chat room, processes hidden Pandora Prison messages
  * @param {Character} SenderCharacter - The character sending the message
  * @param {String} Interaction - The message sent
- * @returns {Object} - Nothing to be used
+ * @returns {void} - Nothing to be used
  */
-declare function PandoraPenitentiaryHiddenMessage(SenderCharacter: Character, Interaction: string): any;
+declare function PandoraPenitentiaryHiddenMessage(SenderCharacter: Character, Interaction: string): void;
 /**
  * When an NPC pays the player for a service
  * @param {string} Amount - The paid amount

@@ -87,7 +87,8 @@
             "Swimsuit1": 47,
             "Swimsuit2": 48,
             "Swimsuit3": 49,
-            "LeatherVestSuit": 50
+            "LeatherVestSuit": 50,
+            "MeshTop": 51
         }
     },
     "Bracelet": {
@@ -189,7 +190,8 @@
             "YuletideVelvetWarmth": 80,
             "AnimeGirl": 81,
             "LatexHobbleDress": 82,
-            "RibbonCorset": 83
+            "RibbonCorset": 83,
+            "MeshTop": 84
         }
     },
     "ClothAccessory": {
@@ -283,7 +285,8 @@
             "Waspie3": 46,
             "SatinSkirt": 47,
             "ASRubberSkirt": 48,
-            "MidLegSkirt": 49
+            "MidLegSkirt": 49,
+            "UtilityKilt": 50
         }
     },
     "Corset": {
@@ -772,7 +775,8 @@
             "HairFront62a": 96,
             "HairFront62b": 97,
             "HairFront63": 98,
-            "HairFront64": 99
+            "HairFront64": 99,
+            "HairFront65": 100
         }
     },
     "Hands": {
@@ -979,7 +983,8 @@
             "Zipties": 22,
             "TormentHeels": 23,
             "StrictPonyBoots": 24,
-            "BalletMittens": 25
+            "BalletMittens": 25,
+            "HeellessHoof": 26
         }
     },
     "ItemBreast": {
@@ -1108,7 +1113,9 @@
             "OneBarGirl": 60,
             "Cement": 61,
             "BrickWall": 62,
-            "PogoBall": 63
+            "PogoBall": 63,
+            "BoundBar": 64,
+            "Throne": 65
         }
     },
     "ItemEars": {
@@ -1523,7 +1530,8 @@
             "GenitalGag": 90,
             "OverfilledGag": 91,
             "PremiumMuzzle": 92,
-            "XmasStickerGag": 93
+            "XmasStickerGag": 93,
+            "AOMGag": 94
         }
     },
     "ItemMouth2": {
@@ -1622,7 +1630,8 @@
             "GenitalGag": 90,
             "OverfilledGag": 91,
             "PremiumMuzzle": 92,
-            "XmasStickerGag": 93
+            "XmasStickerGag": 93,
+            "AOMGag": 94
         }
     },
     "ItemMouth3": {
@@ -1719,7 +1728,8 @@
             "QualityHarnessGag": 88,
             "OverfilledGag": 89,
             "PremiumMuzzle": 90,
-            "XmasStickerGag": 91
+            "XmasStickerGag": 91,
+            "AOMGag": 92
         }
     },
     "ItemNeck": {
@@ -2282,7 +2292,8 @@
             "CustomHeels": 40,
             "FullLegBoots": 41,
             "IndoorSlippers": 42,
-            "WitchShoes": 43
+            "WitchShoes": 43,
+            "HeellessHoof": 44
         }
     },
     "Socks": {

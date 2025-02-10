@@ -108,20 +108,27 @@ declare function ChatRoomCanServeDrink(): boolean;
  */
 declare function ChatRoomCanGiveMoneyForOwner(): boolean;
 /**
+ * Checks if a given character is a chatroom admin.
+ * @param {Character} C - The character to check
+ * @returns {boolean} - TRUE if the character is an admin of the current chatroom.
+ */
+declare function ChatRoomCharacterIsAdmin(C: Character): boolean;
+/**
  * Checks if the player is a chatroom admin.
  * @returns {boolean} - TRUE if the player is an admin of the current chatroom.
  */
 declare function ChatRoomPlayerIsAdmin(): boolean;
 /**
- * Checks if the player is currently in focus mode (non-empty {@link ChatRoomDrawFocusList})
- * @returns {boolean} - TRUE if the player is in focus mode
- */
-declare function ChatRoomPlayerIsInDrawFocus(): boolean;
-/**
  * Checks if the current character is an admin of the chatroom.
  * @returns {boolean} - TRUE if the current character is an admin.
  */
 declare function ChatRoomCurrentCharacterIsAdmin(): boolean;
+/**
+ * Checks if a given character is in the chatroom whitelist.
+ * @param {Character} C - The character to check
+ * @returns {boolean} - TRUE if the character is in the chatroom whitelist.
+ */
+declare function ChatRoomCharacterIsWhitelisted(C: Character): boolean;
 /**
  * Checks if the player is in the chatroom whitelist.
  * @returns {boolean} - TRUE if the player is in the chatroom whitelist.
@@ -132,6 +139,11 @@ declare function ChatRoomPlayerIsWhitelisted(): boolean;
  * @returns {boolean} - TRUE if the current character is in the chatroom whitelist.
  */
 declare function ChatRoomCurrentCharacterIsWhitelisted(): boolean;
+/**
+ * Checks if the player is currently in focus mode (non-empty {@link ChatRoomDrawFocusList})
+ * @returns {boolean} - TRUE if the player is in focus mode
+ */
+declare function ChatRoomPlayerIsInDrawFocus(): boolean;
 /**
  * Checks if the current character is in the player's focuslist (/focus).
  * @returns {boolean} - TRUE if the current character is in the player's focuslist.
@@ -564,6 +576,68 @@ declare function ChatRoomOpenAdminScreen(): void;
 declare function ChatRoomMenuClick(event: MouseEvent | TouchEvent): void;
 declare function ChatRoomAttemptStandMinigameEnd(): void;
 /**
+ * Checks if the given chat room visibility property causes it to be "private" (has any form of visibility control)
+ * @param {ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings} room - The visibility property to check
+ * @returns {boolean} - Returns TRUE if the room is private. FALSE otherwise, or visibility is not set.
+ */
+declare function ChatRoomDataIsPrivate(room: ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings): boolean;
+/**
+ * Checks if the current chat room is "private" (has any form of visibility control)
+ * @returns {boolean} - Returns TRUE if the room is private. FALSE otherwise, or if room doesn't exist.
+ */
+declare function ChatRoomIsPrivate(): boolean;
+/**
+ * Checks if the given chat room access property causes it to be "locked" (has any form of access control)
+ * @param {ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings} room - The access property to check
+ * @returns {boolean} - Returns TRUE if the room is locked. FALSE otherwise, or access is not set.
+ */
+declare function ChatRoomDataIsLocked(room: ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings): boolean;
+/**
+ * Checks if the current chat room is "locked" (has any form of access control)
+ * @returns {boolean} - Returns TRUE if the room is locked. FALSE otherwise, or if room doesn't exist.
+ */
+declare function ChatRoomIsLocked(): boolean;
+/**
+ * Checks if a given character has the needed permissions for a specific role
+ * @param {Character} C - The character to check
+ * @param {ServerChatRoomData} room - The roles to check
+ * @param {"visible"|"access"} role
+ * @returns {boolean} - Returns TRUE if the character matches any role. FALSE otherwise.
+ */
+declare function ChatRoomCharacterHasAnyRole(C: Character, room: ServerChatRoomData, role: "visible" | "access"): boolean;
+/**
+ * Checks if a given character can see the room (meets the visibility list requirements)
+ * @param {Character} C - The character to check
+ * @returns {boolean} - Returns TRUE if the player can see the room.
+ */
+declare function ChatRoomCharacterCanSeeRoom(C: Character): boolean;
+/**
+ * Checks if the player can see the room (meets the visibility list requirements)
+ * @returns {boolean} - Returns TRUE if the player can see the room.
+ */
+declare function ChatRoomPlayerCanSeeRoom(): boolean;
+/**
+ * Checks if the current character can see the room (meets the visibility list requirements)
+ * @returns {boolean} - Returns TRUE if the current character can see the room.
+ */
+declare function ChatRoomCurrentCharacterCanSeeRoom(): boolean;
+/**
+ * Checks if a given character has access to the room (can enter/leave) (meets the access list requirements)
+ * @param {Character} C - The character to check
+ * @returns {boolean} - Returns TRUE if the player has access to the room.
+ */
+declare function ChatRoomCharacterCanAccessRoom(C: Character): boolean;
+/**
+ * Checks if the player has access to the room (can enter/leave) (meets the access list requirements)
+ * @returns {boolean} - Returns TRUE if the player has access to the room.
+ */
+declare function ChatRoomPlayerCanAccessRoom(): boolean;
+/**
+ * Checks if the current character has access to the room (can enter/leave) (meets the access list requirements)
+ * @returns {boolean} - Returns TRUE if the current character has access to the room.
+ */
+declare function ChatRoomCurrentCharacterCanAccessRoom(): boolean;
+/**
  * Checks if the player can leave the chatroom.
  * @returns {boolean} - Returns TRUE if the player can leave the current chat room.
  */
@@ -894,10 +968,10 @@ declare function ChatRoomSyncMemberJoin(data: ServerChatRoomSyncMemberJoinRespon
 declare function ChatRoomSyncMemberLeave(data: ServerChatRoomLeaveResponse): void;
 /**
  * Handles the reception of the room properties from the server.
- * @param {ServerChatRoomSyncMessage} data - Room object containing the updated chatroom properties.
+ * @param {ServerChatRoomSyncPropertiesMessage} data - Room object containing the updated chatroom properties.
  * @returns {void} - Nothing.
  */
-declare function ChatRoomSyncRoomProperties(data: ServerChatRoomSyncMessage): void;
+declare function ChatRoomSyncRoomProperties(data: ServerChatRoomSyncPropertiesMessage): void;
 /**
  * Handles the swapping of two players by a room administrator.
  * @param {ServerChatRoomReorderResponse} data - Object containing the member numbers of the swapped characters.
@@ -1335,6 +1409,10 @@ declare namespace ChatRoomSpaceType {
     let MALE_ONLY: "M";
     let ASYLUM: "Asylum";
 }
+/** @type {Record<ChatRoomVisibilityModeLabel, ServerChatRoomRole[]>} */
+declare const ChatRoomVisibilityMode: Record<ChatRoomVisibilityModeLabel, ServerChatRoomRole[]>;
+/** @type {Record<ChatRoomAccessModeLabel, ServerChatRoomRole[]>} */
+declare const ChatRoomAccessMode: Record<ChatRoomAccessModeLabel, ServerChatRoomRole[]>;
 declare var ChatRoomBackground: string;
 /**
  * The data for the current chatroom, as recieved from the server.
@@ -1579,7 +1657,7 @@ declare namespace ChatRoomSep {
     function IsCollapsed(roomSep: HTMLDivElement): boolean;
     function Uncollapse(roomSep: HTMLDivElement): Promise<void>;
     function Collapse(roomSep: HTMLDivElement): Promise<void>;
-    function SetRoomData(roomSep: HTMLDivElement, data: Pick<ServerChatRoomData, "Name" | "Private" | "Space">): Promise<void>;
+    function SetRoomData(roomSep: HTMLDivElement, data: Pick<ServerChatRoomData, "Name" | "Visibility" | "Space">): Promise<void>;
     function UpdateDisplayNames(): Promise<void>;
 }
 declare let ChatRoomStatusDeadKeys: string[];

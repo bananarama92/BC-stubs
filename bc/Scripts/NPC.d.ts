@@ -94,9 +94,10 @@ declare function NPCLongLoverEventDelay(C: NPCCharacter): number;
 declare function NPCLoveChange(C: NPCCharacter, LoveFactor: number): void;
 /**
  * Raises the love factor progressively with interaction time
+ * @param {Character} C
  * @returns {void} - Nothing
  */
-declare function NPCInteraction(): void;
+declare function NPCInteraction(C: Character): void;
 /**
  * List for all possible pairs of NPC traits. A pair defines opposites.
  * @constant

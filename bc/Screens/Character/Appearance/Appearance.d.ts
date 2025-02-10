@@ -404,10 +404,10 @@ declare var CharacterAppearanceWardrobeName: string;
 declare var CharacterAppearanceForceUpCharacter: number;
 /** @type {"" | ExpressionNameMap["Emoticon"]} */
 declare var CharacterAppearancePreviousEmoticon: "" | ExpressionNameMap["Emoticon"];
-/** @type {"" | "Wardrobe" | "Cloth" | "Color"} */
-declare var CharacterAppearanceMode: "" | "Wardrobe" | "Cloth" | "Color";
-/** @type {"" | "Wardrobe" | "Cloth" | "Color"} */
-declare var CharacterAppearanceMenuMode: "" | "Wardrobe" | "Cloth" | "Color";
+/** @type {"" | "Wardrobe" | "Cloth" | "Color" | "Permissions"} */
+declare var CharacterAppearanceMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
+/** @type {"" | "Wardrobe" | "Cloth" | "Color" | "Permissions"} */
+declare var CharacterAppearanceMenuMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
 /** @type {null | Item} */
 declare var CharacterAppearanceCloth: null | Item;
 /** @type {DialogMenuButton[]} */

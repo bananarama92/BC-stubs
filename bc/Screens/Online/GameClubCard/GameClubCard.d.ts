@@ -50,7 +50,7 @@ declare function GameClubCardRun(): void;
 declare function GameClubCardClick(): void;
 declare function GameClubCardExit(): void;
 /**
- * Checks there's 1 player in slot 1 and slot 2 so we can start the game.
+ *  Checks there's 1 player in slot 1 and slot 2 so we can start the game.
  * @returns {boolean} - Returns TRUE if the game can be launched
  */
 declare function GameClubCardCanLaunchGame(): boolean;
@@ -71,17 +71,17 @@ declare function GameClubCardReset(): void;
 declare function GameClubCardLoadStatus(): void;
 /**
  * Creates a bundle of cards in a string to push to the server.
- * @param {ClubCard[]} Cards - An array of c
+ * @param {readonly ClubCard[]} Cards - An array of c
  * @param {boolean} IncludeTime - If we must include the time property
  * @returns {string} - A string with all the cards
  */
-declare function GameClubCardDoBundle(Cards: ClubCard[], IncludeTime?: boolean): string;
+declare function GameClubCardDoBundle(Cards: readonly ClubCard[], IncludeTime?: boolean): string;
 /**
  * Creates a bundle of cards in a string to push to the server.
- * @param {ClubCard[]} Cards - An array of ClubCard objects
+ * @param {readonly ClubCard[]} Cards - An array of ClubCard objects
  * @returns {string} - A string with all the cards
  */
-declare function GameClubCardBoardDoBundle(Cards: ClubCard[]): string;
+declare function GameClubCardBoardDoBundle(Cards: readonly ClubCard[]): string;
 /**
  * Processes the club card game data received from the server
  * @param {string} Bundle - An array of c
