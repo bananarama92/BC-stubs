@@ -1,50 +1,84 @@
 /**
- * Loads the chat Admin screen properties and creates the inputs
- * @returns {void} - Nothing
+ * Show the room editor screen in creation mode
  */
+declare function ChatAdminShowCreate(): void;
+/**
+ * Show the room editor screen in update mode
+ * @param {ChatRoom} roomData
+ */
+declare function ChatAdminShowEdit(roomData: ChatRoom): void;
+/**
+ * Sets up the chat room editor screen and switches to it
+ *
+ * This should not be called directly; use {@link ChatAdminShowCreate} or {@link ChatAdminShowEdit}
+ *
+ * @param {"create" | "update"} mode
+ * @param {ChatRoomSettings | undefined} roomData
+ */
+declare function ChatAdminStart(mode: "create" | "update", roomData?: ChatRoomSettings | undefined): void;
+/**
+ * Return whether the editor can actually modify the data
+ * @returns {boolean}
+ */
+declare function ChatAdminCanEdit(): boolean;
 declare function ChatAdminLoad(): void;
 declare function ChatAdminUnload(): void;
 /**
- * When the chat Admin screen runs, draws the screen
- * @returns {void} - Nothing
+ * Handles drawing the editor screen
  */
 declare function ChatAdminRun(): void;
 /**
- * Handles the click events on the admin screen. Is called from CommonClick()
+ * Handles the click events on the editor screen. Is called from CommonClick()
  * @returns {void} - Nothing
  */
 declare function ChatAdminClick(): void;
+/**
+ * Handles accepting the room editor
+ */
+declare function ChatAdminCommit(): void;
+declare function ChatAdminKeyDown(event: KeyboardEvent): boolean;
 declare function ChatAdminExit(): void;
 /**
- * Handles the reception of the server response after attempting to update a chatroom: Leaves the admin screen or shows an error message
+ * Sends the chat room data packet to the server. The response will be handled by ChatAdminResponse once it is received
+ * @returns {void} - Nothing
+ */
+declare function ChatEditorUpdateRoom(): void;
+/**
+ * Handles the reception of the server response after attempting to update a chatroom
  * @param {ServerChatRoomUpdateResponse} data - Response from the server ("Updated" or error message)
  * @returns {void} - Nothing
  */
 declare function ChatAdminResponse(data: ServerChatRoomUpdateResponse): void;
 /**
- * Sends the chat room data packet to the server. The response will be handled by ChatAdminResponse once it is received
+ * Sends the chat room data packet to the server and prepares the player to join a room. The response will be handled by ChatCreateResponse once it is received
  * @returns {void} - Nothing
  */
-declare function ChatAdminUpdateRoom(): void;
+declare function ChatEditorCreateRoom(): void;
+/**
+ * Handles the reception of the server response after attempting to create a chatroom: shows the error message, if applicable
+ * @param {ServerChatRoomCreateResponse} data - Response from the server
+ * @returns {void} - Nothing
+ */
+declare function ChatCreateResponse(data: ServerChatRoomCreateResponse): void;
 declare var ChatAdminBackground: string;
 declare var ChatAdminMessage: string;
 declare var ChatAdminBackgroundIndex: number;
-declare var ChatAdminBackgroundSelect: string;
-declare var ChatAdminPrivate: boolean;
-declare var ChatAdminLocked: boolean;
-/** @type {object} */
-declare var ChatAdminMapData: object;
-/** @type {ServerChatRoomGame} */
-declare var ChatAdminGame: ServerChatRoomGame;
+declare var ChatAdminPreviewBackgroundMode: boolean;
 /** @type {ServerChatRoomGame[]} */
 declare var ChatAdminGameList: ServerChatRoomGame[];
-/** @type {string | null} */
-declare var ChatAdminBackgroundSelected: string | null;
-/** @type {Partial<ServerChatRoomData> | null} */
-declare var ChatAdminTemporaryData: Partial<ServerChatRoomData> | null;
-/** @type {ServerChatRoomBlockCategory[]} */
-declare var ChatAdminBlockCategory: ServerChatRoomBlockCategory[];
-declare var ChatAdminInitialLoad: boolean;
+/** @type {ServerChatRoomLanguage[]} */
+declare var ChatAdminLanguageList: ServerChatRoomLanguage[];
+/** @type {null | string[]} */
+declare var ChatAdminBackgroundList: null | string[];
 /** @type {ServerChatRoomLanguage} */
-declare var ChatAdminLanguage: ServerChatRoomLanguage;
-declare var ChatAdminCustom: any;
+declare var ChatAdminDefaultLanguage: ServerChatRoomLanguage;
+declare var ChatAdminVisibilityModeLabels: ChatRoomVisibilityModeLabel[];
+declare var ChatAdminVisibilityModeValues: ServerChatRoomRole[][];
+declare var ChatAdminVisibilityModeIndex: number;
+declare var ChatAdminAccessModeLabels: ChatRoomAccessModeLabel[];
+declare var ChatAdminAccessModeValues: ServerChatRoomRole[][];
+declare var ChatAdminAccessModeIndex: number;
+/** @type {ChatRoomSettings | null} */
+declare var ChatAdminData: ChatRoomSettings | null;
+/** @type {"create" | "update" | null} */
+declare var ChatAdminMode: "create" | "update" | null;

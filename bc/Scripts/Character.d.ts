@@ -22,9 +22,10 @@ declare function CharacterDialogSubstitution(C: Character): void;
  * @param {Character} C - Character for which to build the dialog
  * @param {readonly string[][]} CSV - Content of the CSV file
  * @param {string} functionPrefix - A prefix that will be added to functions that aren't part of the Dialog or ChatRoom "namespace"
+ * @param {boolean} reload - Perform a {@link DialogMenu.Reload} hard reset of the active `dialog` mode
  * @returns {void} - Nothing
  */
-declare function CharacterBuildDialog(C: Character, CSV: readonly string[][], functionPrefix: string): void;
+declare function CharacterBuildDialog(C: Character, CSV: readonly string[][], functionPrefix: string, reload?: boolean): void;
 /**
  * Loads the content of a CSV file to build the character dialog. Can override the current screen.
  * @param {Character} C - Character for which to build the dialog objects
@@ -186,10 +187,10 @@ declare function CharacterRandomUnderwear(C: Character): void;
 /**
  * Removes all appearance items from the character except underwear
  * @param {Character} C - Character to undress partially
- * @param {Array.<*>} Appearance - Appearance array to remove clothes from
+ * @param {readonly Item[]} Appearance - Appearance array to remove clothes from
  * @returns {void} - Nothing
  */
-declare function CharacterUnderwear(C: Character, Appearance: Array<any>): void;
+declare function CharacterUnderwear(C: Character, Appearance: readonly Item[]): void;
 /**
  * Redresses a character based on a given appearance array
  * @param {Character} C - Character to redress
@@ -315,10 +316,10 @@ declare function CharacterIsEdged(C: Character): boolean;
 /**
  * Checks if the character is wearing an item flagged as a category in a blocked list
  * @param {Character} C - The character to validate
- * @param {Array} BlockList - An array of strings to validate
+ * @param {readonly AssetCategory[]} BlockList - An array of strings to validate
  * @returns {boolean} - TRUE if the character is wearing a blocked item, FALSE otherwise
  */
-declare function CharacterHasBlockedItem(C: Character, BlockList: any[]): boolean;
+declare function CharacterHasBlockedItem(C: Character, BlockList: readonly AssetCategory[]): boolean;
 /**
  * Retrieves the member numbers of the given character
  * @param {Character} C - The character to retrieve the lovers numbers from

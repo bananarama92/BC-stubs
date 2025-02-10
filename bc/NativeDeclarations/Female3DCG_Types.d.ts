@@ -94,6 +94,20 @@ declare namespace AllowTypes {
 	}
 }
 
+declare namespace ParentGroup {
+	/**
+	 * An object mapping pose names to group names from which to inherit body sizes.
+	 * The {@link PoseType.DEFAULT} singleton is used for defining the default inheritance behavior when used as key, and disables inheritance when used as value.
+	 */
+	type Data = Partial<Record<PoseTypeDefault | AssetPoseName, PoseTypeDefault | AssetGroupName>>;
+
+	/**
+	 * An object mapping pose names to group names from which to inherit body sizes or a singular group name to apply it to _all_ poses.
+	 * The {@link PoseType.DEFAULT} singleton is used for defining the default inheritance behavior when used as key, and disables inheritance when used as value.
+	 */
+	type Definition = AssetGroupName | Data;
+}
+
 /**
  * Properties common to groups, assets and layers
  *
@@ -129,8 +143,19 @@ interface AssetCommonPropertiesGroupAssetLayer {
 	/** The group the target should inherit its color from. */
 	InheritColor?: AssetGroupName;
 
-	/** A group identifier that will be used to inherit the body size */
-	ParentGroup?: AssetGroupName | null;
+	/**
+	 * A group identifier that will be used to inherit the body size.
+	 * Body sizes can be either be used for all poses (by passing a singular group) or on a pose-by-pose basis (via passing an object).
+	 * In the latter case {@link PoseType.DEFAULT} can be used to override the default for _all_ groups when used as key, or to disable inheritance when used as value.
+	 *
+	 * @example
+	 * // Inherit from the body sizes `BodyLower` by default, but do not inherit for the `AllFours` pose
+	 * ParentGroup: {
+	 *     [PoseType.DEFAULT]: "BodyLower",
+	 *     AllFours: PoseType.DEFAULT,
+	 * },
+	 */
+	ParentGroup?: ParentGroup.Definition | null;
 
 	/**
 	 * The poses that have pose-specific assets.
@@ -1189,8 +1214,6 @@ interface ModularItemOptionConfig extends Omit<ExtendedItemOptionConfig, "Name">
 	HeightModifier?: number;
 	/** Whether that option applies effects */
 	Effect?: EffectName[];
-	/** Whether the option forces a given pose */
-	SetPose?: AssetPoseName;
 	/** A list of activities enabled by that module */
 	AllowActivity?: ActivityName[];
 	Property?: Omit<ItemProperties, "TypeRecord">;

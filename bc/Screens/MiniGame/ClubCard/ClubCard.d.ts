@@ -9,51 +9,81 @@ declare function ClubCardIsOnline(): boolean;
  */
 declare function ClubCardIsPlaying(): boolean;
 /**
- * Adds a text entry to the game log
- * @param {ClubCardMessage[]} LogEntry - Message Packet with message and messageType
- * @param {boolean} Push - The club card player
- * @returns {void} - Nothing
+ * In case one of the players disconnects from the server, the other player sends a message about it to the game chat.
+ * @param {number} disconnectedMemberNumber
  */
-declare function ClubCardLogAdd(LogEntry: ClubCardMessage[], Push?: boolean): void;
+declare function ClubCardCheckDisconnected(disconnectedMemberNumber: number): void;
 /**
- * Adds a message to the message storage.
- * @param {string} Message
- * @param {string} MessageType -  ClubCardStartTurnType
+ * Resets club card game status and synchronizes
  */
-declare function ClubCardMessagePacketAdd(Message: string, MessageType: string): void;
+declare function ClubCardResetGameStatus(): void;
 /**
- * Function for sending system messages or player messages in chat log.
- * @param {string} Message
- * @param {string} MessageType
+ * A hidden message to trigger all room members and a normal notification message to the chat room.
  */
-declare function ClubCardOneMessagePacketSend(Message: string, MessageType: string, Push?: boolean): void;
+declare function ClubCardSendRequestResetGame(): void;
 /**
- * Function to merge a huge number of Rope Slave and Living Art posts into one.
- * @param {ClubCardMessage[]} MessagePacket
- * @returns
+ * Adds a message to the storage for processing later.
+ * Sends messages immediately if their type matches the ClubCardImmediateMessageTypes array.
+ *
+ * @param {string} TextGetKey - Localization key
+ * @param {string} MessageType - Message type (constant)
+ * @param {Record<string, any>} placeholders - Dynamic data for text replacement
+ * @param {ClubCardPlayer|null} TargetPlayer - The source player
+ * @param {string} MessageText - if TextGetKey is not used
  */
-declare function ClubCardProcessingRopeSlaveLivingArt(MessagePacket: ClubCardMessage[]): ClubCardMessage[];
+declare function ClubCardMessageAdd(MessageType: string, TextGetKey: string, placeholders?: Record<string, any>, TargetPlayer?: ClubCardPlayer | null, MessageText?: string): void;
 /**
- * Send Message Packet in Chat Log
- * @param {ClubCardMessage[]} MessagePacket
+ * Sends a message to the render log and synchronizes it with other players.
+ * This method is used for immediate messages and for sending processed messages from storage.
+ *
+ * @param {ClubCardMessage} message - The message object to be sent
+ * @param {boolean} Push - Whether to send the message to other players
  */
-declare function ClubCardMessagePacketSend(MessagePacket: ClubCardMessage[]): void;
+declare function ClubCardMessageSend(message: ClubCardMessage, Push?: boolean): void;
 /**
- * Returns a packet with messages of the selected type and deletes them from the storage.
- * @param {string[]} MessageTypes - Message Types for filter;
- * @returns {ClubCardMessage[]}
+ * Processes stored messages, merges similar ones, clears the storage,
+ * and sends all messages using the ClubCardSendMessage function.
  */
-declare function ClubCardGetLogPacket(MessageTypes: string[]): ClubCardMessage[];
+declare function ClubCardMessageSendAll(): void;
 /**
- * Publishes an action to the log and replaces all the tags
- * @param {string} MessageType - Message Type
- * @param {string} Text - The text to fetch
- * @param {ClubCardPlayer|null} CCPlayer - The source player
- * @param {number|null} Amount - The amount linked to the action
- * @param {ClubCard|null} Card - The card linked to the action
- * @returns {void}
+ * Processes and merges specific messages from the storage.
  */
-declare function ClubCardLogGetDataPacket(MessageType: string, Text: string, CCPlayer?: ClubCardPlayer | null, Amount?: number | null, Card?: ClubCard | null): void;
+declare function ClubCardMessagePacketProcessing(): void;
+/**
+ * Merges multiple messages by summing their AMOUNT placeholder and keeping the last message.
+ *
+ * @param {Array<{ message: ClubCardMessage, index: number }>} messageArray - The array of messages with their indexes.
+ */
+declare function ClubCardMessagesMerge(messageArray: Array<{
+    message: ClubCardMessage;
+    index: number;
+}>): void;
+/**
+ * Merges "StealMoney" and "StealFame" messages into one.
+ *
+ * @param {Array<{ message: ClubCardMessage, index: number }>} stealMoneyMessages - Messages related to stealing money.
+ * @param {Array<{ message: ClubCardMessage, index: number }>} stealFameMessages - Messages related to stealing fame.
+ */
+declare function ClubCardMessagesMergeSteal(stealMoneyMessages: Array<{
+    message: ClubCardMessage;
+    index: number;
+}>, stealFameMessages: Array<{
+    message: ClubCardMessage;
+    index: number;
+}>): void;
+/**
+ * Generates a formatted message text by replacing placeholders with actual values.
+ * @param {ClubCardMessage} ClubCardMessage - Message Item
+ * @returns {string} MessageText
+ */
+declare function ClubCardMessageGetText(ClubCardMessage: ClubCardMessage): string;
+/**
+   * Updated the text by mask, for InnerHTML
+   * The function finds the necessary words from the arrays and adds colour labels to them.
+   * @param {String} text -Normal Card Text
+   * @returns {String} -  Updated for InnerHTML Card Text
+   */
+declare function ClubCardGetFormatTextForInnerHTML(text: string): string;
 /**
  * Creates a popop in the middle of the board that pauses the game
  * @param {string} Mode - The popup mode "DECK", "TEXT" or "YESNO"
@@ -104,6 +134,24 @@ declare function ClubCardPlayerAddMoney(CCPlayer: ClubCardPlayer, Amount: number
  */
 declare function ClubCardPlayerAddFame(CCPlayer: ClubCardPlayer, Amount: number): void;
 /**
+ * Add fame from a player and remove from the ohter player
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {Number} moneyAmount - The money amount to steal
+ * @param {Number} fameAmount - The fame amount to steal
+ * @param {boolean} isStickyFingers - Whether Sticky Fingers effect should be ignored.
+ * @returns {{ stolenMoney: number, stolenFame: number }} - The amounts of money and fame stolen.
+ */
+declare function ClubCardPlayerSteal(CCPlayer: ClubCardPlayer, moneyAmount: number, fameAmount: number, isStickyFingers?: boolean): {
+    stolenMoney: number;
+    stolenFame: number;
+};
+/**
+ * Applies the "Sticky Fingers" effect, stealing extra resources if possible.
+ * @param {ClubCardPlayer} CCPlayer - The club card player.
+ * @param {ClubCardPlayer} opponent - The opponent player.
+ */
+declare function ClubCardApplyStickyFingers(CCPlayer: ClubCardPlayer, opponent: ClubCardPlayer): void;
+/**
  * Raises the level of player
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @returns {void} - Nothing
@@ -123,6 +171,13 @@ declare function ClubCardEventNameIsInEvents(CCPlayer: ClubCardPlayer, CardName:
  * @returns {boolean} - TRUE if at least one card with that name is present
  */
 declare function ClubCardNameIsOnBoard(CCPlayer: ClubCardPlayer, CardName: string): boolean;
+/**
+ * Returns the amount of a card (by name) that are currently present on a board
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {string} CardName - The name of the card
+ * @returns {number} - the amount of members with that name on board
+ */
+declare function ClubCardNameCountOnBoard(CCPlayer: ClubCardPlayer, CardName: string): number;
 /**
  * Returns TRUE if a card (by group) is currently present on a board
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -144,6 +199,13 @@ declare function ClubCardCardHasGroup(card: ClubCard, GroupName: string): boolea
  */
 declare function ClubCardGroupOnBoardCount(CCPlayer: ClubCardPlayer, GroupName: string): number;
 /**
+ * Returns the number of cards of a specific group found in the discard pile
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {string} GroupName - The name of the card group
+ * @returns {number} - The number of cards from that group in the discard pile
+ */
+declare function ClubCardGroupInDiscardPileCount(CCPlayer: ClubCardPlayer, GroupName: string): number;
+/**
  * Removes a card from a player board
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {ClubCard} Card - The card object to remove
@@ -158,6 +220,12 @@ declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCar
  * @returns {number} The cost to level up
  */
 declare function ClubCardCalculateLevelCost(CCPlayer: ClubCardPlayer): number;
+/**
+ * Gets the club level for pets effects
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @returns {number} club level for pets effects
+ */
+declare function ClubCardCalculateLevelForPets(CCPlayer: ClubCardPlayer): number;
 /**
  * Gets the max effect a card should have depending on its "tier"/required level to play
  * @param {ClubCard} Card
@@ -175,9 +243,9 @@ declare function ClubCardAddToHand(CCPlayer: ClubCardPlayer, Card: ClubCard): vo
 /**
  * Removes several cards from player time events
  * @param {ClubCardPlayer} CCPlayer - The club card player
- * @param {String[]} ListOfCardNames - The names of the cards to remove
+ * @param {readonly String[]} ListOfCardNames - The names of the cards to remove
  */
-declare function ClubCardRemoveCardsFromEventByName(CCPlayer: ClubCardPlayer, ListOfCardNames: string[]): void;
+declare function ClubCardRemoveCardsFromEventByName(CCPlayer: ClubCardPlayer, ListOfCardNames: readonly string[]): void;
 /**
  * Removes a card from a player time events
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -194,10 +262,10 @@ declare function ClubCardRemoveFromEventByName(CCPlayer: ClubCardPlayer, CardNam
 declare function ClubCardRemoveGroupFromBoard(CCPlayer: ClubCardPlayer, GroupName: string): void;
 /**
  * Shuffles an array of cards
- * @param {Array} array - The array of cards to shuffle
- * @returns {Array} - The shuffled cards
+ * @param {ClubCard[]} array - The array of cards to shuffle
+ * @returns {ClubCard[]} - The shuffled cards
  */
-declare function ClubCardShuffle(array: any[]): any[];
+declare function ClubCardShuffle(array: ClubCard[]): ClubCard[];
 /**
  * Sets the glowing border for a card
  * @param {ClubCard} Card - The card that must glow
@@ -215,20 +283,20 @@ declare function ClubCardPlayerDrawCard(CCPlayer: ClubCardPlayer, Amount?: numbe
 /**
  * Draw cards from the player deck into it's hand
  * @param {ClubCardPlayer} CCPlayer - The club card player that draws the cards
- * @param {string[]} groups - The group to draw from
+ * @param {readonly string[]} groups - The group to draw from
  * @param {number | undefined} level - The level
  * @returns {boolean} - if cards were drawn or not
  */
-declare function ClubCardPlayerDrawGroupCard(CCPlayer: ClubCardPlayer, groups: string[], level: number | undefined): boolean;
+declare function ClubCardPlayerDrawGroupCard(CCPlayer: ClubCardPlayer, groups: readonly string[], level: number | undefined): boolean;
 /**
  * Summon cards from the player deck into it's board
  * @param {ClubCardPlayer} CCPlayer - The club card player that summons the cards
- * @param {string[]} groups - The group to summon from
+ * @param {readonly string[]} groups - The group to summon from
  * @param {number} amount - The amount of cards to summon
  * @param {number | undefined} level - The level of the cards if needed
  * @returns {boolean} - if cards were summoned or not
  */
-declare function ClubCardPlayerSummonGroupCardFromDeck(CCPlayer: ClubCardPlayer, groups: string[], amount: number, level: number | undefined): boolean;
+declare function ClubCardPlayerSummonGroupCardFromDeck(CCPlayer: ClubCardPlayer, groups: readonly string[], amount: number, level: number | undefined): boolean;
 /**
  * Play a card from an effect
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -244,12 +312,18 @@ declare function ClubCardSummonCard(CCPlayer: ClubCardPlayer, card: ClubCard): v
  */
 declare function ClubCardCanSummonCard(CCPlayer: ClubCardPlayer, Card: ClubCard): boolean;
 /**
- *
+ * When drawing card, checks for various conditions and triggers.
  * @param {ClubCardPlayer} CCPlayer - The club card player that draws the cards
  * @returns {void} - Nothing
  *
  */
-declare function ClubCardCheckDetectiveDraw(CCPlayer: ClubCardPlayer): void;
+declare function ClubCardCheckDraw(CCPlayer: ClubCardPlayer): void;
+/**
+ * trigger effects when the player is taking the draw action
+ * @param {ClubCardPlayer} CCPlayer - The club card player that draws the cards
+ * @returns {void} - Nothing
+ */
+declare function ClubCardOnDrawAction(CCPlayer: ClubCardPlayer): void;
 /**
  * Common place to handle Alvins effect on kidnapping and Restrain
  * @param {ClubCardPlayer} CCPlayer
@@ -266,10 +340,10 @@ declare function ClubCardAlvinCondition(CCPlayer: ClubCardPlayer): void;
 declare function ClubCardPlayerDiscardCard(CCPlayer: ClubCardPlayer, Amount: number): void;
 /**
  * Builds a deck array of object from a deck array of numbers
- * @param {Array} InDeck - The array of number deck
- * @returns {Array} - The resulting deck
+ * @param {readonly number[]} InDeck - The array of number deck
+ * @returns {ClubCard[]} - The resulting deck
  */
-declare function ClubCardLoadDeck(InDeck: any[]): any[];
+declare function ClubCardLoadDeck(InDeck: readonly number[]): ClubCard[];
 /**
  * Returns the index of the player in the ClubCardPlayer array
  * @returns {number} - The array index position
@@ -285,10 +359,10 @@ declare function ClubCardLoadDeckNumber(DeckNum: number): void;
  * Draw the club card player hand on screen, show only sleeves if not controlled by player
  * @param {Character} Char - The character to link to that club card player
  * @param {String} Cont - The control linked to that player
- * @param {Array} Cards - The cards to build the deck with
+ * @param {readonly number[]} Cards - The cards to build the deck with
  * @returns {void} - Nothing
  */
-declare function ClubCardAddPlayer(Char: Character, Cont: string, Cards: any[]): void;
+declare function ClubCardAddPlayer(Char: Character, Cont: string, Cards: readonly number[]): void;
 /**
  * The player can get rewarded with a new card if she wins VS a specific opponent
  * @returns {void} - Nothing
@@ -359,6 +433,12 @@ declare function ClubCardCanPlayCard(CCPlayer: ClubCardPlayer, Card: ClubCard): 
  */
 declare function ClubCardCanSelectCard(CCPlayer: ClubCardPlayer, Card: ClubCard): boolean;
 /**
+ * Returns TRUE if a specific card can be selected as a prerequisite for another card by the player
+ * @param {ClubCard} Card - The card to select
+ * @returns {boolean} - TRUE if the card can be selected
+ */
+declare function ClubCardCardsSelectConditions(Card: ClubCard): boolean;
+/**
  * When a player plays a card
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {ClubCard} Card - The card to play
@@ -410,7 +490,7 @@ declare function ClubCardBankrupt(): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardEndGame(Victory: boolean): void;
-declare function ClubCardTextGet(Text: any): any;
+declare function ClubCardTextGet(Text: any): string;
 /**
  * Prepares the card titles, texts and initialize the log if needed
  * @returns {void} - Nothing
@@ -438,17 +518,10 @@ declare function ClubCardLoad(): void;
 declare function ClubCardRenderBubble(Value: number, X: number, Y: number, W: number, Image: string): number;
 /**
  * Returns the text description of all groups, separated by commas
- * @param {Array} Group - The card to draw
+ * @param {readonly string[]} Group - The card to draw
  * @returns {string} - The
  */
-declare function ClubCardGetGroupText(Group: any[]): string;
-/**
-   * Updated the text by mask, for InnerHTML
-   * The function finds the necessary words from the arrays and adds colour labels to them.
-   * @param {String} text -Normal Card Text
-   * @returns {String} -  Updated for InnerHTML Card Text
-   */
-declare function ClubCardGetFormatTextForInnerHTML(text: string): string;
+declare function ClubCardGetGroupText(Group: readonly string[]): string;
 /**
  * Draw the club card player hand on screen, show only sleeves if not controlled by player
  * @param {ClubCard|Number} Card - The card to draw
@@ -462,7 +535,7 @@ declare function ClubCardGetFormatTextForInnerHTML(text: string): string;
 declare function ClubCardRenderCard(Card: ClubCard | number, X: number, Y: number, W: number, Sleeve?: string | null, Source?: string | null): void;
 /**
  * Draw the club card player board on screen
- * @param {Object} CCPlayer - The club card player that draws the cards
+ * @param {ClubCardPlayer} CCPlayer - The club card player that draws the cards
  * @param {number} X - The X on screen position
  * @param {number} Y - The Y on screen position
  * @param {number} W - The width of the game board
@@ -470,7 +543,7 @@ declare function ClubCardRenderCard(Card: ClubCard | number, X: number, Y: numbe
  * @param {boolean} Mirror - If the board should be rendered bottom to top
  * @returns {void} - Nothing
  */
-declare function ClubCardRenderBoard(CCPlayer: any, X: number, Y: number, W: number, H: number, Mirror: boolean): void;
+declare function ClubCardRenderBoard(CCPlayer: ClubCardPlayer, X: number, Y: number, W: number, H: number, Mirror: boolean): void;
 /**
  * Draw the club card player hand on screen, show only sleeves if not controlled by player
  * @param {ClubCardPlayer} CCPlayer - The club card player that draws it's hand
@@ -532,53 +605,89 @@ declare var ClubCardBackground: string;
 declare var ClubCardColor: string[];
 declare var ClubCardFameTextColor: string;
 declare var ClubCardMoneyTextColor: string;
-declare var ClubCardOpponent: any;
-declare var ClubCardOpponentDeck: any[];
-declare var ClubCardReward: any;
-declare var ClubCardHover: any;
-declare var ClubCardFocus: any;
-declare var ClubCardTextCache: any;
+/** @type {null | Character } */
+declare var ClubCardOpponent: null | Character;
+/** @type {number[]} */
+declare var ClubCardOpponentDeck: number[];
+/** @type {null | ClubCard} */
+declare var ClubCardReward: null | ClubCard;
+/** @type {null | ClubCard} */
+declare var ClubCardHover: null | ClubCard;
+/** @type {null | ClubCard} */
+declare var ClubCardFocus: null | ClubCard;
+/** @type {null | TextCache} */
+declare var ClubCardTextCache: null | TextCache;
 declare var ClubCardTurnIndex: number;
 declare var ClubCardTurnCardPlayed: number;
 declare var ClubCardTurnEndDraw: boolean;
 declare var ClubCardFameGoal: number;
-declare var ClubCardPopup: any;
-/** @type {ClubCard} */
-declare var ClubCardSelection: ClubCard;
-declare var ClubCardPending: any;
+/** @type {{ Mode: null | string, Text: null | string, Button1: null | string, Button2: null | string, Function1: null | string, Function2: null | string }} */
+declare var ClubCardPopup: {
+    Mode: null | string;
+    Text: null | string;
+    Button1: null | string;
+    Button2: null | string;
+    Function1: null | string;
+    Function2: null | string;
+};
+/** @type {null | ClubCard} */
+declare var ClubCardSelection: null | ClubCard;
+/** @type {null | ClubCard} */
+declare var ClubCardPending: null | ClubCard;
 declare var ClubCardLevelLimit: number[];
 declare var ClubCardLevelCost: number[];
 /** @type {ClubCardPlayer[]} */
 declare var ClubCardPlayer: ClubCardPlayer[];
 declare var ClubCardOnlinePlayerMemberNumber1: number;
 declare var ClubCardOnlinePlayerMemberNumber2: number;
-/** @type {ClubCardMessage[]} */
-declare var ClubCardLog: ClubCardMessage[];
-/** @type {ClubCardMessage[]} */
-declare var ClubCardRenderLog: ClubCardMessage[];
-declare var ClubCardLogScroll: boolean;
-/** @type {ClubCardMessage[]} */
+/**
+ * Storage for all processed and displayed log messages
+ * @type {ClubCardMessage[]}
+ */
+declare let ClubCardLog: ClubCardMessage[];
+/**
+ * Temporary buffer used for rendering messages before final log update
+ * @type {ClubCardMessage[]}
+ */
+declare let ClubCardRenderLog: ClubCardMessage[];
+/**
+ * Message storage to accumulate messages before processing and sending
+ * @type {ClubCardMessage[]}
+ */
 declare let ClubCardMessageStorage: ClubCardMessage[];
+declare var ClubCardLogScroll: boolean;
 declare const ClubCardMessageType: Readonly<{
     STARTTURNINFO: "StartTurnInfo";
     STARTTURNEVENT: "StartTurnEvent";
-    ACTION: "Actions";
     CARDEFFECT: "CardsEffect";
     KNOTEVENT: "KnotEvent";
     TURNENDEFFECT: "TurnEndEffect";
     FAMEMONEYINFO: "FameMoneyInfo";
     VICTORYINFO: "VictoryInfo";
-    PREREQUISTITE: "Prerequisite";
     ACTIONSEPARATOR: "ActionSeparator";
+    PREREQUISTITE: "Prerequisite";
+    ACTION: "Actions";
     SYSTEM: "SystemMessage";
     PLAYERSMESSAGE: "PlayersMessage";
+    PLAYERSDISCONNECTED: "PlayersDisconnected";
 }>;
+declare const ClubCardImmediateMessageTypes: ("Prerequisite" | "ActionSeparator" | "Actions" | "SystemMessage" | "PlayersMessage" | "PlayersDisconnected")[];
 declare const ClubCardStartTurnType: Readonly<{
     PLAYCARD: "PlayCard";
     DRAWENDTURN: "DrawAndEndTurn";
     BANKRUPT: "Bankrupt";
     UPGRADELEVEL: "UpgradeLevel";
     ENDTURN: "EndTurn";
+}>;
+/**
+ * Keys for filling in the function parameters ClubCardMessageAdd
+ */
+declare const ClubCardPlaceholderKeys: Readonly<{
+    AMOUNT: "AMOUNT";
+    CARDNAME: "CARDNAME";
+    FAMEMONEY: "FAMEMONEY";
+    MONEYAMOUNT: "MONEYAMOUNT";
+    FAMEAMOUNT: "FAMEAMOUNT";
 }>;
 /** @type {boolean} Variable to check if the start function of the turn has already been called or not. */
 declare let ClubCardIsStartTurn: boolean;

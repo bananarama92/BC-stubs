@@ -1,8 +1,9 @@
 /**
  * Loads the deck # in memory so it can be edited
+ * @param {number} Deck
  * @returns {void} - Nothing
  */
-declare function ClubCardBuilderLoadDeck(Deck: any): void;
+declare function ClubCardBuilderLoadDeck(Deck: number): void;
 /**
  * Saves the modified deck as a string on the server
  * @returns {void} - Nothing
@@ -48,11 +49,15 @@ declare function ClubCardBuilderRun(): void;
 declare function ClubCardBuilderClick(): void;
 declare var ClubCardBuilderBackground: string;
 declare var ClubCardBuilderDeckIndex: number;
-declare var ClubCardBuilderFocus: any;
-declare var ClubCardBuilderList: any[];
+/** @type {null | ClubCard} */
+declare var ClubCardBuilderFocus: null | ClubCard;
+/** @type {ClubCard[]} */
+declare var ClubCardBuilderList: ClubCard[];
 declare var ClubCardBuilderOffset: number;
-declare var ClubCardBuilderDeckCurrent: any[];
-declare var ClubCardBuilderDeckSize: number;
+/** @type {number[]} */
+declare var ClubCardBuilderDeckCurrent: number[];
+declare var ClubCardBuilderMinDeckSize: number;
+declare var ClubCardBuilderMaxDeckSize: number;
 declare var ClubCardBuilderFilterIndex: number;
 declare var ClubCardBuilderFilterGroup: string[];
 declare var ClubCardBuilderRenameIndex: number;

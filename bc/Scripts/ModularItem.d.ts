@@ -93,11 +93,12 @@ declare function ModularItemClickModule(module: ModularItemModule, data: Modular
  * @param {ModularItemData} data
  * @param {ExtendedItemDrawData<ElementMetaData.Modular>} drawData
  * @param {function(): void} exitCallback - A callback to be called when the exit button has been clicked
- * @param {function(number): void} itemCallback - A callback to be called when an item has been clicked
+ * @param {function(number): boolean} itemCallback - A callback to be called when an item has been clicked
  * @param {function(number): void} paginateCallback - A callback to be called when a pagination button has been clicked
+ * @param {number} pageNumber - The currently shown page
  * @returns {void} - Nothing
  */
-declare function ModularItemClickCommon(data: ModularItemData, { paginate, elementData }: ExtendedItemDrawData<ElementMetaData.Modular>, exitCallback: () => void, itemCallback: (arg0: number) => void, paginateCallback: (arg0: number) => void): void;
+declare function ModularItemClickCommon(data: ModularItemData, { paginate, elementData, itemsPerPage }: ExtendedItemDrawData<ElementMetaData.Modular>, exitCallback: () => void, itemCallback: (arg0: number) => boolean, paginateCallback: (arg0: number) => void, pageNumber: number): void;
 /**
  * Handles page changing for modules
  * @param {string} moduleName - The name of the module whose page should be modified

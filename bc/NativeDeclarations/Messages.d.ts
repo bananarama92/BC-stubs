@@ -207,6 +207,7 @@ type ServerAppearanceBundle = ServerItemBundle[];
 
 type ServerChatRoomSpace = "X" | "" | "M" | "Asylum";
 type ServerChatRoomLanguage = "EN" | "DE" | "FR" | "ES" | "CN" | "RU" | "UA";
+type ServerChatRoomRole = "All" | "Admin" | "Whitelist";
 type ServerChatRoomGame = "" | "ClubCard" | "LARP" | "MagicBattle" | "GGTS" | "Prison";
 type ServerChatRoomBlockCategory =
 	/** Those are known as AssetCategory to the client */
@@ -229,8 +230,16 @@ type ServerChatRoomData = {
 	/* FIXME: server actually expects a string there, but we cheat to make the typing simpler */
 	Limit: number;
 	Game: ServerChatRoomGame;
-	Locked: boolean;
-	Private: boolean;
+	Visibility: ServerChatRoomRole[];
+	Access: ServerChatRoomRole[];
+	/**
+	 * @deprecated Use {@link ServerChatRoomData.Visibility} instead, this is temporarily maintained for backwards compatibility
+	 */
+	Private: boolean; // TODO: Remove following completion of migration
+	/**
+	 * @deprecated Use {@link ServerChatRoomData.Access} instead, this is temporarily maintained for backwards compatibility
+	 */
+	Locked: boolean; // TODO: Remove following completion of migration
 	BlockCategory: ServerChatRoomBlockCategory[];
 	Language: ServerChatRoomLanguage;
 	Space: ServerChatRoomSpace;
@@ -240,10 +249,10 @@ type ServerChatRoomData = {
 }
 
 interface ServerChatRoomMapData {
-	Type: string;
+	Type: ChatRoomMapType;
 	Fog?: boolean;
-	Tiles: string;
-	Objects: string;
+	Tiles?: string;
+	Objects?: string;
 }
 
 interface ServerChatRoomCustomData {
@@ -289,7 +298,7 @@ interface ServerAccountCreateResponseSuccess {
     MemberNumber: number;
 }
 
-type ServerAccountCreateResponse = ServerAccountCreateResponseSuccess | "Account already exists" | "Invalid account information";
+type ServerAccountCreateResponse = ServerAccountCreateResponseSuccess | "Account already exists" | "Invalid account information" | "New accounts per day exceeded";
 
 type ServerPasswordResetRequest = string;
 
@@ -428,7 +437,10 @@ interface ServerChatRoomSearchRequest {
     Game?: ServerChatRoomGame;
     FullRooms?: boolean;
     Ignore?: string[];
-    Language: string;
+	Language: "" | ServerChatRoomLanguage | ServerChatRoomLanguage[];
+    SearchDescs?: boolean;
+	ShowLocked?: boolean;
+    MapTypes?: string[];
 }
 
 interface ServerChatRoomSearchData {
@@ -436,14 +448,25 @@ interface ServerChatRoomSearchData {
     Language: string;
     Creator: string;
     CreatorMemberNumber: number;
+	Creation: number;
     MemberCount: number;
     MemberLimit: number;
     Description: string;
-    BlockCategory: string[];
+    BlockCategory: AssetCategory[];
     Game: ServerChatRoomGame;
     Friends: ServerFriendInfo[];
     Space: ServerChatRoomSpace;
-	MapType?: string;
+    Visibility: ServerChatRoomRole[];
+	Access: ServerChatRoomRole[];
+	/**
+	 * @deprecated Use {@link ServerChatRoomData.Visibility} instead, this is maintained for backwards compatibility
+	 */
+	Private?: boolean;
+	/**
+	 * @deprecated Use {@link ServerChatRoomData.Access} instead, this is maintained for backwards compatibility
+	 */
+	Locked?: boolean;
+    MapType: string;
 }
 
 type ServerChatRoomSearchResultResponse = ServerChatRoomSearchData[];
@@ -491,7 +514,7 @@ interface ServerChatRoomSyncMessage extends ServerChatRoomData {
 	SourceMemberNumber: number;
 }
 
-interface ServerChatRoomSyncPropertiesMessage extends ServerChatRoomData {
+interface ServerChatRoomSyncPropertiesMessage extends Omit<ServerChatRoomData, "Character"> {
 	SourceMemberNumber: number;
 }
 
@@ -805,9 +828,27 @@ interface ServerChatRoomGameKDUpdateRequest {
 	KinkyDungeon: any;
 }
 
+interface ServerChatRoomGameCardGameData {
+    MemberNumber: number;
+    Playing: boolean;
+    Level: number;
+    Fame: number;
+    Money: number;
+    LastFamePerTurn: number;
+    LastMoneyPerTurn: number;
+    FullDeck: string;
+    Deck: string;
+    Hand: string;
+    Board: string;
+    Event: string;
+    DiscardPile: string;
+    CardsPlayedThisTurn: Record<number, ClubCard[]>;
+    ClubCardTurnCounter: number;
+}
+
 interface ServerChatRoomGameCardGameQueryRequest {
 	GameProgress: "Query";
-	CCData?: any;
+	CCData?: ServerChatRoomGameCardGameData[];
 	Player1?: number;
 	Player2?: number;
 }
@@ -847,8 +888,8 @@ interface ServerChatRoomGameResponse extends ServerChatRoomMessageBase {
 		/* Club Card */
 		Player1?: number;
 		Player2?: number;
-		CCData: [any];
-		CCLog: [any];
+		CCData: ServerChatRoomGameCardGameData[];
+		CCLog: ClubCardMessage;
 	};
     RNG: number;
 }
