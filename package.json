@@ -20,5 +20,5 @@
   "dependencies": {
     "socket.io-client": "4.6.1"
   },
-  "typeScriptVersion": "^5.5.2"
+  "typeScriptVersion": "^5.7.3"
 }
