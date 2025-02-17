@@ -1115,7 +1115,8 @@
             "BrickWall": 62,
             "PogoBall": 63,
             "BoundBar": 64,
-            "Throne": 65
+            "Throne": 65,
+            "ExclusiveWaitress": 66
         }
     },
     "ItemEars": {
