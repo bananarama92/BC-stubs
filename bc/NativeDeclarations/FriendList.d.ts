@@ -3,7 +3,7 @@ type FriendListMode = "OnlineFriends" | "Beeps" | "AllFriends";
 type FriendListSortingMode = 'None' | 'MemberName' | 'MemberNickname' | 'MemberNumber' | 'ChatRoomName' | 'RelationType';
 type FriendListSortingDirection = 'Asc' | 'Desc';
 
-type FriendListReturn = { Screen: string, Module: ModuleType, IsInChatRoom?: boolean, hasScrolledChat?: boolean };
+type FriendListReturn<T extends ModuleType> = { Screen: ModuleScreens[T], Module: T, IsInChatRoom?: boolean, hasScrolledChat?: boolean };
 
 type FriendRawData = {
   memberNumber?: number; /* undefined for NPCs */

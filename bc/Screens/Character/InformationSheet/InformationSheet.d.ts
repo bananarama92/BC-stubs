@@ -29,7 +29,6 @@ declare function InformationSheetLoadCharacter(C: Character): void;
 declare var InformationSheetBackground: string;
 /** @type {null | Character | NPCCharacter} */
 declare var InformationSheetSelection: null | Character | NPCCharacter;
-/** @type {"" | ModuleType} */
-declare var InformationSheetPreviousModule: "" | ModuleType;
-declare var InformationSheetPreviousScreen: string;
+/** @type {ScreenSpecifier | null} */
+declare var InformationSheetReturnScreen: ScreenSpecifier | null;
 declare var InformationSheetSecondScreen: boolean;

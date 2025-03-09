@@ -100,12 +100,16 @@ declare function CommonCallFunctionByName(FunctionName: string, ...args: any[]):
  */
 declare function CommonCallFunctionByNameWarn(FunctionName: string, ...args: any[]): any;
 /**
+ * Get the current screen
+ * @returns {ScreenSpecifier}
+ */
+declare function CommonGetScreen(): ScreenSpecifier;
+/**
  * Sets the current screen and calls the loading script if needed
- * @param {ModuleType} NewModule - Module of the screen to display
- * @param {string} NewScreen - Screen to display
+ * @param {ScreenSpecifier} spec
  * @returns {void} - Nothing
  */
-declare function CommonSetScreen(NewModule: ModuleType, NewScreen: string): void;
+declare function CommonSetScreen(...spec: ScreenSpecifier): void;
 /**
  * Gets the current time in ms
  * @returns {number} - Date in ms
@@ -113,10 +117,10 @@ declare function CommonSetScreen(NewModule: ModuleType, NewScreen: string): void
 declare function CommonTime(): number;
 /**
  * Checks if a given value is a valid HEX color code
- * @param {string} Value - Potential HEX color code
+ * @param {string | undefined} Value - Potential HEX color code
  * @returns {boolean} - Returns TRUE if the string is a valid HEX color
  */
-declare function CommonIsColor(Value: string): boolean;
+declare function CommonIsColor(Value: string | undefined): boolean;
 /**
  * Checks whether an item's color has a valid value that can be interpreted by the drawing
  * functions. Valid values are null, undefined, strings, and an array containing any of the
@@ -567,6 +571,11 @@ declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: 
     replacer?: (this: any, key: string, value: any) => any;
     reviver?: (this: any, key: string, value: any) => any;
 }): VariableContainer<T1, T2>;
+/**
+ *
+ * @param {RoomName} screen
+ */
+declare function CommonScreenName(screen: RoomName): string;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /**
@@ -576,8 +585,8 @@ declare var Player: PlayerCharacter;
 declare var KeyPress: number | string;
 /** @type {ModuleType} */
 declare var CurrentModule: ModuleType;
-/** @type {string} */
-declare var CurrentScreen: string;
+/** @type {ModuleScreens[CurrentModule]} */
+declare var CurrentScreen: ModuleScreens[keyof ModuleScreens];
 /** @type {ScreenFunctions} */
 declare var CurrentScreenFunctions: ScreenFunctions;
 /** @type {Character|NPCCharacter|null} */

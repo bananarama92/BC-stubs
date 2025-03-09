@@ -18,6 +18,7 @@ declare function LoginLoad(): void;
  * @returns {void} Nothing
  */
 declare function LoginRun(): void;
+declare function LoginResize(load: boolean): void;
 /**
  * Perform the inventory fixups needed.
  * @param {InventoryBundle[]} Inventory - The server-provided inventory object
@@ -110,9 +111,9 @@ declare function LoginQueue(Pos: number): void;
 declare function LoginFixOwner(): void;
 /**
  * Sets the player character info from the server data
- * @param {Partial<ServerAccountData>} C
+ * @param {ServerAccountData} C
  */
-declare function LoginSetupPlayer(C: Partial<ServerAccountData>): void;
+declare function LoginSetupPlayer(C: ServerAccountData): void;
 /**
  * Handles player login response data
  * @param {ServerLoginResponse} C - The Login response data - this will either be the player's character data if the

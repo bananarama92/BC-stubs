@@ -6,10 +6,10 @@
 declare function CharacterAppearanceBuildAssets(C: Character): void;
 /**
  * Makes sure the character appearance is valid from inventory and asset requirement. This function is called during the login process.
- * @param {Character} C - The character whose appearance is checked
+ * @param {PlayerCharacter} C - The character whose appearance is checked
  * @returns {void} - Nothing
  */
-declare function CharacterAppearanceValidate(C: Character): void;
+declare function CharacterAppearanceValidate(C: PlayerCharacter): void;
 /**
  * Resets the character to it's default appearance
  * @param {Character} C - The character to redress to its default appearance
@@ -395,9 +395,8 @@ declare var CharacterAppearanceColorPickerRefreshTimer: any;
 declare var CharacterAppearanceSelection: Character | null;
 /** @type {(accept: boolean) => void} */
 declare var CharacterAppearanceResultCallback: (accept: boolean) => void;
-declare var CharacterAppearanceReturnRoom: string;
-/** @type {ModuleType} */
-declare var CharacterAppearanceReturnModule: ModuleType;
+/** @type {ScreenSpecifier} */
+declare var CharacterAppearanceReturnScreen: ScreenSpecifier;
 declare var CharacterAppearanceWardrobeOffset: number;
 declare var CharacterAppearanceWardrobeText: string;
 declare var CharacterAppearanceWardrobeName: string;

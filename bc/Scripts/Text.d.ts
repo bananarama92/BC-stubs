@@ -27,8 +27,9 @@ declare function TextPrefetch(Module: string, TextGroup: string): void;
 /**
  * Trigger the caching of a specific file into the text cache
  * @param {string} file
+ * @returns {TextCache}
  */
-declare function TextPrefetchFile(file: string): void;
+declare function TextPrefetchFile(file: string): TextCache;
 /**
  * @param {string} msg
  * @returns {string}

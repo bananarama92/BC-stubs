@@ -56,10 +56,10 @@ declare function MainHallHasSlaveCollarAndMaidsNotDisabled(): boolean;
 declare function MainHallPlayerNeedsHelpAndHasNoOwnerOrLoverItemAndMaidsNotDisabled(): boolean;
 /**
  * Returns TRUE if the main hall sub-screen is allowed for the player, check for owner rules
- * @param {string} ID - The screen ID to validate (A is club shop)
+ * @param {keyof typeof MainHallAllowIDToScreenMap} room - The screen ID to validate (A is club shop)
  * @returns {boolean} - Returns true, if the screen is allowed
  */
-declare function MainHallAllow(ID: string): boolean;
+declare function MainHallAllow(room: keyof typeof MainHallAllowIDToScreenMap): boolean;
 /**
  * Loads the main hall by setting up the NPCs, CSVs and global variables required.
  * @returns {void} - Nothing
@@ -81,10 +81,10 @@ declare function MainHallDraw(): void;
 declare function MainHallCycleTips(): void;
 /**
  * Validates the player's move into a new room. Before entering the requested rooms, the player can be attacked by random kidnappers or intercepted by various NPC types
- * @param {string} RoomName - Name of the room the player is heading to
+ * @param {RoomName | "Trouble"} RoomName - Name of the room the player is heading to
  * @returns {void} - Nothing
  */
-declare function MainHallWalk(RoomName: string): void;
+declare function MainHallWalk(RoomName: RoomName | "Trouble"): void;
 /**
  * Handles clicks in the main hall screen
  * @returns {void} - Nothing
@@ -261,3 +261,33 @@ declare var MainHallPunishmentList: ({
 })[];
 declare var MainHallPunishmentChoice: number;
 declare var MainHallRopeColor: string;
+declare namespace MainHallAllowIDToScreenMap {
+    let Shop: string;
+    let Private: string;
+    let Introduction: string;
+    let MaidQuarters: string;
+    let KidnapLeague: string;
+    let ShibariDojo: string;
+    let Sarah: string;
+    let Trouble: string;
+    let SlaveMarket: string;
+    let Cell: string;
+    let LARPBattle: string;
+    let College: string;
+    let Asylum: string;
+    let Poker: string;
+    let Infiltration: string;
+    let MovieStudio: string;
+    let MagicSchool: string;
+    let Platform: string;
+    let Crafting: string;
+    let ClubCard: string;
+    let Gambling: string;
+    let Prison: string;
+    let Photographic: string;
+    let Stable: string;
+    let Magic: string;
+    let Nursery: string;
+    let Cafe: string;
+    let Arcade: string;
+}

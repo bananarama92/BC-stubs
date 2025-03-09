@@ -52,11 +52,12 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	/** String-based values have been deprecated as of BondageProjects/Bondage-College#2138 */
 	Inventory?: string | Partial<Record<AssetGroupName, string[]>>;
 	InventoryData?: string;
-	AssetFamily?: "Female3DCG";
+	/** Initialized by {@link CharacterCreate} */
+	AssetFamily: "Female3DCG";
 	Infiltration?: InfiltrationType;
 	SavedColors?: HSVColor[];
 	ChatSearchFilterTerms?: string;
-	Difficulty?: { Level: number; LastChange: number };
+	Difficulty?: { Level: DifficultyLevel; LastChange: number };
 	MapData?: ChatRoomMapData;
 	PrivateCharacter?: ServerPrivateCharacterData[];
 	SavedExpressions?: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
@@ -276,7 +277,7 @@ type ServerChatRoomSettings = Partial<ServerChatRoomData> & {
 
 //#region Requests & Responses
 
-type ServerLoginResponse = "InvalidNamePassword" | Partial<ServerAccountData>;
+type ServerLoginResponse = "InvalidNamePassword" | ServerAccountData;
 
 type ServerLoginQueueResponse = number;
 
@@ -958,17 +959,17 @@ interface ServerCharacterArousalResponse {
 
 interface ServerCharacterItemUpdate {
 	Target: number;
-	Group: string;
+	Group: AssetGroupName;
 	Name?: string;
 	Color: string | string[];
 	Difficulty: number;
-	Property: any;
-	Craft: any;
+	Property?: ItemProperties;
+	Craft?: CraftingItem;
 }
 
 interface ServerChatRoomSyncItemResponse {
     Source: number;
-    Item: any;
+    Item: ServerCharacterItemUpdate;
 }
 
 type ServerChatRoomUpdateResponse = "RoomAlreadyExist" | "Updated" | "InvalidRoomData";

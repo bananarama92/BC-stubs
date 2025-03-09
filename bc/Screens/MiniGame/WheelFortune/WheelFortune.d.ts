@@ -86,9 +86,8 @@ declare function WheelFortuneResult(): void;
  */
 declare function WheelFortuneExit(): void;
 declare var WheelFortuneBackground: string;
-/** @type {"" | ModuleType} */
-declare var WheelFortuneEntryModule: "" | ModuleType;
-declare var WheelFortuneEntryScreen: string;
+/** @type {ScreenSpecifier | null} */
+declare var WheelFortuneReturnScreen: ScreenSpecifier | null;
 /** @type {null | Character} */
 declare var WheelFortuneCharacter: null | Character;
 declare var WheelFortuneRoleplay: boolean;

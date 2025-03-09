@@ -90,8 +90,8 @@ declare function FriendListToggleAutoRefresh(this: HTMLButtonElement): void;
 declare var FriendListBackground: string;
 /** @type {number[]} */
 declare var FriendListConfirmDelete: number[];
-/** @type {FriendListReturn | null} */
-declare var FriendListReturn: FriendListReturn | null;
+/** @type {FriendListReturn<any> | null} */
+declare var FriendListReturn: FriendListReturn<any> | null;
 /** @type {FriendListModes} */
 declare var FriendListMode: FriendListModes;
 declare var FriendListModeIndex: number;

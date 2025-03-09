@@ -6,6 +6,7 @@ declare function ServerInit(): void;
  * @param {string} [errorMessage] - the error message to display if not connected
  */
 declare function ServerSetConnected(connected: boolean, errorMessage?: string): void;
+declare function ServerIsLoggedIn(): boolean;
 /**
  * Callback when receiving a "connect" event on the socket - this will be called on initial connection and on
  * successful reconnects.
@@ -133,9 +134,9 @@ declare function ServerBuildAppearanceDiff(assetFamily: IAssetFamily, appearance
  * appearance item, as used by the game client
  * @param {IAssetFamily} assetFamily - The asset family of the appearance item
  * @param {ItemBundle} item - The bundled appearance item
- * @returns {Item} - A full appearance item representation of the provided bundled appearance item
+ * @returns {null | Item} - A full appearance item representation of the provided bundled appearance item
  */
-declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, item: ItemBundle): Item;
+declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, item: ItemBundle): null | Item;
 /**
  * Parses an item color, based on the allowed colorable layers on an asset, and the asset's color schema
  * @param {Asset} asset - The asset on which the color is set
@@ -285,6 +286,13 @@ declare namespace ServerAccountDataSyncedValidate {
     function Title(arg: Partial<TitleName>, C: Character): Partial<TitleName>;
     function Nickname(arg: string, C: Character): string;
     function ItemPermission(arg: Partial<0 | 2 | 1 | 3 | 4 | 5>, C: Character): 0 | 2 | 1 | 3 | 4 | 5;
+    function Difficulty(arg: Partial<{
+        Level: DifficultyLevel;
+        LastChange: number;
+    }>, C: Character): {
+        Level: DifficultyLevel;
+        LastChange: number;
+    };
     function ArousalSettings(arg: Partial<ArousalSettingsType>, C: Character): {
         Active: ArousalActiveName;
         Visible: ArousalVisibleName;

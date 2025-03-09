@@ -112,6 +112,29 @@ declare var PreferencePageCurrent: number;
 /** @type {Record<string,PreferenceExtensionsSettingItem>} */
 declare let PreferenceExtensionsSettings: Record<string, PreferenceExtensionsSettingItem>;
 declare let PreferenceDidAddOldStyleScreens: boolean;
+/**
+ * Private helper to quickly check boolean settings
+ * @param {boolean} defaultValue
+ * @returns {(arg: boolean) => boolean}
+ */
+declare function isBool(defaultValue: boolean): (arg: boolean) => boolean;
+/**
+ * Private helper to quickly check items in lists
+ * @template T
+ * @param {T[]} list
+ * @param {T} defaultValue
+ * @returns {(arg: unknown) => T}
+ */
+declare function isItem<T>(list: T[], defaultValue: T): (arg: unknown) => T;
+/**
+ * Private helper to quickly check numbers
+ * @template {number} T
+ * @param {number} min
+ * @param {number} max
+ * @param {T} defaultValue
+ * @returns {(arg: T) => T}
+ */
+declare function isInt<T extends number>(min: number, max: number, defaultValue: T): (arg: T) => T;
 declare namespace PreferenceActivityEnjoymentDefault {
     let Name: ActivityName | undefined;
     let Self: ArousalFactor;
@@ -175,3 +198,147 @@ declare var PreferenceOnlineSharedSettingsDefault: CharacterOnlineSharedSettings
  * @namespace
  */
 declare var PreferenceOnlineSharedSettingsValidate: { [k in keyof Required<CharacterOnlineSharedSettings>]: (arg: CharacterOnlineSharedSettings[k], C: Character) => CharacterOnlineSharedSettings[k]; };
+/**
+ * Namespace with default values for {@link ChatSettingsType} properties.
+ * @type {Required<ChatSettingsType>}
+ * @namespace
+ */
+declare var PreferenceChatSettingsDefault: Required<ChatSettingsType>;
+/**
+ * Namespace with functions for validating {@link ChatSettingsType} properties
+ * @type {{ [k in keyof Required<ChatSettingsType>]: (arg: ChatSettingsType[k], C: Character) => ChatSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceChatSettingsValidate: { [k in keyof Required<ChatSettingsType>]: (arg: ChatSettingsType[k], C: Character) => ChatSettingsType[k]; };
+/**
+ * Namespace with default values for {@link VisualSettingsType} properties.
+ * @type {Required<VisualSettingsType>}
+ * @namespace
+ */
+declare var PreferenceVisualSettingsDefault: Required<VisualSettingsType>;
+/**
+ * Namespace with functions for validating {@link VisualSettingsType} properties
+ * @type {{ [k in keyof Required<VisualSettingsType>]: (arg: VisualSettingsType[k], C: Character) => VisualSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceVisualSettingsValidate: { [k in keyof Required<VisualSettingsType>]: (arg: VisualSettingsType[k], C: Character) => VisualSettingsType[k]; };
+/**
+ * Namespace with default values for {@link AudioSettingsType} properties.
+ * @type {Required<AudioSettingsType>}
+ * @namespace
+ */
+declare var PreferenceAudioSettingsDefault: Required<AudioSettingsType>;
+/**
+ * Namespace with functions for validating {@link AudioSettingsType} properties
+ * @type {{ [k in keyof Required<AudioSettingsType>]: (arg: AudioSettingsType[k], C: Character) => AudioSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceAudioSettingsValidate: { [k in keyof Required<AudioSettingsType>]: (arg: AudioSettingsType[k], C: Character) => AudioSettingsType[k]; };
+/**
+ * Namespace with default values for {@link ControllerSettingsType} properties.
+ * @type {Required<ControllerSettingsType>}
+ * @namespace
+ */
+declare var PreferenceControllerSettingsDefault: Required<ControllerSettingsType>;
+/**
+ * Namespace with functions for validating {@link ControllerSettingsType} properties
+ * @type {{ [k in keyof Required<ControllerSettingsType>]: (arg: ControllerSettingsType[k], C: Character) => ControllerSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceControllerSettingsValidate: { [k in keyof Required<ControllerSettingsType>]: (arg: ControllerSettingsType[k], C: Character) => ControllerSettingsType[k]; };
+/**
+ * Namespace with default values for {@link GameplaySettingsType} properties.
+ * @type {Required<GameplaySettingsType>}
+ * @namespace
+ */
+declare var PreferenceGameplaySettingsDefault: Required<GameplaySettingsType>;
+/**
+ * Namespace with functions for validating {@link GameplaySettingsType} properties
+ * @type {{ [k in keyof Required<GameplaySettingsType>]: (arg: GameplaySettingsType[k], C: Character) => GameplaySettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceGameplaySettingsValidate: { [k in keyof Required<GameplaySettingsType>]: (arg: GameplaySettingsType[k], C: Character) => GameplaySettingsType[k]; };
+/**
+ * Namespace with default values for {@link ImmersionSettingsType} properties.
+ * @type {Required<ImmersionSettingsType>}
+ * @namespace
+ */
+declare var PreferenceImmersionSettingsDefault: Required<ImmersionSettingsType>;
+/**
+ * Namespace with functions for validating {@link ImmersionSettingsType} properties
+ * @type {{ [k in keyof Required<ImmersionSettingsType>]: (arg: ImmersionSettingsType[k], C: Character) => ImmersionSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceImmersionSettingsValidate: { [k in keyof Required<ImmersionSettingsType>]: (arg: ImmersionSettingsType[k], C: Character) => ImmersionSettingsType[k]; };
+/**
+ * Namespace with default values for {@link RestrictionSettingsType} properties.
+ * @type {Required<RestrictionSettingsType>}
+ * @namespace
+ */
+declare var PreferenceRestrictionSettingsDefault: Required<RestrictionSettingsType>;
+/**
+ * Namespace with functions for validating {@link RestrictionSettingsType} properties
+ * @type {{ [k in keyof Required<RestrictionSettingsType>]: (arg: RestrictionSettingsType[k], C: Character) => RestrictionSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceRestrictionSettingsValidate: { [k in keyof Required<RestrictionSettingsType>]: (arg: RestrictionSettingsType[k], C: Character) => RestrictionSettingsType[k]; };
+/**
+ * Namespace with default values for {@link PlayerOnlineSettings} properties.
+ * @type {Required<PlayerOnlineSettings>}
+ * @namespace
+ */
+declare var PreferenceOnlineSettingsDefault: Required<PlayerOnlineSettings>;
+/**
+ * Namespace with functions for validating {@link PlayerOnlineSettings} properties
+ * @type {{ [k in keyof Required<PlayerOnlineSettings>]: (arg: PlayerOnlineSettings[k], C: Character) => PlayerOnlineSettings[k] }}
+ * @namespace
+ */
+declare var PreferenceOnlineSettingsValidate: { [k in keyof Required<PlayerOnlineSettings>]: (arg: PlayerOnlineSettings[k], C: Character) => PlayerOnlineSettings[k]; };
+/**
+ * Namespace with default values for {@link GraphicsSettingsType} properties.
+ * @type {Required<GraphicsSettingsType>}
+ * @namespace
+ */
+declare var PreferenceGraphicsSettingsDefault: Required<GraphicsSettingsType>;
+/**
+ * Namespace with functions for validating {@link GraphicsSettingsType} properties
+ * @type {{ [k in keyof Required<GraphicsSettingsType>]: (arg: GraphicsSettingsType[k], C: Character) => GraphicsSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceGraphicsSettingsValidate: { [k in keyof Required<GraphicsSettingsType>]: (arg: GraphicsSettingsType[k], C: Character) => GraphicsSettingsType[k]; };
+/**
+ * Namespace with default values for {@link GenderSettingsType} properties.
+ * @type {Required<GenderSettingsType>}
+ * @namespace
+ */
+declare var PreferenceGenderSettingsDefault: Required<GenderSettingsType>;
+/**
+ * @template {object} T
+ * @param {T} shape
+ * @returns {(arg: T) => T}
+ */
+declare function hasSameShape<T extends unknown>(shape: T): (arg: T) => T;
+/**
+ * Namespace with functions for validating {@link GenderSettingsType} properties
+ * @type {{ [k in keyof Required<GenderSettingsType>]: (arg: GenderSettingsType[k], C: Character) => GenderSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceGenderSettingsValidate: { [k in keyof Required<GenderSettingsType>]: (arg: GenderSettingsType[k], C: Character) => GenderSettingsType[k]; };
+/**
+ * Private helper to quick check notification settings
+ * @param {NotificationSetting} defaultNotif
+ * @returns {(arg: NotificationSetting) => NotificationSetting}
+ */
+declare function isValidNotification(defaultNotif: NotificationSetting): (arg: NotificationSetting) => NotificationSetting;
+/**
+ * Namespace with default values for {@link NotificationSettingsType} properties.
+ * @type {Required<NotificationSettingsType>}
+ * @namespace
+ */
+declare var PreferenceNotificationSettingsDefault: Required<NotificationSettingsType>;
+/**
+ * Namespace with functions for validating {@link NotificationSettingsType} properties
+ * @type {{ [k in keyof Required<NotificationSettingsType>]: (arg: NotificationSettingsType[k], C: Character) => NotificationSettingsType[k] }}
+ * @namespace
+ */
+declare var PreferenceNotificationSettingsValidate: { [k in keyof Required<NotificationSettingsType>]: (arg: NotificationSettingsType[k], C: Character) => NotificationSettingsType[k]; };

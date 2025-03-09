@@ -88,7 +88,8 @@
             "Swimsuit2": 48,
             "Swimsuit3": 49,
             "LeatherVestSuit": 50,
-            "MeshTop": 51
+            "MeshTop": 51,
+            "ShinyLeotard": 52
         }
     },
     "Bracelet": {
@@ -405,7 +406,8 @@
             "Tentacles": 4,
             "HipHarness": 5,
             "WaistLegHarness": 6,
-            "ComboBelt": 7
+            "ComboBelt": 7,
+            "FemPelvisHarness": 8
         }
     },
     "Glasses": {
@@ -427,7 +429,8 @@
             "SunGlasses2": 13,
             "SunGlassesClear": 14,
             "VGlasses": 15,
-            "Pincenez": 16
+            "Pincenez": 16,
+            "RoundSunglasses": 17
         }
     },
     "Gloves": {
@@ -1359,7 +1362,8 @@
             "RubberMask": 53,
             "CustomBallHood": 54,
             "Balloon": 55,
-            "Kigu2Hood": 56
+            "Kigu2Hood": 56,
+            "CreepyIronMask": 57
         }
     },
     "ItemLegs": {
@@ -1532,7 +1536,8 @@
             "OverfilledGag": 91,
             "PremiumMuzzle": 92,
             "XmasStickerGag": 93,
-            "AOMGag": 94
+            "AOMGag": 94,
+            "HorrorMuzzle": 95
         }
     },
     "ItemMouth2": {
@@ -1632,7 +1637,8 @@
             "OverfilledGag": 91,
             "PremiumMuzzle": 92,
             "XmasStickerGag": 93,
-            "AOMGag": 94
+            "AOMGag": 94,
+            "HorrorMuzzle": 95
         }
     },
     "ItemMouth3": {
@@ -1730,7 +1736,8 @@
             "OverfilledGag": 89,
             "PremiumMuzzle": 90,
             "XmasStickerGag": 91,
-            "AOMGag": 92
+            "AOMGag": 92,
+            "HorrorMuzzle": 93
         }
     },
     "ItemNeck": {
@@ -1880,7 +1887,8 @@
             "NoseRing": 5,
             "PigNose": 6,
             "PigNoseHook": 7,
-            "GlueNose": 8
+            "GlueNose": 8,
+            "NoseClip": 9
         }
     },
     "ItemPelvis": {
@@ -1914,7 +1922,8 @@
             "StraponPanties": 25,
             "StuddedChastityBelt": 26,
             "HipHarness": 27,
-            "WaistLegHarness": 28
+            "WaistLegHarness": 28,
+            "FemPelvisHarness": 29
         }
     },
     "ItemScript": {
@@ -1955,7 +1964,9 @@
             "Underbust": 26,
             "HipHarness": 27,
             "TightCorset": 28,
-            "RibbonCorset": 29
+            "RibbonCorset": 29,
+            "FemPelvisHarness": 30,
+            "ShinyLeotardLock": 31
         }
     },
     "ItemTorso2": {
@@ -1990,7 +2001,9 @@
             "Underbust": 26,
             "HipHarness": 27,
             "TightCorset": 28,
-            "RibbonCorset": 29
+            "RibbonCorset": 29,
+            "FemPelvisHarness": 30,
+            "ShinyLeotardLock": 31
         }
     },
     "ItemVulva": {
@@ -2209,7 +2222,8 @@
             "WrapPanties1": 46,
             "ZipPanties1": 47,
             "HipHarness": 48,
-            "WaistLegHarness": 49
+            "WaistLegHarness": 49,
+            "FemPelvisHarness": 50
         }
     },
     "Pronouns": {
@@ -2397,7 +2411,8 @@
             "SeethroughSuit": 8,
             "SeethroughSuitZip": 9,
             "SleevelessCatsuit": 10,
-            "SleevelessSlimLatexLeotard": 11
+            "SleevelessSlimLatexLeotard": 11,
+            "ShinyLeotard": 12
         }
     },
     "SuitLower": {
