@@ -21,10 +21,5 @@ declare function RelogKeyDown(event: KeyboardEvent): boolean;
 declare function RelogExit(): void;
 declare var RelogBackground: string;
 declare var RelogCanvas: HTMLCanvasElement;
-/** @type {null | { Screen: string, Module: ModuleType, Character: Character, ChatRoomName: string | null}} */
-declare var RelogData: null | {
-    Screen: string;
-    Module: ModuleType;
-    Character: Character;
-    ChatRoomName: string | null;
-};
+/** @type {null | RelogData} */
+declare var RelogData: null | RelogData;

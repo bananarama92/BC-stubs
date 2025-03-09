@@ -77,36 +77,20 @@ declare function ElementCreateInput(ID: string, Type: string, Value: string, Max
  */
 declare function ElementCreateRangeInput(id: string, value: number, min: number, max: number, step: number, thumbIcon?: ThumbIcon, vertical?: boolean): HTMLInputElement;
 /**
- * Creates a dropdown element and adjusts it to the BC look and feel. In the HTML Code this will look like this:
- * <div> -- enclosing div used for css and postioning
- *     <select> -- the select statement with its options
- *         <option 1>
- *         <option n>
- *     </select>
- *     <div></div> -- the div representing the currently selected item
- *     <div> -- div for the various options
- *        <div>Option 1</div>
- *        <div>Option n</div>
- *     </div>
- * </div>
- * This construct is built automatically and ignores the original select statement. All the logic is handled by
- * event handlers that are connected to the various divs. See comments in the code.
- * What this function cannot handle at the moment:
- * - The size is always set to 1
- * - Multiple selects are impossible
- * @param {string} id - The name of the select item. The outer div will get this name, for positioning. The select
- * tag will get the name ID+"-select"
- * @param {readonly string[]} Options - The list of options for the current select statement
- * @param {null | ((this: HTMLSelectElement, event: Event) => any)} [ClickEventListener=null] - An event listener to be called, when the value of the drop down box changes
- * @returns {HTMLDivElement} - The created element
+ * Construct a `<select>`-based dropdown menu.
+ * @param {string} id - The name of the select item.
+ * @param {readonly (string | Omit<HTMLOptions<"option">, "tag">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
+ * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
+ * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number }} [options] - Additional `<select>`-specific properties
+ * @param {null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+ * @returns {HTMLSelectElement} - The created element
  */
-declare function ElementCreateDropdown(id: string, Options: readonly string[], ClickEventListener?: null | ((this: HTMLSelectElement, event: Event) => any)): HTMLDivElement;
-/**
- * Closes all select boxes in the current document, except the current select box
- * @param {object} elmnt - The select box to exclude from the closing
- * @returns {void} - Nothing
- */
-declare function ElementCloseAllSelect(elmnt: object): void;
+declare function ElementCreateDropdown(id: string, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag">)[], onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
+    required?: boolean;
+    multiple?: boolean;
+    disabled?: boolean;
+    size?: number;
+}, htmlOptions?: null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>): HTMLSelectElement;
 /**
  * Creates a new div element in the main document. Does not create a new element if there is already an existing one with the same ID
  * @param {string} ID - The id of the div tag to create.
@@ -121,14 +105,14 @@ declare function ElementCreateDiv(ID: string): HTMLDivElement;
 declare function ElementRemove(ID: string): void;
 /**
  * Draws an existing HTML element at a specific position within the document. The element is "centered" on the given coordinates by dividing its height and width by two.
- * @param {string} ElementID - The id of the input tag to (re-)position.
+ * @param {string | HTMLElement} ElementOrID - The id of the input tag to (re-)position.
  * @param {number} X - Center point of the element on the X axis.
  * @param {number} Y - Center point of the element on the Y axis.
  * @param {number} W - Width of the element.
  * @param {number} [H] - Height of the element.
  * @returns {void} - Nothing
  */
-declare function ElementPosition(ElementID: string, X: number, Y: number, W: number, H?: number): void;
+declare function ElementPosition(ElementOrID: string | HTMLElement, X: number, Y: number, W: number, H?: number): void;
 /**
  * Draws an existing HTML element at a specific position within the document. The element will not be centered on its given coordinates unlike the ElementPosition function.
  * Not same as ElementPositionFix. Calculates Font size itself.
@@ -326,23 +310,19 @@ declare namespace ElementButton {
     /**
      * @private
      * @param {string} id
-     * @param {string} [label]
+     * @param {ElementButton.StaticNode} [label]
      * @param {"top" | "center" | "bottom"} [position]
      * @param {Omit<HTMLOptions<"span">, "tag">} [options]
      * @returns {HTMLSpanElement}
      */
-    function _ParseLabel(id: string, label?: string, position?: "top" | "center" | "bottom", options?: Omit<HTMLOptions<"span">, "tag">): HTMLSpanElement;
+    function _ParseLabel(id: string, label?: ElementButton.StaticNode, position?: "top" | "center" | "bottom", options?: Omit<HTMLOptions<"span">, "tag">): HTMLSpanElement;
     /**
      * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
      * @param {string} id - The ID of the parent element
-     * @param {readonly (InventoryIcon | { name: string, iconSrc: string, tooltipText: string | Node })[]} [icons] - The (optional) list of icons
+     * @param {readonly (InventoryIcon | ElementButton.CustomIcon)[]} [icons] - The (optional) list of icons
      * @returns {null | { iconGrid: HTMLDivElement, tooltip: [string, HTMLElement, HTMLElement] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
      */
-    function _ParseIcons(id: string, icons?: readonly (InventoryIcon | {
-        name: string;
-        iconSrc: string;
-        tooltipText: string | Node;
-    })[]): null | {
+    function _ParseIcons(id: string, icons?: readonly (InventoryIcon | ElementButton.CustomIcon)[]): null | {
         iconGrid: HTMLDivElement;
         tooltip: [string, HTMLElement, HTMLElement];
     };

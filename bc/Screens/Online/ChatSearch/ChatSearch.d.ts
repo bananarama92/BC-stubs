@@ -222,9 +222,8 @@ declare var ChatSearchListParams: CommonGenerateGridParameters;
 /** Pre-calculated. Must be updated if you change the grid parameters */
 declare var ChatSearchRoomsPerPage: number;
 declare var ChatSearchMessage: string;
-declare var ChatSearchLeaveRoom: string;
-/** @type {ModuleType} */
-declare var ChatSearchLeaveSpace: ModuleType;
+/** @type {ScreenSpecifier} */
+declare var ChatSearchReturnScreen: ScreenSpecifier;
 /** @type {null | Item[]} */
 declare var ChatSearchSafewordAppearance: null | Item[];
 /** @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>} */
@@ -246,8 +245,8 @@ declare var ChatSearchFilterUnhideConfirm: null | {
     WordsLabel: string;
 };
 declare var ChatSearchRejoinIncrement: number;
-/** @type {null | string} */
-declare var ChatSearchReturnToScreen: null | string;
+/** @type {null | RoomName} */
+declare var ChatSearchReturnToScreen: null | RoomName;
 /** @type {"" | ServerChatRoomLanguage} */
 declare var ChatSearchLanguage: "" | ServerChatRoomLanguage;
 /** @type {"" | ServerChatRoomLanguage} */

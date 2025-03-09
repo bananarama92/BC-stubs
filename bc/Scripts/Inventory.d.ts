@@ -152,7 +152,7 @@ declare function InventoryAllow(C: Character, asset: Asset, prerequisites?: Asse
 declare function InventoryGet(C: Character, AssetGroup: AssetGroupName): Item | null;
 /**
 * Applies crafted properties to the item used
-* @param {Character} Source - The character that used the item
+* @param {null | Character} Source - The character that used the item (if any)
 * @param {Character} Target - The character on which the item is used
 * @param {AssetGroupItemName} GroupName - The name of the asset group to scan
 * @param {CraftingItem} Craft - The crafted properties to apply
@@ -161,7 +161,7 @@ declare function InventoryGet(C: Character, AssetGroup: AssetGroupName): Item | 
 * @param {Boolean} CraftWarn - Whether a warning should logged whenever the crafting validation fails
 * @returns {void}
 */
-declare function InventoryCraft(Source: Character, Target: Character, GroupName: AssetGroupItemName, Craft: CraftingItem, Refresh: boolean, PreConfigureItem?: boolean, CraftWarn?: boolean): void;
+declare function InventoryCraft(Source: null | Character, Target: Character, GroupName: AssetGroupItemName, Craft: CraftingItem, Refresh: boolean, PreConfigureItem?: boolean, CraftWarn?: boolean): void;
 /**
 * Returns the number of items on a character with a specific property
 * @param {Character} C - The character to validate
@@ -176,14 +176,6 @@ declare function InventoryCraftCount(C: Character, Property: CraftingPropertyTyp
 * @returns {boolean} - TRUE if the property matches
 */
 declare function InventoryCraftPropertyIs(Item: Item, Property: CraftingPropertyType): boolean;
-/**
-* Sets the craft and type on the item, uses the achetype properties if possible.
-* Note that appearance changes are _not_ pushed to the server.
-* @param {Item} Item - The item being applied
-* @param {Character} C - The character that must wear the item
-* @param {CraftingItem} [Craft] - The crafting properties of the item
-*/
-declare function InventoryWearCraft(Item: Item, C: Character, Craft?: CraftingItem): void;
 /**
  * Makes the character wear an item on a body area
  * @param {Character} C - The character that must wear the item
@@ -527,10 +519,10 @@ declare function InventoryIsKey(Item: Item): boolean;
 /**
  * Serialises the provided character's inventory into a string for easy comparisons, inventory items are uniquely
  * identified by their name and group
- * @param {Character} C - The character whose inventory we should serialise
+ * @param {PlayerCharacter} C - The character whose inventory we should serialise
  * @return {string} - A simple string representation of the character's inventory
  */
-declare function InventoryStringify(C: Character): string;
+declare function InventoryStringify(C: PlayerCharacter): string;
 /**
  * Returns TRUE if the inventory category is blocked in the current chat room
  * @param {readonly ServerChatRoomBlockCategory[]} Category - An array of string containing all the categories to validate
@@ -597,6 +589,12 @@ declare namespace InventoryPrerequisiteConflicts {
         invert?: boolean;
     }): string;
 }
+/**
+* Sets the craft and type on the item, uses the achetype properties if possible.
+* Note that appearance changes are _not_ pushed to the server.
+* @deprecated Use {@link InventoryCraft} instead (or use {@link InventoryWear} directly if appropriate)
+*/
+declare var InventoryWearCraft: never;
 /** @satisfies {Set<keyof PropertiesArray>} */
 declare const PropertiesArrayLike: Set<"Block" | "Hide" | "AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "Prerequisite" | "ExpressionTrigger" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "AllowExpression" | "Alpha" | "MemberNumberList" | "UnHide" | "Texts">;
 /** @satisfies {Set<keyof PropertiesRecord>} */

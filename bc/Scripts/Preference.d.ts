@@ -106,23 +106,20 @@ declare function PreferenceArousalIsActive(): boolean;
  */
 declare function PreferenceInit(C: Character): void;
 /**
- * Initialise a Gender setting
- * @returns {GenderSetting} - The setting to use
- */
-declare function PreferenceInitGenderSetting(): GenderSetting;
-/**
  * Initialize and validates Player settings
+ * @param {PlayerCharacter} C
+ * @param {Partial<ServerAccountData>} data
  * @returns {void} - Nothing
  */
-declare function PreferenceInitPlayer(): void;
+declare function PreferenceInitPlayer(C: PlayerCharacter, data: Partial<ServerAccountData>): void;
 /**
  * Initialise the Notifications settings, converting the old boolean types to objects
- * @param {object} setting - The old version of the setting
+ * @param {boolean} setting - The old version of the setting
  * @param {NotificationAudioType} audio - The audio setting
  * @param {NotificationAlertType} [defaultAlertType] - The default AlertType to use
  * @returns {NotificationSetting} - The setting to use
  */
-declare function PreferenceInitNotificationSetting(setting: object, audio: NotificationAudioType, defaultAlertType?: NotificationAlertType): NotificationSetting;
+declare function PreferenceInitNotificationSetting(setting: boolean, audio: NotificationAudioType, defaultAlertType?: NotificationAlertType): NotificationSetting;
 /**
  * Migrates a named preference from one preference object to another if not already migrated
  * @param {object} from - The preference object to migrate from

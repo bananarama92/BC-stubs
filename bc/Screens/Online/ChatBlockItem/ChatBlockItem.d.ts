@@ -20,7 +20,5 @@ declare var ChatBlockItemList: ServerChatRoomBlockCategory[];
 /** @type {ServerChatRoomBlockCategory[]} */
 declare var ChatBlockItemCategory: ServerChatRoomBlockCategory[];
 declare var ChatBlockItemEditable: boolean;
-/** @type { { Screen?: string; } } */
-declare var ChatBlockItemReturnData: {
-    Screen?: string;
-};
+/** @type {ScreenSpecifier | null} */
+declare var ChatBlockItemReturnScreen: ScreenSpecifier | null;

@@ -1,3 +1,4 @@
+declare function CharacterCreatePlayer(): void;
 /**
  * Loads a character into the buffer, creates it if it does not exist
  * @param {IAssetFamily} CharacterAssetFamily - Name of the asset family of the character
@@ -464,14 +465,20 @@ declare const CharacterBlindLevels: Map<BlindEffectName, number>;
 declare const CharacterDeafLevels: Map<DeafEffectName, number>;
 /** @type {Map<BlurEffectName, number>} */
 declare const CharacterBlurLevels: Map<BlurEffectName, number>;
+declare namespace Difficulty {
+    let ROLEPLAY: number;
+    let REGULAR: number;
+    let HARDCORE: number;
+    let EXTREME: number;
+}
 /**
  * An enum representing the various character archetypes
  * ONLINE: The player, or a character representing another online player
  * NPC: Any NPC
  * SIMPLE: Any simple character, generally used internally and not to represent an actual in-game character
- * @type {Record<"ONLINE"|"NPC"|"SIMPLE", CharacterType>}
+ * @type {Record<"ONLINE"|"NPC"|"SIMPLE"|"PLAYER", CharacterType>}
  */
-declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE", CharacterType>;
+declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE" | "PLAYER", CharacterType>;
 /**
  * A record mapping screen names to functions for returning {@link CharacterGetCurrent} characters.
  * @type {Record<string, () => null | Character>}

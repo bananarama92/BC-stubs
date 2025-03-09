@@ -172,11 +172,11 @@ declare function MaidQuartersWearMaidUniform(): void;
 declare function MaidQuartersRemoveMaidUniform(): void;
 /**
  * Starts a mini game or maid chore
- * @param {string} GameType - Name of the mini-game to launch
+ * @param {ModuleScreens["MiniGame"]} GameType - Name of the mini-game to launch
  * @param {number} Difficulty - Difficulty Ration for the mini-game
  * @returns {void} - Nothing
  */
-declare function MaidQuartersMiniGameStart(GameType: string, Difficulty: number): void;
+declare function MaidQuartersMiniGameStart(GameType: ModuleScreens["MiniGame"], Difficulty: number): void;
 /**
  * Is called when the mini game ends and sends the player back to the maid quarters.
  * Depending on the choosen game, the next dialog option is selected

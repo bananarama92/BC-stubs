@@ -98,10 +98,18 @@ type HTMLElementScalarTagNameMap = {
 type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 	/** The elements HTML tag */
 	tag: T,
-	/** Scalar-valued attributes that will be set on the HTML element. */
-	attributes?: Partial<HTMLElementScalarTagNameMap[T]> & Partial<Record<string, number | boolean | string>>;
-	/** Data attributes that will be set on the HTML element (see {@link HTMLElement.dataset}). */
-	dataAttributes?: Partial<Record<string, number | boolean | string>>;
+	/**
+	 * Scalar-valued attributes that will be set on the HTML element.
+	 *
+	 * Note that booleans are interpretted as [boolean attributes](https://developer.mozilla.org/en-US/docs/Glossary/Boolean/HTML).
+	 */
+	attributes?: Partial<Record<string, number | boolean | string>>;
+	/**
+	 * Data attributes that will be set on the HTML element (see {@link HTMLElement.dataset}).
+	 *
+	 * Note that booleans are interpretted as [boolean attributes](https://developer.mozilla.org/en-US/docs/Glossary/Boolean/HTML).
+	 */
+	dataAttributes?: Partial<Record<string, number | string | boolean>>;
 	/** CSS style declarations that will be set on the HTML element (see {@link HTMLElement.style}). */
 	style?: Record<string, string>;
 	/** Event listeners that will be attached to the HTML element (see {@link HTMLElement.addEventListener}). */
@@ -122,10 +130,23 @@ interface HTMLElementEventMap {
 }
 
 declare namespace ElementButton {
+	/** An input type for representing one or more text nodes and/or **non-interactive** DOM elements (_e.g._ `<i>` or `<code>`) */
+	type StaticNode = null | string | Node | HTMLOptions<any> | readonly (null | undefined | string | Node | HTMLOptions<any>)[];
+
+	/** Input options for creating custom button icons */
+	interface CustomIcon {
+		/** The {@link HTMLImageElement.src} of the icon */
+		iconSrc: string,
+		/** The internal ID of the icon */
+		name: string,
+		/** The tooltip component associated with the icon */
+		tooltipText?: StaticNode,
+	}
+
 	/** Various options that can be passed along to {@link ElementButton.Create} */
 	interface Options {
 		/** Optional tooltip content. If not supplied then one should manually prepend it to the tooltip later */
-		tooltip?: null | string | Node | HTMLOptions<any> | readonly (null | string | Node | HTMLOptions<any>)[]
+		tooltip?: StaticNode;
 		/** The position of the tooltip w.r.t. the button */
 		tooltipPosition?: "left" | "right" | "top" | "bottom";
 		/**
@@ -136,7 +157,7 @@ declare namespace ElementButton {
 		 */
 		tooltipRole?: "label" | "description" | "none";
 		/** A button label */
-		label?: string;
+		label?: StaticNode;
 		/** The position of the button label */
 		labelPosition?: "top" | "center" | "bottom";
 		/** A background image for the button */
@@ -146,7 +167,7 @@ declare namespace ElementButton {
 		 *
 		 * Alternatively, one can directly pass the icon's {@link HTMLImageElement.src} and its tooltip component.
 		 */
-		icons?: readonly (null | InventoryIcon | { iconSrc: string, tooltipText: string | Node, name: string })[];
+		icons?: readonly (null | undefined | InventoryIcon | CustomIcon)[];
 		/** The role of the button. All accepted values are currently special-cased in order to set role-specific event listeners and/or attributes. */
 		role?: "radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox";
 		/** Whether to limit the default styling of the button's border and background */
@@ -299,7 +320,7 @@ type DialogSortOrder = | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 type DialogStruggleActionType = "ActionUse" | "ActionSwap" | "ActionRemove" | "ActionUnlock" | "ActionUnlockAndRemove" | "ActionStruggle" | "ActionEscape" | "ActionDismount";
 
-type CharacterType = "online" | "npc" | "simple";
+type CharacterType = "player" | "online" | "npc" | "simple";
 
 type CharacterPronouns = "SheHer" | "HeHim";
 
@@ -584,7 +605,101 @@ type TitleName =
 
 type MagicSchoolHouse = "Maiestas" | "Vincula" | "Amplector" | "Corporis";
 
-type ModuleType = "Character" | "Cutscene" | "MiniGame" | "Online" | "Room";
+type ModuleType = keyof ModuleScreens;
+
+interface ModuleScreens {
+	Character:
+		| "Appearance"
+		| "BackgroundSelection"
+		| "Cheat"
+		| "Creation"
+		| "Disclaimer"
+		| "FriendList"
+		| "InformationSheet"
+		| "ItemColor"
+		| "Login"
+		| "OnlineProfile"
+		| "PasswordReset"
+		| "Player"
+		| "Preference"
+		| "Relog"
+		| "Title"
+		| "Wardrobe"
+	;
+	Cutscene:
+		| "NPCCollaring"
+		| "NPCSlaveAuction"
+		| "NPCWedding"
+		| "PlayerCollaring"
+		| "PlayerMistress"
+		| "SarahIntro"
+	;
+	MiniGame:
+		| "Chess" | "ChestLockpick"
+		| "ClubCard" | "ClubCardBuilder"
+		| "DojoStruggle"
+		| "GetUp"
+		| "HorseWalk"
+		| "Kidnap"
+		| "KinkyDungeon"
+		| "Lockpick"
+		| "MagicBattle" | "MagicPuzzle"
+		| "MaidCleaning" | "MaidDrinks"
+		| "PlayerAuction"
+		| "PuppyWalker"
+		| "RhythmGame"
+		| "SlaveAuction"
+		| "Tennis"
+		| "Therapy"
+		| "WheelFortune"
+		;
+	Online:
+		| "AdvancedRule"
+		| "ChatAdmin" | "ChatAdminRoomCustomization" | "ChatBlockItem"
+		| "ChatRoom" | "ChatSearch" | "ChatSelect"
+		| "ForbiddenWords"
+		| "Game" | "GameClubCard" | "GameLARP" | "GameMagicBattle"
+		| "NicknameManagement"
+		| "WheelFortuneCustomize"
+		;
+	Room:
+		| "Arcade"
+		| "AsylumBedroom" | "AsylumEntrance" | "AsylumGGTS" | "AsylumMeeting" | "AsylumTherapy"
+		| "Cafe" | "Cell" | "ClubCardLounge"
+		| "CollegeCafeteria" | "CollegeChess" | "CollegeDetention" | "CollegeEntrance" | "CollegeTeacher" | "CollegeTennis" | "CollegeTheater"
+		| "Crafting" | "DailyJob" | "Empty" | "Gambling"
+		| "Infiltration" | "InfiltrationPerks"
+		| "Introduction"
+		| "KidnapLeague"
+		| "LARP"
+		| "Magic" | "MagicSchoolEscape" | "MagicSchoolLaboratory"
+		| "MaidQuarters" | "MainHall" | "Management" | "MovieStudio" | "Nursery"
+		| "Pandora" | "PandoraPrison"
+		| "Photographic"
+		| "Platform" | "PlatformIntro" | "PlatformDialog" | "PlatformProfile"
+		| "Poker" | "Prison"
+		| "Private" | "PrivateBed" | "PrivateRansom"
+		| "Sarah"
+		| "Shibari"
+		| "Shop" | "Shop2"
+		| "SlaveMarket" | "Stable"
+	;
+}
+
+type RoomName = ModuleScreens[ModuleType];
+
+interface RelogDataBase<T extends ModuleType> {
+    Screen: ModuleScreens[T],
+    Module: T,
+    Character: Character,
+    ChatRoomName: string | null,
+}
+
+type _RelogDataMap<T> = T extends ModuleType ? RelogDataBase<T> : never;
+type RelogData = _RelogDataMap<ModuleType>;
+
+type _ScreenSpecifier<T extends ModuleType> = [module: T, screen: ModuleScreens[T]];
+type ScreenSpecifier = _ScreenSpecifier<"Character"> | _ScreenSpecifier<"Cutscene"> | _ScreenSpecifier<"MiniGame"> | _ScreenSpecifier<"Online"> | _ScreenSpecifier<"Room">;
 
 type AssetCategory = "Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy";
 
@@ -1088,7 +1203,16 @@ interface Asset {
 	readonly DynamicGroupName: AssetGroupName;
 	readonly DynamicActivity: (C: Character) => ActivityName | null | undefined;
 	readonly DynamicAudio: ((C: Character) => string) | null;
-	readonly CharacterRestricted: boolean;
+	/**
+	 * Whether the asset is restricted to a given character.
+	 *
+	 * When the asset is added to a character, the member number of the character using the
+	 * asset will be stored along in its properties, and all subsequent modifications will
+	 * only be possible for that character.
+	 *
+	 * @deprecated Discontinued in favor of the {@link FamilyOnly}/{@link LoverOnly}/{@link OwnerOnly} trio
+	 */
+	readonly CharacterRestricted?: never;
 	readonly AllowRemoveExclusive: boolean;
 	readonly InheritColor: null | AssetGroupName;
 	readonly DynamicBeforeDraw: boolean;
@@ -1455,15 +1579,30 @@ interface Character {
 	/** The asset family used by the character */
 	AssetFamily: IAssetFamily;
 	Name: string;
-	Nickname?: string;
+	Nickname?: string; // technically never as it's Online-only
 	Owner: string;
 	Lover: string;
 	Money: number;
 	Inventory: InventoryItem[];
 	InventoryData?: string;
 	Appearance: Item[];
-	Stage: string;
-	CurrentDialog: string;
+	/**
+	 * @private
+	 * @see {@link Character.Stage}
+	 */
+	_Stage: string;
+	/** Set or get the current stage, performing a dialog {@link DialogMenu.Reload} if required */
+	get Stage(): string;
+	set Stage(value: string);
+	/**
+	 * @private
+	 * @see {@link Character.CurrentDialog}
+	 */
+	_CurrentDialog: string;
+	ClickedOption: null | string;
+	/** Set or get the current dialog, performing a dialog status update if required (see {@link DialogSetStatus}) */
+	get CurrentDialog(): string;
+	set CurrentDialog(value: string);
 	Dialog: DialogLine[];
 	Reputation: Reputation[];
 	Skill: Skill[];
@@ -1539,9 +1678,9 @@ interface Character {
 	WhiteList: number[];
 	HeightModifier: number;
 	MemberNumber?: number;
-	ItemPermission?: 0 | 1 | 2 | 3 | 4 | 5;
-	Ownership?: Ownership;
-	Lovership?: Lovership[];
+	ItemPermission: 0 | 1 | 2 | 3 | 4 | 5;
+	Ownership: Ownership | null;
+	Lovership: Lovership[];
 	ExpressionQueue?: ExpressionQueueItem[];
 	CanTalk: () => boolean;
 	CanWalk: () => boolean;
@@ -1659,31 +1798,29 @@ interface Character {
 	HasVagina: () => boolean;
 	IsFlatChested: () => boolean;
 	WearingCollar: () => boolean;
+
 	// Properties created in other places
-	ArousalSettings?: ArousalSettingsType;
-	AppearanceFull?: Item[];
+	ArousalSettings: ArousalSettingsType;
+	AppearanceFull?: Item[]; // Private NPCs only
 	// Online character properties
 	Title?: TitleName;
 	LabelColor?: HexColor;
-	Creation?: number;
-	Description?: string;
-	OnlineSharedSettings?: CharacterOnlineSharedSettings;
-	Game?: CharacterGameParameters;
+	Creation?: number; // technically never as it is Online-only
+	Description?: string; // technically never as it is Online-only
+	OnlineSharedSettings?: CharacterOnlineSharedSettings;  // technically never as it is Online-only
+	Game?: CharacterGameParameters; // technically never as it is Online-only
 	MapData?: ChatRoomMapData;
 	BlackList: number[];
 	RunScripts?: boolean;
 	HasScriptedAssets?: boolean;
 	Cage?: boolean;
-	Difficulty?: {
-		Level: number;
-		LastChange?: number;
-	};
+	Difficulty?: { Level: number }; // technically never as it is Online-only
 	ArousalZoom?: boolean;
 	FixedImage?: string;
 	Rule?: LogRecord[];
 	Status?: string | null;
 	StatusTimer?: number;
-	Crafting?: (null | CraftingItem)[];
+	Crafting: (CraftingItem | null)[]; // technically never as it is Online-only
 	LastMapData?: ChatRoomMapData;
 	/**
 	 * The custom background to use for the current room
@@ -1849,35 +1986,57 @@ interface ControllerSettingsOld {
 	ControllerDPadRight: number;
 }
 
+type DifficultyLevel =
+ 	| 0 // Roleplay
+	| 1 // Regular
+	| 2 // Hardcore
+	| 3 // Extreme
+	;
+
 interface PlayerCharacter extends Character {
+	// All the following are guaranteed to be set on login
+	MemberNumber: number;
+	Nickname: string;
+	LabelColor: HexColor;
+	Game: CharacterGameParameters;
+	Description: string;
+	Creation: number;
+	Difficulty: {
+		Level: DifficultyLevel;
+		LastChange?: number;
+	};
+	Crafting: (null | CraftingItem)[];
+	ItemPermission: 0 | 1 | 2 | 3 | 4 | 5;
+
 	// PreferenceInitPlayer() must be updated with defaults, when adding a new setting
-	ChatSettings?: ChatSettingsType;
-	VisualSettings?: VisualSettingsType;
-	AudioSettings?: AudioSettingsType;
-	ControllerSettings?: ControllerSettingsType;
-	GameplaySettings?: GameplaySettingsType;
-	ImmersionSettings?: ImmersionSettingsType;
+	ChatSettings: ChatSettingsType;
+	VisualSettings: VisualSettingsType;
+	AudioSettings: AudioSettingsType;
+	ControllerSettings: ControllerSettingsType;
+	GameplaySettings: GameplaySettingsType;
+	ImmersionSettings: ImmersionSettingsType;
 	/** The chat room we were previous in. Used for relog room re-creation */
 	// TODO: the fact that this is set *might* be used to also fold the "relog" enabled checks
 	// If we have a chatroom, then we relog to it. If we don't, then the player didn't have the
 	// setting enabled in the first place
 	LastChatRoom?: ChatRoomSettings;
-	RestrictionSettings?: RestrictionSettingsType;
-	OnlineSettings?: PlayerOnlineSettings;
-	GraphicsSettings?: GraphicsSettingsType;
-	NotificationSettings?: NotificationSettingsType;
+	RestrictionSettings: RestrictionSettingsType;
+	OnlineSettings: PlayerOnlineSettings;
+	GraphicsSettings: GraphicsSettingsType;
+	NotificationSettings: NotificationSettingsType;
+	OnlineSharedSettings: CharacterOnlineSharedSettings;  // technically never as it is Online-only
 	GhostList?: number[];
-	Wardrobe?: ItemBundle[][];
-	WardrobeCharacterNames?: string[];
+	Wardrobe: ItemBundle[][];
+	WardrobeCharacterNames: string[];
 	SavedExpressions?: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
 	SavedColors: HSVColor[];
-	FriendList?: number[];
-	FriendNames?: Map<number, string>;
-	SubmissivesList?: Set<number>;
-	ChatSearchFilterTerms?: string;
+	FriendList: number[];
+	FriendNames: Map<number, string>;
+	SubmissivesList: Set<number>;
+	ChatSearchFilterTerms: string;
 	GenderSettings: GenderSettingsType;
 	/** The list of items we got confiscated in the Prison */
-	ConfiscatedItems?: { Group: AssetGroupName, Name: string }[];
+	ConfiscatedItems: { Group: AssetGroupName, Name: string }[];
 	ExtensionSettings: ExtensionSettings;
 }
 
@@ -1904,20 +2063,20 @@ interface NotificationSettingsType {
 	ChatMessage: NotificationSetting & {
 		/** @deprecated */
 		IncludeActions?: any;
-		Mention?: boolean;
-		Normal?: boolean;
-		Whisper?: boolean;
-		Activity?: boolean;
+		Mention: boolean;
+		Normal: boolean;
+		Whisper: boolean;
+		Activity: boolean;
 	};
 	/** @deprecated */
 	ChatActions?: any;
 	ChatJoin: NotificationSetting & {
 		/** @deprecated */
 		Enabled?: any;
-		Owner?: boolean;
-		Lovers?: boolean;
-		Friendlist?: boolean;
-		Subs?: boolean;
+		Owner: boolean;
+		Lovers: boolean;
+		Friendlist: boolean;
+		Subs: boolean;
 	};
 	Disconnect: NotificationSetting;
 	Larp: NotificationSetting;
@@ -1927,7 +2086,6 @@ interface NotificationSettingsType {
 interface GraphicsSettingsType {
 	Font: GraphicsFontName;
 	InvertRoom: boolean;
-	StimulationFlashes: boolean;
 	DoBlindFlash: boolean;
 	AnimationQuality: number;
 	StimulationFlash: boolean;
@@ -1992,16 +2150,6 @@ interface ChatSettingsType {
 	ShowChatHelp: boolean;
 	ShrinkNonDialogue: boolean;
 	WhiteSpace: "" | "Preserve";
-	/** @deprecated */
-	AutoBanBlackList?: any;
-	/** @deprecated */
-	AutoBanGhostList?: any;
-	/** @deprecated */
-	SearchFriendsFirst?: any;
-	/** @deprecated */
-	DisableAnimations?: any;
-	/** @deprecated */
-	SearchShowsFullRooms?: any;
 	CensoredWordsList: string;
 	CensoredWordsLevel: number;
 	/** Whether to preserve the chat log when switching rooms */
@@ -2031,10 +2179,10 @@ interface AudioSettingsType {
 }
 
 interface VisualSettingsType {
-	ForceFullHeight?: boolean;
-	UseCharacterInPreviews?: boolean;
-	MainHallBackground?: string;
-	PrivateRoomBackground?: string;
+	ForceFullHeight: boolean;
+	UseCharacterInPreviews: boolean;
+	MainHallBackground: string;
+	PrivateRoomBackground: string;
 }
 
 /**
@@ -2047,8 +2195,8 @@ interface PlayerOnlineSettings {
 	DisableAnimations: boolean;
 	SearchShowsFullRooms: boolean;
 	SearchFriendsFirst: boolean;
-	SendStatus?: boolean;
-	ShowStatus?: boolean;
+	SendStatus: boolean;
+	ShowStatus: boolean;
 	EnableAfkTimer: boolean;
 	ShowRoomCustomization: 0 | 1 | 2 | 3; // 0 - Never, 1 - No by default, 2 - Yes by default, 3 - Always
 	FriendListAutoRefresh: boolean;
@@ -2832,8 +2980,10 @@ interface ItemPropertiesCustom {
 	/**
 	 * The member number of the player adding the item.
 	 * Only set if the asset is marked as {@link AssetDefinition.CharacterRestricted}.
+	 *
+	 * @deprecated Discontinued in favor of the {@link Asset.FamilyOnly}/{@link Asset.LoverOnly}/{@link Asset.OwnerOnly} trio
 	 */
-	ItemMemberNumber?: number;
+	ItemMemberNumber?: never;
 
 	//#region Lock properties
 

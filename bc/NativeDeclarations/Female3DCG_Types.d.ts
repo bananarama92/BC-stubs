@@ -694,8 +694,10 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	 * When the asset is added to a character, the member number of the character using the
 	 * asset will be stored along in its properties, and all subsequent modifications will
 	 * only be possible for that character.
+	 *
+	 * @deprecated Discontinued in favor of the {@link FamilyOnly}/{@link LoverOnly}/{@link OwnerOnly} trio
 	 */
-	CharacterRestricted?: boolean;
+	CharacterRestricted?: never;
 	AllowRemoveExclusive?: boolean;
 
 	DynamicBeforeDraw?: boolean;
@@ -774,7 +776,6 @@ declare namespace AssetDefinition {
 		AlwaysExtend?: false;
 		AlwaysInteract?: false;
 		ArousalZone?: never;
-		CharacterRestricted?: false;
 		CraftGroup?: never;
 		CustomBlindBackground?: never;
 		Difficulty?: never;

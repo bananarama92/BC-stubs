@@ -317,7 +317,7 @@ declare function ValidationHasSomeScriptPermission(character: Character, propert
  * @param {boolean} allowExtraKeys whether to allow extra key/value pairs in `arg` (absent from the `validators` record) to-be returned
  * @returns {{ [k in keyof T]: ReturnType<T[k]> }} The validated `arg`
  */
-declare function ValdiationApplyRecord<T extends {
+declare function ValidationApplyRecord<T extends {
     [key: string]: (arg: any, C: Character) => any;
 }>(arg: unknown, C: Character, validators: T, allowExtraKeys?: boolean): { [k in keyof T]: ReturnType<T[k]>; };
 declare const ValidationCombinationNumberRegex: RegExp;

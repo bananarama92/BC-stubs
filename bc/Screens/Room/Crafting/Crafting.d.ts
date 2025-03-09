@@ -72,10 +72,10 @@ declare function CraftingSaveServer(): void;
 declare function CraftingDeserialize(craftString: string): null | CraftingItem;
 /**
  * Deserialize and unpack the crafting data from the server.
- * @param {string | (null | CraftingItem)[]} Data The serialized crafting data or already-decompressed crafting item list
+ * @param {string | undefined | (null | CraftingItem)[]} Data The serialized crafting data or already-decompressed crafting item list
  * @returns {(null | CraftingItem)[]}
  */
-declare function CraftingDecompressServerData(Data: string | (null | CraftingItem)[]): (null | CraftingItem)[];
+declare function CraftingDecompressServerData(Data: string | undefined | (null | CraftingItem)[]): (null | CraftingItem)[];
 /**
  * Loads the server packet and creates the crafting array for the player
  * @param {string | (null | CraftingItem)[]} Packet - The packet or already-decompressed crafting item list

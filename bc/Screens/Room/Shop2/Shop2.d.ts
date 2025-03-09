@@ -104,9 +104,9 @@ declare const Shop2InitVars: VariableContainer<{
     Preview: null | Character;
     /**
      * The module- and screen-name of the previous screen (if any)
-     * @type {null | [module: ModuleType, screen: string]}
+     * @type {null | ScreenSpecifier}
      */
-    PreviousScreen: null | [module: ModuleType, screen: string];
+    PreviousScreen: null | ScreenSpecifier;
     /**
      * Super set of all items that be bought or sold
      * @type {readonly ShopItem[]}
@@ -213,8 +213,8 @@ declare namespace Shop2 {
     /**
      * Helper function for initializing the `Shop2` screen.
      * @param {null | string} background - The shops background image
-     * @param {null | [module: ModuleType, screen: string]} screen - A 2-tuple containing the module and name of the previous screen
+     * @param {null | ScreenSpecifier} screen - A 2-tuple containing the module and name of the previous screen
      * @param {null | readonly Asset[]} assets - A list of all assets that should appear in the shop
      */
-    function Init(background?: null | string, screen?: null | [module: ModuleType, screen: string], assets?: null | readonly Asset[]): void;
+    function Init(background?: null | string, screen?: null | ScreenSpecifier, assets?: null | readonly Asset[]): void;
 }

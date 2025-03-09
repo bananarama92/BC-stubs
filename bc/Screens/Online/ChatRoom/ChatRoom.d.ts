@@ -358,15 +358,16 @@ declare function ChatRoomLoad(): void;
 declare function ChatRoomClearAllElements(): void;
 /**
  * Starts the chatroom selection screen.
+ * @template {ModuleType} T
  * @param {ServerChatRoomSpace} Space - Name of the chatroom space
  * @param {ServerChatRoomGame} Game - Name of the chatroom game to play
- * @param {string | null} LeaveRoom - Name of the room to go back to when exiting chatsearch.
- * @param {ModuleType | null} LeaveSpace - Name of the space to go back to when exiting chatsearch.
+ * @param {ModuleScreens[T] | null} LeaveRoom - Name of the room to go back to when exiting chatsearch.
+ * @param {T | null} LeaveSpace - Name of the space to go back to when exiting chatsearch.
  * @param {string} Background - Name of the background to use in chatsearch.
  * @param {BackgroundTag[]} BackgroundTagList - List of available backgrounds in the chatroom space.
  * @returns {void} - Nothing.
  */
-declare function ChatRoomStart(Space: ServerChatRoomSpace, Game: ServerChatRoomGame, LeaveRoom: string | null, LeaveSpace: ModuleType | null, Background: string, BackgroundTagList: BackgroundTag[]): void;
+declare function ChatRoomStart<T extends ModuleType>(Space: ServerChatRoomSpace, Game: ServerChatRoomGame, LeaveRoom: ModuleScreens[T] | null, LeaveSpace: T | null, Background: string, BackgroundTagList: BackgroundTag[]): void;
 /**
  * Create the list of chat room menu buttons
  * @returns {void} - Nothing

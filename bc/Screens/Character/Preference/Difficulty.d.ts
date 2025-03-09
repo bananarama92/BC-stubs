@@ -8,6 +8,6 @@ declare function PreferenceSubscreenDifficultyRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenDifficultyClick(): void;
-/** @type {null | number} */
-declare var PreferenceDifficultyLevel: null | number;
+/** @type {null | DifficultyLevel} */
+declare var PreferenceDifficultyLevel: null | DifficultyLevel;
 declare var PreferenceDifficultyAccept: boolean;

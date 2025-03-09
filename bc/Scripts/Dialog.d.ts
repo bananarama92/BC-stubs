@@ -964,9 +964,8 @@ declare namespace DialogSortOrder {
 declare var DialogSelfMenuSelected: null | DialogSelfMenuOptionType;
 declare var DialogLeaveDueToItem: boolean;
 declare var DialogLentLockpicks: boolean;
-declare var DialogGamingPreviousRoom: string;
-/** @type {"" | ModuleType} */
-declare var DialogGamingPreviousModule: "" | ModuleType;
+/** @type {ScreenSpecifier | null} */
+declare var DialogGamingReturnScreen: ScreenSpecifier | null;
 declare var DialogButtonDisabledTester: RegExp;
 /**
  * The attempted action that's leading the player to struggle.
@@ -1109,12 +1108,27 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
      */
     get focusGroup(): null | AssetItemGroup;
     /**
+     * A set with the numeric IDs of to-be run reloads.
+     * See {@link DialogMenu.Reload}
+     * @private
+     * @readonly
+     * @type {Set<number>}
+     */
+    private readonly _reloadQueue;
+    /**
+     * The highest reload ID currently in use.
+     * See {@link DialogMenu.Reload}
+     * @private
+     * @type {number}
+     */
+    private _reloadHighestID;
+    /**
      * Promise object for queuing reloads, ensuring that they are run consecutively rather than concurrently if multiple calls are invoked (near) simultenously.
      * See {@link DialogMenu.Reload}
      * @private
      * @type {Promise<boolean>}
      */
-    private _reload;
+    private _reloadPromise;
     /**
      * Initialize the {@link DialogMenu} subscreen.
      *
@@ -1433,6 +1447,17 @@ declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLi
         _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
+    /**
+     * A {@link clearTimeout}-returned ID for temporarily disabling the exit button on mobile button clicks
+     * @private
+     * @type {null | number}
+     */
+    private _mobileTimeoutID;
+    /**
+     * @private
+     * @satisfies {TimerHandler}
+     */
+    private _mobileTimeoutHandler;
 }
 declare namespace DialogMenuMapping {
     let activities: _DialogActivitiesMenu<"activities">;

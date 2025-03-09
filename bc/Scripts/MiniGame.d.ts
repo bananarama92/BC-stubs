@@ -1,12 +1,12 @@
 declare function MiniGameLoad(): void;
 /**
  * Starts a given mini game at a set difficulty and keeps
- * @param {string} GameType - Name of the mini-game to launch
+ * @param {ModuleScreens["MiniGame"]} GameType - Name of the mini-game to launch
  * @param {number|string} Difficulty - Difficulty Ration for the mini-game
  * @param {string} ReturnFunction - Callback name to execute once the mini-game is over
  * @returns {void} - Nothing
  */
-declare function MiniGameStart(GameType: string, Difficulty: number | string, ReturnFunction: string): void;
+declare function MiniGameStart(GameType: ModuleScreens["MiniGame"], Difficulty: number | string, ReturnFunction: string): void;
 declare function MiniGameEnd(): void;
 /**
  * @returns {boolean} - TRUE if the game has started, but not yet ended.
