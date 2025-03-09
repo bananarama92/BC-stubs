@@ -21,7 +21,7 @@
   "homepage": "https://github.com/bananarama92/BC-stubs/tree/main/bc_data#readme",
   "devDependencies": {
     "typescript": "^5.7.3",
-    "@types/node": "^20.14.8",
+    "@types/node": "^22.13.10",
     "minimist": "^1.2.8",
     "@types/minimist": "^1.2.5"
   }
