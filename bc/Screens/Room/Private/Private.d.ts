@@ -421,9 +421,9 @@ declare function PrivateIsSuccubus(): boolean;
 /**
  * Returns a random item that could be bought from the store as a gift that the player could receive by a NPC
  * @param {boolean} Restraint - TRUE if we must return an item that's a restraint
- * @returns {Asset} - The item asset that can be given
+ * @returns {Asset|null} - The item asset that can be given
  */
-declare function PrivateGetPossibleGift(Restraint: boolean): Asset;
+declare function PrivateGetPossibleGift(Restraint: boolean): Asset | null;
 /**
  * Loads the private room screen and the vendor NPC.
  * @returns {void} - Nothing.

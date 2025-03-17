@@ -32,6 +32,7 @@
         "BodyWritings": "R103",
         "FacePaints": "R111",
         "FaceScars": "R109",
+        "Splatters": "R114",
         "WombTattoos": "R101"
     },
     "BodyUpper": {
@@ -357,7 +358,8 @@
     "FaceMarkings": {
         "AnimalNoses": "R112",
         "FaceScars": "R112",
-        "FaceWritings": "R112"
+        "FaceWritings": "R112",
+        "Splatters": "R114"
     },
     "FacialHair": {
         "BigBeard": "R98",
@@ -1964,6 +1966,7 @@
         "PetNose": "R98",
         "RubberMask": "R107",
         "ShinobiMask": "R98",
+        "Splatters": "R114",
         "SwimCap": "R98",
         "VenetianMask": "R98"
     },

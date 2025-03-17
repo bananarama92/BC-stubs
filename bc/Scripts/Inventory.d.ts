@@ -60,10 +60,10 @@ declare function InventoryDataBuild(C: Character): string;
 /**
 * Checks if the character has the inventory available
 * @param {Character} C - The character on which we should remove the item
-* @param {string|'*'} InventoryName - The name of the item to validate, * means any
-* @param {AssetGroupName} InventoryGroup - The group name of the item to validate
+* @param {string} Name - The name of the item to validate
+* @param {AssetGroupName} Group - The group name of the item to validate
 */
-declare function InventoryAvailable(C: Character, InventoryName: string | "*", InventoryGroup: AssetGroupName): boolean;
+declare function InventoryAvailable(C: Character, Name: string, Group: AssetGroupName): boolean;
 /**
  * Returns an error message if a prerequisite clashes with the character's items and clothes
  * @param {Character} C - The character on which we check for prerequisites
