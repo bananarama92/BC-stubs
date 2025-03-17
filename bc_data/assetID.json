@@ -20,7 +20,8 @@
             "WombTattoos": 0,
             "BodyWritings": 1,
             "FaceScars": 2,
-            "FacePaints": 3
+            "FacePaints": 3,
+            "Splatters": 4
         }
     },
     "BodyUpper": {
@@ -2125,7 +2126,8 @@
             "EldritchMask": 31,
             "FaceScars": 32,
             "NecromancerHelmet": 33,
-            "Kigu2Hood": 34
+            "Kigu2Hood": 34,
+            "Splatters": 35
         }
     },
     "Mouth": {
@@ -2558,7 +2560,8 @@
         "assets": {
             "AnimalNoses": 0,
             "FaceScars": 1,
-            "FaceWritings": 2
+            "FaceWritings": 2,
+            "Splatters": 3
         }
     }
 }
