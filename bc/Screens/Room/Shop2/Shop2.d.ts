@@ -169,7 +169,7 @@ declare namespace Shop2 {
      * @param {number} w
      * @param {number} h
      * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
-     * @satisfies {ShopScreenFunctions["Draw"]}
+     * @satisfies {ScreenDrawHandler}
      * @private
      */
     function _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
@@ -177,7 +177,7 @@ declare namespace Shop2 {
      * Click function for a single item in the shop
      * @param {MouseEvent | TouchEvent} event
      * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
-     * @satisfies {ShopScreenFunctions["Click"]}
+     * @satisfies {MouseEventListener}
      * @private
      */
     function _AssetElementClick(event: MouseEvent | TouchEvent, assetIndex: number): void;

@@ -75,6 +75,16 @@ declare function IsActivityNameDictionaryEntry(entry: ChatMessageDictionaryEntry
  */
 declare function IsMessageEffectDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MessageEffectEntry;
 /**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ReplyIdDictionaryEntry}
+ */
+declare function IsReplyIdDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ReplyIdDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is MsgIdDictionaryEntry}
+ */
+declare function IsMsgIdDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MsgIdDictionaryEntry;
+/**
  * Build class for chat message dictionaries
  */
 declare class DictionaryBuilder {

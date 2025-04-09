@@ -496,6 +496,11 @@ declare function ChatRoomStatusUpdateLocalCharacter(C: Character, Status: string
  */
 declare function ChatRoomStatusUpdate(Status: string | null): void;
 /**
+ * Stops the reply when the escape key is pressed
+ * @param {KeyboardEvent} key
+ */
+declare function ChatRoomStopReplyOnEscape(key: KeyboardEvent): void;
+/**
  * Sends the "Talk" status to other players if the player typed in the text box and there's a value in it
  * @param {KeyboardEvent} Key
  * @returns {void} - Nothing.
@@ -507,6 +512,13 @@ declare function ChatRoomStatusUpdateTalk(Key: KeyboardEvent): void;
  * @param {Event} event
  */
 declare function ChatRoomChatInputChangeHandler(this: HTMLTextAreaElement, event: Event): void;
+/**
+ * Manually adjust the size of `TextAreaChatLog` based on the (auto-expanded) `chatInput` height.
+ *
+ * Why manually? Because doing it automatically can get veeeery slow as the chat log grows in size.
+ * @param {HTMLElement} chatInput
+ */
+declare function ChatRoomInputResize(chatInput: HTMLElement): void;
 /**
  * Checks if status has expired or is otherwise no longer valid and resets status if so
  * @returns {void} - Nothing.
@@ -690,11 +702,12 @@ declare function ChatRoomSendChat(): void;
  * This function automatically formats and sends the message with all the information
  * needed to reconstruct it on the receiver.
  *
- * @param {"Chat"|"Whisper"} type
+ * @param {"Chat"|"Whisper"|"Emote"} type
  * @param {string} msg
+ * @param {string} [replyId]
  * @return {ServerChatRoomMessage}
  */
-declare function ChatRoomGenerateChatRoomChatMessage(type: "Chat" | "Whisper", msg: string): ServerChatRoomMessage;
+declare function ChatRoomGenerateChatRoomChatMessage(type: "Chat" | "Whisper" | "Emote", msg: string, replyId?: string): ServerChatRoomMessage;
 /**
  * Send a specific chat message to the room
  * @param {string} msg
@@ -911,6 +924,52 @@ declare function ChatRoomMessage(data: ServerChatRoomMessage): void;
  * @this {HTMLButtonElement}
  */
 declare function ChatRoomMessageNameClick(this: HTMLButtonElement): void;
+/**
+ * Returns the HTML element for the message with the given ID
+ * @param {string} id
+ * @returns {HTMLElement | null}
+ */
+declare function ChatRoomMessageGetById(id: string): HTMLElement | null;
+/**
+ * Returns the ID of the message that this message is a reply to
+ * @returns {string | null}
+ */
+declare function ChatRoomMessageGetReplyId(): string | null;
+/**
+ * Returns the name of the character that this message is a reply to.
+ * We get the wrong name when replying to reply that's what this is for.
+ * @param {string} msgId
+ * @param {boolean} isWhisper
+ * @returns {string | null}
+ */
+declare function ChatRoomMessageGetReplyName(msgId: string, isWhisper?: boolean): string | null;
+/**
+ * @param {string} msgId
+ * @returns {string | null}
+ */
+declare function ChatRoomMessageGetReplyContent(msgId: string): string | null;
+/**
+ * Figures out the type of the message with the given ID
+ * @param {string} msgId
+ * @returns {"Chat" | "Whisper"}
+ */
+declare function ChatRoomMessageGetType(msgId: string): "Chat" | "Whisper";
+/**
+ * Closes the reply.
+ */
+declare function ChatRoomMessageReplyStop(): void;
+/**
+ * Sets the reply to the message with the given ID
+ * @param {string} msgId
+ */
+declare function ChatRoomMessageSetReply(msgId: string): void;
+/**
+ * Creates the HTML element for a reply message
+ * @param {string} msgId
+ * @param {string} displayMessage
+ * @returns {HTMLSpanElement | string}
+ */
+declare function ChatRoomMessageCreateReplyMessageElement(msgId: string, displayMessage: string): HTMLSpanElement | string;
 /**
  * Update the Chat log with the recieved message
  *
@@ -1480,6 +1539,11 @@ declare var ChatRoomChatLengthLabelRect: never;
  * @type {RectTuple}
  */
 declare var ChatRoomDivRect: RectTuple;
+/**
+ * The last approximate height (_i.e._ {@link HTMLElement.clientHeight} as opposed to {@link DOMRect.height}) of the `InputChat` element.
+ * @type {number}
+ */
+declare let ChatRoomDivInputPrevHeight: number;
 declare var ChatRoomChatHidden: boolean;
 /**
  * The chatroom characters that were drawn in the last frame.
@@ -1600,9 +1664,9 @@ declare namespace ChatRoomArousalMsg_ChanceGagMod {
 declare var ChatRoomHideIconState: number;
 /**
  * The list of buttons in the top-right
- * @type {string[]}
+ * @type {ChatRoomMenuButton[]}
  * */
-declare var ChatRoomMenuButtons: string[];
+declare var ChatRoomMenuButtons: ChatRoomMenuButton[];
 declare let ChatRoomFontSize: number;
 declare namespace ChatRoomFontSizes {
     let Small: number;
@@ -1629,15 +1693,16 @@ declare namespace ChatRoomResizeManager {
 }
 declare namespace ChatRoomSep {
     let ActiveElem: null | HTMLDivElement;
+    function _CopyHeader(this: HTMLDivElement, event: ClipboardEvent): void;
     let _ClickCollapse: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
     let _ClickScrollUp: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
     /**
      * Return a {@link HTMLElement.InnerHTML} representation of the passed button's room name
      * @private
      * @param {HTMLButtonElement} button
-     * @returns {string}
+     * @returns {(string | HTMLElement)[]}
      */
-    function _GetDisplayName(button: HTMLButtonElement): string;
+    function _GetDisplayName(button: HTMLButtonElement): (string | HTMLElement)[];
     /**
      * Create a dividing element serving as seperator for different chat rooms
      * @param {boolean} appendChat - Whether to assign {@link ChatRoomSep.ActiveElem} and append the returned `<div>` to the chat log
@@ -1647,9 +1712,9 @@ declare namespace ChatRoomSep {
     /**
      * Return a {@link HTMLElement.innerHTML} representation of the separators room name
      * @param {HTMLDivElement} roomSep - The chat room separator
-     * @returns {string}
+     * @returns {(string | HTMLElement)[]}
      */
-    function GetDisplayName(roomSep: HTMLDivElement): string;
+    function GetDisplayName(roomSep: HTMLDivElement): (string | HTMLElement)[];
     /**
      * Return whether the passed room separator is collapsed OR NOT
      * @param {HTMLDivElement} roomSep - The chat room separator

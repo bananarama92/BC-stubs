@@ -114,7 +114,7 @@ declare namespace Layering {
     function Resize(load: boolean): void;
     function Unload(): void;
     /**
-     * @satisfies {ScreenFunctions["Exit"]}
+     * @satisfies {ScreenExitHandler}
      * @param {boolean} reload - Whether the exit call is part of a reload (see {@link Layering.Init})
      */
     function Exit(reload?: boolean): void;

@@ -108,7 +108,7 @@ declare function CraftingConvertItemToSelected(Craft: CraftingItem): CraftingIte
 declare function CraftingExitResetElements(): void;
 /**
  * When the player exits the crafting room
- * @satisfies {ScreenFunctions["Exit"]}
+ * @satisfies {ScreenExitHandler}
  * @param {boolean} allowPanelClose - Whether an exit call in the `Name` mode is allowed to close the side panels before performing a proper exit of the subscreen
  */
 declare function CraftingExit(allowPanelClose?: boolean): void;
@@ -301,7 +301,7 @@ declare namespace CraftingEventListeners {
     function _InputLayering(this: HTMLInputElement, ev: Event): void;
     function _ChangeName(this: HTMLInputElement, ev: Event): void;
     function _ChangeDescription(this: HTMLTextAreaElement, ev: Event): void;
-    function _InputDescription(this: HTMLTextAreaElement, ev: Event): void;
+    function _InputDescription(this: HTMLTextAreaElement | HTMLInputElement, ev: Event): void;
     function _ChangeColor(this: HTMLInputElement, ev: Event): void;
     function _ClickExtended(this: HTMLButtonElement, ev: Event): void;
     function _ClickTighten(this: HTMLButtonElement, ev: Event): void;
@@ -319,14 +319,11 @@ declare namespace CraftingEventListeners {
     function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
     let _InputSearch: (this: HTMLInputElement, ev: Event) => Promise<void>;
     function _ClickAsciiDescription(this: HTMLInputElement, ev: Event): void;
+    function _ClickGroup(this: HTMLButtonElement, ev: MouseEvent): void;
+    let _FocusSearchAsset: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
+    let _FocusSearch: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
 }
 declare namespace CraftingElements {
-    /**
-     * @private
-     * @param {string} controls
-     * @returns {() => string[]}
-     */
-    function _SearchInputGetDataList(controls: string): () => string[];
     /**
      * @private
      * @param {string} id
@@ -334,7 +331,8 @@ declare namespace CraftingElements {
      * @param {string} placeholder
      * @returns {HTMLInputElement}
      */
-    function _SearchInput(id: string, controls: string, placeholder: string): HTMLInputElement;
+    function _SearchInput(id: string, controls: string, placeholder: string, assetSearch?: boolean): HTMLInputElement;
+    let _SearchCache: Map<"ALL" | AssetGroupItemName, readonly HTMLOptionElement[]>;
     /**
      * @private
      * @param {string} id

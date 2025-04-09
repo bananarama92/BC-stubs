@@ -275,6 +275,7 @@ declare namespace ElementCheckboxDropdown {
     }): HTMLDivElement;
 }
 declare namespace ElementButton {
+    let _idCounter: number;
     let _TooltipPositions: Readonly<{
         left: "button-tooltip-left";
         right: "button-tooltip-right";
@@ -293,6 +294,8 @@ declare namespace ElementButton {
     function _MouseUp(this: HTMLButtonElement, ev: Event): void;
     function _QueryDFS(root: Element, query: string, filter: (el: Element) => boolean): Generator<Element, void>;
     function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
+    function _ClickSpin(this: HTMLButtonElement, ev: MouseEvent): void;
+    function _KeyDownSpin(this: HTMLButtonElement, ev: KeyboardEvent): void;
     /**
      * @this {HTMLElement}
      * @param {KeyboardEvent} ev
@@ -320,11 +323,11 @@ declare namespace ElementButton {
      * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
      * @param {string} id - The ID of the parent element
      * @param {readonly (InventoryIcon | ElementButton.CustomIcon)[]} [icons] - The (optional) list of icons
-     * @returns {null | { iconGrid: HTMLDivElement, tooltip: [string, HTMLElement, HTMLElement] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
+     * @returns {null | { iconGrid: HTMLDivElement, tooltip: [string, HTMLElement] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
      */
     function _ParseIcons(id: string, icons?: readonly (InventoryIcon | ElementButton.CustomIcon)[]): null | {
         iconGrid: HTMLDivElement;
-        tooltip: [string, HTMLElement, HTMLElement];
+        tooltip: [string, HTMLElement];
     };
     /**
      * @private
@@ -417,4 +420,16 @@ declare namespace ElementMenu {
      * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
      */
     export function PrependItem(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
+}
+declare namespace ElementCheckbox {
+    let _idCounter_1: number;
+    export { _idCounter_1 as _idCounter };
+    /**
+     * Construct an return a DOM checkbox element (`<input type="checkbox">`)
+     * @param {null | string} id - The ID of the element, or `null` if one must be assigned automatically
+     * @param {(this: HTMLInputElement, ev: Event) => any} onChange - The change event listener to-be fired upon checkbox clicks
+     * @param {null | ElementCheckbox.Options} options - High level options for the to-be created checkbox
+     * @param {null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     */
+    export function Create(id: null | string, onChange: (this: HTMLInputElement, ev: Event) => any, options?: null | ElementCheckbox.Options, htmlOptions?: null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
 }

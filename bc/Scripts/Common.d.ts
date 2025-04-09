@@ -173,6 +173,11 @@ declare function CommonConvertStringToArray(s: string): number[];
  */
 declare function CommonStringShuffle(string: string): string;
 /**
+ * Generate a unique ID
+ * @returns {string}
+ */
+declare function CommonGenerateUniqueID(): string;
+/**
  * Converts an array to a string separated by commas (equivalent of .join(","))
  * @param {readonly unknown[]} Arr - Array to convert to a joined string
  * @returns {string} - String of all the array items joined together

@@ -252,5 +252,6 @@ declare var ChatSearchLanguage: "" | ServerChatRoomLanguage;
 /** @type {"" | ServerChatRoomLanguage} */
 declare var ChatSearchLanguageTemp: "" | ServerChatRoomLanguage;
 declare var ChatSearchFilterTermsTemp: string;
-declare var ChatSearchRoomSpaces: string[];
+/** @type {ChatRoomSpaceLabel[]} */
+declare var ChatSearchRoomSpaces: ChatRoomSpaceLabel[];
 declare var ChatSearchCurrentRoomSpaceIndex: number;

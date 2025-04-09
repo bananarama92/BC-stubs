@@ -43,3 +43,7 @@ declare function PreferenceNotificationsClickSetting(Left: number, Top: number, 
  * Exits the preference screen. Resets the test notifications.
  */
 declare function PreferenceSubscreenNotificationsExit(): boolean;
+/**
+ * Finalize notification setting when the screen is unloaded
+ */
+declare function PreferenceSubscreenNotificationsUnload(): void;

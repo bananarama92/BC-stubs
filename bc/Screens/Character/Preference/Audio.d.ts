@@ -14,6 +14,7 @@ declare function PreferenceSubscreenAudioClick(): void;
  * Exits the preference screen.
  */
 declare function PreferenceSubscreenAudioExit(): boolean;
+declare function PreferenceSubscreenAudioUnload(): void;
 declare var PreferenceSettingsVolumeList: number[];
 declare var PreferenceSettingsVolumeIndex: number;
 declare var PreferenceSettingsMusicVolumeIndex: number;

@@ -5,6 +5,15 @@
  */
 declare function CommonDrawCanvasPrepare(C: Character): void;
 /**
+ * @typedef { Map<AssetGroupName, TextureAlphaMask[]> } MaskLayersMap
+ * @param {Character} C - The character to prepare
+ * @returns { { maskLayers: MaskLayersMap, maskLayersBlink: MaskLayersMap} } - The grouped mask layers for the character's appearance
+ */
+declare function CommonDrawAppearancePrepareMaskLayers(C: Character): {
+    maskLayers: MaskLayersMap;
+    maskLayersBlink: MaskLayersMap;
+};
+/**
  * Draws the given character's appearance using the provided drawing callbacks
  * @param {Character} C - The character whose appearance to draw
  * @param {CommonDrawCallbacks} callbacks - The drawing callbacks to be used
@@ -77,3 +86,4 @@ declare function CommonDrawFindPose(C: Character, AllowedPoses: Partial<Record<A
  * @returns {AssetPoseName | null} - The pose to use when drawing the given asset (or layer)
  */
 declare function CommonDrawResolveAssetPose(C: Character, Layer?: AssetLayer): AssetPoseName | null;
+type MaskLayersMap = Map<AssetGroupName, TextureAlphaMask[]>;

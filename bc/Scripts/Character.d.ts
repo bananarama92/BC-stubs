@@ -263,6 +263,14 @@ declare function CharacterSetFacialExpression(C: Character, AssetGroup: Expressi
  */
 declare function CharacterResetFacialExpression(C: Character): void;
 /**
+ * Checks if a given expression is disallowed on a character
+ * @param {Character} C
+ * @param {Item} Item
+ * @param {null | ExpressionName} Expression
+ * @returns {null | string} - An exit status or `null` if the expression is otherwise allowed
+ */
+declare function CharacterIsExpressionDisallowed(C: Character, Item: Item, Expression: null | ExpressionName): null | string;
+/**
  * Checks if a given expression is allowed on a character
  * @param {Character} C
  * @param {Item} Item
@@ -456,6 +464,13 @@ declare function CharacterSetActivePose(C: Character, poseName: null | AssetPose
  * @deprecated Superseded by {@link PoseCanChangeUnaided}
  */
 declare function CharacterCanChangeToPose(C: Character, poseName: AssetPoseName): boolean;
+/**
+ * Check a character against another one's access lists
+ * @param {Character} listOwner - The character to check against
+ * @param {Character | number} listTarget - The character or member number to check for
+ * @param {"black" | "white" | "ghost" | "friend"} list
+ */
+declare function CharacterIsOnList(listOwner: Character, listTarget: Character | number, list: "black" | "white" | "ghost" | "friend"): boolean;
 /** @type Character[] */
 declare var Character: Character[];
 declare var CharacterNextId: number;

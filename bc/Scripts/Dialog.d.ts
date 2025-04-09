@@ -492,40 +492,15 @@ declare function DialogInventoryBuild(C: Character, resetOffset?: boolean, locks
  */
 declare function DialogInventoryStringified(C: Character): string;
 /**
- * Build the initial state of the selection available in the facial expressions menu
- * @returns {void} - Nothing
- */
-declare function DialogFacialExpressionsBuild(): void;
-/**
- * Saves the expressions to a slot
- * @param {number} Slot - Index of saved expression (0 to 4)
- */
-declare function DialogFacialExpressionsSave(Slot: number): void;
-/**
  * Loads expressions from a slot
  * @param {number} Slot - Index of saved expression (0 to 4)
  */
 declare function DialogFacialExpressionsLoad(Slot: number): void;
 /**
  * Builds the savedexpressions menu previews.
- * @returns {void} - Nothing
+ * @returns {(null | Character)[]} - the created preview characters
  */
-declare function DialogBuildSavedExpressionsMenu(): void;
-/**
- * Draws the savedexpressions menu
- * @returns {void} - Nothing
- */
-declare function DialogDrawSavedExpressionsMenu(): void;
-/** Handles clicks in the savedexpressions menu
- * @returns {void} - Nothing
- */
-declare function DialogClickSavedExpressionsMenu(): void;
-/**
- * Build the initial state of the pose menu
- * @param {Character} [C] The character for whom {@link DialogActivePoses} whill be constructed; defaults to {@link CurrentCharacter}
- * @returns {void} - Nothing
- */
-declare function DialogLoadPoseMenu(C?: Character): void;
+declare function DialogBuildSavedExpressionsMenu(): (null | Character)[];
 /**
  * Handles the Click events in the Dialog Screen
  * @returns {boolean} - Whether a button was clicked
@@ -625,11 +600,11 @@ declare function DialogGetCharacterZone(C: Character, Zone: readonly [number, nu
 declare function DialogFindNextSubMenu(): void;
 /**
  * Finds and set an available character sub menu.
- * @param {string} MenuName - The name of the sub menu, see DialogSelfMenuOptions.
+ * @param {DialogSelfMenuName} MenuName - The name of the sub menu, see DialogSelfMenuOptions.
  * @param {boolean} force - Whether to check availability of the menu first.
  * @returns {boolean} - True, when the sub menu is found and available and was switched to. False otherwise and nothing happened.
  */
-declare function DialogFindSubMenu(MenuName: string, force?: boolean): boolean;
+declare function DialogFindSubMenu(MenuName: DialogSelfMenuName, force?: boolean): boolean;
 /**
  * Finds and sets a facial expression group. The expression sub menu has to be already opened.
  * @param {ExpressionGroupName} ExpressionGroup - The name of the expression group, see XXX.
@@ -647,7 +622,7 @@ declare function DialogSetStatus(status: string, timer?: number, replace?: null 
     asset?: Asset;
     group?: AssetGroup;
     C?: Character;
-}): void;
+}, id?: any): void;
 /**
  * Timer handler for managing timed dialog statuses.
  * @param {Element} elem - The relevant `span.dialog-status` element
@@ -752,54 +727,19 @@ declare function DialogDrawRepositionButton(): void;
  * @param {Character} C The character currently focused.
  */
 declare function DialogDrawTopMenu(C: Character): void;
-/**
- * Draws the left menu for the character
- * @param {Character} C - The currently focused character
- */
-declare function DialogSelfMenuDraw(C: Character): void;
-/**
- * Handles clicks on the left menu
- * @param {Character} C - The currently focused character
- */
-declare function DialogSelfMenuClick(C: Character): void;
 declare function DialogLoad(): void;
 declare function DialogDraw(): void;
 /**
- * Draw the menu for changing facial expressions
- * @returns {void} - Nothing
- */
-declare function DialogDrawExpressionMenu(): void;
-/**
- * Return the page number of the expression item's current expression.
- * @param {ExpressionItem} item - The expression item
- * @returns {number} The page number of the item's current expression
- */
-declare function DialogGetCurrentExpressionPage(item: ExpressionItem): number;
-/**
  * Handles clicks in the dialog expression menu.
+ * @deprecated - Superseded by {@link DialogSelfMenuMapping["Expression"]}
  * @returns {void} - Nothing
  */
 declare function DialogClickExpressionMenu(): void;
-/**
- * Draws the pose sub menu
- * @returns {void} - Nothing
- */
-declare function DialogDrawPoseMenu(): void;
-/**
- * Handles clicks in the pose sub menu
- * @returns {void} - Nothing
- */
-declare function DialogClickPoseMenu(): void;
 /**
  * Sets the current character sub menu to the owner rules
  * @returns {void} - Nothing
  */
 declare function DialogViewOwnerRules(): void;
-/**
- * Draws the rules sub menu
- * @returns {void} - Nothing
- */
-declare function DialogDrawOwnerRulesMenu(): void;
 /**
  * Sets the skill ratio for the player, will be a % of effectiveness applied to the skill when using it.
  * This way a player can use only a part of her bondage or evasion skill.
@@ -927,21 +867,9 @@ declare var DialogExpressionPreviousMode: {
     mode: DialogMenuMode;
     group: AssetItemGroup;
 };
-/** @type {ExpressionItem[]} */
-declare var DialogFacialExpressions: ExpressionItem[];
-/** The maximum number of expressions per page for a given asset group. */
-declare const DialogFacialExpressionsPerPage: 18;
-/**
- * The currently selected expression page number for a given asset group.
- * Contains up to {@link DialogFacialExpressionsPerPage} expressions.
- */
-declare let DialogFacialExpressionsSelectedPage: number;
-declare var DialogFacialExpressionsSelected: number;
+/** @deprecated */
+declare var DialogFacialExpressions: never;
 declare var DialogFacialExpressionsSelectedBlindnessLevel: number;
-/** @type {Character[]} */
-declare var DialogSavedExpressionPreviews: Character[];
-/** @type {Pose[][]} */
-declare var DialogActivePoses: Pose[][];
 declare var DialogExtendedMessage: string;
 /**
  * The list of available activities for the selected group.
@@ -960,8 +888,11 @@ declare namespace DialogSortOrder {
     let Unusable: 9;
     let Blocked: 10;
 }
-/** @type {null | DialogSelfMenuOptionType} */
-declare var DialogSelfMenuSelected: null | DialogSelfMenuOptionType;
+/**
+ * The currently active self-menu.
+ * @type {null | DialogSelfMenuName}
+ */
+declare var DialogSelfMenuSelected: null | DialogSelfMenuName;
 declare var DialogLeaveDueToItem: boolean;
 declare var DialogLentLockpicks: boolean;
 /** @type {ScreenSpecifier | null} */
@@ -989,10 +920,12 @@ declare var PlayerDialog: Map<string, string>;
 /** @type {FavoriteState[]} */
 declare var DialogFavoriteStateDetails: FavoriteState[];
 /**
- * The list of menu types available when clicking on yourself
- * @type {readonly DialogSelfMenuOptionType[]}
+ * The list of self-menu types available when clicking on yourself.
+ *
+ * The order of items in this list represents the menu iteration order as honored by the "view next page" spin button.
+ * @type {readonly DialogSelfMenuName[]}
  */
-declare var DialogSelfMenuOptions: readonly DialogSelfMenuOptionType[];
+declare var DialogSelfMenuOptions: readonly DialogSelfMenuName[];
 declare namespace DialogLeaveFocusItemHandlers {
     let DialogTightenLoosenItem: Record<string, (item: Item) => void>;
     let DialogFocusItem: Record<string, (item: Item) => void>;
@@ -1013,12 +946,30 @@ declare namespace DialogEffectIcons {
     function _BlindLevelToIcon(level?: number): null | InventoryIcon;
 }
 /**
+ * Abstract base class for a simplistic DOM subscreen with three-ish components:
+ * - A menubar with a set of buttons which are generally heterogeneous in function (_e.g._ perform arbitrary, unrelated task #1, #2 or #3)
+ * - A status message of some sort
+ * - A grid with some type of misc element, generally a set of buttons homogeneous in function (e.g. equip item #1, #2 or #3). See below for more details.
+ *
+ * Grid button clicks
+ * ------------------
+ * Grid button clicks in the {@link ids|ids.grid}-referenced element generally involve the following four steps:
+ * 1) The click listener (see {@link eventListeners|eventListeners._ClickButton}) performs some basic generic validation, like checking whether the character has been initialized.
+ *    A validation failure is considered an internal error, and will lead to a premature termination of the click event.
+ * 2) The click listener retrieves some type of underlying object associated with the grid button, like an item or activity (see {@link _GetClickedObject}).
+ * 3) The click listener performs more extensive, subscreen-/class-specific validation (see {@link GetClickStatus}), like checking whether an item has not been blacklisted.
+ *    A validation failure here will trigger a soft reload, updating the status message and re-evaluating the enabled/disabled state of _all_ pre-existing grid buttons.
+ * 4) The click listener finally performs a subscreen-/class-specific action based on the grid button click, like equipping an item (see {@link _ClickButton}).
+ *
+ * Parameters
+ * ----------
  * @abstract
  * @template {string} [ModeType=string] - The name of the mode associated with this instance (_e.g._ {@link DialogMenuMode})
- * @template {DialogInventoryItem | ItemActivity | DialogLine | null} [ClickedObj=any] - The underlying item or activity object of the clicked grid buttons (if applicable)
- * @extends {Omit<ScreenFunctions, "Run">}
+ * @template [ClickedObj=any] - The underlying item or activity object of the clicked grid buttons (if applicable)
+ * @template {DialogMenu.InitProperties} [PropType=DialogMenu.InitProperties] - Properties as initialized by {@link Init}
+ * @extends {ScreenFunctions}
  */
-declare class DialogMenu<ModeType extends string = string, ClickedObj extends DialogInventoryItem | ItemActivity | DialogLine | null = any> {
+declare class DialogMenu<ModeType extends string = string, ClickedObj = any, PropType extends DialogMenu.InitProperties = DialogMenu.InitProperties> {
     /**
      * @param {ModeType} mode The name of the mode associated with this instance
      */
@@ -1037,6 +988,21 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
         icon?: string;
         menubar?: string;
     }>;
+    /**
+     * A list of all init property names as supported by this class.
+     * Represents the set of keys that will be stored in {@link _initProperties}
+     * @readonly
+     * @abstract
+     * @type {readonly (keyof PropType)[]}
+     */
+    readonly _initPropertyNames: readonly (keyof PropType)[];
+    /**
+     * An object for storing all of this classes init properties.
+     *
+     * Subclasses _should_ generally implement a public getter/setter interface for safely manipulating each property stored herein.
+     * @type {null | PropType}
+     */
+    _initProperties: null | PropType;
     /**
      * An object containg all event listeners referenced in the {@link DialogMenu} subclass.
      * @readonly
@@ -1086,27 +1052,21 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
      * @type {Readonly<RectTuple>}
      */
     readonly defaultShape: Readonly<RectTuple>;
-    /**
-     * See {@link DialogMenu.C}
-     * @private
-     * @type {null | Character}
-     */
-    private _C;
-    set C(value: Character);
+    set C(value: PropType["C"]);
     /**
      * Get or set the currently selected character.
      *
      * Performs a hard {@link DialogMenu.Reload} if a new character is assigned.
+     * @type {PropType["C"]}
      */
-    get C(): Character;
-    set focusGroup(value: null | AssetItemGroup);
+    get C(): PropType["C"];
     /**
      * Get or set the currently selected group.
      *
      * Performs a hard {@link DialogMenu.Reload} if a new focus group is assigned.
-     * @type {null | AssetItemGroup}
+     * @type {null | AssetGroup}
      */
-    get focusGroup(): null | AssetItemGroup;
+    get focusGroup(): null | AssetGroup;
     /**
      * A set with the numeric IDs of to-be run reloads.
      * See {@link DialogMenu.Reload}
@@ -1132,13 +1092,12 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
     /**
      * Initialize the {@link DialogMenu} subscreen.
      *
-     * Serves as a {@link ScreenFunctions["Load"]} wrapper with added parameters.
-     * @param {Character} C The character in question
-     * @param {null | AssetItemGroup} focusGroup The focused item group
+     * Serves as a {@link ScreenLoadHandler} wrapper with added parameters.
+     * @param {PropType} properties The to be initialized character and any other properties
      * @param {null | { shape?: RectTuple }} style Misc styling for the subscreen
      * @returns {null | HTMLDivElement} The div containing the dialog subscreen root element or `null` if the screen failed to initialize
      */
-    Init(C: Character, focusGroup?: null | AssetItemGroup, style?: null | {
+    Init(properties: PropType, style?: null | {
         shape?: RectTuple;
     }): null | HTMLDivElement;
     Load(): void;
@@ -1151,29 +1110,28 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
     Unload(): void;
     Click(event: MouseEvent | TouchEvent): void;
     Draw(): void;
+    Run(time: number): void;
     Resize(load: boolean): void;
     Exit(): void;
     KeyDown(event: KeyboardEvent): boolean;
     /**
      * Reload the subscreen, updating the DOM elements and, if required, re-assigning the character and focus group.
-     * @param {null | Character} C - The selected character; defaults to {@link DialogMenu.C} and will update the property inplace otherwise
-     * @param {null | AssetItemGroup} focusGroup - The selected group; defaults to {@link DialogMenu.focusGroup} and will update the property inplace otherwise
+     * @param {null | Partial<PropType>} properties
      * @param {null | DialogMenu.ReloadOptions} [options] - Further customization options
      * @returns {Promise<boolean>} - Whether an update was triggered or aborted
      */
-    Reload(C?: null | Character, focusGroup?: null | AssetItemGroup, options?: null | DialogMenu.ReloadOptions): Promise<boolean>;
+    Reload(properties?: null | Partial<PropType>, options?: null | DialogMenu.ReloadOptions): Promise<boolean>;
     /**
      * See {@link DialogMenu.Reload}
-     * @param {null | Character} C
-     * @param {null | AssetItemGroup} focusGroup
-     * @returns {{ status: false, param?: never } | { status: true, param: DialogMenu.ReloadParam }}
+     * @param {Partial<PropType>} properties
+     * @returns {{ status: false, param?: never } | { status: true, param: DialogMenu.ReloadParam<PropType> }}
      */
-    _ReloadValidate(C: null | Character, focusGroup: null | AssetItemGroup): {
+    _ReloadValidate(properties: Partial<PropType>): {
         status: false;
         param?: never;
     } | {
         status: true;
-        param: DialogMenu.ReloadParam;
+        param: DialogMenu.ReloadParam<PropType>;
     };
     /**
      * See {@link DialogMenu.Reload}
@@ -1181,47 +1139,43 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
      * @param {DialogMenu.ReloadOptions} options
      * @returns {boolean}
      */
-    _Reload(param: DialogMenu.ReloadParam, options: DialogMenu.ReloadOptions): boolean;
+    _Reload(param: DialogMenu.ReloadParam<any>, options: DialogMenu.ReloadOptions): boolean;
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
      * @abstract
      * @param {HTMLElement} root
      * @param {HTMLElement} status
-     * @param {Character} C
-     * @param {null | AssetItemGroup} focusGroup
+     * @param {PropType} properties
      * @param {Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">} options
      */
-    _ReloadStatus(root: HTMLElement, status: HTMLElement, C: Character, focusGroup: null | AssetItemGroup, options: Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">): void;
+    _ReloadStatus(root: HTMLElement, status: HTMLElement, properties: PropType, options: Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">): void;
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.grid} elements.
      * @abstract
      * @param {HTMLElement} root
      * @param {HTMLElement} buttonGrid
-     * @param {Character} C
-     * @param {null | AssetItemGroup} focusGroup
+     * @param {PropType} properties
      * @param {Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">} options
      */
-    _ReloadButtonGrid(root: HTMLElement, buttonGrid: HTMLElement, C: Character, focusGroup: null | AssetItemGroup, options: Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">): void;
+    _ReloadButtonGrid(root: HTMLElement, buttonGrid: HTMLElement, properties: PropType, options: Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">): void;
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.icon} elements.
      * @abstract
      * @param {HTMLElement} root
      * @param {HTMLElement} icon
-     * @param {Character} C
-     * @param {null | AssetItemGroup} focusGroup
+     * @param {PropType} properties
      * @param {Pick<DialogMenu.ReloadOptions, never>} options
      */
-    _ReloadIcon(root: HTMLElement, icon: HTMLElement, C: Character, focusGroup: null | AssetItemGroup, options: Pick<DialogMenu.ReloadOptions, never>): void;
+    _ReloadIcon(root: HTMLElement, icon: HTMLElement, properties: PropType, options: Pick<DialogMenu.ReloadOptions, never>): void;
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.menubar} elements.
      * @abstract
      * @param {HTMLElement} root
      * @param {HTMLElement} menubar
-     * @param {Character} C
-     * @param {null | AssetItemGroup} focusGroup
+     * @param {PropType} properties
      * @param {Pick<DialogMenu.ReloadOptions, "reset">} options
      */
-    _ReloadMenubar(root: HTMLElement, menubar: HTMLElement, C: Character, focusGroup: null | AssetItemGroup, options: Pick<DialogMenu.ReloadOptions, "reset">): void;
+    _ReloadMenubar(root: HTMLElement, menubar: HTMLElement, properties: PropType, options: Pick<DialogMenu.ReloadOptions, "reset">): void;
     /**
      * Return an error status (if any) for when an item or activity is clicked.
      *
@@ -1259,16 +1213,28 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj extends Di
  * {@link DialogMenu} abstract subclass for dialog menus with a focus group.
  * @abstract
  * @template {string} [ModeType=string] - The name of the mode associated with this instance (_e.g._ {@link DialogMenuMode})
- * @template {DialogInventoryItem | ItemActivity | DialogLine | null} [ClickedObj=any] - The underlying item or activity object of the clicked grid buttons (if applicable)
- * @extends {DialogMenu<ModeType, ClickedObj>}
+ * @template [ClickedObj=any] - The underlying item or activity object of the clicked grid buttons (if applicable)
+ * @template {{ C: Character, focusGroup: AssetItemGroup }} [PropType={ C: Character, focusGroup: AssetItemGroup }]
+ * @extends {DialogMenu<ModeType, ClickedObj, PropType>}
  */
-declare class _DialogFocusMenu<ModeType extends string = string, ClickedObj extends DialogInventoryItem | ItemActivity | DialogLine | null = any> extends DialogMenu<ModeType, ClickedObj> {
+declare class _DialogFocusMenu<ModeType extends string = string, ClickedObj = any, PropType extends {
+    C: Character;
+    focusGroup: AssetItemGroup;
+} = {
+    C: Character;
+    focusGroup: AssetItemGroup;
+}> extends DialogMenu<ModeType, ClickedObj, PropType> {
     /**
-     * See {@link DialogMenu.focusGroup}.
-     * @private
-     * @type {null | AssetItemGroup}
+     * @param {ModeType} mode The name of the mode associated with this instance
      */
-    private _focusGroup;
+    constructor(mode: ModeType);
+    set focusGroup(value: AssetItemGroup);
+    /**
+     * Get or set the currently selected group.
+     *
+     * Performs a hard {@link DialogMenu.Reload} if a new focus group is assigned.
+     */
+    get focusGroup(): AssetItemGroup;
     eventListeners: {
         _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
         _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
@@ -1276,44 +1242,15 @@ declare class _DialogFocusMenu<ModeType extends string = string, ClickedObj exte
         _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
-    /**
-     * Initialize the {@link DialogMenu} subscreen.
-     *
-     * Serves as a {@link ScreenFunctions["Load"]} wrapper with added parameters.
-     * @param {Character} C The character in question
-     * @param {AssetItemGroup} focusGroup The focused item group
-     * @param {null | { shape?: RectTuple }} style Misc styling for the subscreen
-     * @returns {null | HTMLDivElement} The div containing the dialog subscreen root element or `null` if the screen failed to initialize
-     */
-    Init(C: Character, focusGroup: AssetItemGroup, style?: null | {
-        shape?: RectTuple;
-    }): null | HTMLDivElement;
-    /**
-     * See {@link DialogMenu.Reload}
-     * @param {null | Character} C
-     * @param {null | AssetItemGroup} focusGroup
-     * @returns {{ status: false, param?: never } | { status: true, param: DialogMenu.ReloadFocusParam }}
-     */
-    _ReloadValidate(C: null | Character, focusGroup: null | AssetItemGroup): {
-        status: false;
-        param?: never;
-    } | {
-        status: true;
-        param: DialogMenu.ReloadFocusParam;
-    };
-    /**
-     * See {@link DialogMenu.Reload}
-     * @param {DialogMenu.ReloadFocusParam} param
-     * @param {DialogMenu.ReloadOptions} options
-     * @returns {boolean}
-     */
-    _Reload(param: DialogMenu.ReloadFocusParam, options: DialogMenu.ReloadOptions): boolean;
 }
 /**
  * @template {string} T
  * @extends {_DialogFocusMenu<T, DialogInventoryItem>}
  */
-declare class _DialogItemMenu<T extends string> extends _DialogFocusMenu<T, DialogInventoryItem> {
+declare class _DialogItemMenu<T extends string> extends _DialogFocusMenu<T, DialogInventoryItem, {
+    C: Character;
+    focusGroup: AssetItemGroup;
+}> {
     /**
      * @param {ModeType} mode The name of the mode associated with this instance
      */
@@ -1325,6 +1262,7 @@ declare class _DialogItemMenu<T extends string> extends _DialogFocusMenu<T, Dial
         icon: "dialog-inventory-icon";
         paginate: "dialog-inventory-paginate";
     }>;
+    _initPropertyNames: readonly ["C", "focusGroup"];
     /** @satisfies {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
     clickStatusCallbacks: {
         InventoryBlockedOrLimited: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
@@ -1342,7 +1280,10 @@ declare class _DialogItemMenu<T extends string> extends _DialogFocusMenu<T, Dial
  * @template {string} T
  * @extends {_DialogFocusMenu<T, DialogInventoryItem>}
  */
-declare class _DialogLockingMenu<T extends string> extends _DialogFocusMenu<T, DialogInventoryItem> {
+declare class _DialogLockingMenu<T extends string> extends _DialogFocusMenu<T, DialogInventoryItem, {
+    C: Character;
+    focusGroup: AssetItemGroup;
+}> {
     /**
      * @param {ModeType} mode The name of the mode associated with this instance
      */
@@ -1353,6 +1294,7 @@ declare class _DialogLockingMenu<T extends string> extends _DialogFocusMenu<T, D
         grid: "dialog-locking-grid";
         paginate: "dialog-locking-paginate";
     }>;
+    _initPropertyNames: readonly ["C", "focusGroup"];
     /** @satisfies {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
     clickStatusCallbacks: {
         InventoryBlockedOrLimited: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item) => string;
@@ -1364,7 +1306,10 @@ declare class _DialogLockingMenu<T extends string> extends _DialogFocusMenu<T, D
  * @template {string} T
  * @extends {_DialogFocusMenu<T, DialogInventoryItem>}
  */
-declare class _DialogPermissionMenu<T extends string> extends _DialogFocusMenu<T, DialogInventoryItem> {
+declare class _DialogPermissionMenu<T extends string> extends _DialogFocusMenu<T, DialogInventoryItem, {
+    C: Character;
+    focusGroup: AssetItemGroup;
+}> {
     /**
      * @param {ModeType} mode The name of the mode associated with this instance
      */
@@ -1375,6 +1320,7 @@ declare class _DialogPermissionMenu<T extends string> extends _DialogFocusMenu<T
         grid: "dialog-permission-grid";
         paginate: "dialog-permission-paginate";
     }>;
+    _initPropertyNames: readonly ["C", "focusGroup"];
     /** @type {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
     clickStatusCallbacks: DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"];
 }
@@ -1382,7 +1328,10 @@ declare class _DialogPermissionMenu<T extends string> extends _DialogFocusMenu<T
  * @template {string} T
  * @extends {_DialogFocusMenu<T, ItemActivity>}
  */
-declare class _DialogActivitiesMenu<T extends string> extends _DialogFocusMenu<T, ItemActivity> {
+declare class _DialogActivitiesMenu<T extends string> extends _DialogFocusMenu<T, ItemActivity, {
+    C: Character;
+    focusGroup: AssetItemGroup;
+}> {
     /**
      * @param {ModeType} mode The name of the mode associated with this instance
      */
@@ -1393,6 +1342,7 @@ declare class _DialogActivitiesMenu<T extends string> extends _DialogFocusMenu<T
         grid: "dialog-activity-grid";
         paginate: "dialog-activity-paginate";
     }>;
+    _initPropertyNames: readonly ["C", "focusGroup"];
     /** @type {DialogMenu<T, ItemActivity>["clickStatusCallbacks"]} */
     clickStatusCallbacks: DialogMenu<T, ItemActivity>["clickStatusCallbacks"];
 }
@@ -1400,7 +1350,10 @@ declare class _DialogActivitiesMenu<T extends string> extends _DialogFocusMenu<T
  * @template {string} T
  * @extends {_DialogFocusMenu<T, null>}
  */
-declare class _DialogCraftedMenu<T extends string> extends _DialogFocusMenu<T, null> {
+declare class _DialogCraftedMenu<T extends string> extends _DialogFocusMenu<T, null, {
+    C: Character;
+    focusGroup: AssetItemGroup;
+}> {
     /**
      * @param {ModeType} mode The name of the mode associated with this instance
      */
@@ -1418,14 +1371,17 @@ declare class _DialogCraftedMenu<T extends string> extends _DialogFocusMenu<T, n
         crafter: "dialog-crafted-crafter";
         gap: "dialog-crafted-gap";
     }>;
+    _initPropertyNames: readonly ["C", "focusGroup"];
     /** @type {DialogMenu["clickStatusCallbacks"]} */
     clickStatusCallbacks: DialogMenu["clickStatusCallbacks"];
 }
 /**
  * @template {string} T
- * @extends {DialogMenu<T, DialogLine>}
+ * @extends {DialogMenu<T, DialogLine, { C: Character }>}
  */
-declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLine> {
+declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLine, {
+    C: Character;
+}> {
     /**
      * @param {T} mode
      */
@@ -1436,6 +1392,7 @@ declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLi
         grid: "dialog-dialog-grid";
         menubar: "dialog-dialog-menubar";
     }>;
+    _initPropertyNames: readonly ["C"];
     defaultShape: readonly [1005, 15, 995, 962];
     /** @type {DialogMenu<string, DialogLine>["clickStatusCallbacks"]} */
     clickStatusCallbacks: DialogMenu<string, DialogLine>["clickStatusCallbacks"];
@@ -1458,6 +1415,325 @@ declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLi
      * @satisfies {TimerHandler}
      */
     private _mobileTimeoutHandler;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} status
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">} options
+     */
+    _ReloadStatus(root: HTMLElement, status: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.grid} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} buttonGrid
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">} options
+     */
+    _ReloadButtonGrid(root: HTMLElement, buttonGrid: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.icon} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} icon
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, never>} options
+     */
+    _ReloadIcon(root: HTMLElement, icon: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, never>): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.menubar} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} menubar
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "reset">} options
+     */
+    _ReloadMenubar(root: HTMLElement, menubar: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "reset">): void;
+}
+/**
+ * @template {DialogSelfMenuName} [ModeType=DialogSelfMenuName]
+ * @template [T=any]
+ * @extends {DialogMenu<ModeType, T, { C: PlayerCharacter }>}
+ */
+declare class _DialogSelfMenu<ModeType extends DialogSelfMenuName = DialogSelfMenuName, T = any> extends DialogMenu<ModeType, T, {
+    C: PlayerCharacter;
+}> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: ModeType);
+    _initPropertyNames: readonly ["C"];
+    defaultShape: readonly [15, 15, 500, 940];
+    /**
+     * An object mapping button {@link HTMLButtonElement.name}s to their respective click + validation functions
+     * @satisfies {Record<string, DialogMenu.MenuButtonData<{ C: PlayerCharacter }>>}
+     */
+    menubarEventListeners: {
+        /** @type {DialogMenu.MenuButtonData<{ C: PlayerCharacter }>} */
+        next: DialogMenu.MenuButtonData<{
+            C: PlayerCharacter;
+        }>;
+    };
+    /**
+     * Whether this self-menu is accessible via the "view next page" button.
+     * @param {PlayerCharacter} C
+     */
+    IsAvailable(C: PlayerCharacter): boolean;
+    eventListeners: {
+        _ClickMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
+    };
+}
+/**
+ * @template {DialogSelfMenuName} ModeType
+ * @extends {_DialogSelfMenu<ModeType, ExpressionPair>}
+ */
+declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends _DialogSelfMenu<ModeType, ExpressionPair> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: ModeType);
+    ids: Readonly<{
+        root: "dialog-expression";
+        status: "dialog-expression-status";
+        menubar: "dialog-expression-menubar";
+        menuLeft: "dialog-expression-menu-left";
+        grid: "dialog-expression-button-grid";
+    }>;
+    /** @satisfies {DialogMenu<ModeType, ExpressionPair>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: {
+        CharacterIsExpressionAllowed: (C: Character, clickedItem: ExpressionPair, equippedItem: Item) => string;
+    };
+    /**
+     * See {@link _DialogExpressionMenu.facialExpressions}
+     * @private
+     * @type {null | Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>}
+     */
+    private _facialExpressions;
+    /**
+     * Get an object with all UI-configurable expression group names mapped to their respective expressions.
+     * @readonly
+     * @type {Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>}
+     */
+    readonly get facialExpressions(): Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>;
+    get focusGroup(): AssetAppearanceGroup;
+    eventListeners: {
+        _expressionRadioGroupClick(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
+    };
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} status
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">} options
+     */
+    _ReloadStatus(root: HTMLElement, status: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.grid} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} buttonGrid
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">} options
+     */
+    _ReloadButtonGrid(root: HTMLElement, buttonGrid: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.icon} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} icon
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, never>} options
+     */
+    _ReloadIcon(root: HTMLElement, icon: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, never>): void;
+}
+/**
+ * @template {DialogSelfMenuName} ModeType
+ * @extends {_DialogSelfMenu<ModeType, Pose>}
+ */
+declare class _DialogPoseMenu<ModeType extends DialogSelfMenuName> extends _DialogSelfMenu<ModeType, Pose> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: ModeType);
+    ids: Readonly<{
+        root: "dialog-pose";
+        status: "dialog-pose-status";
+        menubar: "dialog-pose-menubar";
+        grid: "dialog-pose-button-grid";
+    }>;
+    /** @satisfies {DialogMenu<ModeType, Pose>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: {
+        PoseAvailable(C: Character, pose: Pose): string;
+        ChatRoomOwnerPresenceRule(C: Character, pose: Pose): string;
+        CurrentScreen(C: Character, pose: Pose): string;
+    };
+    /**
+     * See {@link poses}
+     * @private
+     * @type {null | Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>}
+     */
+    private _poses;
+    /**
+     * An object mapping all (potentially) button-valid pose categories to their respective poses.
+     * @readonly
+     * @type {Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>}
+     */
+    readonly get poses(): Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>;
+    eventListeners: {
+        _clickPoseMutuallyExclusive(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
+    };
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} status
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">} options
+     */
+    _ReloadStatus(root: HTMLElement, status: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.grid} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} buttonGrid
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">} options
+     */
+    _ReloadButtonGrid(root: HTMLElement, buttonGrid: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.icon} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} icon
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, never>} options
+     */
+    _ReloadIcon(root: HTMLElement, icon: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, never>): void;
+}
+/**
+ * @template {DialogSelfMenuName} ModeType
+ * @extends {_DialogSelfMenu<ModeType, number>}
+ */
+declare class _DialogSavedExpressionsMenu<ModeType extends DialogSelfMenuName> extends _DialogSelfMenu<ModeType, number> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: ModeType);
+    ids: Readonly<{
+        root: "dialog-expression-preset";
+        status: "dialog-expression-preset-status";
+        menubar: "dialog-expression-preset-menubar";
+        grid: "dialog-expression-preset-button-grid";
+    }>;
+    /** @type {DialogMenu<ModeType, number>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: DialogMenu<ModeType, number>["clickStatusCallbacks"];
+    /**
+     * See {@link expressionPreviews}
+     * @private
+     * @type {null | (null | Character)[]}
+     */
+    private _expressionPreviews;
+    /**
+     * @readonly
+     * @type {readonly (null | Character)[]}
+     */
+    readonly get expressionPreviews(): readonly (null | Character)[];
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} status
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">} options
+     */
+    _ReloadStatus(root: HTMLElement, status: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.grid} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} buttonGrid
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">} options
+     */
+    _ReloadButtonGrid(root: HTMLElement, buttonGrid: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.icon} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} icon
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, never>} options
+     */
+    _ReloadIcon(root: HTMLElement, icon: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, never>): void;
+}
+/**
+ * @template {DialogSelfMenuName} ModeType
+ * @extends {_DialogSelfMenu<ModeType, null>}
+ */
+declare class _DialogOwnerRulesMenu<ModeType extends DialogSelfMenuName> extends _DialogSelfMenu<ModeType, null> {
+    /**
+     * @param {ModeType} mode The name of the mode associated with this instance
+     */
+    constructor(mode: ModeType);
+    ids: Readonly<{
+        root: "dialog-owner-rules";
+        status: "dialog-owner-rules-status";
+        menubar: "dialog-owner-rules-menubar";
+        grid: "dialog-owner-rules-grid";
+        empty: "dialog-owner-rules-empty";
+    }>;
+    /** @type {DialogMenu<ModeType, number>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: DialogMenu<ModeType, number>["clickStatusCallbacks"];
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} status
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">} options
+     */
+    _ReloadStatus(root: HTMLElement, status: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "status" | "statusTimer">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.grid} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} buttonGrid
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">} options
+     */
+    _ReloadButtonGrid(root: HTMLElement, buttonGrid: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, "reset" | "resetScrollbar" | "resetDialogItems">): void;
+    /**
+     * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.icon} elements.
+     * @abstract
+     * @param {HTMLElement} root
+     * @param {HTMLElement} icon
+     * @param {PropType} properties
+     * @param {Pick<DialogMenu.ReloadOptions, never>} options
+     */
+    _ReloadIcon(root: HTMLElement, icon: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, never>): void;
 }
 declare namespace DialogMenuMapping {
     let activities: _DialogActivitiesMenu<"activities">;
@@ -1467,4 +1743,23 @@ declare namespace DialogMenuMapping {
     let locked: _DialogItemMenu<"locked">;
     let locking: _DialogLockingMenu<"locking">;
     let permissions: _DialogPermissionMenu<"permissions">;
+}
+declare namespace DialogSelfMenuMapping {
+    let Expression: _DialogExpressionMenu<"Expression">;
+    let Pose: _DialogPoseMenu<"Pose">;
+    let SavedExpressions: _DialogSavedExpressionsMenu<"SavedExpressions">;
+    let OwnerRules: _DialogOwnerRulesMenu<"OwnerRules">;
+}
+declare namespace DialogFocusGroup {
+    /**
+     *
+     * @param {string} id - The ID for the to-be created focus group grid
+     * @param {(this: HTMLButtonElement, ev: MouseEvent) => any} listener - The listener to-be executed upon selecting a group; the group name can be retrieved from `this.name`
+     * @param {null | { required?: boolean, useDynamicGroupName?: boolean }} options - Further options for the to-be created focus group grid
+     * @returns {HTMLElement} - The created element
+     */
+    function Create(id: string, listener: (this: HTMLButtonElement, ev: MouseEvent) => any, options?: null | {
+        required?: boolean;
+        useDynamicGroupName?: boolean;
+    }): HTMLElement;
 }

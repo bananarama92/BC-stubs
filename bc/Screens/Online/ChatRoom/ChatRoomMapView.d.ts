@@ -309,11 +309,7 @@ declare function ChatRoomMapViewMouseDown(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewMouseMove(): void;
-/**
- * Mouse up event is used to stop drawing
- * @returns {void} - Nothing
- */
-declare function ChatRoomMapViewMouseUp(): void;
+declare function ChatRoomMapViewMouseUp(event: MouseEvent | TouchEvent): void;
 declare function ChatRoomMapViewMouseWheel(event: WheelEvent): void;
 /**
  * Copies the current map in the clipboard.  Called from the chat field command "mapcopy"

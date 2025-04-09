@@ -22,23 +22,23 @@ declare function PlatformProfileLoad(): void;
  * @param {number} X - The X position on screen
  * @param {number} Y - The Y position on screen
  * @param {number} PerkNum - The perk number for the current character
- * @param {Object} Prerequisite1 - If there's a first prerequisite to validate
- * @param {Object} Prerequisite2 - If there's a second prerequisite to validate
+ * @param {Platform.PerkName} [Prerequisite1] - If there's a first prerequisite to validate
+ * @param {Platform.PerkName} [Prerequisite2] - If there's a second prerequisite to validate
  * @returns {void} - Nothing
  */
-declare function PlatformProfileDrawPerkButton(X: number, Y: number, PerkNum: number, Prerequisite1: any, Prerequisite2: any): void;
+declare function PlatformProfileDrawPerkButton(X: number, Y: number, PerkNum: number, Prerequisite1?: Platform.PerkName, Prerequisite2?: Platform.PerkName): void;
 /**
  * Returns the text associated to the bonus given by the owner of the current player
- * @param {Object} PlatformChar - The platform character to evaluate
+ * @param {Platform.Character} PlatformChar - The platform character to evaluate
  * @returns {string} - The text string linked to the bonus
  */
-declare function PlatformGetOwnerBonus(PlatformChar: any): string;
+declare function PlatformGetOwnerBonus(PlatformChar: Platform.Character): string;
 /**
  * Returns the text associated to the bonus given by the lover of the current player
- * @param {Object} PlatformChar - The platform character to evaluate
+ * @param {Platform.Character} PlatformChar - The platform character to evaluate
  * @returns {string} - The text string linked to the bonus
  */
-declare function PlatformGetLoverBonus(PlatformChar: any): string;
+declare function PlatformGetLoverBonus(PlatformChar: Platform.Character): string;
 /**
  * Runs and draws the screen.
  * @returns {void} - Nothing

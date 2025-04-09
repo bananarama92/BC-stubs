@@ -127,3 +127,31 @@ declare const FriendListIDs: Readonly<{
     beepTextArea: "friend-list-beep-textarea";
     beepFooter: "friend-list-beep-footer";
 }>;
+/** @satisfies {{ [key in (ServerChatRoomSpace | "Private")]: FriendListIcon }} */
+declare const FriendListIconMapping: {
+    "": {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    M: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    X: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    Asylum: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    Private: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+};

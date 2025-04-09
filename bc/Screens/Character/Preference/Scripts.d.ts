@@ -3,6 +3,7 @@ declare function PreferenceSubscreenScriptsRun(): void;
 declare function PreferenceScriptsDrawWarningScreen(): void;
 declare function PreferenceSubscreenScriptsClick(): void;
 declare function PreferenceSubscreenScriptsExit(): boolean;
+declare function PreferenceSubscreenScriptsUnload(): void;
 declare function PreferenceSubscreenScriptsWarningClick(): void;
 /** @type {ScriptPermissionProperty[]} */
 declare const PreferenceScriptPermissionProperties: ScriptPermissionProperty[];
