@@ -1519,10 +1519,9 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
     private _facialExpressions;
     /**
      * Get an object with all UI-configurable expression group names mapped to their respective expressions.
-     * @readonly
      * @type {Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>}
      */
-    readonly get facialExpressions(): Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>;
+    get facialExpressions(): Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>;
     get focusGroup(): AssetAppearanceGroup;
     eventListeners: {
         _expressionRadioGroupClick(this: HTMLButtonElement, ev: MouseEvent): void;
@@ -1591,10 +1590,9 @@ declare class _DialogPoseMenu<ModeType extends DialogSelfMenuName> extends _Dial
     private _poses;
     /**
      * An object mapping all (potentially) button-valid pose categories to their respective poses.
-     * @readonly
      * @type {Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>}
      */
-    readonly get poses(): Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>;
+    get poses(): Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>;
     eventListeners: {
         _clickPoseMutuallyExclusive(this: HTMLButtonElement, ev: MouseEvent): void;
         _ClickMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
@@ -1657,10 +1655,9 @@ declare class _DialogSavedExpressionsMenu<ModeType extends DialogSelfMenuName> e
      */
     private _expressionPreviews;
     /**
-     * @readonly
      * @type {readonly (null | Character)[]}
      */
-    readonly get expressionPreviews(): readonly (null | Character)[];
+    get expressionPreviews(): readonly (null | Character)[];
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
      * @abstract
@@ -1705,8 +1702,8 @@ declare class _DialogOwnerRulesMenu<ModeType extends DialogSelfMenuName> extends
         grid: "dialog-owner-rules-grid";
         empty: "dialog-owner-rules-empty";
     }>;
-    /** @type {DialogMenu<ModeType, number>["clickStatusCallbacks"]} */
-    clickStatusCallbacks: DialogMenu<ModeType, number>["clickStatusCallbacks"];
+    /** @type {DialogMenu<ModeType, null>["clickStatusCallbacks"]} */
+    clickStatusCallbacks: DialogMenu<ModeType, null>["clickStatusCallbacks"];
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
      * @abstract
