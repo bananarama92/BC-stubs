@@ -657,6 +657,7 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	AllowHideItem?: string[];
 	/** @deprecated */
 	AllowTypes?: never;
+	/** A list of {@link TypeRecord} keys for which a single layer expects multiple type-specific .png files. */
 	CreateLayerTypes?: string[];
 	/**
 	 * Whether an item can be tightened or not.
@@ -805,6 +806,12 @@ type AssetDefinition = (
 	| AssetDefinition.Script
 );
 
+interface AssetLayerMaskTexureDefinition {
+	/** The groups that will be affected */
+	Groups: AssetGroupName[];
+	/** If true, the texture mask will apply to all layers in the groups specified, event if their priority is higher than the mask layer */ 
+	ApplyToAbove?: boolean;
+}
 
 interface AssetLayerDefinition extends AssetCommonPropertiesGroupAssetLayer, AssetCommonPropertiesAssetLayer {
 	/** The layer's name */
@@ -819,7 +826,7 @@ interface AssetLayerDefinition extends AssetCommonPropertiesGroupAssetLayer, Ass
 	/** Whether the layer is hidden in the Color Picker UI. Defaults to false. */
 	HideColoring?: boolean;
 
-	/** A record (or a list thereof) with all screen names + option indices that should make the layer visible */
+	/** A record (or a list thereof) with all screen names + option indices, _i.e._ {@link TypeRecord} keys + values, that should make the layer visible */
 	AllowTypes?: AllowTypes.Definition;
 
 	/**
@@ -848,6 +855,15 @@ interface AssetLayerDefinition extends AssetCommonPropertiesGroupAssetLayer, Ass
 	 */
 	BlendingMode?: GlobalCompositeOperation;
 
+
+	/**
+	 * Mark the layer as a mask layer, which will be used to apply alpha masks to other layers.
+	 * Only the alpha channel of the image, and positioning are concerned for a mask layer.
+	 * The color, priority and alpha are ignored for mask layers.
+	 * The blending mode of the mask layer must be set to "destination-in" or "destination-out".
+	 */
+	TextureMask?: AssetLayerMaskTexureDefinition;
+
 	/**
 	 * Specify that this is (one of) the asset's lock layer.
 	 *
@@ -867,6 +883,11 @@ interface AssetLayerDefinition extends AssetCommonPropertiesGroupAssetLayer, Ass
 	 */
 	CopyLayerPoseMapping?: string;
 
+	/**
+	 * A list of {@link TypeRecord} keys for which a single layer expects multiple type-specific .png files.
+	 *
+	 * By default files are expected for _all_ option indices associated with the key(s), unless the valid option set has been narrowed down according to {@link AssetLayerDefinition.AllowTypes}.
+	 */
 	CreateLayerTypes?: string[];
 	/* Specifies that this layer should not be drawn if the character is wearing any item with the given attributes */
 	HideForAttribute?: AssetAttribute[];

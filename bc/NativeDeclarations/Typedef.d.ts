@@ -8,7 +8,8 @@ declare function io(serv: string): SocketIO.Socket;
 
 type ClientEvent = import("@socket.io/component-emitter").EventNames<ClientToServerEvents>;
 type ClientEventParams<Ev extends ClientEvent> = import("@socket.io/component-emitter").EventParams<ClientToServerEvents, Ev>;
-
+type _SendRateLimitQueueItem<T extends ClientEvent> = T extends ClientEvent ? { Message: T, args: ClientEventParams<T>} : never;
+type SendRateLimitQueueItem = _SendRateLimitQueueItem<ClientEvent>;
 interface String {
 	replaceAt(index: number, character: string): string;
 }
@@ -32,6 +33,7 @@ interface WebGL2RenderingContext {
 	programFull?: WebGLProgram;
 	programHalf?: WebGLProgram;
 	programTexMask?: WebGLProgram;
+	programPreMultiplyAlpha?: WebGLProgram;
 	textureCache?: Map<string, WebGLTextureData>;
 	maskCache?: Map<string, WebGLTexture>;
 }
@@ -44,6 +46,7 @@ interface WebGLProgram {
 	u_matrix?: WebGLUniformLocation;
 	u_texture?: WebGLUniformLocation;
 	u_alpha_texture?: WebGLUniformLocation;
+	u_mask_texture?: WebGLUniformLocation;
 	position_buffer?: WebGLBuffer;
 	texcoord_buffer?: WebGLBuffer;
 }
@@ -169,13 +172,30 @@ declare namespace ElementButton {
 		 */
 		icons?: readonly (null | undefined | InventoryIcon | CustomIcon)[];
 		/** The role of the button. All accepted values are currently special-cased in order to set role-specific event listeners and/or attributes. */
-		role?: "radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox";
+		role?: "radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox" | "spinbutton";
 		/** Whether to limit the default styling of the button's border and background */
 		noStyling?: boolean;
 		/** Whether the button should be disabled or not */
 		disabled?: boolean;
 		/** A click event listener to-be fired when a button is disabled via `aria-disabled: "true"`. */
 		clickDisabled?: (this: HTMLButtonElement, event: MouseEvent) => any;
+	}
+}
+
+declare namespace ElementCheckbox {
+
+	/** Various options that can be passed along to {@link ElementCheckbox.Create} */
+	interface Options {
+		/** Whether the checkbox is checked by default or not */
+		checked?: boolean;
+		/** Whether the checkbox should be disabled or not */
+		disabled?: boolean;
+		/**
+		 * The {@link HTMLInputElement.value}/{@link HTMLInputElement.valueAsNumber} associated with the checkbox when checked.
+		 *
+		 * Defaults to `"on"` if not specified.
+		 */
+		value?: string | number;
 	}
 }
 
@@ -242,6 +262,26 @@ type ChatRoomSpaceLabel = "MIXED" | "FEMALE_ONLY" | "MALE_ONLY" | "ASYLUM";
 type ChatRoomVisibilityModeLabel = "PUBLIC" | "ADMIN_WHITELIST" | "ADMIN" | "UNLISTED";
 type ChatRoomAccessModeLabel = "PUBLIC" | "ADMIN_WHITELIST" | "ADMIN";
 
+type ChatRoomMenuButton =
+	| "Camera"
+	| "Cancel"
+	| "CharacterView"
+	| "Cut"
+	| "CustomizationOn"
+	| "CustomizationOff"
+	| "Dress"
+	| "Exit"
+	| "GameOption"
+	| "Icons"
+	| "Kneel"
+	| "MapView"
+	| "NextCharacters"
+	| "PreviousCharacters"
+	| "Profile"
+	| "RoomAdmin"
+	| "ClearFocus"
+;
+
 type DialogMenuMode = (
 	"activities"
 	| "colorDefault"
@@ -300,19 +340,61 @@ declare namespace DialogMenu {
 	}
 
 	/** Internal {@link DialogMenu.Reload} parameters for dialog subscreens without a focus group */
-	interface ReloadParam {
+	interface ReloadParam<T extends InitProperties> {
 		root: HTMLElement;
-		C: Character;
-		currentC: Character;
+		newProperties: T;
+		oldProperties: T;
 		textCache: TextCache;
-		focusGroup?: AssetItemGroup;
-		currentFocusGroup?: AssetItemGroup;
 	}
 
-	/** Internal {@link DialogMenu.Reload} parameters for dialog subscreens with a focus group */
-	interface ReloadFocusParam extends ReloadParam {
-		focusGroup: AssetItemGroup;
-		currentFocusGroup: AssetItemGroup;
+	/**
+	 * All valid init properties that a {@link DialogMenu} subclass may choose to implement.
+	 *
+	 * Init properties represent a set of {@link DialogMenu.Init}-initialized properties which are exclusively active during the matching screen's lifetime.
+	 */
+	interface InitProperties {
+		C: Character;
+		focusGroup?: AssetGroup;
+	}
+
+	/** An object representing the validation output of a menubar button, determining whether it should be clickable or not */
+	interface MenuButtonValidateData {
+		/**
+		 * The button's validation state:
+		 * * `null`: Validation successful
+		 * * `"hide"`: Validation failure; hide the button
+		 * * `"disabled"`: Validation failure; disable the button but do not hide it
+		 */
+		state: null | "hidden" | "disabled";
+		/**
+		 * An optional status message to-be returned if the validation fails.
+		 */
+		status?: null | string;
+	}
+
+	/**
+	 * A custom validation function for determining whether the button should be enabled, disabled or hidden.
+	 * @param button The button in question
+	 * @param properties The {@link InitProperties} associated with the specific dialog menu
+	 * @param equippedItem The equipped item in question (if any)
+	 * @returns A nullish object if the validation passes or an object representing the validation state
+	 */
+	type MenuButtonValidator<T extends InitProperties> = (
+		button: HTMLButtonElement,
+		properties: T,
+		equippedItem?: Item | null
+	) => MenuButtonValidateData | null;
+
+	interface MenuButtonData<T extends InitProperties> {
+		/**
+		 * @param button The button in question
+		 * @param ev The mouse event associated with the button click
+		 * @param properties The {@link InitProperties} associated with the specific dialog menu
+		 * @param equippedItem The equipped item in question (if any)
+		 */
+		click: (button: HTMLButtonElement, ev: MouseEvent, properties: T, equippedItem?: Item | null) => any;
+		/** An object mapping labels to custom validation functions for button clicks. */
+		validate?: Record<string, MenuButtonValidator<T>>;
 	}
 }
 
@@ -525,24 +607,6 @@ type ArousalActiveName = "Inactive" | "NoMeter" | "Manual" | "Hybrid" | "Automat
 type ArousalVisibleName = "All" | "Access" | "Self";
 type ArousalAffectStutterName = "None" | "Arousal" | "Vibration" | "All";
 
-/**
- * A listener for KeyboardEvents
- *
- * Cheat-sheet about how to do key checks with it:
- * - {@link KeyboardEvent.code} is the layout-insensitive code
- * for the key (so KeyA, Space, etc.) Use this if you want to
- * keep the QWERTY location, like movement keys.
- *
- * {@link KeyboardEvent.key} is the layout-dependent string
- * for the key (so "a" (or "q" on AZERTY), "A" (or "Q"), " ", etc.)
- * Use this if you want the key to correspond to what's actually on
- * the user's keyboard.
- *
- * @see {@link CommonKeyMove}
- */
-type KeyboardEventListener = ScreenFunctions["KeyDown"];
-type MouseEventListener = ScreenFunctions["MouseDown"];
-
 type SettingsSensDepName = "SensDepLight" | "Normal" | "SensDepNames" | "SensDepTotal" | "SensDepExtreme";
 type SettingsVFXName = "VFXInactive" | "VFXSolid" | "VFXAnimatedTemp" | "VFXAnimated";
 type SettingsVFXVibratorName = "VFXVibratorInactive" | "VFXVibratorSolid" | "VFXVibratorAnimated";
@@ -568,6 +632,7 @@ interface PreferenceSubscreen {
 	run: () => void;
 	click: () => void;
 	exit?: () => boolean;
+	unload?: () => void;
 }
 
 interface PreferenceGenderSetting {
@@ -792,6 +857,12 @@ interface IChatRoomMessageMetadata {
 	ChatRoomName?: string;
 	/** The original, ungarbled message, if provided by the sender */
 	OriginalMsg?: string;
+	/** The ID of the message being replied to */
+	ReplyId?: string;
+	/** The ID of the message */
+	MsgId?: string;
+
+
 }
 
 /**
@@ -883,7 +954,7 @@ interface IFriendListBeepLogMessage {
 	MemberName: string;
 	ChatRoomName?: string;
 	Private: boolean;
-	ChatRoomSpace?: string;
+	ChatRoomSpace?: ServerChatRoomSpace;
 	Sent: boolean;
 	Time: Date;
 	Message?: string;
@@ -1002,11 +1073,11 @@ interface AssetScriptGroup extends AssetGroup {
 	readonly IsDefault: false;
 }
 
-/** Mapped type for mapping group names to their respective {@link AssetGroup} subtype */
-type AssetGroupMap = (
-	{[k in AssetGroupBodyName]: AssetAppearanceGroup}
-	& {[k in AssetGroupItemName]: AssetItemGroup}
-	& {[k in AssetGroupScriptName]: AssetScriptGroup}
+/** A type mapping all asset group names to their respective, {@link AssetGroup.Category}-specific group type */
+type AssetGroupMapping = (
+	{ [key in AssetGroupBodyName]: AssetAppearanceGroup }
+	& { [key in AssetGroupItemName]: AssetItemGroup }
+	& { [key in AssetGroupScriptName]: AssetScriptGroup }
 );
 
 /** An object defining a drawable layer of an asset */
@@ -1052,6 +1123,7 @@ interface AssetLayer {
 	readonly MinOpacity: number;
 	readonly MaxOpacity: number;
 	readonly BlendingMode: GlobalCompositeOperation;
+	readonly TextureMask?: AssetLayerMaskTexureDefinition;
 	readonly LockLayer: boolean;
 	readonly MirrorExpression?: AssetGroupName;
 	/** @deprecated */
@@ -1063,6 +1135,11 @@ interface AssetLayer {
 	readonly GroupAlpha?: readonly Alpha.Data[];
 	/** @deprecated - Superceded by {@link CreateLayerTypes} */
 	readonly ModuleType?: never;
+	/**
+	 * A list of {@link TypeRecord} keys for which a single layer expects multiple type-specific .png files.
+	 *
+	 * By default files are expected for _all_ option indices associated with the key(s), unless the valid option set has been narrowed down according to {@link AssetLayer.AllowTypes}.
+	 */
 	readonly CreateLayerTypes: readonly string[];
 	/* Specifies that this layer should not be drawn if the character is wearing any item with the given attributes */
 	readonly HideForAttribute: readonly AssetAttribute[] | null;
@@ -1096,6 +1173,11 @@ interface ExpressionItem {
 	Group: ExpressionGroupName,
 	CurrentExpression: null | ExpressionName,
 	ExpressionList: ExpressionName[],
+}
+
+interface ExpressionPair {
+	Group: Exclude<ExpressionGroupName, "Eyes2">,
+	Expression: null | ExpressionName,
 }
 
 /**
@@ -1220,10 +1302,7 @@ interface Asset {
 	readonly DynamicScriptDraw: boolean;
 	/** @deprecated - superceded by {@link CreateLayerTypes} */
 	readonly HasType?: never;
-	/**
-	 * A module for which the layer can have types.
-	 * Allows one to define different module-specific assets for a single layer.
-	 */
+	/** A list of {@link TypeRecord} keys for which a single layer expects multiple type-specific .png files. */
 	readonly CreateLayerTypes: readonly string[];
 	/** A record that maps {@link ExtendedItemData.name} to a set with all option indices that support locks */
 	readonly AllowLockType: null | Record<string, Set<number>>;
@@ -1368,6 +1447,7 @@ type InventoryIcon = (
 	| "FamilyOnly"
 	| "OwnerOnly"
 	| "Unlocked"
+	| "Blocked"
 	| AssetLockType
 	| ShopIcon
 );
@@ -1422,63 +1502,92 @@ interface Lovership {
 	BeginWeddingOfferedByMemberNumber?: never;
 }
 
+
+/**
+ * A listener for KeyboardEvents
+ *
+ * Cheat-sheet about how to do key checks with it:
+ * - {@link KeyboardEvent.code} is the layout-insensitive code
+ * for the key (so KeyA, Space, etc.) Use this if you want to
+ * keep the QWERTY location, like movement keys.
+ *
+ * {@link KeyboardEvent.key} is the layout-dependent string
+ * for the key (so "a" (or "q" on AZERTY), "A" (or "Q"), " ", etc.)
+ * Use this if you want the key to correspond to what's actually on
+ * the user's keyboard.
+ *
+ * @see {@link CommonKeyMove}
+ */
+type KeyboardEventListener = (event: KeyboardEvent) => boolean;
+type MouseEventListener = (event: MouseEvent | TouchEvent) => void;
+type MouseWheelEventListener = (event: WheelEvent) => void;
+
+type VoidHandler = () => void;
+
+type ScreenLoadHandler = VoidHandler;
+type ScreenUnloadHandler = VoidHandler;
+type ScreenDrawHandler = VoidHandler;
+type ScreenRunHandler = (time: number) => void;
+type ScreenResizeHandler = (load: boolean) => void;
+type ScreenExitHandler = VoidHandler;
+
 interface ScreenFunctions {
 	// Required
 	/**
 	 * Called each frame
 	 * @param {number} time - The current time for frame
 	 */
-	Run(time: number): void;
+	Run: ScreenRunHandler;
 	/**
 	 * Called if the user presses the mouse button or touches the touchscreen on the canvas
 	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
 	 */
-	MouseDown?(event: MouseEvent | TouchEvent): void;
+	MouseDown?: MouseEventListener;
 		/**
 	 * Called if the user releases the mouse button or the touchscreen on the canvas
 	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
 	 */
-	MouseUp?(event: MouseEvent | TouchEvent): void;
+	MouseUp?: MouseEventListener;
 	/**
 	 * Called if the user moves the mouse cursor or the touch on the touchscreen over the canvas
 	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
 	 */
-	MouseMove?(event: MouseEvent | TouchEvent): void;
+	MouseMove?: MouseEventListener;
 	/**
 	 * Called if the user moves the mouse wheel on the canvas
 	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
 	 */
-	MouseWheel?(event: WheelEvent): void;
+	MouseWheel?: MouseWheelEventListener;
 	/**
 	 * Called if the user clicks on the canvas
 	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
 	 */
-	Click(event: MouseEvent | TouchEvent): void;
+	Click: MouseEventListener;
 
 	// Optional
 	/** Called when screen is loaded using `CommonSetScreen` */
-	Load?(): void;
+	Load?: ScreenLoadHandler
 	/** Called when this screen is being replaced */
-	Unload?(): void;
+	Unload?: ScreenUnloadHandler;
 	/** Called each frame when the screen needs to be drawn. */
-	Draw?() : void;
+	Draw?: ScreenDrawHandler;
 	/**
 	 * Called when screen size or position changes or after screen load
 	 * @param {boolean} load - If the reason for call was load (`true`) or window resize (`false`)
 	 */
-	Resize?(load: boolean): void;
+	Resize?: ScreenResizeHandler;
 	/**
 	 * Called if the the user presses any key
 	 * @param {KeyboardEvent} event - The event that triggered this
 	 */
-	KeyDown?(event: KeyboardEvent): boolean;
+	KeyDown?: KeyboardEventListener;
 	/**
 	 * Called if the user releases a pressed key
 	 * @param {KeyboardEvent} event - The event that triggered this
 	 */
-	KeyUp?(event: KeyboardEvent): void;
+	KeyUp?: KeyboardEventListener;
 	/** Called when user presses Esc */
-	Exit?(): void;
+	Exit?: ScreenExitHandler;
 }
 
 //#region Characters
@@ -1607,6 +1716,18 @@ interface Character {
 	Reputation: Reputation[];
 	Skill: Skill[];
 	/**
+	 * An object mapping expression group names to their respective currently explicitly, manually selected expression (which may thus diverge from the actual currently active expression).
+	 *
+	 * Setting or deleting an entry will potentially trigger a {@link DialogSelfMenuMapping.Expression} reload unless done so via `setWithoutReload()`/`deleteWithoutReload()` calls.
+	 */
+	readonly ActiveExpression: (
+		Partial<Record<ExpressionGroupName, ExpressionName>>
+		& {
+			setWithoutReload(key: ExpressionGroupName, value: ExpressionName): void,
+			deleteWithoutReload(key: ExpressionGroupName): void,
+		}
+	);
+	/**
 	 * Get a copy or set the array of currently enabled poses.
 	 * @see {@link PoseMapping} - The underlying record of this property, usage of which is recommended
 	 */
@@ -1675,7 +1796,6 @@ interface Character {
 	LimitedItems?: never;
 	/** A record with all asset- and type-specific permission settings */
 	PermissionItems: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
-	WhiteList: number[];
 	HeightModifier: number;
 	MemberNumber?: number;
 	ItemPermission: 0 | 1 | 2 | 3 | 4 | 5;
@@ -1787,6 +1907,7 @@ interface Character {
 	HasAttribute: (attribute: AssetAttribute) => boolean;
 	DrawAppearance?: Item[];
 	AppearanceLayers?: Mutable<AssetLayer>[];
+	AppearanceMasks?: AssetLayer[];
 	Hooks: Map<CharacterHook, Map<string, () => void>> | null;
 	RegisterHook: (hookName: CharacterHook, hookInstance: string, callback: () => void) => boolean;
 	UnregisterHook: (hookName: CharacterHook, hookInstance: string) => boolean;
@@ -1798,6 +1919,50 @@ interface Character {
 	HasVagina: () => boolean;
 	IsFlatChested: () => boolean;
 	WearingCollar: () => boolean;
+	/**
+	 * Check if the player is ghosting the given target character (or member number)
+	 */
+	HasOnGhostlist: (this: PlayerCharacter, target?: Character | number) => boolean;
+	/**
+	 * Check if the player is blacklisting the given target character (or member number)
+	 */
+	HasOnBlacklist: (target?: Character | number) => boolean;
+	/**
+	 * Check if the player is whitelisting the given target character (or member number)
+	 */
+	HasOnWhitelist: (target?: Character | number) => boolean;
+	/**
+	 * Check if the player is friend with the given target character (or member number)
+	 */
+	HasOnFriendlist: (this: PlayerCharacter, target?: Character | number) => boolean;
+	/**
+	 * Check if this character is ghosted by the player
+	 */
+	IsGhosted: () => boolean;
+	/**
+	 * Check if this character is blacklisted by the player
+	 */
+	IsBlacklisted: () => boolean;
+	/**
+	 * Check if this character is whitelisted by the player
+	 */
+	IsWhitelisted: () => boolean;
+	/**
+	 * Check if this character is friended by the player
+	 */
+	IsFriend: () => boolean;
+	/**
+	 * List of whitelisted member numbers for the character
+	 *
+	 * Do not manipulate directly. Use {@link ChatRoomListUpdate}
+	 */
+	WhiteList: number[];
+	/**
+	 * List of blacklisted member numbers for the character
+	 *
+	 * Do not manipulate directly. Use {@link ChatRoomListUpdate}
+	 */
+	BlackList: number[];
 
 	// Properties created in other places
 	ArousalSettings: ArousalSettingsType;
@@ -1810,7 +1975,6 @@ interface Character {
 	OnlineSharedSettings?: CharacterOnlineSharedSettings;  // technically never as it is Online-only
 	Game?: CharacterGameParameters; // technically never as it is Online-only
 	MapData?: ChatRoomMapData;
-	BlackList: number[];
 	RunScripts?: boolean;
 	HasScriptedAssets?: boolean;
 	Cage?: boolean;
@@ -2025,7 +2189,12 @@ interface PlayerCharacter extends Character {
 	GraphicsSettings: GraphicsSettingsType;
 	NotificationSettings: NotificationSettingsType;
 	OnlineSharedSettings: CharacterOnlineSharedSettings;  // technically never as it is Online-only
-	GhostList?: number[];
+	/**
+	 * List of ghosted member numbers for the player
+	 *
+	 * Do not manipulate directly. Use {@link ChatRoomListUpdate}
+	 */
+	GhostList: number[];
 	Wardrobe: ItemBundle[][];
 	WardrobeCharacterNames: string[];
 	SavedExpressions?: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
@@ -2923,7 +3092,7 @@ interface AssetDefinitionProperties {
 type PartialType = `${string}${number}`;
 
 /**
- * A record mapping screen names to option indices.
+ * A record mapping extended item data/module names (see {@link ExtendedItemData.Name} and {@link ModularItemModule.Key}) to option indices.
  * @see {@link PartialType} A concatenation of a single `TypeRecord` key/value pair.
  */
 type TypeRecord = Record<string, number>;
@@ -3694,6 +3863,15 @@ interface AudioChatAction {
 
 // #region Character drawing
 
+interface TextureAlphaMask {
+	X: number;
+	Y: number;
+	Url: string;
+	Mode: "destination-in" | "destination-out";
+	/** The priority of the mask, -1 means it will ignores priority and applied to the layers on top of it */
+	Priority: number;
+}
+
 /** Options available to most draw calls */
 type DrawOptions = {
 	/** Transparency between 0-1 */
@@ -3718,6 +3896,8 @@ type DrawOptions = {
 	readonly AlphaMasks?: readonly RectTuple[];
 	/** Blending mode for drawing the image */
 	BlendingMode?: GlobalCompositeOperation;
+	/** A list of mask layers to apply to the call */
+	readonly TextureAlphaMask?: readonly TextureAlphaMask[];
 }
 
 /**
@@ -3740,6 +3920,7 @@ type DrawCanvasCallback = (
 	x: number,
 	y: number,
 	alphaMasks?: RectTuple[],
+	maskLayers?: TextureAlphaMask[],
 ) => void;
 
 /**
@@ -4222,13 +4403,7 @@ interface DialogInventoryItem extends Item {
 	Vibrating: boolean;
 }
 
-interface DialogSelfMenuOptionType {
-	Name: string;
-	IsAvailable: () => boolean;
-	Load?: () => void;
-	Draw: () => void;
-	Click: () => void;
-}
+type DialogSelfMenuName = "Expression" | "Pose" | "SavedExpressions" | "OwnerRules";
 
 // #end region
 
@@ -4369,6 +4544,8 @@ interface PreferenceExtensionsSettingItem {
 	 * Called when the extension screen is about to exit.
 	 *
 	 * Happens either through a click of the exit button, or the ESC key.
+	 * This will **not** be called if a disconnect happens, so clean up should be
+	 * done in {@link PreferenceExtensionsSettingItem.unload}.
 	 *
 	 * @returns {boolean | void} If you have some validation that needs to happen
 	 * (for example, ensuring that a textfield contains a valid color code), return false;
@@ -4377,7 +4554,7 @@ interface PreferenceExtensionsSettingItem {
 	 * either through your own means or by setting `PreferenceMessage` to a string.
 	 *
 	 * If you return true or nothing, your screen's {@link PreferenceExtensionsSettingItem.unload} handler
-	 * will be called afterward.
+	 * will be called afterward. And the setting screen for the extension will be closed.
 	 */
 	exit: () => boolean | void;
 }

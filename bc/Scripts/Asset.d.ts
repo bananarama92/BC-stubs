@@ -150,10 +150,10 @@ declare function AssetAllActivities(family: IAssetFamily): Activity[];
 /**
  * Gets an activity asset by family and name
  * @param {IAssetFamily} family - The family to search in
- * @param {ActivityName} name - Name of activity to search for
- * @returns {Activity|undefined}
+ * @param {string} name - Name of activity to search for
+ * @returns {Activity|null}
  */
-declare function AssetGetActivity(family: IAssetFamily, name: ActivityName): Activity | undefined;
+declare function AssetGetActivity(family: IAssetFamily, name: string): Activity | null;
 /**
  * Get the list of all activities on a group for a given family.
  *
@@ -171,9 +171,9 @@ declare function AssetActivitiesForGroup(family: IAssetFamily, groupname: AssetG
  * @template {AssetGroupName} T
  * @param {IAssetFamily} Family - The asset family that the group belongs to (Ignored until other family is added)
  * @param {T} Group - The name of the asset group to find
- * @returns {AssetGroupMap[T] | null} - The asset group matching the provided family and group name
+ * @returns {AssetGroupMapping[T] | null} - The asset group matching the provided family and group name
  */
-declare function AssetGroupGet<T extends AssetGroupName>(Family: IAssetFamily, Group: T): AssetGroupMap[T] | null;
+declare function AssetGroupGet<T extends AssetGroupName>(Family: IAssetFamily, Group: T): AssetGroupMapping[T] | null;
 /**
  * Utility function for retrieving the preview image directory path for an asset
  * @param {Asset} A - The asset whose preview path to retrieve

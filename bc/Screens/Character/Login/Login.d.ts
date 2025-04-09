@@ -157,8 +157,12 @@ declare function LoginExit(): void;
  */
 declare function LoginUnload(): void;
 declare var LoginBackground: string;
-/** @type {null | string[][]} */
-declare var LoginCredits: null | string[][];
+/**
+ * Contents of the GameCredits.csv file
+ * Initialized once on screen load
+ * @type {string[][]}
+ */
+declare var LoginCredits: string[][];
 declare var LoginCreditsPosition: number;
 declare var LoginThankYou: string;
 declare var LoginThankYouList: string[];
@@ -167,7 +171,11 @@ declare var LoginSubmitted: boolean;
 declare var LoginQueuePosition: number;
 /** The server login status */
 declare var LoginErrorMessage: string;
-/** @type {NPCCharacter} */
+/**
+ * The dummy on the login screen.
+ *
+ * Lifetime bound to the screen.
+ * @type {NPCCharacter} */
 declare var LoginCharacter: NPCCharacter;
 declare namespace LoginEventListeners {
     function _KeyDownInputName(this: HTMLInputElement, ev: KeyboardEvent): void;

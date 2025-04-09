@@ -275,8 +275,6 @@ declare var ServerSendRateLimitInterval: number;
 /**
  * Queued messages waiting to be sent
  *
- * @typedef {{ Message: ClientEvent, args: ClientEventParams<ClientEvent>}} SendRateLimitQueueItem
- *
  * @type {SendRateLimitQueueItem[]}
  */
 declare const ServerSendRateLimitQueue: SendRateLimitQueueItem[];
@@ -354,11 +352,4 @@ declare namespace ServerAccountDataSyncedValidate {
 type ServerChatRoomChecksOptions = {
     screen?: string;
     callback?: () => boolean;
-};
-/**
- * Queued messages waiting to be sent
- */
-type SendRateLimitQueueItem = {
-    Message: ClientEvent;
-    args: ClientEventParams<ClientEvent>;
 };

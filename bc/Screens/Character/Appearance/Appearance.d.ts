@@ -73,6 +73,14 @@ declare function CharacterAppearanceIsLayerVisible(C: Character, layer: AssetLay
  */
 declare function CharacterAppearanceSortLayers(C: Character): Mutable<AssetLayer>[];
 /**
+ * Builds a map of all mask layers in a character's appearance, grouped by the asset groups they affect.
+ * Only includes mask layers from visible assets that aren't blocked and are allowed in the current chat room.
+ *
+ * @param {Character} C - The character whose masks should be built
+ * @returns {AssetLayer[]} A map of group names to arrays of mask layers that affect them
+ */
+declare function CharacterAppearanceBuildMasks(C: Character): AssetLayer[];
+/**
  * Determines whether an item or a whole item group is visible or not
  * @param {Character} C - The character whose assets are checked
  * @param {string} AssetName - The name of the asset to check
@@ -186,15 +194,14 @@ declare function AppearancePreviewUseCharacter(assetGroup: AssetGroup): boolean;
  * Sets an item in the character appearance
  * @param {Character} C - The character whose appearance should be changed
  * @param {AssetGroupName} Group - The name of the corresponding groupr for the item
- * @param {Asset|null} ItemAsset - The asset collection of the item to be changed
+ * @param {Asset|undefined} ItemAsset - The asset collection of the item to be changed
  * @param {string|string[]} [NewColor] - The new color (as "#xxyyzz" hex value) for that item
  * @param {number} [DifficultyFactor=0] - The difficulty, on top of the base asset difficulty, that should be assigned
  * to the item
  * @param {number} [ItemMemberNumber=-1] - The member number of the player adding the item - defaults to -1
- * @param {boolean} [Refresh=true] - Determines, wether the character should be redrawn after the item change
- * @returns {null | Item} - Thew newly created item or `null` if the asset does not exist
+ * @returns {Item | null} - Thew newly created item or `undefined` if the asset does not exist
  */
-declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName, ItemAsset: Asset | null, NewColor?: string | string[], DifficultyFactor?: number, ItemMemberNumber?: number, Refresh?: boolean): null | Item;
+declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName, ItemAsset: Asset | undefined, NewColor?: string | string[], DifficultyFactor?: number, ItemMemberNumber?: number): Item | null;
 /**
  * Cycle in the appearance assets to find the next item in a group
  * @param {Character} C - The character whose assets are used

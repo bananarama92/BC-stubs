@@ -6,13 +6,13 @@
 declare function PlatformDialogVoice(Source: string): void;
 /**
  * Loads the dialog at a specific position
- * @param {Number} Position - The position # to load
+ * @param {number} Position - The position # to load
  * @returns {void} - Nothing
  */
 declare function PlatformDialogLoadPosition(Position: number): void;
 /**
  * Starts a specific dialog
- * @param {String} DialogName - The name of the dialog to start
+ * @param {string} DialogName - The name of the dialog to start
  * @returns {void} - Nothing
  */
 declare function PlatformDialogStart(DialogName: string): void;
@@ -33,34 +33,34 @@ declare function PlatformDialogDrawDialog(): void;
 declare function PlatformDialogRun(): void;
 /**
  * Change the love/domination value based on the option picked, influenced also by perks
- * @param {Number} CurrentValue - The current value
- * @param {Number} Change - The modifier to apply
- * @param {Boolean} Bonus - If there's a bonus to apply or not
+ * @param {number} CurrentValue - The current value
+ * @param {number} Change - The modifier to apply
+ * @param {boolean} Bonus - If there's a bonus to apply or not
  * @returns {Number} - The new stat after changes
  */
 declare function PlatformDialogChangeValue(CurrentValue: number, Change: number, Bonus: boolean, Level: any): number;
 /**
  * Pick a specific idle pose if the character allows it
- * @param {Object} Character - The character to evaluate
- * @param {Number} Love - The love value that changed
- * @param {Number} Domination - The domination value that changed
+ * @param {Platform.DialogCharacter} Character - The character to evaluate
+ * @param {number} Love - The love value that changed
+ * @param {number} Domination - The domination value that changed
  * @returns {Object} - A unused object
  */
-declare function PlatformDialogSetIdlePose(Character: any, Love: number, Domination: number): any;
+declare function PlatformDialogSetIdlePose(Character: Platform.DialogCharacter, Love: number, Domination: number): any;
 /**
  * Pick an answer in a specific dialog
- * @param {Number} Position - The position of the answer picked
+ * @param {number} Position - The position of the answer picked
  * @returns {void} - Nothing
  */
 declare function PlatformDialogPickAnswer(Position: number): void;
 /**
  * Alters a property (love or domination) for a specific character
- * @param {String} CharacterName - The name of the character to alter
- * @param {String} Property - The name of the property to alter
+ * @param {string} CharacterName - The name of the character to alter
+ * @param {"Love" | "Domination"} Property - The name of the property to alter
  * @param {Number} Value - The value to change
  * @returns {void} - Nothing
  */
-declare function PlatformDialogAlterProperty(CharacterName: string, Property: string, Value: number): void;
+declare function PlatformDialogAlterProperty(CharacterName: string, Property: "Love" | "Domination", Value: number): void;
 /**
  * Processes the current dialog, can answer or skip to the next phase
  * @returns {void} - Nothing
@@ -79,10 +79,10 @@ declare function PlatformDialogLeave(): void;
 declare function PlatformDialogClick(): void;
 /**
  * Returns a dialog character
- * @param {String} Name - The name of a character
- * @returns {Object} - The character object
+ * @param {string} Name - The name of a character
+ * @returns {Platform.DialogCharacter} - The character object
  */
-declare function PlatformDialogGetCharacter(Name: string): any;
+declare function PlatformDialogGetCharacter(Name: string): Platform.DialogCharacter;
 /**
  * Handles the controller inputs
  * @param {readonly GamepadButton[]} buttons - The buttons pressed on the controller
@@ -91,10 +91,10 @@ declare function PlatformDialogGetCharacter(Name: string): any;
 declare function PlatformDialogController(buttons: readonly GamepadButton[]): boolean;
 /**
  * Returns TRUE if the party leader (Melody) has a specific social perk
- * @param {String} PerkName - The name of the perk
+ * @param {Platform.PerkName} PerkName - The name of the perk
  * @returns {boolean} - TRUE if the perk is active
  */
-declare function PlatformDialogLeaderHasPerk(PerkName: string): boolean;
+declare function PlatformDialogLeaderHasPerk(PerkName: Platform.PerkName): boolean;
 /**
  * Sets up some special event parameters based on the game progress
  * @returns {void}
@@ -102,46 +102,46 @@ declare function PlatformDialogLeaderHasPerk(PerkName: string): boolean;
 declare function PlatformDialogEvent(): void;
 /**
  * Returns TRUE if the character is Melody's lover, make sure that character or Melody is currently active
- * @param {String} Name - The name of a character
+ * @param {string} Name - The name of a character
  * @returns {boolean} - TRUE if lover
  */
 declare function PlatformDialogIsLover(Name: string): boolean;
 /**
  * Returns TRUE if two characters are lovers
- * @param {String} Char1 - The name of the first character
- * @param {String} Char2 - The name of the second character
+ * @param {string} Char1 - The name of the first character
+ * @param {string} Char2 - The name of the second character
  * @returns {boolean} - TRUE if lover
  */
 declare function PlatformDialogCharactersAreLovers(Char1: string, Char2: string): boolean;
 /**
  * Returns TRUE if the character is Melody's slave, make sure that character or Melody is currently active
- * @param {String} Name - The name of a character
+ * @param {string} Name - The name of a character
  * @returns {boolean} - TRUE if lover
  */
 declare function PlatformDialogIsSlave(Name: string): boolean;
 /**
  * Returns TRUE if the first character is the slave of the second character
- * @param {String} Char1 - The name of the first character
- * @param {String} Char2 - The name of the second character
+ * @param {string} Char1 - The name of the first character
+ * @param {string} Char2 - The name of the second character
  * @returns {boolean} - TRUE if slave
  */
 declare function PlatformDialogIsSlaveOfCharacter(Char1: string, Char2: string): boolean;
 /**
  * Returns TRUE if the character is Melody's owner, make sure that character or Melody is currently active
- * @param {String} Name - The name of a character
+ * @param {string} Name - The name of a character
  * @returns {boolean} - TRUE if lover
  */
 declare function PlatformDialogIsOwner(Name: string): boolean;
 /**
  * Returns TRUE if the character doesn't have any lover
- * @param {String} Name - The name of a character
+ * @param {string} Name - The name of a character
  * @returns {boolean} - TRUE if no lover
  */
 declare function PlatformDialogCharacterIsSingle(Name: string): boolean;
 /**
  * Returns 0 if the source character and target character are not in a relationship, 1 if lover or slave, 2 if lover and slave
- * @param {String} SourceName - The source character name to evaluate
- * @param {String} TargetName - The target character name to evaluate
+ * @param {string} SourceName - The source character name to evaluate
+ * @param {string} TargetName - The target character name to evaluate
  * @returns {number} - TRUE if lover
  */
 declare function PlatformDialogLoverAndSlaveFactor(SourceName: string, TargetName: string): number;
@@ -165,39 +165,13 @@ declare var PlatformDialogReply: any;
 declare var PlatformDialogGoto: any;
 declare var PlatformDialogCharacterDisplay: any;
 declare var PlatformDialogPosition: number;
-declare var PlatformDialogCharacter: any;
+/** @type {Platform.DialogCharacter[]} */
+declare var PlatformDialogCharacter: Platform.DialogCharacter[];
 declare var PlatformDialogAudio: any;
 declare var PlatformDialogControllerHandle: boolean;
 declare var PlatformDialogAudioStyle: string[];
-declare var PlatformDialogCharacterTemplate: ({
-    Name: string;
-    Color: string;
-    IdlePose?: undefined;
-    Love?: undefined;
-    Domination?: undefined;
-    NickName?: undefined;
-} | {
-    Name: string;
-    Color: string;
-    IdlePose: string[];
-    Love: number;
-    Domination: number;
-    NickName?: undefined;
-} | {
-    Name: string;
-    Color: string;
-    Love: number;
-    Domination: number;
-    IdlePose?: undefined;
-    NickName?: undefined;
-} | {
-    Name: string;
-    NickName: string;
-    Color: string;
-    IdlePose?: undefined;
-    Love?: undefined;
-    Domination?: undefined;
-})[];
+/** @type {Platform.DialogCharacter[]} */
+declare var PlatformDialogCharacterTemplate: Platform.DialogCharacter[];
 declare var PlatformDialogData: ({
     Name: string;
     Music: string;

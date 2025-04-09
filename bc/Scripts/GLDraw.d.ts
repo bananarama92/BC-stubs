@@ -101,8 +101,9 @@ declare function GLChooseProgram(gl: WebGL2RenderingContext, color: string, full
  * @param {number} Y - Position of the image on the Y axis
  * @param {number} blinkOffset - Offset for the blink canvas
  * @param {readonly RectTuple[]} alphaMasks - A list of alpha masks to apply to the asset
+ * @param {readonly TextureAlphaMask[]} texMasks - A list of mask layers to apply to the asset
  */
-declare function GLDraw2DCanvas(gl: WebGL2RenderingContext, Img: HTMLImageElement | HTMLCanvasElement, X: number, Y: number, blinkOffset: number, alphaMasks: readonly RectTuple[]): void;
+declare function GLDraw2DCanvas(gl: WebGL2RenderingContext, Img: HTMLImageElement | HTMLCanvasElement, X: number, Y: number, blinkOffset: number, alphaMasks: readonly RectTuple[], texMasks: readonly TextureAlphaMask[]): void;
 /**
  * Sets texture info from image data
  * @param {WebGLRenderingContext} gl - WebGL context
@@ -129,6 +130,24 @@ declare function GLDrawLoadImage(gl: WebGL2RenderingContext, url: string): WebGL
  * @return {WebGLTexture} - The WebGL texture corresponding to the mask
  */
 declare function GLDrawLoadMask(gl: WebGL2RenderingContext, texWidth: number, texHeight: number, offsetX: number, offsetY: number, alphaMasks: readonly RectTuple[]): WebGLTexture;
+/**
+ * Creates an empty mask (fully opaque) for use when no mask layers are provided
+ * @param {WebGL2RenderingContext} gl - The WebGL context
+ * @returns {WebGLTexture} - A default mask texture
+ */
+declare function GLDrawCreateEmptyTextureAlphaMask(gl: WebGL2RenderingContext, texWidth: any, texHeight: any): WebGLTexture;
+declare function canvasToNewWin(canvas: any): void;
+/**
+ * Loads mask layers and combines them into a single texture mask
+ * @param {WebGL2RenderingContext} gl
+ * @param {number} texWidth - The width of the texture
+ * @param {number} texHeight - The height of the texture
+ * @param {number} offsetX - The X offset for the texture
+ * @param {number} offsetY - The Y offset for the texture
+ * @param {readonly TextureAlphaMask[]} maskLayers - The mask layers to combine
+ * @returns { WebGLTexture }
+ */
+declare function GLDrawLoadTextureAlphaMask(gl: WebGL2RenderingContext, texWidth: number, texHeight: number, offsetX: number, offsetY: number, maskLayers: readonly TextureAlphaMask[]): WebGLTexture;
 /**
  * Clears a rectangle on WebGLRenderingContext
  * @param {WebGLRenderingContext} gl - WebGL context
@@ -197,6 +216,12 @@ declare var GLDrawFragmentShaderSource: string;
  * @type {string}
  */
 declare var GLDrawFragmentShaderSourceTexMask: string;
+/**
+ * Source used for the Pre-Multiply Alpha Shader
+ * @constant
+ * @type {string}
+ */
+declare var GLDrawFragmentShaderSourcePreMultiplyAlpha: string;
 /**
  * Source used for the Full Alpha Shader
  * @constant

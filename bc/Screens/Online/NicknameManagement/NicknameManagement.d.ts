@@ -15,7 +15,7 @@ declare function NicknameManagementRun(): void;
 declare function NicknameManagementClick(): void;
 /**
  * Handles exiting from the screen, updates the sub rules
- * @satisfies {ScreenFunctions["Exit"]}
+ * @satisfies {ScreenExitHandler}
  * @param {boolean} Save - Received rule data object.
  */
 declare function NicknameManagementExit(Save?: boolean): void;

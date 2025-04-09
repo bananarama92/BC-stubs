@@ -18,3 +18,4 @@ declare function PreferenceSubscreenSecurityClick(): void;
  * Exits the preference screen
  */
 declare function PreferenceSubscreenSecurityExit(): boolean;
+declare function PreferenceSubscreenSecurityUnload(): void;

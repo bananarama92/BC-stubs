@@ -42,13 +42,23 @@ declare function PreferenceVisibilityCheckboxChanged(permissionRecord: Partial<R
  * Exits the preference screen
  */
 declare function PreferenceSubscreenVisibilityExit(): boolean;
+declare function PreferenceSubscreenVisibilityUnload(): void;
 /**
  * Trigger a subscreen exit
  * @param {boolean} SaveChanges - If TRUE, this will commit the configuration
  * @returns {void} - Nothing
  */
 declare function PreferenceVisibilityExit(SaveChanges: boolean): void;
-declare var PreferenceVisibilityGroupList: any[];
+/** @type {{ Group: AssetGroup, Assets: { Asset: Asset, Hidden: boolean, Blocked: boolean, Limited: boolean}[]}[]} */
+declare var PreferenceVisibilityGroupList: {
+    Group: AssetGroup;
+    Assets: {
+        Asset: Asset;
+        Hidden: boolean;
+        Blocked: boolean;
+        Limited: boolean;
+    }[];
+}[];
 declare var PreferenceVisibilityGroupIndex: number;
 declare var PreferenceVisibilityAssetIndex: number;
 declare var PreferenceVisibilityHideChecked: boolean;

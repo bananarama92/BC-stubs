@@ -13,7 +13,6 @@ declare function PreferenceSubscreenExtensionsRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenExtensionsClick(): void;
-declare function PreferenceSubscreenExtensionsUnload(): void;
 declare function PreferenceSubscreenExtensionsExit(): boolean;
 /**
  * Exit the preference subscreen for extensions, should be called when
@@ -21,6 +20,11 @@ declare function PreferenceSubscreenExtensionsExit(): boolean;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenExtensionsClear(): void;
+/**
+ * Unloads the preference subscreen for extensions
+ * Cleans up the current extension, and reset the current extension to null
+ */
+declare function PreferenceSubscreenExtensionsUnload(): void;
 /** @type {PreferenceExtensionsMenuButtonInfo[]} */
 declare let PreferenceExtensionsDisplay: PreferenceExtensionsMenuButtonInfo[];
 /** @type {PreferenceExtensionsSettingItem | null}*/

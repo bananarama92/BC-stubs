@@ -17,6 +17,7 @@ declare function PreferenceSubscreenCensoredWordsClick(): void;
  * Exits the preference screen
  */
 declare function PreferenceSubscreenCensoredWordsExit(): boolean;
+declare function PreferenceSubscreenCensoredWordsUnload(): void;
 /** @type {string[]} */
 declare var PreferenceCensoredWordsList: string[];
 declare var PreferenceCensoredWordsOffset: number;

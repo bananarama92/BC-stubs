@@ -61,7 +61,7 @@ declare function BackgroundSelectionKeyDown(event: KeyboardEvent): boolean;
 /**
  * Handles the exit of the selection screen. Sets the new background, if necessary, and
  * calls the previously defined callback function. Then exits the screen to the screen, the player was before
- * @satisfies {ScreenFunctions["Exit"]}
+ * @satisfies {ScreenExitHandler}
  * @param {boolean} SetBackground - Defines, wether the background must be changed (true) or not (false)
  */
 declare function BackgroundSelectionExit(SetBackground?: boolean): void;

@@ -17,9 +17,14 @@ declare function PreferenceRun(): void;
 declare function PreferenceClick(): void;
 declare function PreferenceExit(): void;
 /**
+ * Clear all GUI data and DOM elements creates by the preference screen load function
+ * We don't do this in exit function for disconnects do not trigger the exit function
+ */
+declare function PreferenceUnload(): void;
+/**
  * Exit from a specific subscreen by running its handler and checking its validity
  */
-declare function PreferenceSubscreenExit(): boolean;
+declare function PreferenceSubscreenExit(): void;
 /**
  * Draw a button to navigate multiple pages in a preference subscreen
  * @param {number} Left - The X co-ordinate of the button

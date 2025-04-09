@@ -42,6 +42,7 @@ declare function PreferenceDecrementArousalFactor(factor: ArousalFactor): Arousa
  * Exits the preference screen
  */
 declare function PreferenceSubscreenArousalExit(): boolean;
+declare function PreferenceSubscreenArousalUnload(): void;
 /** @type {ArousalActiveName[]} */
 declare var PreferenceArousalActiveList: ArousalActiveName[];
 declare var PreferenceArousalActiveIndex: number;

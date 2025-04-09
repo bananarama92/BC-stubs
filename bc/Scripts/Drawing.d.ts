@@ -159,9 +159,10 @@ declare function DrawImageCanvas(Source: string | HTMLImageElement | HTMLCanvasE
  * @param {number} X - Position of the image on the X axis
  * @param {number} Y - Position of the image on the Y axis
  * @param {readonly RectTuple[]} AlphaMasks - A list of alpha masks to apply to the asset
+ * @param {readonly TextureAlphaMask[]} TextureAlphaMasks - A list of mask layers to apply to the asset
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawCanvas(Img: HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, X: number, Y: number, AlphaMasks: readonly RectTuple[]): boolean;
+declare function DrawCanvas(Img: HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, X: number, Y: number, AlphaMasks: readonly RectTuple[], TextureAlphaMasks: readonly TextureAlphaMask[]): boolean;
 /**
  * Draws an image from a source on the main canvas
  * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of image or image itself
@@ -171,6 +172,14 @@ declare function DrawCanvas(Img: HTMLImageElement | HTMLCanvasElement, Canvas: C
  * @returns {boolean} - whether the image was complete or not
  */
 declare function DrawImage(Source: string | HTMLImageElement | HTMLCanvasElement, X: number, Y: number, Invert?: boolean): boolean;
+/**
+ * Applies texture masks to a canvas about to be drawn
+ * @param {CanvasRenderingContext2D} destCanvas
+ * @param {number} X - Position of the image on the X axis
+ * @param {number} Y - Position of the image on the Y axis
+ * @param {readonly TextureAlphaMask[]} TextureAlphaMasks
+ */
+declare function DrawApplyTextureAlphaMask(destCanvas: CanvasRenderingContext2D, X: number, Y: number, TextureAlphaMasks: readonly TextureAlphaMask[]): void;
 /**
  * Draws an image on canvas, applying all options
  * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of image or image itself
@@ -579,6 +588,11 @@ declare namespace DrawingResizeMode {
     let FillOriginalRatio: number;
     let ShowFullOriginalRatio: number;
 }
+/**
+ * A cache of the texture masks used to draw the character
+ * @type {Map<string, HTMLCanvasElement>}
+ */
+declare let DrawCacheTextureAlphaMasks: Map<string, HTMLCanvasElement>;
 /**
  * Gets the text size needed to fit inside a given width according to the current font.
  * This function is memoized because <code>MainCanvas.measureText(Text)</code> is a major resource hog.

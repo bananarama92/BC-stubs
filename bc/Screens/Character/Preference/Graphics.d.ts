@@ -14,6 +14,10 @@ declare function PreferenceSubscreenGraphicsRun(): void;
  */
 declare function PreferenceSubscreenGraphicsClick(): void;
 declare function PreferenceSubscreenGraphicsExit(): boolean;
+/**
+ * Finalize graphics setting when the screen is unloaded
+ */
+declare function PreferenceSubscreenGraphicsUnload(): void;
 /** @type {SettingsVFXName[]} */
 declare var PreferenceSettingsVFXList: SettingsVFXName[];
 declare var PreferenceSettingsVFXIndex: number;
