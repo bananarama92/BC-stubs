@@ -1878,7 +1878,8 @@
             "PetPost": 8,
             "Post": 9,
             "Bedchain": 10,
-            "ChokeChain": 11
+            "ChokeChain": 11,
+            "MCuffCollar": 12
         }
     },
     "ItemNipples": {

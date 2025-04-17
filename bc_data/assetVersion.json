@@ -1714,7 +1714,6 @@
         "LeatherCorsetCollar": "R98",
         "LeatherDeluxeCollar": "R98",
         "LoveLeatherCollar": "R98",
-        "MCuffCollar": "R115",
         "MaidCollar": "R98",
         "MoonCollar": "R110",
         "NeckRope": "R98",
@@ -1770,6 +1769,7 @@
         "CollarRopeLong": "R98",
         "CollarRopeMedium": "R98",
         "CollarRopeShort": "R98",
+        "MCuffCollar": "R115",
         "PetPost": "R98",
         "Post": "R98"
     },

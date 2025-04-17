@@ -124,9 +124,13 @@ declare function CharacterLoadCanvasAll(): void;
  * Sets the current character to have a dialog with.
  *
  * @param {Character} C - Character to have a conversation with
+ * @param {null | { mode?: DialogMenuMode, selfMode?: DialogSelfMenuName }} options - The type of dialog- and dialog-self subscreen te open
  * @returns {void} - Nothing
  */
-declare function CharacterSetCurrent(C: Character): void;
+declare function CharacterSetCurrent(C: Character, options?: null | {
+    mode?: DialogMenuMode;
+    selfMode?: DialogSelfMenuName;
+}): void;
 /**
  * Changes the character money and sync with the account server, factors in the cheaters version.
  * @param {Character} C - Character for which we are altering the money amount
