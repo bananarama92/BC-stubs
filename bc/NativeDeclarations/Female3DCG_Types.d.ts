@@ -808,7 +808,7 @@ type AssetDefinition = (
 
 interface AssetLayerMaskTexureDefinition {
 	/** The groups that will be affected */
-	Groups: AssetGroupName[];
+	Groups?: AssetGroupName[];
 	/** If true, the texture mask will apply to all layers in the groups specified, event if their priority is higher than the mask layer */ 
 	ApplyToAbove?: boolean;
 }

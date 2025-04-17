@@ -269,3 +269,5 @@ declare var ActivityOrgasmGameResistCount: number;
 declare var ActivityOrgasmGameTimer: number;
 declare var ActivityOrgasmResistLabel: string;
 declare var ActivityOrgasmRuined: boolean;
+/** @type { ()=>void | undefined } */
+declare let ActivityTranslateResolve: () => void | undefined;

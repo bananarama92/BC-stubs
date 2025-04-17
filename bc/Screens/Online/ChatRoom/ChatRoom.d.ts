@@ -404,9 +404,13 @@ declare function ChatRoomDrawCharacterStatusIcons(C: Character, CharX: number, C
 /**
  * Select the character (open dialog) and clear other chatroom displays.
  * @param {Character} C - The character to focus on. Does nothing if null.
+ * @param {null | { mode?: DialogMenuMode, selfMode?: DialogSelfMenuName }} options - The type of dialog- and dialog-self subscreen te open
  * @returns {void} - Nothing
  */
-declare function ChatRoomFocusCharacter(C: Character): void;
+declare function ChatRoomFocusCharacter(C: Character, options?: null | {
+    mode?: DialogMenuMode;
+    selfMode?: DialogSelfMenuName;
+}): void;
 /**
  * Sends the request to the server to check the current character's relationship status.
  * @returns {void} - Nothing.
@@ -1693,7 +1697,6 @@ declare namespace ChatRoomResizeManager {
 }
 declare namespace ChatRoomSep {
     let ActiveElem: null | HTMLDivElement;
-    function _CopyHeader(this: HTMLDivElement, event: ClipboardEvent): void;
     let _ClickCollapse: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
     let _ClickScrollUp: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
     /**
