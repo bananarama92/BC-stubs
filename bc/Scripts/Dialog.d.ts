@@ -1523,6 +1523,7 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
      */
     get facialExpressions(): Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>;
     get focusGroup(): AssetAppearanceGroup;
+    /** @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>} */
     eventListeners: {
         _expressionRadioGroupClick(this: HTMLButtonElement, ev: MouseEvent): void;
         _ClickMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
@@ -1532,6 +1533,29 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
         _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
         _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
+    };
+    /** @satisfies {Record<string, DialogMenu.MenuButtonData<{ C: PlayerCharacter }>>} */
+    menubarEventListeners: {
+        /** @type {DialogMenu.MenuButtonData<{ C: PlayerCharacter }>} */
+        color: DialogMenu.MenuButtonData<{
+            C: PlayerCharacter;
+        }>;
+        /** @type {DialogMenu.MenuButtonData<{ C: PlayerCharacter }>} */
+        blindness: DialogMenu.MenuButtonData<{
+            C: PlayerCharacter;
+        }>;
+        /** @type {DialogMenu.MenuButtonData<{ C: PlayerCharacter }>} */
+        blink: DialogMenu.MenuButtonData<{
+            C: PlayerCharacter;
+        }>;
+        /** @type {DialogMenu.MenuButtonData<{ C: PlayerCharacter }>} */
+        clear: DialogMenu.MenuButtonData<{
+            C: PlayerCharacter;
+        }>;
+        /** @type {DialogMenu.MenuButtonData<{ C: PlayerCharacter }>} */
+        next: DialogMenu.MenuButtonData<{
+            C: PlayerCharacter;
+        }>;
     };
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
@@ -1561,6 +1585,7 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
      */
     _ReloadIcon(root: HTMLElement, icon: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, never>): void;
 }
+declare const bob: _DialogExpressionMenu<"Expression">;
 /**
  * @template {DialogSelfMenuName} ModeType
  * @extends {_DialogSelfMenu<ModeType, Pose>}
