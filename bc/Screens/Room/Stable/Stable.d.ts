@@ -196,6 +196,12 @@ declare function StableClubCardStart(): void;
  * @returns {void} - Nothing
  */
 declare function StableClubCardEnd(): void;
+/**
+ * Runs the pony command from the online chat box
+ * @param {string} Activity - The activity to validate
+ * @returns {void} - Nothing
+ */
+declare function StableDoActivity(Activity: string): void;
 declare var StableBackground: string;
 /** @type {null | NPCCharacter} */
 declare var StableTrainer: null | NPCCharacter;
@@ -234,3 +240,4 @@ declare var StableProgressCancelDialog: any;
 declare var StableProgressBehavior: number;
 declare var StableProgressOperation: any;
 declare var StableProgressStruggleCount: any;
+declare var StableActivityList: string[];

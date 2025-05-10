@@ -343,6 +343,13 @@ declare function ChatRoomShowElements(): void;
 /** Show the UI elements of the chatroom screen */
 declare function ChatRoomHideElements(): void;
 /**
+ * Construct and return a metadata-containing element with the time and member number
+ * @param {string} time
+ * @param {null | number | string} [sender]
+ * @returns {HTMLDivElement}
+ */
+declare function ChatRoomGetMetadataElem(time: string, sender?: null | number | string): HTMLDivElement;
+/**
  * Append an element to the chatroom's chat log, scroll it down and restore focus
  * @param {HTMLElement} div
  */
@@ -971,9 +978,18 @@ declare function ChatRoomMessageSetReply(msgId: string): void;
  * Creates the HTML element for a reply message
  * @param {string} msgId
  * @param {string} displayMessage
- * @returns {HTMLSpanElement | string}
+ * @param {{ time: string, sender?: number }} data
+ * @returns {(HTMLSpanElement | string)[]}
  */
-declare function ChatRoomMessageCreateReplyMessageElement(msgId: string, displayMessage: string): HTMLSpanElement | string;
+declare function ChatRoomMessageCreateReplyMessageElement(msgId: string, displayMessage: string, data: {
+    time: string;
+    sender?: number;
+}): (HTMLSpanElement | string)[];
+/**
+ * Scroll to the passed message (be it either via the element or its message ID), accounting for the offset of the sticky chat room separators
+ * @param {HTMLElement} msg
+ */
+declare function ChatRoomScrollToReplyID(msg: HTMLElement): void;
 /**
  * Update the Chat log with the recieved message
  *

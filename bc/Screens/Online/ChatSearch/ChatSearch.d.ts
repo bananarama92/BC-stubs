@@ -200,6 +200,11 @@ declare function ChatSearchCalculateIgnoredRoomsOffset(shownRooms: number): numb
  */
 /** Background image */
 declare var ChatSearchBackground: string;
+/**
+ * The list of tags allowed as backgrounds for the room edit screens
+ * @type {BackgroundTag[]}
+ */
+declare var ChatSearchBackgroundTagList: BackgroundTag[];
 /** @type {ChatRoomSearchResult[]} */
 declare var ChatSearchResult: ChatRoomSearchResult[];
 /** @type {ChatRoomSearchResult[]} */

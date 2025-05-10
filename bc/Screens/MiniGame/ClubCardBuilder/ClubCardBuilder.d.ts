@@ -16,6 +16,12 @@ declare function ClubCardBuilderSaveChanges(): void;
  */
 declare function ClubCardBuilderSaveName(Save: boolean): void;
 /**
+ * Saves the selected card back on the server
+ * @param {number} CardBack - the number of the saved card back
+ * @returns {void} - Nothing
+ */
+declare function ClubCardBuilderSaveCardBack(CardBack: number): void;
+/**
  * Loads the filtered cards
  * @returns {void} - Nothing
  */
@@ -61,6 +67,10 @@ declare var ClubCardBuilderMaxDeckSize: number;
 declare var ClubCardBuilderFilterIndex: number;
 declare var ClubCardBuilderFilterGroup: string[];
 declare var ClubCardBuilderRenameIndex: number;
+declare var ClubCardBuilderCustomizationIndex: string;
+declare var ClubCardBuilderSelectedCardBack: number;
+declare var ClubCardBuilderCardBackFocus: any;
+declare var ClubCardBuilderCardBackCount: number;
 declare var ClubCardBuilderDefaultDeck: number[];
 declare var ClubCardBuilderMaidDeck: number[];
 declare var ClubCardBuilderDominantDeck: number[];

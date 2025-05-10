@@ -90,7 +90,8 @@
             "Swimsuit3": 49,
             "LeatherVestSuit": 50,
             "MeshTop": 51,
-            "ShinyLeotard": 52
+            "ShinyLeotard": 52,
+            "OrnateMetalBra": 53
         }
     },
     "Bracelet": {
@@ -195,7 +196,9 @@
             "RibbonCorset": 83,
             "MeshTop": 84,
             "BartenderVest": 85,
-            "BartenderVestM": 86
+            "BartenderVestM": 86,
+            "CocktailDress": 87,
+            "MaidBikini": 88
         }
     },
     "ClothAccessory": {
@@ -234,7 +237,9 @@
             "LeatherBeltCloth": 30,
             "ComboBelt": 31,
             "FaceWritings": 32,
-            "SatinScarf": 33
+            "SatinScarf": 33,
+            "HoodedCloak": 34,
+            "SideRuffles": 35
         }
     },
     "ClothLower": {
@@ -560,7 +565,8 @@
             "Onihorns": 30,
             "SkunkEars": 31,
             "AquaticEars": 32,
-            "CyberneticEars1": 33
+            "CyberneticEars1": 33,
+            "BigLynxEars": 34
         }
     },
     "HairAccessory3": {
@@ -1155,7 +1161,8 @@
             "BoundBar": 64,
             "Throne": 65,
             "ExclusiveWaitress": 66,
-            "LeatherCage": 67
+            "LeatherCage": 67,
+            "Highchair": 68
         }
     },
     "ItemEars": {
@@ -1972,7 +1979,9 @@
             "StuddedChastityBelt": 26,
             "HipHarness": 27,
             "WaistLegHarness": 28,
-            "FemPelvisHarness": 29
+            "FemPelvisHarness": 29,
+            "LatexDiaper": 30,
+            "UntrainersThin": 31
         }
     },
     "ItemScript": {
@@ -2279,7 +2288,9 @@
             "ZipPanties1": 47,
             "HipHarness": 48,
             "WaistLegHarness": 49,
-            "FemPelvisHarness": 50
+            "FemPelvisHarness": 50,
+            "LatexDiaper": 51,
+            "UntrainersThin": 52
         }
     },
     "Pronouns": {

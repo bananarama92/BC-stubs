@@ -1605,7 +1605,6 @@ declare class _DialogPoseMenu<ModeType extends DialogSelfMenuName> extends _Dial
     clickStatusCallbacks: {
         PoseAvailable(C: Character, pose: Pose): string;
         ChatRoomOwnerPresenceRule(C: Character, pose: Pose): string;
-        CurrentScreen(C: Character, pose: Pose): string;
     };
     /**
      * See {@link poses}
