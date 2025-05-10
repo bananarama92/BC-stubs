@@ -189,6 +189,18 @@ declare function ServerAccountQueryResult(data: ServerAccountQueryResponse): voi
  * @returns {void} - Nothing
  */
 declare function ServerAccountBeep(data: ServerAccountBeepResponse): void;
+/**
+ * Show a message as a beep
+ * @param {string} message
+ * @param {number} duration
+ * @param {object} [options]
+ * @param {(this: HTMLDivElement, event: MouseEvent) => void} [options.onClick]
+ * @param {boolean} [options.silent]
+ */
+declare function ServerShowBeep(message: string, duration: number, options?: {
+    onClick?: (this: HTMLDivElement, event: MouseEvent) => void;
+    silent?: boolean;
+}): void;
 /** Draws the last beep sent by the server if the timer is still valid, used during the drawing process */
 declare function ServerDrawBeep(): void;
 /** Handles a click on the beep rectangle if mail is included */
@@ -219,13 +231,18 @@ declare function ServerChatRoomGetAllowItem(Source: Character, Target: Character
 /** @type {SocketIO.Socket} */
 declare var ServerSocket: SocketIO.Socket;
 declare var ServerURL: string;
-/** @type { { Message: string; Timer: number; ChatRoomName?: string | null; IsMail?: boolean; } } */
+/**
+ * @type { { Message: string; Timer: number; ChatRoomName?: string | null; IsMail?: boolean; } }
+ * @deprecated Use {@link ServerShowBeep} instead.
+ */
 declare var ServerBeep: {
     Message: string;
     Timer: number;
     ChatRoomName?: string | null;
     IsMail?: boolean;
 };
+/** @type {NotificationBeep[] } */
+declare var ServerBeepQueue: NotificationBeep[];
 declare var ServerIsConnected: boolean;
 declare var ServerReconnectCount: number;
 declare var ServerAccountEmailRegex: RegExp;

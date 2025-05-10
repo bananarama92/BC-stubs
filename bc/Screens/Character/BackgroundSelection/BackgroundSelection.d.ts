@@ -1,24 +1,18 @@
 /**
  * Change the current screen to the background selection screen
- * @param {string[]} List - The list of possible Background names
- * @param {number} Idx - The index of the current background
- * @param {(selection: string) => void} Callback - The function to call when a new background has been selected
+ * @param {BackgroundTag[]} Tags - The list of possible Background names
+ * @param {string} Name - The name of the current background
+ * @param {(selection: string, setBackground: boolean) => void} Callback - The function to call when a new background has been selected
  * @returns {void} - Nothing
  */
-declare function BackgroundSelectionMake(List: string[], Idx: number, Callback: (selection: string) => void): void;
+declare function BackgroundSelectionMake(Tags: BackgroundTag[], Name: string, Callback: (selection: string, setBackground: boolean) => void): void;
 /**
  * Comapres two backgrounds by their description
- * @param {object} a - The first object to compare
- * @param {string} a.Description - The description of object a. Is used for comparision
- * @param {object} b - The second object to compar
- * @param {string} b.Description - The description of object b. Is used for comparision
+ * @param {string} a - The name of the first background
+ * @param {string} b - The name of the second background
  * @returns {number} - Returns -1 if the description of object a is less then that of b, 1 otherwise
  */
-declare function BackgroundSelectionSort(a: {
-    Description: string;
-}, b: {
-    Description: string;
-}): number;
+declare function BackgroundSelectionSort(a: string, b: string): number;
 /**
  * Initializes the Background selection screen.
  * Function coiuld be called dynamically, so the body has to be there, even if it does nothing.
@@ -34,9 +28,11 @@ declare function BackgroundSelectionUnload(): void;
 declare function BackgroundSelectionInputChanged(): void;
 /**
  * When a new value is selected in the tag selection drop-down, we refresh the displayed background
+ * @this {HTMLSelectElement}
  * @returns {void} - Nothing
  */
-declare function BackgroundSelectionTagChanged(): void;
+declare function BackgroundSelectionTagChanged(this: HTMLSelectElement): void;
+declare function BackgroundSelectionResize(load: boolean): void;
 /**
  * Draws the Background selection screen:
  * - draws all the buttons and the text input field on the topmost rows
@@ -71,22 +67,26 @@ declare var BackgroundSelectionList: string[];
 /** @type {BackgroundTag[]} */
 declare var BackgroundSelectionTagList: BackgroundTag[];
 declare var BackgroundSelectionIndex: number;
-declare var BackgroundSelectionSelect: string;
+/** @type {string | null} */
+declare var BackgroundSelectionSelect: string | null;
 declare var BackgroundSelectionSize: number;
 declare var BackgroundSelectionOffset: number;
-/** @type {null | ((selection: string) => void)} */
-declare var BackgroundSelectionCallback: null | ((selection: string) => void);
-/** @type {ScreenSpecifier | null} */
-declare var BackgroundSelectionReturnScreen: ScreenSpecifier | null;
-/** @type {{ Name: string, Description: string, Low: string }[]} */
-declare var BackgroundSelectionAll: {
-    Name: string;
-    Description: string;
-    Low: string;
-}[];
-/** @type {{ Name: string, Description: string, Low: string }[]} */
-declare var BackgroundSelectionView: {
-    Name: string;
-    Description: string;
-    Low: string;
-}[];
+/** @type {null | ((selection: string, setBackground: boolean) => void)} */
+declare var BackgroundSelectionCallback: null | ((selection: string, setBackground: boolean) => void);
+/** @type {never} */
+declare var BackgroundSelectionReturnScreen: never;
+/** @type {never} */
+declare var BackgroundSelectionAll: never;
+/** @type {string[]} */
+declare var BackgroundSelectionView: string[];
+declare namespace Background {
+    namespace elementID {
+        let root: string;
+        let searchFilter: string;
+        let tagFilter: string;
+        let btnPrev: string;
+        let btnNext: string;
+        let btnCancel: string;
+        let btnAccept: string;
+    }
+}

@@ -1,3 +1,4 @@
+declare function PreferenceSubscreenOnlineLoad(): void;
 /**
  * Sets the online preferences for the player. Redirected to from the main Run function if the player is in the online
  * settings subscreen.
@@ -9,3 +10,7 @@ declare function PreferenceSubscreenOnlineRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenOnlineClick(): void;
+/** @type {null | string[]} */
+declare var PreferenceOnlineDefaultBackgroundList: null | string[];
+declare var PreferenceOnlineDefaultBackgroundIndex: number;
+declare var PreferenceOnlineDefaultBackground: string;
