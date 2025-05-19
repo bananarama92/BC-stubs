@@ -175,6 +175,11 @@ declare function AssetActivitiesForGroup(family: IAssetFamily, groupname: AssetG
  */
 declare function AssetGroupGet<T extends AssetGroupName>(Family: IAssetFamily, Group: T): AssetGroupMapping[T] | null;
 /**
+ * Check whether a group can be hidden through the item visibility settings
+ * @param {AssetGroup} group
+ */
+declare function AssetGroupIsHideable(group: AssetGroup): boolean;
+/**
  * Utility function for retrieving the preview image directory path for an asset
  * @param {Asset} A - The asset whose preview path to retrieve
  * @returns {string} - The path to the asset's preview image directory

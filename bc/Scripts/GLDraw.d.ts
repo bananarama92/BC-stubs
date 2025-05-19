@@ -178,8 +178,8 @@ declare var GLDrawCacheLoadedImages: number;
 declare var GLDrawCacheTotalImages: number;
 /** @type {"webgl2"|"webgl"|"No WebGL"} */
 declare var GLVersion: "webgl2" | "webgl" | "No WebGL";
-/** @type {HTMLCanvasElement} */
-declare var GLDrawCanvas: HTMLCanvasElement;
+/** @type {null | HTMLCanvasElement} */
+declare var GLDrawCanvas: null | HTMLCanvasElement;
 /**
  * How many seconds to wait before forcefully resetting the canvas after a
  * context loss

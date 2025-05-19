@@ -19,7 +19,7 @@ type FriendRawRoom = {
   name?: string;
   caption: string;
   canSearchRoom: boolean;
-  types: FriendListIcon[];
+  types: (null | FriendListIcon)[];
 };
 
 type FriendRawBeep = {
