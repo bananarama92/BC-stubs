@@ -4890,6 +4890,8 @@ interface ShopItem {
 	readonly Asset: Asset,
 	/** The assets sorting priority within the asset list; lower values take priority */
 	readonly SortPriority: number,
+	/** Whether the player is forbidden to buy the item */
+	readonly CannotBuy: boolean,
 	/** Whether an item should never be able to be sold */
 	readonly NeverSell: boolean,
 	/** Whether the asset can be bought; `false` implies that it can be sold */
