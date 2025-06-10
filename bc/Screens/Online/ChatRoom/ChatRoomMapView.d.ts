@@ -245,8 +245,8 @@ declare function ChatRoomMapViewUpdateRoomSync(): void;
  */
 declare function ChatRoomMapViewUpdatePlayerSync(): void;
 /**
- * Updates a single character's expression in the chatroom.
- * @param {ServerMapDataResponse} data - Data object containing the new character expression data.
+ * Updates a character's map data
+ * @param {ServerMapDataResponse} data - Data object containing the new character map data.
  * @returns {void} - Nothing.
  */
 declare function ChatRoomMapViewSyncMapData(data: ServerMapDataResponse): void;

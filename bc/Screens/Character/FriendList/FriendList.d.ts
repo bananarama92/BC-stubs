@@ -21,6 +21,10 @@ declare function FriendListBeepMenuClose(): void;
  */
 declare function FriendListBeepMenuSend(): void;
 /**
+ * Opens the friendlist from any screen
+ */
+declare function FriendListShow(): void;
+/**
  * Shows the wanted beep on click from beep list
  * @param {number} i index of the beep
  */

@@ -91,7 +91,11 @@
             "LeatherVestSuit": 50,
             "MeshTop": 51,
             "ShinyLeotard": 52,
-            "OrnateMetalBra": 53
+            "OrnateMetalBra": 53,
+            "Bandage": 54,
+            "LeatherBunnyHollowBra": 55,
+            "MaidBra": 56,
+            "SatinCorset": 57
         }
     },
     "Bracelet": {
@@ -349,7 +353,8 @@
             "Eyes6": 10,
             "Eyes7": 11,
             "Eyes8": 12,
-            "Eyes9": 13
+            "Eyes9": 13,
+            "Eyes15": 14
         }
     },
     "Eyes2": {
@@ -368,7 +373,8 @@
             "Eyes6": 10,
             "Eyes7": 11,
             "Eyes8": 12,
-            "Eyes9": 13
+            "Eyes9": 13,
+            "Eyes15": 14
         }
     },
     "EyeShadow": {
@@ -526,7 +532,9 @@
             "CyberneticEars1": 42,
             "Onihorns": 43,
             "SkunkEars": 44,
-            "AquaticEars": 45
+            "AquaticEars": 45,
+            "CyberEars": 46,
+            "FloppyBunnyEars": 47
         }
     },
     "HairAccessory2": {
@@ -566,7 +574,8 @@
             "SkunkEars": 31,
             "AquaticEars": 32,
             "CyberneticEars1": 33,
-            "BigLynxEars": 34
+            "BigLynxEars": 34,
+            "CyberEars": 35
         }
     },
     "HairAccessory3": {
@@ -1346,7 +1355,8 @@
             "WebBlindfold": 33,
             "RubberMask": 34,
             "Kigu2Hood": 35,
-            "AsylumBlindfold": 36
+            "AsylumBlindfold": 36,
+            "HypnoticVisor": 37
         }
     },
     "ItemHood": {
@@ -2631,6 +2641,23 @@
             "FaceScars": 1,
             "FaceWritings": 2,
             "Splatters": 3
+        }
+    },
+    "BodyStyle": {
+        "id": 87,
+        "assets": {
+            "EchoV1": 0,
+            "Original": 1
+        }
+    },
+    "ClothOuter": {
+        "id": 88,
+        "assets": {
+            "AdmiralTop": 0,
+            "BusinessSuit": 1,
+            "FurCoat": 2,
+            "LeatherJacket": 3,
+            "Robe1": 4
         }
     }
 }

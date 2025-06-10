@@ -80,6 +80,33 @@ declare namespace TextItem {
      * @param {TextItemOption} previousOption
      */
     function PublishAction(data: TextItemData, C: Character, item: Item, newOption: TextItemOption, previousOption: TextItemOption): void;
+    /**
+     * Usage AfterDraw: (...args) => TextItem.GenericTextDrawHook(...args, {Width: 128, Height: 128, XOffset: 0, YOffset: 10, drawOptions: { fontSize: 12 }})
+     * @param {TextItemData} data
+     * @param {((drawData: DynamicDrawingData<Record<string, unknown>>) => void) | null} originalFunction
+     * @param {{C: Character; A: Asset; CA: Item; X: number; Y: number; Property: ItemProperties; drawCanvas: DrawCanvasCallback; drawCanvasBlink: DrawCanvasCallback; AlphaMasks: RectTuple[]; L: string; Color: string}} drawArgs
+     * @param {{Width?: number; Height?: number; XOffset?: number; YOffset?: number; LayerName?: string; drawOptions?: DynamicDrawOptions;}} options
+     */
+    function GenericTextDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData<Record<string, unknown>>) => void) | null, { C, A, CA, X, Y, Property, drawCanvas, drawCanvasBlink, AlphaMasks, L, Color, }: {
+        C: Character;
+        A: Asset;
+        CA: Item;
+        X: number;
+        Y: number;
+        Property: ItemProperties;
+        drawCanvas: DrawCanvasCallback;
+        drawCanvasBlink: DrawCanvasCallback;
+        AlphaMasks: RectTuple[];
+        L: string;
+        Color: string;
+    }, { Width, Height, XOffset, YOffset, LayerName, drawOptions }: {
+        Width?: number;
+        Height?: number;
+        XOffset?: number;
+        YOffset?: number;
+        LayerName?: string;
+        drawOptions?: DynamicDrawOptions;
+    }): void;
 }
 /**
  * Throttled callback for handling text changes.

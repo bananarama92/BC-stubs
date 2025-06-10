@@ -226,6 +226,14 @@ declare function ElementCreateSearchInput(id: string | null, dataCallback: () =>
     maxLength?: null | number;
 }): HTMLInputElement;
 /**
+ * Returns the element's document- or shadow-root.
+ *
+ * If an element is not part of the DOM tree, thus lacking a document- or shadow-root, then {@link document} is returned.
+ * @param {Node} elem
+ * @returns {Document | ShadowRoot}
+ */
+declare function ElementGetRoot(elem: Node): Document | ShadowRoot;
+/**
  * Return whether an element is visible or not.
  *
  * Approximate polyfill of [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility),
@@ -345,7 +353,7 @@ declare namespace ElementButton {
     let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     function _MouseDown(this: HTMLButtonElement, ev: MouseEvent): void;
-    function _MouseUp(this: Document, ev: MouseEvent): void;
+    function _MouseUp(this: Document | ShadowRoot, ev: MouseEvent): void;
     function _GetClickTouchListeners(): {
         click: (this: HTMLButtonElement, ev: MouseEvent | PointerEvent) => void;
         touchend: (this: HTMLButtonElement, ev: TouchEvent) => void;
@@ -422,6 +430,11 @@ declare namespace ElementButton {
      */
     function CreateForAsset(idPrefix: string | null, asset: Asset | Item, C: null | Character, onClick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
     /**
+     * @param {CraftingItem} craft
+     * @returns {HTMLElement[]}
+     */
+    function CreateCraftTooltipContent(craft: CraftingItem): HTMLElement[];
+    /**
      * Create a button for an activity, including image, label and icons.
      * @param {string | null} idPrefix - The ID of the to-be created search button
      * @param {ItemActivity} activity - The activity for which to create a button
@@ -487,12 +500,14 @@ declare namespace ElementMenu {
     export function PrependItem(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
 }
 declare namespace ElementCheckbox {
+    function _pointerdown(this: HTMLInputElement, ev: PointerEvent): void;
+    function _pointerup(this: Document | ShadowRoot, ev: PointerEvent): void;
     /**
      * Construct an return a DOM checkbox element (`<input type="checkbox">`)
      * @param {null | string} id - The ID of the element, or `null` if one must be assigned automatically
-     * @param {(this: HTMLInputElement, ev: Event) => any} onChange - The change event listener to-be fired upon checkbox clicks
+     * @param {null | ((this: HTMLInputElement, ev: Event) => any)} onChange - The change event listener to-be fired upon checkbox clicks
      * @param {null | ElementCheckbox.Options} options - High level options for the to-be created checkbox
      * @param {null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
      */
-    function Create(id: null | string, onChange: (this: HTMLInputElement, ev: Event) => any, options?: null | ElementCheckbox.Options, htmlOptions?: null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
+    function Create(id?: null | string, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.Options, htmlOptions?: null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
 }
