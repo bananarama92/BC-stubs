@@ -35,6 +35,10 @@
         "Splatters": "R114",
         "WombTattoos": "R101"
     },
+    "BodyStyle": {
+        "EchoV1": "R117",
+        "Original": "R117"
+    },
     "BodyUpper": {
         "FlatMedium": "R98",
         "FlatSmall": "R98",
@@ -44,6 +48,7 @@
         "XLarge": "R98"
     },
     "Bra": {
+        "Bandage": "R117",
         "Bandeau1": "R98",
         "Bikini1": "R98",
         "BondageBra1": "R98",
@@ -77,14 +82,17 @@
         "LatexBra1": "R98",
         "LatexBunnySuit": "R98",
         "LeatherBreastBinder": "R98",
+        "LeatherBunnyHollowBra": "R117",
         "LeatherStrapBra1": "R98",
         "LeatherVestSuit": "R104",
+        "MaidBra": "R117",
         "MaidBra1": "R98",
         "MeshTop": "R113",
         "OrnateMetalBra": "R116",
         "OuvertPerl1": "R98",
         "Ribbons": "R98",
         "Sarashi1": "R98",
+        "SatinCorset": "R117",
         "SexyBeachBra1": "R98",
         "SexyBikini1": "R98",
         "SexyBikini2": "R98",
@@ -291,6 +299,13 @@
         "Waspie2": "R98",
         "Waspie3": "R98"
     },
+    "ClothOuter": {
+        "AdmiralTop": "R117",
+        "BusinessSuit": "R117",
+        "FurCoat": "R117",
+        "LeatherJacket": "R117",
+        "Robe1": "R117"
+    },
     "Corset": {
         "ClassicLatexCorset": "R98",
         "Corset1": "R98",
@@ -324,6 +339,7 @@
         "Eyes12": "R98",
         "Eyes13": "R98",
         "Eyes14": "R99",
+        "Eyes15": "R117",
         "Eyes2": "R98",
         "Eyes3": "R98",
         "Eyes4": "R98",
@@ -340,6 +356,7 @@
         "Eyes12": "R98",
         "Eyes13": "R98",
         "Eyes14": "R99",
+        "Eyes15": "R117",
         "Eyes2": "R98",
         "Eyes3": "R98",
         "Eyes4": "R98",
@@ -453,12 +470,14 @@
         "BunnyEars2": "R98",
         "CowEars": "R104",
         "CowHorns": "R98",
+        "CyberEars": "R117",
         "CyberneticEars1": "R108",
         "DildocornHorn": "R98",
         "EarWarmer": "R103",
         "Ears1": "R98",
         "Ears2": "R98",
         "ElfEars": "R98",
+        "FloppyBunnyEars": "R117",
         "FoxEars1": "R98",
         "FoxEars2": "R98",
         "FoxEars3": "R98",
@@ -501,6 +520,7 @@
         "BunnyEars2": "R98",
         "CowEars": "R104",
         "CowHorns": "R98",
+        "CyberEars": "R117",
         "CyberneticEars1": "R111",
         "DildocornHorn": "R98",
         "Ears1": "R98",
@@ -1242,6 +1262,7 @@
         "FullBlindfold": "R98",
         "FurScarf": "R98",
         "FuturisticMask": "R98",
+        "HypnoticVisor": "R117",
         "InteractiveVRHeadset": "R98",
         "InteractiveVisor": "R98",
         "Kigu2Hood": "R112",

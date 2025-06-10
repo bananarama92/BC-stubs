@@ -29,14 +29,17 @@ declare function CommonGetBrowser(): {
  */
 declare function CommonParseCSV(str: string): string[][];
 /**
- *  Read a CSV file from cache, or fetch it from the server
- * @param {string} Array - Name of where the cached text is stored
- * @param {string} Path - Path/Group in which the screen is located
- * @param {string} Screen - Screen for which the file is for
- * @param {string} File - Name of the file to get
- * @returns {void} - Nothing
+ * Read a CSV file from the server
+ *
+ * If the file has been cached already it'll use that.
+ *
+ * @warning Note that due to the way fetching is async, the
+ * array you'll get back won't be populated until the fetch completes
+ *
+ * @param {string} url - URL to load
+ * @returns {string[][]}
  */
-declare function CommonReadCSV(Array: string, Path: string, Screen: string, File: string): void;
+declare function CommonReadCSV(url: string): string[][];
 /**
  * AJAX utility to get a file and return its content. By default will retry requests 10 times
  * @param {string} Path - Path of the resource to request
@@ -577,10 +580,45 @@ declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: 
     reviver?: (this: any, key: string, value: any) => any;
 }): VariableContainer<T1, T2>;
 /**
+ * Partition the string into separate parts using the given replacer keys, replacing them with replacer values
+ * @template T
+ * @param {string} string
+ * @param {Record<string, T>} replacers
+ * @returns {(string | T)[]}
+ */
+declare function CommonStringPartitionReplace<T>(string: string, replacers: Record<string, T>): (string | T)[];
+/**
  *
  * @param {RoomName} screen
  */
 declare function CommonScreenName(screen: RoomName): string;
+/**
+ * Generates the path to a translation CSV file for a screen
+ *
+ * @param {string} [module] - The screen's module
+ * @param {string} [screen] - The screen's name
+ * @param {string} [group] - The text group
+ * @returns {string | undefined}
+ */
+declare function ScreenFileGetTranslation(module?: string, screen?: string, group?: string): string | undefined;
+/**
+ * Generates the path to a CSV Dialog file for a screen
+ *
+ * @param {string} npcType - The dialog file name
+ * @param {string} [module] - The screen's module
+ * @param {string} [screen] - The screen's name
+ * @returns {string}
+ */
+declare function ScreenFileGetDialog(npcType: string, module?: string, screen?: string): string;
+/**
+ * Generate a path to one of our Screen assets
+ *
+ * @param {string} file
+ * @param {string} [module]
+ * @param {string} [screen]
+ * @returns
+ */
+declare function ScreenFileGetPath(file: string, module?: string, screen?: string): string;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /**
@@ -684,3 +722,12 @@ declare namespace CommonKey {
      */
     function NavigationKeyDown(scrollableElem: HTMLElement, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: HTMLElement) => number): boolean;
 }
+/**
+ * Escapes any potential regex syntax characters in a string, and returns a new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
+ * @license MIT - Copyright (c) 2014-2025 Denis Pushkarev, core-js 3.40.0 - 2025.01.08
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/escape
+ * @see https://github.com/zloirock/core-js/blob/v3.40.0/packages/core-js/modules/esnext.regexp.escape.js
+ * @param S The string to escape.
+ * @returns A new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
+ */
+declare var CommonRegEscape: Function;

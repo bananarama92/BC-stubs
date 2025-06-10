@@ -302,6 +302,7 @@ declare namespace AssetPoseMapping {
         let Yoked_8: "Yoked";
         export { Yoked_8 as Yoked };
     }
+    let ItemHead: {};
     namespace ItemLegs {
         let AllFours_15: "Hide";
         export { AllFours_15 as AllFours };

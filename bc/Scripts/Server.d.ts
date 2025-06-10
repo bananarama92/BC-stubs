@@ -190,22 +190,43 @@ declare function ServerAccountQueryResult(data: ServerAccountQueryResponse): voi
  */
 declare function ServerAccountBeep(data: ServerAccountBeepResponse): void;
 /**
+ * Send a beep message to another player
+ * @param {number} target - The member number of the target. We must be friend with them
+ * @param {string} [msg] - The message to send to the target.
+ * @param {object} [options] - Options for the beep message
+ * @param {boolean} [options.includeRoom] - If set, we'll include the current room data we're in
+ */
+declare function ServerSendBeepMessage(target: number, msg?: string, options?: {
+    includeRoom?: boolean;
+}): void;
+/**
  * Show a message as a beep
  * @param {string} message
  * @param {number} duration
  * @param {object} [options]
  * @param {(this: HTMLDivElement, event: MouseEvent) => void} [options.onClick]
+ * @param {number} [options.memberNumber]
+ * @param {string} [options.memberName]
+ * @param {string} [options.chatRoomName]
  * @param {boolean} [options.silent]
  */
 declare function ServerShowBeep(message: string, duration: number, options?: {
     onClick?: (this: HTMLDivElement, event: MouseEvent) => void;
+    memberNumber?: number;
+    memberName?: string;
+    chatRoomName?: string;
     silent?: boolean;
 }): void;
-/** Draws the last beep sent by the server if the timer is still valid, used during the drawing process */
+/** Draws the last beep sent by the server if the timer is still valid, used during the drawing process
+ * @deprecated
+ */
 declare function ServerDrawBeep(): void;
 /** Handles a click on the beep rectangle if mail is included */
 declare function ServerClickBeep(): void;
-/** Opens the friendlist from any screen */
+/**
+ * Opens the friendlist from any screen
+ * @deprecated Use {@link FriendListShow()};
+ */
 declare function ServerOpenFriendList(): void;
 /**
  * Callback used to parse received information related to the player ownership data
@@ -365,6 +386,7 @@ declare namespace ServerAccountDataSyncedValidate {
     }[], C: Character): Reputation[];
     function WhiteList(arg: number[], C: Character): number[];
     function BlackList(arg: number[], C: Character): number[];
+    function MapData(arg: Partial<ChatRoomMapData>, C: Character): ChatRoomMapData;
 }
 type ServerChatRoomChecksOptions = {
     screen?: string;

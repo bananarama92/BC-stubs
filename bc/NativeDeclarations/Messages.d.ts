@@ -2,6 +2,16 @@
 
 type MemberNumber = number;
 
+type ChatRoomMapPos = {
+	X: number;
+	Y: number;
+}
+
+type ChatRoomMapData = {
+	Pos: ChatRoomMapPos
+	PrivateState: Record<string, Object>
+}
+
 interface ServerAccountImmutableData {
 	/** Socket ID */
 	ID: string;
@@ -153,7 +163,7 @@ type ServerItemPermissionsPacked = Partial<Record<AssetGroupName, Record<string,
 
 interface ServerMapDataResponse {
 	MemberNumber: number;
-	MapData: ChatRoomMapPos;
+	MapData: ChatRoomMapData;
 }
 
 type ServerAccountDataSynced = Omit<ServerAccountData, "Money" | "FriendList" | "AccountName">;
@@ -1075,7 +1085,7 @@ interface ClientToServerEvents {
 	ChatRoomCharacterPoseUpdate: (data: ServerCharacterPoseUpdate) => void;
 	ChatRoomCharacterArousalUpdate: (data: ServerCharacterArousalUpdate) => void;
 	ChatRoomCharacterItemUpdate: (data: ServerCharacterItemUpdate) => void;
-	ChatRoomCharacterMapDataUpdate: (data: ChatRoomMapPos) => void;
+	ChatRoomCharacterMapDataUpdate: (data: ChatRoomMapData) => void;
 
 	ChatRoomAdmin: (data: ServerChatRoomAdminRequest) => void;
 	ChatRoomAllowItem: (data: ServerChatRoomAllowItemRequest) => void;
