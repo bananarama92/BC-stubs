@@ -1,3 +1,4 @@
+declare function CommonPrefersReducedMotion(): boolean;
 /**
  * Checks if a variable is a number
  * @param {any} n - Variable to check for
