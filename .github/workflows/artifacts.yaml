@@ -83,9 +83,8 @@ jobs:
 
           # Extract all native .d.ts files and store them in a dedicated directory
           mkdir -p dist/NativeDeclarations
-          find . -iname "*.d.ts" -not -path "./Scripts/lib/*" -not -path "./Tools/*" -not -path "./Screens/MiniGame/KinkyDungeon/*" -exec cp {} dist/NativeDeclarations/ \;
+          python ../../scripts/copy_declarations.py . dist/NativeDeclarations --ignore MiniGame/KinkyDungeon MessagesPatch.d.ts Tools/Node
           cp ../../.github/lzstring.d.ts dist/NativeDeclarations/
-          rm dist/NativeDeclarations/MessagesPatch.d.ts
 
           # Convert namespace-embedded functions into proper methods so that TS actually picks up their docstrings
           # (xref https://github.com/bananarama92/BC-stubs/issues/18)
