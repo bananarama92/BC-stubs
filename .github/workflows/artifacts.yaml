@@ -89,7 +89,7 @@ jobs:
 
           # Convert namespace-embedded functions into proper methods so that TS actually picks up their docstrings
           # (xref https://github.com/bananarama92/BC-stubs/issues/18)
-          python ../../namespace_function_sanitize.py .
+          python ../../scripts/namespace_function_sanitize.py .
 
           set +e
           npx -p typescript tsc
@@ -111,7 +111,7 @@ jobs:
 
       - name: Push artifacts
         run: |
-          BC_VERSION=$(python get_bc_version.py Bondage-College/BondageClub/Scripts/Game.js)
+          BC_VERSION=$(python scripts/get_bc_version.py Bondage-College/BondageClub/Scripts/Game.js)
           rm -rf Bondage-College
 
           git config --local user.name "github-actions[bot]"
