@@ -1585,7 +1585,6 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
      */
     _ReloadIcon(root: HTMLElement, icon: HTMLElement, properties: DialogMenu.InitProperties, options: Pick<DialogMenu.ReloadOptions, never>): void;
 }
-declare const bob: _DialogExpressionMenu<"Expression">;
 /**
  * @template {DialogSelfMenuName} ModeType
  * @extends {_DialogSelfMenu<ModeType, Pose>}
