@@ -85,6 +85,11 @@ declare function IsReplyIdDictionaryEntry(entry: ChatMessageDictionaryEntry): en
  */
 declare function IsMsgIdDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MsgIdDictionaryEntry;
 /**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is MapViewTeleportEventDictionaryEntry}
+ */
+declare function IsMapViewTeleportEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MapViewTeleportEventDictionaryEntry;
+/**
  * Build class for chat message dictionaries
  */
 declare class DictionaryBuilder {
@@ -202,6 +207,12 @@ declare class DictionaryBuilder {
      * @returns
      */
     performActivity(name: ActivityName, group: AssetGroup, item?: Item, count?: number): this;
+    /**
+     * Adds a teleport dictionary entry
+     * @param {ChatRoomMapPos} position - The position to teleport to
+     * @returns
+     */
+    mapViewTeleport(position: ChatRoomMapPos): this;
     /**
      * Adds a dictionary entry to the builder
      * @param {ChatMessageDictionaryEntry} entry - The dictionary entry to add

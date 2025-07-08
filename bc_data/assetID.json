@@ -319,7 +319,8 @@
             "Underbust": 11,
             "TightCorset": 12,
             "RibbonCorset": 13,
-            "ExtremeCorset": 14
+            "ExtremeCorset": 14,
+            "SatinCorset": 15
         }
     },
     "Emoticon": {
@@ -2308,7 +2309,8 @@
         "id": 66,
         "assets": {
             "HeHim": 0,
-            "SheHer": 1
+            "SheHer": 1,
+            "TheyThem": 2
         }
     },
     "Pussy": {
@@ -2387,7 +2389,8 @@
             "IndoorSlippers": 42,
             "WitchShoes": 43,
             "HeellessHoof": 44,
-            "HoofBoots": 45
+            "HoofBoots": 45,
+            "CombatBoots": 46
         }
     },
     "Socks": {
@@ -2648,7 +2651,8 @@
         "id": 87,
         "assets": {
             "EchoV1": 0,
-            "Original": 1
+            "Original": 1,
+            "EchoV2": 2
         }
     },
     "ClothOuter": {

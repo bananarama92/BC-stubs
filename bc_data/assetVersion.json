@@ -37,6 +37,7 @@
     },
     "BodyStyle": {
         "EchoV1": "R117",
+        "EchoV2": "R118",
         "Original": "R117"
     },
     "BodyUpper": {
@@ -319,6 +320,7 @@
         "LatexCorset1": "R98",
         "LeatherCorsetTop1": "R98",
         "RibbonCorset": "R112",
+        "SatinCorset": "R118",
         "SteampunkCorsetTop1": "R98",
         "TightCorset": "R107",
         "Underbust": "R98"
@@ -2144,7 +2146,8 @@
     },
     "Pronouns": {
         "HeHim": "R98",
-        "SheHer": "R98"
+        "SheHer": "R98",
+        "TheyThem": "R118"
     },
     "Pussy": {
         "Penis": "R98",
@@ -2160,6 +2163,7 @@
         "BarefootSandals1": "R98",
         "Boots1": "R98",
         "Clogs": "R99",
+        "CombatBoots": "R118",
         "CustomHeels": "R107",
         "DeluxeBoots": "R98",
         "DutyShoes": "R98",

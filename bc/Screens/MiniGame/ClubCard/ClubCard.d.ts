@@ -792,8 +792,6 @@ declare var ClubCardHover: null | ClubCard;
  * */
 declare var ClubCardFocus: null | ClubCard;
 declare var ClubCardFocusAI: any;
-/** @type {null | TextCache} */
-declare var ClubCardTextCache: null | TextCache;
 declare var ClubCardTurnIndex: number;
 declare var ClubCardTurnCardPlayed: number;
 declare var ClubCardTurnEndDraw: boolean;

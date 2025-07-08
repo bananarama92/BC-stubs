@@ -775,6 +775,15 @@ interface MsgIdDictionaryEntry {
 	MsgId: string;
 	Tag: "MsgId";
 }
+
+/**
+ * A dictionary entry for teleport events
+ */
+interface MapViewTeleportEventDictionaryEntry {
+	Tag: "MapViewTeleport";
+	Position: ChatRoomMapPos;
+}
+
 /**
  * A dictionary entry with metadata about the chat message transmitted.
  *
@@ -804,7 +813,8 @@ type ChatMessageDictionaryEntry =
 	| ActivityNameDictionaryEntry
 	| MessageEffectEntry
 	| MsgIdDictionaryEntry
-	| ReplyIdDictionaryEntry ;
+	| ReplyIdDictionaryEntry
+	| MapViewTeleportEventDictionaryEntry;
 
 
 type ChatMessageDictionary = ChatMessageDictionaryEntry[];

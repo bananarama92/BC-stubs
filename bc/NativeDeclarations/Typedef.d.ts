@@ -335,6 +335,34 @@ type DialogMenuButton = "Activity" |
 	"Wardrobe" | "WardrobeDisabled" | "Reset" | "WearRandom" | "Random" | "Copy" | "Paste" | "Naked" | "Accept" | "Cancel" | "Character"
 	;
 
+declare namespace ElementDOMScreen {
+	/** Options for customizing the {@link ElementDOMScreen.GetTemplate} output */
+	interface TemplateOptions {
+		/** The parent element of the to-be returned screen (if any) */
+		parent?: Node;
+		/** Buttons for in the header's menubar (see `.screen-header [role="menubar"]`) */
+		menubarButtons?: readonly HTMLButtonElement[];
+		/** Content for within the main section (see `.screen-main`) */
+		mainContent?: readonly (Node | string)[];
+		/** Text content for within the heading (see `.screen-hgroup h1`) */
+		header?: string;
+		/**
+		 * Whether the main section (see `.screen-main`) is a `<main>` or `<aside>` element.
+		 *
+		 * As a rule of thumb: use `"main"` (aka the default) _unless_ another `<main>` element is already visible on the page,
+		 * as the HTML spec demands that only a single non-hidden main element may be present at any time.
+		 */
+		mainTag?: "main" | "aside";
+		/**
+		 * Whether to content of the DOM screen root is embedded within a [shadow root](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM) or not,
+		 * storing the DOM tree in an isolated namespace with its own set of element IDs and CSS style sheets
+		 */
+		asShadow?: boolean;
+		/** Additional CSS files to load when the `asShadow` option is specified */
+		cssFiles?: readonly string[];
+	}
+}
+
 declare namespace DialogMenu {
 	/** Customization options for {@link DialogMenu.Reload} */
 	interface ReloadOptions {
@@ -423,7 +451,7 @@ type DialogStruggleActionType = "ActionUse" | "ActionSwap" | "ActionRemove" | "A
 
 type CharacterType = "player" | "online" | "npc" | "simple";
 
-type CharacterPronouns = "SheHer" | "HeHim";
+type CharacterPronouns = "SheHer" | "HeHim" | "TheyThem";
 
 type VibratorIntensity = -1 | 0 | 1 | 2 | 3;
 
@@ -1047,7 +1075,12 @@ interface AssetGroup {
 	readonly PreviewZone?: RectTuple;
 	readonly DynamicGroupName: AssetGroupName;
 	readonly StyleOverride?: string [];
-	readonly SupportedStyles?: string [];
+	readonly CreateLayerTypesOverride?: number [];
+	readonly Reposition?: {
+        Group?: string;
+        ShiftX?: number;
+        ShiftY?: number;
+    }[];
 
 	readonly MirrorActivitiesFrom?: AssetGroupItemName;
 	readonly ArousalZone?: AssetGroupItemName;
@@ -1106,7 +1139,10 @@ type AssetGroupMapping = (
 interface AssetLayer {
 	/** The name of the layer - may be null if the asset only contains a single default layer */
 	readonly Name: string | null;
-	/** whether or not this layer can be colored */
+	/** Specify a body type to override the asset with. */
+	readonly StyleOverride?: string [];
+	readonly CreateLayerTypesOverride?: number [];
+	/** Specify a list of CLT asset layers to override. */
 	readonly AllowColorize: boolean;
 	/** if not null, specifies that this layer should always copy the color of the named layer */
 	readonly CopyLayerColor: string | null;
@@ -1239,6 +1275,14 @@ interface Asset {
 	readonly SetPose?: readonly AssetPoseName[];
 	readonly StyleOverride?: string[];
 	readonly SupportedStyles?: string[];
+	readonly CreateLayerTypesOverride?: number[];
+	readonly DrawOffset?: {
+        Group?: AssetGroupName;
+        Asset?: string;
+        Layer?: string[];
+        X?: number;
+        Y?: number;
+    }[];
 	/** @deprecated - Superceded by {@link Asset.PoseMapping} */
 	readonly AllowPose?: never;
 	/** @deprecated - Superceded by {@link Asset.PoseMapping} */
@@ -1392,7 +1436,7 @@ interface Pose {
 	MovePosition?: { Group: AssetGroupName; X: number; Y: number; }[];
 }
 
-type ActivityNameBasic = "Bite" | "Caress" | "Choke" | "Cuddle" | "FrenchKiss" |
+type ActivityNameBasic = "Bite" | "Brush" | "Caress" | "Choke" | "Cuddle" | "FrenchKiss" |
 	"GagKiss" | "GaggedKiss" | "Grope" | "HandGag" | "Kick" |
 	"Kiss" | "Lick" | "MassageFeet" | "MassageHands" | "MasturbateFist" |
 	"MasturbateFoot" |"MasturbateHand" | "MasturbateTongue" |
@@ -1404,7 +1448,7 @@ type ActivityNameBasic = "Bite" | "Caress" | "Choke" | "Cuddle" | "FrenchKiss" |
 	"SistersHug" | "BrothersHandshake" | "SiblingsCheekKiss" | "CollarGrab"
 ;
 
-type ActivityNameItem = "Inject" | "MasturbateItem" | "PenetrateItem" | "PourItem" | "RollItem" | "RubItem" | "ShockItem" | "SipItem" | "SpankItem" | "TickleItem" | "EatItem" | "Scratch" | "ThrowItem";
+type ActivityNameItem = "Inject" | "MasturbateItem" | "PenetrateItem" | "PourItem" | "RollItem" | "RubItem" | "BrushItem" | "ShockItem" | "SipItem" | "SpankItem" | "TickleItem" | "EatItem" | "Scratch" | "ThrowItem";
 
 type ActivityName = ActivityNameBasic | ActivityNameItem;
 
@@ -1656,6 +1700,14 @@ interface DialogInfo {
 	module: ModuleType;
 	screen: string;
 	name: string;
+}
+
+declare namespace DialogLeave {
+	/** Further options for {@link DialogLeave} */
+	export interface Options {
+		/** Whether to call the {@link ScreenLoadHandler} and {@link ScreenResizeHandler} functions of the current screen after leaving the dialog */
+		reload?: boolean;
+	}
 }
 
 /** The packed representation of a Private Room NPC */
@@ -1913,6 +1965,12 @@ interface Character {
 	CanPickLocks: () => boolean;
 	IsEdged: () => boolean;
 	IsPlayer: () => this is PlayerCharacter;
+	get X(): number | null;
+	get Y(): number | null;
+	set X(X: number);
+	set Y(Y: number);
+	get Position(): ChatRoomMapPos | null;
+	set Position({ X, Y }: ChatRoomMapPos);
 	IsBirthday: () => boolean;
     IsSiblingOfCharacter: (C: Character) => boolean;
 	IsFamilyOfPlayer: () => boolean;
@@ -3816,7 +3874,11 @@ interface GameClubCardParameters {
 	PlayerSlot?: number;
 	Background?: string;
 	CardBack?: number;
-	IsAnimation?: boolean;
+	// General game settings
+	Settings?: {
+		AutoSpectate?: boolean;
+		IsAnimation?: boolean;
+	};
 }
 
 interface GamePrisonParameters {

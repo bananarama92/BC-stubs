@@ -17,10 +17,15 @@ declare function ChatRoomMapViewInitialize(mode: ChatRoomMapType): ServerChatRoo
 declare function ChatRoomMapViewInitializeCharacter(C: Character): ChatRoomMapData;
 /**
  * Validate the passed chat room map positions.
- * @param {unknown} pos
+ * @param {unknown} position
  * @returns {ChatRoomMapPos}
  */
-declare function ChatRoomMapViewValidatePos(pos: unknown): ChatRoomMapPos;
+declare function ChatRoomMapViewValidatePosition(position: unknown): ChatRoomMapPos;
+/**
+ * Checks if the coordinates are out of bounds relative to the map
+ * @param {ChatRoomMapPos} position
+ */
+declare function ChatRoomMapViewIsOutOfBounds(position: ChatRoomMapPos): boolean;
 /**
  * Performs cleanup when leaving the chat room map
  * @returns {void} - Nothing
@@ -275,6 +280,18 @@ declare function ChatRoomMapViewDraw(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewDrawUi(): void;
+/**
+ * Teleport a character to a specific tile
+ * @param {Character} target
+ * @param {ChatRoomMapPos} position
+ */
+declare function ChatRoomMapViewTeleport(target: Character, position: ChatRoomMapPos): void;
+/**
+ * Teleport a character to a specific tile from a hidden message
+ * @param {Character} sender
+ * @param {ServerChatRoomMessage} data
+ */
+declare function ChatRoomMapViewTeleportHiddenMessage(sender: Character, data: ServerChatRoomMessage): void;
 /**
  * Check if a tile on the map can be entered by a player, and return the number of milliseconds required to reach it
  * @param {number} X - The X position on the map

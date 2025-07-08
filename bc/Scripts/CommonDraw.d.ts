@@ -9,10 +9,12 @@ declare function CommonDrawCanvasPrepare(C: Character): void;
  * @param {AssetGroup} group - The asset group
  * @param {AssetGroupName} groupName -  The asset group.
  * @param {AssetPoseName | PoseType} pose - The pose the user is in.
+ * @param {AssetLayer} layer - the layer of the asset.
+ * @param {string} layerType - CLT layer name, e.g. typed3
  * @param {Asset} asset - target asset
  * @returns {string} baseURL - URL pointing to asset art to load
  */
-declare function AssetBaseURL(C: Character, group: AssetGroup, groupName: AssetGroupName, pose: AssetPoseName | PoseType, asset: Asset): string;
+declare function AssetBaseURL(C: Character, group: AssetGroup, groupName: AssetGroupName, pose: AssetPoseName | PoseType, layer: AssetLayer, layerType: string, asset: Asset): string;
 /**
  * @typedef { Map<AssetGroupName, TextureAlphaMask[]> } MaskLayersMap
  * @param {Character} C - The character to prepare

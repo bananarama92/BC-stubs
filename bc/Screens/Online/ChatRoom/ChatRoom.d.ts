@@ -1483,6 +1483,12 @@ declare function ChatRoomPronounSubstitutions(C: Character, key: string, hideIde
  * @return {ChatRoomSettings}
  */
 declare function ChatRoomGetSettings(room: ChatRoom): ChatRoomSettings;
+/**
+ * Gets a character by MemberNumber or name or nickname
+ * @param {string|number} spec
+ * @return {Character|null}
+ */
+declare function ChatRoomGetCharacter(spec: string | number): Character | null;
 declare namespace ChatRoomSpaceType {
     let MIXED: "X";
     let FEMALE_ONLY: "";
