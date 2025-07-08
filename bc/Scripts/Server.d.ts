@@ -209,6 +209,7 @@ declare function ServerSendBeepMessage(target: number, msg?: string, options?: {
  * @param {string} [options.memberName]
  * @param {string} [options.chatRoomName]
  * @param {boolean} [options.silent]
+ * @param {string} [title]
  */
 declare function ServerShowBeep(message: string, duration: number, options?: {
     onClick?: (this: HTMLDivElement, event: MouseEvent) => void;
@@ -216,7 +217,7 @@ declare function ServerShowBeep(message: string, duration: number, options?: {
     memberName?: string;
     chatRoomName?: string;
     silent?: boolean;
-}): void;
+}, title?: string): void;
 /** Draws the last beep sent by the server if the timer is still valid, used during the drawing process
  * @deprecated
  */

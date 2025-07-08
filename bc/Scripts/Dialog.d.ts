@@ -326,9 +326,10 @@ declare function DialogIntro(C: Character): string;
 /**
  * Generic dialog function to leave conversation. De-inititalizes global variables and reverts the
  * FocusGroup of the player and the current character to null
+ * @param {null | DialogLeave.Options} options - Further customization options
  * @returns {void} - Nothing
  */
-declare function DialogLeave(): void;
+declare function DialogLeave(options?: null | DialogLeave.Options): void;
 /**
  * Generic dialog function to remove a piece of the conversation that's already done
  * @returns {void} - Nothing

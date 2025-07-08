@@ -22,6 +22,23 @@ declare function ClubCardBuilderSaveName(Save: boolean): void;
  */
 declare function ClubCardBuilderSaveCardBack(CardBack: number): void;
 /**
+ * Opens the deck editor and remember if we came from an online room
+ * @param {boolean} FromChatRoom - TRUE if we came from an online room
+ * @returns {void} - Nothing
+ */
+declare function ClubCardBuilderShowScreen(FromChatRoom: boolean): void;
+declare function ClubCardBuilderTagChanged(): void;
+/**
+ * Resets the tag selection and remove the elements when we finish editing the deck
+ * @returns {void} - Nothing
+ */
+declare function ClubCardBuilderFinishEdit(): void;
+/**
+ * Handles input in the text box for cards search
+ * @returns {void} - Nothing
+ */
+declare function ClubCardBuilderInputChanged(): void;
+/**
  * Loads the filtered cards
  * @returns {void} - Nothing
  */
@@ -53,6 +70,7 @@ declare function ClubCardBuilderRun(): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardBuilderClick(): void;
+declare function ClubCardBuilderUnload(): void;
 declare var ClubCardBuilderBackground: string;
 declare var ClubCardBuilderDeckIndex: number;
 /** @type {null | ClubCard} */
@@ -64,13 +82,14 @@ declare var ClubCardBuilderOffset: number;
 declare var ClubCardBuilderDeckCurrent: number[];
 declare var ClubCardBuilderMinDeckSize: number;
 declare var ClubCardBuilderMaxDeckSize: number;
-declare var ClubCardBuilderFilterIndex: number;
+declare var ClubCardBuilderSelectedTag: string;
 declare var ClubCardBuilderFilterGroup: string[];
 declare var ClubCardBuilderRenameIndex: number;
 declare var ClubCardBuilderCustomizationIndex: string;
 declare var ClubCardBuilderSelectedCardBack: number;
 declare var ClubCardBuilderCardBackFocus: any;
 declare var ClubCardBuilderCardBackCount: number;
+declare var ClubCardBuilderView: ClubCard[];
 declare var ClubCardBuilderDefaultDeck: number[];
 declare var ClubCardBuilderMaidDeck: number[];
 declare var ClubCardBuilderDominantDeck: number[];
@@ -79,3 +98,5 @@ declare var ClubCardBuilderAsylumDeck: number[];
 declare var ClubCardBuilderABDLDeck: number[];
 declare var ClubCardBuilderCollegeDeck: number[];
 declare var ClubCardBuilderLiabilityDeck: number[];
+/** Whether exiting the builder should return you to the chatroom or, otherwise, the club card lounge. */
+declare let ClubCardBuilderReturnToChatroom: boolean;

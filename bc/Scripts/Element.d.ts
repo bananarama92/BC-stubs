@@ -511,3 +511,66 @@ declare namespace ElementCheckbox {
      */
     function Create(id?: null | string, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.Options, htmlOptions?: null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
 }
+declare namespace ElementSwipe {
+    /**
+     * @param {HTMLElement} elem
+     * @param {null | ElementSwipe.Options} options
+     */
+    function setListeners(elem: HTMLElement, options?: null | ElementSwipe.Options): void;
+}
+declare namespace ElementDOMScreen {
+    /**
+     * Construct and return a template for a basic DOM screen.
+     *
+     * Important points:
+     * * Screen dimensions of `[x, 0, y, 1000]` are generally recommended
+     * * The standard child elements of the to-be returned screen _may_ freely be moved around in the DOM tree as one sees fit
+     * * The standard child elements of the to-be returned screen _should_ not be removed; do so at your own risk. They _may_ remain unused however.
+     * @example
+     * <div id="my-fancy-id" class="screen">
+     *     <!--
+     *         The first row: a banner containing a menubar,
+     *         the latter of which _should_ contain an exit button as its first entry
+     *     -->
+     *     <header class="screen-header">
+     *         <div role="menubar" />
+     *     </header>
+     *
+     *     <!--
+     *         The second row: the screen's main heading/label/description
+     *         and a dedicated field for anyand all temporary status messages (see `ElementDOMScreen.SetStatus()`)
+     *     -->
+     *     <hgroup class="screen-hgroup">
+     *         <h1 />
+     *         <p role="status" />
+     *     </hgroup>
+     *
+     *     <!--
+     *         The third and final row: a scrollable section with the main content of the screen.
+     *         As a rule of thumb, it is recommended to embed the immediate child elements into some sort of
+     *         grouping element like `<fieldset>`, `<section>` and/or `<article>`.
+     *     -->
+     *     <main class="screen-main" />
+     * </div>
+     * @param {string} id - The ID of the screen
+     * @param {null | ElementDOMScreen.TemplateOptions} options - Further customization options
+     * @returns {HTMLDivElement} - The newly created DOM screen
+     */
+    function getTemplate(id: string, options?: null | ElementDOMScreen.TemplateOptions): HTMLDivElement;
+    let _statusIDMap: WeakMap<Element, number>;
+    /**
+     * Timer handler for {@link ElementDOMScreen.SetStatus}
+     * @private
+     * @satisfies {TimerHandler}
+     * @param {Element} headingElem The screen's `h1` element
+     * @param {Element} statusElem The screen's `[role='status']` element
+     */
+    function _setStatusTimerHandler(headingElem: Element, statusElem: Element): void;
+    /**
+     * Set a temporary status message for the screen.
+     * @param {HTMLElement} root The screen on which the status is the be set; it _must_ contain a single `h1` and `[role='status']` element
+     * @param {string} status The to-be displayed status message
+     * @param {number} timeout How long the status message should be shown in ms; defaults to 5000 ms
+     */
+    function setStatus(root: HTMLElement, status: string, timeout?: number): void;
+}
