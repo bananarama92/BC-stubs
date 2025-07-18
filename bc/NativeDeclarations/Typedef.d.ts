@@ -1436,7 +1436,7 @@ interface Pose {
 	MovePosition?: { Group: AssetGroupName; X: number; Y: number; }[];
 }
 
-type ActivityNameBasic = "Bite" | "Brush" | "Caress" | "Choke" | "Cuddle" | "FrenchKiss" |
+type ActivityNameBasic = "Bite" | "Brush" | "Caress" | "Choke" | "Clean" | "Cuddle" | "FrenchKiss" |
 	"GagKiss" | "GaggedKiss" | "Grope" | "HandGag" | "Kick" |
 	"Kiss" | "Lick" | "MassageFeet" | "MassageHands" | "MasturbateFist" |
 	"MasturbateFoot" |"MasturbateHand" | "MasturbateTongue" |
