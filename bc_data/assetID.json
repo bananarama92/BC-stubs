@@ -320,7 +320,8 @@
             "TightCorset": 12,
             "RibbonCorset": 13,
             "ExtremeCorset": 14,
-            "SatinCorset": 15
+            "SatinCorset": 15,
+            "BarrelCorset": 16
         }
     },
     "Emoticon": {
@@ -1880,7 +1881,8 @@
             "CollarSun": 17,
             "CustomCollarTag": 18,
             "ElectronicTag": 19,
-            "Key": 20
+            "Key": 20,
+            "CollarRoseAmulet": 21
         }
     },
     "ItemNeckRestraints": {
@@ -2117,7 +2119,8 @@
             "WiredEgg": 29,
             "FullCasingCage": 30,
             "LatexNulge": 31,
-            "LockingCockring": 32
+            "LockingCockring": 32,
+            "Ballspreader": 33
         }
     },
     "ItemVulvaPiercings": {
@@ -2236,7 +2239,8 @@
             "NecklaceRope": 17,
             "PearlNecklace1": 18,
             "AnimeGirlNecklace": 19,
-            "SatinScarf": 20
+            "SatinScarf": 20,
+            "RosePendant": 21
         }
     },
     "Nipples": {

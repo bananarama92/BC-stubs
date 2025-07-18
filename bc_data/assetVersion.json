@@ -308,6 +308,7 @@
         "Robe1": "R117"
     },
     "Corset": {
+        "BarrelCorset": "R118",
         "ClassicLatexCorset": "R98",
         "Corset1": "R98",
         "Corset2": "R98",
@@ -1783,6 +1784,7 @@
         "CollarPentagram": "R98",
         "CollarPupBone": "R98",
         "CollarRose": "R98",
+        "CollarRoseAmulet": "R118",
         "CollarShockUnit": "R98",
         "CollarSun": "R98",
         "CustomCollarTag": "R98",
@@ -1965,6 +1967,7 @@
         "Underbust": "R98"
     },
     "ItemVulva": {
+        "Ballspreader": "R118",
         "BasicCockring": "R98",
         "BenWaBalls": "R98",
         "ChastityPouch": "R98",
@@ -2082,6 +2085,7 @@
         "NecklaceLock": "R98",
         "NecklaceRope": "R98",
         "PearlNecklace1": "R105",
+        "RosePendant": "R118",
         "SatinScarf": "R112"
     },
     "Nipples": {

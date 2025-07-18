@@ -29,11 +29,12 @@ declare function AssetAdd(Group: AssetGroup, AssetDef: AssetDefinition, Extended
 /**
  * Automatically generated pose-related asset prerequisites
  * @param {Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>} asset The asset or any other object with the expected asset interface subset
- * @returns {{ Prerequisite?: AssetPrerequisite[], AllowActivePose?: AssetPoseName[] }} The newly generated prerequisites
+ * @returns {{ Prerequisite?: AssetPrerequisite[], AllowActivePose?: AssetPoseName[], SetPose?: AssetPoseName[] }} The newly generated prerequisites
  */
 declare function AssetParsePosePrerequisite({ SetPose, AllowActivePose, Effect, Prerequisite }: Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>): {
     Prerequisite?: AssetPrerequisite[];
     AllowActivePose?: AssetPoseName[];
+    SetPose?: AssetPoseName[];
 };
 /**
  * Constructs extended item functions for an asset, if extended item configuration exists for the asset.
@@ -219,6 +220,7 @@ declare function AssetTextGet(msg: string): string;
  * Outputs all possible errors in the console log, it runs aynscronious
  */
 declare function AssetInventoryIDValidate(): Promise<void>;
+declare function AssetLoadCheckActivities(): void;
 /** @type {Asset[]} */
 declare var Asset: Asset[];
 /** @type {AssetGroup[]} */
