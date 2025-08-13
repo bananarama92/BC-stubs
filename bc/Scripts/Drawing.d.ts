@@ -23,9 +23,15 @@ declare function DrawLoad(): void;
 declare function DrawGetImage(Source: string): HTMLImageElement;
 /**
  * Reloads all character canvas once all images are loaded
+ * @param {HTMLImageElement | null} img
  * @returns {void} - Nothing
  */
-declare function DrawGetImageOnLoad(): void;
+declare function DrawGetImageOnLoad(img: HTMLImageElement | null): void;
+/**
+ *
+ * @param {HTMLImageElement | null} img
+ */
+declare function DrawRefreshCharacterForImage(img: HTMLImageElement | null): void;
 /**
  * Attempts to redownload an image if it previously failed to load
  * @param {HTMLImageElement & { errorcount?: number }} Img - Image tag that failed to load
@@ -407,6 +413,17 @@ declare function DrawGetScreenFlashAlpha(FlashTime: number): string;
  */
 declare function DrawGetDarkFactor(): number;
 /**
+ * Display the loading screen
+ * @param {number} time - The current time for frame
+ */
+declare function DrawLoadingScreen(time: number): void;
+/**
+ *
+ * @param {boolean} skipVFX
+ * @returns
+ */
+declare function DrawGetBackgroundURL(skipVFX: boolean): string;
+/**
  * Constantly looping draw process. Draws beeps, handles the screen size, handles the current blindfold state and draws the current screen.
  * @param {number} time - The current time for frame
  * @returns {void} - Nothing
@@ -560,8 +577,6 @@ declare var BlindFlash: boolean;
 declare var DrawingBlindFlashTimer: number;
 /** @type {Map<string, HTMLImageElement>} */
 declare const DrawCacheImage: Map<string, HTMLImageElement>;
-declare let DrawCacheLoadedImages: number;
-declare let DrawCacheTotalImages: number;
 declare var DrawLastDarkFactor: number;
 /**
  * A list of the characters that are drawn every frame

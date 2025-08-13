@@ -33,11 +33,7 @@ declare function GameClubCardDrawIcon(C: Character, X: number, Y: number, Zoom: 
  * @returns {void} - Nothing
  */
 declare function GameClubCardDrawCharacter(C: Character, X: number, Y: number, Zoom: number): void;
-/**
- * Loads the online Club Card configuration screen.
- * @returns {void} - Nothing
- */
-declare function GameClubCardLoad(): void;
+declare function GameClubCardLoad(): Promise<void>;
 /**
  * Runs the online Club Card configuration screen
  * @returns {void} - Nothing

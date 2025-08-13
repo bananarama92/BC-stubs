@@ -18,11 +18,7 @@ declare function CraftingItemHasEffect(Item: Asset, Effect: EffectName[]): boole
  * @returns {void} - Nothing
  */
 declare function CraftingShowScreen(FromChatRoom: boolean): void;
-/**
- * Loads the club crafting room in slot selection mode, creates a dummy character for previews
- * @returns {void} - Nothing
- */
-declare function CraftingLoad(): void;
+declare function CraftingLoad(): Promise<void>;
 /**
  * Update the crafting character preview image, applies the item on all possible body parts
  */

@@ -1,8 +1,4 @@
-/**
- * Loads the magic school laboratory and the teacher
- * @returns {void} - Nothing
- */
-declare function MagicSchoolEscapeLoad(): void;
+declare function MagicSchoolEscapeLoad(): Promise<void>;
 /**
  * Runs the room
  * @returns {void} - Nothing

@@ -5,11 +5,7 @@
  * @returns {void} - Nothing
  */
 declare function MagicSchoolLaboratoryPrepareNPC(C: Character, House: "" | "Maiestas" | "Vincula" | "Amplector" | "Corporis"): void;
-/**
- * Loads the magic school laboratory and the teacher
- * @returns {void} - Nothing
- */
-declare function MagicSchoolLaboratoryLoad(): void;
+declare function MagicSchoolLaboratoryLoad(): Promise<void>;
 /**
  * Runs the room
  * @returns {void} - Nothing

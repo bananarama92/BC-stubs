@@ -1,8 +1,4 @@
-/**
- * Loads the disclaimer screen
- * @returns {void} - Nothing
- */
-declare function DisclaimerLoad(): void;
+declare function DisclaimerLoad(): Promise<void>;
 /**
  * Runs & draws the disclaimer screen
  * @returns {void} - Nothing

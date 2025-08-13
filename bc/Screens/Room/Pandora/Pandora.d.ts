@@ -14,11 +14,7 @@ declare function PandoraCostumeIs(Costume: string): boolean;
 /** @param {number} Number */
 declare function PandoraQuizIs(Number: number): boolean;
 declare function PandoraCanAskForPaint(): boolean;
-/**
- * Loads the Pandora's Box screen
- * @returns {void} - Nothing
- */
-declare function PandoraLoad(): void;
+declare function PandoraLoad(): Promise<void>;
 /**
  * Returns the color of the direction buttons, it can change if the direction was recently navigated to
  * The Cartographer perk can show the returning path in yellow

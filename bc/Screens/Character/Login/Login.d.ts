@@ -8,17 +8,24 @@ declare function LoginDoNextThankYou(): void;
  * @returns {void} Nothing
  */
 declare function LoginDrawCredits(): void;
-/**
- * Loads the character login screen
- * @returns {void} Nothing
- */
-declare function LoginLoad(): void;
+declare function LoginLoad(): Promise<void>;
 /**
  * Runs the character login screen
  * @returns {void} Nothing
  */
 declare function LoginRun(): void;
+/**
+ * Handles player click events on the character login screen
+ * @returns {void} Nothing
+ */
+declare function LoginClick(): void;
+declare function LoginKeyDown(event: KeyboardEvent): boolean;
+/**
+ * Unload function - called when the login page unloads
+ */
+declare function LoginUnload(): void;
 declare function LoginResize(load: boolean): void;
+declare function LoginReloadLanguageText(): void;
 /**
  * Perform the inventory fixups needed.
  * @param {InventoryBundle[]} Inventory - The server-provided inventory object
@@ -124,12 +131,6 @@ declare function LoginResponse(C: ServerLoginResponse): void;
 /** Check if the player's browser has ES2020 support */
 declare function LoginCheckES2020(): void;
 /**
- * Handles player click events on the character login screen
- * @returns {void} Nothing
- */
-declare function LoginClick(): void;
-declare function LoginKeyDown(event: KeyboardEvent): boolean;
-/**
  * Attempt to log the user in based on their input username and password
  * @param {string} Name
  * @param {string} Password
@@ -151,11 +152,6 @@ declare function LoginSetStatus(ErrorMessage?: string, reset?: boolean): void;
  * @returns {string | null} The current login status, or null if we're not currently attempting to log in
  */
 declare function LoginGetStatus(): string | null;
-declare function LoginExit(): void;
-/**
- * Unload function - called when the login page unloads
- */
-declare function LoginUnload(): void;
 declare var LoginBackground: string;
 /**
  * Contents of the GameCredits.csv file
@@ -177,6 +173,22 @@ declare var LoginErrorMessage: string;
  * Lifetime bound to the screen.
  * @type {NPCCharacter} */
 declare var LoginCharacter: NPCCharacter;
+declare const LoginIDs: Readonly<{
+    name: "InputName";
+    password: "InputPassword";
+    language: "LanguageDropdown";
+    nameLabel: "login-name-label";
+    passwordLabel: "login-password-label";
+    newCharacter: "login-new-character-label";
+    register: "login-register-button";
+    login: "login-login-button";
+    welcome: "login-welcome-message";
+    status: "login-status";
+    passwordReset: "login-password-reset-button";
+    forgotPassword: "login-password-reset-hint";
+    cheats: "login-cheats-button";
+    footer: "login-footer";
+}>;
 declare namespace LoginEventListeners {
     function _KeyDownInputName(this: HTMLInputElement, ev: KeyboardEvent): void;
     function _KeyDownInputPassword(this: HTMLInputElement, ev: KeyboardEvent): void;

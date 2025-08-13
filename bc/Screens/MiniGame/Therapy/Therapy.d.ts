@@ -1,8 +1,4 @@
-/**
- * Loads the therapy mini game and sets the difficulty. The game is a little faster on mobile since its easier.
- * @returns {void} - Nothing
- */
-declare function TherapyLoad(): void;
+declare function TherapyLoad(): Promise<void>;
 /**
  * Runs the therapy mini game.
  * @returns {void} - Nothing

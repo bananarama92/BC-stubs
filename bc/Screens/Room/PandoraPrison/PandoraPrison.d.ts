@@ -1,8 +1,4 @@
-/**
- * Loads the Pandora's Box prison screen
- * @returns {void} - Nothing
- */
-declare function PandoraPrisonLoad(): void;
+declare function PandoraPrisonLoad(): Promise<void>;
 /**
  * Runs and draws the prison screen
  * @returns {void} - Nothing

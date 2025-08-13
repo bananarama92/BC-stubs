@@ -1,8 +1,4 @@
-/**
- * Loads the online profile screen by creating its input
- * @returns {void} - Nothing
- */
-declare function OnlineProfileLoad(): void;
+declare function OnlineProfileLoad(): Promise<void>;
 /**
  * Handles unloading the online profile screen
  */

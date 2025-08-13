@@ -558,11 +558,7 @@ declare function ClubCardLoadCaption(): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardCommonLoad(): void;
-/**
- * Loads the club card mini-game: Assigns the opponents and draws the cards
- * @returns {void} - Nothing
- */
-declare function ClubCardLoad(): void;
+declare function ClubCardLoad(): Promise<void>;
 /**
  * Draw the club card player hand on screen, show only sleeves if not controlled by player
  * @param {Number} Value - The card to draw

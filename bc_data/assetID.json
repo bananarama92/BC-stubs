@@ -21,7 +21,8 @@
             "BodyWritings": 1,
             "FaceScars": 2,
             "FacePaints": 3,
-            "Splatters": 4
+            "Splatters": 4,
+            "FacePaint": 5
         }
     },
     "BodyUpper": {
@@ -202,7 +203,8 @@
             "BartenderVest": 85,
             "BartenderVestM": 86,
             "CocktailDress": 87,
-            "MaidBikini": 88
+            "MaidBikini": 88,
+            "OffTheShoulderTop": 89
         }
     },
     "ClothAccessory": {
@@ -536,7 +538,13 @@
             "SkunkEars": 44,
             "AquaticEars": 45,
             "CyberEars": 46,
-            "FloppyBunnyEars": 47
+            "FloppyBunnyEars": 47,
+            "CustomizableCatEars": 48,
+            "CustomizableCowEars": 49,
+            "CustomizableElfEars": 50,
+            "CustomizableFluffyEars1": 51,
+            "CustomizableFluffyEars2": 52,
+            "CustomizableFluffyEars3": 53
         }
     },
     "HairAccessory2": {
@@ -578,7 +586,13 @@
             "CyberneticEars1": 33,
             "BigLynxEars": 34,
             "CyberEars": 35,
-            "FloppyBunnyEars": 36
+            "FloppyBunnyEars": 36,
+            "CustomizableCatEars": 37,
+            "CustomizableCowEars": 38,
+            "CustomizableElfEars": 39,
+            "CustomizableFluffyEars1": 40,
+            "CustomizableFluffyEars2": 41,
+            "CustomizableFluffyEars3": 42
         }
     },
     "HairAccessory3": {
@@ -1007,7 +1021,9 @@
             "ArmbinderSuit": 76,
             "BedMetalCuffs": 77,
             "InflatableDress": 78,
-            "SteelBelt": 79
+            "SteelBelt": 79,
+            "PawPaddedPetsuitArms": 80,
+            "StrappedPetsuitArms": 81
         }
     },
     "ItemBoots": {
@@ -1100,7 +1116,8 @@
             "VibratingDildoPlug": 36,
             "WolfTail1": 37,
             "WolfTail2": 38,
-            "WolfTail3": 39
+            "WolfTail3": 39,
+            "FuckPlug": 40
         }
     },
     "ItemDevices": {
@@ -1295,7 +1312,9 @@
             "Brick": 64,
             "Trowel": 65,
             "Kyosensu": 66,
-            "Uchiwa": 67
+            "Uchiwa": 67,
+            "Cigarette": 68,
+            "Plushies": 69
         }
     },
     "ItemHands": {
@@ -1453,7 +1472,9 @@
             "Tentacles": 21,
             "Zipties": 22,
             "FrogtieMetalCuffs": 23,
-            "BarrelCorset": 24
+            "BarrelCorset": 24,
+            "PawPaddedPetsuitLegs": 25,
+            "StrappedPetsuitLegs": 26
         }
     },
     "ItemMisc": {
@@ -1497,7 +1518,8 @@
             "WoodenMaidTray": 35,
             "WoodenMaidTrayFull": 36,
             "WoodenPaddle": 37,
-            "WoodenSign": 38
+            "WoodenSign": 38,
+            "Plushies": 39
         }
     },
     "ItemMouth": {
@@ -2559,7 +2581,8 @@
             "DragonTailStrap2Right": 26,
             "LatexFoxTail": 27,
             "SkunkTail": 28,
-            "LargeBushyTail": 29
+            "LargeBushyTail": 29,
+            "DragonsTail": 30
         }
     },
     "Wings": {
@@ -2667,6 +2690,20 @@
             "FurCoat": 2,
             "LeatherJacket": 3,
             "Robe1": 4
+        }
+    },
+    "Decals": {
+        "id": 89,
+        "assets": {
+            "AmberFam": 0,
+            "DemonsBar": 1,
+            "DenOfSin": 2,
+            "Gangriels": 3,
+            "LukeChill": 4,
+            "Malkuth": 5,
+            "RatAss": 6,
+            "SlaveHelpline": 7,
+            "VoidOrder": 8
         }
     }
 }

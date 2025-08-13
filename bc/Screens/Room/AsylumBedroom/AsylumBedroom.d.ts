@@ -1,8 +1,4 @@
-/**
- * Loads the room and initializes the UI elements. Called dynamically
- * @returns {void} - Nothing
- */
-declare function AsylumBedroomLoad(): void;
+declare function AsylumBedroomLoad(): Promise<void>;
 /**
  * Runs the bedroom. Is called dynamically at very short intervals so don't use espensive loops or other functions from within
  * @returns {void} - Nothing

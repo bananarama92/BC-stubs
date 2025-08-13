@@ -25,6 +25,8 @@ interface ServerAccountImmutableData {
 	Pose?: readonly AssetPoseName[];
 }
 
+type AllowedInteractions = 0 | 1 | 2 | 3 | 4 | 5;
+
 interface ServerAccountData extends ServerAccountImmutableData {
 	Owner?: string;
 	/**
@@ -37,7 +39,9 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	BlackList: MemberNumber[];
 	FriendList: MemberNumber[];
 	WhiteList: MemberNumber[];
-	ItemPermission: 0 | 1 | 2 | 3 | 4 | 5;
+	AllowedInteractions: AllowedInteractions;
+	/** @deprecated */
+	ItemPermission: AllowedInteractions;
 	Skill?: Skill[];
 	Reputation?: { Type: ReputationType, Value: number }[];
 	Wardrobe?: string;

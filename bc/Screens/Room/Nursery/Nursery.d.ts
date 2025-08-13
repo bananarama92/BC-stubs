@@ -7,7 +7,7 @@ declare function NurseryPlayerReadyToAppologise(): boolean;
 declare function NurseryPlayerDiapered(): boolean;
 declare function NurseryPlayerReadyDiapered(): boolean;
 declare function NurseryPlayerCanRegress(): boolean;
-declare function NurseryLoad(): void;
+declare function NurseryLoad(): Promise<void>;
 declare function NurseryRun(): void;
 declare function NurseryClick(): void;
 declare function NurseryDrawText(): void;

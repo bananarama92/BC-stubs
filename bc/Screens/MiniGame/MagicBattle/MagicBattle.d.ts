@@ -7,11 +7,7 @@
  * @returns {void} - Nothing
  */
 declare function MagicBattleStart(Opponent: Character, Difficulty: number, Background: string, FunctionName: string): void;
-/**
- * Loads the magic battle
- * @returns {void} - Nothing
- */
-declare function MagicBattleLoad(): void;
+declare function MagicBattleLoad(): Promise<void>;
 /**
  * Returns a difficulty factor based on the character nakedness and predicament
  * @param {Character} C

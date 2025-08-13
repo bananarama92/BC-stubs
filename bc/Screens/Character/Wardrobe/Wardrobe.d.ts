@@ -16,13 +16,7 @@ declare function WardrobeFixLength(): void;
  * @returns {void} - Nothing
  */
 declare function WardrobeLoadCharacters(Fast: boolean): void;
-/**
- * Loads the player's wardrobe. when the player opens the wardrobe screen for the first time.
- * This function is called dynamically.
- * @returns {void} - Nothing
- *
- */
-declare function WardrobeLoad(): void;
+declare function WardrobeLoad(): Promise<void>;
 /**
  * Shows the wardrobe screen. This function is called dynamically on a repeated basis. So don't call complex functions
  * or use extended loops in this function.

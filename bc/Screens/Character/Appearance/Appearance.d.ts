@@ -134,11 +134,7 @@ declare function CharacterAppearanceXOffset(C: Character, HeightRatio: number): 
  * @returns {number} - The amounnt to move the character along the Y co-ordinate
  */
 declare function CharacterAppearanceYOffset(C: Character, HeightRatio: number, IgnoreUpButton?: boolean): number;
-/**
- * Loads the character appearance screen and keeps a backup of the previous appearance. The function name is created dynamically.
- * @returns {void} - Nothing
- */
-declare function AppearanceLoad(): void;
+declare function AppearanceLoad(): Promise<void>;
 /**
  * Build the buttons in the top menu
  * @param {Character} C - The character the appearance is being set for

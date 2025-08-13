@@ -18,11 +18,7 @@ declare function InfiltrationPerksTaken(): number;
  * @returns {number} - Number of perks available for the player
  */
 declare function InfiltrationPerksAvail(): number;
-/**
- * Loads the infiltration perks screen, checks if there's an invalid perk and clears the list if it's the case
- * @returns {void} - Nothing
- */
-declare function InfiltrationPerksLoad(): void;
+declare function InfiltrationPerksLoad(): Promise<void>;
 /**
  * Runs and draws the infiltration perks screen
  * @returns {void} - Nothing

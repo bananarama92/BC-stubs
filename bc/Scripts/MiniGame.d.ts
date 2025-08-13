@@ -1,4 +1,4 @@
-declare function MiniGameLoad(): void;
+declare function MiniGameLoad(): Promise<void>;
 /**
  * Starts a given mini game at a set difficulty and keeps
  * @param {ModuleScreens["MiniGame"]} GameType - Name of the mini-game to launch

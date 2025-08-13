@@ -25,11 +25,7 @@ declare function CollegeTeacherIsMildredSubmissive(): boolean;
  * @returns {void} - Nothing
  */
 declare function CollegeTeacherMildredClothes(C: Character): void;
-/**
- * Loads the teacher's lounge and generates Mildred
- * @returns {void} - Nothing
- */
-declare function CollegeTeacherLoad(): void;
+declare function CollegeTeacherLoad(): Promise<void>;
 /**
  * Runs the room (shows the player and Mildred)
  * @returns {void} - Nothing

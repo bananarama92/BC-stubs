@@ -21,7 +21,7 @@ declare function ChatAdminStart(mode: "create" | "update", roomData?: ChatRoomSe
  * @returns {boolean}
  */
 declare function ChatAdminCanEdit(): boolean;
-declare function ChatAdminLoad(): void;
+declare function ChatAdminLoad(): Promise<void>;
 declare function ChatAdminUnload(): void;
 /**
  * Handles drawing the editor screen

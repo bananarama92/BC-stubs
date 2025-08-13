@@ -9,11 +9,7 @@ declare function MaidCleaningGenerateSpots(MaxSpot: number): void;
  * @returns {void} - Nothing
  */
 declare function MaidCleaningDrawSpots(): void;
-/**
- * Loads the maid cleaning mini game. It will select a random background and generate spots based on the difficulty
- * @returns {void} - Nothing
- */
-declare function MaidCleaningLoad(): void;
+declare function MaidCleaningLoad(): Promise<void>;
 /**
  * Runs the maid cleaning mini game
  * @returns {void} - Nothing

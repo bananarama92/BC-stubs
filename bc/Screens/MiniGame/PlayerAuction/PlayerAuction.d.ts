@@ -9,11 +9,7 @@ declare function PlayerAuctionSetNextBidTime(): void;
  * @returns {void} - Nothing
  */
 declare function PlayerAuctionAddCustomer(Index: number): void;
-/**
- * Loads the player auction mini game by setting the global variables and loading the NPCs required
- * @returns {void} - Nothing
- */
-declare function PlayerAuctionLoad(): void;
+declare function PlayerAuctionLoad(): Promise<void>;
 /**
  * Runs the player auction mini game by drawing the characters and related text on screen.
  * @returns {void} - Nothing

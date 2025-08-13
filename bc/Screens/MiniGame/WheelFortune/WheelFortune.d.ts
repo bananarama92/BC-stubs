@@ -39,11 +39,7 @@ declare function WheelFortuneBlockWardrobe(Minutes: number): void;
  * @returns {void} - Nothing
  */
 declare function WheelFortuneInventoryWear(Group: AssetGroupName, Minutes: number): void;
-/**
- * Loads the lucky wheel mini game and builds the wheel
- * @returns {void} - Nothing
- */
-declare function WheelFortuneLoad(): void;
+declare function WheelFortuneLoad(): Promise<void>;
 /**
  * Draws the full lucky wheel
  * @param {string} FullWheel

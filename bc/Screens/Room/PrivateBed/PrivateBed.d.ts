@@ -8,11 +8,7 @@ declare function PrivateBedActive(): boolean;
  * @returns {Number} - The number of girls.
  */
 declare function PrivateBedCount(): number;
-/**
- * Loads the private bedroom screen.
- * @returns {void} - Nothing.
- */
-declare function PrivateBedLoad(): void;
+declare function PrivateBedLoad(): Promise<void>;
 /**
  * Draws a private bedroom character.
  * @param {Character} C - The character to draw.

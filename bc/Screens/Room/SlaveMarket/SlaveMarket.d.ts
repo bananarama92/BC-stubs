@@ -23,11 +23,7 @@ declare function SlaveMarketCanBeAuctioned(): boolean;
  * @returns {boolean} - TRUE if the character has the title in the parameter
  */
 declare function SlaveMarketSlaveTitleIs(Title: any): boolean;
-/**
- * Loads the Slave Market room, generates the Mistress and slave
- * @returns {void} - Nothing
- */
-declare function SlaveMarketLoad(): void;
+declare function SlaveMarketLoad(): Promise<void>;
 /**
  * Runs and draws the slave market, the screen can be used to search for a daily job.
  * @returns {void} - Nothing

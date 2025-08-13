@@ -1,8 +1,4 @@
-/**
- * Loads the dojo struggle mini game and prepare the rope walls
- * @returns {void} - Nothing
- */
-declare function DojoStruggleLoad(): void;
+declare function DojoStruggleLoad(): Promise<void>;
 /**
  * Runs the dojo struggle mini game and draws the relevant information on screen
  * @returns {void} - Nothing

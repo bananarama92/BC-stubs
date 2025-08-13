@@ -44,11 +44,7 @@ declare function IntroductionCannotTakeJobRestrained(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function IntroductionCanPlayClubCard(): boolean;
-/**
- * Loads the introduction room and its 2 NPCS
- * @returns {void} - Nothing
- */
-declare function IntroductionLoad(): void;
+declare function IntroductionLoad(): Promise<void>;
 /**
  * Runs and draws the main introduction room with its 3 characters.
  * @returns {void} - Nothing

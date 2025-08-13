@@ -322,7 +322,7 @@ declare let ServerSendRateLimitTimes: number[];
 declare namespace ServerAccountDataSyncedValidate {
     function Title(arg: Partial<TitleName>, C: Character): Partial<TitleName>;
     function Nickname(arg: string, C: Character): string;
-    function ItemPermission(arg: Partial<0 | 2 | 1 | 3 | 4 | 5>, C: Character): 0 | 2 | 1 | 3 | 4 | 5;
+    function AllowedInteractions(arg: Partial<AllowedInteractions>, C: Character): AllowedInteractions;
     function Difficulty(arg: Partial<{
         Level: DifficultyLevel;
         LastChange: number;

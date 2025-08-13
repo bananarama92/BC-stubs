@@ -1,11 +1,7 @@
 declare function CollegeChessCanStripPlayer(): boolean;
 declare function CollegeChessCanStripOpponent(): boolean;
 declare function CollegeChessCanMakeLove(): boolean;
-/**
- * Loads the college chest screen by generating the opponent.
- * @returns {void} - Nothing
- */
-declare function CollegeChessLoad(): void;
+declare function CollegeChessLoad(): Promise<void>;
 /**
  * Runs and draws the college chess screen.  Shows the player and the opponent.
  * @returns {void} - Nothing

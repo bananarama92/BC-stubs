@@ -28,11 +28,7 @@ declare function AsylumEntranceNurseHasGGTSCollar(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function AsylumEntranceCanPlayClubCard(): boolean;
-/**
- * Loads the room and generates the nurse. Is called dynamically
- * @returns {void} - Nothing
- */
-declare function AsylumEntranceLoad(): void;
+declare function AsylumEntranceLoad(): Promise<void>;
 /**
  * // Runs the room (shows the nurse, player, icons and committed time).
  * Is called over and over again, so don't call expensive functions or loops from here.

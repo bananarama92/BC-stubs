@@ -8,11 +8,7 @@ declare function ChatSelectRun(): void;
  * @returns {void} - Nothing
  */
 declare function ChatSelectClick(): void;
-/**
- * Loads the chat select screen, automatically joining a chat search space if configured
- * @returns {void} - Nothing
- */
-declare function ChatSelectLoad(): void;
+declare function ChatSelectLoad(): Promise<void>;
 /**
  * Start the chat search screen for the relevant chat room space
  * @param {ServerChatRoomSpace} space - The space to join

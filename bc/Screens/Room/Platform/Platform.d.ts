@@ -67,11 +67,7 @@ declare function PlatformPartyActivate(CharacterName: string): void;
  * @returns {void} - Nothing
  */
 declare function PlatformPartyBuild(): void;
-/**
- * When the platform screen is loaded
- * @returns {void} - Nothing
- */
-declare function PlatformLoad(): void;
+declare function PlatformLoad(): Promise<void>;
 /**
  * Get the proper animation from the cycle to draw
  * @param {Platform.Character} C - The character to evaluate

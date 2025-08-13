@@ -11,11 +11,7 @@ declare function TennisServe(CharacterLeftServe: boolean): void;
  * @returns {string} - Score in text, or current status (Win, loss, advantage)
  */
 declare function TennisGetScore(PointFor: number, PointAgainst: number): string;
-/**
- * Loads the tennis mini game and sets the difficulty ratio before serving the first ball
- * @returns {void} - Nothing
- */
-declare function TennisLoad(): void;
+declare function TennisLoad(): Promise<void>;
 /**
  * Runs the tennis mini game and draws its components on screen
  * @returns {void} - Nothing

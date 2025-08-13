@@ -1,8 +1,4 @@
-/**
- * Loads the club card room and the tutor
- * @returns {void} - Nothing
- */
-declare function ClubCardLoungeLoad(): void;
+declare function ClubCardLoungeLoad(): Promise<void>;
 /**
  * Runs and draws the club card  room with the player and tutor
  * @returns {void} - Nothing

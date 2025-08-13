@@ -1,8 +1,4 @@
-/**
- * Loads the screen
- * @returns {void} - Nothing
- */
-declare function PlatformIntroLoad(): void;
+declare function PlatformIntroLoad(): Promise<void>;
 /**
  * Runs and draws the screen.
  * @returns {void} - Nothing

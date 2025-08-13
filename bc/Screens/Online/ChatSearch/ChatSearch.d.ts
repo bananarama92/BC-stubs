@@ -1,4 +1,4 @@
-declare function ChatSearchLoad(): void;
+declare function ChatSearchLoad(): Promise<void>;
 declare function ChatSearchUnload(): void;
 declare function ChatSearchRun(time: number): void;
 declare function ChatSearchClick(event: MouseEvent | TouchEvent): void;

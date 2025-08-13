@@ -1,8 +1,4 @@
-/**
- * Loads the mini game, resets the speed and difficulty
- * @returns {void} - Nothing
- */
-declare function ChestLockpickLoad(): void;
+declare function ChestLockpickLoad(): Promise<void>;
 /**
  * Runs the chest lock pick mini game and draws its components on screen
  * @returns {void} - Nothing

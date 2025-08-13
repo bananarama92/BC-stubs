@@ -1,8 +1,4 @@
-/**
- * Loads the chess mini game and sets the difficulty ratio before serving the first ball
- * @returns {void} - Nothing
- */
-declare function ChessLoad(): void;
+declare function ChessLoad(): Promise<void>;
 /**
  * Runs the chess mini game and draws its components on screen
  * @returns {void} - Nothing

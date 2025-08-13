@@ -48,6 +48,26 @@ declare function CommonParseCSV(str: string): string[][];
  */
 declare function CommonReadCSV(url: string): string[][];
 /**
+ * Sleep for a number of milliseconds
+ * @param {number} ms
+ * @returns {Promise<number>}
+ */
+declare function CommonSleep(ms: number): Promise<number>;
+/**
+ *
+ * @param {() => boolean} func
+ * @param {() => boolean} cancelFunc
+ * @returns
+ */
+declare function CommonWaitFor(func: () => boolean, cancelFunc: () => boolean): Promise<boolean>;
+/**
+ * Fetch a remote resource
+ *
+ * @param {RequestInfo | URL} request
+ * @returns {Promise<Response>}
+ */
+declare function CommonFetch(request: RequestInfo | URL): Promise<Response>;
+/**
  * AJAX utility to get a file and return its content. By default will retry requests 10 times
  * @param {string} Path - Path of the resource to request
  * @param {(this: XMLHttpRequest, xhr: XMLHttpRequest) => void} Callback - Callback to execute once the resource is received
@@ -68,6 +88,7 @@ declare function CommonMouseDown(event: MouseEvent | TouchEvent): void;
 declare function CommonMouseUp(event: MouseEvent | TouchEvent): void;
 declare function CommonMouseMove(event: MouseEvent | TouchEvent): void;
 declare function CommonMouseWheel(event: WheelEvent): void;
+declare function CommonResize(load: boolean): void;
 declare function CommonClick(event: MouseEvent | TouchEvent): void;
 /**
  * Returns TRUE if a section of the screen is currently touched on a mobile device
@@ -117,9 +138,9 @@ declare function CommonGetScreen(): ScreenSpecifier;
 /**
  * Sets the current screen and calls the loading script if needed
  * @param {ScreenSpecifier} spec
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function CommonSetScreen(...spec: ScreenSpecifier): void;
+declare function CommonSetScreen(...spec: ScreenSpecifier): Promise<void>;
 /**
  * Gets the current time in ms
  * @returns {number} - Date in ms
@@ -676,6 +697,15 @@ declare const CommonChatTags: Record<"SOURCE_CHAR" | "DEST_CHAR" | "DEST_CHAR_NA
  * @type {Record<String, [String[], String]>}
  */
 declare const CommonFontStacks: Record<string, [string[], string]>;
+/**
+ * How many times do we retry a resource fetch.
+ */
+declare const FETCH_MAX_RETRIES: 10;
+/**
+ * How much to wait max between each attempt.
+ */
+declare const FETCH_MAX_RETRY_BACKOFF_TIME: 16;
+declare var ScreenIsLoading: boolean;
 /**
  * Memoized getter function. Returns a font string specifying the player's
  * preferred font and the provided size. This is memoized as it is called on

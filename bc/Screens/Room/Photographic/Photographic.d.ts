@@ -28,7 +28,7 @@ declare function PhotographicIsRestrainedWithoutLock(): boolean;
 declare function PhotographicIsRestrainedWithLockAndMaidsNotDisabled(): boolean;
 declare function PhotographicIsRestrainedWithoutLockAndMaidsNotDisabled(): boolean;
 declare function PhotographicIsMaidsDisabledAndRestrained(): boolean;
-declare function PhotographicLoad(): void;
+declare function PhotographicLoad(): Promise<void>;
 declare function PhotographicRun(): void;
 declare function PhotographicClick(): void;
 declare function PhotographicShotThePlayerPhoto(): void;

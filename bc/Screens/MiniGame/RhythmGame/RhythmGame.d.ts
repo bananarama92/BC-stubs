@@ -1,8 +1,4 @@
-/**
- * Loads the rythm mini game after saving the main cancas to restore it once the game is done.
- * @returns {void} - Nothing
- */
-declare function RhythmGameLoad(): void;
+declare function RhythmGameLoad(): Promise<void>;
 /**
  * Runs and draws the canvas for the rythm mini game. The game uses objects to handle various processes.
  * @returns {void} - Nothing

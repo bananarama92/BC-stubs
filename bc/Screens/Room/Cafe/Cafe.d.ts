@@ -59,11 +59,7 @@ declare function CafeEquired(Type: string): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function CafeCanPlayClubCard(): boolean;
-/**
- * Loads the Cafe room and initializes the NPCs. This function is called dynamically
- * @returns {void} - Nothing
- */
-declare function CafeLoad(): void;
+declare function CafeLoad(): Promise<void>;
 /**
  * Run the Cafe room and draw characters. This function is called dynamically at short intervals.
  * Don't use expensive loops or functions from here

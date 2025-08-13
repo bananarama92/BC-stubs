@@ -60,11 +60,7 @@ declare function MainHallPlayerNeedsHelpAndHasNoOwnerOrLoverItemAndMaidsNotDisab
  * @returns {boolean} - Returns true, if the screen is allowed
  */
 declare function MainHallAllow(room: keyof typeof MainHallAllowIDToScreenMap): boolean;
-/**
- * Loads the main hall by setting up the NPCs, CSVs and global variables required.
- * @returns {void} - Nothing
- */
-declare function MainHallLoad(): void;
+declare function MainHallLoad(): Promise<void>;
 /**
  * Runs the main hall screen
  * @returns {void} - Nothing

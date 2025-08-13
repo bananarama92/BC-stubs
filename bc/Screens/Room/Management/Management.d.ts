@@ -329,11 +329,7 @@ declare function ManagementNoMistressInPrivateRoom(): boolean;
  * @returns {boolean} - TRUE if any NPC in the private room is chaste.
  */
 declare function ManagementFriendIsChaste(): boolean;
-/**
- * Loads the club management room, creates the Mistress and sub character
- * @returns {void} - Nothing.
- */
-declare function ManagementLoad(): void;
+declare function ManagementLoad(): Promise<void>;
 /**
  * Run the club management room, draws the player and 2 NPCs (if they are not gone).
  * @returns {void} - Nothing.

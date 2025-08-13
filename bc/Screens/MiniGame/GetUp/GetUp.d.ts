@@ -4,11 +4,7 @@
  * @returns {void} - Nothing
  */
 declare function GetUpEnd(Victory: boolean): void;
-/**
- * Loads the Get Up mini game
- * @returns {void} - Nothing
- */
-declare function GetUpLoad(): void;
+declare function GetUpLoad(): Promise<void>;
 /**
  * @param {number} delta
  */

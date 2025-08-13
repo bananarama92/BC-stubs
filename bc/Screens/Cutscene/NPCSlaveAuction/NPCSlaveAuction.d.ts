@@ -1,8 +1,4 @@
-/**
- * Loads the slave auction cutscene by creating the NPCs and setting the stage.
- * @returns {void} - Nothing
- */
-declare function NPCSlaveAuctionLoad(): void;
+declare function NPCSlaveAuctionLoad(): Promise<void>;
 /**
  * Runs and draws the slave auction cutscene
  * @returns {void} - Nothing

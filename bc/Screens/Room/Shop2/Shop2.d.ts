@@ -1,4 +1,4 @@
-declare function Shop2Load(): void;
+declare function Shop2Load(): Promise<void>;
 declare function Shop2Click(event: MouseEvent | TouchEvent): void;
 declare function Shop2Draw(): void;
 declare function Shop2Run(time: number): void;

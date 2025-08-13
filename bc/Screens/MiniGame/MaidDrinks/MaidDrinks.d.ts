@@ -3,11 +3,7 @@
  * @param {number} StartTime - Start time of the sequence
  */
 declare function MaidDrinksGenerateMove(StartTime: number): void;
-/**
- * Loads the maid drinks mini game and its NPCs
- * @returns {void} - Nothing
- */
-declare function MaidDrinksLoad(): void;
+declare function MaidDrinksLoad(): Promise<void>;
 /**
  * Draws the icons for the mini game
  * @returns {void} - Nothing

@@ -110,7 +110,7 @@ declare namespace Layering {
      * @returns {HTMLDivElement} The div containing the layering subscreen
      */
     function Init(item: Item, character: Character, display?: null | Partial<LayeringDisplay>, reload?: boolean, readonly?: boolean): HTMLDivElement;
-    function Load(): void;
+    function Load(): Promise<void>;
     function Resize(load: boolean): void;
     function Unload(): void;
     /**

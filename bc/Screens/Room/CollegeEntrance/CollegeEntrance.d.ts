@@ -18,11 +18,7 @@ declare function CollegeEntranceCanGoDetention(): boolean;
  * @returns {boolean} - Returns true if the player can go to the teacher room
  */
 declare function CollegeEntranceCanGoTeacher(): boolean;
-/**
- * Loads the college entrance room and its student NPC
- * @returns {void} - Nothing
- */
-declare function CollegeEntranceLoad(): void;
+declare function CollegeEntranceLoad(): Promise<void>;
 /**
  * Runs and draws the college entrance room with the player and the student
  * @returns {void} - Nothing

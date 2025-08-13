@@ -45,11 +45,7 @@ declare function AsylumGGTSGetRules(C: Character): string[];
  * @returns {void} - Nothing
  */
 declare function AsylumGGTSComputerImage(Level: number): void;
-/**
- * Loads the GGTS and computer NPC
- * @returns {void} - Nothing
- */
-declare function AsylumGGTSLoad(): void;
+declare function AsylumGGTSLoad(): Promise<void>;
 /**
  * Runs the room
  * @returns {void} - Nothing

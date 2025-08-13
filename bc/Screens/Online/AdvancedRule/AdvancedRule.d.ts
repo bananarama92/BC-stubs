@@ -1,8 +1,4 @@
-/**
- * Loads the advanced rule screen
- * @returns {void} - Nothing
- */
-declare function AdvancedRuleLoad(): void;
+declare function AdvancedRuleLoad(): Promise<void>;
 /**
  * Starts the advanced rule screen and loads it
  * @param {LogNameAdvanced} RuleType
