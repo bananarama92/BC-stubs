@@ -35,11 +35,7 @@ declare function CollegeTheaterIsJuliaDamsel(): boolean;
  * @returns {void} - Nothing
  */
 declare function CollegeTheaterJuliaClothes(C: Character): void;
-/**
- * Loads the college theater screen, generates Julia like she is in bondage college. Julia is not generated if she is in the player's private room.
- * @returns {void} - Nothing
- */
-declare function CollegeTheaterLoad(): void;
+declare function CollegeTheaterLoad(): Promise<void>;
 /**
  * Runs and draws the College Theater screen, show the player and Julia
  * @returns {void} - Nothing

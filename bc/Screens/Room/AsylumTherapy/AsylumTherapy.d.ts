@@ -3,11 +3,7 @@
  * @returns {boolean} - Returns true, if the player is ready for therapy, false otherwise
  */
 declare function AsylumTherapyPatientReadyForTherapy(): boolean;
-/**
- * Loads the room and initializes the nurse and the patient
- * @returns {void} - Nothing
- */
-declare function AsylumTherapyLoad(): void;
+declare function AsylumTherapyLoad(): Promise<void>;
 /**
  * Runs the room. This function is called over and over again at short intervals. So better don't use expensive loops or functions from here.
  * @returns {void} - Nothing

@@ -3,11 +3,7 @@
  * @returns {void} - Nothing
  */
 declare function SlaveAuctionSetNextBidTime(): void;
-/**
- * Loads the slave auction mini game by setting the global variables and loading the NPCs required
- * @returns {void} - Nothing
- */
-declare function SlaveAuctionLoad(): void;
+declare function SlaveAuctionLoad(): Promise<void>;
 /**
  * Runs the slave auction mini game by drawing the characters and related text on screen.
  * @returns {void} - Nothing

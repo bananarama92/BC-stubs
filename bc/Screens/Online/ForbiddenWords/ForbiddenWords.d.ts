@@ -1,8 +1,4 @@
-/**
- * Loads the forbidden words screen, fetches the word list from the current character rules
- * @returns {void} - Nothing
- */
-declare function ForbiddenWordsLoad(): void;
+declare function ForbiddenWordsLoad(): Promise<void>;
 /**
  * Starts the forbidden words screen and loads it
  * @returns {void} - Nothing

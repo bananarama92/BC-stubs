@@ -1,8 +1,4 @@
-/**
- * Loads the cell screen and its NPC, then checks if it should be locked or not
- * @returns {void} - Nothing
- */
-declare function CellLoad(): void;
+declare function CellLoad(): Promise<void>;
 /**
  * Runs and draws the cell screen
  * @returns {void} - Nothing

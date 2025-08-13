@@ -23,11 +23,8 @@ declare function TitleIsForced(Title: TitleName): boolean;
  * @returns {boolean} - Result of the check
  */
 declare function TitleIsEarned(Title: TitleName): boolean;
-/**
- * When the title screen is loaded
- * @returns {void} - Nothing
- */
-declare function TitleLoad(): void;
+declare function TitleLoad(): Promise<void>;
+declare function TitleUnload(): void;
 /**
  * Runs the title selection screen. This function is called dynamically on a repeated basis,
  * so don't use complex loops or call extended functions from here.
@@ -50,9 +47,8 @@ declare var TitleList: {
 }[];
 /** @type {null | TitleName} */
 declare var TitleSelectedTitle: null | TitleName;
-declare var TitleCanEditNickname: boolean;
-/** @type {null | "NicknameTooLong" | "NicknameInvalidChars"} */
-declare var TitleNicknameStatus: null | "NicknameTooLong" | "NicknameInvalidChars";
+/** @type {null | "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked"} */
+declare var TitleNicknameStatus: null | "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
 declare let TitleOffset: number;
 /** @type {{ Name: TitleName; Requirement: () => boolean; Earned?: boolean, Force?: boolean }[]} */
 declare let TitleListFiltered: {

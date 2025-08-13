@@ -58,11 +58,7 @@ declare function InfiltrationCanPlayClubCard(): boolean;
  * @returns {boolean} - * Returns TRUE if the player has free space and is skilled enough.
  */
 declare function InfiltrationCanBrainwashCaptive(): boolean;
-/**
- * Loads the infiltration screen by generating the supervisor.
- * @returns {void} - Nothing
- */
-declare function InfiltrationLoad(): void;
+declare function InfiltrationLoad(): Promise<void>;
 /**
  * Runs and draws the infiltration screen.  Shows the player and the opponent.
  * @returns {void} - Nothing

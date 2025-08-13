@@ -24,11 +24,7 @@ declare function GameMagicBattleIsAdmin(C: Character): boolean;
  * @returns {void} - Nothing
  */
 declare function GameMagicBattleDrawIcon(C: Character, X: number, Y: number, Zoom: number): void;
-/**
- * Loads the Magic Battle game.
- * @returns {void} - Nothing
- */
-declare function GameMagicBattleLoad(): void;
+declare function GameMagicBattleLoad(): Promise<void>;
 /**
  * Returns the team setup for the online magic battle.
  * @returns {"FreeForAll" | "House"} - "FreeForAll" or "House", depending on the team setup

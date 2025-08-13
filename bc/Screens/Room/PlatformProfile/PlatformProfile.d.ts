@@ -12,11 +12,7 @@ declare function PlatformProfileGetFreePerk(): number;
  * @returns {void} - Nothing
  */
 declare function PlatformProfileDrawArrow(SX: number, SY: number, TX: number, TY: number): void;
-/**
- * Loads the screen
- * @returns {void} - Nothing
- */
-declare function PlatformProfileLoad(): void;
+declare function PlatformProfileLoad(): Promise<void>;
 /**
  * Draws the perk button on the screen, the color changes based on if the perk is available or paid
  * @param {number} X - The X position on screen

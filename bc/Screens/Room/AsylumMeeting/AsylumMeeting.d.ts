@@ -25,11 +25,7 @@ declare function AsylumMeetingGGTSCollar(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained and gagged
  */
 declare function AsylumMeetingCanPlayClubCard(): boolean;
-/**
- * Loads the room and it's patients
- * @returns {void} - Nothing
- */
-declare function AsylumMeetingLoad(): void;
+declare function AsylumMeetingLoad(): Promise<void>;
 /**
  * Runs the room. Is called at short intervals so don't use expensive loops or function calls from here
  * @returns {void} - Nothing

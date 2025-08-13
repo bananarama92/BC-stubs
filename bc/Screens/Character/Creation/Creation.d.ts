@@ -1,9 +1,4 @@
-/**
- * Loads the character login screen. Imports data from the Bondage College if necessary
- * and creates the input fields. This function is called dynamically.
- * @returns {void} - Nothing
- */
-declare function CreationLoad(): void;
+declare function CreationLoad(): Promise<void>;
 /**
  * Runs the character creation screen. Draws all needed input fields and buttons.
  * If the import of Bondage College data is possible, an appropriate check box is drawn.

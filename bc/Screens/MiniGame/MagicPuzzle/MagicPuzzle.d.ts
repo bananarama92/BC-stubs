@@ -1,8 +1,4 @@
-/**
- * Loads the magic puzzle mini game and sets the difficulty ratio
- * @returns {void} - Nothing
- */
-declare function MagicPuzzleLoad(): void;
+declare function MagicPuzzleLoad(): Promise<void>;
 /**
  * Returns the time in seconds with 3 digits milliseconds
  * @param {number} Time

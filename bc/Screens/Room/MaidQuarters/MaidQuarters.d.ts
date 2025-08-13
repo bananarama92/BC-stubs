@@ -139,11 +139,7 @@ declare function MaidQuartersCanUngagAndMaidsDisabled(): boolean;
  */
 declare function MaidQuartersCannotUngag(): boolean;
 declare function MaidQuartersCannotUngagAndMaidsNotDisabled(): boolean;
-/**
- * Loads the maid quarters. This function is called dynamically, as soon, as the player enters the maid quarters
- * @returns {void} - Nothing
- */
-declare function MaidQuartersLoad(): void;
+declare function MaidQuartersLoad(): Promise<void>;
 /**
  * Runs the maid quarters dialog
  * This function is called periodically so don't use it for extensive use or the call of other complex functions

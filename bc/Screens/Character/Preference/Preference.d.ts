@@ -1,9 +1,4 @@
-/**
- * Loads the preference screen. This function is called dynamically, when the character enters the preference screen
- * for the first time
- * @returns {void} - Nothing
- */
-declare function PreferenceLoad(): void;
+declare function PreferenceLoad(): Promise<void>;
 /**
  * Runs the preference screen. This function is called dynamically on a repeated basis.
  * So don't use complex loops or other function calls within this method

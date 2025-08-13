@@ -1,8 +1,4 @@
-/**
- * Loads the Information Sheet, cache the sub screens
- * @returns {void} - Nothing
- */
-declare function InformationSheetLoad(): void;
+declare function InformationSheetLoad(): Promise<void>;
 /**
  * Main function of the character info screen. It's called continuously, so be careful
  * to add time consuming functions or loops here

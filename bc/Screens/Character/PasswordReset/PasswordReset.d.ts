@@ -1,8 +1,4 @@
-/**
- * Loads the password reset screen
- * @returns {void} Nothing
- */
-declare function PasswordResetLoad(): void;
+declare function PasswordResetLoad(): Promise<void>;
 /**
  * Runs the password reset screen
  * @returns {void} Nothing

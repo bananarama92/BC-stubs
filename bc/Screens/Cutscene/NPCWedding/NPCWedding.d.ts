@@ -11,11 +11,7 @@ declare function NPCWeddingDress(C: Character, Dress: string): void;
  * @returns {void} - Nothing.
  */
 declare function NPCWeddingBridesmaid(C: Character): void;
-/**
- * Loads the NPC wedding cutscene by creating the random NPCs and setting the stage
- * @returns {void} - Nothing
- */
-declare function NPCWeddingLoad(): void;
+declare function NPCWeddingLoad(): Promise<void>;
 /**
  * Runs and draws the NPC wedding cutscene
  * @returns {void} - Nothing

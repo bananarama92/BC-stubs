@@ -9,11 +9,7 @@ declare function CollegeCafeteriaSidneyStatusIs(QueryStatus: string): boolean;
  * @returns {boolean} - Returns true, if the player can invite Sidney, false otherwise
  */
 declare function CollegeCafeteriaCanInviteToPrivateRoom(): boolean;
-/**
- * Loads the cafeteria and generates Sidney according to her current state
- * @returns {void} - Nothing
- */
-declare function CollegeCafeteriaLoad(): void;
+declare function CollegeCafeteriaLoad(): Promise<void>;
 /**
  * Runs the room (shows the player and Sidney)
  * @returns {void} - Nothing

@@ -9,11 +9,7 @@ declare function CollegeTennisJenniferStatusIs(QueryStatus: string): boolean;
  * @returns {boolean} - Returns TRUE if the player has a private room and an empty spot in it.
  */
 declare function CollegeTennisCanInviteToPrivateRoom(): boolean;
-/**
- * Loads the tennis screen by generating Jennifer. The player's relationship with her from the bondage college is taken into consideration.
- * @returns {void} - Nothing
- */
-declare function CollegeTennisLoad(): void;
+declare function CollegeTennisLoad(): Promise<void>;
 /**
  * Runs and draws the tennis screen. Shows the player and Jennifer
  * @returns {void} - Nothing

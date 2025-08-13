@@ -50,11 +50,7 @@ declare function MovieStudioChangeMeter(Factor: number): void;
  * @returns {void} - Nothing
  */
 declare function MovieStudioProcessDecay(): void;
-/**
- * Loads the Movie Studio introduction room screen and saves the player clothes
- * @returns {void} - Nothing
- */
-declare function MovieStudioLoad(): void;
+declare function MovieStudioLoad(): Promise<void>;
 /**
  * Runs and draws the Movie Studio screen
  * @returns {void} - Nothing

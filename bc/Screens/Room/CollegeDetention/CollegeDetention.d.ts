@@ -40,11 +40,7 @@ declare function CollegeDetentionIsYukiSubmissive(): boolean;
  * @returns {void} - Nothing
  */
 declare function CollegeDetentionYukiClothes(C: Character): void;
-/**
- * Loads the room and generates Yuki
- * @returns {void} - Nothing
- */
-declare function CollegeDetentionLoad(): void;
+declare function CollegeDetentionLoad(): Promise<void>;
 /**
  * Runs the room (shows the player and Yuki)
  * @returns {void} - Nothing

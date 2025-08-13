@@ -1,8 +1,4 @@
-/**
- * Loads the chat room item blocking screen
- * @returns {void} - Nothing
- */
-declare function ChatBlockItemLoad(): void;
+declare function ChatBlockItemLoad(): Promise<void>;
 /**
  * When the chat room item blocking screen runs, draws the screen
  * @returns {void} - Nothing

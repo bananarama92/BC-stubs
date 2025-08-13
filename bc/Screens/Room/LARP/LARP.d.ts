@@ -3,11 +3,7 @@
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function LARPCanPlayClubCard(): boolean;
-/**
- * Loads the LARP introduction room NPC
- * @returns {void} - Nothing
- */
-declare function LARPLoad(): void;
+declare function LARPLoad(): Promise<void>;
 /**
  * Runs and draws the LARP introduction screen. The screen can be used to search for daily jobs.
  * @returns {void} - Nothing

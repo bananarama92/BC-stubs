@@ -13,11 +13,7 @@ declare function ShopIsRescueScenario(ScenarioName: string): boolean;
  * Entry point for accessing the actual shop from the NPC dialog menu
  */
 declare function ShopEnter(): void;
-/**
- * Loads the shop room and its NPC
- * @returns {void} - Nothing
- */
-declare function ShopLoad(): void;
+declare function ShopLoad(): Promise<void>;
 /**
  * Runs and draws the shop screen.
  * @returns {void} - Nothing

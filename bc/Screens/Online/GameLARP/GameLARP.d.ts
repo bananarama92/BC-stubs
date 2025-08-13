@@ -24,11 +24,7 @@ declare function GameLARPIsAdmin(C: Character): boolean;
  * @returns {void} - Nothing
  */
 declare function GameLARPDrawIcon(C: Character, X: number, Y: number, Zoom: number): void;
-/**
- * Loads the LARP game.
- * @returns {void} - Nothing
- */
-declare function GameLARPLoad(): void;
+declare function GameLARPLoad(): Promise<void>;
 /**
  * Runs and draws the LARP game.
  * @returns {void} - Nothing

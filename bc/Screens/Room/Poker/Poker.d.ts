@@ -1,8 +1,4 @@
-/**
- * Loads the Bondage Poker room
- * @returns {void} - Nothing
- */
-declare function PokerLoad(): void;
+declare function PokerLoad(): Promise<void>;
 /**
  * Draws a poker player behind the table
  * @param {PokerPlayer} P

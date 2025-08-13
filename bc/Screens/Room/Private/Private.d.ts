@@ -424,11 +424,7 @@ declare function PrivateIsSuccubus(): boolean;
  * @returns {Asset|null} - The item asset that can be given
  */
 declare function PrivateGetPossibleGift(Restraint: boolean): Asset | null;
-/**
- * Loads the private room screen and the vendor NPC.
- * @returns {void} - Nothing.
- */
-declare function PrivateLoad(): void;
+declare function PrivateLoad(): Promise<void>;
 /**
  * NPCs can change clothes randomly everyday
  * @param {Character} C - The NPC to change

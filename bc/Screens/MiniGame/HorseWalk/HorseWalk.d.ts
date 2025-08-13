@@ -22,11 +22,7 @@ declare function HorseWalkGenerateHurdleTrainingItems(MaxHurdle: number): void;
  * @returns {void} - Nothing
  */
 declare function HorseWalkDrawItem(): void;
-/**
- * Loads the Horse Walk mini game and generate the items, there are more carrots on harder difficulties and there are less of them overall on mobile because it is hard (no mouse swiping)
- * @returns {void} - Nothing
- */
-declare function HorseWalkLoad(): void;
+declare function HorseWalkLoad(): Promise<void>;
 /**
  * Runs the horse walk mini game and draws the characters and items on screen
  * @returns {void} - Nothing

@@ -3,11 +3,7 @@
  * @returns {boolean} - TRUE if a ransom or more was started
  */
 declare function PrivateRansomStart(): boolean;
-/**
- * Loads the private ransom note screen
- * @returns {void} - Nothing.
- */
-declare function PrivateRansomLoad(): void;
+declare function PrivateRansomLoad(): Promise<void>;
 /**
  * Draws the character and the ransom note
  * @returns {void} - Nothing.

@@ -5,11 +5,7 @@
  * @returns {void} - Nothing
  */
 declare function ChatAdminRoomCustomizationCommand(Property: "Image" | "Filter" | "Music", Value: string): void;
-/**
- * Loads the chat Admin Custom screen properties and creates the inputs
- * @returns {void} - Nothing
- */
-declare function ChatAdminRoomCustomizationLoad(): void;
+declare function ChatAdminRoomCustomizationLoad(): Promise<void>;
 declare function ChatAdminRoomCustomizationUnload(): void;
 /**
  * Plays or stop the background music

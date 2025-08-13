@@ -88,11 +88,7 @@ declare function KidnapLeagueOnlineBountyFinish(): void;
  * @returns {void} - Nothing
  */
 declare function KidnapLeagueResetOnlineBountyProgress(): void;
-/**
- * Loads the kidnap league NPC
- * @returns {void} - Nothing
- */
-declare function KidnapLeagueLoad(): void;
+declare function KidnapLeagueLoad(): Promise<void>;
 /**
  * Runs and draws the kidnap league,  this room can be used for daily job search
  * @returns {void} - Nothing

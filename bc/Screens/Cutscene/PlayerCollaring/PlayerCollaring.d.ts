@@ -1,8 +1,4 @@
-/**
- * Loads the Player collaring cutscene by creating the random NPCs and setting the stage
- * @returns {void} - Nothing
- */
-declare function PlayerCollaringLoad(): void;
+declare function PlayerCollaringLoad(): Promise<void>;
 /**
  * Runs and draws the player collaring cutscene
  * @returns {void} - Nothing

@@ -9,11 +9,7 @@ declare function DailyJobPlayerFullRestrain(): void;
  * @returns {Character} - The generated puppy girl
  */
 declare function DailyJobPuppyLoad(GirlNum: "0" | "1" | "2" | "3" | "4"): Character;
-/**
- * Loads the daily job room screen characters. This changes based on the current job being performed.
- * @returns {void} - Nothing
- */
-declare function DailyJobLoad(): void;
+declare function DailyJobLoad(): Promise<void>;
 /**
  * Runs and draws the daily job room. Empty as daily jobs are ran from other rooms.
  * @returns {void} - Nothing

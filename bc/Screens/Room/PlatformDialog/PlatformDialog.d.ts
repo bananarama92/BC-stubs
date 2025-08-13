@@ -16,11 +16,7 @@ declare function PlatformDialogLoadPosition(Position: number): void;
  * @returns {void} - Nothing
  */
 declare function PlatformDialogStart(DialogName: string): void;
-/**
- * Loads the screen
- * @returns {void} - Nothing
- */
-declare function PlatformDialogLoad(): void;
+declare function PlatformDialogLoad(): Promise<void>;
 /**
  * Draws the dialog character, text & answers
  * @returns {void} - Nothing

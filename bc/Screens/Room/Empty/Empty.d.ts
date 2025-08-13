@@ -18,21 +18,9 @@ declare function EmptyStruggleProgress(): boolean;
  * @returns {boolean} - Whether the player is ready to do a bondage training or not.
  */
 declare function EmptySlaveMarketReadyForBondageTraining(): boolean;
-/**
- * Loads the empty room screen. Does nothing, required for future use and because it is called dynamically when loading the screen.
- * @returns {void} - Nothing
- */
-declare function EmptyLoad(): void;
-/**
- * Runs and draws the empty room screen, it will place each character inside the room evenly
- * @returns {void} - Nothing
- */
-declare function EmptyRun(): void;
-/**
- * Handles clicks in the empty room screen
- * @returns {void} - Nothing
- */
-declare function EmptyClick(): void;
+declare function EmptyLoad(): Promise<void>;
+declare function EmptyRun(time: number): void;
+declare function EmptyClick(event: MouseEvent | TouchEvent): void;
 /**
  * Used to return the player to the main hall from the empty room when in the management room
  * @returns {void} - Nothing

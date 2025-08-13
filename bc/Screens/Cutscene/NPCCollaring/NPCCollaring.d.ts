@@ -1,8 +1,4 @@
-/**
- * Loads the NPC collaring cutscene by creating the random NPCs and setting the stage
- * @returns {void} - Nothing
- */
-declare function NPCCollaringLoad(): void;
+declare function NPCCollaringLoad(): Promise<void>;
 /**
  * Runs and draws the NPC collaring cutscene
  * @returns {void} - Nothing

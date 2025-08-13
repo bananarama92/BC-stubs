@@ -13,12 +13,7 @@ declare function BackgroundSelectionMake(Tags: BackgroundTag[], Name: string, Ca
  * @returns {number} - Returns -1 if the description of object a is less then that of b, 1 otherwise
  */
 declare function BackgroundSelectionSort(a: string, b: string): number;
-/**
- * Initializes the Background selection screen.
- * Function coiuld be called dynamically, so the body has to be there, even if it does nothing.
- * @returns {void} - Nothing
- */
-declare function BackgroundSelectionLoad(): void;
+declare function BackgroundSelectionLoad(): Promise<void>;
 declare function BackgroundSelectionUnload(): void;
 /**
  * Handles input in the text box in the topmost row of the selection screen

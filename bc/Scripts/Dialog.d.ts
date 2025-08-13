@@ -728,6 +728,10 @@ declare function DialogDrawRepositionButton(): void;
  * @param {Character} C The character currently focused.
  */
 declare function DialogDrawTopMenu(C: Character): void;
+/**
+ * Load function for starting the Dialog subscreen.
+ * @return {void}
+ */
 declare function DialogLoad(): void;
 declare function DialogDraw(): void;
 /**
@@ -1101,7 +1105,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
     Init(properties: PropType, style?: null | {
         shape?: RectTuple;
     }): null | HTMLDivElement;
-    Load(): void;
+    Load(): Promise<void>;
     /**
      * Construct and return the (unpopulated) {@link DialogMenu.ids.root} element.
      * @abstract

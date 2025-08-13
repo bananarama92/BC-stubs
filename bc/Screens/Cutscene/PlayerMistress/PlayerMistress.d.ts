@@ -1,8 +1,4 @@
-/**
- * Loads the mistress promotion cutscene by creating the random maids and mistress, and setting the stage
- * @returns {void} - Nothing
- */
-declare function PlayerMistressLoad(): void;
+declare function PlayerMistressLoad(): Promise<void>;
 /**
  * Runs and draws the mistress promotion cutscene
  * @returns {void} - Nothing

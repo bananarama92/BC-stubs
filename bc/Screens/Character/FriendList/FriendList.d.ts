@@ -1,4 +1,4 @@
-declare function FriendListLoad(): void;
+declare function FriendListLoad(): Promise<void>;
 declare function FriendListResize(load: boolean): void;
 declare function FriendListRun(time: number): void;
 declare function FriendListDraw(): void;

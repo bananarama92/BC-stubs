@@ -24,7 +24,7 @@ declare function StableCanHideDice(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function StableCanPlayClubCard(): boolean;
-declare function StableLoad(): void;
+declare function StableLoad(): Promise<void>;
 declare function StableRun(): void;
 declare function StableClick(): void;
 declare function StableTrialPonyTraining(): void;

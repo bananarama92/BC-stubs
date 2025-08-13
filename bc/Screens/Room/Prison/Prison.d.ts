@@ -15,7 +15,7 @@ declare function PrisonSubIsFree(): boolean;
 declare function PrisonSubAskForCuff(): boolean;
 declare function PrisonSubCanStripSearch(): boolean;
 declare function PrisonSubCanClothBack(): boolean;
-declare function PrisonLoad(): void;
+declare function PrisonLoad(): Promise<void>;
 declare function PrisonRun(): void;
 declare function PrisonClick(): void;
 declare function PrisonCharacterAppearanceAvailable(C: any, AppearanceName: any, AppearanceGroup: any): boolean;

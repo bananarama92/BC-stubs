@@ -174,8 +174,6 @@ declare function GLDrawHexToRGBA(color: string, alpha?: number): number[];
 declare function GLDrawAppearanceBuild(C: Character): void;
 /** @type {Map<string, HTMLImageElement>} */
 declare var GLDrawImageCache: Map<string, HTMLImageElement>;
-declare var GLDrawCacheLoadedImages: number;
-declare var GLDrawCacheTotalImages: number;
 /** @type {"webgl2"|"webgl"|"No WebGL"} */
 declare var GLVersion: "webgl2" | "webgl" | "No WebGL";
 /** @type {null | HTMLCanvasElement} */

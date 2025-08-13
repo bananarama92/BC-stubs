@@ -124,7 +124,7 @@ declare function AssetBuildDescription(Family: IAssetFamily, CSV: string[][]): v
  * Loads the description of the assets in a specific language
  * @param {IAssetFamily} Family The asset family to load the description for
  */
-declare function AssetLoadDescription(Family: IAssetFamily): void;
+declare function AssetLoadDescription(Family: IAssetFamily): Promise<void>;
 /**
  * Loads a specific asset file
  * @param {readonly AssetGroupDefinition[]} Groups

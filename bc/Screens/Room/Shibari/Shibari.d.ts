@@ -62,11 +62,7 @@ declare function ShibariCanPlayClubCard(): boolean;
  * @returns {void} - Nothing
  */
 declare function ShibariRandomBondage(C: Character, Level: number): void;
-/**
- * Loads the shibari dojo and its two characters.
- * @returns {void} - Nothing
- */
-declare function ShibariLoad(): void;
+declare function ShibariLoad(): Promise<void>;
 /**
  * Runs and draws the shibari dojo, with its 3 characters
  * @returns {void} - Nothing

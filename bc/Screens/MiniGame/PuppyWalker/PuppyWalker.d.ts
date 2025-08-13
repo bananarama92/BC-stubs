@@ -1,8 +1,4 @@
-/**
- * Loads the puppy walker mini game and sets the difficulty, it's a little faster on mobile because it's easier.
- * @returns {void} - Nothing
- */
-declare function PuppyWalkerLoad(): void;
+declare function PuppyWalkerLoad(): Promise<void>;
 /**
  * Draws the puppy girl if she hasn't escaped
  * @param {Character} Puppy - The puppy character to draw

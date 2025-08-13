@@ -1,8 +1,4 @@
-/**
- * Loads the lucky wheel customization screen
- * @returns {void} - Nothing
- */
-declare function WheelFortuneCustomizeLoad(): void;
+declare function WheelFortuneCustomizeLoad(): Promise<void>;
 /**
  * Draws the lucky wheel customization screen
  * @returns {void} - Nothing

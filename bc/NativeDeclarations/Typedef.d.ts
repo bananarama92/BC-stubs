@@ -565,7 +565,7 @@ type AssetGroupScriptName = 'ItemScript';
 type AssetGroupBodyName =
 	ExpressionGroupName | 'AnkletLeft' | 'AnkletRight' | 'ArmsLeft' | 'ArmsRight' |
 	'BodyStyle' | 'BodyLower' | 'BodyUpper' | 'BodyMarkings' | 'Bra' | 'Bracelet' | 'Cloth' |
-	'ClothAccessory' | 'ClothLower' | 'ClothOuter' | 'Corset' | 'EyeShadow' | 'FacialHair' | 'Garters' | 'Glasses' | 'Gloves' |
+	'ClothAccessory' | 'ClothLower' | 'ClothOuter' | 'Corset' | 'Decals' | 'EyeShadow' | 'FacialHair' | 'Garters' | 'Glasses' | 'Gloves' |
 	'HairAccessory1' | 'HairAccessory2' | 'HairAccessory3' | 'HairBack' |
 	'HairFront' | 'HandAccessoryLeft' | 'HandAccessoryRight' |  'FacialHair' | 'Hat' | 'Head' | 'Height' | 'Jewelry' | 'Mask' |
 	'Necklace' | 'Nipples' | 'Panties' | 'Pronouns' |
@@ -1592,7 +1592,7 @@ type MouseWheelEventListener = (event: WheelEvent) => void;
 
 type VoidHandler = () => void;
 
-type ScreenLoadHandler = VoidHandler;
+type ScreenLoadHandler = () => Promise<void>;
 type ScreenUnloadHandler = VoidHandler;
 type ScreenDrawHandler = VoidHandler;
 type ScreenRunHandler = (time: number) => void;
@@ -1874,7 +1874,7 @@ interface Character {
 	PermissionItems: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
 	HeightModifier: number;
 	MemberNumber?: number;
-	ItemPermission: 0 | 1 | 2 | 3 | 4 | 5;
+	AllowedInteractions: AllowedInteractions;
 	Ownership: Ownership | null;
 	Lovership: Lovership[];
 	ExpressionQueue?: ExpressionQueueItem[];
@@ -2252,7 +2252,7 @@ interface PlayerCharacter extends Character {
 		LastChange?: number;
 	};
 	Crafting: (null | CraftingItem)[];
-	ItemPermission: 0 | 1 | 2 | 3 | 4 | 5;
+	AllowedInteractions: AllowedInteractions;
 
 	// PreferenceInitPlayer() must be updated with defaults, when adding a new setting
 	ChatSettings: ChatSettingsType;

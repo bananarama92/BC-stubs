@@ -354,11 +354,7 @@ declare function ChatRoomGetMetadataElem(time: string, sender?: null | number | 
  * @param {HTMLElement} div
  */
 declare function ChatRoomAppendChat(div: HTMLElement): void;
-/**
- * Loads the chat room screen by displaying the proper inputs.
- * @returns {void} - Nothing.
- */
-declare function ChatRoomLoad(): void;
+declare function ChatRoomLoad(): Promise<void>;
 /**
  * Removes all elements that can be open in the chat room
 */

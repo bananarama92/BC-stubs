@@ -427,7 +427,22 @@ declare function CharacterPronoun(C: Character, DialogKey: string, HideIdentity:
  * @returns {string} - The text to use
  */
 declare function CharacterPronounDescription(C: Character): string;
-declare function CharacterSetNickname(C: any, Nick: any): "NicknameTooLong" | "NicknameInvalidChars";
+/**
+ * Whether the character's nickname can be changed
+ *
+ * @param {Character} C
+ */
+declare function CharacterCanChangeNickname(C: Character): boolean;
+/**
+ * Update the given character's nickname.
+ *
+ * Note that changing any nickname but yours (ie. Player) is not supported.
+ *
+ * @param {Character} C - The character to change the nickname of.
+ * @param {string} Nick - The name to use as the new nickname. An empty string uses the character's real name.
+ * @return {"NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked"} null if the nickname was valid, or an explanation for why the nickname was rejected.
+ */
+declare function CharacterSetNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
 /**
  * Updates the leash state on a character
  *
@@ -489,6 +504,14 @@ declare namespace Difficulty {
     let REGULAR: number;
     let HARDCORE: number;
     let EXTREME: number;
+}
+declare namespace AllowedInteractions {
+    let Everyone: 0;
+    let EveryoneExceptBlacklist: 1;
+    let OwnerLoversWhitelistAndDomsOnly: 2;
+    let OwnerLoversWhitelistOnly: 3;
+    let OwnerLoversOnly: 4;
+    let OwnerOnly: 5;
 }
 /**
  * An enum representing the various character archetypes

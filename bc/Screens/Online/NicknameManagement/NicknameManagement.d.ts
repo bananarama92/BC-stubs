@@ -1,8 +1,4 @@
-/**
- * Loads the Nickname Management screen
- * @returns {void} - Nothing
- */
-declare function NicknameManagementLoad(): void;
+declare function NicknameManagementLoad(): Promise<void>;
 /**
  * Draws the Nickname Management controls
  * @returns {void} - Nothing
