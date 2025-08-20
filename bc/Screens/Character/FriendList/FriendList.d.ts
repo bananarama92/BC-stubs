@@ -33,7 +33,7 @@ declare function FriendListShowBeep(i: number): void;
  * Exits the friendlist
  * @param {string} room The room to search for
  */
-declare function FriendListChatSearch(room: string): void;
+declare function FriendListChatSearch(room: string): Promise<void>;
 /**
  * Loads the friend list data into the HTML div element.
  * @param {ServerFriendInfo[]} data - An array of data, we receive from the server

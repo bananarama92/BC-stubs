@@ -30,7 +30,6 @@
     },
     "BodyMarkings": {
         "BodyWritings": "R103",
-        "FacePaint": "R119",
         "FacePaints": "R111",
         "FaceScars": "R109",
         "Splatters": "R114",
@@ -330,6 +329,7 @@
     },
     "Decals": {
         "AmberFam": "R119",
+        "AzureCorp": "R119",
         "DemonsBar": "R119",
         "DenOfSin": "R119",
         "Gangriels": "R119",
@@ -398,6 +398,7 @@
     },
     "FaceMarkings": {
         "AnimalNoses": "R112",
+        "FacePaint": "R119",
         "FaceScars": "R112",
         "FaceWritings": "R112",
         "Splatters": "R114"
@@ -1470,6 +1471,7 @@
         "CarrotGag": "R98",
         "ChloroformCloth": "R98",
         "ChopstickGag": "R98",
+        "Cigarette": "R119",
         "ClothGag": "R98",
         "ClothStuffing": "R98",
         "CropGag": "R98",

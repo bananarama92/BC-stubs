@@ -56,10 +56,10 @@ declare function CommonSleep(ms: number): Promise<number>;
 /**
  *
  * @param {() => boolean} func
- * @param {() => boolean} cancelFunc
+ * @param {() => boolean} [cancelFunc]
  * @returns
  */
-declare function CommonWaitFor(func: () => boolean, cancelFunc: () => boolean): Promise<boolean>;
+declare function CommonWaitFor(func: () => boolean, cancelFunc?: () => boolean): Promise<boolean>;
 /**
  * Fetch a remote resource
  *

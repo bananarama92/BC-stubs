@@ -1621,7 +1621,8 @@
             "XmasStickerGag": 93,
             "AOMGag": 94,
             "HorrorMuzzle": 95,
-            "AsylumMuzzle": 96
+            "AsylumMuzzle": 96,
+            "Cigarette": 97
         }
     },
     "ItemMouth2": {
@@ -2671,7 +2672,8 @@
             "AnimalNoses": 0,
             "FaceScars": 1,
             "FaceWritings": 2,
-            "Splatters": 3
+            "Splatters": 3,
+            "FacePaint": 4
         }
     },
     "BodyStyle": {
@@ -2703,7 +2705,8 @@
             "Malkuth": 5,
             "RatAss": 6,
             "SlaveHelpline": 7,
-            "VoidOrder": 8
+            "VoidOrder": 8,
+            "AzureCorp": 9
         }
     }
 }
