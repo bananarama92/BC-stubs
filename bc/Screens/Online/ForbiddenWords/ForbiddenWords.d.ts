@@ -1,4 +1,5 @@
 declare function ForbiddenWordsLoad(): Promise<void>;
+declare function ForbiddenWordsUnload(): void;
 /**
  * Starts the forbidden words screen and loads it
  * @returns {void} - Nothing

@@ -23,12 +23,12 @@ declare function FriendListBeepMenuSend(): void;
 /**
  * Opens the friendlist from any screen
  */
-declare function FriendListShow(): void;
+declare function FriendListShow(): Promise<void>;
 /**
  * Shows the wanted beep on click from beep list
  * @param {number} i index of the beep
  */
-declare function FriendListShowBeep(i: number): void;
+declare function FriendListShowBeep(i: number): Promise<void>;
 /**
  * Exits the friendlist
  * @param {string} room The room to search for

@@ -79,11 +79,11 @@ declare function AssetParsePoseMapping(poseMapping: null | undefined | AssetPose
 declare function AssetParseAllowTypes(allowTypes: AllowTypes.Definition): AllowTypes.Data;
 /**
  * Parse the passed {@link AssetDefinition.ParentGroup}.
- * @param {null | undefined | ParentGroup.Definition} parentGroup - The to-be parsed parent group value
+ * @param {AssetDefinition["ParentGroup"]} parentGroup - The to-be parsed parent group value
  * @param {ParentGroup.Data} superParentGroup - The parsed parent group value of the layer's/asset's super-asset/group
  * @returns {ParentGroup.Data} - The parsed parent group value
  */
-declare function AssetParseParentGroup(parentGroup: null | undefined | ParentGroup.Definition, superParentGroup: ParentGroup.Data): ParentGroup.Data;
+declare function AssetParseParentGroup(parentGroup: AssetDefinition["ParentGroup"], superParentGroup: ParentGroup.Data): ParentGroup.Data;
 /**
  * Parses and validates asset's opacity
  * @param {number|undefined} opacity

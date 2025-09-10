@@ -202,6 +202,29 @@ declare function ElementFocus(ElementOrId: ElementHelp.ElementOrId): void;
  */
 declare function ElementToggleGeneratedElements(Screen: string, ShouldDisplay: boolean): void;
 /**
+ * Create a label for a given element
+ * @param {string} label
+ * @param {string} forElement
+ * @param {'left' | 'top'} position
+ */
+declare function ElementCreateSettingsLabel(label: string, forElement: string, position?: "left" | "top"): HTMLLabelElement;
+/**
+ * Create a group of radio buttons
+ * @param {string} id
+ * @param {string} defaultValue
+ * @param {(this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any} onclick
+ * @param {{
+ * htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>,
+ * options?: ElementButton.Options,
+ * onClick?: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent, key: string) => any
+ * }[]} options
+ */
+declare function ElementCreateRadioButtonGroup(id: string, onclick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, defaultValue: string, options: {
+    htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>;
+    options?: ElementButton.Options;
+    onClick?: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent, key: string) => any;
+}[]): HTMLFieldSetElement;
+/**
  * Construct a search-based `<input>` element that offers suggestions based on the passed callbacks output.
  *
  * The search suggestions are constructed lazily once the search input is focused.

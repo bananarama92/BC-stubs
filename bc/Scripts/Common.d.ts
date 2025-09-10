@@ -647,6 +647,27 @@ declare function ScreenFileGetDialog(npcType: string, module?: string, screen?: 
  * @returns
  */
 declare function ScreenFileGetPath(file: string, module?: string, screen?: string): string;
+/**
+ * Gets the common prefix of a list of strings
+ * @param {string[]} strings
+ * @returns {string}
+ */
+declare function CommonGetCommonPrefix(strings: string[]): string;
+/**
+ * Splits a string into tokens by delimiters and spaces
+ * @param {string} input
+ * @param {{
+ * delimiters: [string, string][];
+ * includeDelimiters?: boolean;
+ * trimTrailingSpaces?: boolean;
+ * }} options
+ * @returns {string[]}
+ */
+declare function CommonTokenize(input: string, options?: {
+    delimiters: [string, string][];
+    includeDelimiters?: boolean;
+    trimTrailingSpaces?: boolean;
+}): string[];
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /**

@@ -172,9 +172,9 @@ declare function MainHallMaidPunishmentPlayer(): void;
 declare function MainHallResetClubSlave(): void;
 /**
  * Triggered when the player needs to be brought to the club management room to be expelled
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function MainHallMistressExpulsion(): void;
+declare function MainHallMistressExpulsion(): Promise<void>;
 /**
  * Sets the maid dialog stage to the introduction for new players
  * @returns {void} - Nothing

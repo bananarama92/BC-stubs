@@ -97,9 +97,9 @@ declare function GameClubCardLoadBundle(CCPlayer: ClubCardPlayer, Bundle: any): 
  * Assigns both club card players based on the players selection
  * @param {ServerChatRoomGameResponse} Packet - The data packet to process
  * @param {Character} Char - The character that's sending the packet
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function GameClubCardAssignPlayers(Packet: ServerChatRoomGameResponse, Char: Character): void;
+declare function GameClubCardAssignPlayers(Packet: ServerChatRoomGameResponse, Char: Character): Promise<void>;
 /**
  * Loads the club card game data
  * @param {ServerChatRoomGameResponse} Packet - The data packet to process

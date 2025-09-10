@@ -176,9 +176,9 @@ declare function MaidQuartersMiniGameStart(GameType: ModuleScreens["MiniGame"], 
 /**
  * Is called when the mini game ends and sends the player back to the maid quarters.
  * Depending on the choosen game, the next dialog option is selected
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function MaidQuartersMiniGameEnd(): void;
+declare function MaidQuartersMiniGameEnd(): Promise<void>;
 /**
  * Rewards the player with the latex maid outfit
  * @returns {void} - Nothing

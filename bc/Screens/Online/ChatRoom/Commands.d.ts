@@ -34,6 +34,7 @@ declare function CommandCombine(add: ICommand | ICommand[]): void;
 declare function CommandParse(msg: string): string | boolean;
 /**
  * Prints out the help for commands with tags that include `low`
+ * @deprecated
  * @param {string} low - lower case search keyword for tags
  * @param {number} [timeout] - total time to display the help message in ms
  * @returns {void} - Nothing
@@ -41,11 +42,22 @@ declare function CommandParse(msg: string): string | boolean;
 declare function CommandHelp(low: string, timeout?: number): void;
 /**
  * Prints out the help for commands
- * @param {Optional<ICommand, 'Action'>[]} CommandList - list of commands
- * @param {number} [Timeout] - total time to display the help message in ms
- * @param {boolean} [DoShowEscapeHint] - if message about message escaping should be shown
+ * @deprecated
+ * @param {Optional<ICommand, 'Action'>[]} commands - list of commands
+ * @param {number} [timeout] - total time to display the help message in ms
+ * @param {boolean} [doShowEscapeHint] - if message about message escaping should be shown
  */
-declare function CommandPrintHelpFor(CommandList: Optional<ICommand, "Action">[], Timeout?: number, DoShowEscapeHint?: boolean): void;
+declare function CommandPrintHelpFor(commands: Optional<ICommand, "Action">[], timeout?: number, doShowEscapeHint?: boolean): void;
+/**
+ * Prints out the help for commands
+ * @param {ICommand} cmd
+ * @param {{ arguments?: ArgumentDef['suggestions'], subcommands?: Subcommand[] }} options - list of commands
+ * @param {number} [timeout] - total time to display the help message in ms
+ */
+declare function CommandPrintHelpForSubcommandsArguments(cmd: ICommand, options: {
+    arguments?: ArgumentDef["suggestions"];
+    subcommands?: Subcommand[];
+}, timeout?: number): void;
 /**
  * Finds command and executes it from the message
  * @param {string} msg - User input
@@ -57,12 +69,128 @@ declare function CommandExecute(msg: string): boolean;
  * @param {string} msg - InputChat content
  */
 declare function CommandAutoComplete(msg: string): void;
+/**
+ *
+ * @param {ICommand[]} candidates
+ * @param {string} key
+ */
+declare function CommandHandleMultipleCandidates(candidates: ICommand[], key: string): void;
+/**
+ *
+ * @param {ICommand} initialCmd
+ * @param {string[]} forward
+ * @param {string[]} parts
+ * @param {string} low
+ * @param {string} msg
+ * @returns
+ */
+declare function CommandHandleSingleCandidate(initialCmd: ICommand, forward: string[], parts: string[], low: string, msg: string): void | HTMLDivElement;
+/**
+ *
+ * @param {ICommand} cmd
+ * @returns {ICommand | undefined}
+ */
+declare function CommandResolveReference(cmd: ICommand): ICommand | undefined;
+/**
+ *
+ * @param {ICommand} cmd
+ * @param {string[]} remaining
+ * @param {string[]} parts
+ * @param {{setCommand?: string}} [options]
+ * @returns {boolean} if completion was handled
+ */
+declare function CommandHandleSubcommandCompletion(cmd: ICommand, remaining: string[], parts: string[], options?: {
+    setCommand?: string;
+}): boolean;
+/**
+ *
+ * @param {ICommand | Subcommand} cmd
+ * @param {string[]} remaining
+ * @param {string[]} parts
+ * @param {{setCommand?: string}} [options]
+ * @returns {boolean | 'complete'} if completion was handled
+ */
+declare function CommandHandleArgumentCompletion(cmd: ICommand | Subcommand, remaining: string[], parts: string[], options?: {
+    setCommand?: string;
+}): boolean | "complete";
+/**
+ *
+ * @param {string} setCommand
+ * @param {string[]} remaining
+ * @param {number} argumentDepth
+ * @param {string} completion
+ * @param {boolean} completed
+ */
+declare function CommandCompleteCommand(setCommand: string, remaining: string[], argumentDepth: number, completion: string, completed?: boolean): void;
+/**
+ *
+ * @param {string} msg
+ */
+declare function CommandChangeChatInputContent(msg: string): void;
+/**
+ * Returns the caret position of the chat input or -1 if user selected text or if there is no input
+ * @returns {number}
+ */
+declare function CommandGetChatRoomCaretPosition(): number;
 /** @type {ICommand[]} */
 declare var Commands: ICommand[];
 /** @readonly */
 declare let CommandsKey: string;
 /** @type {TextCache} */
 declare let CommandText: TextCache;
+declare namespace CommandsHelp {
+    /**
+     * @private
+     * @param {HTMLElement} help
+     */
+    function _Publish(help: HTMLElement): void;
+    function _BuildDelete(id: any): HTMLButtonElement;
+    /**
+     *
+     * @param {string} id
+     * @param {boolean} expanded
+     * @returns
+     */
+    function _BuildToggle(id: string, expanded: boolean): HTMLButtonElement;
+    /**
+     *
+     * @param {ICommand} command
+     * @returns {string}
+     */
+    function _GetDescription(command: ICommand): string;
+    /**
+ * @param {ICommand} command
+ * @param {string} setCommand
+ * @param {boolean} singleCommand
+ * @returns {HTMLOptions<keyof HTMLElementTagNameMap>}
+ */
+    function _BuildCommand(command: ICommand, setCommand: string, singleCommand: boolean): HTMLOptions<keyof HTMLElementTagNameMap>;
+    /**
+     * @param {ICommand[]} commands
+   * @param {{ setCommand?: string}} [options]
+     * @returns
+     */
+    function _BuildHelp(commands: ICommand[], { setCommand }?: {
+        setCommand?: string;
+    }): HTMLDivElement;
+    /**
+     * Prints out the help for commands
+     * @param {Optional<ICommand, 'Action'>[]} commands - list of commands
+     * @param {{ doShowEscapeHint?: boolean, setCommand?: string, publish?: boolean }} [options] - if message about message escaping should be shown
+     */
+    function ShowFor(commands: Optional<ICommand, "Action">[], options?: {
+        doShowEscapeHint?: boolean;
+        setCommand?: string;
+        publish?: boolean;
+    }): HTMLDivElement;
+    /**
+     * Prints out the help for commands with tags that include `low`
+     * @param {string} low - lower case search keyword for tags
+     * @returns {void} - Nothing
+     */
+    function ShowForPartial(low: string): void;
+    function Complete(): void;
+}
 declare namespace CommandsChangelog {
     /**
      * Iterate through the passed changelog element and remove all (redundant) elements outside the `[startID, stopID)` interval.
@@ -147,7 +275,3 @@ declare namespace CommandsChangelog {
         stopID?: null | string;
     }): HTMLDivElement;
 }
-/**
- * @type {ICommand[]}
- */
-declare const CommonCommands: ICommand[];

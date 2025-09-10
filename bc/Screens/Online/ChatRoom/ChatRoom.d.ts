@@ -691,6 +691,7 @@ declare function ChatRoomProcessSlowLeave(): void;
 declare function ChatRoomLeave(clearCharacters?: boolean): void;
 declare function ChatRoomCommonKeyDown(event: KeyboardEvent): boolean;
 declare function ChatRoomKeyDown(event: KeyboardEvent): boolean;
+declare function ChatRoomKeyUp(event: KeyboardEvent): boolean;
 /**
  * Scroll through the chat history
  *
@@ -1021,9 +1022,9 @@ declare function ChatRoomValidateProperties(obj: unknown): obj is ChatRoom;
  * This only happens once per ChatRoom "lifetime".
  *
  * @param {ServerChatRoomSyncMessage} data - Room object containing the new chatroom data.
- * @returns {void} - Nothing.
+ * @returns {Promise<void>} - Nothing.
  */
-declare function ChatRoomSync(data: ServerChatRoomSyncMessage): void;
+declare function ChatRoomSync(data: ServerChatRoomSyncMessage): Promise<void>;
 /**
  * Handles the reception of the character data of a single player from the server.
  * @param {ServerChatRoomSyncCharacterResponse} data - object containing the character's data.
@@ -1507,6 +1508,7 @@ declare let ChatRoomData: null | ServerChatRoomData;
  * @type {Character[]}
  */
 declare var ChatRoomCharacter: Character[];
+declare var ChatRoomJustEntered: boolean;
 /** @type {ChatRoomChatLogEntry[]} */
 declare var ChatRoomChatLog: ChatRoomChatLogEntry[];
 declare var ChatRoomLastMessage: string[];

@@ -145,8 +145,11 @@ interface AssetCommonPropertiesGroupAssetLayer {
 
 	/**
 	 * A group identifier that will be used to inherit the body size.
+	 *
 	 * Body sizes can be either be used for all poses (by passing a singular group) or on a pose-by-pose basis (via passing an object).
 	 * In the latter case {@link PoseType.DEFAULT} can be used to override the default for _all_ groups when used as key, or to disable inheritance when used as value.
+	 *
+	 * A value of `undefined` means the parent group will be inherited. A value of `""` will make it size-independent.
 	 *
 	 * @example
 	 * // Inherit from the body sizes `BodyLower` by default, but do not inherit for the `AllFours` pose
@@ -155,7 +158,7 @@ interface AssetCommonPropertiesGroupAssetLayer {
 	 *     AllFours: PoseType.DEFAULT,
 	 * },
 	 */
-	ParentGroup?: ParentGroup.Definition | null;
+	ParentGroup?: ParentGroup.Definition | "";
 
 	/**
 	 * The poses that have pose-specific assets.

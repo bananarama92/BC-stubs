@@ -96,7 +96,9 @@
             "Bandage": 54,
             "LeatherBunnyHollowBra": 55,
             "MaidBra": 56,
-            "SatinCorset": 57
+            "SatinCorset": 57,
+            "SportBra": 58,
+            "SportSwimsuit": 59
         }
     },
     "Bracelet": {
@@ -245,7 +247,8 @@
             "FaceWritings": 32,
             "SatinScarf": 33,
             "HoodedCloak": 34,
-            "SideRuffles": 35
+            "SideRuffles": 35,
+            "RuffledCollar": 36
         }
     },
     "ClothLower": {
@@ -301,7 +304,9 @@
             "SatinSkirt": 47,
             "ASRubberSkirt": 48,
             "MidLegSkirt": 49,
-            "UtilityKilt": 50
+            "UtilityKilt": 50,
+            "GymShorts": 51,
+            "RuffledMiniskirt": 52
         }
     },
     "Corset": {
@@ -899,7 +904,9 @@
             "NunVeil": 41,
             "AnimeGirlTiara": 42,
             "VintageHat": 43,
-            "CheapHelmet": 44
+            "CheapHelmet": 44,
+            "FlatCap": 45,
+            "Gat": 46
         }
     },
     "Head": {
@@ -1056,7 +1063,9 @@
             "StrictPonyBoots": 24,
             "BalletMittens": 25,
             "HeellessHoof": 26,
-            "HoofBoots": 27
+            "HoofBoots": 27,
+            "SingleBalletBoot": 28,
+            "ZipperBBoots": 29
         }
     },
     "ItemBreast": {
@@ -1191,7 +1200,8 @@
             "Throne": 65,
             "ExclusiveWaitress": 66,
             "LeatherCage": 67,
-            "Highchair": 68
+            "Highchair": 68,
+            "SingleBalletBoot": 69
         }
     },
     "ItemEars": {
@@ -1314,7 +1324,9 @@
             "Kyosensu": 66,
             "Uchiwa": 67,
             "Cigarette": 68,
-            "Plushies": 69
+            "Plushies": 69,
+            "FoamRoll": 70,
+            "Plushie": 71
         }
     },
     "ItemHands": {
@@ -1335,7 +1347,8 @@
             "GlueMittens": 12,
             "HempRopeCuffs": 13,
             "FullMittens": 14,
-            "LatexBondageMitts": 15
+            "LatexBondageMitts": 15,
+            "FoamMittens": 16
         }
     },
     "ItemHead": {
@@ -1519,7 +1532,8 @@
             "WoodenMaidTrayFull": 36,
             "WoodenPaddle": 37,
             "WoodenSign": 38,
-            "Plushies": 39
+            "Plushies": 39,
+            "Plushie": 40
         }
     },
     "ItemMouth": {
@@ -1622,7 +1636,8 @@
             "AOMGag": 94,
             "HorrorMuzzle": 95,
             "AsylumMuzzle": 96,
-            "Cigarette": 97
+            "Cigarette": 97,
+            "CompGag": 98
         }
     },
     "ItemMouth2": {
@@ -1724,7 +1739,8 @@
             "XmasStickerGag": 93,
             "AOMGag": 94,
             "HorrorMuzzle": 95,
-            "AsylumMuzzle": 96
+            "AsylumMuzzle": 96,
+            "CompGag": 97
         }
     },
     "ItemMouth3": {
@@ -2263,7 +2279,8 @@
             "PearlNecklace1": 18,
             "AnimeGirlNecklace": 19,
             "SatinScarf": 20,
-            "RosePendant": 21
+            "RosePendant": 21,
+            "RuffledCollar": 22
         }
     },
     "Nipples": {
@@ -2329,7 +2346,8 @@
             "WaistLegHarness": 49,
             "FemPelvisHarness": 50,
             "LatexDiaper": 51,
-            "UntrainersThin": 52
+            "UntrainersThin": 52,
+            "SportPanties": 53
         }
     },
     "Pronouns": {
@@ -2417,7 +2435,8 @@
             "WitchShoes": 43,
             "HeellessHoof": 44,
             "HoofBoots": 45,
-            "CombatBoots": 46
+            "CombatBoots": 46,
+            "ZipperBBoots": 47
         }
     },
     "Socks": {
@@ -2691,7 +2710,10 @@
             "BusinessSuit": 1,
             "FurCoat": 2,
             "LeatherJacket": 3,
-            "Robe1": 4
+            "Robe1": 4,
+            "BartenderVest": 5,
+            "BartenderVestM": 6,
+            "JacketHoodie": 7
         }
     },
     "Decals": {
@@ -2706,7 +2728,28 @@
             "RatAss": 6,
             "SlaveHelpline": 7,
             "VoidOrder": 8,
-            "AzureCorp": 9
+            "AzureCorp": 9,
+            "BCRules": 10,
+            "BondageCollege": 11,
+            "Bonk": 12,
+            "BTeacher": 13,
+            "BTG": 14,
+            "Bullseye": 15,
+            "ControlPad1": 16,
+            "DataRoom": 17,
+            "Dominant": 18,
+            "Eclipse": 19,
+            "Elite": 20,
+            "Hogtied": 21,
+            "HWood": 22,
+            "Keys": 23,
+            "RadFrog": 24,
+            "Raiders": 25,
+            "Shibari": 26,
+            "Staff": 27,
+            "WhiteMoon": 28,
+            "ZamStick": 29,
+            "ZamStickII": 30
         }
     }
 }

@@ -171,12 +171,6 @@ declare function ClubCardPlayerSteal(CCPlayer: ClubCardPlayer, moneyAmount: numb
     stolenFame: number;
 };
 /**
- * Applies the "Sticky Fingers" effect, stealing extra resources if possible.
- * @param {ClubCardPlayer} CCPlayer - The club card player.
- * @param {ClubCardPlayer} opponent - The opponent player.
- */
-declare function ClubCardApplyStickyFingers(CCPlayer: ClubCardPlayer, opponent: ClubCardPlayer): void;
-/**
  * Raises the level of player
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @returns {void} - Nothing
@@ -193,16 +187,18 @@ declare function ClubCardEventNameIsInEvents(CCPlayer: ClubCardPlayer, CardName:
  * Returns TRUE if a card (by name) is currently present on a board
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {string} CardName - The name of the card
+ * @param {boolean} NegateCheck - If we need to check if the card is negated
  * @returns {boolean} - TRUE if at least one card with that name is present
  */
-declare function ClubCardNameIsOnBoard(CCPlayer: ClubCardPlayer, CardName: string): boolean;
+declare function ClubCardNameIsOnBoard(CCPlayer: ClubCardPlayer, CardName: string, NegateCheck?: boolean): boolean;
 /**
  * Returns the amount of a card (by name) that are currently present on a board
- * @param {ClubCardPlayer} CCPlayer - The club card player
- * @param {string} CardName - The name of the card
+ * @param {ClubCardPlayer} CCPlayer - The club card pla
+ * @param {string} CardName - The name of the carder
+ * @param {boolean} NegateCheck - If we need to check if the card is negated
  * @returns {number} - the amount of members with that name on board
  */
-declare function ClubCardNameCountOnBoard(CCPlayer: ClubCardPlayer, CardName: string): number;
+declare function ClubCardNameCountOnBoard(CCPlayer: ClubCardPlayer, CardName: string, NegateCheck?: boolean): number;
 /**
  * Returns TRUE if a card (by group) is currently present on a board
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -285,6 +281,13 @@ declare function ClubCardRemoveCardsFromEventByName(CCPlayer: ClubCardPlayer, Li
  */
 declare function ClubCardRemoveFromEventByName(CCPlayer: ClubCardPlayer, CardName: string): void;
 /**
+ * Removes a card from a player time events
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {ClubCard} Card - The card object to remove
+ * @returns {void} - Nothing
+ */
+declare function ClubCardRemoveFromEvent(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
+/**
  * Removes all cards that belong to a group (ex: Liability) from a board
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {String} GroupName - The group name to remove
@@ -366,6 +369,14 @@ declare function ClubCardCheckDraw(CCPlayer: ClubCardPlayer): void;
  */
 declare function ClubCardOnDrawAction(CCPlayer: ClubCardPlayer): void;
 /**
+ * Handles the remove of negate effect
+ * @param {ClubCardPlayer} CCPlayer
+ * @param {ClubCard} CardToCancel - the card to cancel its negation
+ * @returns {void} - Nothing
+ *
+ */
+declare function ClubCardCancelNegation(CCPlayer: ClubCardPlayer, CardToCancel: ClubCard): void;
+/**
  * Common place to handle Alvins effect on kidnapping and Restrain
  * @param {ClubCardPlayer} CCPlayer
  * @returns {void} - Nothing
@@ -379,6 +390,14 @@ declare function ClubCardAlvinCondition(CCPlayer: ClubCardPlayer): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardPlayerDiscardCard(CCPlayer: ClubCardPlayer, Amount: number): void;
+/**
+ * Removes a card from a player hand
+ * @param {ClubCardPlayer} CCPlayer - The club card player that discards
+ * @param {number} Pos - The location of the card to discard
+ * @param {string} DiscardFrom - The pile to discard from
+ * @returns {void} - Nothing
+ */
+declare function ClubCardDiscardCard(CCPlayer: ClubCardPlayer, Pos: number, DiscardFrom?: string): void;
 /**
  * Builds a deck array of object from a deck array of numbers
  * @param {readonly number[]} InDeck - The array of number deck
