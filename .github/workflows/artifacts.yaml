@@ -67,7 +67,7 @@ jobs:
           cd Bondage-College
           echo "BC_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
 
