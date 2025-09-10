@@ -77,7 +77,9 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	SavedExpressions?: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
 	ConfiscatedItems?: { Group: AssetGroupName, Name: string }[];
 	RoomCreateLanguage?: ServerChatRoomLanguage;
+	/** @deprecated */
 	RoomSearchLanguage?: "" | ServerChatRoomLanguage;
+	ChatSearchSettings?: ChatRoomSearchSettings;
 	LastMapData?: null | ChatRoomMapData;
 	// Unfortunately can't @deprecated individual union members
 	/** String-based values have been deprecated and are superseded by {@link ServerChatRoomSettings} objects */
@@ -453,9 +455,21 @@ interface ServerChatRoomSearchRequest {
     FullRooms?: boolean;
     Ignore?: string[];
 	Language: "" | ServerChatRoomLanguage | ServerChatRoomLanguage[];
-    SearchDescs?: boolean;
+    SearchDescriptions?: boolean;
 	ShowLocked?: boolean;
     MapTypes?: string[];
+}
+type ChatRoomSearchSettings = {
+	Language: "" | ServerChatRoomLanguage;
+	Query: string;
+	Space: ServerChatRoomSpace;
+	Game: ServerChatRoomGame;
+	FullRooms: boolean;
+	ShowLocked: boolean;
+	SearchDescriptions: boolean;
+	MapTypes: string;
+	RoomMinSize: number;
+	RoomMaxSize: number;
 }
 
 interface ServerChatRoomSearchData {
@@ -789,6 +803,17 @@ interface MapViewTeleportEventDictionaryEntry {
 }
 
 /**
+ * A dictionary entry for change key events
+ */
+interface MapViewChangeKeyEventDictionaryEntry {
+	Tag: "MapViewChangeKey";
+	/** The key to give or take. */
+	Key: "gold" | "silver" | "bronze";
+	/** Whether to give (true) or take the key (false) */
+	Bool: boolean;
+}
+
+/**
  * A dictionary entry with metadata about the chat message transmitted.
  *
  * Send with Chat and Whisper-type messages to inform the other side about the
@@ -818,7 +843,8 @@ type ChatMessageDictionaryEntry =
 	| MessageEffectEntry
 	| MsgIdDictionaryEntry
 	| ReplyIdDictionaryEntry
-	| MapViewTeleportEventDictionaryEntry;
+	| MapViewTeleportEventDictionaryEntry
+	| MapViewChangeKeyEventDictionaryEntry;
 
 
 type ChatMessageDictionary = ChatMessageDictionaryEntry[];

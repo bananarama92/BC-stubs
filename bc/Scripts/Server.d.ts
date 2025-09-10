@@ -228,7 +228,7 @@ declare function ServerClickBeep(): void;
  * Opens the friendlist from any screen
  * @deprecated Use {@link FriendListShow()};
  */
-declare function ServerOpenFriendList(): void;
+declare function ServerOpenFriendList(): Promise<void>;
 /**
  * Callback used to parse received information related to the player ownership data
  * @param {object} data - Data object containing the Owner name and Ownership object

@@ -153,15 +153,15 @@ declare function KidnapLeagueEndKidnap(): void;
 declare function KidnapLeagueResetTrainer(): void;
 /**
  * Triggered at the start of a match, sets a random intro sequence.
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function KidnapLeagueRandomIntro(): void;
+declare function KidnapLeagueRandomIntro(): Promise<void>;
 /**
  * Triggered at the end of a match, sets a random outro sequence.
  * @param {boolean} Surrender - Whether or not the player surrendered.
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function KidnapLeagueRandomOutro(Surrender: boolean): void;
+declare function KidnapLeagueRandomOutro(Surrender: boolean): Promise<void>;
 /**
  * Triggered when a random kidnap match starts. We start the kidnap minigame with the appropriate settings.
  * @returns {void} - Nothing
@@ -216,9 +216,9 @@ declare function KidnapLeagueTransferToRoom(): void;
 declare function KidnapLeagueRandomClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function KidnapLeagueRandomClubCardEnd(): void;
+declare function KidnapLeagueRandomClubCardEnd(): Promise<void>;
 /**
  * Returns TRUE if the player can get the anime girl costume
  * @returns {boolean} - TRUE if it's possible

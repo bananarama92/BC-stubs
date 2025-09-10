@@ -149,9 +149,9 @@ declare function MovieStudioGetMoney(): void;
 declare function MovieStudioClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function MovieStudioClubCardEnd(): void;
+declare function MovieStudioClubCardEnd(): Promise<void>;
 declare var MovieStudioBackground: string;
 /** @type {null | NPCCharacter} */
 declare var MovieStudioDirector: null | NPCCharacter;

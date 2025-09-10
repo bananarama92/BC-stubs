@@ -1,3 +1,9 @@
+/**
+ * Open a specific subscreen
+ * @param {PreferenceSubscreenName} subscreen
+ * @param {number} page
+ */
+declare function PreferenceOpenSubscreen(subscreen: PreferenceSubscreenName, page?: number): Promise<void>;
 declare function PreferenceLoad(): Promise<void>;
 /**
  * Runs the preference screen. This function is called dynamically on a repeated basis.
@@ -94,11 +100,6 @@ declare var PreferenceMessage: string;
  */
 declare var PreferenceSubscreen: PreferenceSubscreen | null;
 /**
- * @type {PreferenceSubscreenName[]}
- * @deprecated the old name. Remove after the extensions have caught up
- */
-declare var PreferenceSubscreenList: PreferenceSubscreenName[];
-/**
  * All the base settings screens
  * @type {PreferenceSubscreen[]}
  */
@@ -111,7 +112,6 @@ declare const PreferenceSubscreens: PreferenceSubscreen[];
 declare var PreferencePageCurrent: number;
 /** @type {Record<string,PreferenceExtensionsSettingItem>} */
 declare let PreferenceExtensionsSettings: Record<string, PreferenceExtensionsSettingItem>;
-declare let PreferenceDidAddOldStyleScreens: boolean;
 /**
  * Private helper to quickly check boolean settings
  * @param {boolean} defaultValue

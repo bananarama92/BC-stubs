@@ -281,6 +281,18 @@ declare function ChatRoomMapViewDraw(): void;
  */
 declare function ChatRoomMapViewDrawUi(): void;
 /**
+ * Change the key of charachter - sender
+ * @param {Character} target
+ * @param {("gold" | "silver" | "bronze")[]} keys
+ */
+declare function ChatRoomMapViewChangeKey(target: Character, keys: ("gold" | "silver" | "bronze")[], boolean: any): void;
+/**
+ * Change a key from a character from a hidden message - reciver
+ * @param {Character} sender
+ * @param {ServerChatRoomMessage} data
+ */
+declare function ChatRoomMapViewChangeKeyHiddenMessage(sender: Character, data: ServerChatRoomMessage): void;
+/**
  * Teleport a character to a specific tile
  * @param {Character} target
  * @param {ChatRoomMapPos} position
@@ -311,6 +323,7 @@ declare function ChatRoomMapViewMove(D: "West" | "East" | "North" | "South"): vo
  */
 declare function ChatRoomMapViewUndo(): void;
 declare function ChatRoomMapViewKeyDown(event: KeyboardEvent): boolean;
+declare function ChatRoomMapViewKeyUp(event: KeyboardEvent): boolean;
 /**
  * Handles clicks the chatroom screen view.
  * @returns {void} - Nothing.
@@ -392,6 +405,12 @@ declare var ChatRoomMapViewVisibilityMask: boolean[];
 declare var ChatRoomMapViewAudibilityMask: boolean[];
 declare var ChatRoomMapViewTileFog: string;
 declare var ChatRoomMapViewObjectFog: string;
+declare namespace ChatRoomMapViewKeysPressed {
+    let u: boolean;
+    let d: boolean;
+    let l: boolean;
+    let r: boolean;
+}
 /** @type {ChatRoomMapTile[]} */
 declare const ChatRoomMapViewTileList: ChatRoomMapTile[];
 /** @type {ChatRoomMapObject[]} */

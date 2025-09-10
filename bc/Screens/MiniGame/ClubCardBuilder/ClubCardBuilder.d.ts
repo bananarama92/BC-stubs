@@ -82,8 +82,12 @@ declare var ClubCardBuilderOffset: number;
 declare var ClubCardBuilderDeckCurrent: number[];
 declare var ClubCardBuilderMinDeckSize: number;
 declare var ClubCardBuilderMaxDeckSize: number;
-declare var ClubCardBuilderSelectedTag: string;
-declare var ClubCardBuilderFilterGroup: string[];
+/** @type {ClubCardTag} */
+declare var ClubCardBuilderSelectedTag: ClubCardTag;
+/**
+ * @type {Record<ClubCardTag, (card: ClubCard) => boolean>}
+ */
+declare const ClubCardBuilderFilterGroupFilters: Record<ClubCardTag, (card: ClubCard) => boolean>;
 declare var ClubCardBuilderRenameIndex: number;
 declare var ClubCardBuilderCustomizationIndex: string;
 declare var ClubCardBuilderSelectedCardBack: number;

@@ -24,9 +24,9 @@ declare function MagicSchoolLaboratoryClick(): void;
 declare function MagicSchoolLaboratorySpellPractice(SpellNumber: number): void;
 /**
  * When the magic spell practice puzzle ends
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function MagicSchoolLaboratorySpellPracticeEnd(): void;
+declare function MagicSchoolLaboratorySpellPracticeEnd(): Promise<void>;
 /**
  * Check if someone is a member of a magic house or not
  * @param {"" | "Maiestas" | "Vincula" | "Amplector" | "Corporis"} House - The house name
@@ -70,9 +70,9 @@ declare function MagicSchoolLaboratoryFromRivalHouse(House: MagicSchoolHouse): b
 declare function MagicSchoolLaboratoryMagicBattleStart(Difficulty: number): void;
 /**
  * When the magic battle practice ends
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function MagicSchoolLaboratoryMagicBattleEnd(): void;
+declare function MagicSchoolLaboratoryMagicBattleEnd(): Promise<void>;
 /**
  * Generates a random student from the same house as the player (sister)
  * @returns {void} - Nothing
@@ -91,9 +91,9 @@ declare function MagicSchoolLaboratoryFindStudent(): void;
 declare function MagicSchoolLaboratoryBattleStudentStart(Type: "Wage25" | "Honor" | "RainbowWand"): void;
 /**
  * When a student battle ends, we release the winner, change reputation or give some money based on the wage
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function MagicSchoolLaboratoryBattleStudentEnd(): void;
+declare function MagicSchoolLaboratoryBattleStudentEnd(): Promise<void>;
 /**
  * Sets an emote for the student when there's an activity
  * @param {ExpressionNameMap["Blush"]} Blush
@@ -143,9 +143,9 @@ declare function MagicSchoolLaboratoryPlayerMainHall(): void;
 declare function MagicSchoolLaboratoryBattleMasterStart(): void;
 /**
  * When the magic battle against the master ends
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function MagicSchoolLaboratoryBattleMasterEnd(): void;
+declare function MagicSchoolLaboratoryBattleMasterEnd(): Promise<void>;
 /**
  * When the player learns the master technique from it's house
  * @returns {void} - Nothing

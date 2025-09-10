@@ -1,33 +1,37 @@
 declare function ChatSearchLoad(): Promise<void>;
+declare function ChatSearchResize(load: boolean): void;
 declare function ChatSearchUnload(): void;
 declare function ChatSearchRun(time: number): void;
 declare function ChatSearchClick(event: MouseEvent | TouchEvent): void;
 /**
  * Draws buttons and text for selection of room space.
+ * @deprecated - deprecated after DOM-ification
  * @returns {void} - Nothing
  */
 declare function ChatSearchRoomSpaceSelectDraw(): void;
+/**
+ * Gets the pagination information for the current page.
+ * @returns {{currentPage: number, total: number}}
+ */
+declare function ChatSearchGetPagination(): {
+    currentPage: number;
+    total: number;
+};
+/**
+ * Sets the page based on the passed page number.
+ * @param {number} page
+ */
+declare function ChatSearchSetPage(page: number): void;
+/**
+ * Relatively sets the page based on the passed offsets.
+ * @param {number} offset
+ */
+declare function ChatSearchSetPageRelative(offset: number): void;
 /**
  * Handles clicks on selection of room space.
  * @returns {void} - Nothing
  */
 declare function ChatSearchRoomSpaceSelectClick(): void;
-/**
- * While in normal view, called when player clicks apply or presses enter.
- * Saves the "temp" options into their normal variables, and sends them to the server.
- * @returns {void} - Nothing
- */
-declare function ChatSearchSaveLanguageFiltering(): void;
-/**
- * While in normal view, calls when player clicks revert.
- * Loads the "temp" options from their normal variables.
- * @returns {void} - Nothing
- */
-declare function ChatSearchLoadLanguageFiltering(): void;
-/**
- * @returns {boolean} - True if the player changed the options and the apply/revert buttons should show
- */
-declare function ChatSearchChangedLanguageOrFilterTerms(): boolean;
 /**
  * While in filter view, called when player clicks apply, presses enter, or returns to the normal view.
  * Saves the "temp" options into their normal variables, and sends them to the server.
@@ -43,7 +47,13 @@ declare function ChatSearchSaveLanguageAndFilterTerms(): void;
  */
 declare function ChatSearchLoadLanguageAndFilterTerms(): void;
 declare function ChatSearchKeyDown(event: KeyboardEvent): boolean;
-declare function ChatSearchExit(): void;
+/**
+ * Handles exiting from the chat search screen, removes the input.
+ * @type {ScreenExitHandler & { closeSubElements?: boolean }}
+ * @param {boolean} [closeSubElements=true] - Whether to exit the screen or just menus within
+ */
+declare function ChatSearchExit(closeSubElements?: boolean): void;
+declare function ChatSearchBack(): void;
 /**
  * Draws the filter mode help screen: just text and a back button.
  * @returns {void} - Nothing
@@ -55,10 +65,67 @@ declare function ChatSearchFilterHelpDraw(): void;
  */
 declare function ChatSearchFilterUnhideConfirmDraw(): void;
 /**
+ * Returns the translated language name for the given code.
+ * @param {ServerChatRoomLanguage} languageCode
+ */
+declare function ChatSearchGetLanguageName(languageCode: ServerChatRoomLanguage): string;
+/**
+ * Returns the translated room type for the given code.
+ * @param {ChatRoomMapType} roomType
+ */
+declare function ChatSearchGetRoomTypeName(roomType: ChatRoomMapType): string;
+/**
+ * Returns the translated space for the given code.
+ * @param {"" | "X" | "M" | "Asylum"} space
+ */
+declare function ChatSearchGetSpaceName(space: "" | "X" | "M" | "Asylum"): string;
+/**
  * Draws the list of rooms in normal mode.
+ * @deprecated - deprecated after DOM-ification
  * @returns {void} - Nothing
  */
 declare function ChatSearchNormalDraw(): void;
+/**
+ * Updates the room grid with the given rooms
+ * @param {ChatRoomSearchResult[]} rooms
+ */
+declare function ChatSearchGridUpdate(rooms: ChatRoomSearchResult[]): void;
+/**
+ * Creates a grid button for the given room
+ * @param {ChatRoomSearchResult} room
+ * @param {number} index
+ */
+declare function ChatSearchCreateGridRoom(room: ChatRoomSearchResult, index: number): void;
+/**
+ * Returns the list of icons for the given room
+ * @param {ChatRoomSearchResult} room
+ * @returns {string[]}
+ */
+declare function ChatSearchGridRoomGetIcons(room: ChatRoomSearchResult): string[];
+/**
+ * Returns whether the given room can be joined
+ * @param {ChatRoomSearchResult} room
+ * @returns {boolean}
+ */
+declare function ChatSearchGridRoomCanJoin(room: ChatRoomSearchResult): boolean;
+/**
+ * Creates the tooltip for the given room
+ * @param {ChatRoomSearchResult} room
+ * @param {number} index
+ * @returns {HTMLDivElement}
+ */
+declare function ChatSearchCreateGridRoomTooltip(room: ChatRoomSearchResult, index: number): HTMLDivElement;
+/**
+ * Creates the tags for the room page
+ * @param {ChatRoomSearchResult} room
+ * @returns {HTMLElement[]}
+ */
+declare function ChatSearchCreateRoomPageTags(room: ChatRoomSearchResult): HTMLElement[];
+/**
+ * Shows the room page for the given room
+ * @param {ChatRoomSearchResult} room
+ */
+declare function ChatSearchShowRoomPage(room: ChatRoomSearchResult): void;
 /**
  * Garbles based on immersion settings
  * @param {string} Text - The text to garble
@@ -71,10 +138,11 @@ declare function ChatSearchMuffle(Text: string): string;
  */
 declare function ChatSearchPermissionDraw(): void;
 /**
- * Handles the clicks related to the chatroom list when in normal mode
+ * Joins the room with the given name
+ * @param {string} RoomName - The name of the room to join
  * @returns {void} - Nothing
  */
-declare function ChatSearchJoin(): void;
+declare function ChatSearchJoin(RoomName: string): void;
 /**
  * Switch the search screen between the normal view and the filter mode which allows hiding of rooms
  * @returns {void} - Nothing
@@ -124,6 +192,11 @@ declare function ChatSearchClickUnhideRoom(C: ChatRoomSearchResult | number, Con
  * @returns {void} - Nothing
  */
 declare function ChatSearchResponse(data: ServerChatRoomSearchResponse): void;
+/**
+ * Sends a toast message based on the given response type
+ * @param {ServerChatRoomSearchResponse} type
+ */
+declare function ChatSearchSendToast(type: ServerChatRoomSearchResponse): void;
 /**
  * Censors the chat search result name and description based on the player preference
  * @param {ServerChatRoomSearchData} searchData - The (potentially) to-be censored search result
@@ -226,7 +299,6 @@ declare var ChatSearchPageY: number;
 declare var ChatSearchListParams: CommonGenerateGridParameters;
 /** Pre-calculated. Must be updated if you change the grid parameters */
 declare var ChatSearchRoomsPerPage: number;
-declare var ChatSearchMessage: string;
 /** @type {ScreenSpecifier} */
 declare var ChatSearchReturnScreen: ScreenSpecifier;
 /** @type {null | Item[]} */
@@ -260,3 +332,18 @@ declare var ChatSearchFilterTermsTemp: string;
 /** @type {ChatRoomSpaceLabel[]} */
 declare var ChatSearchRoomSpaces: ChatRoomSpaceLabel[];
 declare var ChatSearchCurrentRoomSpaceIndex: number;
+/** @type {HTMLDivElement} */
+declare var ChatSearchRoomHeader: HTMLDivElement;
+/** @type {HTMLDivElement} */
+declare var ChatSearchRoomGrid: HTMLDivElement;
+/** @type {HTMLFieldSetElement} */
+declare var ChatSearchSearchMenu: HTMLFieldSetElement;
+/** @type {HTMLDivElement} */
+declare var ChatSearchPageCountElement: HTMLDivElement;
+/** @type {HTMLDialogElement | null} */
+declare var ChatSearchDialogElement: HTMLDialogElement | null;
+/** @type {HTMLButtonElement} */
+declare var ChatSearchSearchMenuButton: HTMLButtonElement;
+/** @type {HTMLDivElement} */
+declare var ChatSearchSearchBodyElement: HTMLDivElement;
+declare function ChatSearchUpdateSearchSettings(): void;

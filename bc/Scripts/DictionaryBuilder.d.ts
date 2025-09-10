@@ -90,6 +90,11 @@ declare function IsMsgIdDictionaryEntry(entry: ChatMessageDictionaryEntry): entr
  */
 declare function IsMapViewTeleportEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MapViewTeleportEventDictionaryEntry;
 /**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is MapViewChangeKeyEventDictionaryEntry}
+ */
+declare function IsMapViewChangeKeyEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MapViewChangeKeyEventDictionaryEntry;
+/**
  * Build class for chat message dictionaries
  */
 declare class DictionaryBuilder {
@@ -213,6 +218,12 @@ declare class DictionaryBuilder {
      * @returns
      */
     mapViewTeleport(position: ChatRoomMapPos): this;
+    /**
+     * Adds a changeKey dictionary entry
+     * @param {("gold" | "silver" | "bronze")[]} keys
+     * @returns
+     */
+    mapViewChangeKey(keys: ("gold" | "silver" | "bronze")[], giveKey: any): this;
     /**
      * Adds a dictionary entry to the builder
      * @param {ChatMessageDictionaryEntry} entry - The dictionary entry to add
