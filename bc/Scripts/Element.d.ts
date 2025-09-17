@@ -204,10 +204,9 @@ declare function ElementToggleGeneratedElements(Screen: string, ShouldDisplay: b
 /**
  * Create a label for a given element
  * @param {string} label
- * @param {string} forElement
  * @param {'left' | 'top'} position
  */
-declare function ElementCreateSettingsLabel(label: string, forElement: string, position?: "left" | "top"): HTMLLabelElement;
+declare function ElementCreateSettingsLabel(label: string, position?: "left" | "top"): HTMLSpanElement;
 /**
  * Create a group of radio buttons
  * @param {string} id

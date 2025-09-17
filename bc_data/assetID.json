@@ -1201,7 +1201,8 @@
             "ExclusiveWaitress": 66,
             "LeatherCage": 67,
             "Highchair": 68,
-            "SingleBalletBoot": 69
+            "SingleBalletBoot": 69,
+            "Microphone": 70
         }
     },
     "ItemEars": {

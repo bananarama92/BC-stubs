@@ -50,10 +50,10 @@ declare function ChatSearchKeyDown(event: KeyboardEvent): boolean;
 /**
  * Handles exiting from the chat search screen, removes the input.
  * @type {ScreenExitHandler & { closeSubElements?: boolean }}
- * @param {boolean} [closeSubElements=true] - Whether to exit the screen or just menus within
+ * @param {boolean} [exitScreen=false] - Whether to exit the screen or just menus within
  */
-declare function ChatSearchExit(closeSubElements?: boolean): void;
-declare function ChatSearchBack(): void;
+declare function ChatSearchExit(exitScreen?: boolean): void;
+declare function ChatSearchBack(): boolean;
 /**
  * Draws the filter mode help screen: just text and a back button.
  * @returns {void} - Nothing

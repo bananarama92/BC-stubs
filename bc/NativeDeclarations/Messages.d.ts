@@ -455,7 +455,7 @@ interface ServerChatRoomSearchRequest {
     FullRooms?: boolean;
     Ignore?: string[];
 	Language: "" | ServerChatRoomLanguage | ServerChatRoomLanguage[];
-    SearchDescriptions?: boolean;
+    SearchDescs?: boolean;
 	ShowLocked?: boolean;
     MapTypes?: string[];
 }
