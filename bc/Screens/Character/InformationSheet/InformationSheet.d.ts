@@ -15,6 +15,10 @@ declare function InformationSheetSecondScreenRun(): void;
  * @returns {void} - Nothing
  */
 declare function InformationSheetClick(): void;
+/**
+ * Cleanup all elements, if the user exits the screen
+ * @type {ScreenExitHandler}
+ */
 declare function InformationSheetExit(): void;
 /**
  * Loads the information sheet for a character

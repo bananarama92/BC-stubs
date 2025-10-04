@@ -36,6 +36,10 @@ declare function WardrobeClick(): void;
  * @param {WardrobeReorderType} newmode - The mode to set.  If null, advance to next mode.
  */
 declare function WardrobeReorderModeSet(newmode?: WardrobeReorderType): void;
+/**
+ * Exits the wardorbe screen and sends the player back to her private room
+ * @type {ScreenExitHandler}
+ */
 declare function WardrobeExit(): void;
 /**
  * Set a wardrobe character name, sync it with server

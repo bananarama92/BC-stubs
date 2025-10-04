@@ -115,3 +115,27 @@ declare let PropertyPunishActivityCache: Set<ActivityName>;
  * @type {readonly string[]}
  */
 declare const PropertyAutoPunishKeywords: readonly string[];
+declare namespace PropertyLayerOrigin {
+    /**
+     * Resolve the `Left/Top` data for the specified item, including any {@link ItemProperties}-based corrections.
+     * @param {Item} item
+     * @param {"DrawingTop" | "DrawingLeft"} fieldName
+     * @returns {Partial<Record<LayerName, Mutable<TopLeft.Data>>>}
+     */
+    function resolveItem(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
+    /**
+     * Resolve the `Left/Top` data for the specified layer, including any {@link ItemProperties}-based corrections.
+     * @param {AssetLayer} layer
+     * @param {"DrawingTop" | "DrawingLeft"} fieldName
+     * @param {null | ItemProperties} properties
+     * @returns {Mutable<TopLeft.Data>}
+     */
+    function resolveLayer(layer: AssetLayer, fieldName: "DrawingTop" | "DrawingLeft", properties?: null | ItemProperties): Mutable<TopLeft.Data>;
+    /**
+     * Get the item's original `Left/Top` data as determined by its layer- and extended item data; any user-made alterations are removed.
+     * @param {Item} item
+     * @param {"DrawingTop" | "DrawingLeft"} fieldName
+     * @returns {Partial<Record<LayerName, Mutable<TopLeft.Data>>>}
+     */
+    function getOriginal(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
+}

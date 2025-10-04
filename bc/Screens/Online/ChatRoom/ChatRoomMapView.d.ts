@@ -4,6 +4,10 @@
  */
 declare function ChatRoomMapViewHasSuperPowers(): boolean;
 /**
+ * When the screen loses focus, we clear the keys pressed because we don't want movement to get stuck
+ */
+declare function ChatRoomMapViewBlur(): void;
+/**
  * Initializes the map to its default blank state
  * @param {ChatRoomMapType} mode
  * @returns {ServerChatRoomMapData}
@@ -47,16 +51,6 @@ declare function ChatRoomMapViewDeactivate(): void;
  */
 declare function ChatRoomMapViewIsActive(): boolean;
 declare function ChatRoomMapViewRun(time: number): void;
-/**
- * Alter the received message to what will be displayed in the chat log
- *
- * @param {ServerChatRoomMessage} data
- * @param {string} msg
- * @param {Character} SenderCharacter
- * @param {IChatRoomMessageMetadata} metadata
- * @returns {string|null} - The string to display or null if the message should be hidden
- */
-declare function ChatRoomMapViewDisplayMessage(data: ServerChatRoomMessage, msg: string, SenderCharacter: Character, metadata: IChatRoomMessageMetadata): string | null;
 /**
  * Returns TRUE if the player can leave from the map
  * @returns {boolean} - True if the player can leave
@@ -411,6 +405,7 @@ declare namespace ChatRoomMapViewKeysPressed {
     let l: boolean;
     let r: boolean;
 }
+declare var ChatRoomMapViewStartOfKeyPress: number;
 /** @type {ChatRoomMapTile[]} */
 declare const ChatRoomMapViewTileList: ChatRoomMapTile[];
 /** @type {ChatRoomMapObject[]} */

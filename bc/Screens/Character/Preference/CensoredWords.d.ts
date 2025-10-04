@@ -18,6 +18,15 @@ declare function PreferenceSubscreenCensoredWordsClick(): void;
  */
 declare function PreferenceSubscreenCensoredWordsExit(): boolean;
 declare function PreferenceSubscreenCensoredWordsUnload(): void;
+declare function PreferenceSubscreenCensoredWordsResize(): void;
+declare function PreferenceSubscreenCensoredWordsBuildWords(): void;
 /** @type {string[]} */
 declare var PreferenceCensoredWordsList: string[];
-declare var PreferenceCensoredWordsOffset: number;
+declare const PreferenceCensoredWordsIDs: Readonly<{
+    grid: "preference-censored-words-grid";
+    subtitle: "preference-censored-words-subtitle";
+    censorshipOption: "preference-censored-words-censorship-group";
+    wordInput: "InputWord";
+    wordInputGroup: "preference-censored-words-word-input-group";
+    add: "preference-censored-words-add-button";
+}>;

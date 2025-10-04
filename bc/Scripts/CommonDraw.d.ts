@@ -47,8 +47,9 @@ declare function CommonDrawResolveLayerExpression(C: Character, item: Item, laye
  * @param {Asset} asset
  * @param {AssetLayer} layer
  * @param {AssetGroupName} groupName
+ * @param {null | ItemProperties} properties
  */
-declare function CommonDrawComputeDrawingCoordinates(C: Character, asset: Asset, layer: AssetLayer, groupName: AssetGroupName): {
+declare function CommonDrawComputeDrawingCoordinates(C: Character, asset: Asset, layer: AssetLayer, groupName: AssetGroupName, properties?: null | ItemProperties): {
     X: number;
     Y: number;
     fixedYOffset: number;

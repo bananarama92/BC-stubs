@@ -9,6 +9,23 @@ declare function PreferenceSubscreenImmersionRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenImmersionClick(): void;
+declare function PreferenceSubscreenImmersionResize(onLoad: any): void;
+/**
+ * @param {boolean} disableButtons
+ */
+declare function PreferenceSubscreenImmersionCheckStates(disableButtons: boolean): void;
 /** @type {SettingsSensDepName[]} */
 declare var PreferenceSettingsSensDepList: SettingsSensDepName[];
-declare var PreferenceSettingsSensDepIndex: number;
+/** @type {{label: string, check: () => boolean, click: (value: boolean) => void, disabled?: (disableButtons: boolean) => boolean}[]} */
+declare const PreferenceSubscreenImmersionCheckboxes: {
+    label: string;
+    check: () => boolean;
+    click: (value: boolean) => void;
+    disabled?: (disableButtons: boolean) => boolean;
+}[];
+declare const PreferenceSubscreenImmersionIDs: Readonly<{
+    wrapper: "preference-immersion-wrapper";
+    grid: "preference-immersion-grid";
+    header: "preference-immersion-header";
+    lockCheckbox: "preference-ImmersionLockSetting";
+}>;

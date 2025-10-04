@@ -228,7 +228,7 @@ type ServerChatRoomRole = "All" | "Admin" | "Whitelist";
 type ServerChatRoomGame = "" | "ClubCard" | "LARP" | "MagicBattle" | "GGTS" | "Prison";
 type ServerChatRoomBlockCategory =
 	/** Those are known as AssetCategory to the client */
-	"Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" |
+	"Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" | "Smoking" |
 	/** Those are room features */
 	"Leashing" | "Photos" | "Arousal";
 
@@ -276,7 +276,8 @@ interface ServerChatRoomCustomData {
 	ImageURL?: string;
 	ImageFilter?: string;
 	MusicURL?: string;
-	SizeMode?: number
+	SizeMode?: number;
+	MusicStart?: number;
 }
 
 /**
@@ -461,7 +462,6 @@ interface ServerChatRoomSearchRequest {
 }
 type ChatRoomSearchSettings = {
 	Language: "" | ServerChatRoomLanguage;
-	Query: string;
 	Space: ServerChatRoomSpace;
 	Game: ServerChatRoomGame;
 	FullRooms: boolean;
@@ -602,6 +602,7 @@ interface CharacterReferenceDictionaryEntry extends TaggedDictionaryEntry {
  */
 interface SourceCharacterDictionaryEntry {
 	SourceCharacter: number;
+	HasSuperPowers?: true;
 }
 
 /**

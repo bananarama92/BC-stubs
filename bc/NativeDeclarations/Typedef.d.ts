@@ -164,7 +164,7 @@ declare namespace ElementButton {
 		/** A button label */
 		label?: StaticNode;
 		/** The position of the button label */
-		labelPosition?: "top" | "center" | "bottom";
+		labelPosition?: "top" | "center" | "bottom" | "left" | "right";
 		/** A background image for the button */
 		image?: string;
 		/**
@@ -216,6 +216,10 @@ declare namespace ElementCheckbox {
 		 */
 		name?: string;
 	}
+
+	interface LabelOptions extends Options {
+		orientation?: "horizontal" | "vertical";
+}
 }
 
 type Rect = { x: number, y: number, w: number, h: number };
@@ -676,11 +680,12 @@ interface PreferenceSubscreen {
 	description?: string;
 	icon?: string;
 	hidden?: boolean;
-	load?: () => void;
+	load?: () => void | Promise<void>;
 	run: () => void;
 	click: () => void;
-	exit?: () => boolean;
+	exit?: () => boolean | Promise<boolean>;
 	unload?: () => void;
+	resize?: (onLoad: boolean) => void;
 }
 
 interface PreferenceGenderSetting {
@@ -802,10 +807,10 @@ interface ModuleScreens {
 type RoomName = ModuleScreens[ModuleType];
 
 interface RelogDataBase<T extends ModuleType> {
-    Screen: ModuleScreens[T],
-    Module: T,
-    Character: Character,
-    ChatRoomName: string | null,
+	Screen: ModuleScreens[T],
+	Module: T,
+	Character: Character | null,
+	ChatRoomName: string | null,
 }
 
 type _RelogDataMap<T> = T extends ModuleType ? RelogDataBase<T> : never;
@@ -814,7 +819,7 @@ type RelogData = _RelogDataMap<ModuleType>;
 type _ScreenSpecifier<T extends ModuleType> = [module: T, screen: ModuleScreens[T]];
 type ScreenSpecifier = _ScreenSpecifier<"Character"> | _ScreenSpecifier<"Cutscene"> | _ScreenSpecifier<"MiniGame"> | _ScreenSpecifier<"Online"> | _ScreenSpecifier<"Room">;
 
-type AssetCategory = "Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy";
+type AssetCategory = "Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" | "Smoking";
 
 type PortalLinkStatus = "PortalLinkInvalidCode" | "PortalLinkClipboardError" | "PortalLinkValidCode" | `PortalLinkSearching${number}` | "PortalLinkDuplicateCode" | "PortalLinkTargetNotFound" | "PortalLinkEstablished";
 type PortalLinkFunction = "PortalLinkFunctionLock" | "PortalLinkFunctionUnlock" | "PortalLinkFunctionCycleChastity" | `PortalLinkFunctionActivity${ActivityName}`;
@@ -835,6 +840,15 @@ type ChatRoomSettings = ServerChatRoomSettings;
 /** ChatRoom results once received by the client */
 type ChatRoomSearchResult = (ServerChatRoomSearchData & { DisplayName: string, Order: number });
 
+interface ChatSearchLobbyOptions {
+	/** Name of the chatroom game to play */
+	Game?: ServerChatRoomGame;
+	/** Name of the background to use in the lobby */
+	Background?: string;
+	/** Tags of allowed backgrounds when creating a room */
+	BackgroundTagList?: BackgroundTag[];
+}
+
 type StimulationAction = "Kneel" | "Walk" | "Struggle" | "StruggleFail" | "Talk";
 
 interface StimulationEvent {
@@ -854,13 +868,13 @@ type StimulationEventType = "CrotchRope" | "Talk" | "Vibe" | "Inflated" | "Wiggl
 
 interface StimulationEventItem {
 	/** The item that caused the stimulation event */
-    item: Item;
+		item: Item;
 	/** The type of stimulation event */
-    event: StimulationEventType;
+		event: StimulationEventType;
 	/** The chance of the event occurring */
-    chance: number;
+		chance: number;
 	/** Arousal booost from the event */
-    arousal: number;
+		arousal: number;
 }
 
 interface ChatRoomChatLogEntry {
@@ -909,8 +923,8 @@ interface IChatRoomMessageMetadata {
 	ReplyId?: string;
 	/** The ID of the message */
 	MsgId?: string;
-
-
+	/** Whether the sender has super powers active (only in map view) */
+	HasSuperPowers?: boolean;
 }
 
 /**
@@ -1015,7 +1029,7 @@ interface IFriendListBeepLogMessage {
  * Opposite of {@link Readonly}
  */
 type Mutable<T> = {
-    -readonly[P in keyof T]: T[P];
+		-readonly[P in keyof T]: T[P];
 };
 
 //#region Assets
@@ -1077,10 +1091,10 @@ interface AssetGroup {
 	readonly StyleOverride?: string [];
 	readonly CreateLayerTypesOverride?: number [];
 	readonly Reposition?: {
-        Group?: string;
-        ShiftX?: number;
-        ShiftY?: number;
-    }[];
+				Group?: string;
+				ShiftX?: number;
+				ShiftY?: number;
+		}[];
 
 	readonly MirrorActivitiesFrom?: AssetGroupItemName;
 	readonly ArousalZone?: AssetGroupItemName;
@@ -1138,14 +1152,14 @@ type AssetGroupMapping = (
 /** An object defining a drawable layer of an asset */
 interface AssetLayer {
 	/** The name of the layer - may be null if the asset only contains a single default layer */
-	readonly Name: string | null;
+	readonly Name: LayerName | null;
 	/** Specify a body type to override the asset with. */
 	readonly StyleOverride?: string [];
 	readonly CreateLayerTypesOverride?: number [];
 	/** Specify a list of CLT asset layers to override. */
 	readonly AllowColorize: boolean;
 	/** if not null, specifies that this layer should always copy the color of the named layer */
-	readonly CopyLayerColor: string | null;
+	readonly CopyLayerColor: LayerName | null;
 	/** specifies the name of a color group that this layer belongs to. Any layers within the same color group can be colored together via the item color UI */
 	readonly ColorGroup: string | null;
 	/** whether or not this layer can be colored in the coloring UI */
@@ -1277,12 +1291,12 @@ interface Asset {
 	readonly SupportedStyles?: string[];
 	readonly CreateLayerTypesOverride?: number[];
 	readonly DrawOffset?: {
-        Group?: AssetGroupName;
-        Asset?: string;
-        Layer?: string[];
-        X?: number;
-        Y?: number;
-    }[];
+				Group?: AssetGroupName;
+				Asset?: string;
+				Layer?: string[];
+				X?: number;
+				Y?: number;
+		}[];
 	/** @deprecated - Superceded by {@link Asset.PoseMapping} */
 	readonly AllowPose?: never;
 	/** @deprecated - Superceded by {@link Asset.PoseMapping} */
@@ -1597,7 +1611,7 @@ type ScreenUnloadHandler = VoidHandler;
 type ScreenDrawHandler = VoidHandler;
 type ScreenRunHandler = (time: number) => void;
 type ScreenResizeHandler = (load: boolean) => void;
-type ScreenExitHandler = VoidHandler;
+type ScreenExitHandler = VoidHandler | (() => Promise<void>);
 
 interface ScreenFunctions {
 	// Required
@@ -1972,7 +1986,7 @@ interface Character {
 	get Position(): ChatRoomMapPos | null;
 	set Position({ X, Y }: ChatRoomMapPos);
 	IsBirthday: () => boolean;
-    IsSiblingOfCharacter: (C: Character) => boolean;
+		IsSiblingOfCharacter: (C: Character) => boolean;
 	IsFamilyOfPlayer: () => boolean;
 	IsInFamilyOfMemberNumber: (MemberNum: number) => boolean;
 	IsOnline: () => this is Character;
@@ -2455,7 +2469,6 @@ interface PlayerOnlineSettings {
 	AutoBanBlackList: boolean;
 	AutoBanGhostList: boolean;
 	DisableAnimations: boolean;
-	SearchShowsFullRooms: boolean;
 	SearchFriendsFirst: boolean;
 	SendStatus: boolean;
 	ShowStatus: boolean;
@@ -2463,6 +2476,10 @@ interface PlayerOnlineSettings {
 	ShowRoomCustomization: 0 | 1 | 2 | 3; // 0 - Never, 1 - No by default, 2 - Yes by default, 3 - Always
 	FriendListAutoRefresh: boolean;
 	DefaultChatRoomBackground: string;
+	/**
+	 * @deprecated
+	 */
+	SearchShowsFullRooms: never;
 }
 
 /** Pandora Player extension */
@@ -3415,9 +3432,24 @@ interface ItemPropertiesCustom {
 
 	/** PortalLink: Used to link a remote to its target asset. */
 	PortalLinkCode?: string;
+
+	/** Override the top-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually. */
+	DrawingTop?: TopLeft.ItemData;
+
+	/** Override the left-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually. */
+	DrawingLeft?: TopLeft.ItemData;
 }
 
 interface ItemProperties extends ItemPropertiesBase, AssetDefinitionProperties, ItemPropertiesCustom { }
+
+/** Base type for unparsed extended item properties */
+interface ItemPropertiesConfig extends Omit<ItemProperties, "DrawingTop" | "DrawingLeft"> {
+	/** Override the top-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually. */
+	DrawingTop?: TopLeft.ItemDefinition;
+
+	/** Override the left-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually. */
+	DrawingLeft?: TopLeft.ItemDefinition;
+}
 
 /** All item/asset/group properties with all array-based values removed */
 declare namespace PropertiesNoArray {
@@ -4700,6 +4732,8 @@ interface PreferenceExtensionsSettingItem {
 	 * will be called afterward. And the setting screen for the extension will be closed.
 	 */
 	exit: () => boolean | void;
+
+	resize?: (onLoad: boolean) => void;
 }
 
 /** Preference Menu info for extensions settings*/
@@ -4707,6 +4741,18 @@ type PreferenceExtensionsMenuButtonInfo = {
 	Button: string;
 	Image?: string;
 	click: () => void;
+}
+
+interface PreferenceChatDropdownOption {
+	list: string[];
+	current: () => string;
+	onChange: (value: string) => void;
+}
+
+interface PreferenceChatCheckboxOption {
+	label: string,
+	check: () => boolean,
+	click: () => void
 }
 
 // #end region
@@ -4718,12 +4764,12 @@ type WheelFortuneColor = "Blue" | "Gold" | "Gray" | "Green" | "Orange" | "Purple
 
 /** Base type for fortune wheel options */
 interface WheelFortuneOptionType {
-    /** A single-character UTF16 string with the option's ID */
-    ID: string;
-    /** The color of the option button */
-    Color: WheelFortuneColor;
-    /** An optional script that will be executed whenever the option is picked */
-    Script?: () => void;
+		/** A single-character UTF16 string with the option's ID */
+		ID: string;
+		/** The color of the option button */
+		Color: WheelFortuneColor;
+		/** An optional script that will be executed whenever the option is picked */
+		Script?: () => void;
 }
 
 // #end region
@@ -4844,43 +4890,43 @@ interface ClubCardPlayer {
 interface ClubCardMessage {
 	TextGetKey: string;         // Localization key
 	MessageText?: string;		// Message Text
-    MessageType: string;        // Type of message (e.g., ACTION, SYSTEM, IMMEDIATE)
-    PlayerId: string;           // ID of the player who triggered the message
-    TurnCounter: number;        // Turn number when the message was created
-    Placeholders: {             // Dynamic data for text replacement
-        [key: string]: string | number;
+		MessageType: string;        // Type of message (e.g., ACTION, SYSTEM, IMMEDIATE)
+		PlayerId: string;           // ID of the player who triggered the message
+		TurnCounter: number;        // Turn number when the message was created
+		Placeholders: {             // Dynamic data for text replacement
+				[key: string]: string | number;
 	};
 	PlayerName?: string;
-    SourcePlayer?: string;
-    OpponentPlayer?: string;
+		SourcePlayer?: string;
+		OpponentPlayer?: string;
 }
 
 /**
  * Represents an active card animation in progress.
  */
 interface ClubCardActiveAnimation {
-    /** The card being animated. */
-    Card: ClubCard;
-    /** The original card (if a copy is animated). */
-    OriginalCard?: ClubCard | null;
-    /** Timestamp when the animation started (in milliseconds). */
-    StartTime: number;
-    /** Total animation duration in milliseconds. */
-    Duration: number;
-    /** Initial position of the card. */
-    StartPosition: { x: number, y: number, w: number };
-    /** Target position of the card. */
-    EndPosition: { x: number, y: number, w: number };
-    /** Whether to hide the original card during animation. */
-    HideOriginal: boolean;
-    /** Whether the original card should stay hidden after animation completes. */
-    KeepOriginalHidden: boolean;
-    /** Timeout ID for fallback handling (used to restore the card state in case of failure). */
-    SafetyTimeout: number;
-    /** Callback function called when the animation completes. */
-    OnComplete?: Function|null;
-    // Processed elsewhere
-    // /** Callback function called when the animation starts. */
+		/** The card being animated. */
+		Card: ClubCard;
+		/** The original card (if a copy is animated). */
+		OriginalCard?: ClubCard | null;
+		/** Timestamp when the animation started (in milliseconds). */
+		StartTime: number;
+		/** Total animation duration in milliseconds. */
+		Duration: number;
+		/** Initial position of the card. */
+		StartPosition: { x: number, y: number, w: number };
+		/** Target position of the card. */
+		EndPosition: { x: number, y: number, w: number };
+		/** Whether to hide the original card during animation. */
+		HideOriginal: boolean;
+		/** Whether the original card should stay hidden after animation completes. */
+		KeepOriginalHidden: boolean;
+		/** Timeout ID for fallback handling (used to restore the card state in case of failure). */
+		SafetyTimeout: number;
+		/** Callback function called when the animation completes. */
+		OnComplete?: Function|null;
+		// Processed elsewhere
+		// /** Callback function called when the animation starts. */
 	// OnStart?: Function|null;
 	/** Animation rendering level priority*/
 	Priority: number;
@@ -4931,7 +4977,6 @@ interface ChatRoomView extends Pick<ScreenFunctions, "Run" | "MouseDown" | "Mous
 	Deactivate?: () => void;
 	Draw: () => void;
 	DrawUi: () => void;
-	DisplayMessage: (data: ServerChatRoomMessage, msg: string, SenderCharacter: Character, metadata: IChatRoomMessageMetadata) => string|null;
 	SyncRoomProperties?: (data: ServerChatRoomSyncMessage) => void;
 	CanStartWhisper?: (C: Character) => boolean;
 	CanLeave?: () => boolean;

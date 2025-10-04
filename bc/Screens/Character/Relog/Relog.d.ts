@@ -14,6 +14,10 @@ declare function RelogRun(): void;
  */
 declare function RelogClick(): void;
 declare function RelogKeyDown(event: KeyboardEvent): boolean;
+/**
+ * Sends the player back to the main login screen
+ * @type {ScreenExitHandler}
+ */
 declare function RelogExit(): void;
 declare function RelogResize(): void;
 /** @type {null | RelogData} */

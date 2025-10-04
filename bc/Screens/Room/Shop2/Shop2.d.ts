@@ -5,6 +5,7 @@ declare function Shop2Run(time: number): void;
 declare function Shop2Resize(load: boolean): void;
 declare function Shop2Unload(): void;
 declare function Shop2MouseWheel(event: WheelEvent): void;
+/** @type {ScreenExitHandler} */
 declare function Shop2Exit(): void;
 declare var Shop2Background: string;
 declare namespace ShopDropdownState {

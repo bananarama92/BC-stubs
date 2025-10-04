@@ -65,6 +65,10 @@ declare function OnlineGameCharacterInChatRoom(MemberNumber: number): boolean;
  * @returns {void} - Nothing
  */
 declare function OnlineGameDrawCharacter(C: Character, X: number, Y: number, Zoom: number): void;
+/**
+ * Returns whether the room's current game has a specific option screen
+ */
+declare function OnlineGameHasOptions(): boolean;
 /** @type {null | string[][]} */
 declare let OnlineGameDictionary: null | string[][];
 /** @type { ()=>void | undefined } */

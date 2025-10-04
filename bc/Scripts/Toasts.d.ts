@@ -64,6 +64,13 @@ declare var ToastManager: {
      */
     dismissByType(type: Toasts.Type): void;
     /**
+     * Kicks out all toasts of a category.
+     *
+     * @param {string} category - The type of toasts to dismiss (e.g., 'info', 'error').
+     * @returns {void}
+     */
+    dismissByCategory(category: string): void;
+    /**
      * Enqueues a new toast to be displayed with the given options.
      * Fills in any missing option fields with default values, then
      * attempts to process the queue to show toasts if slots are available.

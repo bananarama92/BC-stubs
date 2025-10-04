@@ -19,3 +19,23 @@ declare function PreferenceSubscreenSecurityClick(): void;
  */
 declare function PreferenceSubscreenSecurityExit(): boolean;
 declare function PreferenceSubscreenSecurityUnload(): void;
+declare function PreferenceSubscreenSecurityResize(): void;
+/**
+ * Updates the placeholder of the "New Email" input based on the result of an email update operation.
+ * @param {ServerAccountQueryEmailStatus} data - Server response containing the result of the email update.
+ * @returns {void}
+ */
+declare function SecurityEmailUpdate(data: ServerAccountQueryEmailStatus): void;
+/**
+ * Updates the email input placeholder based on whether an email is linked to the account.
+ * @param {ServerAccountQueryEmailStatus} data - Server response containing the email status.
+ * @returns {void}
+ */
+declare function SecurityEmailStatus(data: ServerAccountQueryEmailStatus): void;
+declare const PreferenceSubscreenSecurityIDs: Readonly<{
+    grid: "preference-security-grid";
+    emailOld: "InputEmailOld";
+    emailNew: "InputEmailNew";
+    hint: "preference-security-hint";
+    update: "preference-security-update-button";
+}>;

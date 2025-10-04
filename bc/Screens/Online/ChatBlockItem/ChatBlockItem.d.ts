@@ -9,6 +9,10 @@ declare function ChatBlockItemRun(): void;
  * @returns {void} - Nothing
  */
 declare function ChatBlockItemClick(): void;
+/**
+ * Handles exiting from the screen
+ * @type {ScreenExitHandler}
+ */
 declare function ChatBlockItemExit(): void;
 declare var ChatBlockItemBackground: string;
 /** @type {ServerChatRoomBlockCategory[]} */
@@ -18,3 +22,5 @@ declare var ChatBlockItemCategory: ServerChatRoomBlockCategory[];
 declare var ChatBlockItemEditable: boolean;
 /** @type {ScreenSpecifier | null} */
 declare var ChatBlockItemReturnScreen: ScreenSpecifier | null;
+/** @type {CommonGenerateGridParameters} */
+declare let ChatBlockListGridParams: CommonGenerateGridParameters;

@@ -36,6 +36,10 @@ declare function TitleRun(): void;
  * @returns {void} - Nothing
  */
 declare function TitleClick(): void;
+/**
+ * Exits the title selection screen and brings the player back to the InformationSheet
+ * @type {ScreenExitHandler}
+ */
 declare function TitleExit(): void;
 declare var TitleBackground: string;
 /** @type {{ Name: TitleName; Requirement: () => boolean; Earned?: boolean, Force?: boolean }[]} */

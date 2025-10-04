@@ -1,3 +1,11 @@
+/**
+ * Starts the chatroom selection screen.
+ * @param {ServerChatRoomSpace} space - Name of the chatroom space
+ * @param {ScreenSpecifier | undefined} returnScreen - Screen to go back to when exiting leaving the lobby.
+ * @param {ChatSearchLobbyOptions} [options]
+ * @returns {void} - Nothing.
+ */
+declare function ChatSearchStart(space: ServerChatRoomSpace, returnScreen: ScreenSpecifier | undefined, options?: ChatSearchLobbyOptions): void;
 declare function ChatSearchLoad(): Promise<void>;
 declare function ChatSearchResize(load: boolean): void;
 declare function ChatSearchUnload(): void;
@@ -9,6 +17,11 @@ declare function ChatSearchClick(event: MouseEvent | TouchEvent): void;
  * @returns {void} - Nothing
  */
 declare function ChatSearchRoomSpaceSelectDraw(): void;
+/**
+ * Returns the rooms to be displayed
+ * @returns {ChatRoomSearchResult[]}
+ */
+declare function ChatSearchGetRooms(): ChatRoomSearchResult[];
 /**
  * Gets the pagination information for the current page.
  * @returns {{currentPage: number, total: number}}
@@ -29,6 +42,7 @@ declare function ChatSearchSetPage(page: number): void;
 declare function ChatSearchSetPageRelative(offset: number): void;
 /**
  * Handles clicks on selection of room space.
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function ChatSearchRoomSpaceSelectClick(): void;
@@ -47,6 +61,7 @@ declare function ChatSearchSaveLanguageAndFilterTerms(): void;
  */
 declare function ChatSearchLoadLanguageAndFilterTerms(): void;
 declare function ChatSearchKeyDown(event: KeyboardEvent): boolean;
+declare function ChatSearchKeyDownListener(this: HTMLInputElement, ev: KeyboardEvent): void;
 /**
  * Handles exiting from the chat search screen, removes the input.
  * @type {ScreenExitHandler & { closeSubElements?: boolean }}
@@ -60,10 +75,20 @@ declare function ChatSearchBack(): boolean;
  */
 declare function ChatSearchFilterHelpDraw(): void;
 /**
+ * @deprecated
  * Draws the filter mode unhide confirm screen: just text and confirm/cancel buttons.
  * @returns {void} - Nothing
  */
 declare function ChatSearchFilterUnhideConfirmDraw(): void;
+/**
+ * Creates the filter mode unhide confirm screen: just text and confirm/cancel buttons.
+ * @param {string} roomLabel
+ * @param {string} memberLabel
+ * @param {string} wordsLabel
+ * @param {ChatRoomSearchResult} room
+ * @returns {void} - Nothing
+ */
+declare function ChatSearchCreateFilterUnhideConfirm(roomLabel: string, memberLabel: string, wordsLabel: string, room: ChatRoomSearchResult): void;
 /**
  * Returns the translated language name for the given code.
  * @param {ServerChatRoomLanguage} languageCode
@@ -155,17 +180,18 @@ declare function ChatSearchToggleSearchMode(): void;
  */
 declare function ChatSearchToggleHiddenMode(): void;
 /**
+ * @deprecated
  * Switch to the Filter Help view or back again.
  * Correctly handles adding/removing the input box as needed.
  * @returns {void} - Nothing
  */
 declare function ChatSearchToggleHelpMode(): void;
 /**
+ * @deprecated
  * Adds/removes event listeners to the input box when entering/exiting filter view.
- * @param {boolean} add - true to add listeners, false to remove.
  * @returns {void} - Nothing
  */
-declare function ChatSearchSetFilterChangeHandler(add: boolean): void;
+declare function ChatSearchSetFilterChangeHandler(): void;
 /**
  * Handles the input box being changed in any way, while in filter view.
  * Makes sure the "temp" filter terms variable is kept updated, so the apply/revert buttons will appear/disappear at the correct times.
@@ -228,9 +254,10 @@ declare function ChatSearchResultResponse(data: ServerChatRoomSearchResultRespon
 declare function ChatSearchAutoJoinRoom(): void;
 /**
  * Sends the search query data to the server. The response will be handled by ChatSearchResponse once it is received
+ * @param {string} Query - The search term to look for
  * @returns {void} - Nothing
  */
-declare function ChatSearchQuery(): void;
+declare function ChatSearchQuery(Query: string): void;
 /**
  * Sorts the room result based on a player's settings
  * @returns {void} - Nothing
@@ -268,6 +295,12 @@ declare function ChatSearchMatchesTerms(Room: {
  * @returns {number} - Starting offset for ingored rooms
  */
 declare function ChatSearchCalculateIgnoredRoomsOffset(shownRooms: number): number;
+/**
+ * Return the space we're currently in.
+ * Note that it will look at both the current room's, and if we're not in one, the current lobby
+ * @returns {ServerChatRoomSpace | null}
+ */
+declare function ChatSearchGetSpace(): ServerChatRoomSpace | null;
 /**
  * @file This file handles the chat lobby search & filter screen
  */
@@ -313,7 +346,8 @@ declare var ChatSearchTempHiddenRooms: number[];
 declare var ChatSearchMode: "" | "Filter";
 declare var ChatSearchGhostPlayerOnClickActive: boolean;
 declare var ChatSearchShowHiddenRoomsActive: boolean;
-declare var ChatSearchFilterHelpActive: boolean;
+/** @deprecated */
+declare var ChatSearchFilterHelpActive: any;
 /** @type {null | { Index: number, RoomLabel: string, MemberLabel: string, WordsLabel: string }} */
 declare var ChatSearchFilterUnhideConfirm: null | {
     Index: number;
@@ -322,12 +356,21 @@ declare var ChatSearchFilterUnhideConfirm: null | {
     WordsLabel: string;
 };
 declare var ChatSearchRejoinIncrement: number;
-/** @type {null | RoomName} */
-declare var ChatSearchReturnToScreen: null | RoomName;
+/**
+ * @deprecated
+ * @type {never}
+ */
+declare var ChatSearchReturnToScreen: never;
+/** @type {string} */
+declare var ChatSearchQueryString: string;
 /** @type {"" | ServerChatRoomLanguage} */
 declare var ChatSearchLanguage: "" | ServerChatRoomLanguage;
-/** @type {"" | ServerChatRoomLanguage} */
-declare var ChatSearchLanguageTemp: "" | ServerChatRoomLanguage;
+/** @type {never} */
+declare var ChatSearchLanguageTemp: never;
+/** @type {ServerChatRoomGame} */
+declare var ChatSearchGame: ServerChatRoomGame;
+/** @type {ServerChatRoomSpace | null} */
+declare var ChatSearchSpace: ServerChatRoomSpace | null;
 declare var ChatSearchFilterTermsTemp: string;
 /** @type {ChatRoomSpaceLabel[]} */
 declare var ChatSearchRoomSpaces: ChatRoomSpaceLabel[];
@@ -346,4 +389,8 @@ declare var ChatSearchDialogElement: HTMLDialogElement | null;
 declare var ChatSearchSearchMenuButton: HTMLButtonElement;
 /** @type {HTMLDivElement} */
 declare var ChatSearchSearchBodyElement: HTMLDivElement;
+/** @type {HTMLDialogElement | null} */
+declare var ChatSearchFilterUnhideConfirmElement: HTMLDialogElement | null;
+/** @type {HTMLDialogElement} */
+declare var ChatSearchFilterHelpScreenElement: HTMLDialogElement;
 declare function ChatSearchUpdateSearchSettings(): void;

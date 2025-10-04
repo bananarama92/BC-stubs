@@ -1117,6 +1117,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
     Draw(): void;
     Run(time: number): void;
     Resize(load: boolean): void;
+    /** @type {ScreenExitHandler} */
     Exit(): void;
     KeyDown(event: KeyboardEvent): boolean;
     /**

@@ -318,6 +318,11 @@ declare function ElementSetSize(elementOrId: ElementHelp.ElementOrId, width?: nu
  * @param {number | 'auto'} targetFontSize
  */
 declare function ElementSetFontSize(elementOrId: ElementHelp.ElementOrId, targetFontSize?: number | "auto"): void;
+/**
+ * Given an HTML element, reduce its font size until it fully fits into its visual width
+ * @param {HTMLElement} el
+ */
+declare function ElementFitText(el: HTMLElement): void;
 declare function ElementGenerateID(): string;
 /** @satisfies {ElementNoParent} */
 declare const ElementNoParent: 0;
@@ -371,6 +376,8 @@ declare namespace ElementButton {
         top: "button-label-top";
         center: "button-label-center";
         bottom: "button-label-bottom";
+        left: "button-label-left";
+        right: "button-label-right";
     }>;
     let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
     let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
@@ -407,11 +414,11 @@ declare namespace ElementButton {
      * @private
      * @param {string} id
      * @param {ElementButton.StaticNode} [label]
-     * @param {"top" | "center" | "bottom"} [position]
+     * @param {"top" | "center" | "bottom" | "left" | "right"} [position]
      * @param {Omit<HTMLOptions<"span">, "tag">} [options]
-     * @returns {HTMLSpanElement}
+     * @returns {null | HTMLSpanElement}
      */
-    function _ParseLabel(id: string, label?: ElementButton.StaticNode, position?: "top" | "center" | "bottom", options?: Omit<HTMLOptions<"span">, "tag">): HTMLSpanElement;
+    function _ParseLabel(id: string, label?: ElementButton.StaticNode, position?: "top" | "center" | "bottom" | "left" | "right", options?: Omit<HTMLOptions<"span">, "tag">): null | HTMLSpanElement;
     /**
      * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
      * @param {string} id - The ID of the parent element
@@ -525,13 +532,27 @@ declare namespace ElementCheckbox {
     function _pointerdown(this: HTMLInputElement, ev: PointerEvent): void;
     function _pointerup(this: Document | ShadowRoot, ev: PointerEvent): void;
     /**
-     * Construct an return a DOM checkbox element (`<input type="checkbox">`)
+     * Construct and return a DOM checkbox element (`<input type="checkbox">`)
      * @param {null | string} id - The ID of the element, or `null` if one must be assigned automatically
      * @param {null | ((this: HTMLInputElement, ev: Event) => any)} onChange - The change event listener to-be fired upon checkbox clicks
      * @param {null | ElementCheckbox.Options} options - High level options for the to-be created checkbox
      * @param {null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
      */
     function Create(id?: null | string, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.Options, htmlOptions?: null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
+    /**
+     * Construct and return a DOM pair of checkbox and label elements
+     * @example
+     * <label class="checkbox-pair">
+     *   <input type="checkbox" id="checkbox" class="checkbox">
+     *   <span id="checkbox-label" for="checkbox">Label</label>
+     * </div>
+     * @param {null | string} id - The ID of the element, or `null` if one must be assigned automatically
+     * @param {string | Node | HTMLOptions<keyof HTMLElementTagNameMap>} label - The label of the checkbox
+     * @param {null | ((this: HTMLInputElement, ev: Event) => any)} onChange - The change event listener to-be fired upon checkbox clicks
+     * @param {null | ElementCheckbox.LabelOptions} options - High level options for the to-be created checkbox
+     * @param {null | Partial<Record<"checkbox" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     */
+    function CreateLabelled(id: null | string, label: string | Node | HTMLOptions<keyof HTMLElementTagNameMap>, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.LabelOptions, htmlOptions?: null | Partial<Record<"checkbox" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
 }
 declare namespace ElementSwipe {
     /**

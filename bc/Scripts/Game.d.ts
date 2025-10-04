@@ -19,8 +19,8 @@ declare function GameRunBackground(Timestamp: number): void;
  * When the user presses a key, we send the KeyDown event to the current screen if it can accept it
  * @param {KeyboardEvent} event
  */
-declare function GameKeyDown(event: KeyboardEvent): boolean;
-declare function GameKeyUp(event: any): void;
+declare function GameKeyDown(event: KeyboardEvent): Promise<boolean>;
+declare function GameKeyUp(event: KeyboardEvent): boolean;
 /**
  * If the user presses the mouse button, we fire the mousedown event for other screens
  * @param {MouseEvent} event

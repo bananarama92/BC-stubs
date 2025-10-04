@@ -29,6 +29,10 @@ declare function InfiltrationPerksRun(): void;
  * @returns {void} - Nothing
  */
 declare function InfiltrationPerksClick(): void;
+/**
+ * Updates the infiltration data for the player
+ * @type {ScreenExitHandler}
+ */
 declare function InfiltrationPerksExit(): void;
 declare var InfiltrationPerksBackground: string;
 declare var InfiltrationPerksList: string[];
