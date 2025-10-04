@@ -15,6 +15,7 @@ declare function PreferenceSubscreenAudioClick(): void;
  */
 declare function PreferenceSubscreenAudioExit(): boolean;
 declare function PreferenceSubscreenAudioUnload(): void;
-declare var PreferenceSettingsVolumeList: number[];
-declare var PreferenceSettingsVolumeIndex: number;
-declare var PreferenceSettingsMusicVolumeIndex: number;
+declare function PreferenceSubscreenAudioResize(onLoad: any): void;
+declare namespace PreferenceSubscreenAudioIDs {
+    let grid: string;
+}

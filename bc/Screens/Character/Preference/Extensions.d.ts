@@ -13,19 +13,29 @@ declare function PreferenceSubscreenExtensionsRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenExtensionsClick(): void;
-declare function PreferenceSubscreenExtensionsExit(): boolean;
+declare function PreferenceSubscreenExtensionsExit(): Promise<boolean>;
 /**
  * Exit the preference subscreen for extensions, should be called when
  * leaving custom menu of extensions if the extension exits the menu from itself.
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function PreferenceSubscreenExtensionsClear(): void;
+declare function PreferenceSubscreenExtensionsClear(): Promise<void>;
 /**
  * Unloads the preference subscreen for extensions
  * Cleans up the current extension, and reset the current extension to null
  */
 declare function PreferenceSubscreenExtensionsUnload(): void;
+declare function PreferenceSubscreenExtensionsResize(onLoad: any): void;
+/**
+ * @param {string} screenIdentifier
+ * @param {ScreenSpecifier} returnScreen
+ */
+declare function PreferenceSubscreenExtensionsOpen(screenIdentifier: string, returnScreen: ScreenSpecifier): Promise<void>;
 /** @type {PreferenceExtensionsMenuButtonInfo[]} */
 declare let PreferenceExtensionsDisplay: PreferenceExtensionsMenuButtonInfo[];
 /** @type {PreferenceExtensionsSettingItem | null}*/
 declare let PreferenceExtensionsCurrent: PreferenceExtensionsSettingItem | null;
+declare const PreferenceExtensionsIDs: Readonly<{
+    grid: "preference-extensions-grid";
+    noExtensionLabel: "preference-no-extensions-label";
+}>;

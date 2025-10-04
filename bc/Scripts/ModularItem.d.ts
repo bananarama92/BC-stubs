@@ -146,6 +146,13 @@ declare function ModularItemSanitizeProperties(Property: ItemProperties, mergedP
  */
 declare function ModularItemMergeOverrideHeight(currentValue: AssetOverrideHeight, newValue: AssetOverrideHeight): AssetOverrideHeight | undefined;
 /**
+ * @param {undefined | TopLeft.ItemData} currentValue
+ * @param {TopLeft.ItemData} newValue
+ * @param {Set<LayerName>} layerNames
+ * @returns {undefined | TopLeft.ItemData}
+ */
+declare function ModularItemMergeDrawingTopLeft(currentValue: undefined | TopLeft.ItemData, newValue: TopLeft.ItemData, layerNames: Set<LayerName>): undefined | TopLeft.ItemData;
+/**
  * Sets a modular item's type based on a change in a module's option selection.
  * @param {ModularItemModule} module - The module that changed
  * @param {number} index - The index of the newly chosen option within the module

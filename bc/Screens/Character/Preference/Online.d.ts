@@ -10,7 +10,20 @@ declare function PreferenceSubscreenOnlineRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenOnlineClick(): void;
+declare function PreferenceSubscreenOnlineResize(): void;
 /** @type {null | string[]} */
 declare var PreferenceOnlineDefaultBackgroundList: null | string[];
 declare var PreferenceOnlineDefaultBackgroundIndex: number;
 declare var PreferenceOnlineDefaultBackground: string;
+/** @type {{label: string, check: () => boolean, click: () => void}[]} */
+declare const PreferenceSubscreenOnlineCheckboxes: {
+    label: string;
+    check: () => boolean;
+    click: () => void;
+}[];
+declare const PreferenceSubscreenOnlineIDs: Readonly<{
+    grid: "preference-online-grid";
+    grid2: "preference-online-grid2";
+    subtitle: "preference-online-subtitle";
+    selection: "preference-online-selection-button";
+}>;

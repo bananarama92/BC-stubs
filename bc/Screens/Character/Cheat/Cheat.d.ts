@@ -36,6 +36,10 @@ declare function CheatRun(): void;
  * @returns {void} - Nothing
  */
 declare function CheatClick(): void;
+/**
+ * Handles exiting the cheat screen by saving the cheats and going back to the login screen.
+ * @type {ScreenExitHandler}
+ */
 declare function CheatExit(): void;
 declare var CheatBackground: string;
 declare var CheatAllow: boolean;

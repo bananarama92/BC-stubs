@@ -14,25 +14,19 @@ declare function PreferenceSubscreenChatClick(): void;
  * Exits the preference screen
  */
 declare function PreferenceSubscreenChatExit(): boolean;
+declare function PreferenceSubscreenChatResize(onLoad: any): void;
 /** @type {ChatColorThemeType[]} */
 declare var PreferenceChatColorThemeList: ChatColorThemeType[];
-declare var PreferenceChatColorThemeIndex: number;
 /** @type {ChatEnterLeaveType[]} */
 declare var PreferenceChatEnterLeaveList: ChatEnterLeaveType[];
-declare var PreferenceChatEnterLeaveIndex: number;
 /** @type {ChatMemberNumbersType[]} */
 declare var PreferenceChatMemberNumbersList: ChatMemberNumbersType[];
-declare var PreferenceChatMemberNumbersIndex: number;
 /** @type {ChatFontSizeType[]} */
 declare var PreferenceChatFontSizeList: ChatFontSizeType[];
-declare var PreferenceChatFontSizeIndex: number;
-declare var PreferenceChatPageIndex: number;
-declare var PreferenceChatPageList: number[];
-/** @type {{label: string, check: () => boolean, click: () => void}[]} */
-declare const PreferenceSubscreenChatCheckboxes: {
-    label: string;
-    check: () => boolean;
-    click: () => void;
-}[];
-/** @type {CommonGenerateGridParameters} */
-declare const PreferenceSubscreenChatCheckboxGrid: CommonGenerateGridParameters;
+/** @type {PreferenceChatCheckboxOption[]} */
+declare const PreferenceSubscreenChatCheckboxes: PreferenceChatCheckboxOption[];
+/** @type {Record<string, PreferenceChatDropdownOption>} */
+declare const PreferenceSubscreenChatDropdowns: Record<string, PreferenceChatDropdownOption>;
+declare const PreferenceSubscreenChatIDs: Readonly<{
+    grid: "preference-chat-grid";
+}>;

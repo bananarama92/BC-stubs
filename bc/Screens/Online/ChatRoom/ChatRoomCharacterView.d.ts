@@ -8,15 +8,6 @@ declare function ChatRoomCharacterViewIsActive(): boolean;
  */
 declare function ChatRoomCharacterViewRun(): void;
 /**
- * Alter the received message to what will be displayed in the chat log
- * @param {ServerChatRoomMessage} data
- * @param {string} msg
- * @param {Character} SenderCharacter
- * @param {IChatRoomMessageMetadata} metadata
- * @returns {string|null} - The string to display or null if the message should be hidden
- */
-declare function ChatRoomCharacterViewDisplayMessage(data: ServerChatRoomMessage, msg: string, SenderCharacter: Character, metadata: IChatRoomMessageMetadata): string | null;
-/**
  * Handles clicks the chatroom screen view.
  * @returns {void} - Nothing.
  */
@@ -89,16 +80,19 @@ declare var ChatRoomCharacterViewSlideWeight: number;
 declare var ChatRoomCharacterViewX_Upper: number;
 declare var ChatRoomCharacterViewX_Lower: number;
 declare var ChatRoomCharacterViewZoom: number;
+/** @type {number} */
 declare var ChatRoomCharacterViewCharacterCount: number;
+/** @type {number} */
 declare var ChatRoomCharacterViewCharacterCountTotal: number;
 /** @type {null | number} */
 declare var ChatRoomCharacterViewMoveTarget: null | number;
+/** @type {number} */
 declare var ChatRoomCharacterViewOffset: number;
 declare const ChatRoomCharacterViewWidth: number;
 declare const ChatRoomCharacterViewHeight: 1000;
 declare const ChatRoomCharacterViewCharactersPerRow: 5;
 /**
  * The name of the chat room character view.
- * @type {string}
+ * @type {"Character"}
  */
-declare const ChatRoomCharacterViewName: string;
+declare const ChatRoomCharacterViewName: "Character";

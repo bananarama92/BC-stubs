@@ -6,6 +6,9 @@ declare function ServerInit(): void;
  * @param {string} [errorMessage] - the error message to display if not connected
  */
 declare function ServerSetConnected(connected: boolean, errorMessage?: string): void;
+/**
+ * Returns whether the player has successfully logged into the game
+ */
 declare function ServerIsLoggedIn(): boolean;
 /**
  * Callback when receiving a "connect" event on the socket - this will be called on initial connection and on
@@ -34,6 +37,11 @@ declare function ServerInfo(data: {
  * @returns {void} - Nothing
  */
 declare function ServerDisconnect(data?: ServerForceDisconnectMessage, close?: boolean): void;
+/**
+ * Handles resuming the game after a disconnect
+ * @param {ServerAccountData} C
+ */
+declare function ServerHandleRelog(C: ServerAccountData): boolean;
 /**
  * Returns whether the player is currently in a chatroom or viewing a subscreen while in a chatroom
  * @returns {boolean} - True if in a chatroom
@@ -274,6 +282,16 @@ declare var ServerAccountResetNumberRegex: RegExp;
 declare var ServerCharacterNameRegex: RegExp;
 declare var ServerCharacterNicknameRegex: RegExp;
 declare var ServerChatMessageMaxLength: number;
+declare var ServerChatRoomDescriptionMaxLength: number;
+/**
+ * A promise that resolves upon an account logging in.
+ *
+ * Note that you will have to also wait for the DOMContentLoaded event, to ensure the game engine
+ * itself has finished initializing.
+ * See {@link ServerIsLoggedIn} for the synchronous `boolean`-based variant of this variable.
+ * @type {Promise<void>}
+ */
+declare var ServerIsLoggedInPromise: Promise<void>;
 declare const ServerScriptMessage: string;
 declare const ServerScriptWarningStyle: string;
 /** @readonly */
@@ -299,6 +317,11 @@ declare var ServerAccountUpdate: {
      */
     QueueData(Data: ServerAccountUpdateRequest, Force?: boolean): void;
 };
+/**
+ * @private Use the {@link ServerIsLoggedIn} function instead.
+ * @type {boolean}
+ */
+declare let ServerIsLoggedIn_: boolean;
 declare namespace ServerPlayerChatRoom {
     let callbacks: ((screen: string) => boolean)[];
     /**
@@ -364,12 +387,12 @@ declare namespace ServerAccountDataSyncedValidate {
     };
     function Crafting(arg: string, C: Character): CraftingItem[];
     function Game(arg: Partial<CharacterGameParameters>, C: Character): {
-        LARP: Record<string, unknown>;
-        MagicBattle: GameMagicBattleParameters & Record<string, unknown>;
-        GGTS: GameGGTSParameters & Record<string, unknown>;
-        Poker: Record<string, unknown>;
-        ClubCard: GameClubCardParameters & Record<string, unknown>;
-        Prison: Record<string, unknown>;
+        LARP: GameLARPParameters;
+        MagicBattle: GameMagicBattleParameters;
+        GGTS: GameGGTSParameters;
+        Poker: GamePokerParameters;
+        ClubCard: GameClubCardParameters;
+        Prison: GamePrisonParameters;
     };
     function LabelColor(arg: string, C: Character): string;
     function Creation(arg: number, C: Character): number;

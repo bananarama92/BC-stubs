@@ -13,6 +13,13 @@ declare function AssetGroupAdd(Family: IAssetFamily, GroupDef: AssetGroupDefinit
  */
 declare function AssetParseTopLeft(value: undefined | TopLeft.Definition, fallback: number | TopLeft.Data): TopLeft.Data;
 /**
+ * Parse the passed item-left {@link ItemPropertiesConfig["DrawingTop"]} and DrawingLeft values
+ * @param {TopLeft.ItemDefinition} value
+ * @param {null | string} [propName] The name of the underlying property for the purpose of error reporting
+ * @returns {undefined | TopLeft.ItemData}
+ */
+declare function ItemParseTopLeft(value: TopLeft.ItemDefinition, propName?: null | string): undefined | TopLeft.ItemData;
+/**
  * Collects the group equivalence classes defined by the MirrorActivitiesFrom property into a map for easy access to
  * mirror group sets (i.e. all groups that are mirror activities from, or are mirrored by, each other).
  * @param {AssetGroup} group - The group to register
@@ -221,6 +228,8 @@ declare function AssetTextGet(msg: string): string;
  */
 declare function AssetInventoryIDValidate(): Promise<void>;
 declare function AssetLoadCheckActivities(): void;
+/** @type {AssetOverride} */
+declare const AssetOverride: AssetOverride;
 /** @type {Asset[]} */
 declare var Asset: Asset[];
 /** @type {AssetGroup[]} */

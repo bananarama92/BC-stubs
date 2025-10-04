@@ -69,5 +69,5 @@ declare var TimerLastCycleCall: number;
 declare var TimerLastArousalProgress: number;
 declare var TimerLastArousalProgressCount: number;
 declare var TimerLastArousalDecay: number;
-/** @type {Timer.CustomTimer[]} */
-declare var Timers: Timer.CustomTimer[];
+/** @type {Map<string, Timer.CustomTimer>} */
+declare var Timers: Map<string, Timer.CustomTimer>;

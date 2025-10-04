@@ -37,6 +37,10 @@ declare function ChatAdminClick(): void;
  */
 declare function ChatAdminCommit(): void;
 declare function ChatAdminKeyDown(event: KeyboardEvent): boolean;
+/**
+ * Handles exiting from the editor screen, removes the inputs and resets the state of the variables
+ * @type {ScreenExitHandler}
+ */
 declare function ChatAdminExit(): void;
 /**
  * Sends the chat room data packet to the server. The response will be handled by ChatAdminResponse once it is received

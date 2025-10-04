@@ -328,13 +328,19 @@ declare function ExtendedItemManualRegister(): void;
  */
 declare function ExtendedItemGetDrawData<MetaData extends ElementMetaData>(drawData: ExtendedItemConfigDrawData<Partial<MetaData>> | undefined, defaults: Pick<ExtendedItemDrawData<MetaData>, "elementData" | "itemsPerPage">): ExtendedItemDrawData<MetaData>;
 /**
+ * @param {Asset} asset
+ * @param {ItemPropertiesConfig} properties
+ * @returns {ItemProperties}
+ */
+declare function ExtendedItemParseProperties(asset: Asset, properties: ItemPropertiesConfig): ItemProperties;
+/**
  * Pre-process the passed extended item option and return a shallow copy.
- * @template {Pick<ExtendedItemOption, "Property" | "Prerequisite">} T
+ * @template {Pick<ExtendedItemOption, "Property" | "Prerequisite"> | Pick<ExtendedItemOptionConfig, "Property" | "Prerequisite">} T
  * @param {T} option The to-be processed extended item option
  * @param {Asset} asset
  * @returns {T}
  */
-declare function ExtendedItemParseOptions<T extends Pick<ExtendedItemOption, "Property" | "Prerequisite">>(option: T, asset: Asset): T;
+declare function ExtendedItemParseOptions<T extends Pick<ExtendedItemOption, "Property" | "Prerequisite"> | Pick<ExtendedItemOptionConfig, "Property" | "Prerequisite">>(option: T, asset: Asset): T;
 /**
  * Set an extended items properties based on the passed type record
  * @param {Character} C - The character in question

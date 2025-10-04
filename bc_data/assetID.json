@@ -248,7 +248,13 @@
             "SatinScarf": 33,
             "HoodedCloak": 34,
             "SideRuffles": 35,
-            "RuffledCollar": 36
+            "RuffledCollar": 36,
+            "FuzzyScarf": 37,
+            "LargeBeltClassic": 38,
+            "VampiricCloak": 39,
+            "WitchShawl": 40,
+            "XmasLongShawl": 41,
+            "XmasShortShawl": 42
         }
     },
     "ClothLower": {
@@ -306,7 +312,12 @@
             "MidLegSkirt": 49,
             "UtilityKilt": 50,
             "GymShorts": 51,
-            "RuffledMiniskirt": 52
+            "RuffledMiniskirt": 52,
+            "BaggyJeans": 53,
+            "MiniDenimHotPants": 54,
+            "OpenLeatherSkirt": 55,
+            "PVCHobbleSkirt": 56,
+            "YogaPants": 57
         }
     },
     "Corset": {
@@ -467,7 +478,11 @@
             "SunGlassesClear": 14,
             "VGlasses": 15,
             "Pincenez": 16,
-            "RoundSunglasses": 17
+            "RoundSunglasses": 17,
+            "HalfRimGlasses": 18,
+            "Monocle": 19,
+            "ShutterSunshades": 20,
+            "VintageSunglasses": 21
         }
     },
     "Gloves": {
@@ -1349,7 +1364,8 @@
             "HempRopeCuffs": 13,
             "FullMittens": 14,
             "LatexBondageMitts": 15,
-            "FoamMittens": 16
+            "FoamMittens": 16,
+            "BalletBootsMittens": 17
         }
     },
     "ItemHead": {
@@ -1456,7 +1472,8 @@
             "Balloon": 55,
             "Kigu2Hood": 56,
             "CreepyIronMask": 57,
-            "HalloIII": 58
+            "HalloIII": 58,
+            "TransparentLatexHood": 59
         }
     },
     "ItemLegs": {
@@ -1895,7 +1912,9 @@
             "SunCollar": 45,
             "AsylumCollar": 46,
             "ChainCollar": 47,
-            "MCuffCollar": 48
+            "MCuffCollar": 48,
+            "SSpikedCollar": 49,
+            "SteampunkCollar": 50
         }
     },
     "ItemNeckAccessories": {
@@ -2281,7 +2300,10 @@
             "AnimeGirlNecklace": 19,
             "SatinScarf": 20,
             "RosePendant": 21,
-            "RuffledCollar": 22
+            "RuffledCollar": 22,
+            "BeadNecklace": 23,
+            "EldritchNecklace": 24,
+            "PlantNecklace": 25
         }
     },
     "Nipples": {
@@ -2437,7 +2459,8 @@
             "HeellessHoof": 44,
             "HoofBoots": 45,
             "CombatBoots": 46,
-            "ZipperBBoots": 47
+            "ZipperBBoots": 47,
+            "PumpHighHeels": 48
         }
     },
     "Socks": {
@@ -2567,7 +2590,8 @@
             "Stockings3": 15,
             "Stockings4": 16,
             "LongFishnets": 17,
-            "RippedPantyhose": 18
+            "RippedPantyhose": 18,
+            "YogaPants": 19
         }
     },
     "TailStraps": {

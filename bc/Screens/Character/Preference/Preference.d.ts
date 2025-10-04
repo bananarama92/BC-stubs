@@ -16,16 +16,29 @@ declare function PreferenceRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceClick(): void;
-declare function PreferenceExit(): void;
+/**
+ * Is called when the player exits the preference screen. All settings of the preference screen are sent to the server.
+ * If the player is in a subscreen, they exit to the main preferences menu instead.
+ * @type {ScreenExitHandler}
+ */
+declare function PreferenceExit(): Promise<void>;
 /**
  * Clear all GUI data and DOM elements creates by the preference screen load function
  * We don't do this in exit function for disconnects do not trigger the exit function
  */
 declare function PreferenceUnload(): void;
+declare function PreferenceResize(onLoad: any): void;
+/**
+ * @param {string} subscreenName
+ * @returns
+ */
+declare function PreferenceSubscreenCreateSubscreen(subscreenName: string): HTMLDivElement;
+declare function PreferenceSubscreenResize(onLoad: any): void;
 /**
  * Exit from a specific subscreen by running its handler and checking its validity
  */
-declare function PreferenceSubscreenExit(): void;
+declare function PreferenceSubscreenExit(): Promise<void>;
+declare function PreferenceSubscreenUnload(): void;
 /**
  * Draw a button to navigate multiple pages in a preference subscreen
  * @param {number} Left - The X co-ordinate of the button
@@ -112,6 +125,11 @@ declare const PreferenceSubscreens: PreferenceSubscreen[];
 declare var PreferencePageCurrent: number;
 /** @type {Record<string,PreferenceExtensionsSettingItem>} */
 declare let PreferenceExtensionsSettings: Record<string, PreferenceExtensionsSettingItem>;
+declare const PreferenceIDs: Readonly<{
+    subscreen: "preference-subscreen";
+    exit: "preference-exit";
+    title: "preference-subscreen-hgroup";
+}>;
 /**
  * Private helper to quickly check boolean settings
  * @param {boolean} defaultValue

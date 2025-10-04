@@ -6,10 +6,10 @@
 declare function ChatRoomActivateView(viewName: string): void;
 /**
  * Indicates if the chat room view with the passed name is active or not
- * @param {string} viewName - The name of the view to check
+ * @param {keyof typeof ChatRoomViews} viewName - The name of the view to check
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
-declare function ChatRoomIsViewActive(viewName: string): boolean;
+declare function ChatRoomIsViewActive(viewName: keyof typeof ChatRoomViews): boolean;
 /**
  * Checks if the player can add the current character to her whitelist.
  * @returns {boolean} - TRUE if the current character is not in the player's whitelist nor blacklist.
@@ -361,6 +361,7 @@ declare function ChatRoomLoad(): Promise<void>;
 declare function ChatRoomClearAllElements(): void;
 /**
  * Starts the chatroom selection screen.
+ * @deprecated Use {@link ChatSearchStart}
  * @template {ModuleType} T
  * @param {ServerChatRoomSpace} Space - Name of the chatroom space
  * @param {ServerChatRoomGame} Game - Name of the chatroom game to play
@@ -1486,6 +1487,10 @@ declare function ChatRoomGetSettings(room: ChatRoom): ChatRoomSettings;
  * @return {Character|null}
  */
 declare function ChatRoomGetCharacter(spec: string | number): Character | null;
+/**
+ * Returns the currently running game in the room
+ */
+declare function ChatRoomGetGame(): ServerChatRoomGame;
 declare namespace ChatRoomSpaceType {
     let MIXED: "X";
     let FEMALE_ONLY: "";
@@ -1524,9 +1529,17 @@ declare var ChatRoomPlayerCanJoin: boolean;
 declare var ChatRoomMoneyForOwner: number;
 /** @type {number[]} */
 declare var ChatRoomQuestGiven: number[];
-/** @type {ServerChatRoomSpace} */
+/**
+ * @deprecated Use {@link ChatSearchGetSpace()}
+ * @todo Remove after R121
+ * @type {ServerChatRoomSpace}
+ */
 declare var ChatRoomSpace: ServerChatRoomSpace;
-/** @type {ServerChatRoomGame} */
+/**
+ * @deprecated Use {@link ChatRoomGetGame()}
+ * @todo Remove after R121
+ * @type {ServerChatRoomGame}
+ */
 declare var ChatRoomGame: ServerChatRoomGame;
 declare var ChatRoomHelpSeen: boolean;
 declare var ChatRoomAllowCharacterUpdate: boolean;
@@ -1616,9 +1629,9 @@ declare var ChatRoomCustomFilter: string;
 declare var ChatRoomCustomSizeMode: any;
 /**
  * The list of chat room views
- * @type {Record<string, ChatRoomView>}
+ * @type {Record<"Character"|"Map", ChatRoomView>}
  */
-declare var ChatRoomViews: Record<string, ChatRoomView>;
+declare var ChatRoomViews: Record<"Character" | "Map", ChatRoomView>;
 /**
  * The active chat room view
  * @type {ChatRoomView}

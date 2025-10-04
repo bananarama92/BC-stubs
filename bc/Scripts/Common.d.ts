@@ -358,9 +358,9 @@ declare function CommonCensor(S: string): string;
 /**
  * Type guard which checks that a value is a simple object (i.e. a non-null object which is not an array)
  * @param {unknown} value - The value to test
- * @returns {value is Record<string, unknown>}
+ * @returns {value is object}
  */
-declare function CommonIsObject(value: unknown): value is Record<string, unknown>;
+declare function CommonIsObject(value: unknown): value is object;
 /**
  * Deep-clones an object
  * @todo JSON serialization will break things like functions, Sets and Maps.
@@ -402,19 +402,18 @@ declare function CommonIsFinite(value: unknown, min?: number, max?: number): val
 declare function CommonIsArray(arg: unknown): arg is readonly unknown[];
 /**
  * A {@link Object.keys} variant annotated to return respect literal key types
- * @template {string} T
- * @param {Partial<Record<T, unknown>>} record A record with string-based keys
- * @returns {T[]} The keys in the passed record
+ * @template {object} T
+ * @param {T} obj A record with string-based keys
+ * @returns {(keyof T)[]} The keys in the passed record
  */
-declare function CommonKeys<T extends string>(record: Partial<Record<T, unknown>>): T[];
+declare function CommonKeys<T extends unknown>(obj: T): (keyof T)[];
 /**
  * A {@link Object.entries} variant annotated to return respect literal key types
- * @template {string} KT
- * @template VT
- * @param {Partial<Record<KT, VT>>} record A record with string-based keys
- * @returns {[KT, VT][]} The key/value pairs in the passed record
+ * @template {{}} T
+ * @param {T} obj A record with string-based keys
+ * @returns {[keyof T, T[keyof T]][]} The key/value pairs in the passed record
  */
-declare function CommonEntries<KT extends string, VT>(record: Partial<Record<KT, VT>>): [KT, VT][];
+declare function CommonEntries<T extends {}>(obj: T): [keyof T, T[keyof T]][];
 /**
  * A {@link Array.includes} version annotated to return a type guard.
  * @template T
@@ -531,7 +530,7 @@ declare function CommonObjectIsSubset<T>(subRec: unknown, superRec: T): subRec i
  * Returns the object with keys and values reversed
  * @param {object} obj
  */
-declare function CommonObjectFlip(obj: object): {};
+declare function CommonObjectFlip(obj: object): Record<string, any>;
 /**
  * Parse the passed stringified JSON data and catch any exceptions.
  * Exceptions will cause the function to return `undefined`.
@@ -548,7 +547,7 @@ declare function CommonJSONParse(data: string): any;
  * @param {KeyboardEvent} event
  * @returns {"u"|"d"|"l"|"r"|undefined}
  */
-declare function CommonKeyMove(event: KeyboardEvent, allowArrowKeys?: boolean): "u" | "d" | "l" | "r" | undefined;
+declare function CommonKeyMove(event: KeyboardEvent, allowArrowKeys?: boolean, checkModifiers?: boolean): "u" | "d" | "l" | "r" | undefined;
 /**
  * A {@link Set.has}/{@link Map.has} version annotated to return a type guard.
  * @template T
@@ -668,6 +667,12 @@ declare function CommonTokenize(input: string, options?: {
     includeDelimiters?: boolean;
     trimTrailingSpaces?: boolean;
 }): string[];
+/**
+ * Formats a duration in ms to a human readable string of days, months, and years
+ * @param {number} ms
+ * @returns
+ */
+declare function CommonFormatDuration(ms: number): string;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /**

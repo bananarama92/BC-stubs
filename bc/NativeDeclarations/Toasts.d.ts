@@ -28,6 +28,8 @@ declare namespace Toasts {
 		title?: string;
 		/** Type and style of the toast. */
 		type?: Type;
+		/** An user-provided category */
+		category?: string;
 		/** How long (in milliseconds) the toast remains visible. */
 		duration?: number;
 		/** Whether to show a progress bar. */
@@ -42,13 +44,14 @@ declare namespace Toasts {
 		onClose?: (toast: ToastElement, reason: CloseReason) => void;
 		/** Optional icon to display alongside the message. */
 		icon?: string;
-    /** Optional icon color. */
-    iconColor?: IconColor;
+		/** Optional icon color. */
+		iconColor?: IconColor;
 		/** Optional array of action buttons to render inside the toast. */
 		buttons?: ToastButton[];
 		/** Whether to clamp long messages to 3 lines. */
 		clampMessage?: boolean;
 	}
+
 	/**
 	 * Defines a button to be rendered inside a toast notification.
 	 * - label:

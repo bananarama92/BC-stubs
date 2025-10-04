@@ -524,11 +524,11 @@ declare function InventoryIsKey(Item: Item): boolean;
  */
 declare function InventoryStringify(C: PlayerCharacter): string;
 /**
- * Returns TRUE if the inventory category is blocked in the current chat room
- * @param {readonly ServerChatRoomBlockCategory[]} Category - An array of string containing all the categories to validate
- * @return {boolean} - TRUE if it's blocked
+ * Returns TRUE if all of the asset categories are allowed in the current chat room
+ * @param {readonly AssetCategory[]} Category - An array of string containing all the categories to validate
+ * @return {boolean} - TRUE if it's allowed
  */
-declare function InventoryChatRoomAllow(Category: readonly ServerChatRoomBlockCategory[]): boolean;
+declare function InventoryChatRoomAllow(Category: readonly AssetCategory[]): boolean;
 /**
  * Applies a preset expression from being shocked to the character if able
  * @param {Character} C - The character to update
