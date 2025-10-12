@@ -77,4 +77,8 @@ declare var CommonVersionUpdated: boolean;
 /** @type {TouchList | null} */
 declare var CommonTouchList: TouchList | null;
 declare const DEFAULT_FRAMERATE: 60;
+declare namespace GameReadyState {
+    let load: Promise<void>;
+    let login: undefined | Promise<void>;
+}
 declare var GameMouseIsDown: boolean;

@@ -7,9 +7,17 @@ declare function ServerInit(): void;
  */
 declare function ServerSetConnected(connected: boolean, errorMessage?: string): void;
 /**
- * Returns whether the player has successfully logged into the game
+ * Returns whether the player has successfully logged into the game.
+ *
+ * See {@link ServerIsLoggedInAsync} for an asynchronous variant of this function.
  */
 declare function ServerIsLoggedIn(): boolean;
+/**
+ * Resolve upon successfully logging into the game.
+ *
+ * See {@link ServerIsLoggedIn} for a synchronous variant of this function.
+ */
+declare function ServerIsLoggedInAsync(): Promise<void>;
 /**
  * Callback when receiving a "connect" event on the socket - this will be called on initial connection and on
  * successful reconnects.
@@ -283,15 +291,6 @@ declare var ServerCharacterNameRegex: RegExp;
 declare var ServerCharacterNicknameRegex: RegExp;
 declare var ServerChatMessageMaxLength: number;
 declare var ServerChatRoomDescriptionMaxLength: number;
-/**
- * A promise that resolves upon an account logging in.
- *
- * Note that you will have to also wait for the DOMContentLoaded event, to ensure the game engine
- * itself has finished initializing.
- * See {@link ServerIsLoggedIn} for the synchronous `boolean`-based variant of this variable.
- * @type {Promise<void>}
- */
-declare var ServerIsLoggedInPromise: Promise<void>;
 declare const ServerScriptMessage: string;
 declare const ServerScriptWarningStyle: string;
 /** @readonly */
