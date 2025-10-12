@@ -2738,7 +2738,8 @@
             "Robe1": 4,
             "BartenderVest": 5,
             "BartenderVestM": 6,
-            "JacketHoodie": 7
+            "JacketHoodie": 7,
+            "Hoodie": 8
         }
     },
     "Decals": {
