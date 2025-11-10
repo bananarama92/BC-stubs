@@ -718,10 +718,6 @@ declare function PrivateNPCCheat(Type: any): void;
  * @returns {void} - Nothing.
  */
 declare function PrivateGetBed(Type: "White" | "Black" | "Pink"): void;
-/**
- * When the player exits the private room
- * @type {ScreenExitHandler}
- */
 declare function PrivateExit(): void;
 /**
  * When the player joins the NPC in bed

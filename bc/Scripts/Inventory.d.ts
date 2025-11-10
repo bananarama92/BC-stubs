@@ -393,10 +393,10 @@ declare function InventoryDoesItemAllowLock(item: Item): boolean;
  * @param {Character} C - The character on which the lock must be applied
  * @param {Item|AssetGroupName} Item - The item from appearance to lock
  * @param {Item|AssetLockType} Lock - The asset of the lock or the name of the lock asset
- * @param {null|number|string} [MemberNumber] - The member number to put on the lock, or message to show
+ * @param {null|Character|string} [AppliedBy] - The member number to put on the lock, or message to show
  * @param {boolean} [Update=true] - Whether or not to update the character
  */
-declare function InventoryLock(C: Character, Item: Item | AssetGroupName, Lock: Item | AssetLockType, MemberNumber?: null | number | string, Update?: boolean): void;
+declare function InventoryLock(C: Character, Item: Item | AssetGroupName, Lock: Item | AssetLockType, AppliedBy?: null | Character | string, Update?: boolean): void;
 /**
  * Unlocks an item and removes all related properties
  * @param {Character} C - The character on which the item must be unlocked
@@ -408,21 +408,21 @@ declare function InventoryUnlock(C: Character, Item: Item | AssetGroupItemName, 
 * Applies a random lock on an item
 * @param {Character} C - The character on which the item must be locked
 * @param {Item} Item - The item from appearance to lock
-* @param {Boolean} FromOwner - Set to TRUE if the source is the owner, to apply owner locks
+* @param {Character} AppliedBy - Set to TRUE if the source is the owner, to apply owner locks
 */
-declare function InventoryLockRandom(C: Character, Item: Item, FromOwner: boolean): void;
+declare function InventoryLockRandom(C: Character, Item: Item, AppliedBy: Character): void;
 /**
 * Applies random locks on each character items that can be locked
 * @param {Character} C - The character on which the items must be locked
-* @param {Boolean} FromOwner - Set to TRUE if the source is the owner, to apply owner locks
+* @param {Character} AppliedBy - Set to TRUE if the source is the owner, to apply owner locks
 */
-declare function InventoryFullLockRandom(C: Character, FromOwner: boolean): void;
+declare function InventoryFullLockRandom(C: Character, AppliedBy: Character): void;
 /**
 * Applies a specific lock  on each character items that can be locked
 * @param {Character} C - The character on which the items must be locked
 * @param {AssetLockType} LockType - The lock type to apply
 */
-declare function InventoryFullLock(C: Character, LockType: AssetLockType): void;
+declare function InventoryFullLock(C: Character, LockType: AssetLockType, AppliedBy: any): void;
 /**
 * Removes all common keys from the player inventory
 */

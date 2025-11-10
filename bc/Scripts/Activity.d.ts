@@ -1,4 +1,8 @@
 /**
+ * Debug logging function for activities
+ */
+declare function ActivityLog(...args: any[]): void;
+/**
  * Checks if the current room allows for activities. (They can only be done in certain rooms)
  * @returns {boolean} - Whether or not activities can be done
  */
@@ -270,3 +274,4 @@ declare var ActivityOrgasmResistLabel: string;
 declare var ActivityOrgasmRuined: boolean;
 /** @type { ()=>void | undefined } */
 declare let ActivityTranslateResolve: () => void | undefined;
+declare let ActivityDebug: boolean;

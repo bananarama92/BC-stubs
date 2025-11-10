@@ -12,12 +12,6 @@ declare function ChatSearchUnload(): void;
 declare function ChatSearchRun(time: number): void;
 declare function ChatSearchClick(event: MouseEvent | TouchEvent): void;
 /**
- * Draws buttons and text for selection of room space.
- * @deprecated - deprecated after DOM-ification
- * @returns {void} - Nothing
- */
-declare function ChatSearchRoomSpaceSelectDraw(): void;
-/**
  * Returns the rooms to be displayed
  * @returns {ChatRoomSearchResult[]}
  */
@@ -41,26 +35,14 @@ declare function ChatSearchSetPage(page: number): void;
  */
 declare function ChatSearchSetPageRelative(offset: number): void;
 /**
- * Handles clicks on selection of room space.
- * @deprecated
- * @returns {void} - Nothing
- */
-declare function ChatSearchRoomSpaceSelectClick(): void;
-/**
  * While in filter view, called when player clicks apply, presses enter, or returns to the normal view.
  * Saves the "temp" options into their normal variables, and sends them to the server.
  * Also refreshes the displayed rooms accordingly.
  * @returns {void} - Nothing
  */
-declare function ChatSearchSaveLanguageAndFilterTerms(): void;
-/**
- * While in filter view, calls when player clicks revert.
- * Also called when entering the filter view, so that the values are correct on first load or if they got changed in any other way somehow.
- * Loads the "temp" options from their normal variables, and updates the search box.
- * @returns {void} - Nothing
- */
-declare function ChatSearchLoadLanguageAndFilterTerms(): void;
+declare function ChatSearchSaveFilterTerms(): void;
 declare function ChatSearchKeyDown(event: KeyboardEvent): boolean;
+declare function ChatSearchPaste(event: ClipboardEvent): void;
 declare function ChatSearchKeyDownListener(this: HTMLInputElement, ev: KeyboardEvent): void;
 /**
  * Handles exiting from the chat search screen, removes the input.
@@ -74,12 +56,6 @@ declare function ChatSearchBack(): boolean;
  * @returns {void} - Nothing
  */
 declare function ChatSearchFilterHelpDraw(): void;
-/**
- * @deprecated
- * Draws the filter mode unhide confirm screen: just text and confirm/cancel buttons.
- * @returns {void} - Nothing
- */
-declare function ChatSearchFilterUnhideConfirmDraw(): void;
 /**
  * Creates the filter mode unhide confirm screen: just text and confirm/cancel buttons.
  * @param {string} roomLabel
@@ -104,12 +80,6 @@ declare function ChatSearchGetRoomTypeName(roomType: ChatRoomMapType): string;
  * @param {"" | "X" | "M" | "Asylum"} space
  */
 declare function ChatSearchGetSpaceName(space: "" | "X" | "M" | "Asylum"): string;
-/**
- * Draws the list of rooms in normal mode.
- * @deprecated - deprecated after DOM-ification
- * @returns {void} - Nothing
- */
-declare function ChatSearchNormalDraw(): void;
 /**
  * Updates the room grid with the given rooms
  * @param {ChatRoomSearchResult[]} rooms
@@ -137,9 +107,9 @@ declare function ChatSearchGridRoomCanJoin(room: ChatRoomSearchResult): boolean;
  * Creates the tooltip for the given room
  * @param {ChatRoomSearchResult} room
  * @param {number} index
- * @returns {HTMLDivElement}
+ * @returns {HTMLDivElement | undefined}
  */
-declare function ChatSearchCreateGridRoomTooltip(room: ChatRoomSearchResult, index: number): HTMLDivElement;
+declare function ChatSearchCreateGridRoomTooltip(room: ChatRoomSearchResult, index: number): HTMLDivElement | undefined;
 /**
  * Creates the tags for the room page
  * @param {ChatRoomSearchResult} room
@@ -158,11 +128,6 @@ declare function ChatSearchShowRoomPage(room: ChatRoomSearchResult): void;
  */
 declare function ChatSearchMuffle(Text: string): string;
 /**
- * Draws the list of rooms in permission mode.
- * @returns {void} - Nothing
- */
-declare function ChatSearchPermissionDraw(): void;
-/**
  * Joins the room with the given name
  * @param {string} RoomName - The name of the room to join
  * @returns {void} - Nothing
@@ -179,30 +144,6 @@ declare function ChatSearchToggleSearchMode(): void;
  * @returns {void} - Nothing
  */
 declare function ChatSearchToggleHiddenMode(): void;
-/**
- * @deprecated
- * Switch to the Filter Help view or back again.
- * Correctly handles adding/removing the input box as needed.
- * @returns {void} - Nothing
- */
-declare function ChatSearchToggleHelpMode(): void;
-/**
- * @deprecated
- * Adds/removes event listeners to the input box when entering/exiting filter view.
- * @returns {void} - Nothing
- */
-declare function ChatSearchSetFilterChangeHandler(): void;
-/**
- * Handles the input box being changed in any way, while in filter view.
- * Makes sure the "temp" filter terms variable is kept updated, so the apply/revert buttons will appear/disappear at the correct times.
- * @returns {void} - Nothing
- */
-declare function ChatSearchFilterChangeHandler(): void;
-/**
- * Handles the clicks related to the chatroom list when in permission mode
- * @returns {void} - Nothing
- */
-declare function ChatSearchClickPermission(): void;
 /**
  * Does whatever is necessary to unhide a room.
  * Shows a confirmation screen first, unless the only reason is "TempHidden".
@@ -346,8 +287,6 @@ declare var ChatSearchTempHiddenRooms: number[];
 declare var ChatSearchMode: "" | "Filter";
 declare var ChatSearchGhostPlayerOnClickActive: boolean;
 declare var ChatSearchShowHiddenRoomsActive: boolean;
-/** @deprecated */
-declare var ChatSearchFilterHelpActive: any;
 /** @type {null | { Index: number, RoomLabel: string, MemberLabel: string, WordsLabel: string }} */
 declare var ChatSearchFilterUnhideConfirm: null | {
     Index: number;

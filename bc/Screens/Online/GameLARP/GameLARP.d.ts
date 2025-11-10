@@ -62,10 +62,6 @@ declare function GameLARPStartProcess(): void;
  * @returns {void} - Nothing
  */
 declare function GameLARPClick(): void;
-/**
- * Triggered when the player exits the LARP info screen.
- * @type {ScreenExitHandler}
- */
 declare function GameLARPExit(): void;
 /**
  * Checks if a LARP match can be launched. The player must be an admin and two different teams must be selected.
@@ -160,15 +156,25 @@ declare function GameLARPProcessAction(Action: string, ItemName: string, Source:
  */
 declare function GameLARPCharacterClick(C: Character): boolean;
 /**
+ * Builds a universal substitution array for LARP messages/options.
+ * @param {Character} Source - Source character
+ * @param {Character} Target - Target character
+ * @param {string} Description - Item/team description
+ * @param {number} RNG - Random number
+ * @param {number} Odds - Odds number
+ * @returns {CommonSubtituteSubstitution[]} - Array of placeholder substitutions
+ */
+declare function GameLARPBuildSubstitutions(Source: Character, Target: Character, Description: string, RNG: number, Odds: number): CommonSubtituteSubstitution[];
+/**
  * Adds a LARP message to the chat log.
- * @param {string} Msg - Message tag
+ * @param {string} Msg - Message tag from the dictionary
  * @param {Character} Source - Source character of the message
- * @param {Character} Target - Character targetted by the message
- * @param {string} Description - Description of the message (item name, team name, etc.)
- * @param {number} RNG - The number given by RNG.
- * @param {number} Odds - The number required for the move to work.
- * @param {string} [Color] - Color of the message to add.
- * @returns {void} - Nothing
+ * @param {Character} Target - Target character of the message
+ * @param {string} Description - Item, team, or effect description
+ * @param {number} RNG - The RNG roll (0–1 float)
+ * @param {number} Odds - The odds required for the move to work (0–1 float)
+ * @param {string} [Color] - Optional color of the message
+ * @returns {void}
  */
 declare function GameLARPAddChatLog(Msg: string, Source: Character, Target: Character, Description: string, RNG: number, Odds: number, Color?: string): void;
 /**

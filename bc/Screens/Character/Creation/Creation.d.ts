@@ -19,10 +19,6 @@ declare function CreationResponse(data: ServerAccountCreateResponse): void;
  * @returns {void} - Nothing
  */
 declare function CreationClick(): void;
-/**
- * Does the cleanup, if the user exits the screen
- * @type {ScreenExitHandler}
- */
 declare function CreationExit(): void;
 declare var CreationBackground: string;
 declare var CreationMessage: string;

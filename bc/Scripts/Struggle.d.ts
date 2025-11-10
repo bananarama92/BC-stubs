@@ -101,6 +101,14 @@ declare function StruggleMinigameStart(C: Character, MiniGame: StruggleKnownMini
  */
 declare function StruggleMinigameStop(): void;
 /**
+ * Checks if the player wants to bypass the struggle minigame entirely
+ */
+declare function StruggleMinigameShouldBypass(): boolean;
+/**
+ * Checks if the struggle challenge can actually be completed
+ */
+declare function StruggleMinigameIsImpossible(): boolean;
+/**
  * Perform setup for the Strength minigame.
  *
  * Called by StruggleMinigameStart. Calculates the challenge level based on the
@@ -327,9 +335,29 @@ declare var StruggleLockPickTotalTries: number;
 declare var StruggleProgressStruggleCount: number;
 declare var StruggleProgressAuto: number;
 declare var StruggleProgressOperation: string;
+/**
+ * How much experience should be gained on success.
+ *
+ * FIXME: the value is calculated by the minigame, but the skill is selected by Dialog when the minigame stops.
+ */
 declare var StruggleProgressSkill: number;
 declare var StruggleProgressLastKeyPress: any;
+/**
+ * The difficulty of the struggle minigame.
+ */
 declare var StruggleProgressChallenge: number;
+/**
+ * Threshold at which actually succeeding the minigame becomes impossible.
+ */
+declare const STRUGGLE_THRESHOLD_IMPOSSIBLE: 6;
+/**
+ * Threshold at which the loosen option appears.
+ */
+declare const STRUGGLE_THRESHOLD_CAN_LOOSEN: 9;
+/**
+ * Number of struggle attempts to do before the challenge value is revealed
+ */
+declare const STRUGGLE_THRESHOLD_REVEAL: 50;
 declare var StruggleLoosenSpeed: number;
 declare var StruggleLoosenAngle: number;
 declare var StruggleLoosenHoleAngle: number;

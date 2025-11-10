@@ -23,6 +23,23 @@ declare function PreferenceSubscreenGeneralExit(): boolean;
  * If the selected color is invalid, the player cannot leave the screen.
  */
 declare function PreferenceSubscreenGeneralUnload(): void;
+declare function PreferenceSubscreenGeneralResize(): void;
+declare function PreferenceSubscreenGeneralColorPickerToggle(): void;
+/** @param {HTMLInputElement} input */
+declare function PreferenceSubscreenGeneralColorInput(input: HTMLInputElement): void;
 /** @type {boolean} */
 declare var PreferenceSubscreenGeneralColorPicker: boolean;
 declare var PreferenceSafewordConfirm: boolean;
+/** @type {{label: string, check: () => boolean, click: (value: boolean) => void, disabled?: (disableButtons: boolean) => boolean}[]} */
+declare const PreferenceSubscreenGeneralCheckboxes: {
+    label: string;
+    check: () => boolean;
+    click: (value: boolean) => void;
+    disabled?: (disableButtons: boolean) => boolean;
+}[];
+declare const PreferenceSubscreenGeneralIDs: Readonly<{
+    grid: "preference-general-grid";
+    colorInput: "InputCharacterLabelColor";
+    colorPickerToggle: "preference-general-color-picker-toggle";
+    generalHardcoreWarning: "preference-general-hardcore-warning";
+}>;

@@ -43,7 +43,7 @@ declare function NPCTraitDialog(C: Character): void;
  * @param {Character} C - NPC to set the arousal stats of
  * @returns {void} - Nothing.
  */
-declare function NPCArousal(C: Character): void;
+declare function NPCSetupArousal(C: Character): void;
 /**
  * Returns the trait value of an NPC. If the opposite trait is found, it will return a negative value.
  * @param {NPCCharacter} C - NPC to get the trait of

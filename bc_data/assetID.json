@@ -1141,7 +1141,8 @@
             "WolfTail1": 37,
             "WolfTail2": 38,
             "WolfTail3": 39,
-            "FuckPlug": 40
+            "FuckPlug": 40,
+            "FoxTail": 41
         }
     },
     "ItemDevices": {
@@ -1217,7 +1218,9 @@
             "LeatherCage": 67,
             "Highchair": 68,
             "SingleBalletBoot": 69,
-            "Microphone": 70
+            "Microphone": 70,
+            "Enema": 71,
+            "Potty": 72
         }
     },
     "ItemEars": {
@@ -1228,7 +1231,13 @@
             "HeadphoneEarPlugs": 2,
             "Headphones": 3,
             "HeavyDutyEarPlugs": 4,
-            "LightDutyEarPlugs": 5
+            "LightDutyEarPlugs": 5,
+            "CustomizableCatEars": 6,
+            "CustomizableCowEars": 7,
+            "CustomizableElfEars": 8,
+            "CustomizableFluffyEars1": 9,
+            "CustomizableFluffyEars2": 10,
+            "CustomizableFluffyEars3": 11
         }
     },
     "ItemFeet": {
@@ -1342,7 +1351,11 @@
             "Cigarette": 68,
             "Plushies": 69,
             "FoamRoll": 70,
-            "Plushie": 71
+            "Plushie": 71,
+            "BabyPowder": 72,
+            "Diaper": 73,
+            "MiniDolls": 74,
+            "Wipes": 75
         }
     },
     "ItemHands": {
@@ -1551,7 +1564,8 @@
             "WoodenPaddle": 37,
             "WoodenSign": 38,
             "Plushies": 39,
-            "Plushie": 40
+            "Plushie": 40,
+            "MiniDolls": 41
         }
     },
     "ItemMouth": {
@@ -2054,7 +2068,8 @@
             "WaistLegHarness": 28,
             "FemPelvisHarness": 29,
             "LatexDiaper": 30,
-            "UntrainersThin": 31
+            "UntrainersThin": 31,
+            "WombTattoos": 32
         }
     },
     "ItemScript": {
@@ -2627,7 +2642,8 @@
             "LatexFoxTail": 27,
             "SkunkTail": 28,
             "LargeBushyTail": 29,
-            "DragonsTail": 30
+            "DragonsTail": 30,
+            "FoxTailStrap": 31
         }
     },
     "Wings": {

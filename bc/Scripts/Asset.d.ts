@@ -175,6 +175,19 @@ declare function AssetGetActivity(family: IAssetFamily, name: string): Activity 
  */
 declare function AssetActivitiesForGroup(family: IAssetFamily, groupname: AssetGroupName, onSelf?: "self" | "other" | "any"): Activity[];
 /**
+ * Gets all fetishes for a family
+ * @param {IAssetFamily} family - The family to search in
+ * @returns {Fetish[]}
+ */
+declare function AssetAllFetishes(family: IAssetFamily): Fetish[];
+/**
+ * Gets an activity asset by family and name
+ * @param {IAssetFamily} family - The family to search in
+ * @param {FetishName} name - Name of fetish to search for
+ * @returns {Fetish|null}
+ */
+declare function AssetGetFetish(family: IAssetFamily, name: FetishName): Fetish | null;
+/**
  * Gets an asset group by the asset family name and group name
  * @template {AssetGroupName} T
  * @param {IAssetFamily} Family - The asset family that the group belongs to (Ignored until other family is added)

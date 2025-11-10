@@ -444,6 +444,22 @@ declare function CharacterCanChangeNickname(C: Character): boolean;
  */
 declare function CharacterSetNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
 /**
+ * Validate the given character's nickname
+ *
+ * @param {Character} C - The character to change the nickname of.
+ * @param {string} Nick - The name to use as the new nickname. An empty string uses the character's real name.
+ * @return {"NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked"} null if the nickname was valid, or an explanation for why the nickname was rejected.
+ */
+declare function CharacterValidateNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
+/**
+ * Update the owners note on the specified character.  The Player must be the owner of this character.
+ * Notes will be truncated to max 4000 chars.
+ *
+ * @param {Character} C - The character to receive the updated notes.
+ * @param {string} [notes] - String containing the notes.  If undefined, existing notes will be erased.
+ */
+declare function CharacterSetOwnersNotes(C: Character, notes?: string): void;
+/**
  * Updates the leash state on a character
  *
  * @param {Character} C

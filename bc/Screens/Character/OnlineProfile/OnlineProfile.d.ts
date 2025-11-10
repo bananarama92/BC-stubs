@@ -1,6 +1,20 @@
+/**
+ * Setup OnlineProfile UI in a specific mode.
+ *
+ * @param {"Description" | "OwnersNotes"} mode - Initial display mode.
+ * @returns {void}
+ */
+declare function OnlineProfileStart(mode: "Description" | "OwnersNotes"): void;
+/**
+ * Loads the text element based on current viewing/editing mode.
+ * @param {HTMLInputElement} element
+ * @returns {void}
+ */
+declare function OnlineProfileLoadTextArea(element: HTMLInputElement): void;
 declare function OnlineProfileLoad(): Promise<void>;
 /**
  * Handles unloading the online profile screen
+ * @returns {void}
  */
 declare function OnlineProfileUnload(): void;
 /**
@@ -19,9 +33,16 @@ declare function OnlineProfileClick(): void;
  * @returns {void} - Nothing
  */
 declare function OnlineProfileExit(Save: boolean): void;
+/** @type { "Description" | "OwnersNotes" } */
+declare var OnlineProfileMode: "Description" | "OwnersNotes";
+declare var OnlineProfileTextDesc: string;
+declare var OnlineProfileTextOwnersNotes: string;
+declare var OnlineProfileNotesAvailable: boolean;
+declare const OnlineProfileTextDescMaxLen: 10000;
+declare const OnlineProfileTextOwnersNotesMaxLen: 4000;
 declare var OnlineProfileBackground: string;
 /**
- * Character used to signal, that description is compressed
+ * Leading character used to signal that description is compressed
  * @readonly
  */
-declare var ONLINE_PROFILE_DESCRIPTION_COMPRESSION_MAGIC: string;
+declare const ONLINE_PROFILE_DESCRIPTION_COMPRESSION_MAGIC: string;

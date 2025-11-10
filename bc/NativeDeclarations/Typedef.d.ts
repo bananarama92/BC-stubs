@@ -134,6 +134,10 @@ interface HTMLElementEventMap {
 	bcTouchHold: MouseEvent;
 }
 
+interface HTMLElementTagNameMap {
+	"bc-tint-input": HTMLColorTintElement;
+}
+
 declare namespace ElementButton {
 	/** An input type for representing one or more text nodes and/or **non-interactive** DOM elements (_e.g._ `<i>` or `<code>`) */
 	type StaticNode = null | string | Node | HTMLOptions<any> | readonly (null | undefined | string | Node | HTMLOptions<any>)[];
@@ -168,13 +172,18 @@ declare namespace ElementButton {
 		/** A background image for the button */
 		image?: string;
 		/**
+		 * Overlay a color on top of the button image.
+		 * Defaults to [`background-blend-mode: multiply`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode) for overlaying the color.
+		 */
+		imageColor?: string;
+		/**
 		 * Button icons to-be displayed in the top-left corner of the button.
 		 *
 		 * Alternatively, one can directly pass the icon's {@link HTMLImageElement.src} and its tooltip component.
 		 */
 		icons?: readonly (null | undefined | InventoryIcon | CustomIcon)[];
 		/** The role of the button. All accepted values are currently special-cased in order to set role-specific event listeners and/or attributes. */
-		role?: "radio" | "checkbox" | "menuitemradio" | "menuitemcheckbox" | "spinbutton";
+		role?: "radio" | "combobox" | "checkbox" | "menuitemradio" | "menuitemcheckbox" | "spinbutton";
 		/** Whether to limit the default styling of the button's border and background */
 		noStyling?: boolean;
 		/** Whether the button should be disabled or not */
@@ -188,6 +197,16 @@ declare namespace ElementButton {
 		allowRequiredClick?: boolean;
 		/** The {@link HTMLButtonElement.name} of the button */
 		name?: string;
+		/** The {@link HTMLButtonElement.tabIndex} of the button */
+		tabindex?: number;
+		/** The elements (or IDs thereof) controlled by the button; see the `aria-controls` attribute */
+		ariaControls?: string | Element | readonly (string | Element)[];
+		/** The {@link HTMLButtonElement.ariaChecked} of the button */
+		ariaChecked?: boolean | "true" | "false" | "mixed" | "undefined";
+		/** The {@link HTMLButtonElement.ariaExpanded} of the button */
+		ariaExpanded?: boolean | "true" | "false" | "undefined";
+		/** The {@link HTMLButtonElement.ariaHasPopup} of the button */
+		ariaHasPopup?: boolean | "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
 	}
 }
 
@@ -347,16 +366,18 @@ declare namespace ElementDOMScreen {
 		/** Buttons for in the header's menubar (see `.screen-header [role="menubar"]`) */
 		menubarButtons?: readonly HTMLButtonElement[];
 		/** Content for within the main section (see `.screen-main`) */
-		mainContent?: readonly (Node | string)[];
+		mainContent?: readonly (Node | string | HTMLOptions<keyof HTMLElementTagNameMap>)[];
+		/** Whether an extra `aside.screen-aside-l` section should be added to the left of `.screen-main` */
+		leftContent?: readonly (Node | string | HTMLOptions<keyof HTMLElementTagNameMap>)[];
+		/** Whether an extra `aside.screen-aside-r` section should be added to the right of `.screen-main` */
+		rightContent?: readonly (Node | string | HTMLOptions<keyof HTMLElementTagNameMap>)[];
 		/** Text content for within the heading (see `.screen-hgroup h1`) */
 		header?: string;
 		/**
-		 * Whether the main section (see `.screen-main`) is a `<main>` or `<aside>` element.
-		 *
-		 * As a rule of thumb: use `"main"` (aka the default) _unless_ another `<main>` element is already visible on the page,
-		 * as the HTML spec demands that only a single non-hidden main element may be present at any time.
+		 * Which section should be marked as `<main>` (if any).
+		 * Defaults to `center` if unspecified.
 		 */
-		mainTag?: "main" | "aside";
+		mainSection?: "left" | "center" | "right" | "none";
 		/**
 		 * Whether to content of the DOM screen root is embedded within a [shadow root](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM) or not,
 		 * storing the DOM tree in an isolated namespace with its own set of element IDs and CSS style sheets
@@ -364,6 +385,8 @@ declare namespace ElementDOMScreen {
 		asShadow?: boolean;
 		/** Additional CSS files to load when the `asShadow` option is specified */
 		cssFiles?: readonly string[];
+		/** Whether heading group should be embedded within the header or not, with the alternative placing them below each other */
+		hgroupInHeader?: boolean;
 	}
 }
 
@@ -617,7 +640,7 @@ type CraftingPropertyType =
 	;
 
 type AssetAttribute =
-	"Skirt" | "SuitLower" | "UpperLarge" |
+	"Skirt" | "SuitLower" | "UpperLarge" | "Diaper" |
 	"ShortHair" | "SmallEars" | "NoEars" | "NoseRing" | "HoodieFix" |
 	"CanAttachMittens" |
 	"IsChestHarness" | "IsHipHarness" |
@@ -672,7 +695,7 @@ type GraphicsFontName =
 type PreferenceSubscreenName =
 	"General" | "Difficulty" | "Restriction" | "Chat" | "CensoredWords" | "Audio" | "Arousal" |
 	"Security" | "Online" | "Visibility" | "Immersion" | "Graphics" | "Controller" | "Notifications" |
-	"Gender" | "Scripts" | "Extensions" | "Main"
+	"Gender" | "Scripts" | "Extensions" | "Main" | "Keybindings"
 	;
 
 interface PreferenceSubscreen {
@@ -686,6 +709,7 @@ interface PreferenceSubscreen {
 	exit?: () => boolean | Promise<boolean>;
 	unload?: () => void;
 	resize?: (onLoad: boolean) => void;
+	keyUp?: (event: KeyboardEvent) => void;
 }
 
 interface PreferenceGenderSetting {
@@ -704,21 +728,6 @@ type FetishName =
 type BackgroundTag =
 	"Filter by tag" | "Indoor" | "Outdoor" | "Aquatic" | "Special Events" | "SciFi & Fantasy" |
 	"Club" | "College" | "Regular house" | "Dungeon" | "Asylum" | "Pandora" | "Club Cards"
-	;
-
-// NOTE: `NPCArchetype` is for NPC's only
-type TitleName =
-	NPCArchetype | "None" | "Mistress" | "Master" | "Mistree" | "ClubSlave" | "Maid" | "HeadMaid" | "BondageMaid" | "Kidnapper" |
-	"MasterKidnapper" | "Patient" | "PermanentPatient" | "EscapedPatient" | "Nurse" | "Doctor" | "AnimeBoy" |
-	"LadyLuck" | "LordFortune" | "Patron" | "CollegeStudent" |"Nawashi" | "Houdini" | "PonyAlicorn" |
-	"PonyPegasus" | "PonyUnicorn" | "PonyWild" | "PonyHot" | "PonyWarm" | "PonyCold" | "PonyFarm" |
-	"PonyFoal" | "InfilrationMole" | "InfilrationInfiltrator" | "InfilrationAgent" |
-	"InfilrationOperative" | "InfilrationSuperspy" | "MagicSchoolWizard" | "MagicSchoolMagus" |
-	"MagicSchoolMagician" | "MagicSchoolSorcerer" | "MagicSchoolSage" | "MagicSchoolOracle" |
-	"MagicSchoolWitch" | "MagicSchoolWarlock" | "Duchess" | "Duke" | "LittleOne" | "Baby" | "DL" |
-	"BondageBaby" | "Switch" | "Princess" |	"Prince" | "Liege" | "Majesty" | "Missy" | "Sissy" | "Tomboy" | "Femboy" | "GoodOne" |
-	"Pet" |	"Brat" | "Kitten" | "Puppy" | "Foxy" | "Bunny" | "Doll" | "Demon" | "Angel" | "Alien" | "Captain" | "Admiral" |
-	"Succubus" | "Incubus" | "Concubus" | "GoodGirl" | "GoodBoy" | "GoodSlaveGirl" | "GoodSlaveBoy" | "GoodSlave" | "Drone"
 	;
 
 type MagicSchoolHouse = "Maiestas" | "Vincula" | "Amplector" | "Corporis";
@@ -1458,7 +1467,7 @@ type ActivityNameBasic = "Bite" | "Brush" | "Caress" | "Choke" | "Clean" | "Cudd
 	"MoanGagWhimper" | "Nibble" | "Nod" | "PenetrateFast" |
 	"PenetrateSlow" | "Pet" | "Pinch" | "PoliteKiss" | "Pull" |
 	"RestHead" | "Rub" | "Scratch" | "Sit" | "Slap" | "Spank" | "Step" | "StruggleArms" | "StruggleLegs" |
-	"Suck" | "TakeCare" | "Tickle" | "Whisper" | "Wiggle" |
+	"Suck" | "SuckPenetrateItem" | "DeepThroat" | "TakeCare" | "Tickle" | "Whisper" | "Wiggle" |
 	"SistersHug" | "BrothersHandshake" | "SiblingsCheekKiss" | "CollarGrab"
 ;
 
@@ -1469,6 +1478,7 @@ type ActivityName = ActivityNameBasic | ActivityNameItem;
 type ActivityPrerequisite =
 	"AssEmpty" | "CantUseArms" | "CantUseFeet" | "CanUsePenis" | "CanUseTongue" | "HasVagina" | "IsGagged" | "MoveHead" |
 	`Needs-${ActivityNameItem}` |
+	`TargetNeeds-${ActivityNameItem}` |
 	"TargetCanUseTongue" | "TargetKneeling" | "TargetMouthBlocked" | "TargetMouthOpen" | "TargetZoneAccessible" | "TargetZoneNaked" |
 	"UseArms" | "UseFeet" | "UseHands" | "UseMouth" | "UseTongue" | "VulvaEmpty" | "ZoneAccessible" | "ZoneNaked" |
 	"Sisters" | "Brothers" | "SiblingsWithDifferentGender" | "Collared"
@@ -1514,6 +1524,17 @@ interface Item {
 	Difficulty?: number;
 	Craft?: CraftingItem;
 	Property?: ItemProperties;
+}
+
+/** An item properties subtype with a guaranteed opacity field. */
+interface ItemColorProperties extends ItemProperties {
+	Opacity: number[];
+}
+
+/** An item subtype with a guaranteed color and opacity field. */
+interface ItemColorItem extends Item {
+	Color: string[];
+	Property: ItemColorProperties;
 }
 
 type FavoriteIcon = "Favorite" | "FavoriteBoth" | "FavoritePlayer";
@@ -1565,6 +1586,7 @@ interface Reputation {
 interface Ownership {
 	Name: string;
 	MemberNumber: number;
+	Notes?: string;
 	Stage: 0 | 1;
 	Start: number;
 }
@@ -1603,6 +1625,7 @@ interface Lovership {
 type KeyboardEventListener = (event: KeyboardEvent) => boolean;
 type MouseEventListener = (event: MouseEvent | TouchEvent) => void;
 type MouseWheelEventListener = (event: WheelEvent) => void;
+type ClipboardEventListener = (event: ClipboardEvent) => void;
 
 type VoidHandler = () => void;
 
@@ -1611,7 +1634,7 @@ type ScreenUnloadHandler = VoidHandler;
 type ScreenDrawHandler = VoidHandler;
 type ScreenRunHandler = (time: number) => void;
 type ScreenResizeHandler = (load: boolean) => void;
-type ScreenExitHandler = VoidHandler | (() => Promise<void>);
+type ScreenExitHandler = VoidHandler;
 
 interface ScreenFunctions {
 	// Required
@@ -1668,6 +1691,11 @@ interface ScreenFunctions {
 	 * @param {KeyboardEvent} event - The event that triggered this
 	 */
 	KeyUp?: KeyboardEventListener;
+	/**
+	 * Called if the user pastes some content
+	 * @param {ClipboardEvent} event - The event that triggered this
+	 */
+	Paste?: ClipboardEventListener;
 	/** Called when user presses Esc */
 	Exit?: ScreenExitHandler;
 }
@@ -1931,8 +1959,11 @@ interface Character {
 	OwnerName: () => string;
 	/** The character's owner number. Might be -1 for non-online characters */
 	OwnerNumber: () => number;
+	/** Whether the owner of this character (if any) has left any public notes. */
+	HasOwnerNotes: () => boolean;
 	/** Whether the player owns that character */
 	IsOwnedByPlayer: () => boolean;
+	IsFullyOwnedByPlayer: () => boolean;
 	/** The number of days since the character has been owned (-1 means not owned) */
 	OwnedSince: () => number;
 	/** Whether the given character owns the player */
@@ -2298,12 +2329,14 @@ interface PlayerCharacter extends Character {
 	FriendList: number[];
 	FriendNames: Map<number, string>;
 	SubmissivesList: Set<number>;
-	ChatSearchFilterTerms: string;
+	/** @deprecated */
+	ChatSearchFilterTerms: never;
 	GenderSettings: GenderSettingsType;
 	/** The list of items we got confiscated in the Prison */
 	ConfiscatedItems: { Group: AssetGroupName, Name: string }[];
 	ExtensionSettings: ExtensionSettings;
 	ChatSearchSettings: ChatRoomSearchSettings;
+	KeybindingSettings: string;
 }
 
 /** A type defining which genders a setting is active for */
@@ -2422,6 +2455,7 @@ interface ChatSettingsType {
 	PreserveChat: boolean;
 	OOCAutoClose: boolean;
 	DisableReplies: boolean;
+	ShowFriendRequestMessages: boolean;
 }
 
 interface GameplaySettingsType {
@@ -3269,8 +3303,16 @@ interface ItemPropertiesCustom {
 
 	/** Asset name of the lock */
 	LockedBy?: AssetLockType;
-	/** The member number of the person that applied the lock */
-	LockMemberNumber?: number | string;
+	/**
+	 * The member number of the person that applied the lock.
+	 * If set to a positive number, LockMemberName is the name of the character that added the lock.
+	 * Otherwise it's either -1 and the name of an NPC, or null and a message.
+	 */
+	LockMemberNumber?: number;
+	/** The member name of the person that applied the lock */
+	LockMemberName?: string;
+	/** A short message describing where the lock comes from. Only used by the Nursery and KD */
+	LockMessage?: string;
 	/** `/^[A-Z]{1,8}$/`, Used by `PasswordPadlock`, `SafewordPadlock` and `TimerPasswordPadlock` lock */
 	Password?: string;
 	/** Comma separated numbers */
@@ -4394,33 +4436,54 @@ declare namespace CraftingJSON {
 /** An object defining a group of layers which can be colored together */
 interface ColorGroup {
 	/** The name of the color group */
-	name: string;
+	name: null | string;
 	/** The layers contained within the color group */
 	layers: AssetLayer[];
 	/** The color index for the color group - this is the lowest color index of any of the layers within the color group */
 	colorIndex: number;
 }
 
+/** A fully mutubable subset of {@link ItemColorStateType} */
+interface ItemColorExitState extends Pick<ItemColorStateType, "colors" | "initialColors" | "defaultColors" | "opacity" | "initialOpacity" | "defaultOpacity" | "editOpacity" > {
+	initialColors: string[];
+	initialOpacity: number[];
+	defaultColors: string[];
+	defaultOpacity: number[];
+}
+
 /**
  * A callback function that is called when the item color UI exits
  * @param c - The character being colored
- * @param item - The item being colored
+ * @param colorState - The new colors and opacities
  * @param save - Whether the item's appearance changes should be saved
+ * @param root - The root DOM element of the subscreen (if any)
  */
-type itemColorExitListener = (
-	c: Character,
-	item: Item,
+type ItemColorExitListener = (
+	colorState: ItemColorExitState,
 	save: boolean,
+	root: null | HTMLElement,
 ) => void;
 
 interface ItemColorStateType {
 	colorGroups: ColorGroup[];
+	/** The colors of the item */
 	colors: string[];
+	/** The initial colors of the item prior to editing */
+	initialColors: readonly string[];
 	/**
 	 * The underlying assets default colors.
 	 * @see {@link Asset.DefaultColor}
 	 */
 	defaultColors: readonly string[];
+	/** The opacity of the item */
+	opacity: number[];
+	/** The initial opacity of the item prior to editing */
+	initialOpacity: readonly number[];
+	/**
+	 * The underlying assets default opacity.
+	 * @see {@link AssetLayer.Opacity} of the asset's layers
+	 */
+	defaultOpacity: readonly number[];
 	simpleMode: boolean;
 	paginationButtonX: number;
 	cancelButtonX: number;
@@ -4431,13 +4494,8 @@ interface ItemColorStateType {
 	groupButtonWidth: number;
 	pageSize: number;
 	pageCount: number;
-	colorInputWidth: number;
-	colorInputX: number;
-	colorInputY: number;
+	/** Whether the opacity is user-configurable */
 	editOpacity: boolean;
-	exportButtonX: number;
-	importButtonX: number;
-	resetButtonX: number;
 	drawImport: () => Promise<string>;
 	drawExport: (data: string) => Promise<void>;
 }
@@ -4452,8 +4510,34 @@ interface HSVColor {
 	V: number;
 }
 
-/** The color picker callback called when selection completes. */
-type ColorPickerCallbackType = (Color: string) => void;
+interface ColorPickerInitOptions {
+	/** The root element or `color-picker` fieldset (or ID thereof) in the color picker subscreen; defaults to {@link ColorPicker.ids.root} */
+	root?: ElementHelp.ElementOrId;
+	/** A custom heading to-be assigned to the color picker's `<h1>` element */
+	heading?: string | Element | readonly (string | Element)[];
+	/**
+	 * A custom input event listener that will to be triggered by any valid input changes of the underlying interactive elements (hue slider, opacity slider, tint slider or output text).
+	 */
+	onInput?: (elem: HTMLFieldSetElement, ev: CustomEvent<{ source: "hue" | "opacity" | "tint" | "output" }>) => any;
+	/**
+	 * A callback to-be executed upon closing the color picker.
+	 */
+	onExit?: ItemColorExitListener;
+	/**
+	 * A custom color state.
+	 * Defaults to {@link ItemColorState} if not provided.
+	 */
+	colorState?: Pick<ItemColorStateType, "editOpacity" | "opacity" | "colors">;
+	/** Whether the color picker should be disabled or not */
+	disabled?: boolean;
+	/** The dimensions of the color picker screen */
+	shape?: Readonly<RectTuple>;
+	/**
+	 * Whether omitting an option will keep its currently configured state or reset it to its default whenever an explicit option is absent
+	 * @default false
+	 */
+	reset?: boolean;
+}
 
 //#end region
 
