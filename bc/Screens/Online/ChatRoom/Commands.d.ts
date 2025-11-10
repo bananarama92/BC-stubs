@@ -159,15 +159,20 @@ declare namespace CommandsHelp {
      */
     function _GetDescription(command: ICommand): string;
     /**
- * @param {ICommand} command
- * @param {string} setCommand
- * @param {boolean} singleCommand
- * @returns {HTMLOptions<keyof HTMLElementTagNameMap>}
- */
+     * @param {string | Partial<Record<ServerChatRoomLanguage | "TW", string>>} arg
+     * @returns {string}
+     */
+    function _GetArgumentTranslated(arg: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>): string;
+    /**
+    * @param {ICommand} command
+    * @param {string} setCommand
+    * @param {boolean} singleCommand
+    * @returns {HTMLOptions<keyof HTMLElementTagNameMap>}
+    */
     function _BuildCommand(command: ICommand, setCommand: string, singleCommand: boolean): HTMLOptions<keyof HTMLElementTagNameMap>;
     /**
      * @param {ICommand[]} commands
-   * @param {{ setCommand?: string}} [options]
+     * @param {{ setCommand?: string}} [options]
      * @returns
      */
     function _BuildHelp(commands: ICommand[], { setCommand }?: {

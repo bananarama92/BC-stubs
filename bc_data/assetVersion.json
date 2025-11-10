@@ -1102,8 +1102,7 @@
         "Cowtail": "R98",
         "DemonPlug": "R98",
         "EggVibePlugXXL": "R98",
-        "FoxTail1": "R98",
-        "FoxTail2": "R98",
+        "FoxTail": "R122",
         "FoxTails": "R98",
         "FuckPlug": "R119",
         "HollowButtPlug": "R98",
@@ -1148,6 +1147,7 @@
         "Cushion": "R98",
         "DisplayCase": "R98",
         "DollBox": "R98",
+        "Enema": "R122",
         "ExclusiveWaitress": "R113",
         "Familiar": "R98",
         "FoldingScreen": "R98",
@@ -1175,6 +1175,7 @@
         "PetBowl": "R98",
         "PogoBall": "R112",
         "Pole": "R98",
+        "Potty": "R122",
         "SaddleStand": "R98",
         "SingleBalletBoot": "R120",
         "SmallDisplayCase": "R98",
@@ -1206,6 +1207,12 @@
     },
     "ItemEars": {
         "BluetoothEarbuds": "R98",
+        "CustomizableCatEars": "R122",
+        "CustomizableCowEars": "R122",
+        "CustomizableElfEars": "R122",
+        "CustomizableFluffyEars1": "R122",
+        "CustomizableFluffyEars2": "R122",
+        "CustomizableFluffyEars3": "R122",
         "FuturisticEarphones": "R98",
         "HeadphoneEarPlugs": "R98",
         "Headphones": "R98",
@@ -1248,6 +1255,7 @@
     },
     "ItemHandheld": {
         "AnimeGirlWand": "R106",
+        "BabyPowder": "R122",
         "Baguette": "R98",
         "Ballgag": "R98",
         "Belt": "R98",
@@ -1259,6 +1267,7 @@
         "CattleProd": "R98",
         "Cigarette": "R119",
         "Crop": "R98",
+        "Diaper": "R122",
         "ElectricToothbrush": "R98",
         "Feather": "R98",
         "FeatherDuster": "R98",
@@ -1281,6 +1290,7 @@
         "LongSock": "R98",
         "Lotion": "R98",
         "MedicalInjector": "R98",
+        "MiniDolls": "R122",
         "Mug": "R98",
         "Paddle": "R98",
         "Panties": "R98",
@@ -1317,7 +1327,8 @@
         "Vibrator": "R98",
         "WartenbergWheel": "R98",
         "Whip": "R98",
-        "WhipPaddle": "R98"
+        "WhipPaddle": "R98",
+        "Wipes": "R122"
     },
     "ItemHands": {
         "BalletBootsMittens": "R121",
@@ -1488,6 +1499,7 @@
         "MetalCuffsKey": "R98",
         "MetalPadlock": "R98",
         "MetalPadlockKey": "R98",
+        "MiniDolls": "R122",
         "MistressPadlock": "R98",
         "MistressPadlockKey": "R98",
         "MistressTimerPadlock": "R98",
@@ -1981,7 +1993,8 @@
         "StraponPanties": "R98",
         "StuddedChastityBelt": "R98",
         "UntrainersThin": "R116",
-        "WaistLegHarness": "R111"
+        "WaistLegHarness": "R111",
+        "WombTattoos": "R122"
     },
     "ItemScript": {
         "Script": "R98"
@@ -2433,8 +2446,7 @@
         "DragonTailStrap2Left": "R104",
         "DragonTailStrap2Right": "R104",
         "DragonsTail": "R119",
-        "FoxTailStrap1": "R98",
-        "FoxTailStrap2": "R98",
+        "FoxTailStrap": "R122",
         "FoxTailsStrap": "R98",
         "HorseTailStrap": "R98",
         "HorseTailStrap1": "R98",

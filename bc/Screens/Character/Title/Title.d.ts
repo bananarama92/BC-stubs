@@ -5,6 +5,11 @@
  */
 declare function TitleSet(NewTitle: TitleName): TitleName;
 /**
+ * Selects a title, updating the UI
+ * @param {TitleName} title - The title to select
+ */
+declare function TitleSelect(title: TitleName): void;
+/**
  * Returns the current title of the given player. If an invalid title is found or the player has to wear a certain title
  * the correct title is pushed to the player's attributes
  * @param {Character} C - The player, whose title we want to get
@@ -36,23 +41,15 @@ declare function TitleRun(): void;
  * @returns {void} - Nothing
  */
 declare function TitleClick(): void;
-/**
- * Exits the title selection screen and brings the player back to the InformationSheet
- * @type {ScreenExitHandler}
- */
 declare function TitleExit(): void;
+declare function TitleResize(): void;
+declare function TitleSearch(): void;
 declare var TitleBackground: string;
-/** @type {{ Name: TitleName; Requirement: () => boolean; Earned?: boolean, Force?: boolean }[]} */
-declare var TitleList: {
-    Name: TitleName;
-    Requirement: () => boolean;
-    Earned?: boolean;
-    Force?: boolean;
-}[];
 /** @type {null | TitleName} */
 declare var TitleSelectedTitle: null | TitleName;
 /** @type {null | "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked"} */
 declare var TitleNicknameStatus: null | "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
+/** @deprecated */
 declare let TitleOffset: number;
 /** @type {{ Name: TitleName; Requirement: () => boolean; Earned?: boolean, Force?: boolean }[]} */
 declare let TitleListFiltered: {
@@ -61,4 +58,19 @@ declare let TitleListFiltered: {
     Earned?: boolean;
     Force?: boolean;
 }[];
+/** @deprecated */
 declare const TitlePerPage: 28;
+declare const TitleSelec: Readonly<{
+    subscreen: "title-subscreen";
+    nicknameInputGroup: "input-nickname-group";
+    nicknameInput: "InputNickname";
+    searchInput: "input-search";
+    exit: "title-exit";
+    titleGroup: "title-subscreen-hgroup";
+    titleStatus: "title-subscreen-status";
+    titleMain: "title-subscreen-main";
+    titleButtonContainer: "title-subscreen-titlebuttons";
+    /** @param {TitleName} title */
+    titleButtonId(title: TitleName): string;
+    titleButtonClass: "title-button";
+}>;

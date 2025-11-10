@@ -70,6 +70,7 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	AssetFamily: "Female3DCG";
 	Infiltration?: InfiltrationType;
 	SavedColors?: HSVColor[];
+	/** @deprecated */
 	ChatSearchFilterTerms?: string;
 	Difficulty?: { Level: DifficultyLevel; LastChange: number };
 	MapData?: ChatRoomMapData;
@@ -119,6 +120,7 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	FriendNames?: string;
 	SubmissivesList?: string;
 	KinkyDungeonExploredLore?: unknown[];
+	KeybindingSettings?: string;
 }
 
 // TODO: Add `Lover` after figuring out why {@link ServerPlayerSync} still passes this field to the server
@@ -177,6 +179,7 @@ type ServerAccountDataSynced = Omit<ServerAccountData, "Money" | "FriendList" | 
 interface ServerOwnership {
 	MemberNumber?: number;
 	Name?: string;
+	Notes?: string;
 	Stage?: number;
 	Start?: number;
 	StartTrialOfferedByMemberNumber?: number;
@@ -249,14 +252,6 @@ type ServerChatRoomData = {
 	Game: ServerChatRoomGame;
 	Visibility: ServerChatRoomRole[];
 	Access: ServerChatRoomRole[];
-	/**
-	 * @deprecated Use {@link ServerChatRoomData.Visibility} instead, this is temporarily maintained for backwards compatibility
-	 */
-	Private: boolean; // TODO: Remove following completion of migration
-	/**
-	 * @deprecated Use {@link ServerChatRoomData.Access} instead, this is temporarily maintained for backwards compatibility
-	 */
-	Locked: boolean; // TODO: Remove following completion of migration
 	BlockCategory: ServerChatRoomBlockCategory[];
 	Language: ServerChatRoomLanguage;
 	Space: ServerChatRoomSpace;
@@ -408,10 +403,18 @@ interface ServerAccountLovershipComplete {
 
 type ServerAccountLovershipResponse = ServerAccountLovershipStatus | ServerAccountLovershipInfo | ServerAccountLovershipComplete;
 
-interface ServerAccountOwnershipRequest {
+interface ServerAccountOwnershipAcquisitionRequest {
 	MemberNumber: number;
 	Action?: "Propose" | "Accept" | "Release" | "Break";
 }
+
+interface ServerAccountOwnershipUpdateNotesRequest {
+	MemberNumber: number;
+	Action: "UpdateNotes";
+	Notes?: string;
+}
+
+type ServerAccountOwnershipRequest = ServerAccountOwnershipAcquisitionRequest | ServerAccountOwnershipUpdateNotesRequest;
 
 interface ServerAccountOwnershipStatus {
     MemberNumber: number;
@@ -469,6 +472,7 @@ type ChatRoomSearchSettings = {
 	MapTypes: string;
 	RoomMinSize: number;
 	RoomMaxSize: number;
+	FilterTerms: string;
 }
 
 interface ServerChatRoomSearchData {
@@ -486,14 +490,6 @@ interface ServerChatRoomSearchData {
     Space: ServerChatRoomSpace;
     Visibility: ServerChatRoomRole[];
 	Access: ServerChatRoomRole[];
-	/**
-	 * @deprecated Use {@link ServerChatRoomData.Visibility} instead, this is maintained for backwards compatibility
-	 */
-	Private?: boolean;
-	/**
-	 * @deprecated Use {@link ServerChatRoomData.Access} instead, this is maintained for backwards compatibility
-	 */
-	Locked?: boolean;
 	CanJoin: boolean;
     MapType: string;
 }

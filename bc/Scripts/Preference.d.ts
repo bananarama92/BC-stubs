@@ -43,18 +43,24 @@ declare function PreferenceGetFetishFactor(C: Character, Type: FetishName): Arou
 declare function PreferenceSetFetishFactor(C: Character, Type: FetishName, Factor: ArousalFactor): void;
 /**
  * Validates the character arousal object and converts it's objects to compressed string if needed
- * @param {number} Factor - The factor of enjoyability from 0 (turn off) to 4 (very high)
- * @param {boolean} Orgasm - Whether the zone can give an orgasm
+ * @param {ArousalFactor} factor - The factor of enjoyability from 0 (turn off) to 4 (very high)
+ * @param {boolean} allowOrgasm - Whether the zone can give an orgasm
  * @returns {string} - A string of 1 char that represents the compressed zone
  */
-declare function PreferenceArousalFactorToChar(Factor?: number, Orgasm?: boolean): string;
+declare function PreferenceArousalZoneToChar(factor: ArousalFactor, allowOrgasm: boolean): string;
+/**
+ * Turn a fetish factor value into its serialized character representation
+ * @param {ArousalFactor} factor - The factor of enjoyability from 0 (turn off) to 4 (very high)
+ * @returns {string} - A string of 1 char that represents the compressed zone
+ */
+declare function PreferenceArousalFetishToChar(factor: ArousalFactor): string;
 /**
  * Validates the character arousal object and converts it's objects to compressed string if needed
- * @param {number} Factor1 - The first factor of enjoyability from 0 (turn off) to 4 (very high)
- * @param {number} Factor2 - The second factor of enjoyability from 0 (turn off) to 4 (very high)
+ * @param {number} selfFactor - The first factor of enjoyability from 0 (turn off) to 4 (very high)
+ * @param {number} otherFactor - The second factor of enjoyability from 0 (turn off) to 4 (very high)
  * @returns {string} - A string of 1 char that represents the compressed zone
  */
-declare function PreferenceArousalTwoFactorToChar(Factor1?: number, Factor2?: number): string;
+declare function PreferenceArousalActivityToChar(selfFactor: number, otherFactor: number): string;
 /**
  * Gets the corresponding arousal zone definition from a player's preferences (if the group's activities are mirrored,
  * returns the arousal zone definition for the mirrored group).

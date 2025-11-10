@@ -60,10 +60,6 @@ declare function GameMagicBattleStartProcess(): void;
  * @returns {void} - Nothing
  */
 declare function GameMagicBattleClick(): void;
-/**
- * Triggered when the player exits the Magic Battle info screen.
- * @type {ScreenExitHandler}
- */
 declare function GameMagicBattleExit(): void;
 /**
  * Checks if a Magic Battle match can be launched. The player must be an admin and two different houses must be selected.

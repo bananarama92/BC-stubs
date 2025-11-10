@@ -24,11 +24,12 @@ declare function CommonGetBrowser(): {
     Version: string;
 };
 /**
- * Parses a string into a number
+ * Parses a string into an integer
  * @param {string} val The string to parse into a number
+ * @param {null | number} radix A value between 2 and 36 that specifies the base of the number in the string. Defaults to 10 if not provided
  * @returns {number | null}
  */
-declare function CommonParseNumber(val: string): number | null;
+declare function CommonParseInt(val: string, radix?: null | number): number | null;
 /**
  * Parse a CSV file content into an array
  * @param {string} str - Content of the CSV
@@ -147,11 +148,14 @@ declare function CommonSetScreen(...spec: ScreenSpecifier): Promise<void>;
  */
 declare function CommonTime(): number;
 /**
- * Checks if a given value is a valid HEX color code
+ * Checks if a given value is a valid HEX color code (optionally with alpha channel)
  * @param {string | undefined} Value - Potential HEX color code
+ * @param {null | { allowAlpha?: boolean }} [options]
  * @returns {boolean} - Returns TRUE if the string is a valid HEX color
  */
-declare function CommonIsColor(Value: string | undefined): boolean;
+declare function CommonIsColor(Value: string | undefined, options?: null | {
+    allowAlpha?: boolean;
+}): boolean;
 /**
  * Checks whether an item's color has a valid value that can be interpreted by the drawing
  * functions. Valid values are null, undefined, strings, and an array containing any of the
@@ -362,6 +366,12 @@ declare function CommonCensor(S: string): string;
  */
 declare function CommonIsObject(value: unknown): value is object;
 /**
+ * Type guard which checks that a value is a character
+ * @param {unknown} value - The value to test
+ * @returns {value is Character}
+ */
+declare function CommonIsCharacter(value: unknown): value is Character;
+/**
  * Deep-clones an object
  * @todo JSON serialization will break things like functions, Sets and Maps.
  * @template T
@@ -544,6 +554,7 @@ declare function CommonJSONParse(data: string): any;
  *
  * This returns a layout independent u/d/l/r string
  *
+ * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
  * @param {KeyboardEvent} event
  * @returns {"u"|"d"|"l"|"r"|undefined}
  */
@@ -610,7 +621,7 @@ declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: 
  * Partition the string into separate parts using the given replacer keys, replacing them with replacer values
  * @template T
  * @param {string} string
- * @param {Record<string, T>} replacers
+ * @param {Record<string, T>} replacers - An object with replacements. Note that {@link Node} elements are cloned prior to the replacement
  * @returns {(string | T)[]}
  */
 declare function CommonStringPartitionReplace<T>(string: string, replacers: Record<string, T>): (string | T)[];
@@ -673,6 +684,40 @@ declare function CommonTokenize(input: string, options?: {
  * @returns
  */
 declare function CommonFormatDuration(ms: number): string;
+/**
+ * Build and returns a range
+ * @param {number} start If {@link end} is unspecified, then this will be the end of the range, and start will be set to 0
+ * @param {number} [end] End value for the range, inclusive
+ * @param {number} [step=1]
+ * @returns {number[]}
+ */
+declare function CommonRange(start: number, end?: number, step?: number): number[];
+/**
+ * Take an array and find the first element that maps to a user-specified value, returning the mapped value.
+ *
+ * Effectively combines {@link array.find} and {@link array.map}.
+ * @template Tinp
+ * @template Tout
+ * @param {readonly Tinp[]} array - The array in question
+ * @param {(value: Tinp, index: number, obj: readonly Tinp[]) => undefined | null | Tout} predicateMapper - A mapping
+ * predicate. The first non-nullish return value will be returned by the outer function.
+ * @param {any} [thisArg] - If provided, it will be used as the this value for each invocation of
+ * predicate. If it is not provided, undefined is used instead.
+ * @returns {undefined | Tout} - The mapped value or `undefined` if no non-nullish value was found
+ */
+declare function CommonFindMap<Tinp, Tout>(array: readonly Tinp[], predicateMapper: (value: Tinp, index: number, obj: readonly Tinp[]) => undefined | null | Tout, thisArg?: any): undefined | Tout;
+/**
+ * Splice a string into a string at a specific index.
+ *
+ * The string will be automatically extended using {@link defaultValue} if the index falls outside its bounds.
+ *
+ * @param {string} string
+ * @param {number} index
+ * @param {string} value
+ * @param {string} defaultValue
+ * @returns
+ */
+declare function CommonStringSplice(string: string, index: number, value: string, defaultValue: string): string;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /**
@@ -777,13 +822,31 @@ declare namespace CommonKey {
      */
     function GetModifiers(event: KeyboardEvent): number;
     /**
-     * A {@link ScreenFunctions.keydown} helper function for implementing the navigation key handling of scrollable elements.
+     * A {@link ScreenFunctions.KeyDown} helper function for implementing the navigation key handling of scrollable elements.
+     * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
      * @param {HTMLElement} scrollableElem - The scrollable element
-     * @param {KeyboardEvent} event - The keydown event
+     * @param {KeyboardEvent} event - The `keydown` event
      * @param {(scrollableElem: HTMLElement) => number} getArrowScrollDistance - A callback for computing the (absolute) scroll distance for up/down arrow key presses
      * @returns {boolean} - Whether a navigation key was (successfuly pressed)
      */
     function NavigationKeyDown(scrollableElem: HTMLElement, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: HTMLElement) => number): boolean;
+    /**
+     * A {@link ScreenFunctions.KeyDown} helper function for automatically forwarding key presses to the passed input element.
+     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - The input or textarea element in question
+     * @param {KeyboardEvent} ev - The keydown event
+     * @param {null | { allowCtrlA?: boolean }} options
+     * @returns {boolean} - Whether the keypress was processed
+     */
+    function InputKeyDown(inputElem: HTMLInputElement | HTMLTextAreaElement, ev: KeyboardEvent, options?: null | {
+        allowCtrlA?: boolean;
+    }): boolean;
+    /**
+     * A {@link ScreenFunctions.Paste} helper function for automatically forwarding paste actions to the passed input element.
+     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - helper function for automatically forwarding paste actions to the passed input element.
+     * @param {ClipboardEvent} ev - The `paste` event
+     * @returns {void}
+     */
+    function InputPaste(inputElem: HTMLInputElement | HTMLTextAreaElement, ev: ClipboardEvent): void;
 }
 /**
  * Escapes any potential regex syntax characters in a string, and returns a new string that can be safely used as a literal pattern for the {@link RegExp} constructor.

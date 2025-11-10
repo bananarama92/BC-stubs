@@ -37,8 +37,6 @@ declare namespace CraftingJSON {
         function clickError(this: HTMLElement): void;
         function inputSearch(this: HTMLInputElement): void;
         function focusSearch(this: HTMLInputElement): void;
-        function keydownDocument(this: Document, ev: KeyboardEvent): void;
-        function pasteDocument(this: Document, ev: ClipboardEvent): void;
     }
     /**
      * Encode the passed list of crafting items into a JSON-valid object

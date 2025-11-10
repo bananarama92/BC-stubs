@@ -107,6 +107,33 @@ declare namespace TextItem {
         LayerName?: string;
         drawOptions?: DynamicDrawOptions;
     }): void;
+    /**
+     * Is equivalent to GenericTextDrawHook but arc
+     * @param {TextItemData} data
+     * @param {((drawData: DynamicDrawingData<Record<string, unknown>>) => void) | null} originalFunction
+     * @param {{C: Character; A: Asset; CA: Item; X: number; Y: number; Property: ItemProperties; drawCanvas: DrawCanvasCallback; drawCanvasBlink: DrawCanvasCallback; AlphaMasks: RectTuple[]; L: string; Color: string}} drawArgs
+     * @param {{Width?: number; Height?: number; XOffset?: number; YOffset?: number; LayerName?: string; drawOptions?: DynamicDrawOptions;}} options
+     */
+    function GenericTextArcDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData<Record<string, unknown>>) => void) | null, { C, A, CA, X, Y, Property, drawCanvas, drawCanvasBlink, AlphaMasks, L, Color, }: {
+        C: Character;
+        A: Asset;
+        CA: Item;
+        X: number;
+        Y: number;
+        Property: ItemProperties;
+        drawCanvas: DrawCanvasCallback;
+        drawCanvasBlink: DrawCanvasCallback;
+        AlphaMasks: RectTuple[];
+        L: string;
+        Color: string;
+    }, { Width, Height, XOffset, YOffset, LayerName, drawOptions }: {
+        Width?: number;
+        Height?: number;
+        XOffset?: number;
+        YOffset?: number;
+        LayerName?: string;
+        drawOptions?: DynamicDrawOptions;
+    }): void;
 }
 /**
  * Throttled callback for handling text changes.

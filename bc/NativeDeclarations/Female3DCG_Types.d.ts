@@ -1050,6 +1050,10 @@ interface ExtendedItemOptionConfig {
 	PrerequisiteBuyGroup?: string;
 	/** If the option has an archetype, sets the config to use */
 	ArchetypeConfig?: null | AssetArchetypeConfig;
+	DrawOptions?: {
+		Mirror?: boolean;
+		Invert?: boolean;
+	}
 }
 
 /** Defines a single (fully parsed) extended item option */

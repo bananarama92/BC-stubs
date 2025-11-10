@@ -692,6 +692,7 @@ declare function ChatRoomProcessSlowLeave(): void;
 declare function ChatRoomLeave(clearCharacters?: boolean): void;
 declare function ChatRoomCommonKeyDown(event: KeyboardEvent): boolean;
 declare function ChatRoomKeyDown(event: KeyboardEvent): boolean;
+declare function ChatRoomPaste(event: ClipboardEvent): void;
 declare function ChatRoomKeyUp(event: KeyboardEvent): boolean;
 /**
  * Scroll through the chat history
@@ -745,6 +746,7 @@ declare function ChatRoomSendEmote(msg: string): void;
 /**
  * Sends message as attempt emote. Emote can be failed or succeeded.
  * @param {string} msg - Emote message
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function ChatRoomSendAttemptEmote(msg: string): void;
@@ -1186,25 +1188,36 @@ declare function ChatRoomCurrentTime(): string;
  * Adds or removes an online member to/from a specific list. (From the dialog menu)
  * @param {"Add" | "Remove"} Operation - Operation to perform.
  * @param {"WhiteList" | "FriendList" | "BlackList" | "GhostList" | "DrawFocusList"} ListType - Name of the list to alter. (Whitelist, friendlist, blacklist, ghostlist, drawfocuslist)
+ * @param {string} [notification] - used to send notifications
  * @returns {void} - Nothing
  */
-declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: "WhiteList" | "FriendList" | "BlackList" | "GhostList" | "DrawFocusList"): void;
+declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: "WhiteList" | "FriendList" | "BlackList" | "GhostList" | "DrawFocusList", notification?: string): void;
 /**
  * Adds or removes an online member to/from a specific list from a typed message.
- * @param {number[]|null} List - List to add to or remove from.
+ * @param {number[]} List - List to add to or remove from.
  * @param {boolean} Adding - If TRUE adding to the list, if FALSE removing from the list.
  * @param {string} Argument - Member number to add/remove.
+ * @param {string} [notification] - used to send notifications
+ * @deprecated Use {@link ChatRoomListUpdate}
  * @returns {void} - Nothing
  */
-declare function ChatRoomListManipulation(List: number[] | null, Adding: boolean, Argument: string): void;
+declare function ChatRoomListManipulation(List: number[], Adding: boolean, Argument: string, notification?: string): void;
+/**
+ * Sends a notification message when a friend request is received.
+ * @param {Character} SenderCharacter - The character who sent the request.
+ * @param {ServerChatRoomMessage} data - The chat message data.
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomFriendMessage(SenderCharacter: Character, data: ServerChatRoomMessage): void;
 /**
  * Updates character lists for the player and saves the change
  * @param {number[]} list - The array of member numbers to update
  * @param {boolean} adding - If TRUE adding to the list, if FALSE removing from the list
  * @param {number} memberNumber - The member number to add/remove
+ * @param {String} [notification] - used to send notifications
  * @returns {void} - Nothing
  */
-declare function ChatRoomListUpdate(list: number[], adding: boolean, memberNumber: number): void;
+declare function ChatRoomListUpdate(list: number[], adding: boolean, memberNumber: number, notification?: string): void;
 /**
  * Adds a list of character(s) into the Focus List
  * @param {Character[]} characters - Characters to add
@@ -1778,3 +1791,5 @@ declare var ChatRoomMessageExtractors: ChatRoomMessageExtractor[];
  * @type {ChatRoomMessageHandler[]}
  * */
 declare var ChatRoomMessageHandlers: ChatRoomMessageHandler[];
+/** @type {Map<string, number>} */
+declare const ChatRoomLastFriendRequest: Map<string, number>;

@@ -66,15 +66,3 @@ declare var PreferenceArousalFetishList: null | FetishName[];
 declare var PreferenceArousalFetishIndex: number;
 /** @type {ArousalFactor} */
 declare var PreferenceArousalFetishFactor: ArousalFactor;
-/**
- * By default on new characters, all activities are neutral on self and others
- * */
-declare var PreferenceArousalActivityDefaultCompressedString: string;
-/**
- * By default on new characters, all zones are of neutral preference and vulva/clit/butt can trigger an orgasm
- */
-declare var PreferenceArousalZoneDefaultCompressedString: string;
-/**
- * By default on new characters, all festishes are of neutral preference
- */
-declare var PreferenceArousalFetishDefaultCompressedString: string;

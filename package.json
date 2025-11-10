@@ -1,6 +1,6 @@
 {
   "name": "bc-stubs",
-  "version": "121.0.0",
+  "version": "122.0.0-Beta.1",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/bananarama92/BC-stubs.git"
@@ -20,5 +20,5 @@
   "dependencies": {
     "socket.io-client": "4.6.1"
   },
-  "typeScriptVersion": "^5.7.3"
+  "typeScriptVersion": "^5.9.3"
 }
