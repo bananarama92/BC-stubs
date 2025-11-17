@@ -27,6 +27,12 @@ declare function ElementContent(ID: string | null, Content?: string): string;
  */
 declare function ElementCreate<T extends keyof HTMLElementScalarTagNameMap>(options: HTMLOptions<T>): HTMLElementTagNameMap[T];
 /**
+ * Convert the list of passed HTML option children into a list of nodes and/or string
+ * @param {HTMLOptions<any>["children"]} children
+ * @returns {(string | Node)[]}
+ */
+declare function ElementParseChildren(children: HTMLOptions<any>["children"]): (string | Node)[];
+/**
  * Creates a new from element in the main document.
  *
  * @param {string | null} ID - The id of the form to create
@@ -79,17 +85,18 @@ declare function ElementCreateRangeInput(id: string | null, value: number, min: 
 /**
  * Construct a `<select>`-based dropdown menu.
  * @param {string | null} id - The name of the select item.
- * @param {readonly (string | Omit<HTMLOptions<"option">, "tag">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
+ * @param {readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
  * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
- * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number }} [options] - Additional `<select>`-specific properties
+ * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number, name?: string }} [options] - Additional `<select>`-specific properties
  * @param {null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
  * @returns {HTMLSelectElement} - The created element
  */
-declare function ElementCreateDropdown(id: string | null, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag">)[], onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
+declare function ElementCreateDropdown(id: string | null, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[], onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
     required?: boolean;
     multiple?: boolean;
     disabled?: boolean;
     size?: number;
+    name?: string;
 }, htmlOptions?: null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>): HTMLSelectElement;
 /**
  * Creates a new div element in the main document. Does not create a new element if there is already an existing one with the same ID
@@ -406,10 +413,11 @@ declare namespace ElementButton {
      * @private
      * @param {string} id
      * @param {string} [img]
+     * @param {string} [imgColor]
      * @param {Omit<HTMLOptions<"img">, "tag">} [options]
-     * @returns {HTMLImageElement}
+     * @returns {HTMLImageElement | HTMLDivElement}
      */
-    function _ParseImage(id: string, img?: string, options?: Omit<HTMLOptions<"img">, "tag">): HTMLImageElement;
+    function _ParseImage(id: string, img?: string, imgColor?: string, options?: Omit<HTMLOptions<"img">, "tag">): HTMLImageElement | HTMLDivElement;
     /**
      * @private
      * @param {string} id
@@ -484,6 +492,16 @@ declare namespace ElementButton {
     function ReloadAssetIcons(button: HTMLButtonElement, asset: Asset | Item, C: null | Character): boolean;
 }
 declare namespace ElementMenu {
+    export let _observers: WeakMap<Element, MutationObserver>;
+    /**
+     * @private
+     * @satisfies {MutationCallback}
+     * @param {readonly { addedNodes: readonly Node[] | NodeList, target: Node }[]} mutationList
+     */
+    export function _osbserverCallback(mutationList: readonly {
+        addedNodes: readonly Node[] | NodeList;
+        target: Node;
+    }[]): void;
     export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;
     export { _KeyDown_1 as _KeyDown };
     /**
@@ -519,12 +537,14 @@ declare namespace ElementMenu {
      * Append a menuitem to the passed menubar
      * @param {HTMLElement} menu - The menubar
      * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
+     * @deprecated - Fully equivalent to {@link HTMLElement.append}
      */
     export function AppendButton(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
     /**
      * Prepend a menuitem to the passed menubar
      * @param {HTMLElement} menu - The menubar
      * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
+     * @deprecated - Fully equivalent to {@link HTMLElement.prepend}
      */
     export function PrependItem(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
 }
@@ -550,9 +570,9 @@ declare namespace ElementCheckbox {
      * @param {string | Node | HTMLOptions<keyof HTMLElementTagNameMap>} label - The label of the checkbox
      * @param {null | ((this: HTMLInputElement, ev: Event) => any)} onChange - The change event listener to-be fired upon checkbox clicks
      * @param {null | ElementCheckbox.LabelOptions} options - High level options for the to-be created checkbox
-     * @param {null | Partial<Record<"checkbox" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @param {null | Partial<Record<"checkbox" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
      */
-    function CreateLabelled(id: null | string, label: string | Node | HTMLOptions<keyof HTMLElementTagNameMap>, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.LabelOptions, htmlOptions?: null | Partial<Record<"checkbox" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
+    function CreateLabelled(id: null | string, label: string | Node | HTMLOptions<keyof HTMLElementTagNameMap>, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.LabelOptions, htmlOptions?: null | Partial<Record<"checkbox" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
 }
 declare namespace ElementSwipe {
     /**
@@ -588,12 +608,16 @@ declare namespace ElementDOMScreen {
      *         <p role="status" />
      *     </hgroup>
      *
-     *     <!--
-     *         The third and final row: a scrollable section with the main content of the screen.
-     *         As a rule of thumb, it is recommended to embed the immediate child elements into some sort of
-     *         grouping element like `<fieldset>`, `<section>` and/or `<article>`.
-     *     -->
-     *     <main class="screen-main" />
+     *     <div class="screen-main-container">
+     *         <aside class="screen-aside-l" />
+     *         <!--
+     *             The third and final row: a scrollable section with the main content of the screen.
+     *             As a rule of thumb, it is recommended to embed the immediate child elements into some sort of
+     *             grouping element like `<fieldset>`, `<section>` and/or `<article>`.
+     *         -->
+     *         <main class="screen-main" />
+     *         <aside class="screen-aside-r" />
+     *     </div>
      * </div>
      * @param {string} id - The ID of the screen
      * @param {null | ElementDOMScreen.TemplateOptions} options - Further customization options
@@ -611,9 +635,129 @@ declare namespace ElementDOMScreen {
     function _setStatusTimerHandler(headingElem: Element, statusElem: Element): void;
     /**
      * Set a temporary status message for the screen.
-     * @param {HTMLElement} root The screen on which the status is the be set; it _must_ contain a single `h1` and `[role='status']` element
-     * @param {string} status The to-be displayed status message
+     * @param {ElementHelp.ElementOrId} root The screen on which the status is the be set; it _must_ contain a single `h1` and `[role='status']` element
+     * @param {string | Element | readonly (string | Element)[]} status The to-be displayed status message
      * @param {number} timeout How long the status message should be shown in ms; defaults to 5000 ms
      */
-    function setStatus(root: HTMLElement, status: string, timeout?: number): void;
+    function setStatus(root: ElementHelp.ElementOrId, status: string | Element | readonly (string | Element)[], timeout?: number): void;
+    /**
+     * Set the persistent heading of a screen.
+     * @param {ElementHelp.ElementOrId} root The screen on which the heading is the be set
+     * @param {string | Element | readonly (string | Element)[]} heading The to-be displayed heading content. Note that headings may only ever contain [flow content](https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Content_categories#flow_content)
+     */
+    function setHeading(root: ElementHelp.ElementOrId, heading: string | Element | readonly (string | Element)[]): void;
+}
+/**
+ * HTML element for color tint pickers, functioning as some kind of 2D `<input type='range'>` input for selecting the color's saturation and brightness.
+ */
+declare class HTMLColorTintElement extends HTMLElement {
+    static observedAttributes: string[];
+    static formAssociated: boolean;
+    /** @type {null | ElementInternals} */
+    internals_: null | ElementInternals;
+    /**
+     * @private
+     * @type {null | string}
+     */
+    private _pressedOldValue;
+    connectedCallback(): void;
+    /**
+     * Sets or retrieves the initial contents of the object.
+     *
+     * See {@link HTMLInputElement.defaultValue}
+     * @type {string}
+     */
+    defaultValue: string;
+    set value(value: string);
+    /**
+     * Sets or retrieves the initial contents of the object.
+     *
+     * See {@link HTMLInputElement.value}
+     * @type {string}
+     */
+    get value(): string;
+    /**
+     * @param {string} name
+     * @param {null | string} oldValue
+     * @param {null | string} newValue
+     */
+    attributeChangedCallback(name: string, oldValue: null | string, newValue: null | string): void;
+    set disabled(value: boolean);
+    /**
+     * See {@link HTMLInputElement.disabled}
+     * @type {boolean}
+     */
+    get disabled(): boolean;
+    set hue(value: number);
+    /**
+     * Get or set the color hue on a scale of 0 to 360.
+     * @type {number}
+     */
+    get hue(): number;
+    set valueAsHSV(value: HSVColor);
+    /**
+     * Get or set the color {@link value} via an object with [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV) color values.
+     * All HSV values are expected to be normalized to the `[0, 1]` range.
+     * @type {HSVColor}
+     */
+    get valueAsHSV(): HSVColor;
+    set saturation(value: number);
+    /**
+     * Get or set the color saturation on a scale of 0 to 255.
+     * @type {number}
+     */
+    get saturation(): number;
+    set brightness(value: number);
+    /**
+     * Get or set the color brightness on a scale of 0 to 255.
+     * @type {number}
+     */
+    get brightness(): number;
+    /**
+     * Returns the error message that would be displayed if the user submits the form, or an empty string if no error message.
+     * It also triggers the standard error message, such as "this is a required field".
+     * The result is that the user sees validation messages without actually submitting.
+     *
+     * See {@link HTMLInputElement.validationMessage}
+     * @type {string}
+     */
+    get validationMessage(): string;
+    /**
+     * Returns a ValidityState object that represents the validity states of an element.
+     *
+     * See {@link HTMLInputElement.validity}
+     * @returns {ValidityState}
+     */
+    get validity(): ValidityState;
+    /**
+     * See {@link HTMLInputElement.reportValidity}
+     * @returns {boolean}
+     */
+    reportValidity(): boolean;
+    /**
+     * @private
+     * @type {Readonly<HSVColor>}
+     */
+    private _value;
+    set name(value: string);
+    /**
+     * Sets or retrieves the name of the object.
+     *
+     * See {@link HTMLInputElement.name}
+     * @type {string}
+     */
+    get name(): string;
+    /**
+     * Set the position the knob
+     * @private
+     * @param {number} left - The relative left position on a scale of 0-100
+     * @param {number} top - The relative top position on a scale of 0-100
+     */
+    private _setKnobPosition;
+    /**
+     * Get the position the knob
+     * @private
+     * @returns {{ left: number, top: number }} - The position of the knob on a scale of 0-100
+     */
+    private _getKnobPosition;
 }

@@ -15,17 +15,15 @@ declare function InformationSheetSecondScreenRun(): void;
  * @returns {void} - Nothing
  */
 declare function InformationSheetClick(): void;
-/**
- * Cleanup all elements, if the user exits the screen
- * @type {ScreenExitHandler}
- */
 declare function InformationSheetExit(): void;
+declare function InformationSheetUnload(): void;
 /**
  * Loads the information sheet for a character
  * @param {Character} C - The character whose information sheet should be displayed
  * @returns {void} - Nothing
  */
 declare function InformationSheetLoadCharacter(C: Character): void;
+declare function InformationSheetResize(): void;
 declare var InformationSheetBackground: string;
 /** @type {null | Character | NPCCharacter} */
 declare var InformationSheetSelection: null | Character | NPCCharacter;

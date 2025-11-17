@@ -367,6 +367,12 @@ declare function ExtendedItemSetOptionByRecord(C: Character, itemOrGroupName: As
  */
 declare function ExtendedItemTypeToRecord(asset: Asset, type: null | string): TypeRecord;
 /**
+ * Collect draw options for an item, given its current configuration
+ * @param {Item} item
+ * @returns {ExtendedItemOptionConfig["DrawOptions"]}
+ */
+declare function ExtendedItemGetDrawingOptions(item: Item): ExtendedItemOptionConfig["DrawOptions"];
+/**
  * Utility file for handling extended items
  */
 /**

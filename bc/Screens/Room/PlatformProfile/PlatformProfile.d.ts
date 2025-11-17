@@ -56,8 +56,4 @@ declare function PlatformProfileResetPerk(): void;
  * @returns {void} - Nothing
  */
 declare function PlatformProfileClick(): void;
-/**
- * When the screens exits, we unload the listeners
- * @type {ScreenExitHandler}
- */
 declare function PlatformProfileExit(): void;

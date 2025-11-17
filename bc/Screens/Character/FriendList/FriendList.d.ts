@@ -5,7 +5,6 @@ declare function FriendListDraw(): void;
 declare function FriendListClick(event: MouseEvent | TouchEvent): void;
 declare function FriendListKeyDown(event: KeyboardEvent): boolean;
 declare function FriendListUnload(): void;
-/** @type {ScreenExitHandler} */
 declare function FriendListExit(): void;
 /**
  * Creates beep message menu

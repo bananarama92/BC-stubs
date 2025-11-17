@@ -1,4 +1,16 @@
 /**
+ * Sanitize the color of the passed item, returning an array of valid color strings and of length {@link Asset.ColorableLayerCount}.
+ * @param {Item} item - The item whose colors are to be validated
+ * @returns {string[]} - The validated colors returned as array
+ */
+declare function ItemColorSanitizeColor(item: Item): string[];
+/**
+ * Sanitize the properties of the passed item in relation to any and all color & opacity related fields.
+ * @param {Item} item - The item whose properties are to be validated
+ * @returns {ItemColorProperties} - The validated item properties
+ */
+declare function ItemColorSanitizeProperty(item: Item): ItemColorProperties;
+/**
  * Loads the item color UI with the provided character, item and positioning parameters.
  * @param {Character} c - The character being colored
  * @param {Item} item - The item being colored
@@ -7,9 +19,10 @@
  * @param {number} width - The width the UI should be drawn at
  * @param {number} height - The height the UI should be drawn at
  * @param {boolean} [includeResetButton] - Whether or not to include the "Reset to default" button
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
+ * @satisfies {ScreenLoadHandler}
  */
-declare function ItemColorLoad(c: Character, item: Item, x: number, y: number, width: number, height: number, includeResetButton?: boolean): void;
+declare function ItemColorLoad(c: Character, item: Item, x: number, y: number, width: number, height: number, includeResetButton?: boolean): Promise<void>;
 /**
  * Draws the item color UI according to its current state
  * @param {Character} c - The character being colored
@@ -18,10 +31,9 @@ declare function ItemColorLoad(c: Character, item: Item, x: number, y: number, w
  * @param {number} y - The y-coordinate at which to draw the UI
  * @param {number} width - The width the UI should be drawn at
  * @param {number} height - The height the UI should be drawn at
- * @param {boolean} includeResetButton - Whether or not to include the "Reset to default" button
  * @returns {void} - Nothing
  */
-declare function ItemColorDraw(c: Character, group: AssetGroupName, x: number, y: number, width: number, height: number, includeResetButton: boolean): void;
+declare function ItemColorDraw(c: Character, group: AssetGroupName, x: number, y: number, width: number, height: number): void;
 /**
  * Draws the item color UI in default mode
  * @param {number} x - The x-coordinate at which to draw the default UI
@@ -37,18 +49,18 @@ declare function ItemColorDrawDefault(x: number, y: number): void;
  * @param {number} y - The y-coordinate at which the UI was drawn
  * @param {number} width - The width with which the UI was drawn
  * @param {number} height - The height with which the UI was drawn
- * @param {boolean} includeResetButton - Whether or not to include the "Reset to default" button
  * @returns {void} - Nothing
  */
-declare function ItemColorClick(c: Character, group: AssetGroupName, x: number, y: number, width: number, height: number, includeResetButton: boolean): void;
+declare function ItemColorClick(c: Character, group: AssetGroupName, x: number, y: number, width: number, height: number): void;
 /**
  * Click handler for the item color UI when it's in default mode
  * @param {number} x - The x-coordinate at which the default UI was drawn
  * @param {number} y - The y-coordinate at which the default UI was drawn
  * @param {number} width - The width with which the default UI was drawn
+ * @param {Readonly<RectTuple>} shape - The shape of the color picker
  * @returns {void} - Nothing
  */
-declare function ItemColorClickDefault(x: number, y: number, width: number): void;
+declare function ItemColorClickDefault(x: number, y: number, width: number, shape: Readonly<RectTuple>): void;
 /**
  * Handles pagination clicks on the item color UI
  * @returns {void} - Nothing
@@ -75,6 +87,11 @@ declare function ItemColorCancelAndExit(): void;
  */
 declare function ItemColorSaveClick(): void;
 /**
+ * Revert the {@link ItemColorItem} colors and opacity.
+ * @param {"initial" | "default"} type - The type of revertion: the initial state prior to opening the color picker or the assets default
+ */
+declare function ItemColorRevert(type: "initial" | "default"): void;
+/**
  * Handles color picker cancellation clicks when the item color UI is in color picker mode
  * @returns {void} - Nothing
  */
@@ -95,9 +112,10 @@ declare function ItemColorGetColorIndices(colorGroup: ColorGroup): number[];
 /**
  * Toggles the item color UI into color picker mode
  * @param {ColorGroup} colorGroup - The color group that is being colored
- * @returns {void} - Nothing
+ * @param {null | ColorPickerInitOptions} options - Further load options to be passed along to {@link ColorPickerInit}
+ * @returns {Promise<HTMLElement>} - The root element of the color picker subscreen
  */
-declare function ItemColorOpenPicker(colorGroup: ColorGroup): void;
+declare function ItemColorOpenPicker(colorGroup: ColorGroup, options?: null | ColorPickerInitOptions): Promise<HTMLElement>;
 /**
  * Cycles a color group's color to the next color in the asset group's color schema, or to "Default" if the color group is not currently
  * colored with a single color from the color schema
@@ -132,10 +150,9 @@ declare function ItemColorGetGroups(item: Item, colorableLayers: readonly AssetL
  * @param {number} y - The y-coordinate at which to draw the UI
  * @param {number} width - The width the UI should be drawn at
  * @param {number} height - The height the UI should be drawn at
- * @param {boolean} [includeResetButton=false] - Whether or not to include the "Reset to default" button
  * @returns {void} - Nothing
  */
-declare function ItemColorStateBuild(c: Character, item: Item, x: number, y: number, width: number, height: number, includeResetButton?: boolean): void;
+declare function ItemColorStateBuild(c: Character, item: Item, x: number, y: number, width: number, height: number): void;
 /**
  * Returns layers of the asset which can be given distinct colors
  * @param {Item} item - The item to be colored
@@ -164,10 +181,10 @@ declare function ItemColorGetColorButtonTextKey(color: string | readonly string[
 declare function ItemColorGetColorButtonText(color: string | readonly string[]): string;
 /**
  * Registers an exit callback to the item color UI which will be called when the UI is exited.
- * @param {itemColorExitListener} callback - The exit listener to register
+ * @param {ItemColorExitListener} callback - The exit listener to register
  * @returns {void} - Nothing
  */
-declare function ItemColorOnExit(callback: itemColorExitListener): void;
+declare function ItemColorOnExit(callback: ItemColorExitListener): void;
 /**
  * Handles exiting the item color UI. Appropriate text caches are dropped, and any registered exit listeners are called.
  * @param {boolean} save - Whether or not the appearance changes applied by the item color UI should be saved
@@ -197,36 +214,52 @@ declare namespace ItemColorMode {
     let DEFAULT: "Default";
     let COLOR_PICKER: "ColorPicker";
 }
-/** @type {Character} */
-declare let ItemColorCharacter: Character;
-/** @type {Item} */
-declare let ItemColorItem: Item;
-/** @type {ItemColorMode} */
-declare let ItemColorCurrentMode: ItemColorMode;
-/** @type {string} */
-declare let ItemColorStateKey: string;
-/** @type {ItemColorStateType} */
-declare let ItemColorState: ItemColorStateType;
+/** @type {null | Character} */
+declare let ItemColorCharacter: null | Character;
+/** @type {null | ItemColorItem} */
+declare let ItemColorItem: null | ItemColorItem;
+/** @type {null | ItemColorMode} */
+declare let ItemColorCurrentMode: null | ItemColorMode;
+/** @type {null | string} */
+declare let ItemColorStateKey: null | string;
+/** @type {null | ItemColorStateType} */
+declare let ItemColorState: null | ItemColorStateType;
 /** @type {number} */
 declare let ItemColorPage: number;
 /** @type {Record<string, number>} */
 declare let ItemColorLayerPages: Record<string, number>;
-/** @type {string} */
-declare let ItemColorPickerBackup: string;
-/** @type {number[]} */
+/** @type {null | string} */
+declare let ItemColorPickerBackup: null | string;
+/**
+ * The indices of to-be colored layers within a {@link Item.Color}/{@link ItemColorGetColorableLayers}-returned array.
+ *
+ * Note that these layers (and their indices) belong to a colorable _subset_ of {@link Asset.Layer}.
+ * @type {number[]}
+ */
 declare let ItemColorPickerIndices: number[];
-/** @type {itemColorExitListener[]} */
-declare let ItemColorExitListeners: itemColorExitListener[];
-/** @type {string} */
-declare let ItemColorBackup: string;
+/**
+ * The {@link Asset.Layer} indices of to-be colored layers mapped to their respective layer.
+ * @type {Map<number, AssetLayer>}
+ */
+declare const ItemColorPickerLayers: Map<number, AssetLayer>;
+/** @type {ItemColorExitListener[]} */
+declare let ItemColorExitListeners: ItemColorExitListener[];
+/** @type {null | string} */
+declare let ItemColorBackup: null | string;
 declare let ItemColorText: TextCache;
-/** @type {TextCache} */
-declare let ItemColorLayerNames: TextCache;
-/** @type {TextCache} */
-declare let ItemColorGroupNames: TextCache;
+/** @type {null | TextCache} */
+declare let ItemColorLayerNames: null | TextCache;
+/** @type {null | TextCache} */
+declare let ItemColorGroupNames: null | TextCache;
+/**
+ * All (hex code) colors used within the current lifetime of the ItemColor subscreen.
+ * @type {Set<HexColor>}
+ */
+declare const ItemColorHistory: Set<HexColor>;
 /**
  * A debounced callback for when the item color picker changes its value. This sets the color for the currently selected set of color
  * indices
+ * @deprecated - Superseded by {@link ColorPicker.eventListeners.inputItemColor}
  * @type {(color: string) => void}
  */
 declare const ItemColorOnPickerChange: (color: string) => void;

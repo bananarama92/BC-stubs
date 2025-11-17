@@ -291,6 +291,8 @@ declare var ServerCharacterNameRegex: RegExp;
 declare var ServerCharacterNicknameRegex: RegExp;
 declare var ServerChatMessageMaxLength: number;
 declare var ServerChatRoomDescriptionMaxLength: number;
+/** @type {ServerChatRoomLanguage[]} */
+declare const ServerChatRoomSupportedLanguages: ServerChatRoomLanguage[];
 declare const ServerScriptMessage: string;
 declare const ServerScriptWarningStyle: string;
 /** @readonly */
@@ -341,6 +343,51 @@ declare var ServerSendRateLimitInterval: number;
 declare const ServerSendRateLimitQueue: SendRateLimitQueueItem[];
 /** @type {number[]} */
 declare let ServerSendRateLimitTimes: number[];
+declare namespace ServerValidation {
+    /**
+     * Private helper to quickly check boolean settings
+     * @param {boolean} defaultValue
+     * @returns {(arg: boolean) => boolean}
+     */
+    function isBool(defaultValue: boolean): (arg: boolean) => boolean;
+    /**
+     * Private helper to quickly check items in lists
+     * @template T
+     * @param {T[]} list
+     * @param {T} defaultValue
+     * @returns {(arg: unknown) => T}
+     */
+    function isItem<T>(list: T[], defaultValue: T): (arg: unknown) => T;
+    /**
+     * Private helper to quickly check numbers
+     * @template {number} T
+     * @param {number} min
+     * @param {number} max
+     * @param {T} defaultValue
+     * @returns {(arg: T) => T}
+     */
+    function isInt<T extends number>(min: number, max: number, defaultValue: T): (arg: T) => T;
+    /**
+     * Private helper to quickly check strings
+     * @param {number} maxLength
+     * @param {string} defaultValue
+     * @returns {(arg: any) => string}
+     */
+    function isString(maxLength: number, defaultValue: string): (arg: any) => string;
+    /**
+     * Private helper to quickly check strings
+     * @param {number} maxLength
+     * @param {string|undefined} defaultValue
+     * @returns {(arg: any) => string | undefined}
+     */
+    function isStringOrUndefined(maxLength: number, defaultValue: string | undefined): (arg: any) => string | undefined;
+    /**
+     * Private helper to quick check notification settings
+     * @param {NotificationSetting} defaultNotif
+     * @returns {(arg: NotificationSetting) => NotificationSetting}
+     */
+    function isValidNotification(defaultNotif: NotificationSetting): (arg: NotificationSetting) => NotificationSetting;
+}
 declare namespace ServerAccountDataSyncedValidate {
     function Title(arg: Partial<TitleName>, C: Character): Partial<TitleName>;
     function Nickname(arg: string, C: Character): string;
@@ -399,6 +446,7 @@ declare namespace ServerAccountDataSyncedValidate {
     function Ownership(arg: Partial<ServerOwnership>, C: Character): {
         Name: string;
         MemberNumber: number;
+        Notes: string;
         Stage: 0 | 1;
         Start: number;
     };
@@ -410,7 +458,14 @@ declare namespace ServerAccountDataSyncedValidate {
     function WhiteList(arg: number[], C: Character): number[];
     function BlackList(arg: number[], C: Character): number[];
     function MapData(arg: Partial<ChatRoomMapData>, C: Character): ChatRoomMapData;
+    function ChatSearchSettings(arg: ServerAccountDataSynced["ChatSearchSettings"], C: Character): ServerAccountDataSynced["ChatSearchSettings"];
 }
+/**
+ * Namespace with default values for {@link ChatRoomSearchSettings} properties.
+ * @type {{ [k in keyof Required<ChatRoomSearchSettings>]: (arg: ChatRoomSearchSettings[k], C: Character) => ChatRoomSearchSettings[k] }}
+ * @namespace
+ */
+declare const ServerChatRoomSearchSettingsValidate: { [k in keyof Required<ChatRoomSearchSettings>]: (arg: ChatRoomSearchSettings[k], C: Character) => ChatRoomSearchSettings[k]; };
 type ServerChatRoomChecksOptions = {
     screen?: string;
     callback?: () => boolean;

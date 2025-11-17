@@ -1117,7 +1117,6 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
     Draw(): void;
     Run(time: number): void;
     Resize(load: boolean): void;
-    /** @type {ScreenExitHandler} */
     Exit(): void;
     KeyDown(event: KeyboardEvent): boolean;
     /**
@@ -1418,6 +1417,7 @@ declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLi
     private _mobileTimeoutID;
     /**
      * @private
+     * @param {Character} C
      * @satisfies {TimerHandler}
      */
     private _mobileTimeoutHandler;

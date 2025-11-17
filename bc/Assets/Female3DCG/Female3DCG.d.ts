@@ -17,6 +17,7 @@ declare namespace E {
     let Tethered: "Tethered";
     let Enclose: "Enclose";
     let MapImmobile: "MapImmobile";
+    let MapSwim: "MapSwim";
     let OneWayEnclose: "OneWayEnclose";
     let OnBed: "OnBed";
     let Lifted: "Lifted";

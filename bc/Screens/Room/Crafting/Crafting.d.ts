@@ -29,6 +29,8 @@ declare function CraftingUpdatePreview(): void;
  */
 declare function CraftingRun(): void;
 declare function CraftingResize(load: boolean): void;
+declare function CraftingKeyDown(event: KeyboardEvent): boolean;
+declare function CraftingPaste(event: ClipboardEvent): void;
 declare function CraftingUnload(): void;
 /**
  * Update {@link CraftingSelectedItem.ItemProperties} with a select few properties from the passed item.

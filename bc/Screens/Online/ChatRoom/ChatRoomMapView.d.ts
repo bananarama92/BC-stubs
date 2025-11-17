@@ -160,12 +160,12 @@ declare function ChatRoomMapViewGetTileAtPos(X: number, Y: number): ChatRoomMapT
  */
 declare function ChatRoomMapViewGetObjectAtPos(X: number, Y: number): ChatRoomMapObject | null;
 /**
- * Returns TRUE if there's a wall path on the X, Y position that the player can enter
+ * Returns TRUE if a given position cannot be entered
  * @param {number} X - The X position on the map
  * @param {number} Y - The Y position on the map
- * @returns {boolean} - TRUE if we can enter
+ * @returns {boolean} - TRUE if the position is blocked
  */
-declare function ChatRoomMapViewCanEnterWall(X: number, Y: number): boolean;
+declare function ChatRoomMapViewPositionIsBlocked(X: number, Y: number): boolean;
 /**
  * Returns TRUE if the fog of war feature is currently activated on the map
  * @returns {boolean} - TRUE if fog of war is active
