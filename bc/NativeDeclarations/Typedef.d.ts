@@ -525,7 +525,7 @@ type EffectName =
 	GagEffectName | BlindEffectName | BlurEffectName | DeafEffectName |
 	"Freeze" | "BlockWardrobe" | "Block" | "Mounted" |
 	"CuffedFeet" | "CuffedLegs" | "CuffedArms" | "IsChained" | "FixedHead" | "MergedFingers" |
-	"Shackled" | "Tethered" | "MapImmobile" | "Enclose" | "OneWayEnclose" | "OnBed" | "Lifted" | "Suspended" |
+	"Shackled" | "Tethered" | "MapImmobile" | "MapSwim" | "Enclose" | "OneWayEnclose" | "OnBed" | "Lifted" | "Suspended" |
 	"Slow" | "FillVulva" | "VulvaShaft" | "IsPlugged" |
 	"Egged" | "Vibrating" | "ForcedErection" |
 	"Edged" | "DenialMode" | "RuinOrgasms" |
@@ -3884,6 +3884,22 @@ interface StruggleCompletionData {
 }
 
 type StruggleCompletionCallback = (character: Character, game: StruggleKnownMinigames, data: StruggleCompletionData) => void;
+
+interface StruggleOnlineData {
+	Timer: number;
+	Start: number;
+	LastRun: number;
+	Progress: number;
+	Difficulty: number;
+	AllowLoosen: boolean;
+	LoosenMode: boolean;
+	Item: Item;
+	NextAnim: number;
+	StartExpressionEyes: ExpressionName; // technically ExpressionNameMap["Eyes"];
+	StartExpressionBlush: ExpressionName;
+	StartExpressionMouth: ExpressionName;
+	StartExpressionEyebrows: ExpressionName;
+}
 
 // #endregion
 

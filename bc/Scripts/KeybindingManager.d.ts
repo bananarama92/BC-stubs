@@ -1,10 +1,12 @@
 declare class KeybindManager {
-    /** @type {Map<string, Keybindings.Keybinding>} */
-    keybindings: Map<string, Keybindings.Keybinding>;
-    /** @type {Map<string, Keybindings.Category>} */
-    categories: Map<string, Keybindings.Category>;
-    /** @type {Map<string, Keybindings.Context>} */
-    contexts: Map<string, Keybindings.Context>;
+    /** @private @type {Map<string, Keybindings.Keybinding>} */
+    private keybindings;
+    /** @private @type {Map<string, Keybindings.Category>} */
+    private categories;
+    /** @private @type {Map<string, Keybindings.Context>} */
+    private contexts;
+    /** @private @type {Map<string, Keybindings.UninitializedKeybinding>} */
+    private uninitializedKeybindings;
     /**
      * Registers a new keybinding category.
      * Categories are sorted alphabetically by name after insertion.
@@ -22,6 +24,12 @@ declare class KeybindManager {
      */
     getCategory(id: string): Keybindings.Category;
     /**
+     * Returns the user-visible name of a category
+     * @param {Keybindings.Category["id"]} id
+     * @returns {string}
+     */
+    getCategoryLabel(id: Keybindings.Category["id"]): string;
+    /**
      * Returns all registered categories.
      *
      * @returns {Keybindings.Category[]}
@@ -38,16 +46,27 @@ declare class KeybindManager {
     /**
      * Returns a context by ID.
      *
-     * @param {string} id
+     * @param {Keybindings.ContextId} id
      * @returns {Keybindings.Context}
      */
-    getContext(id: string): Keybindings.Context;
+    getContext(id: Keybindings.ContextId): Keybindings.Context;
+    /**
+     * Returns the user-visible name of a context
+     * @param {Keybindings.ContextId} id
+     * @returns {string}
+     */
+    getContextLabel(id: Keybindings.ContextId): string;
     /**
      * Returns all registered contexts.
      *
      * @returns {Keybindings.Context[]}
      */
     getAllContexts(): Keybindings.Context[];
+    /**
+    * @param {Keybindings.KeyCombo} combo
+    * @returns
+    */
+    _validateKeyCombo(combo: Keybindings.KeyCombo): boolean;
     /**
      * Registers a new keybinding.
      * Validates category, contexts, and key combo.
@@ -64,15 +83,25 @@ declare class KeybindManager {
      */
     getKeybinding(actionId: string): Keybindings.Keybinding;
     /**
+     * Returns the user-visible name of an action
+     * @param {string} actionId
+     * @returns {string}
+     */
+    getKeybindingActionLabel(actionId: string): string;
+    /**
+     * Returns the user-visible description of an action
+     * @param {string} actionId
+     * @returns {string}
+     */
+    getKeybindingActionDescription(actionId: string): string;
+    /**
      * Returns all keybindings.
      * Optionally includes uninitialized ones.
      *
-     * @param {{ showUninitialized: boolean }} [options]
+     * @param {{}} [options]
      * @returns {Keybindings.Keybinding[]}
      */
-    getAllKeybindings(options?: {
-        showUninitialized: boolean;
-    }): Keybindings.Keybinding[];
+    getAllKeybindings(options?: {}): Keybindings.Keybinding[];
     /**
      * Removes a keybinding by action ID.
      *
@@ -97,6 +126,12 @@ declare class KeybindManager {
      */
     handleKeyPress(event: KeyboardEvent): boolean;
     /**
+     * Returns true if the two keycombos are equal
+     * @param {Keybindings.KeyCombo} kb1
+     * @param {Keybindings.KeyCombo} kb2
+     */
+    _isKeyComboEqual(kb1: Keybindings.KeyCombo, kb2: Keybindings.KeyCombo): boolean;
+    /**
      * Extracts modifier keys from a `KeyboardEvent` into a Set.
      *
      * @param {KeyboardEvent} event
@@ -120,36 +155,44 @@ declare class KeybindManager {
      * Registers missing bindings as uninitialized placeholders.
      */
     deserialize(): void;
-    /** @param {string | Partial<Record<ServerChatRoomLanguage | "TW", string>>} raw */
-    getTranslated(raw: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>): string;
     /** @param {Keybindings.Keybinding} keybinding */
     isDefaultCombo(keybinding: Keybindings.Keybinding): boolean;
     /**
      * Completes the registration of an uninitialized keybinding.
      * Used when a binding exists in storage but not in defaults at load time.
      *
+     * @private
      * @param {Keybindings.Keybinding} keybinding
+     * @return {Keybindings.Keybinding}
      */
-    _finishUninitializedKeybinding(keybinding: Keybindings.Keybinding): void;
+    private _finishUninitializedKeybinding;
     /**
      * Checks if two modifier sets match exactly.
      *
+     * @private
      * @param {Set<Keybindings.ModifierKey>} modifiers1
      * @param {Set<Keybindings.ModifierKey>} modifiers2
      * @returns {boolean}
      */
-    _areModifiersConflicting(modifiers1: Set<Keybindings.ModifierKey>, modifiers2: Set<Keybindings.ModifierKey>): boolean;
+    private _areModifiersConflicting;
     /**
      * Checks if two context sets match exactly.
      *
+     * @private
      * @param {Set<string>} contexts1
      * @param {Set<string>} contexts2
      * @returns {boolean}
      */
-    _areContextsConflicting(contexts1: Set<string>, contexts2: Set<string>): boolean;
+    private _areContextsConflicting;
+    /**
+     * Registers an uninitialized keybinding.
+     *
+     * @private
+     * @param {Keybindings.UninitializedKeybinding} keybinding
+     */
+    private _registerUninitializedKeybinding;
 }
 declare namespace KeybindingManager {
-    let TextCache: TextCache;
     let ASCIIKeyboardMap: Readonly<{
         KeyA: "A";
         KeyB: "B";

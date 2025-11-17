@@ -1,4 +1,7 @@
 declare namespace Keybindings {
+
+	type KeyCode = keyof typeof KeybindingManager.ASCIIKeyboardMap;
+
 	/**
 	 * Represents a combination of a physical key and optional modifier keys.
 	 *
@@ -14,11 +17,22 @@ declare namespace Keybindings {
 		 * This means the value is hardware-position-based, not character-based.
 		 * See: https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values
 		 */
-		key: keyof typeof KeybindingManager.ASCIIKeyboardMap | null;
+		key: KeyCode | null;
 
 		/**
 		 * An optional set of additional keys (Shift, Alt, Ctrl)
 	 	 * that must be pressed alongside the primary key.
+		 */
+		modifiers?: Set<ModifierKey>;
+	} | {
+		/**
+		 * A layout-dependent character.
+		 */
+		char: string | null;
+
+		/**
+		 * An optional set of additional keys (Shift, Alt, Ctrl)
+			 * that must be pressed alongside the primary key.
 		 */
 		modifiers?: Set<ModifierKey>;
 	};
@@ -34,40 +48,17 @@ declare namespace Keybindings {
 	 * Contexts allow the same keybinding to behave differently depending
 	 * on active UI states or modes.
 	 */
-	type ContextId = string;
-
-	/**
-	 * Describes an executable action that can be bound to a key combination.
-	 */
-	type Action = {
-		/** Unique identifier */
-		readonly id: string;
-
-		/** User-facing label */
-		readonly name: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
-
-		/**
-		 * Function executed when triggered.
-		 * Returns `true` if handled, `false` otherwise.
-		 */
-		readonly action: (event: KeyboardEvent) => boolean | void;
-
-		/** Contexts in which the action is valid */
-		readonly contextIds: string[];
-
-		/** Optional description */
-		readonly description?: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
-	};
+	type ContextId = Context["id"];
 
 	/**
 	 * Groups related actions for easier navigation in a UI (e.g., "Editing", "Navigation").
 	 */
 	type Category = {
 		/** Unique identifier */
-		readonly id: string;
+		readonly id: "chat" | "maproom" | "navigation" | "chatroom" | "unknown";
 
 		/** User-facing label */
-		readonly name: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
+		readonly name?: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
 	};
 
 	/**
@@ -75,10 +66,10 @@ declare namespace Keybindings {
 	 */
 	type Context = {
 		/** Unique identifier */
-		readonly id: ContextId;
+		readonly id: "chat" | "always" | "isInChatRoom" | "isOnChatRoomScreen" | "isChatRoomCharacterMode" | "isChatRoomMapMode" | "isChatRoomChatFocused" | "isChatRoomChatNOTFocused" | "noModifiers";
 
 		/** User-facing label */
-		readonly name: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
+		readonly name?: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
 
 		/** Function returning true if this context should be considered active */
 		readonly prerequisite: (event: KeyboardEvent) => boolean;
@@ -92,7 +83,22 @@ declare namespace Keybindings {
 	 */
 	type Keybinding = {
 		/** Unique identifier */
-		readonly action: Action;
+		readonly id: string;
+
+		/** User-facing label */
+		readonly name?: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
+
+		/**
+		 * Function executed when triggered.
+		 * Returns `true` if handled, `false` otherwise.
+		 */
+		readonly action: (event: KeyboardEvent) => boolean | void;
+
+		/** Optional description */
+		readonly description?: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
+
+		/** Contexts in which the action is valid */
+		readonly contextIds: ContextId[];
 
 		/** Currently assigned key combo */
 		keyCombo?: KeyCombo;
@@ -105,9 +111,11 @@ declare namespace Keybindings {
 
 		/** Flag whether the binding cannot be changed by the user */
 		readonly readonly: boolean;
+	};
 
-		/** Flag whether the binding exists in storage but not in defaults at load time. Usually means it was added by mod */
-		uninitialized?: boolean;
+	type UninitializedKeybinding = {
+		id: Keybinding['id'];
+		keyCombo: KeyCombo;
 	};
 
 	/**

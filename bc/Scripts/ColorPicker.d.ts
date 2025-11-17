@@ -102,6 +102,7 @@ declare namespace ColorPicker {
     let _shapes: WeakMap<Element, Readonly<RectTuple>>;
     namespace eventListeners {
         function inputColor(this: HTMLInputElement | HTMLColorTintElement, ev: InputEvent): void;
+        function focusColor(this: HTMLInputElement, ev: FocusEvent): void;
         function blurColor(this: HTMLInputElement | HTMLColorTintElement, ev: FocusEvent): void;
         function inputFieldset(this: HTMLFieldSetElement, ev: Event): void;
         function changeRadio(this: HTMLInputElement, ev: Event): void;
