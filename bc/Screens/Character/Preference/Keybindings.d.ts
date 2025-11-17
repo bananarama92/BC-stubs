@@ -11,7 +11,7 @@ declare function PreferenceSubscreenKeybindingsExit(): boolean;
  */
 declare function PreferenceSubscreenKeybindingsKeyUp(e: KeyboardEvent): boolean;
 declare namespace KeyGUI {
-    let selectedAction: Keybindings.Keybinding["action"]["id"] | null;
+    let selectedAction: Keybindings.Keybinding["id"] | null;
     let searchingModes: ReadonlySet<KeybindingScreen.FilteringMode>;
     let currentSearchingMode: KeybindingScreen.FilteringMode;
     let showConflictsOnly: boolean;

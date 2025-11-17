@@ -67,8 +67,9 @@ declare function CommandExecute(msg: string): boolean;
 /**
  * Tries to complete the message to a command or print help about it
  * @param {string} msg - InputChat content
+ * @returns {boolean} - If the message was a command
  */
-declare function CommandAutoComplete(msg: string): void;
+declare function CommandAutoComplete(msg: string): boolean;
 /**
  *
  * @param {ICommand[]} candidates

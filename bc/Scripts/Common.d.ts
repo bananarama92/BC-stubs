@@ -810,7 +810,7 @@ declare namespace CommonKey {
      * // `Enter` with the `Ctrl` and `Shift` modifiers
      * CommonKey(event, "Enter", CommonKey.SHIFT | CommonKey.CTRL);
      * @param {KeyboardEvent} event - The keyboard event in question
-     * @param {string} key - The expected key (see {@link KeyboardEvent.key})
+     * @param {string} key - The expected key (see {@link KeyboardEvent.prototype.key})
      * @param {null | number} modifiers - An optional bit mask of all expected modifiers (see examples)
      * @returns {boolean} - Whether the expected key and all its modifiers were pressed
      */

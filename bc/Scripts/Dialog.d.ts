@@ -1417,6 +1417,7 @@ declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLi
     private _mobileTimeoutID;
     /**
      * @private
+     * @param {Character} C
      * @satisfies {TimerHandler}
      */
     private _mobileTimeoutHandler;

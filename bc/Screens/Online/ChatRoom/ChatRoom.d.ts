@@ -758,11 +758,11 @@ declare function ChatRoomSendAttemptEmote(msg: string): void;
  *
  * @param {Character} C - Character on which the action is done.
  * @param {string} Action - Action modifier
- * @param {Item} PrevItem - The item that has been removed.
- * @param {Item} NextItem - The item that has been added.
+ * @param {Item | null} PrevItem - The item that has been removed.
+ * @param {Item | null} NextItem - The item that has been added.
  * @returns {boolean} - whether we published anything to the chat.
  */
-declare function ChatRoomPublishAction(C: Character, Action: string, PrevItem: Item, NextItem: Item): boolean;
+declare function ChatRoomPublishAction(C: Character, Action: string, PrevItem: Item | null, NextItem: Item | null): boolean;
 /**
  * Updates an item on character for everyone in a chat room - replaces ChatRoomCharacterUpdate to cut on the lag.
  *
@@ -1558,7 +1558,8 @@ declare var ChatRoomHelpSeen: boolean;
 declare var ChatRoomAllowCharacterUpdate: boolean;
 declare var ChatRoomStruggleAssistBonus: number;
 declare var ChatRoomStruggleAssistTimer: number;
-declare var ChatRoomStruggleData: any;
+/** @type {StruggleOnlineData} */
+declare var ChatRoomStruggleData: StruggleOnlineData;
 /**
  * The timer started when a slowed player attempts to leave
  * @type {number}
