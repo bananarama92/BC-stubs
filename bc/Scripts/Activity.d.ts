@@ -87,7 +87,7 @@ declare function ActivityCheckPrerequisites(activity: Activity, acting: Characte
  * @param {Activity} activity
  * @param {AssetGroup} targetGroup
  */
-declare function ActivityGenerateItemActivitiesFromNeed(acting: Character, acted: Character, needsItem: ActivityNameItem, activity: Activity, targetGroup: AssetGroup): any[];
+declare function ActivityGenerateItemActivitiesFromNeed(acting: Character, acted: Character, needsItem: ActivityNameItem, activity: Activity, targetGroup: AssetGroup, useTargetItems?: boolean): any[];
 /**
  * Builds the allowed activities on a group given the character's settings.
  * @param {Character} character - The character for which to build the activity dialog options

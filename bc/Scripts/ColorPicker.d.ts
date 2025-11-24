@@ -111,6 +111,8 @@ declare namespace ColorPicker {
         function clickSaveColor(this: HTMLButtonElement, ev: PointerEvent): void;
         function clickExit(this: HTMLButtonElement, ev: PointerEvent): void;
         function clickReset(this: HTMLButtonElement, ev: PointerEvent): void;
+        function clickCopy(this: HTMLButtonElement, ev: PointerEvent): void;
+        function clickPaste(this: HTMLButtonElement, ev: PointerEvent): void;
         function inputItemColor(elem: HTMLFieldSetElement, ev: CustomEvent<{
             source: "hue" | "opacity" | "tint" | "output";
         }>): any;

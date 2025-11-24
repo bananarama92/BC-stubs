@@ -19,11 +19,13 @@ declare function PreferenceSubscreenArousalClick(): void;
 /**
  * Loads the activity factor combo boxes based on the current activity selected
  * @returns {void} - Nothing
+ * @deprecated
  */
 declare function PreferenceLoadActivityFactor(): void;
 /**
  * Loads the fetish factor combo boxes based on the current fetish selected
  * @returns {void} - Nothing
+ * @deprecated
  */
 declare function PreferenceLoadFetishFactor(): void;
 /**
@@ -55,14 +57,14 @@ declare var PreferenceArousalAffectStutterIndex: number;
 /** @type {null | ActivityName[]} */
 declare var PreferenceArousalActivityList: null | ActivityName[];
 declare var PreferenceArousalActivityIndex: number;
-/** @type {ArousalFactor} */
-declare var PreferenceArousalActivityFactorSelf: ArousalFactor;
-/** @type {ArousalFactor} */
-declare var PreferenceArousalActivityFactorOther: ArousalFactor;
-/** @type {ArousalFactor} */
-declare var PreferenceArousalZoneFactor: ArousalFactor;
+/** @type {never} */
+declare var PreferenceArousalActivityFactorSelf: never;
+/** @type {never} */
+declare var PreferenceArousalActivityFactorOther: never;
+/** @type {never} */
+declare var PreferenceArousalZoneFactor: never;
 /** @type {null | FetishName[]} */
 declare var PreferenceArousalFetishList: null | FetishName[];
 declare var PreferenceArousalFetishIndex: number;
-/** @type {ArousalFactor} */
-declare var PreferenceArousalFetishFactor: ArousalFactor;
+/** @type {never} */
+declare var PreferenceArousalFetishFactor: never;

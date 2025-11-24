@@ -393,10 +393,10 @@ declare function InventoryDoesItemAllowLock(item: Item): boolean;
  * @param {Character} C - The character on which the lock must be applied
  * @param {Item|AssetGroupName} Item - The item from appearance to lock
  * @param {Item|AssetLockType} Lock - The asset of the lock or the name of the lock asset
- * @param {null|Character|string} [AppliedBy] - The member number to put on the lock, or message to show
+ * @param {null|Character|PlayerCharacter|number|string} [AppliedBy] - The member number to put on the lock, or message to show
  * @param {boolean} [Update=true] - Whether or not to update the character
  */
-declare function InventoryLock(C: Character, Item: Item | AssetGroupName, Lock: Item | AssetLockType, AppliedBy?: null | Character | string, Update?: boolean): void;
+declare function InventoryLock(C: Character, Item: Item | AssetGroupName, Lock: Item | AssetLockType, AppliedBy?: null | Character | PlayerCharacter | number | string, Update?: boolean): void;
 /**
  * Unlocks an item and removes all related properties
  * @param {Character} C - The character on which the item must be unlocked
