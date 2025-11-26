@@ -641,6 +641,11 @@ declare namespace ElementDOMScreen {
      */
     function setStatus(root: ElementHelp.ElementOrId, status: string | Element | readonly (string | Element)[], timeout?: number): void;
     /**
+     * Clear the temporary status message of the passed screen.
+     * @param {ElementHelp.ElementOrId} root The screen on which the status is the be removed; it _must_ contain a single `h1` and `[role='status']` element
+     */
+    function clearStatus(root: ElementHelp.ElementOrId): void;
+    /**
      * Set the persistent heading of a screen.
      * @param {ElementHelp.ElementOrId} root The screen on which the heading is the be set
      * @param {string | Element | readonly (string | Element)[]} heading The to-be displayed heading content. Note that headings may only ever contain [flow content](https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Content_categories#flow_content)

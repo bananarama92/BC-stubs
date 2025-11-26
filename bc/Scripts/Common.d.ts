@@ -368,9 +368,9 @@ declare function CommonIsObject(value: unknown): value is object;
 /**
  * Type guard which checks that a value is a character
  * @param {unknown} value - The value to test
- * @returns {value is Character}
+ * @returns {value is Character | PlayerCharacter}
  */
-declare function CommonIsCharacter(value: unknown): value is Character;
+declare function CommonIsCharacter(value: unknown): value is Character | PlayerCharacter;
 /**
  * Deep-clones an object
  * @todo JSON serialization will break things like functions, Sets and Maps.
