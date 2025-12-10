@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write  # Required for OIDC
 
 jobs:
   build:
@@ -27,12 +28,8 @@ jobs:
 
       - name: Publish release bc-stubs
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish release bc-data
         run: |
           cd bc_data
           npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_BC_DATA }}
