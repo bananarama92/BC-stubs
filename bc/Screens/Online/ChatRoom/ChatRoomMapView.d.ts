@@ -146,6 +146,19 @@ declare function ChatRoomMapViewFindWallEffectTile(CW: boolean, CE: boolean, SW:
  */
 declare function ChatRoomMapViewIsWall(X: number, Y: number): boolean;
 /**
+ * Checks for connectivity in 4 directions based on a provided validation function
+ * @param {number} X - The X position on the map
+ * @param {number} Y - The Y position on the map
+ * @param {function(number, number): boolean} Condition - Function that returns true if the position is connected
+ * @returns {{ North: boolean, South: boolean, East: boolean, West: boolean }} - The connectivity status
+ */
+declare function ChatRoomMapViewGetConnectivityDirections(X: number, Y: number, Condition: (arg0: number, arg1: number) => boolean): {
+    North: boolean;
+    South: boolean;
+    East: boolean;
+    West: boolean;
+};
+/**
  * Returns the object located at a X and Y position on the map, or NULL if nothing
  * @param {number} X - The X position on the map
  * @param {number} Y - The Y position on the map

@@ -407,9 +407,9 @@ declare function CommonIsFinite(value: unknown, min?: number, max?: number): val
 /**
  * A version of {@link Array.isArray} more friendly towards readonly arrays.
  * @param {unknown} arg - The to-be validated object
- * @returns {arg is readonly unknown[]} Whether the passed object is a (potentially readonly) array
+ * @returns {arg is (arg extends readonly unknown[] ? readonly unknown[] : unknown[])} Whether the passed object is a (potentially readonly) array
  */
-declare function CommonIsArray(arg: unknown): arg is readonly unknown[];
+declare function CommonIsArray(arg: unknown): arg is (unknown extends readonly unknown[] ? readonly unknown[] : unknown[]);
 /**
  * A {@link Object.keys} variant annotated to return respect literal key types
  * @template {object} T
@@ -679,11 +679,58 @@ declare function CommonTokenize(input: string, options?: {
     trimTrailingSpaces?: boolean;
 }): string[];
 /**
- * Formats a duration in ms to a human readable string of days, months, and years
+ * Formats a duration in ms to a human readable string of days, months, and years.
+ * Defaults to showing days.
  * @param {number} ms
- * @returns
+ * @param {{
+ *   includeYears?: boolean;
+ *   includeMonths?: boolean;
+ *   includeWeeks?: boolean;
+ *   includeDays?: boolean;
+ *   includeHours?: boolean;
+ *   includeMinutes?: boolean;
+ *   includeSeconds?: boolean;
+ *   showFull?: boolean;
+ * }} options
+ * @returns {string}
  */
-declare function CommonFormatDuration(ms: number): string;
+declare function CommonFormatDuration(ms: number, options?: {
+    includeYears?: boolean;
+    includeMonths?: boolean;
+    includeWeeks?: boolean;
+    includeDays?: boolean;
+    includeHours?: boolean;
+    includeMinutes?: boolean;
+    includeSeconds?: boolean;
+    showFull?: boolean;
+}): string;
+/**
+ * Break duration into real-calendar components (y, m, d, h, min, s),
+ * optionally rolling excluded components into the next smaller unit.
+ *
+ * @param {number} ms
+ * @param {{
+ *   includeYears?: boolean,
+ *   includeMonths?: boolean,
+ *   includeDays?: boolean,
+ *   includeHours?: boolean,
+ *   includeMinutes?: boolean,
+ * }} options
+ */
+declare function CommonGetDateParts(ms: number, options?: {
+    includeYears?: boolean;
+    includeMonths?: boolean;
+    includeDays?: boolean;
+    includeHours?: boolean;
+    includeMinutes?: boolean;
+}): {
+    y: number;
+    m: number;
+    d: number;
+    h: number;
+    min: number;
+    s: number;
+};
 /**
  * Build and returns a range
  * @param {number} start If {@link end} is unspecified, then this will be the end of the range, and start will be set to 0

@@ -505,14 +505,13 @@ declare function PrivateCancelSecurity(): void;
 declare function PrivateLoadCharacter(data: PrivateCharacterData): boolean;
 /**
  * Triggered when a new character is added to the player's private room.
+ * @template {ModuleType} T
  * @param {NPCCharacter} Template - The base of the character, includes the name and appearance.
  * @param {"" | NPCArchetype} [Archetype] - The type of character such as maid or mistress.
- * @param {boolean} [CustomData=false] - Whether or not the character has non-random traits.
- * @param {null | ModuleType} [Module]
- * @param {null | string} [Screen]
+ * @param {boolean} [CustomData=false] - Whether or not the character has non-random traits. Passing `true` will also skip calling {@link ServerPrivateCharacterSync()}.
  * @returns {NPCCharacter} - The new private room character.
  */
-declare function PrivateAddCharacter(Template: NPCCharacter, Archetype?: "" | NPCArchetype, CustomData?: boolean, Module?: null | ModuleType, Screen?: null | string): NPCCharacter;
+declare function PrivateAddCharacter<T extends ModuleType>(Template: NPCCharacter, Archetype?: "" | NPCArchetype, CustomData?: boolean): NPCCharacter;
 /**
  * Gets the index of a given private room character.
  * @returns {number} - Index of the NPC inside the private characters array.
@@ -864,6 +863,11 @@ declare function PrivateOwnerHallBackground(Background: string, Action: string):
  * @returns {void} - Nothing.
  */
 declare function PrivateOwnerHallParadeEnd(Action: string): void;
+/**
+ * Check whether the Private room has an NPC with that name in it
+ * @param {string} name
+ */
+declare function PrivateCharacterIsInRoom(name: string): boolean;
 declare var PrivateBackground: string;
 /** @type {null | NPCCharacter} */
 declare var PrivateVendor: null | NPCCharacter;

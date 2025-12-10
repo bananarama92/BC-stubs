@@ -86,6 +86,12 @@ declare function ChatSearchGetSpaceName(space: "" | "X" | "M" | "Asylum"): strin
  */
 declare function ChatSearchGridUpdate(rooms: ChatRoomSearchResult[]): void;
 /**
+ * Handle clicks on room buttons
+ * @param {ChatRoomSearchResult} room
+ * @returns
+ */
+declare function ChatSearchClickRoom(room: ChatRoomSearchResult): boolean | void;
+/**
  * Creates a grid button for the given room
  * @param {ChatRoomSearchResult} room
  * @param {number} index
@@ -271,6 +277,8 @@ declare var ChatSearchPageY: number;
  * @type {CommonGenerateGridParameters}
  */
 declare var ChatSearchListParams: CommonGenerateGridParameters;
+declare var ChatSearchRoomsPerRow: number;
+declare var ChatSearchRoomsPerColumn: number;
 /** Pre-calculated. Must be updated if you change the grid parameters */
 declare var ChatSearchRoomsPerPage: number;
 /** @type {ScreenSpecifier} */

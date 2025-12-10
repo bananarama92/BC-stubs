@@ -282,4 +282,23 @@ declare namespace Platform {
 		Time: number;
 		Delay: number;
 	}
+
+	interface SaveData {
+		Character: never;
+		Status: never;
+		Room: never;
+		Party: PartyMember[];
+		Inventory: any[];
+		Audio: boolean;
+		Event: never;
+		Dialog: {
+			Name: string;
+			Love: number;
+			Domination: number;
+			LoverName: string;
+			LoverLevel: number;
+			OwnerName: string;
+			OwnerLevel: number;
+		}[];
+	}
 }

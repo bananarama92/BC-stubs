@@ -324,7 +324,7 @@ declare var ServerAccountUpdate: {
  */
 declare let ServerIsLoggedIn_: boolean;
 declare namespace ServerPlayerChatRoom {
-    let callbacks: ((screen: string) => boolean)[];
+    let callbacks: ((module: ModuleType, screen: ScreenName) => boolean)[];
     /**
      * Register one or more screenname and/or callback for determining whether the player is in a chat room.
      * @param {ServerChatRoomChecksOptions[]} options
@@ -467,6 +467,7 @@ declare namespace ServerAccountDataSyncedValidate {
  */
 declare const ServerChatRoomSearchSettingsValidate: { [k in keyof Required<ChatRoomSearchSettings>]: (arg: ChatRoomSearchSettings[k], C: Character) => ChatRoomSearchSettings[k]; };
 type ServerChatRoomChecksOptions = {
-    screen?: string;
+    screen?: ScreenName;
+    module?: ModuleType;
     callback?: () => boolean;
 };

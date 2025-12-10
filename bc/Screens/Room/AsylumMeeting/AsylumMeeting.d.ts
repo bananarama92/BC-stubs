@@ -102,5 +102,6 @@ declare function AsylumMeetingClubCardEnd(): void;
 declare var AsylumMeetingBackground: string;
 /** @type {null | NPCCharacter} */
 declare var AsylumMeetingPatientLeft: null | NPCCharacter;
+declare var AsylumMeetingPatientFled: boolean;
 /** @type {null | NPCCharacter} */
 declare var AsylumMeetingPatientRight: null | NPCCharacter;
