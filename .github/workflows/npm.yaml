@@ -27,11 +27,19 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Configure npm
+        run: npm config set loglevel verbose
+
       - name: install bc-stubs
         run: |
-          npm install && npm ci
+          npm install -g npm@latest
+          npm install
+          npm ci
+          npm list
           cd bc_data
-          npm install && npm ci
+          npm install
+          npm ci
+          npm list
 
       - name: Publish release bc-stubs
         run: |
