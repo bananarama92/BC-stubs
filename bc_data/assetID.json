@@ -317,7 +317,8 @@
             "MiniDenimHotPants": 54,
             "OpenLeatherSkirt": 55,
             "PVCHobbleSkirt": 56,
-            "YogaPants": 57
+            "YogaPants": 57,
+            "SkinnyJeans": 58
         }
     },
     "Corset": {
@@ -1095,7 +1096,8 @@
             "PolishedChastityBra": 6,
             "Ribbons": 7,
             "TickleBra": 8,
-            "ChastityPlate": 9
+            "ChastityPlate": 9,
+            "LeatherStrapBra1": 10
         }
     },
     "ItemButt": {
@@ -1220,7 +1222,8 @@
             "SingleBalletBoot": 69,
             "Microphone": 70,
             "Enema": 71,
-            "Potty": 72
+            "Potty": 72,
+            "GiftBox": 73
         }
     },
     "ItemEars": {
@@ -1355,7 +1358,9 @@
             "BabyPowder": 72,
             "Diaper": 73,
             "MiniDolls": 74,
-            "Wipes": 75
+            "Wipes": 75,
+            "DragonPlush": 76,
+            "GiftBox": 77
         }
     },
     "ItemHands": {
@@ -1669,7 +1674,8 @@
             "HorrorMuzzle": 95,
             "AsylumMuzzle": 96,
             "Cigarette": 97,
-            "CompGag": 98
+            "CompGag": 98,
+            "RoseBallGag": 99
         }
     },
     "ItemMouth2": {
@@ -1772,7 +1778,8 @@
             "AOMGag": 94,
             "HorrorMuzzle": 95,
             "AsylumMuzzle": 96,
-            "CompGag": 97
+            "CompGag": 97,
+            "RoseBallGag": 98
         }
     },
     "ItemMouth3": {
@@ -1872,7 +1879,8 @@
             "XmasStickerGag": 91,
             "AOMGag": 92,
             "HorrorMuzzle": 93,
-            "AsylumMuzzle": 94
+            "AsylumMuzzle": 94,
+            "RoseBallGag": 95
         }
     },
     "ItemNeck": {
@@ -2318,7 +2326,8 @@
             "RuffledCollar": 22,
             "BeadNecklace": 23,
             "EldritchNecklace": 24,
-            "PlantNecklace": 25
+            "PlantNecklace": 25,
+            "NecklaceRoseBallGag": 26
         }
     },
     "Nipples": {
@@ -2791,7 +2800,9 @@
             "Staff": 27,
             "WhiteMoon": 28,
             "ZamStick": 29,
-            "ZamStickII": 30
+            "ZamStickII": 30,
+            "CyberTechCorp": 31,
+            "SkullDecal": 32
         }
     }
 }

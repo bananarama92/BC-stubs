@@ -52,10 +52,10 @@ declare function ColorPickerHSVToCSS(HSV: HSVColor): HexColor;
 declare function GetDefaultSavedColors(): HSVColor[];
 /**
  * Call {@link ColorPickerLoad} with the passed parameters and perform a resize.
- * @param {ColorPickerInitOptions} options - The load parameters
+ * @param {null | ColorPickerInitOptions} options - The load parameters
  * @returns {Promise<HTMLElement>} - The root element of the color picker subscreen
  */
-declare function ColorPickerInit(options?: ColorPickerInitOptions): Promise<HTMLElement>;
+declare function ColorPickerInit(options?: null | ColorPickerInitOptions): Promise<HTMLElement>;
 declare function ColorPickerLoad(): Promise<void>;
 /**
  * Reload and refresh the color picker based on the current item color data.
@@ -101,7 +101,7 @@ declare namespace ColorPicker {
     let defaultShape: Readonly<RectTuple>;
     let _shapes: WeakMap<Element, Readonly<RectTuple>>;
     namespace eventListeners {
-        function inputColor(this: HTMLInputElement | HTMLColorTintElement, ev: InputEvent): void;
+        function inputColor(this: HTMLInputElement | HTMLColorTintElement, ev: Event): void;
         function focusColor(this: HTMLInputElement, ev: FocusEvent): void;
         function blurColor(this: HTMLInputElement | HTMLColorTintElement, ev: FocusEvent): void;
         function inputFieldset(this: HTMLFieldSetElement, ev: Event): void;
@@ -121,6 +121,23 @@ declare namespace ColorPicker {
         function focusComboLabel(this: HTMLElement, ev: FocusEvent): void;
     }
     /**
+     * Unpack and validate the {@link HTMLFieldSetElement.elements} of the passed `fieldset[name='color-picker']` element.
+     * @private
+     * @param {HTMLFieldSetElement} fieldset
+     * @param {null | { checkValidity?: boolean }} options
+     */
+    function _unpackColorPickerFieldset(fieldset: HTMLFieldSetElement, options?: null | {
+        checkValidity?: boolean;
+    }): {
+        hue: HTMLInputElement;
+        opacity: HTMLInputElement;
+        tint: HTMLColorTintElement;
+        output: HTMLInputElement;
+        savedColorGroup: HTMLFieldSetElement;
+        savedColorOutput: HTMLOutputElement;
+        save: HTMLButtonElement;
+    };
+    /**
      * @param {null | string} id
      * @param {readonly { value: string, label: string }[]} optionList
      * @returns {HTMLElement}
@@ -137,17 +154,37 @@ declare namespace ColorPicker {
      */
     function create(id: null | string, options?: null | Pick<ColorPickerInitOptions, "colorState" | "onInput">): HTMLFieldSetElement;
     /**
+     * {@link ColorPicker.setColor} helper for parsing color values (be it stringified or as HSV)
+     * @private
+     * @param {Pick<ColorPickerColorInput, "colorString" | "hsv">} value
+     * @param {HTMLInputElement} outputInput
+     * @param {null | number} opacity
+     * @returns {{ hsv: null | HSVColor, output: string }}
+     */
+    function _setColorParseColor(value: Pick<ColorPickerColorInput, "colorString" | "hsv">, outputInput: HTMLInputElement, opacity: null | number): {
+        hsv: null | HSVColor;
+        output: string;
+    };
+    /**
+     * {@link ColorPicker.setColor} helper for parsing opacity values
+     * @private
+     * @param {Pick<ColorPickerColorInput, "opacity" | "colorString">} value
+     * @param {HTMLInputElement} opacityInput
+     * @param {null | { overrideEditOpacity?: boolean }} options
+     * @returns {null | number}
+     */
+    function _setColorParseOpacity(value: Pick<ColorPickerColorInput, "opacity" | "colorString">, opacityInput: HTMLInputElement, options?: null | {
+        overrideEditOpacity?: boolean;
+    }): null | number;
+    /**
      * Set the color and/or opacity of the passed color picker screen
      * @param {ElementHelp.ElementOrId} root - The color picker screen or its ID
-     * @param {{ readonly colorString?: string, readonly hsv?: Readonly<HSVColor>, readonly opacity?: number }} value - The passed color (be it as string or HSV object) and opacity
-     * @param {null | { overrideEditOpacity?: boolean }} options
+     * @param {ColorPickerColorInput} value - The passed color (be it as string or HSV object) and opacity
+     * @param {null | { overrideEditOpacity?: boolean, dispatch?: boolean }} options
      */
-    function setColor(root: ElementHelp.ElementOrId, value: {
-        readonly colorString?: string;
-        readonly hsv?: Readonly<HSVColor>;
-        readonly opacity?: number;
-    }, options?: null | {
+    function setColor(root: ElementHelp.ElementOrId, value: ColorPickerColorInput, options?: null | {
         overrideEditOpacity?: boolean;
+        dispatch?: boolean;
     }): void;
     /**
      * Get the color and opacity of the passed color picker screen

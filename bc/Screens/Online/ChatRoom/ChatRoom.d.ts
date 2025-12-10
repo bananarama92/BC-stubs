@@ -1188,20 +1188,20 @@ declare function ChatRoomCurrentTime(): string;
  * Adds or removes an online member to/from a specific list. (From the dialog menu)
  * @param {"Add" | "Remove"} Operation - Operation to perform.
  * @param {"WhiteList" | "FriendList" | "BlackList" | "GhostList" | "DrawFocusList"} ListType - Name of the list to alter. (Whitelist, friendlist, blacklist, ghostlist, drawfocuslist)
- * @param {string} [notification] - used to send notifications
+ * @param {"FriendRequest"} [notification] - used to send notifications
  * @returns {void} - Nothing
  */
-declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: "WhiteList" | "FriendList" | "BlackList" | "GhostList" | "DrawFocusList", notification?: string): void;
+declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: "WhiteList" | "FriendList" | "BlackList" | "GhostList" | "DrawFocusList", notification?: "FriendRequest"): void;
 /**
  * Adds or removes an online member to/from a specific list from a typed message.
  * @param {number[]} List - List to add to or remove from.
  * @param {boolean} Adding - If TRUE adding to the list, if FALSE removing from the list.
  * @param {string} Argument - Member number to add/remove.
- * @param {string} [notification] - used to send notifications
+ * @param {"FriendRequest"} [notification] - used to send notifications
  * @deprecated Use {@link ChatRoomListUpdate}
  * @returns {void} - Nothing
  */
-declare function ChatRoomListManipulation(List: number[], Adding: boolean, Argument: string, notification?: string): void;
+declare function ChatRoomListManipulation(List: number[], Adding: boolean, Argument: string, notification?: "FriendRequest"): void;
 /**
  * Sends a notification message when a friend request is received.
  * @param {Character} SenderCharacter - The character who sent the request.
@@ -1214,10 +1214,10 @@ declare function ChatRoomFriendMessage(SenderCharacter: Character, data: ServerC
  * @param {number[]} list - The array of member numbers to update
  * @param {boolean} adding - If TRUE adding to the list, if FALSE removing from the list
  * @param {number} memberNumber - The member number to add/remove
- * @param {String} [notification] - used to send notifications
+ * @param {"FriendRequest"} [notification] - used to send notifications
  * @returns {void} - Nothing
  */
-declare function ChatRoomListUpdate(list: number[], adding: boolean, memberNumber: number, notification?: string): void;
+declare function ChatRoomListUpdate(list: number[], adding: boolean, memberNumber: number, notification?: "FriendRequest"): void;
 /**
  * Adds a list of character(s) into the Focus List
  * @param {Character[]} characters - Characters to add
@@ -1390,10 +1390,10 @@ declare function ChatRoomGetLoadRules(C: Character | number): void;
 /**
  * Handles a response from another player containing the rules that the current player is allowed to read.
  * @param {Character} C - Character to set the rules on
- * @param {readonly LogRecord[]} Rule - An array of rules that the current player can read.
+ * @param {LogRecord[]} Rule - An array of rules that the current player can read.
  * @returns {void} - Nothing
  */
-declare function ChatRoomSetLoadRules(C: Character, Rule: readonly LogRecord[]): void;
+declare function ChatRoomSetLoadRules(C: Character, Rule: LogRecord[]): void;
 /**
  * Take a screenshot of all characters in the chatroom
  * @returns {void} - Nothing

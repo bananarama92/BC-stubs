@@ -168,9 +168,9 @@ declare namespace CommandsHelp {
     * @param {ICommand} command
     * @param {string} setCommand
     * @param {boolean} singleCommand
-    * @returns {HTMLOptions<keyof HTMLElementTagNameMap>}
+    * @returns {HTMLOptionsUnion}
     */
-    function _BuildCommand(command: ICommand, setCommand: string, singleCommand: boolean): HTMLOptions<keyof HTMLElementTagNameMap>;
+    function _BuildCommand(command: ICommand, setCommand: string, singleCommand: boolean): HTMLOptionsUnion;
     /**
      * @param {ICommand[]} commands
      * @param {{ setCommand?: string}} [options]

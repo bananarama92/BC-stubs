@@ -128,3 +128,4 @@ declare var GameClubCardBackground: string;
 declare var GameClubCardEntryPlayerSlot: number;
 declare var GameClubCardExpectQuery: boolean;
 declare var GameClubCardQueryAdmin: boolean;
+declare var GameClubCardChangedRunningSettings: boolean;

@@ -33,7 +33,7 @@ declare function CharacterBuildDialog(C: Character, CSV: readonly string[][], fu
  * @param {DialogInfo} [info]
  * @returns {void} - Nothing
  */
-declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo): void;
+declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo<any>): void;
 /**
  * Sets the clothes based on a character archetype
  * @param {Character} C - Character to set the clothes for
@@ -44,13 +44,14 @@ declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo): void;
 declare function CharacterArchetypeClothes(C: Character, Archetype: "Maid" | "Mistress" | "Employee" | "AnimeGirl" | "Bunny" | "Succubus", ForceColor?: string): void;
 /**
  * Loads an NPC into the character array. The appearance is randomized, and a type can be provided to dress them in a given style.
+ * @template {ModuleType} T
  * @param {string} CharacterID - The unique identifier for the NPC
  * @param {string} [NPCType] - The dialog used by the NPC.  Defaults to CharacterID if not specified.
- * @param {null | ModuleType} module
- * @param {null | string} screen
+ * @param {null | T} module
+ * @param {null | ModuleScreens[T]} screen
  * @returns {NPCCharacter} - The randomly generated NPC
  */
-declare function CharacterLoadNPC(CharacterID: string, NPCType?: string, module?: null | ModuleType, screen?: null | string): NPCCharacter;
+declare function CharacterLoadNPC<T extends ModuleType>(CharacterID: string, NPCType?: string, module?: null | T, screen?: null | ModuleScreens[T]): NPCCharacter;
 /**
  * Create a minimal character object
  * @param {string} CharacterID - The account name to give to the character

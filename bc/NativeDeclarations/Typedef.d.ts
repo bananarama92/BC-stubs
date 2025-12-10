@@ -98,6 +98,10 @@ type HTMLElementScalarTagNameMap = {
 	}
 };
 
+// Turn `HTMLOptions<"foo" | "bar">` into `HTMLOptions<"foo"> | HTMLOptions<"bar">`
+/** A union of {@link HTMLOptions} types for all valid HTML element tags */
+type HTMLOptionsUnion = { [k in keyof HTMLElementTagNameMap]: HTMLOptions<k> }[keyof HTMLElementTagNameMap];
+
 type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 	/** The elements HTML tag */
 	tag: T,
@@ -122,7 +126,7 @@ type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 	/** A list of CSS classes to-be assigned to the element (see {@link HTMLElement.classList}). */
 	classList?: readonly (null | undefined | string)[];
 	/** Any to-be added child elements. */
-	children?: readonly (null | undefined | string | Node | HTMLOptions<keyof HTMLElementTagNameMap>)[];
+	children?: readonly (null | undefined | string | Node | HTMLOptionsUnion)[];
 	/** The {@link HTMLElement.innerHTML} of the element; will be assigned before appending children */
 	innerHTML?: string;
 };
@@ -366,11 +370,11 @@ declare namespace ElementDOMScreen {
 		/** Buttons for in the header's menubar (see `.screen-header [role="menubar"]`) */
 		menubarButtons?: readonly HTMLButtonElement[];
 		/** Content for within the main section (see `.screen-main`) */
-		mainContent?: readonly (Node | string | HTMLOptions<keyof HTMLElementTagNameMap>)[];
+		mainContent?: readonly (Node | string | HTMLOptionsUnion)[];
 		/** Whether an extra `aside.screen-aside-l` section should be added to the left of `.screen-main` */
-		leftContent?: readonly (Node | string | HTMLOptions<keyof HTMLElementTagNameMap>)[];
+		leftContent?: readonly (Node | string | HTMLOptionsUnion)[];
 		/** Whether an extra `aside.screen-aside-r` section should be added to the right of `.screen-main` */
-		rightContent?: readonly (Node | string | HTMLOptions<keyof HTMLElementTagNameMap>)[];
+		rightContent?: readonly (Node | string | HTMLOptionsUnion)[];
 		/** Text content for within the heading (see `.screen-hgroup h1`) */
 		header?: string;
 		/**
@@ -732,8 +736,6 @@ type BackgroundTag =
 
 type MagicSchoolHouse = "Maiestas" | "Vincula" | "Amplector" | "Corporis";
 
-type ModuleType = keyof ModuleScreens;
-
 interface ModuleScreens {
 	Character:
 		| "Appearance"
@@ -813,6 +815,8 @@ interface ModuleScreens {
 	;
 }
 
+type ModuleType = keyof ModuleScreens;
+type ScreenName = ModuleScreens["Character"] | ModuleScreens["Cutscene"] | ModuleScreens["MiniGame"] | ModuleScreens["Online"] | ModuleScreens["Room"];
 type RoomName = ModuleScreens[ModuleType];
 
 interface RelogDataBase<T extends ModuleType> {
@@ -1040,6 +1044,18 @@ interface IFriendListBeepLogMessage {
 type Mutable<T> = {
 		-readonly[P in keyof T]: T[P];
 };
+
+/**
+ * Normalizes a type for cleaner IntelliSense.
+ *
+ * Forces TypeScript to resolve intersections and mapped types into
+ * a readable object shape without changing the original type behavior.
+ *
+ * @template T
+ */
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & unknown;
 
 //#region Assets
 
@@ -1736,9 +1752,9 @@ interface DialogLine {
 	Trait: string;
 }
 
-interface DialogInfo {
-	module: ModuleType;
-	screen: string;
+interface DialogInfo<T extends ModuleType> {
+	module: T;
+	screen: ModuleScreens[T];
 	name: string;
 }
 
@@ -1794,7 +1810,7 @@ interface Character {
 	/**
 	 * The character's loaded dialog info
 	 */
-	DialogInfo?: DialogInfo;
+	DialogInfo?: DialogInfo<any>;
 	/**
 	 * A deprecated identifier for online characters
 	 * Only exists on the player, has the same value as their character ID.
@@ -1964,6 +1980,8 @@ interface Character {
 	IsFullyOwnedByPlayer: () => boolean;
 	/** The number of days since the character has been owned (-1 means not owned) */
 	OwnedSince: () => number;
+	/** Epoch timestamp of ownership start (-1 means not owned) */
+	OwnedSinceMs: () => number;
 	/** Whether the given character owns the player */
 	IsOwner: () => boolean;
 	IsKneeling: () => boolean;
@@ -1981,7 +1999,9 @@ interface Character {
 	/** Whether the character is in love with the player */
 	IsLoverOfPlayer: () => boolean;
 	/** Returns the list of member numbers (or names, for NPCs) the character is in love with */
-	GetLoversNumbers: (MembersOnly?: boolean) => (number | string)[];
+	GetLoversNumbers(MembersOnly: true): number[];
+	GetLoversNumbers(MembersOnly: false): (number | string)[];
+	GetLoversNumbers(MembersOnly?: boolean): (number | string)[];
 	/** Returns the lovership data for the character */
 	GetLovership: (MembersOnly?: boolean) => Lovership[];
 	/** @deprecated Use IsLoverOfCharacter() */
@@ -2172,11 +2192,6 @@ interface NPCCharacter extends Character {
 	Domination?: number;
 }
 
-/** College & Asylum */
-interface NPCCharacter {
-	GoneAway?: boolean;
-}
-
 /** Movie Studio */
 interface NPCCharacter {
 	TrialDone?: boolean;
@@ -2320,7 +2335,7 @@ interface PlayerCharacter extends Character {
 	 * Do not manipulate directly. Use {@link ChatRoomListUpdate}
 	 */
 	GhostList: number[];
-	Wardrobe: ItemBundle[][];
+	Wardrobe: (ItemBundle[] | null)[];
 	WardrobeCharacterNames: string[];
 	SavedExpressions?: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
 	SavedColors: HSVColor[];
@@ -2552,13 +2567,23 @@ interface NPCTrait {
 
 type NPCEventType =
 	| "LastInteraction"
-	| "Wife" | "Fiancee" | "Girlfriend"
+	| "Wife"
+	| "Fiancee"
+	| "Girlfriend"
 	| "PrivateRoomEntry"
-	| "NPCCollaring" | "PlayerCollaring"
-	| "NextGift" | "LastGift"
-	| "Kidnap" | "NextKidnap"
+	// Date at which the player became full owner of the NPC
+	| "NPCCollaring"
+	// Date at which the player became fully owned by the NPC
+	| "PlayerCollaring"
+	| "NextGift"
+	| "LastGift"
+	| "Kidnap"
+	| "NextKidnap"
 	| "NPCBrainwashing"
-	| "EndSubTrial" | "EndDomTrial"
+	// Date at which the ownership trial as a sub to this NPC ends
+	| "EndSubTrial"
+	// Date at which the ownership trial as a dom to this NPC ends
+	| "EndDomTrial"
 	| "NextBed"
 	| "NewCloth"
 	| "RefusedActivity"
@@ -4524,6 +4549,12 @@ interface HSVColor {
 	V: number;
 }
 
+interface ColorPickerColorInput {
+	readonly colorString?: string,
+	readonly hsv?: Readonly<HSVColor>,
+	readonly opacity?: number,
+}
+
 interface ColorPickerInitOptions {
 	/** The root element or `color-picker` fieldset (or ID thereof) in the color picker subscreen; defaults to {@link ColorPicker.ids.root} */
 	root?: ElementHelp.ElementOrId;
@@ -4541,7 +4572,7 @@ interface ColorPickerInitOptions {
 	 * A custom color state.
 	 * Defaults to {@link ItemColorState} if not provided.
 	 */
-	colorState?: Pick<ItemColorStateType, "editOpacity" | "opacity" | "colors">;
+	colorState?: Prettify<Pick<ItemColorStateType, "editOpacity" | "opacity" | "colors"> & Partial<Pick<ItemColorStateType, "defaultOpacity" | "defaultColors">>>;
 	/** Whether the color picker should be disabled or not */
 	disabled?: boolean;
 	/** The dimensions of the color picker screen */
@@ -4551,6 +4582,7 @@ interface ColorPickerInitOptions {
 	 * @default false
 	 */
 	reset?: boolean;
+	dispatch?: boolean;
 }
 
 //#end region
@@ -5099,6 +5131,7 @@ type ChatRoomMapObjectType = (
 	| "FloorIcon"
 	| "WallDecoration"
 	| "WallPath"
+	| "Banners"
 );
 
 type ChatRoomMapTileType = "Floor" | "FloorExterior" | "Wall" | "Water";

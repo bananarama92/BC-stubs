@@ -61,10 +61,10 @@ declare function CharacterAppearanceAllowForTypes(allowTypes: AllowTypes.Data, t
  * @param {Character} C - The character wearing the item
  * @param {AssetLayer} layer - The layer to check visibility for
  * @param {Asset} asset - The asset that the layer belongs to
- * @param {TypeRecord} [typeRecord] - The item's type, if it has one
+ * @param {null | TypeRecord} [typeRecord] - The item's type, if it has one
  * @returns {boolean} - TRUE if the layer should be visible, FALSE otherwise
  */
-declare function CharacterAppearanceIsLayerVisible(C: Character, layer: AssetLayer, asset: Asset, typeRecord?: TypeRecord): boolean;
+declare function CharacterAppearanceIsLayerVisible(C: Character, layer: AssetLayer, asset: Asset, typeRecord?: null | TypeRecord): boolean;
 /**
  * Builds a filtered and sorted set of appearance layers, each representing a drawable layer of a character's current appearance. Layers
  * that will not be drawn (because their asset is not visible or they do not permit the current asset type) are filtered out at this stage.
