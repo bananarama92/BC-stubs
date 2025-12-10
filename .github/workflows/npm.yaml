@@ -19,6 +19,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Parse input
+        run: |
+          case "${{ github.event_name }}" in
+            "pull_request")
+              echo "DRY=false" >> $GITHUB_ENV
+              ;;
+            "workflow_dispatch")
+              echo "DRY=${{ inputs.repo }}" >> $GITHUB_ENV
+              ;;
+            *)
+              exit 1;;
+          esac
+
       - uses: actions/checkout@v6
 
       # Setup .npmrc file to publish to npm
@@ -43,17 +56,17 @@ jobs:
 
       - name: Publish release bc-stubs
         run: |
-          if [ ${{ inputs.dry }} = true ]; then
+          if [ $DRY == true ]; then
             npm publish --dry-run --tag="dry"
           else
-            npm publish
+            npm publish --tag="latest"
           fi
 
       - name: Publish release bc-data
         run: |
           cd bc_data
-          if [ ${{ inputs.dry }} = true ]; then
+          if [ $DRY == true ]; then
             npm publish --dry-run --tag="dry"
           else
-            npm publish
+            npm publish --tag="latest"
           fi
