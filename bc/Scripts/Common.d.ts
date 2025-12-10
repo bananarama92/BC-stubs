@@ -406,11 +406,10 @@ declare function CommonIsInteger(value: unknown, min?: number, max?: number): va
 declare function CommonIsFinite(value: unknown, min?: number, max?: number): value is number;
 /**
  * A version of {@link Array.isArray} more friendly towards readonly arrays.
- * @template {unknown} T
- * @param {T} arg - The to-be validated object
+ * @param {unknown} arg - The to-be validated object
  * @returns {arg is (arg extends readonly unknown[] ? readonly unknown[] : unknown[])} Whether the passed object is a (potentially readonly) array
  */
-declare function CommonIsArray<T extends unknown>(arg: T): arg is (T extends readonly unknown[] ? readonly unknown[] : unknown[]);
+declare function CommonIsArray(arg: unknown): arg is (unknown extends readonly unknown[] ? readonly unknown[] : unknown[]);
 /**
  * A {@link Object.keys} variant annotated to return respect literal key types
  * @template {object} T
