@@ -206,7 +206,8 @@
             "BartenderVestM": 86,
             "CocktailDress": 87,
             "MaidBikini": 88,
-            "OffTheShoulderTop": 89
+            "OffTheShoulderTop": 89,
+            "RuffledDress": 90
         }
     },
     "ClothAccessory": {
@@ -254,7 +255,8 @@
             "VampiricCloak": 39,
             "WitchShawl": 40,
             "XmasLongShawl": 41,
-            "XmasShortShawl": 42
+            "XmasShortShawl": 42,
+            "BowBelt": 43
         }
     },
     "ClothLower": {
@@ -456,7 +458,8 @@
             "WaistLegHarness": 6,
             "ComboBelt": 7,
             "FemPelvisHarness": 8,
-            "ButterflyGarter": 9
+            "ButterflyGarter": 9,
+            "BowBelt": 10
         }
     },
     "Glasses": {
@@ -1223,7 +1226,8 @@
             "Microphone": 70,
             "Enema": 71,
             "Potty": 72,
-            "GiftBox": 73
+            "GiftBox": 73,
+            "XFrame": 74
         }
     },
     "ItemEars": {
@@ -2202,7 +2206,8 @@
             "FullCasingCage": 30,
             "LatexNulge": 31,
             "LockingCockring": 32,
-            "Ballspreader": 33
+            "Ballspreader": 33,
+            "MysteryBox": 34
         }
     },
     "ItemVulvaPiercings": {

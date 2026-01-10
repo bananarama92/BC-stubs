@@ -176,18 +176,6 @@ interface AssetCommonPropertiesGroupAssetLayer {
 	ParentGroup?: ParentGroup.Definition | "";
 
 	/**
-	 * The poses that have pose-specific assets.
-	 *
-	 * Used when building the file paths for the asset's layers.
-	 *
-	 * If a pose is absent then the asset corresponding to the default pose will be used in its place.
-	 * Note that a pose's absence from this list does *not* prevent its usage.
-	 *
-	 * @deprecated - Superceded by {@link PoseMapping}
-	 */
-	AllowPose?: never;
-
-	/**
      * A record mapping pose names to the actually to-be drawn poses.
      * Special values can be specified, via use of {@link PoseType}, for either hiding the asset or using pose-agnostic assets.
 	 *
@@ -234,12 +222,6 @@ interface AssetCommonPropertiesGroupAsset {
 
 	/** A pose that the character will change to when wearing the asset */
 	SetPose?: AssetPoseName[];
-
-	/**
-	 * A list of pose categories that the character will be prevented to change
-	 * @deprecated Use {@link AssetDefinition.AllowActivePose} instead
-	 */
-	FreezeActivePose?: never;
 
 	/** Which expression the group allows to be set on it */
 	AllowExpression?: ExpressionName[];
@@ -479,16 +461,6 @@ type AssetBonusName = "KidnapDomination" | "KidnapSneakiness" | "KidnapBruteForc
 type AssetGender = 'F' | 'M';
 
 interface AssetCommonPropertiesAssetLayer {
-	/**
-	 * A list of poses that hide the asset when they get set.
-	 *
-	 * Note that this does not prevent usage of the pose (see {@link AssetDefinition.AllowActivePose}).
-	 * Values are automatically added to {@link Asset.AllowPose}.
-	 *
-	 * @deprecated - Superceded by {@link AssetCommonPropertiesGroupAssetLayer.PoseMapping}
-	 */
-	HideForPose?: never;
-
 	/** A list of alpha mask definitions. */
 	Alpha?: Alpha.Definition[];
 
@@ -620,9 +592,6 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	 */
 	AllowActivePose?: AssetPoseName[];
 
-	/** @deprecated - Use {@link AssetDefinition.AllowActivePose} instead */
-	WhitelistActivePose?: never;
-
 	/**
 	 * The cost of the asset in the shop. Defaults to 0.
 	 *
@@ -695,8 +664,6 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	AllowBlock?: AssetGroupItemName[];
 	AllowHide?: AssetGroupItemName[];
 	AllowHideItem?: string[];
-	/** @deprecated */
-	AllowTypes?: never;
 	/** A list of {@link TypeRecord} keys for which a single layer expects multiple type-specific .png files. */
 	CreateLayerTypes?: string[];
 	/**
@@ -729,16 +696,6 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	DynamicActivity?: (C: Character) => ActivityName | null | undefined;
 	DynamicAudio?: (C: Character) => string;
 
-	/**
-	 * Whether the asset is restricted to a given character.
-	 *
-	 * When the asset is added to a character, the member number of the character using the
-	 * asset will be stored along in its properties, and all subsequent modifications will
-	 * only be possible for that character.
-	 *
-	 * @deprecated Discontinued in favor of the {@link FamilyOnly}/{@link LoverOnly}/{@link OwnerOnly} trio
-	 */
-	CharacterRestricted?: never;
 	AllowRemoveExclusive?: boolean;
 
 	DynamicBeforeDraw?: boolean;

@@ -57,16 +57,16 @@ declare function ChatRoomCanRemoveGhost(): boolean;
 declare function DialogCanChangeClothes(): boolean;
 /**
  * Checks if the specified owner option is available.
- * @param {ChatRoomOwnershipOption} Option - The option to check for availability
+ * @param {ChatRoomOwnershipEvent} Option - The option to check for availability
  * @returns {boolean} - TRUE if the current ownership option is the specified one.
  */
-declare function ChatRoomOwnershipOptionIs(Option: ChatRoomOwnershipOption): boolean;
+declare function ChatRoomOwnershipOptionIs(Option: ChatRoomOwnershipEvent): boolean;
 /**
  * Checks if the specified lover option is available.
- * @param {ChatRoomLovershipOption} Option - The option to check for availability
+ * @param {ChatRoomLovershipEvent} Option - The option to check for availability
  * @returns {boolean} - TRUE if the current lover option is the specified one.
  */
-declare function ChatRoomLovershipOptionIs(Option: ChatRoomLovershipOption): boolean;
+declare function ChatRoomLovershipOptionIs(Option: ChatRoomLovershipEvent): boolean;
 /**
  * Returns TRUE if the room customization button can be used
  * @returns {boolean} - TRUE if can be used
@@ -1460,14 +1460,6 @@ declare function ChatRoomCheckForLastChatRoomUpdates(): void;
 declare function ChatRoomDataChanged(): boolean;
 declare function ChatRoomRefreshFontSize(): void;
 /**
- * Checks if the message can be sent as chat or the player should be warned
- * @deprecated No replacement; OOC should always be allowed through
- * @param {string} Message - User input
- * @param {Character} WhisperTarget
- * @returns {boolean}
- */
-declare function ChatRoomShouldBlockGaggedOOCMessage(Message: string, WhisperTarget: Character): boolean;
-/**
  * Validates that the words said in the local chat are not breaking any forbidden words rule
  * @param {string} Message - The message typed by the player
  * @returns {boolean} - Returns FALSE if we must block the message from being sent
@@ -1533,12 +1525,10 @@ declare var ChatRoomLastMessage: string[];
 declare var ChatRoomLastMessageIndex: number;
 /** @type {number} */
 declare var ChatRoomTargetMemberNumber: number;
-/** @type {ChatRoomOwnershipOption} */
-declare var ChatRoomOwnershipOption: ChatRoomOwnershipOption;
-/** @type {ChatRoomLovershipOption} */
-declare var ChatRoomLovershipOption: ChatRoomLovershipOption;
-/** @deprecated Check whether ChatRoomData is set or not instead */
-declare var ChatRoomPlayerCanJoin: boolean;
+/** @type {ChatRoomOwnershipEvent | null} */
+declare var ChatRoomOwnershipOption: ChatRoomOwnershipEvent | null;
+/** @type {ChatRoomLovershipEvent | null} */
+declare var ChatRoomLovershipOption: ChatRoomLovershipEvent | null;
 declare var ChatRoomMoneyForOwner: number;
 /** @type {number[]} */
 declare var ChatRoomQuestGiven: number[];
@@ -1570,21 +1560,6 @@ declare var ChatRoomSlowtimer: number;
  * @type {boolean}
  */
 declare var ChatRoomSlowStop: boolean;
-/**
- * Default position of the chat log field
- * @deprecated - superseded by and incorporated into {@link ChatRoomDivRect}
- */
-declare var ChatRoomChatLogRect: never;
-/**
- * Default position of the chat input field
- * @deprecated - superseded by and incorporated into {@link ChatRoomDivRect}
- */
-declare var ChatRoomChatInputRect: never;
-/**
- * Default position of the chat input length label
- * @deprecated - superseded by and incorporated into {@link ChatRoomDivRect}
- */
-declare var ChatRoomChatLengthLabelRect: never;
 /**
  * Default position of the entire chat panel
  * @type {RectTuple}

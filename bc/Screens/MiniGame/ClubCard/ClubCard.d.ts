@@ -192,6 +192,29 @@ declare function ClubCardEventNameIsInEvents(CCPlayer: ClubCardPlayer, CardName:
  */
 declare function ClubCardNameIsOnBoard(CCPlayer: ClubCardPlayer, CardName: string, NegateCheck?: boolean): boolean;
 /**
+ * Add cards to player's deck
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {string} CardName - The name of the card to add
+ * @param {number} Amount - the number of copies to add (1 by default)
+ * @returns {void} - Nothing
+ */
+declare function ClubCardAddCardsToDeck(CCPlayer: ClubCardPlayer, CardName: string, Amount?: number): void;
+/**
+ * Returns TRUE if can activate the effect of a card
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {ClubCard} Card - The card
+ * @returns {boolean} - TRUE if can active the effect
+ */
+declare function ClubCardCanActiveEffect(CCPlayer: ClubCardPlayer, Card: ClubCard): boolean;
+/**
+ * Activate an effect of card on board
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {ClubCard} Card - The card
+ * @param {boolean} SkipActivation - True if need to skip the activation of the card
+ * @returns {void} - Nothing
+ */
+declare function ClubCardActiveEffect(CCPlayer: ClubCardPlayer, Card: ClubCard, SkipActivation?: boolean): void;
+/**
  * Returns the amount of a card (by name) that are currently present on a board
  * @param {ClubCardPlayer} CCPlayer - The club card pla
  * @param {string} CardName - The name of the carder
@@ -225,6 +248,13 @@ declare function ClubCardCardHasType(card: ClubCard, TypeName: string): boolean;
  * @returns {number} - The number of cards from that group on the board
  */
 declare function ClubCardGroupOnBoardCount(CCPlayer: ClubCardPlayer, GroupName: string): number;
+/**
+ * Returns the number of cards of a specific group found in player's hand
+ * @param {ClubCardPlayer} CCPlayer - The club card player
+ * @param {string} GroupName - The name of the card group
+ * @returns {number} - The number of cards from that group in hand
+ */
+declare function ClubCardGroupInHandCount(CCPlayer: ClubCardPlayer, GroupName: string): number;
 /**
  * Returns the number of cards of a specific group found in the discard pile
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -384,6 +414,13 @@ declare function ClubCardCancelNegation(CCPlayer: ClubCardPlayer, CardToCancel: 
  */
 declare function ClubCardAlvinCondition(CCPlayer: ClubCardPlayer): void;
 /**
+ * Handles Tifas effect selection
+ * @param {ClubCardPlayer} CCPlayer
+ * @param {String} Selection
+ * @returns {void} - Nothing
+ */
+declare function ClubCardTifaSelection(CCPlayer: ClubCardPlayer, Selection: string): void;
+/**
  * Removes cards from a player hand
  * @param {ClubCardPlayer} CCPlayer - The club card player that discards
  * @param {number} Amount - The amount of cards to discard
@@ -453,6 +490,10 @@ declare function ClubCardCheckEventAndCardExpired(): void;
  * and defocuses it if not.
  */
 declare function ClubCardDefocusCardIfDiscarded(): void;
+/**
+ * Checks if need to defocus a card after a member leaves the club
+ */
+declare function ClubCardDefocusCardIfRemoved(): void;
 declare function ClubCardCheckVictory(CCPlayer: any): boolean;
 declare function ClubCardEndGameSyncAndMessage(CCPlayer: any): void;
 /**
@@ -829,6 +870,7 @@ declare var ClubCardPending: null | ClubCard;
 declare var ClubCardTierSelection: null | number;
 declare var ClubCardLevelLimit: number[];
 declare var ClubCardLevelCost: number[];
+declare var ClubCardLiabilityLimit: number[];
 /** @type {ClubCardPlayer[]} */
 declare var ClubCardPlayer: ClubCardPlayer[];
 declare var ClubCardOnlinePlayerMemberNumber1: number;

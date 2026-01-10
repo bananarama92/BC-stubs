@@ -105,11 +105,6 @@ declare function ShibariSurrenderToTeacher(): void;
  */
 declare function ShibariSpank(): void;
 /**
- * Triggered when the teacher gives the suspension hemp rope to the player
- * @returns {void} - Nothing
- */
-declare function ShibariGetRope(): void;
-/**
  * Triggered when the player rescues the teacher and completes the mission for the maid rescue mission.
  * @returns {void} - Nothing
  */

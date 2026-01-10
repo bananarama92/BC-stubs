@@ -77,12 +77,6 @@ declare function TranslationAsset(Family: IAssetFamily): void;
  */
 declare function TranslationGetLanguageName(code: string, english?: boolean): "" | "English" | "Deutsch" | "German" | "Français" | "French" | "Русский" | "Russian" | "中文" | "Chinese" | "繁體中文" | "TraditionalChinese" | "Українська" | "Ukrainian";
 /**
- * Changes the current language and save the new selected language to local storage
- * @deprecated - Use {@link TranslationSwitchLanguage} instead
- * @returns {void} - Nothing
- */
-declare function TranslationNextLanguage(): void;
-/**
  * Changes the language depending on the given language and save the new selected language to local storage
  * @param {ServerChatRoomLanguage | "TW"} languageCode
  */

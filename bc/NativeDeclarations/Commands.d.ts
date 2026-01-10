@@ -16,7 +16,7 @@ interface ICommand {
   /** Whether the case of the command should be preserved. False if omitted */
   PreserveCase?: boolean;
   /** Array of commands that can be used as subcommands. */
-  Subcommands?: Subcommand[];
+  Subcommands?: Thunk<Subcommand[]>;
   /**
    * Array of arguments that the command accepts.
    * Can be a function to generate arguments at runtime.
@@ -28,6 +28,6 @@ interface ICommand {
 type ArgumentDef = {
   name: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
   description: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
-  suggestions?: string[] | (() => string[]);
+  suggestions?: Thunk<string[]>;
 };
 type Subcommand = Omit<ICommand, 'Subcommands' | 'AutoComplete'>;

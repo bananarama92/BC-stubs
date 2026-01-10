@@ -87,30 +87,12 @@ declare function PreferenceGetZoneFactor(C: Character, ZoneName: AssetGroupItemN
  */
 declare function PreferenceSetArousalZone(C: Character, ZoneName: AssetGroupItemName, Factor?: ArousalFactor, CanOrgasm?: boolean): void;
 /**
- * Sets the love factor for a specific body zone on the player
- * @param {Character} C - The character, for whom the love factor of a particular zone should be set
- * @param {AssetGroupItemName} ZoneName - The name of the zone, the factor should be set for
- * @param {ArousalFactor} Factor - The factor of the zone (0 is horrible, 2 is normal, 4 is great)
- * @deprecated Use {@link PreferenceSetArousalZone}
- * @returns {void} - Nothing
- */
-declare function PreferenceSetZoneFactor(C: Character, ZoneName: AssetGroupItemName, Factor: ArousalFactor): void;
-/**
  * Determines, if a player can reach on orgasm from a particular zone
  * @param {Character} C - The character whose ability to orgasm we check
  * @param {AssetGroupItemName} ZoneName - The name of the zone to check
  * @returns {boolean} - Returns true if the zone allows orgasms for a character, false otherwise
  */
 declare function PreferenceGetZoneOrgasm(C: Character, ZoneName: AssetGroupItemName): boolean;
-/**
- * Sets the ability to induce an orgasm for a given zone*
- * @param {Character} C - The characterfor whom we set the ability to órgasm from a given zone
- * @param {AssetGroupItemName} ZoneName - The name of the zone to set the ability to orgasm for
- * @param {boolean} CanOrgasm - Sets, if the character can cum from the given zone (true) or not (false)
- * @deprecated Use {@link PreferenceSetArousalZone}
- * @returns {void} - Nothing
- */
-declare function PreferenceSetZoneOrgasm(C: Character, ZoneName: AssetGroupItemName, CanOrgasm: boolean): void;
 /**
  * Checks, if the arousal activity controls must be activated
  * @returns {boolean} - Returns true if we must activate the preference controls, false otherwise

@@ -82,33 +82,8 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	RoomSearchLanguage?: "" | ServerChatRoomLanguage;
 	ChatSearchSettings?: ChatRoomSearchSettings;
 	LastMapData?: null | ChatRoomMapData;
-	// Unfortunately can't @deprecated individual union members
 	/** String-based values have been deprecated and are superseded by {@link ServerChatRoomSettings} objects */
-	LastChatRoom?: null | ServerChatRoomSettings | string;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomDesc?: string;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomAdmin?: string;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomWhitelist?: string;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomBan?: string;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomBG?: string;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomSize?: number;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomPrivate?: boolean;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomBlockCategory?: ServerChatRoomBlockCategory[];
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomSpace?: ServerChatRoomSpace;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomLanguage?: ServerChatRoomLanguage;
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomCustom?: ServerChatRoomData["Custom"];
-	/** @deprecated superseded by the {@link ServerAccountData.LastChatRoom} object */
-	LastChatRoomMapData?: ServerChatRoomMapData;
+	LastChatRoom?: null | ServerChatRoomSettings;
 	ControllerSettings?: ControllerSettingsType;
 	ImmersionSettings?: ImmersionSettingsType;
 	RestrictionSettings?: RestrictionSettingsType;
