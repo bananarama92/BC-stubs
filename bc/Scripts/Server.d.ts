@@ -234,17 +234,6 @@ declare function ServerShowBeep(message: string, duration: number, options?: {
     chatRoomName?: string;
     silent?: boolean;
 }, title?: string): void;
-/** Draws the last beep sent by the server if the timer is still valid, used during the drawing process
- * @deprecated
- */
-declare function ServerDrawBeep(): void;
-/** Handles a click on the beep rectangle if mail is included */
-declare function ServerClickBeep(): void;
-/**
- * Opens the friendlist from any screen
- * @deprecated Use {@link FriendListShow()};
- */
-declare function ServerOpenFriendList(): Promise<void>;
 /**
  * Callback used to parse received information related to the player ownership data
  * @param {object} data - Data object containing the Owner name and Ownership object
@@ -269,16 +258,6 @@ declare function ServerChatRoomGetAllowItem(Source: Character, Target: Character
 /** @type {SocketIO.Socket} */
 declare var ServerSocket: SocketIO.Socket;
 declare var ServerURL: string;
-/**
- * @type { { Message: string; Timer: number; ChatRoomName?: string | null; IsMail?: boolean; } }
- * @deprecated Use {@link ServerShowBeep} instead.
- */
-declare var ServerBeep: {
-    Message: string;
-    Timer: number;
-    ChatRoomName?: string | null;
-    IsMail?: boolean;
-};
 /** @type {NotificationBeep[] } */
 declare var ServerBeepQueue: NotificationBeep[];
 declare var ServerIsConnected: boolean;

@@ -395,7 +395,6 @@ declare function ManagementContactOwner(): void;
 declare function ManagementReleaseFromOwner(RepChange: number): void;
 /**
  * Break ownership by another player
- * @deprecated
  * @returns {void} - Nothing.
  */
 declare function ManagementBreakOnlineOwnership(): void;

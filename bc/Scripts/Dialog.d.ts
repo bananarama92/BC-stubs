@@ -654,14 +654,6 @@ declare function DialogSetTightenLoosenItem(Item: Item): void;
  */
 declare function DialogChangeItemColor(C: Character, Color: string): void;
 /**
- * Draw the list of activities
- *
- * @deprecated - See {@link DialogMenuMapping.activities.Load} and {@link DialogMenuMapping.activities.Reload} for the new DOM-based menu
- * @param {Character} C - The character currently focused in the dialog.
- * @returns {void} - Nothing
- */
-declare function DialogDrawActivityMenu(C: Character): void;
-/**
  * Returns the button image name for a dialog menu button based on the button name.
  * @param {DialogMenuButton} ButtonName - The menu button name
  * @param {Item} FocusItem - The focused item
@@ -680,14 +672,6 @@ declare function DialogGetMenuButtonColor(ButtonName: DialogMenuButton): string;
  * @returns {boolean} - TRUE if the menu button should be disabled, FALSE otherwise
  */
 declare function DialogIsMenuButtonDisabled(ButtonName: DialogMenuButton): boolean;
-/**
- * Draw the list of items
- *
- * @deprecated - See {@link DialogMenuMapping.items.Load} and {@link DialogMenuMapping.items.Reload} for the new DOM-based menu
- * @param {Character} C - The character currently focused in the dialog.
- * @returns {void} - Nothing
- */
-declare function DialogDrawItemMenu(C: Character): void;
 /**
  * Searches in the dialog for a specific stage keyword and returns that dialog option if we find it, error otherwise
  * @param {string} KeyWord - The key word to search for
@@ -734,12 +718,6 @@ declare function DialogDrawTopMenu(C: Character): void;
  */
 declare function DialogLoad(): void;
 declare function DialogDraw(): void;
-/**
- * Handles clicks in the dialog expression menu.
- * @deprecated - Superseded by {@link DialogSelfMenuMapping["Expression"]}
- * @returns {void} - Nothing
- */
-declare function DialogClickExpressionMenu(): void;
 /**
  * Sets the current character sub menu to the owner rules
  * @returns {void} - Nothing
@@ -796,12 +774,6 @@ declare function DialogStruggleStart(C: Character, Action: DialogStruggleActionT
 declare function DialogStruggleStop(character: Character, game: StruggleKnownMinigames, data: StruggleCompletionData): void;
 declare function DialogKeyDown(event: KeyboardEvent): boolean;
 declare function DialogMouseDown(event: MouseEvent | TouchEvent): void;
-/** @deprecated - Superseded by `span.dialog-status`. */
-declare var DialogText: never;
-/** @deprecated  - Superseded by `span.dialog-status[data-default]`.*/
-declare var DialogTextDefault: never;
-/** @deprecated  - Superseded by `span.dialog-status[data-timeout-id]`.*/
-declare var DialogTextDefaultTimer: never;
 /** The duration temporary status message show up for, in ms
  * @type {number}
  */
@@ -852,18 +824,6 @@ declare var DialogMenuButton: DialogMenuButton[];
  * @type {null | DialogMenuMode}
  */
 declare var DialogMenuMode: null | DialogMenuMode;
-/** @deprecated Use {@link DialogMenuMode}. */
-declare var DialogColor: never;
-/** @deprecated Use {@link DialogMenuMode}. */
-declare var DialogItemPermissionMode: never;
-/** @deprecated Use {@link DialogMenuMode}.*/
-declare var DialogItemToLock: never;
-/** @deprecated Use {@link DialogMenuMode}. */
-declare var DialogActivityMode: never;
-/** @deprecated Use {@link DialogMenuMode}. */
-declare var DialogLockMenu: never;
-/** @deprecated Use {@link DialogMenuMode}. */
-declare var DialogCraftingMenu: never;
 /**
  * The group that was selected before we entered the expression coloring screen
  * @type {{mode: DialogMenuMode, group: AssetItemGroup}}
@@ -872,8 +832,6 @@ declare var DialogExpressionPreviousMode: {
     mode: DialogMenuMode;
     group: AssetItemGroup;
 };
-/** @deprecated */
-declare var DialogFacialExpressions: never;
 declare var DialogFacialExpressionsSelectedBlindnessLevel: number;
 declare var DialogExtendedMessage: string;
 /**

@@ -59,14 +59,6 @@ declare function GameTouchMove(event: TouchEvent, forwardToScreens?: boolean): v
  * @param {MouseEvent} event
  */
 declare function GameMouseLeave(event: MouseEvent): void;
-/** @deprecated */
-declare function KeyDown(event: any): void;
-/** @deprecated */
-declare function MainRun(Timestamp: any): void;
-/** @deprecated */
-declare function Click(event: any): void;
-/** @deprecated */
-declare function LoseFocus(event: any): void;
 /** BC's version */
 declare var GameVersion: string;
 declare const GameVersionFormat: RegExp;

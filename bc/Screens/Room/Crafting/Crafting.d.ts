@@ -153,12 +153,6 @@ declare let CraftingSelectedItem: CraftingItemSelected | null;
 /** An offset used for the pagination of {@link Player.Crafting}. */
 declare let CraftingOffset: number;
 /**
- * A list of all assets valid for crafting, potentially filtered by a user-provided keyword.
- * @type {never}
- * @deprecated
- */
-declare let CraftingItemList: never;
-/**
  * The character used for the crafting preview.
  * @type {Character | null}
  */

@@ -101,7 +101,6 @@ declare function CommonClick(event: MouseEvent | TouchEvent): void;
  * @returns {boolean}
  */
 declare function CommonTouchActive(X: number, Y: number, W: number, H: number, TL?: TouchList): boolean;
-declare function CommonKeyDown(event: KeyboardEvent): boolean;
 /**
  * Calls a basic dynamic function if it exists, for complex functions, use: CommonDynamicFunctionParams
  * @param {string} FunctionName - Name of the function to call
@@ -545,10 +544,10 @@ declare function CommonObjectFlip(obj: object): Record<string, any>;
  * Parse the passed stringified JSON data and catch any exceptions.
  * Exceptions will cause the function to return `undefined`.
  * @param {string} data
- * @returns {any}
+ * @returns {unknown}
  * @see {@link JSON.parse}
  */
-declare function CommonJSONParse(data: string): any;
+declare function CommonJSONParse(data: string): unknown;
 /**
  * Translates the current event into movement directions
  *
@@ -681,6 +680,34 @@ declare function CommonTokenize(input: string, options?: {
 /**
  * Formats a duration in ms to a human readable string of days, months, and years.
  * Defaults to showing days.
+ * @param {number | Date} end
+ * @param {number | Date} start
+ * @param {{
+ *   includeYears?: boolean;
+ *   includeMonths?: boolean;
+ *   includeWeeks?: boolean;
+ *   includeDays?: boolean;
+ *   includeHours?: boolean;
+ *   includeMinutes?: boolean;
+ *   includeSeconds?: boolean;
+ *   showFull?: boolean;
+ * }} options
+ * @returns {string}
+ */
+declare function CommonFormatDurationRange(end: number | Date, start: number | Date, options?: {
+    includeYears?: boolean;
+    includeMonths?: boolean;
+    includeWeeks?: boolean;
+    includeDays?: boolean;
+    includeHours?: boolean;
+    includeMinutes?: boolean;
+    includeSeconds?: boolean;
+    showFull?: boolean;
+}): string;
+/**
+ * Formats a duration in ms to a human readable string of days, months, and years.
+ * Defaults to showing days.
+ * @deprecated Use CommonFormatDurationRange instead
  * @param {number} ms
  * @param {{
  *   includeYears?: boolean;
@@ -708,6 +735,35 @@ declare function CommonFormatDuration(ms: number, options?: {
  * Break duration into real-calendar components (y, m, d, h, min, s),
  * optionally rolling excluded components into the next smaller unit.
  *
+ * @param {Date} end
+ * @param {Date} start
+ * @param {{
+ *   includeYears?: boolean,
+ *   includeMonths?: boolean,
+ *   includeDays?: boolean,
+ *   includeHours?: boolean,
+ *   includeMinutes?: boolean,
+ * }} options
+ */
+declare function CommonGetDatePartsRange(end: Date, start: Date, options?: {
+    includeYears?: boolean;
+    includeMonths?: boolean;
+    includeDays?: boolean;
+    includeHours?: boolean;
+    includeMinutes?: boolean;
+}): {
+    y: number;
+    m: number;
+    d: number;
+    h: number;
+    min: number;
+    s: number;
+};
+/**
+ * Break duration into real-calendar components (y, m, d, h, min, s),
+ * optionally rolling excluded components into the next smaller unit.
+ *
+ * @deprecated Use CommonGetDatePartsRange instead.
  * @param {number} ms
  * @param {{
  *   includeYears?: boolean,
@@ -765,13 +821,16 @@ declare function CommonFindMap<Tinp, Tout>(array: readonly Tinp[], predicateMapp
  * @returns
  */
 declare function CommonStringSplice(string: string, index: number, value: string, defaultValue: string): string;
+/**
+ * Unwraps a thunk into a value
+ *
+ * @template T
+ * @param {Thunk<T>} thunk
+ * @returns {T}
+ */
+declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
-/**
- * @type {number|string}
- * @deprecated Use the keyboard handler's `event` parameter instead
- */
-declare var KeyPress: number | string;
 /** @type {ModuleType} */
 declare var CurrentModule: ModuleType;
 /** @type {ModuleScreens[CurrentModule]} */

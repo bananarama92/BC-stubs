@@ -49,17 +49,6 @@ declare function ChatRoomCharacterViewDraw(): void;
  */
 declare function ChatRoomCharacterViewDrawUi(): void;
 /**
- * Draw the background of a chat room
- * @param {string} Background - The name of the background image file
- * @param {number} Y - The starting Y co-ordinate of the image
- * @param {number} zoom - The zoom factor based on the number of characters
- * @param {number} darken - The value (0 = fully visible, 1 = black) to tint the background
- * @param {boolean} inverted - Whether the background image should be inverted
- * @deprecated Use {@link DrawRoomBackground} instead
- * @returns {void} - Nothing
- */
-declare function ChatRoomCharacterViewDrawBackground(Background: string, Y: number, zoom: number, darken: number, inverted: boolean): void;
-/**
  * Iterate over a room's characters
  *
  * This function takes a callback it will call for each character in turn after having

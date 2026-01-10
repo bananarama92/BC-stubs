@@ -191,6 +191,7 @@
         "ReverseBunnySuit": "R98",
         "RibbonCorset": "R112",
         "Robe1": "R98",
+        "RuffledDress": "R124",
         "SeethroughTop": "R98",
         "ShoulderlessTop": "R98",
         "SlaveRags": "R98",
@@ -217,6 +218,7 @@
         "BodyWritings": "R103",
         "Bouquet": "R98",
         "BowBackAccessory": "R104",
+        "BowBelt": "R124",
         "BugLegs": "R98",
         "BunnyCollarCuffs": "R98",
         "Camera1": "R98",
@@ -471,6 +473,7 @@
         "Fluids": "R98"
     },
     "Garters": {
+        "BowBelt": "R124",
         "ButterflyGarter": "R115",
         "ComboBelt": "R112",
         "DropBag": "R98",
@@ -1208,7 +1211,8 @@
         "WoodenHorse": "R98",
         "WoodenRack": "R98",
         "WoodenStocks": "R98",
-        "X-Cross": "R98"
+        "X-Cross": "R98",
+        "XFrame": "R124"
     },
     "ItemEars": {
         "BluetoothEarbuds": "R98",
@@ -2104,6 +2108,7 @@
         "LockingCockring": "R104",
         "LoversVibrator": "R98",
         "LoversVibratorRemote": "R98",
+        "MysteryBox": "R124",
         "PenisDildo": "R98",
         "PlasticChastityCage1": "R98",
         "PlasticChastityCage2": "R98",
