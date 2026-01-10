@@ -22,14 +22,12 @@ jobs:
       - name: Parse input
         run: |
           case "${{ github.event_name }}" in
-            "pull_request")
-              echo "DRY=false" >> $GITHUB_ENV
-              ;;
             "workflow_dispatch")
               echo "DRY=${{ inputs.repo }}" >> $GITHUB_ENV
               ;;
             *)
-              exit 1;;
+              echo "DRY=false" >> $GITHUB_ENV
+              ;;
           esac
 
       - uses: actions/checkout@v6
