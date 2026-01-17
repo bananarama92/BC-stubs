@@ -1,6 +1,6 @@
 /**
  * Returns character based on argument
- * @param {Character | string} C - The characer to get; can be `"Player"` to get player or empty to get current
+ * @param {Character | string} C - The character to get; can be `"Player"` to get player or empty to get current
  * @returns {Character} - The actual character
  */
 declare function DialogGetCharacter(C: Character | string): Character;
@@ -190,7 +190,7 @@ declare function DialogSkillGreater(SkillType: SkillType, Value: string): boolea
 declare function DialogInventoryAvailable(InventoryName: string, InventoryGroup: AssetGroupName): boolean;
 /**
  * Checks, if the player is the administrator of the current chat room
- * @returns {boolean} - Returns true, if the player belogs to the group of administrators for the current char room false otherwise
+ * @returns {boolean} - Returns true, if the player belongs to the group of administrators for the current char room false otherwise
  */
 declare function DialogChatRoomPlayerIsAdmin(): boolean;
 /**
@@ -324,7 +324,7 @@ declare function DialogAllowItemScreenException(): boolean;
  */
 declare function DialogIntro(C: Character): string;
 /**
- * Generic dialog function to leave conversation. De-inititalizes global variables and reverts the
+ * Generic dialog function to leave conversation. De-initializes global variables and reverts the
  * FocusGroup of the player and the current character to null
  * @param {null | DialogLeave.Options} options - Further customization options
  * @returns {void} - Nothing
@@ -517,7 +517,7 @@ declare function DialogMenuButtonClick(): boolean;
 declare function DialogPublishAction(C: Character, Action: string, ClickItem: Item): void;
 /**
  * Returns TRUE if the clicked item can be processed, make sure it's not the same item as the one already used
- * @param {Item} CurrentItem - The item currently equiped
+ * @param {Item} CurrentItem - The item currently equipped
  * @param {Item} ClickItem - The clicked item
  * @returns {boolean} - TRUE when we can process
  */
@@ -641,7 +641,7 @@ declare function DialogStatusClear(): void;
  */
 declare function DialogExtendItem(Item: Item, SourceItem?: Item): void;
 /**
- * Shows the tigthen/loosen item menu for a given item, if possible.
+ * Shows the tighten/loosen item menu for a given item, if possible.
  * @param {Item} Item - The item to open the menu for
  * @returns {void} - Nothing
  */
@@ -680,7 +680,7 @@ declare function DialogIsMenuButtonDisabled(ButtonName: DialogMenuButton): boole
 declare function DialogFindPlayer(KeyWord: string): string;
 /**
  * Searches in the dialog for a specific stage keyword and returns that dialog option if we find it
- * @param {Character} C - The character whose dialog optio*
+ * @param {Character} C - The character whose dialog option*
  * @param {string} KeyWord1 - The key word to search for
  * @param {string} [KeyWord2] - An optionally given second key word. is only looked for, if specified and the first
  * keyword was not found.
@@ -938,7 +938,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
      */
     constructor(mode: ModeType);
     /**
-     * An object containg all DOM element IDs referenced in the {@link DialogMenu} subclass.
+     * An object containing all DOM element IDs referenced in the {@link DialogMenu} subclass.
      * @abstract
      * @readonly
      * @type {Readonly<Record<string, string> & { root: string, status?: string, grid?: string, paginate?: string, icon?: string, menubar?: string }>}
@@ -967,7 +967,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
      */
     _initProperties: null | PropType;
     /**
-     * An object containg all event listeners referenced in the {@link DialogMenu} subclass.
+     * An object containing all event listeners referenced in the {@link DialogMenu} subclass.
      * @readonly
      * @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>}
      */
@@ -1046,7 +1046,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
      */
     private _reloadHighestID;
     /**
-     * Promise object for queuing reloads, ensuring that they are run consecutively rather than concurrently if multiple calls are invoked (near) simultenously.
+     * Promise object for queuing reloads, ensuring that they are run consecutively rather than concurrently if multiple calls are invoked (near) simultaneously.
      * See {@link DialogMenu.Reload}
      * @private
      * @type {Promise<boolean>}
@@ -1157,7 +1157,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
      */
     _GetClickedObject(button: HTMLButtonElement): ClickedObj | undefined;
     /**
-     * Helper function for handling the clicks of succesfully validated grid button clicks.
+     * Helper function for handling the clicks of successfully validated grid button clicks.
      * @abstract
      * @param {HTMLButtonElement} button - The clicked button
      * @param {Character} C - The target character

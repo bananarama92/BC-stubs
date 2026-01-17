@@ -1,4 +1,9 @@
 /**
+ * Checks whether the player is allowed to change customization settings
+ * @returns {boolean} - true if the player is allowed to change customization settings, false otherwise
+ */
+declare function ChatAdminRoomCustomizationCanEdit(): boolean;
+/**
  * Changes a customiation value from a chat room command
  * @param {"Image" | "Filter" | "Music"} Property - The custom property to change (Image, Filter or Music)
  * @param {string} Value - The value to set in that property

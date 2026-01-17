@@ -108,13 +108,13 @@ type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 	/**
 	 * Scalar-valued attributes that will be set on the HTML element.
 	 *
-	 * Note that booleans are interpretted as [boolean attributes](https://developer.mozilla.org/en-US/docs/Glossary/Boolean/HTML).
+	 * Note that booleans are interpreted as [boolean attributes](https://developer.mozilla.org/en-US/docs/Glossary/Boolean/HTML).
 	 */
 	attributes?: Partial<Record<string, number | boolean | string>>;
 	/**
 	 * Data attributes that will be set on the HTML element (see {@link HTMLElement.dataset}).
 	 *
-	 * Note that booleans are interpretted as [boolean attributes](https://developer.mozilla.org/en-US/docs/Glossary/Boolean/HTML).
+	 * Note that booleans are interpreted as [boolean attributes](https://developer.mozilla.org/en-US/docs/Glossary/Boolean/HTML).
 	 */
 	dataAttributes?: Partial<Record<string, number | string | boolean>>;
 	/** CSS style declarations that will be set on the HTML element (see {@link HTMLElement.style}). */
@@ -801,7 +801,7 @@ interface ModuleScreens {
 		| "Introduction"
 		| "KidnapLeague"
 		| "LARP"
-		| "Magic" | "MagicSchoolEscape" | "MagicSchoolLaboratory"
+		| "Magic" | "MagicSchoolEscape" | "MagicSchoolLaboratory" | "MagicSchoolFindsAround"
 		| "MaidQuarters" | "MainHall" | "Management" | "MovieStudio" | "Nursery"
 		| "Pandora" | "PandoraPrison"
 		| "Photographic"
@@ -896,7 +896,7 @@ interface StimulationEventItem {
 		event: StimulationEventType;
 	/** The chance of the event occurring */
 		chance: number;
-	/** Arousal booost from the event */
+	/** Arousal boost from the event */
 		arousal: number;
 }
 
@@ -912,7 +912,7 @@ interface ChatRoomChatLogEntry {
 interface IChatRoomMessageMetadata {
 	/** The name of the sender character, appropriately garbled if deafened */
 	senderName?: string;
-	/** The character targetted by the message */
+	/** The character targeted by the message */
 	TargetCharacter?: Character;
 	AdditionalTargets?: Record<number, Character>;
 	/** The character sending the message */
@@ -967,7 +967,7 @@ type ChatRoomMessageExtractor =
  * A chat message handler.
  *
  * This is used in ChatRoomMessage to perform filtering and actions on
- * the recieved message. You can register one of those with
+ * the received message. You can register one of those with
  * ChatRoomRegisterMessageHandler if you need to peek at incoming messages.
  *
  * Message processing is done in three phases:
@@ -1841,7 +1841,7 @@ interface Character {
 	/**
 	 * Get a copy or set the array of the last set of manually activated poses.
 	 *
-	 * Note that these poses are by no means guaranted to be enabled, as they do not reflect any item-specific automatic pose changes (see {@link Pose}).
+	 * Note that these poses are by no means guaranteed to be enabled, as they do not reflect any item-specific automatic pose changes (see {@link Pose}).
 	 * @see {@link ActivePoseMapping} - The underlying record of this property, usage of which is recommended
 	 */
 	get ActivePose(): readonly AssetPoseName[];
@@ -1869,7 +1869,7 @@ interface Character {
 	/**
 	 * A record mapping pose categories to the last manually enabled pose belonging to it.
 	 *
-	 * Note that these poses are by no means guaranted to be enabled, as they do not reflect any item-specific automatic pose changes (see {@link PoseMapping}).
+	 * Note that these poses are by no means guaranteed to be enabled, as they do not reflect any item-specific automatic pose changes (see {@link PoseMapping}).
 	 */
 	ActivePoseMapping: Partial<Record<AssetPoseCategory, AssetPoseName>>;
 	/**
@@ -2107,6 +2107,7 @@ interface CharacterGameParameters {
 	GGTS?: GameGGTSParameters,
 	Poker?: GamePokerParameters,
 	ClubCard?: GameClubCardParameters,
+	MagicSchoolFindsAround?: GameMagicSchoolFindsAroundParameters;
 	Prison? : GamePrisonParameters;
 }
 
@@ -2776,10 +2777,10 @@ declare namespace ExtendedItemCallbacks {
 	/**
 	 * Callback for extended item `Validate` functions.
 	 * `Validate` functions are responsible for validating any change in an item's properties.
-	 * @param C The character that has the item equiped
+	 * @param C The character that has the item equipped
 	 * @param item The item in question
 	 * @param newOption The newly selected extended item option
-	 * @param previousOption The previusly selected extended item option
+	 * @param previousOption The previously selected extended item option
 	 * @param permitExisting - Determines whether the validation should allow the new option and previous option
 	 * to be identical. Defaults to false.
 	 * @returns A non-empty message string if the item failed validation, or an empty string otherwise
@@ -2790,10 +2791,10 @@ declare namespace ExtendedItemCallbacks {
 	/**
 	 * Callback for extended item `PublishAction` functions.
 	 * `PublishAction` functions are responsible for reporting any changes to an item's properties via a chat message.
-	 * @param C The character that has the item equiped
+	 * @param C The character that has the item equipped
 	 * @param item The item in question
 	 * @param newOption The newly selected extended item option
-	 * @param previousOption The previusly selected extended item option
+	 * @param previousOption The previously selected extended item option
 	 */
 	type PublishAction<
 		OptionType extends ExtendedItemOption
@@ -2801,7 +2802,7 @@ declare namespace ExtendedItemCallbacks {
 	/**
 	 * Callback for extended item `Init` functions.
 	 * `Init` functions are responsible for setting the initial properties of an extended item.
-	 * @param C The character that has the item equiped
+	 * @param C The character that has the item equipped
 	 * @param item The item in question
 	 * @param push Whether to push to changes to the server
 	 * @param refresh Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
@@ -2810,10 +2811,10 @@ declare namespace ExtendedItemCallbacks {
 	type Init = ExtendedItemCallback<[C: Character, item: Item, push: boolean, refresh: boolean], boolean>;
 	/**
 	 * Callback for extended item `SetOption` functions.
-	 * @param C The character that has the item equiped
+	 * @param C The character that has the item equipped
 	 * @param item The item in question
 	 * @param newOption The newly selected extended item option
-	 * @param previousOption The previusly selected extended item option
+	 * @param previousOption The previously selected extended item option
 	 * @param push Whether to push to changes to the server
 	 * @param refresh Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
 	 */
@@ -2893,10 +2894,10 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	 * `Validate` functions are responsible for validating any change in an item's properties.
 	 * @param data The items extended item data
 	 * @param originalFunction The function (if any) that is normally called when an archetypical item reaches this point
-	 * @param C The character that has the item equiped
+	 * @param C The character that has the item equipped
 	 * @param item The item in question
 	 * @param newOption The newly selected extended item option
-	 * @param previousOption The previusly selected extended item option
+	 * @param previousOption The previously selected extended item option
 	 * @param permitExisting - Determines whether the validation should allow the new option and previous option
 	 * to be identical. Defaults to false.
 	 * @returns A non-empty message string if the item failed validation, or an empty string otherwise
@@ -2910,10 +2911,10 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	 * `PublishAction` functions are responsible for reporting any changes to an item's properties via a chat message.
 	 * @param data The items extended item data
 	 * @param originalFunction The function (if any) that is normally called when an archetypical item reaches this point
-	 * @param C The character that has the item equiped
+	 * @param C The character that has the item equipped
 	 * @param item The item in question
 	 * @param newOption The newly selected extended item option
-	 * @param previousOption The previusly selected extended item option
+	 * @param previousOption The previously selected extended item option
 	 */
 	type PublishAction<
 		DataType extends ExtendedItemData<any>,
@@ -2924,7 +2925,7 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	 * `Init` functions are responsible for setting the initial properties of an extended item.
 	 * @param data The items extended item data
 	 * @param originalFunction The function (if any) that is normally called when an archetypical item reaches this point
-	 * @param C The character that has the item equiped
+	 * @param C The character that has the item equipped
 	 * @param item The item in question
 	 * @param push Whether to push to changes to the server
 	 * @param refresh Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
@@ -2937,10 +2938,10 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	 * Callback for extended item `SetOption` functions.
 	 * @param data The items extended item data
 	 * @param originalFunction The function that is normally called when an archetypical item reaches this point
-	 * @param C The character that has the item equiped
+	 * @param C The character that has the item equipped
 	 * @param item The item in question
 	 * @param newOption The newly selected extended item option
-	 * @param previousOption The previusly selected extended item option
+	 * @param previousOption The previously selected extended item option
 	 * @param push Whether to push to changes to the server
 	 * @param refresh Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
 	 * @returns
@@ -3004,7 +3005,7 @@ interface ExtendedItemData<OptionType extends ExtendedItemOption> {
 	/** A record containing various dialog keys used by the extended item screen */
 	dialogPrefix: ExtendedItemDialog<any, OptionType>;
 	/**
-	 * A recond containing functions that are run on load, click, draw, exit, and validate, with the original archetype function
+	 * A record containing functions that are run on load, click, draw, exit, and validate, with the original archetype function
 	 * and parameters passed on to them. If undefined, these are ignored.
 	 * Note that scripthook functions must be loaded before `Female3DCGExtended.js` in `index.html`.
 	 */
@@ -3525,7 +3526,7 @@ interface ModularItemData extends ExtendedItemData<ModularItemOption> {
 	/** A lookup for the click functions for each of the item's modules */
 	clickFunctions: Record<string, () => void>;
 	/**
-	 * A recond containing functions that are run on load, click, draw, exit, and validate, with the original archetype function
+	 * A record containing functions that are run on load, click, draw, exit, and validate, with the original archetype function
 	 * and parameters passed on to them. If undefined, these are ignored.
 	 * Note that scripthook functions must be loaded before `Female3DCGExtended.js` in `index.html`.
 	 */
@@ -3578,7 +3579,7 @@ interface TypedItemData extends ExtendedItemData<TypedItemOption> {
 	 */
 	chatSetting: TypedItemChatSetting;
 	/**
-	 * A recond containing functions that are run on load, click, draw, exit, validate and publishaction,
+	 * A record containing functions that are run on load, click, draw, exit, validate and publishaction,
 	 * with the original archetype function and parameters passed on to them. If undefined, these are ignored.
 	 * Note that scripthook functions must be loaded before `Female3DCGExtended.js` in `index.html`.
 	 */
@@ -3925,6 +3926,10 @@ interface GamePrisonParameters {
 	Role?: string;
 }
 
+interface GameMagicSchoolFindsAroundParameters {
+	KitsuneQuestProgress?: number;
+}
+
 //#endregion
 
 // #region Online Games
@@ -4260,7 +4265,7 @@ interface CraftingItem {
 	MemberNumber?: number;
 	/** The custom item description. */
 	Description: string;
-	/** The crafted item propery. */
+	/** The crafted item property. */
 	Property: CraftingPropertyType;
 	/** The comma-separated color(s) of the item. */
 	Color: string;
@@ -4293,7 +4298,7 @@ interface CraftingItem {
 	 */
 	TypeRecord?: null | TypeRecord;
 	/**
-	 * Whether the crafting item is elligble for use.
+	 * Whether the crafting item is eligible for use.
 	 * Only relevant if the player is the craft's owner but do they not own the underlying item (_e.g._ due to an inventory wipe).
 	 */
 	Disabled?: boolean;
@@ -4330,9 +4335,9 @@ interface CraftingItemSelected {
 	 * The asset is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
 	 */
 	get Asset(): Asset | undefined;
-	/** The crafted item propery. */
+	/** The crafted item property. */
 	Property: CraftingPropertyType;
-	/** The lock as equiped on the item or, if absent, `null`. */
+	/** The lock as equipped on the item or, if absent, `null`. */
 	Lock: Asset | null;
 	/** Whether the crafted item should be private or not. */
 	Private: boolean;
@@ -4417,7 +4422,7 @@ interface ColorGroup {
 	colorIndex: number;
 }
 
-/** A fully mutubable subset of {@link ItemColorStateType} */
+/** A fully mutable subset of {@link ItemColorStateType} */
 interface ItemColorExitState extends Pick<ItemColorStateType, "colors" | "initialColors" | "defaultColors" | "opacity" | "initialOpacity" | "defaultOpacity" | "editOpacity" > {
 	initialColors: string[];
 	initialOpacity: number[];

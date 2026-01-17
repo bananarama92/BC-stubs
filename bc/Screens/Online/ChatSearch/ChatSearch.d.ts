@@ -3,9 +3,9 @@
  * @param {ServerChatRoomSpace} space - Name of the chatroom space
  * @param {ScreenSpecifier | undefined} returnScreen - Screen to go back to when exiting leaving the lobby.
  * @param {ChatSearchLobbyOptions} [options]
- * @returns {void} - Nothing.
+ * @returns {Promise<void>} - Nothing.
  */
-declare function ChatSearchStart(space: ServerChatRoomSpace, returnScreen: ScreenSpecifier | undefined, options?: ChatSearchLobbyOptions): void;
+declare function ChatSearchStart(space: ServerChatRoomSpace, returnScreen: ScreenSpecifier | undefined, options?: ChatSearchLobbyOptions): Promise<void>;
 declare function ChatSearchLoad(): Promise<void>;
 declare function ChatSearchResize(load: boolean): void;
 declare function ChatSearchUnload(): void;
