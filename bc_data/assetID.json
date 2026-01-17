@@ -2657,7 +2657,8 @@
             "SkunkTail": 28,
             "LargeBushyTail": 29,
             "DragonsTail": 30,
-            "FoxTailStrap": 31
+            "FoxTailStrap": 31,
+            "KitsuneTailStraps": 32
         }
     },
     "Wings": {

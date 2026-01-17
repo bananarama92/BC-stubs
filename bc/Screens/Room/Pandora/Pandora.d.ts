@@ -296,11 +296,12 @@ declare function PandoraPenitentiaryIsGuard(C: Character): boolean;
  */
 declare function PandoraPenitentiaryCreate(): void;
 /**
- * Called from MainHall and ChatSearch - Checks if we must create the Pandora prison and creates it
- * @param {object} Result - The result of the search
+ * Intercept chat results and auto-join Pandora room if currently in the Penitentiary
+ * This function expects to only be called with the ChatSearch screen running
+ * @param {ServerChatRoomSearchResultResponse} Result - The result of the search
  * @returns {void} - Nothing
  */
-declare function PandoraPenitentiaryResult(Result: object): void;
+declare function PandoraPenitentiaryResult(Result: ServerChatRoomSearchResultResponse): void;
 /**
  * Returns TRUE if the group is available for an Onlin Pandora Prison activity
  * @param {Character} C - The character to evaluate

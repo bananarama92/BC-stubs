@@ -80,7 +80,7 @@ declare function ClubCardMessagesMergeSteal(stealMoneyMessages: Array<{
 declare function ClubCardMessageGetText(ClubCardMessage: ClubCardMessage): string;
 /**
    * Updated the text by mask, for InnerHTML
-   * The function finds the necessary words from the arrays and adds colour labels to them.
+   * The function finds the necessary words from the arrays and adds color labels to them.
    * @param {String} text -Normal Card Text
    * @returns {String} -  Updated for InnerHTML Card Text
    */
@@ -108,7 +108,7 @@ declare function ClubCardGetCopyCardByID(cardId: number): ClubCard;
  */
 declare function ClubCardGenerateUniqueID(cardID: number): string;
 /**
- * Creates a popop in the middle of the board that pauses the game
+ * Creates a popup in the middle of the board that pauses the game
  * @param {string} Mode - The popup mode "DECK", "TEXT" or "YESNO"
  * @param {string|null} Text - The text to display
  * @param {string|null} Button1 - The label of the first button
@@ -159,7 +159,7 @@ declare function ClubCardPlayerAddMoney(CCPlayer: ClubCardPlayer, Amount: number
  */
 declare function ClubCardPlayerAddFame(CCPlayer: ClubCardPlayer, Amount: number, CardName?: null | string): void;
 /**
- * Add fame from a player and remove from the ohter player
+ * Add fame from a player and remove from the other player
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {Number} moneyAmount - The money amount to steal
  * @param {Number} fameAmount - The fame amount to steal
@@ -475,7 +475,7 @@ declare function ClubCardGetReward(): void;
 declare function ClubCardRunTurnEndHandlers(CCPlayer: ClubCardPlayer, Opponent: ClubCardPlayer, Before: boolean): void;
 /**
  * @param {string} StartType
- * StartType = ClubCardStartTurnType.BUNKRUPT because otherwise the bankruptcy function won't work.
+ * StartType = ClubCardStartTurnType.BANKRUPT because otherwise the bankruptcy function won't work.
  */
 declare function ClubCardStartTurn(StartType?: string): void;
 /**
