@@ -1,6 +1,6 @@
 {
   "name": "bc-stubs",
-  "version": "124.0.0-Beta.2",
+  "version": "124.0.0",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/bananarama92/BC-stubs.git"
