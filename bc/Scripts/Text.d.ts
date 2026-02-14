@@ -15,15 +15,16 @@ declare function TextGetInScope(filePath: string, key: string): string;
  * Loads the CSV text file of the current screen into the buffer. It will get the CSV from the cache if the file was already fetched from
  * the server
  * @param {string} [TextGroup] - Screen for which to load the CSV of
- * @returns {void} - Nothing
+ * @returns {TextCache} - The CSV text file's correpsonding text cache
  */
-declare function TextLoad(TextGroup?: string): void;
+declare function TextLoad(TextGroup?: string): TextCache;
 /**
  * Cache the Module and TextGroup for later use, speeds up first use
  * @param {string} Module
  * @param {string} TextGroup
+ * @returns {TextCache}  - The Module + TextGroup's correpsonding text cache
  */
-declare function TextPrefetch(Module: string, TextGroup: string): void;
+declare function TextPrefetch(Module: string, TextGroup: string): TextCache;
 /**
  * Trigger the caching of a specific file into the text cache
  * @param {string} file
@@ -76,7 +77,10 @@ declare class TextCache {
      * @type {Promise<TextCache>}
      */
     loadedPromise: Promise<TextCache>;
-    log(msg: any): void;
+    /**
+     * @param {string} msg
+     */
+    log(msg: string): void;
     /**
      * Return the basename of the cached file
      * @returns {string}

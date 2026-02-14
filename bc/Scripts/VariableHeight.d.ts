@@ -105,5 +105,13 @@ declare const VariableHeightNumerId: "VariableHeightNumber";
  * @type {Record<string, VariableHeightData>}
  */
 declare const VariableHeightDataLookup: Record<string, VariableHeightData>;
-/** @type {(height: number, maxHeight: number, minHeight: number, setHeight: VariableHeightSetHeightCallback, fromElementId: string) => void} */
-declare function VariableHeightChange(height: number, maxHeight: number, minHeight: number, setHeight: VariableHeightSetHeightCallback, fromElementId: string): void;
+/**
+ * Apply the setting change, throttling to limit the refreshes
+ * @param {number} height - The new height value for the character
+ * @param {number} maxHeight - The maximum height value for the character
+ * @param {number} minHeight - The minimum height value for the character
+ * @param {VariableHeightSetHeightCallback} setHeight - The control that triggered the change
+ * @param {string} fromElementId - The element ID
+ * @returns {void} - Nothing
+ */
+declare const VariableHeightChange: (height: number, maxHeight: number, minHeight: number, setHeight: VariableHeightSetHeightCallback, fromElementId: string) => void;

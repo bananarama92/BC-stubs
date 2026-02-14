@@ -20,12 +20,12 @@ declare function ChatAdminRoomCustomizationUnload(): void;
 declare function ChatAdminRoomCustomizationPlayMusic(Music: string): void;
 /**
  * Runs the customization on the current screen, can be called from elsewhere
- * @param {ServerChatRoomCustomData} Custom - The customization to apply
+ * @param {ServerChatRoomCustomData | null} Custom - The customization to apply
  * @param {Rect | null} DrawBGToRect - If non-null draw the background to these coordinates. Online chat rooms will use the tracked values elsewhere
  * @param {boolean} DrawBGEffects - If true and drawing a background then apply blur/dark/tint
  * @returns {void} - Nothing
  */
-declare function ChatAdminRoomCustomizationProcess(Custom: ServerChatRoomCustomData, DrawBGToRect: Rect | null, DrawBGEffects: boolean): void;
+declare function ChatAdminRoomCustomizationProcess(Custom: ServerChatRoomCustomData | null, DrawBGToRect: Rect | null, DrawBGEffects: boolean): void;
 /**
  * When the chat Admin Custom screen runs, draws the screen
  * @returns {void} - Nothing
@@ -38,8 +38,8 @@ declare function ChatAdminRoomCustomizationRun(): void;
 declare function ChatAdminRoomCustomizationClick(): void;
 declare function ChatAdminRoomCustomizationExit(): void;
 declare var ChatAdminRoomCustomizationBackground: string;
-/** @type {ServerChatRoomCustomData} */
-declare var ChatAdminRoomCustomizationCurrent: ServerChatRoomCustomData;
+/** @type {null | ServerChatRoomCustomData} */
+declare var ChatAdminRoomCustomizationCurrent: null | ServerChatRoomCustomData;
 /** @type {null | HTMLAudioElement} */
 declare var ChatAdminRoomCustomizationMusic: null | HTMLAudioElement;
 /** @type {null | "MusicLibrary"} */

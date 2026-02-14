@@ -24,9 +24,9 @@ declare function GamblingFirstCanPlay(): boolean;
  */
 declare function GamblingSecondSubRestrained(): boolean;
 /**
-* Checks, wether the right sub can offer games to the player
+ * Checks, wether the right sub can offer games to the player
  * @returns {boolean} - Returns true, if neither the right sub nor the player are restrained, false otherwise
-  */
+ */
 declare function GamblingSecondCanPlay(): boolean;
 /**
  * Checks, if the simple dice game can be offered
@@ -110,27 +110,35 @@ declare function GamblingLoad(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function GamblingRun(): void;
+declare function GamblingClick(event: MouseEvent | TouchEvent): void;
 /**
- * Handles the click events. Is called from CommonClick()
- * @returns {void} - Nothing
- */
-declare function GamblingClick(): void;
-/**
- * Paint the stack of dice, the sum of ponits and player's money
+ * Enable the rendering of the player dice info
  * @returns {true} - Always true
  */
 declare function GamblingShowDiceStack(): true;
 /**
- * Paint the dice for the NPC
+ * Enable the rendering for the NPC dice
  * @returns {true} - Always true
  */
 declare function GamblingShowNpcDice(): true;
+/**
+ * Paint the stack of dice, the sum of points and player's money
+ */
+declare function GamblingDialogDraw(): void;
 /**
  * Calculates the sum of dice in a given dice stack
  * @param {number[]} DiceStack - The dice stack to sum up
  * @returns {number} - The sum of points in the stack
  */
 declare function GamblingDiceStackSum(DiceStack: number[]): number;
+/**
+ * Have the player roll a dice
+ */
+declare function GamblingPlayerRollDice(): number;
+/**
+ * Have the NPC roll a dice
+ */
+declare function GamblingNpcRollDice(): number;
 /**
  * Controller for the Simple Dice Game
  * @param {"new" | "win" | "lost" | "equal"} SimpleDiceState - The current game state
@@ -144,10 +152,10 @@ declare function GamblingSimpleDiceController(SimpleDiceState: "new" | "win" | "
 declare function GamblingShowToothpickStack(): true;
 /**
  * Controller for the Toothpick game
- * @param {"new" | "give_up" | "win" | "lost" | string} ToothpickState - The current state of the game
+ * @param {"new" | "give_up" | "win" | "lost" | "1" | "2" | "3"} ToothpickState - The current state of the game
  * @returns {void} - Nothing
  */
-declare function GamblingToothpickController(ToothpickState: "new" | "give_up" | "win" | "lost" | string): void;
+declare function GamblingToothpickController(ToothpickState: "new" | "give_up" | "win" | "lost" | "1" | "2" | "3"): void;
 /**
  * Determines the random toothpick draw of the NPC
  * @returns {number} - The toothpicks the NPC draws
@@ -167,10 +175,10 @@ declare function GamblingFoxController(FoxState: "new" | "fox" | "hunter" | "Nex
 /**
  * Roll a dice for Street To Roissy and add it to the given dice stack.
  * Replace the last dice on the stack if it was not progressing to Roissy.
- * @param Stack the array to add the new dice on
+ * @param {number[]} Stack - the array to add the new dice on
  * @return {number} - The value of the dice thrown
  */
-declare function GamblingStreetRoissyRollDice(Stack: any): number;
+declare function GamblingStreetRoissyRollDice(Stack: number[]): number;
 /**
  * Controller for Street to Roissy
  * @param {"new" | "nextDice" | "both" | "win" | "lost" | "end"} StreetRoissyState - The current state of the game
@@ -185,17 +193,17 @@ declare function GamblingStreetRoissyController(StreetRoissyState: "new" | "next
 declare function GamblingDaredSixController(DaredSixState: "new" | "add" | "fin" | "win" | "lost"): void;
 /**
  * Get the dressinglevel for characters
- * @param {Character} C - The character to check
- * @returns {number} - Returns 0 if the character is naked, 2, if she's in her underwear, 3 if she's still wearing shoes. 1 otherwise
+ * @param {Character} char - The character to check
+ * @returns {number} - Returns a number that indicates at what stage of being tied the character is
  */
-declare function GamblingDressingLevel(C: Character): number;
+declare function GamblingDressingLevel(char: Character): number;
 /**
- *  Strips or ties a caracter that lost a turn
- * @param {Character} gstCarachter - The character to tie
- * @param {number} gstLevel - The current game level
+ * Strips or ties a caracter that lost a turn
+ * @param {Character} char - The character to tie
+ * @param {number} level - The current game level
  * @returns {boolean} - Returns true, if the character lost, false otherwise
  */
-declare function GamblingStripTied(gstCarachter: Character, gstLevel: number): boolean;
+declare function GamblingStripTied(char: Character, level: number): boolean;
 /**
  * The left sub blindfolds the player
  * @returns {void} - Nothing
@@ -203,10 +211,11 @@ declare function GamblingStripTied(gstCarachter: Character, gstLevel: number): b
 declare function GamblingAnnoyGamblingFirstSub(): void;
 /**
  * Uses an activity on the player or releases her
- * @param {"new"| "next" } ReleaseState - The current state of the release process
+ * @param {"new"| "next" | "end"} ReleaseState - The current state of the release process
+ * @param {string} [ReputationChange]
  * @returns {void} - Nothing
  */
-declare function GamblingReleasePlayerGame(ReleaseState: "new" | "next"): void;
+declare function GamblingReleasePlayerGame(ReleaseState: "new" | "next" | "end", ReputationChange?: string): void;
 /**
  * Release the player for money
  * @returns {void} - Nothing
@@ -228,15 +237,10 @@ declare function GamblingCompleteRescue(): void;
  */
 declare function GamblingStealDice(): void;
 declare var GamblingBackground: string;
-/** @type {null | NPCCharacter} */
-declare var GamblingFirstSub: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var GamblingSecondSub: null | NPCCharacter;
-/** @type {null | number} */
-declare var GamblingPlayerDice: null | number;
-declare var GamblingPolice: any;
-/** @type {null | number} */
-declare var GamblingNpcDice: null | number;
+/** @type {NPCCharacter} */
+declare var GamblingFirstSub: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var GamblingSecondSub: NPCCharacter;
 /** @type {number[]} */
 declare var GamblingPlayerDiceStack: number[];
 /** @type {number[]} */
@@ -248,17 +252,20 @@ declare var GamblingNpcSubState: number;
 declare var GamblingPlayerIsFox: boolean;
 /** Money Bet in Current Game */
 declare var GamblingMoneyBet: number;
-/** Show Summ of Dice Dots in DiceStack */
+/** Show Sum of Dice Dots in DiceStack */
 declare var GamblingShowDiceSum: boolean;
 /** Show Money in DiceStack */
 declare var GamblingShowMoney: boolean;
-/** @type {null | Item[]} */
-declare var GamblingAppearanceFirst: null | Item[];
-/** @type {null | Item[]} */
-declare var GamblingAppearanceSecond: null | Item[];
-/** @type {null | Item[]} */
-declare var GamblingAppearancePlayer: null | Item[];
+/** @type {Item[]} */
+declare var GamblingAppearanceFirst: Item[];
+/** @type {Item[]} */
+declare var GamblingAppearanceSecond: Item[];
+/** @type {Item[]} */
+declare var GamblingAppearancePlayer: Item[];
 /** Sub Player lost Cloth although forbidden by Mistress */
 declare var GamblingIllegalChange: boolean;
 /** available Toothpicks */
 declare var GamblingToothpickCount: number;
+declare var GamblingNpcDiceShown: boolean;
+declare var GamblingPlayerDiceShown: boolean;
+declare var GamblingToothpickStackShown: boolean;

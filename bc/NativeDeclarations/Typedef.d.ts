@@ -110,7 +110,7 @@ type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 	 *
 	 * Note that booleans are interpreted as [boolean attributes](https://developer.mozilla.org/en-US/docs/Glossary/Boolean/HTML).
 	 */
-	attributes?: Partial<Record<string, number | boolean | string>>;
+	attributes?: Partial<Record<string, null | number | boolean | string>>
 	/**
 	 * Data attributes that will be set on the HTML element (see {@link HTMLElement.dataset}).
 	 *
@@ -140,6 +140,11 @@ interface HTMLElementEventMap {
 
 interface HTMLElementTagNameMap {
 	"bc-tint-input": HTMLColorTintElement;
+}
+
+interface HTMLColorTintElement {
+	addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLColorTintElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+	addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
 }
 
 declare namespace ElementButton {
@@ -829,7 +834,13 @@ interface RelogDataBase<T extends ModuleType> {
 type _RelogDataMap<T> = T extends ModuleType ? RelogDataBase<T> : never;
 type RelogData = _RelogDataMap<ModuleType>;
 
-type _ScreenSpecifier<T extends ModuleType> = [module: T, screen: ModuleScreens[T]];
+/** Further options to-be passed along to {@link CommonSetScreen} */
+interface ScreenSpecifierOptions {
+	/** Whether this concerns a recursive {@link CommonSetScreen} call */
+	recursive?: boolean;
+}
+
+type _ScreenSpecifier<T extends ModuleType> = [module: T, screen: ModuleScreens[T], options?: null | ScreenSpecifierOptions];
 type ScreenSpecifier = _ScreenSpecifier<"Character"> | _ScreenSpecifier<"Cutscene"> | _ScreenSpecifier<"MiniGame"> | _ScreenSpecifier<"Online"> | _ScreenSpecifier<"Room">;
 
 type AssetCategory = "Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" | "Smoking";
@@ -858,7 +869,13 @@ type ChatRoomOwnershipEvent =
 	| "CanEndTrial";
 
 type ChatRoom = ServerChatRoomData;
-type ChatRoomSettings = ServerChatRoomSettings;
+// TODO: Review the partial nature of the `Custom` and `Space` fields
+type ChatRoomSettings = Prettify<
+	Omit<ServerChatRoomData, "Character" | "Custom" | "Space">
+	& Partial<Pick<ServerChatRoomData, "Custom" | "Space">>
+>;
+/** Parsed chat room settings as used by the `ChatAdmin` screen */
+type ChatRoomAdminSettings = Prettify<ChatRoomSettings & Required<Pick<ChatRoomSettings, "MapData">>>;
 
 /** ChatRoom results once received by the client */
 type ChatRoomSearchResult = (ServerChatRoomSearchData & { DisplayName: string, Order: number });
@@ -1388,7 +1405,8 @@ interface Asset {
 	readonly CreateLayerTypes: readonly string[];
 	/** A record that maps {@link ExtendedItemData.name} to a set with all option indices that support locks */
 	readonly AllowLockType: null | Record<string, Set<number>>;
-	readonly AllowColorizeAll: boolean;
+	/** @deprecated Removed without replacement: items _must_ support a "color all layers" button (to the extent that the item is colorable in the first place) */
+	readonly AllowColorizeAll?: never;
 	readonly AvailableLocations: readonly string[];
 	readonly OverrideHeight?: Readonly<AssetOverrideHeight>;
 	readonly DrawLocks: boolean;
@@ -1433,7 +1451,7 @@ interface ClipboardItemBundle {
 	/** The item's asset name */
 	A: string;
 	/** The item's color */
-	C?: string;
+	C?: ItemColor;
 }
 
 type ClipboardAppearanceBundle = ClipboardItemBundle[];
@@ -2013,7 +2031,7 @@ interface Character {
 	HasTints: () => boolean;
 	GetTints: () => RGBAColor[];
 	HasAttribute: (attribute: AssetAttribute) => boolean;
-	DrawAppearance?: Item[];
+	DrawAppearance: Item[];
 	AppearanceLayers?: Mutable<AssetLayer>[];
 	AppearanceMasks?: AssetLayer[];
 	Hooks: Map<CharacterHook, Map<string, () => void>> | null;
@@ -3213,9 +3231,9 @@ type TypeRecord = Record<string, number>;
  */
 
 interface ExpressionQueueItem {
-	Time?: number;
-	Group?: ExpressionGroupName;
-	Expression?: ExpressionName;
+	Time: number;
+	Group: ExpressionGroupName;
+	Expression: ExpressionName;
 }
 
 /**
@@ -4265,8 +4283,13 @@ interface CraftingItem {
 	MemberNumber?: number;
 	/** The custom item description. */
 	Description: string;
-	/** The crafted item property. */
-	Property: CraftingPropertyType;
+	/** The crafted item effects mapped to their effect strength. */
+	Effects: Partial<Record<CraftingPropertyType, number>>;
+	/**
+	* The crafted item effect.
+	* @deprecated superseded by {@link CraftingItem.Effects}
+	*/
+	Property?: CraftingPropertyType;
 	/** The comma-separated color(s) of the item. */
 	Color: string;
 	/** The name of the lock or, if absent, an empty string. */
@@ -4335,8 +4358,13 @@ interface CraftingItemSelected {
 	 * The asset is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
 	 */
 	get Asset(): Asset | undefined;
-	/** The crafted item property. */
+	/**
+	 * The crafted item propertty.
+	 * @deprecated superseded by {@link CraftingItemSelected .Effects}
+	 */
 	Property: CraftingPropertyType;
+	/** The crafted item properties mapped to their property strength. */
+	Effects: Partial<Record<CraftingPropertyType, number>>;
 	/** The lock as equipped on the item or, if absent, `null`. */
 	Lock: Asset | null;
 	/** Whether the crafted item should be private or not. */
@@ -5156,6 +5184,12 @@ interface ShopItem {
 	/** Whether the asset can be bought; `false` implies that it can be sold */
 	Buy: boolean,
 }
+
+// #endregion
+
+// #region MaidQuarters
+
+type MaidQuartersMissionType = "ShibariDojo" | "IntroductionClass" | "Shop" | "Gambling" | "Prison";
 
 // #endregion
 

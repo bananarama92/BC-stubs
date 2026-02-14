@@ -245,9 +245,9 @@ declare function ChatSearchCalculateIgnoredRoomsOffset(shownRooms: number): numb
 /**
  * Return the space we're currently in.
  * Note that it will look at both the current room's, and if we're not in one, the current lobby
- * @returns {ServerChatRoomSpace | null}
+ * @returns {ServerChatRoomSpace}
  */
-declare function ChatSearchGetSpace(): ServerChatRoomSpace | null;
+declare function ChatSearchGetSpace(): ServerChatRoomSpace;
 /**
  * @file This file handles the chat lobby search & filter screen
  */
@@ -272,13 +272,13 @@ declare var ChatSearchResultOffset: number;
 declare var ChatSearchPageX: number;
 /** The room grid's top offset */
 declare var ChatSearchPageY: number;
+declare var ChatSearchRoomsPerRow: number;
+declare var ChatSearchRoomsPerColumn: number;
 /**
  * Layout parameters for the room grid
  * @type {CommonGenerateGridParameters}
  */
 declare var ChatSearchListParams: CommonGenerateGridParameters;
-declare var ChatSearchRoomsPerRow: number;
-declare var ChatSearchRoomsPerColumn: number;
 /** Pre-calculated. Must be updated if you change the grid parameters */
 declare var ChatSearchRoomsPerPage: number;
 /** @type {ScreenSpecifier} */
@@ -319,25 +319,23 @@ declare var ChatSearchGame: ServerChatRoomGame;
 /** @type {ServerChatRoomSpace | null} */
 declare var ChatSearchSpace: ServerChatRoomSpace | null;
 declare var ChatSearchFilterTermsTemp: string;
-/** @type {ChatRoomSpaceLabel[]} */
-declare var ChatSearchRoomSpaces: ChatRoomSpaceLabel[];
 declare var ChatSearchCurrentRoomSpaceIndex: number;
-/** @type {HTMLDivElement} */
-declare var ChatSearchRoomHeader: HTMLDivElement;
-/** @type {HTMLDivElement} */
-declare var ChatSearchRoomGrid: HTMLDivElement;
-/** @type {HTMLFieldSetElement} */
-declare var ChatSearchSearchMenu: HTMLFieldSetElement;
-/** @type {HTMLDivElement} */
-declare var ChatSearchPageCountElement: HTMLDivElement;
+/** @type {HTMLDivElement | null} */
+declare var ChatSearchRoomHeader: HTMLDivElement | null;
+/** @type {HTMLDivElement | null} */
+declare var ChatSearchRoomGrid: HTMLDivElement | null;
+/** @type {HTMLFieldSetElement | null} */
+declare var ChatSearchSearchMenu: HTMLFieldSetElement | null;
+/** @type {HTMLDivElement | null} */
+declare var ChatSearchPageCountElement: HTMLDivElement | null;
 /** @type {HTMLDialogElement | null} */
 declare var ChatSearchDialogElement: HTMLDialogElement | null;
-/** @type {HTMLButtonElement} */
-declare var ChatSearchSearchMenuButton: HTMLButtonElement;
-/** @type {HTMLDivElement} */
-declare var ChatSearchSearchBodyElement: HTMLDivElement;
+/** @type {HTMLButtonElement | null} */
+declare var ChatSearchSearchMenuButton: HTMLButtonElement | null;
+/** @type {HTMLDivElement | null} */
+declare var ChatSearchSearchBodyElement: HTMLDivElement | null;
 /** @type {HTMLDialogElement | null} */
 declare var ChatSearchFilterUnhideConfirmElement: HTMLDialogElement | null;
-/** @type {HTMLDialogElement} */
-declare var ChatSearchFilterHelpScreenElement: HTMLDialogElement;
-declare function ChatSearchUpdateSearchSettings(): void;
+/** @type {HTMLDialogElement | null} */
+declare var ChatSearchFilterHelpScreenElement: HTMLDialogElement | null;
+declare const ChatSearchUpdateSearchSettings: () => void;

@@ -4,7 +4,7 @@ declare function ForbiddenWordsUnload(): void;
  * Starts the forbidden words screen and loads it
  * @returns {void} - Nothing
  */
-declare function ForbiddenWordsOpen(RuleType: any): void;
+declare function ForbiddenWordsOpen(): void;
 /**
  * Draws the forbidden words text and check boxes
  * @returns {void} - Nothing

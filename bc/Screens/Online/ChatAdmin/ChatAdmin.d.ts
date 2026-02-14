@@ -13,9 +13,9 @@ declare function ChatAdminShowEdit(roomData: ChatRoom): void;
  * This should not be called directly; use {@link ChatAdminShowCreate} or {@link ChatAdminShowEdit}
  *
  * @param {"create" | "update"} mode
- * @param {ChatRoomSettings | undefined} roomData
+ * @param {ChatRoomSettings | null} roomData
  */
-declare function ChatAdminStart(mode: "create" | "update", roomData?: ChatRoomSettings | undefined): void;
+declare function ChatAdminStart(mode: "create" | "update", roomData?: ChatRoomSettings | null): void;
 /**
  * Return whether the editor can actually modify the data
  * @returns {boolean}
@@ -38,6 +38,22 @@ declare function ChatAdminClick(): void;
 declare function ChatAdminCommit(): void;
 declare function ChatAdminKeyDown(event: KeyboardEvent): boolean;
 declare function ChatAdminExit(): void;
+/**
+ * Validates whether the given settings is in the correct format for a ChatRoomAdminSettings object
+ * @param {unknown} settings - The settings to validate
+ * @returns {settings is ChatRoomAdminSettings} - True if the settings are valid, false otherwise
+ */
+declare function ChatEditorValidateAdminSettings(settings: unknown): settings is ChatRoomAdminSettings;
+/**
+ * Imports the given ChatRoomAdminSettings into the editor inputs
+ * @param {ChatRoomAdminSettings} settings - The chat room settings to import
+ */
+declare function ChatEditorAdminSettingsImport(settings: ChatRoomAdminSettings): void;
+/**
+ * Gathers the data from the editor inputs and returns it as a ChatRoomAdminSettings object
+ * @returns {ChatRoomAdminSettings | undefined} - The chat room settings based on the current editor inputs, or undefined if ChatAdminData is not set
+ */
+declare function ChatEditorGetAdminSettings(): ChatRoomAdminSettings | undefined;
 /**
  * Sends the chat room data packet to the server. The response will be handled by ChatAdminResponse once it is received
  * @returns {void} - Nothing
@@ -81,7 +97,7 @@ declare var ChatAdminVisibilityModeIndex: number;
 declare var ChatAdminAccessModeLabels: ChatRoomAccessModeLabel[];
 declare var ChatAdminAccessModeValues: ServerChatRoomRole[][];
 declare var ChatAdminAccessModeIndex: number;
-/** @type {ChatRoomSettings | null} */
-declare var ChatAdminData: ChatRoomSettings | null;
+/** @type {ChatRoomAdminSettings | null} */
+declare var ChatAdminData: ChatRoomAdminSettings | null;
 /** @type {"create" | "update" | null} */
 declare var ChatAdminMode: "create" | "update" | null;

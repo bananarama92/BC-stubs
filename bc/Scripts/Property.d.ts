@@ -96,7 +96,14 @@ declare function PropertyTypeRecordToStrings(typeRecord: TypeRecord): string[];
  * @type {Map<string, any>}
  */
 declare const PropertyOriginalValue: Map<string, any>;
-declare function PropertyOpacityChange(C: any, Item: any, Opacity: any): void;
+/**
+ * Throttled callback for opacity slider changes
+ * @param {Character} C - The character being modified
+ * @param {Item} item - The item being modified
+ * @param {number} Opacity - The new opacity to set on the item
+ * @returns {void} - Nothing
+ */
+declare const PropertyOpacityChange: (C: any, Item: any, Opacity: any) => void;
 /**
  * A set of group names whose auto-punishment has successfully been handled by {@link PropertyAutoPunishDetectSpeech}.
  * If a group name is absent from the set then it's eligible for action-based punishment triggers.

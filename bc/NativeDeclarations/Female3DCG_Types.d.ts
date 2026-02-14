@@ -703,8 +703,8 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	DynamicScriptDraw?: boolean;
 	AllowLockType?: AssetLockType[];
 
-	/** Whether the color picker shows a "Whole Item" layer. Defaults to true. */
-	AllowColorizeAll?: boolean;
+	/** @deprecated Removed without replacement: items _must_ support a "color all layers" button (to the extent that the item is colorable in the first place) */
+	AllowColorizeAll?: never;
 
 	/** A list of online spaces (eg. Asylum) where the asset is automatically available */
 	AvailableLocations?: string[];

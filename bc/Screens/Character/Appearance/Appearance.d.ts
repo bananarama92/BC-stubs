@@ -52,10 +52,10 @@ declare function CharacterAppearanceStripLayer(C: Character): void;
 /**
  * Check whether a layer must be visible given a provided type record.
  * @param {AllowTypes.Data} allowTypes - The layer's allowed types
- * @param {TypeRecord} typeRecord - The type record in question.
+ * @param {TypeRecord|null|undefined} typeRecord - The type record in question.
  * @returns {boolean} - Whether the layer should be visible
  */
-declare function CharacterAppearanceAllowForTypes(allowTypes: AllowTypes.Data, typeRecord: TypeRecord): boolean;
+declare function CharacterAppearanceAllowForTypes(allowTypes: AllowTypes.Data, typeRecord: TypeRecord | null | undefined): boolean;
 /**
  * Determines whether an asset layer should be rendered, assuming the asset itself is visible.
  * @param {Character} C - The character wearing the item
@@ -83,13 +83,13 @@ declare function CharacterAppearanceBuildMasks(C: Character): AssetLayer[];
 /**
  * Determines whether an item or a whole item group is visible or not
  * @param {Character} C - The character whose assets are checked
- * @param {string} AssetName - The name of the asset to check
+ * @param {string | undefined} AssetName - The name of the asset to check
  * @param {AssetGroupName} GroupName - The name of the item group to check
  * @param {boolean} Recursive - If TRUE, then other items which are themselves hidden will not hide this item. Parameterising this prevents
  *     infinite loops.
  * @returns {boolean} - Returns TRUE if we can show the item or the item group
  */
-declare function CharacterAppearanceVisible(C: Character, AssetName: string, GroupName: AssetGroupName, Recursive?: boolean): boolean;
+declare function CharacterAppearanceVisible(C: Character, AssetName: string | undefined, GroupName: AssetGroupName, Recursive?: boolean): boolean;
 /**
  * Determines whether the player has set this item to not appear on screen
  * @param {string} AssetName - The name of the asset to check
@@ -182,22 +182,22 @@ declare function AppearancePreviewBuild(C: Character, buildCanvases: boolean): v
 declare function AppearancePreviewCleanup(): void;
 /**
  * Returns whether the the 3x3 grid "Cloth" appearance mode should include the character in the preview images
- * @param {AssetGroup} assetGroup - The group to check
+ * @param {AssetGroup | null} assetGroup - The group to check
  * @returns {boolean} - If TRUE the previews will be drawn with the character
  */
-declare function AppearancePreviewUseCharacter(assetGroup: AssetGroup): boolean;
+declare function AppearancePreviewUseCharacter(assetGroup: AssetGroup | null): boolean;
 /**
  * Sets an item in the character appearance
  * @param {Character} C - The character whose appearance should be changed
  * @param {AssetGroupName} Group - The name of the corresponding groupr for the item
- * @param {Asset|undefined} ItemAsset - The asset collection of the item to be changed
+ * @param {Asset|null} ItemAsset - The asset collection of the item to be changed
  * @param {string|string[]} [NewColor] - The new color (as "#xxyyzz" hex value) for that item
  * @param {number} [DifficultyFactor=0] - The difficulty, on top of the base asset difficulty, that should be assigned
  * to the item
  * @param {number} [ItemMemberNumber=-1] - The member number of the player adding the item - defaults to -1
  * @returns {Item | null} - Thew newly created item or `undefined` if the asset does not exist
  */
-declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName, ItemAsset: Asset | undefined, NewColor?: string | string[], DifficultyFactor?: number, ItemMemberNumber?: number): Item | null;
+declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName, ItemAsset: Asset | null, NewColor?: string | string[], DifficultyFactor?: number, ItemMemberNumber?: number): Item | null;
 /**
  * Cycle in the appearance assets to find the next item in a group
  * @param {Character} C - The character whose assets are used
@@ -233,9 +233,9 @@ declare function CharacterAppearanceSetColorForGroup(C: Character, Color: string
  * value.  The reordering mode cycles through the values:
  * "None" -> "Select" -> "Place"
  *
- * @param {WardrobeReorderType} newmode - The mode to set.  If null, advance to next mode.
+ * @param {WardrobeReorderType|null} newmode - The mode to set.  If null, advance to next mode.
  */
-declare function AppearanceWardrobeReorderModeSet(newmode?: WardrobeReorderType): void;
+declare function AppearanceWardrobeReorderModeSet(newmode?: WardrobeReorderType | null): void;
 /**
  * Handle the clicks in the character appearance selection screen. The function name is created dynamically.
  * @returns {void} - Nothing
@@ -307,9 +307,9 @@ declare function AppearanceItemStringify(Item: readonly Item[] | Item | any): st
 declare function CharacterAppearanceRestore(C: Character, backup: string | null): void;
 /**
  * @param {string} stringified
- * @returns {any}
+ * @returns {Item[]}
  */
-declare function AppearanceItemParse(stringified: string): any;
+declare function AppearanceItemParse(stringified: string): Item[];
 /**
  * Opens the color picker for a selected item
  * @param {Character} C - The character the appearance is being changed for
@@ -329,12 +329,12 @@ declare function AppearanceItemColor(C: Character, Item: Item, AssetGroup: Asset
 declare function CharacterAppearanceResolveAppearance(BaseAppearance: readonly Item[], PrevAppearance: Item[], NewAppearance: readonly Item[]): Item[];
 /**
  * Select from two potential changes to an item, preferring the newer if different to the original item
- * @param {Item} BaseItem - The item before any changes were made
- * @param {Item} PrevItem - The first item change
- * @param {Item} NewItem - The second item change
- * @return {Item} - The item to keep
+ * @param {Item | undefined} BaseItem - The item before any changes were made
+ * @param {Item | undefined} PrevItem - The first item change
+ * @param {Item | undefined} NewItem - The second item change
+ * @return {Item | null} - The item to keep
  */
-declare function CharacterAppearanceResolveItem(BaseItem: Item, PrevItem: Item, NewItem: Item): Item;
+declare function CharacterAppearanceResolveItem(BaseItem: Item | undefined, PrevItem: Item | undefined, NewItem: Item | undefined): Item | null;
 /**
  * Merge the incoming appearance changes from the online sync to the currently selected appearance
  * @param {Character} C - The character with changes to merge
@@ -376,10 +376,18 @@ declare var CharacterAppearanceNumClothPerPage: number;
 declare var CharacterAppearanceWardrobeNumPerPage: number;
 declare var CharacterAppearanceHeaderText: string;
 declare var CharacterAppearanceHeaderTextTime: number;
-/** @type {null | string} */
-declare var CharacterAppearanceBackup: null | string;
-/** @type {null | string} */
-declare var CharacterAppearanceInProgressBackup: null | string;
+/**
+ * The appearance the character we're editing had when entering the screen.
+ *
+ * Must stay valid for as long as the screen is up.
+ *
+ * @type {string} */
+declare var CharacterAppearanceBackup: string;
+/**
+ * Backup of the current appearance; used when canceling out of loading a wardrobe outfit.
+ *
+ * @type {undefined | string} */
+declare var CharacterAppearanceInProgressBackup: undefined | string;
 /**
  * The list of all customizable groups
  * @type {AssetGroup[]}
@@ -395,10 +403,21 @@ declare var CharacterAppearanceAssets: Asset[];
 declare var CharacterAppearanceColorPickerGroupName: AssetGroupName;
 declare var CharacterAppearanceColorPickerBackup: string;
 declare var CharacterAppearanceColorPickerRefreshTimer: any;
-/** @type {Character | null} */
-declare var CharacterAppearanceSelection: Character | null;
-/** @type {(accept: boolean) => void} */
-declare var CharacterAppearanceResultCallback: (accept: boolean) => void;
+/**
+ * The character we're editing the appearance of.
+ *
+ * Must stay valid for as long as the screen is up.
+ *
+ * @type {Character}
+ */
+declare var CharacterAppearanceSelection: Character;
+/**
+ * The callback to perform when closing the appearance screen.
+ * Must stay valid for as long as the screen is up.
+ *
+ * @type {((accept: boolean) => void)}
+ */
+declare var CharacterAppearanceResultCallback: ((accept: boolean) => void);
 /** @type {ScreenSpecifier} */
 declare var CharacterAppearanceReturnScreen: ScreenSpecifier;
 declare var CharacterAppearanceWardrobeOffset: number;
@@ -420,9 +439,9 @@ declare var AppearancePreviews: Character[];
 declare var AppearanceUseCharacterInPreviewsSetting: boolean;
 /**
  * List of item indices collected for swapping.
- * #type {number[]}
+ * @type {number[]}
  */
-declare let AppearanceWardrobeReorderList: any[];
+declare let AppearanceWardrobeReorderList: number[];
 /** @type {WardrobeReorderType} */
 declare let AppearanceWardrobeReorderMode: WardrobeReorderType;
 declare const CanvasUpperOverflow: 700;

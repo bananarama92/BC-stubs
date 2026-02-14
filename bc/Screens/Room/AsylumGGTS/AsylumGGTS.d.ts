@@ -45,6 +45,15 @@ declare function AsylumGGTSGetRules(C: Character): string[];
  * @returns {void} - Nothing
  */
 declare function AsylumGGTSComputerImage(Level: number): void;
+/**
+ * Ensure the GGTS messages are loaded
+ */
+declare function AsylumGGTSLoadMessages(): Promise<void>;
+/**
+ * Return a localized GGTS message
+ * @param {string} key
+ */
+declare function AsylumGGTSGetMessage(key: string): string;
 declare function AsylumGGTSLoad(): Promise<void>;
 /**
  * Runs the room
@@ -82,7 +91,7 @@ declare function AsylumGGTSBuildPrivate(): void;
  * @param {Character} C - The character to rename
  * @returns {string} - The new name for that character
  */
-declare function AsylumGGTSCharacterName(C: Character, Name: any): string;
+declare function AsylumGGTSCharacterName(C: Character): string;
 /**
  * Sends a chat message from the GGTS.  GGTS slowly replaces the player name by the player number as level rises.
  * @param {string} Msg - The message to publish
@@ -98,11 +107,10 @@ declare function AsylumGGTSSetTimer(): void;
 /**
  * Returns TRUE if the query was answered by character number M
  * @param {number} Level - The player GGTS level, at level 4 or more, capital letters and punctuation matters
- * @param {string} TextEasy - The text to evaluate
- * @param {string} TextHard - The text to evaluate
+ * @param {string} Text - The text to evaluate
  * @returns {boolean} - TRUE if the is done
  */
-declare function AsylumGGTSQueryDone(Level: number, TextEasy: string, TextHard: string): boolean;
+declare function AsylumGGTSQueryDone(Level: number, Text: string): boolean;
 /**
  * Returns TRUE if the task T is currently done by character C
  * @param {Character} C - The character to evaluate
