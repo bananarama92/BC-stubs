@@ -2399,7 +2399,8 @@
             "FemPelvisHarness": 50,
             "LatexDiaper": 51,
             "UntrainersThin": 52,
-            "SportPanties": 53
+            "SportPanties": 53,
+            "PullDownPanties": 54
         }
     },
     "Pronouns": {
@@ -2808,7 +2809,9 @@
             "ZamStick": 29,
             "ZamStickII": 30,
             "CyberTechCorp": 31,
-            "SkullDecal": 32
+            "SkullDecal": 32,
+            "FireBite": 33,
+            "SpreaderBar": 34
         }
     }
 }

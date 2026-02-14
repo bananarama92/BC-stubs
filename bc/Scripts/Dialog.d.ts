@@ -901,9 +901,9 @@ declare namespace DialogEffectIcons {
      * @returns {InventoryIcon[]} - A list of icon names.
      */
     function GetIcons(item: Item): InventoryIcon[];
-    function GetEffectIcons(effects: Iterable<EffectName>, prop?: CraftingPropertyType): null | InventoryIcon[];
-    function _GetGagIcon(effect: EffectName, prop?: CraftingPropertyType): null | InventoryIcon;
-    function _GetBlindIcon(effect: EffectName, prop?: CraftingPropertyType): null | InventoryIcon;
+    function GetEffectIcons(effects: Iterable<EffectName>, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon[];
+    function _GetGagIcon(effect: EffectName, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon;
+    function _GetBlindIcon(effect: EffectName, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon;
     function _GetDeafIcon(effect: EffectName): undefined | InventoryIcon;
     function _GagLevelToIcon(level?: number): null | InventoryIcon;
     function _BlindLevelToIcon(level?: number): null | InventoryIcon;

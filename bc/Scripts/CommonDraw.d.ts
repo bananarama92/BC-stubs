@@ -94,8 +94,8 @@ declare function CommonDrawFindPose(C: Character, AllowedPoses: Partial<Record<A
 /**
  * Finds the pose that should be used when a given asset (and optionally layer) is drawn.
  * @param {Character} C - The character whose poses to check
- * @param {AssetLayer} [Layer] - The layer to check (optional)
+ * @param {AssetLayer} Layer - The layer to check
  * @returns {AssetPoseName | null} - The pose to use when drawing the given asset (or layer)
  */
-declare function CommonDrawResolveAssetPose(C: Character, Layer?: AssetLayer): AssetPoseName | null;
+declare function CommonDrawResolveAssetPose(C: Character, Layer: AssetLayer): AssetPoseName | null;
 type MaskLayersMap = Map<AssetGroupName, TextureAlphaMask[]>;

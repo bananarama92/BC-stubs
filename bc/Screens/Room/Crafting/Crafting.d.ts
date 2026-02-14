@@ -1,4 +1,15 @@
 /**
+ * Checks if a {@link CraftingItem["Effect"]} prerequisite is met
+ * @param {CraftingItemSelected | CraftingItem} craft
+ * @param {CraftingPropertyType} effect
+ */
+declare function CraftingCheckEffectsPrerequisite(craft: CraftingItemSelected | CraftingItem, effect: CraftingPropertyType): boolean;
+/**
+ * Updates the buttons for crafting properties
+ * @param {CraftingItemSelected} craft
+ */
+declare function CraftingPropertyUpdateButtons(craft: CraftingItemSelected): void;
+/**
  * Construct a record mapping all crafting-valid asset names to a list of matching elligble assets.
  * Elligble assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
  * @see {@link CraftingAssets}
@@ -12,6 +23,7 @@ declare function CraftingAssetsPopulate(): Record<string, Asset[]>;
  * @returns {Boolean} - TRUE if the item has that effect
  */
 declare function CraftingItemHasEffect(Item: Asset, Effect: EffectName[]): boolean;
+declare function CraftingUpdatePropertyButton(): void;
 /**
  * Shows the crating screen and remember if the entry came from an online chat room
  * @param {boolean} FromChatRoom - TRUE if we come from an online chat room
@@ -190,6 +202,16 @@ declare const CraftingSerializeSanitize: RegExp;
  * @type {Map<CraftingPropertyType, (asset: Asset) => boolean>}
  */
 declare const CraftingPropertyMap: Map<CraftingPropertyType, (asset: Asset) => boolean>;
+declare const CraftingEffectsDefaultMaximumStack: 2;
+declare const CraftingEffectsDefaultMaximumEffects: 2;
+/**
+ * A record mapping crafting property names to functions that return a boolean indicating whether the property can increase
+ * @type {Record<CraftingPropertyType, {max?: number, isDisabled?: (craft: CraftingItem | CraftingItemSelected) => boolean}>}
+ */
+declare const CraftingEffectsPrerequisite: Record<CraftingPropertyType, {
+    max?: number;
+    isDisabled?: (craft: CraftingItem | CraftingItemSelected) => boolean;
+}>;
 /**
  * An enum with status codes for crafting validation.
  * @property OK - The validation proceded without errors
@@ -306,6 +328,8 @@ declare namespace CraftingEventListeners {
     function _ClickDownload(this: HTMLButtonElement, ev: Event): void;
     function _ClickExpand(this: HTMLButtonElement, ev: Event): void;
     function _ClickProperty(this: HTMLButtonElement, ev: Event): void;
+    function _ClickAddProperty(this: HTMLButtonElement, ev: Event): void;
+    function _ClickRemoveProperty(this: HTMLButtonElement, ev: Event): void;
     function _ClickPadlock(this: HTMLButtonElement, ev: Event): void;
     function _ClickAsset(this: HTMLButtonElement, ev: Event): void;
     function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
@@ -338,6 +362,11 @@ declare namespace CraftingElements {
      * @returns {HTMLButtonElement}
      */
     function _RadioButton(id: string, onClick: (this: HTMLButtonElement, ev: Event) => any, asset: null | Asset, attributes?: null | Partial<Record<string, string | number | boolean>>, label?: null | string, children?: null | readonly (string | Node)[], first?: boolean): HTMLButtonElement;
+    /**
+     * @param {string} id
+     * @param {CraftingPropertyType} property
+     */
+    function _PropertyListItem(id: string, property: CraftingPropertyType): HTMLLIElement;
 }
 /**
  * A record with tools for validating {@link CraftingItem} properties.

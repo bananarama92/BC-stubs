@@ -16,55 +16,163 @@ declare function PrisonSubAskForCuff(): boolean;
 declare function PrisonSubCanStripSearch(): boolean;
 declare function PrisonSubCanClothBack(): boolean;
 declare function PrisonLoad(): Promise<void>;
-declare function PrisonRun(): void;
-declare function PrisonClick(): void;
-declare function PrisonCharacterAppearanceAvailable(C: any, AppearanceName: any, AppearanceGroup: any): boolean;
-declare function PrisonCharacterAppearanceGroupAvailable(C: any, AppearanceGroup: any): boolean;
+declare function PrisonRun(time: number): void;
+declare function PrisonClick(event: MouseEvent | TouchEvent): void;
+/**
+ * Player going in cell
+ */
 declare function PrisonCellPlayerIn(): void;
+/**
+ * Player leave in cell
+ */
 declare function PrisonCellPlayerOut(): void;
 /**
+ * Add the item as a confiscated item
  * @param {InventoryItem[]} items
  */
 declare function PrisonSaveConfiscatedItems(items: InventoryItem[]): void;
-/** */
+/**
+ * Restore all of the confiscated items and clear the list
+ */
 declare function PrisonRestoreConfiscatedItems(): void;
+/**
+ * Maid leave the Prison for 5-15 second
+ */
 declare function PrisonMaidLeave(): void;
-declare function PrisonCellRelease(C: any): void;
-declare function PrisonHavySearch(C: any): void;
-declare function PrisonLightSearch(C: any): void;
-declare function PrisonerClothBack(C: any): void;
+/**
+ * Player releases and get back his Cloth, only if the Maid is not angry
+ * @param {Character} C
+ */
+declare function PrisonCellRelease(C: Character): void;
+/**
+ * The Strip Search Process for the Player
+ * @param {Character} C
+ */
+declare function PrisonHavySearch(C: Character): void;
+/**
+ * The Light Search Prozess for the Player
+ * @param {Character} C
+ */
+declare function PrisonLightSearch(C: Character): void;
+/**
+ * The Cloth Back Prozess for Prisoner
+ * @param {Character} C
+ */
+declare function PrisonerClothBack(C: Character): void;
+/**
+ * Remove the Letherbelts from the Prisoner
+ */
 declare function PrisonCuffsRelief(): void;
+/**
+ * Light Torture for the Prison Player
+ */
 declare function PrisonMaidLightTorture(): void;
+/**
+ * Heavy Torture for the Prison Player
+ */
 declare function PrisonMaidHevyTorture(): void;
-declare function PrisonDisableKey(C: any): void;
+/**
+ * Get Hadcuffed Key from Prisoner
+ * @param {Character} C
+ */
+declare function PrisonDisableKey(C: Character): void;
+/**
+ * Player Ask in Dialog
+ */
 declare function PrisonCellPlayerAsk(): void;
+/**
+ * Player Shake the Cellbars
+ */
 declare function PrisonCellPlayerShake(): void;
+/**
+ * Player try to escape
+ */
 declare function PrisonCellPlayerTry(): void;
+/**
+ * Player Wimper to Maid
+ */
 declare function PrisonCellPlayerWimper(): void;
+/**
+ * Player wait for Maids-Action
+ */
 declare function PrisonCellPlayerWait(): void;
+/**
+ * PrisonSub leave the Room
+ */
 declare function PrisonSubSendAway(): void;
+/**
+ * Check if Prison NPC Wear Handcuffes
+ */
 declare function PrisonSubHandcuffing(): void;
+/**
+ * Shoves NPC in Cell
+ */
 declare function PrisonCellSubIn(): void;
+/**
+ * Strip Search the NPC
+ */
 declare function PrisonSubHavySearch(): void;
+/**
+ * Let NPC out of Cell
+ */
 declare function PrisonCellSubOut(): void;
+/**
+ * The Prison NPC Leave the Cell
+ */
 declare function PrisonLeaveCell(): void;
+/**
+ * Give Cloth back to Sub
+ */
 declare function PrisonSubClothBack(): void;
+/**
+ * Become a Member of the BadGirlGang
+ */
 declare function PrisonBecomeBadGirl(): void;
+/**
+ * Leave the BadGirlGang
+ */
 declare function PrisonLeaveBadGirl(): void;
+/**
+ * Wear NPC as Police
+ */
 declare function PrisonWearPoliceEquipment(C: any): void;
+/**
+ * Determine how strongly the player is wanted for MainHall
+ */
 declare function PrisonWantedPlayer(): 1 | 3 | 5 | 7;
+/**
+ * Catch by Police in MainHall
+ */
 declare function PrisonMeetPoliceIntro(RoomBackground: any): Promise<void>;
 declare function PrisonPutHandsInTheAir(): void;
 declare function PrisonRaiseHandsHigher(): void;
 declare function PrisonCatchKneel(): void;
 declare function PrisonCatchHandcuffed(): void;
+/**
+ * player fails to escape if they try after kneeling, Police puts them in hogtie as punishment
+ */
 declare function PrisonCatchKneelingEscape(): void;
 declare function PrisonCatchComplain(): void;
 declare function PrisonCatchAdmitDefeat(): void;
+/**
+ * When a fight starts between the player and the Police
+ */
 declare function PrisonFightPolice(): void;
+/**
+ * When the fight against Police ends
+ */
 declare function PrisonFightPoliceEnd(): Promise<void>;
+/**
+ * Outro for the Fight if Player win
+ */
 declare function PrisonFightPoliceOutro(): void;
+/**
+ * Player is caught by Police and imprisoned
+ */
 declare function PrisonCatchByPolice(): Promise<void>;
+/**
+ * Change the Prison Behavior >0 Good, <0 Bad
+ */
 declare function PrisonSetBehavior(Behavior: any): void;
 declare function PrisonArrestHandoverDices(): void;
 declare function PrisonArrestHandoverKeys(): void;

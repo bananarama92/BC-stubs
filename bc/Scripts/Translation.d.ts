@@ -41,9 +41,10 @@ declare function TranslationTextArray(S: readonly {
 /**
  * Loads a character dialog translation and caches it
  * @param {Character} C - The character for which we want to translate the dialog
+ * @param {() => void} cb
  * @returns {void} - Nothing
  */
-declare function TranslationLoadDialog(C: Character, cb: any): void;
+declare function TranslationLoadDialog(C: Character, cb: () => void): void;
 /**
  * Translate a character dialog if the file is in the dictionary
  * @param {Character} C

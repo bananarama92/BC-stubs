@@ -298,8 +298,10 @@ declare var MaidQuartersIsHeadMaid: boolean;
 declare var MaidQuartersSelfBondageMaidDrinksAccepted: boolean;
 declare var MaidQuartersSelfBondageMaidCleaningAccepted: boolean;
 declare var MaidQuartersDominantRep: number;
-declare var MaidQuartersCurrentRescue: string;
-declare var MaidQuartersRescueList: string[];
+/** @type {"" | MaidQuartersMissionType} */
+declare var MaidQuartersCurrentRescue: "" | MaidQuartersMissionType;
+/** @type {MaidQuartersMissionType[]} */
+declare var MaidQuartersRescueList: MaidQuartersMissionType[];
 declare var MaidQuartersRescueStage: string[];
 declare var MaidQuartersCurrentRescueStarted: boolean;
 declare var MaidQuartersCurrentRescueCompleted: boolean;

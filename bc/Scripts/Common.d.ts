@@ -97,10 +97,10 @@ declare function CommonClick(event: MouseEvent | TouchEvent): void;
  * @param {number} Y - The Y position
  * @param {number} W - The width of the square
  * @param {number} H - The height of the square
- * @param {TouchList} [TL] - Can give a specific touch event instead of the default one
+ * @param {null | TouchList} [TL] - Can give a specific touch event instead of the default one
  * @returns {boolean}
  */
-declare function CommonTouchActive(X: number, Y: number, W: number, H: number, TL?: TouchList): boolean;
+declare function CommonTouchActive(X: number, Y: number, W: number, H: number, TL?: null | TouchList): boolean;
 /**
  * Calls a basic dynamic function if it exists, for complex functions, use: CommonDynamicFunctionParams
  * @param {string} FunctionName - Name of the function to call
@@ -110,26 +110,26 @@ declare function CommonDynamicFunction(FunctionName: string): void;
 /**
  * Calls a dynamic function with parameters (if it exists), also allow ! in front to reverse the result. The dynamic function is the provided function name in the dialog option object and it is prefixed by the current screen.
  * @param {string} FunctionName - Function name to call dynamically
- * @returns {*} - Returns what the dynamic function returns or FALSE if the function does not exist
+ * @returns {unknown | boolean} - Returns what the dynamic function returns or FALSE if the function does not exist
  */
-declare function CommonDynamicFunctionParams(FunctionName: string): any;
+declare function CommonDynamicFunctionParams(FunctionName: string): unknown | boolean;
 /**
  *  Calls a named global function with the passed in arguments, if the named function exists. Differs from
  *  CommonDynamicFunctionParams in that arguments are not parsed from the passed in FunctionName string, but
  *  passed directly into the function call, allowing for more complex JS objects to be passed in. This
  *  function will not log to console if the provided function name does not exist as a global function.
  * @param {string} FunctionName - The name of the global function to call
- * @param {readonly any[]} [args] - zero or more arguments to be passed to the function (optional)
+ * @param {readonly any[]} args - zero or more arguments to be passed to the function (optional)
  * @returns {any} - returns the result of the function call, or undefined if the function name isn't valid
  */
-declare function CommonCallFunctionByName(FunctionName: string, ...args: any[]): any;
+declare function CommonCallFunctionByName(FunctionName: string, ...args: readonly any[]): any;
 /**
  * Behaves exactly like CommonCallFunctionByName, but logs a warning if the function name is invalid.
  * @param {string} FunctionName - The name of the global function to call
- * @param {readonly any[]} [args] - zero or more arguments to be passed to the function (optional)
+ * @param {readonly any[]} args - zero or more arguments to be passed to the function (optional)
  * @returns {any} - returns the result of the function call, or undefined if the function name isn't valid
  */
-declare function CommonCallFunctionByNameWarn(FunctionName: string, ...args: any[]): any;
+declare function CommonCallFunctionByNameWarn(FunctionName: string, ...args: readonly any[]): any;
 /**
  * Get the current screen
  * @returns {ScreenSpecifier}
@@ -182,9 +182,9 @@ declare function CommonRemoveItemFromList<T>(list: T[], index: number): undefine
  * Removes random item from list and returns it
  * @template T
  * @param {T[]} list
- * @returns {T}
+ * @returns {undefined | T}
  */
-declare function CommonRemoveRandomItemFromList<T>(list: T[]): T;
+declare function CommonRemoveRandomItemFromList<T>(list: T[]): undefined | T;
 /**
  * Get a random item from a list while making sure not to pick the previous one.
  * Function expects unique values in the list. If there are multiple instances of ItemPrevious, it may still return it.
@@ -238,37 +238,42 @@ declare function CommonArraysEqual<T extends readonly any[]>(a1: T, a2: readonly
  * Creates a debounced wrapper for the provided function with the provided wait time. The wrapped function will not be called as long as
  * the debounced function continues to be called. If the debounced function is called, and then not called again within the wait time, the
  * wrapped function will be called.
- * @param {function} func - The function to debounce
- * @returns {function} - A debounced version of the provided function
+ * @template {any[]} argsT
+ * @template retT
+ * @param {(...args: argsT) => retT} func - The function to debounce
+ * @returns {(waitInterval: number, ...args: argsT) => retT} - A debounced version of the provided function
  */
-declare function CommonDebounce(func: Function): Function;
+declare function CommonDebounce<argsT extends any[], retT>(func: (...args: argsT) => retT): (waitInterval: number, ...args: argsT) => retT;
 /**
  * Creates a throttling wrapper for the provided function with the provided wait time. If the wrapped function has been successfully called
  * within the wait time, further call attempts will be delayed until the wait time has passed.
- * @param {function} func - The function to throttle
- * @returns {function} - A throttled version of the provided function
+ * @template {any[]} argsT
+ * @template retT
+ * @param {(...args: argsT) => retT} func - The function to throttle
+ * @returns {(waitInterval: number, ...args: argsT) => retT} - A throttled version of the provided function
  */
-declare function CommonThrottle(func: Function): Function;
+declare function CommonThrottle<argsT extends any[], retT>(func: (...args: argsT) => retT): (waitInterval: number, ...args: argsT) => retT;
 /**
  * Creates a wrapper for a function to limit how often it can be called. The player-defined wait interval setting determines the
  * allowed frequency. Below 100 ms the function will be throttled and above will be debounced.
- * @template {(...args: any) => any} FunctionType
- * @param {FunctionType} func - The function to limit calls of
+ * @template {any[]} argsT
+ * @template retT
+ * @param {(...args: argsT) => retT} func - The function to limit calls of
  * @param {number} [minWait=0] - A lower bound for how long the wait interval can be, 0 by default
  * @param {number} [maxWait=1000] - An upper bound for how long the wait interval can be, 1 second by default
- * @returns {FunctionType} - A debounced or throttled version of the function
+ * @returns {(...args: argsT) => retT} - A debounced or throttled version of the function
  */
-declare function CommonLimitFunction<FunctionType extends (...args: any) => any>(func: FunctionType, minWait?: number, maxWait?: number): FunctionType;
+declare function CommonLimitFunction<argsT extends any[], retT>(func: (...args: argsT) => retT, minWait?: number, maxWait?: number): (...args: argsT) => retT;
 /**
  * Creates a simple memoizer.
  * The memoized function does calculate its result exactly once and from that point on, uses
  * the result stored in a local cache to speed up things.
  * @template {(...args: any) => any} T
  * @param {T} func - The function to memoize
- * @param {((arg: any) => string)[]} argConvertors - A list of stringification functions for creating a memo, one for each function argument
+ * @param {null | ((arg: any) => string)[]} argConvertors - A list of stringification functions for creating a memo, one for each function argument
  * @returns {MemoizedFunction<T>} - The result of the memoized function
  */
-declare function CommonMemoize<T extends (...args: any) => any>(func: T, argConvertors?: ((arg: any) => string)[]): MemoizedFunction<T>;
+declare function CommonMemoize<T extends (...args: any) => any>(func: T, argConvertors?: null | ((arg: any) => string)[]): MemoizedFunction<T>;
 /**
  * Take a screenshot of specified area in "photo mode" and open the image in a new tab
  * @param {number} Left - Position of the area to capture from the left of the canvas
@@ -375,8 +380,8 @@ declare function CommonIsCharacter(value: unknown): value is Character | PlayerC
  * @todo JSON serialization will break things like functions, Sets and Maps.
  * @template T
  * @param {T} obj
- * @param {null | ((this: any, key: string, value: any) => any)} replacer
- * @param {null | ((this: any, key: string, value: any) => any)} reviver
+ * @param {null | ((this: any, key: string, value: any) => any)} [replacer]
+ * @param {null | ((this: any, key: string, value: any) => any)} [reviver]
  * @returns {T}
  */
 declare function CommonCloneDeep<T>(obj: T, reviver?: null | ((this: any, key: string, value: any) => any), replacer?: null | ((this: any, key: string, value: any) => any)): T;
@@ -575,12 +580,12 @@ declare function CommonHas<T>(obj: {
  *  "OldFunc",
  *  function NewFunc (a, b) { return a + b; },
  * );
- * @template {any} T
+ * @template {readonly any[]} T
  * @param {string} propertyName - The name for the new property
- * @param {()=>T} getter - The getter function for the property
- * @param {(T)=>void} setter - The setter function for the property
+ * @param {() => T} [getter] - The getter function for the property
+ * @param {(args: T) => void} [setter] - The setter function for the property
  */
-declare function CommonProperty<T extends unknown>(propertyName: string, getter?: () => T, setter?: (T: any) => void): void;
+declare function CommonProperty<T extends readonly any[]>(propertyName: string, getter?: () => T, setter?: (args: T) => void): void;
 /**
  * Assign a function to the passed namespace, creating a deprecated and non-deprecated symbol.
  * Both symbols will are in fact get/set wrappers around the same object, enforcing that `namespace[oldName] === namespace[callback.name]` *always* holds.
@@ -589,12 +594,12 @@ declare function CommonProperty<T extends unknown>(propertyName: string, getter?
  *  "OldFunc",
  *  function NewFunc (a, b) { return a + b; },
  * );
- * @template {(...any) => any} T
+ * @template {(...args: any[]) => any} T
  * @param {string} oldName - The old (deprecated) name of the symbol
  * @param {T} callback - The function with its new name
  * @param {Record<string, any>} namespace - The namespace wherein the new and old names will be stored
  */
-declare function CommonDeprecateFunction<T extends (...any: any) => any>(oldName: string, callback: T, namespace?: Record<string, any>): void;
+declare function CommonDeprecateFunction<T extends (...args: any[]) => any>(oldName: string, callback: T, namespace?: Record<string, any>): void;
 /**
  * Capitalize the first character of the passed string.
  * @template {string} T

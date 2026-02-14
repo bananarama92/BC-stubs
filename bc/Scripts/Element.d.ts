@@ -22,10 +22,17 @@ declare function ElementClickTimeout(root: Element, query?: null | string, timeo
 declare function ElementContent(ID: string | null, Content?: string): string;
 /**
  * @template {keyof HTMLElementScalarTagNameMap} T
- * @param {HTMLOptions<T>} options - Options for customizing the element
- * @returns {HTMLElementTagNameMap[T]} - The created element
+ * @overload
+ * @param {HTMLOptions<T>} options
+ * @returns {HTMLElementTagNameMap[T]}
  */
 declare function ElementCreate<T extends keyof HTMLElementScalarTagNameMap>(options: HTMLOptions<T>): HTMLElementTagNameMap[T];
+/**
+ * @overload
+ * @param {HTMLOptionsUnion} options
+ * @returns {HTMLElement}
+ */
+declare function ElementCreate(options: HTMLOptionsUnion): HTMLElement;
 /**
  * Convert the list of passed HTML option children into a list of nodes and/or string
  * @param {HTMLOptions<any>["children"]} children
@@ -62,12 +69,12 @@ declare function ElementNumberInputWheel(this: HTMLInputElement, event: WheelEve
  * Creates a new text input element in the main document.Does not create a new element if there is already an existing one with the same ID
  * @param {string | null} ID - The id of the input tag to create.
  * @param {string} Type - Type of the input tag to create.
- * @param {string} Value - Value of the input tag to create.
- * @param {string | number} [MaxLength] - Maximum input tag of the input to create.
- * @param {Node} [form] - The form the element belongs to
+ * @param {null | string} [Value] - Value of the input tag to create.
+ * @param {null | number | string} [MaxLength] - Maximum input tag of the input to create.
+ * @param {null | Node} [form] - The form the element belongs to
  * @returns {HTMLInputElement} - The created HTML input element
  */
-declare function ElementCreateInput(ID: string | null, Type: string, Value: string, MaxLength?: string | number, form?: Node): HTMLInputElement;
+declare function ElementCreateInput(ID: string | null, Type: string, Value?: null | string, MaxLength?: null | number | string, form?: null | Node): HTMLInputElement;
 /**
  * Creates a new range input element in the main document. Does not create a new element if there is already an
  * existing one with the same id
@@ -106,10 +113,10 @@ declare function ElementCreateDropdown(id: string | null, optionsList: readonly 
 declare function ElementCreateDiv(ID: string | null): HTMLDivElement;
 /**
  * Removes an element from the main document
- * @param {ElementHelp.ElementOrId} elementOrId - The id of the tag to remove from the document.
+ * @param {ElementHelp.ElementOrId | null} elementOrId - The id of the tag to remove from the document.
  * @returns {void} - Nothing
  */
-declare function ElementRemove(elementOrId: ElementHelp.ElementOrId): void;
+declare function ElementRemove(elementOrId: ElementHelp.ElementOrId | null): void;
 /**
  * Draws an existing HTML element at a specific position within the document. The element is "centered" on the given coordinates by dividing its height and width by two.
  * @param {ElementHelp.ElementOrId} ElementOrID - The id of the input tag to (re-)position.
@@ -123,7 +130,7 @@ declare function ElementPosition(ElementOrID: ElementHelp.ElementOrId, X: number
 /**
  * Draws an existing HTML element at a specific position within the document. The element will not be centered on its given coordinates unlike the ElementPosition function.
  * Not same as ElementPositionFix. Calculates Font size itself.
- * @param {ElementHelp.ElementOrId} ElementOrID - The id of the input tag to (re-)position or the element itself.
+ * @param {ElementHelp.ElementOrId | null} ElementOrID - The id of the input tag to (re-)position or the element itself.
  * @param {number} X - Starting point of the element on the X axis.
  * @param {number} Y - Starting point of the element on the Y axis.
  * @param {number} W - Width of the element.
@@ -131,7 +138,7 @@ declare function ElementPosition(ElementOrID: ElementHelp.ElementOrId, X: number
  * @param {ElementHelp.AnchorXY} [anchorPosition]
  * @returns {void} - Nothing
  */
-declare function ElementPositionFixed(ElementOrID: ElementHelp.ElementOrId, X: number, Y: number, W: number, H?: number, anchorPosition?: ElementHelp.AnchorXY): void;
+declare function ElementPositionFixed(ElementOrID: ElementHelp.ElementOrId | null, X: number, Y: number, W: number, H?: number, anchorPosition?: ElementHelp.AnchorXY): void;
 /**
  * Draws an existing HTML element at a specific position within the document. The element will not be centered on its given coordinates unlike the ElementPosition function.
  * @param {ElementHelp.ElementOrId} ElementOrID - The id of the input tag to (re-)position.
@@ -218,14 +225,14 @@ declare function ElementCreateSettingsLabel(label: string, position?: "left" | "
  * Create a group of radio buttons
  * @param {string} id
  * @param {string} defaultValue
- * @param {(this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any} onclick
+ * @param {(this: HTMLButtonElement, ev: MouseEvent | TouchEvent, key: any) => any} onclick
  * @param {{
  * htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>,
  * options?: ElementButton.Options,
  * onClick?: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent, key: string) => any
  * }[]} options
  */
-declare function ElementCreateRadioButtonGroup(id: string, onclick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent) => any, defaultValue: string, options: {
+declare function ElementCreateRadioButtonGroup(id: string, onclick: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent, key: any) => any, defaultValue: string, options: {
     htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>;
     options?: ElementButton.Options;
     onClick?: (this: HTMLButtonElement, ev: MouseEvent | TouchEvent, key: string) => any;
@@ -244,15 +251,15 @@ declare function ElementCreateRadioButtonGroup(id: string, onclick: (this: HTMLB
  * @param {string | null} id - The ID of the to-be created search input; `${id}-datalist` will be assigned the search input's datalist
  * @param {() => Iterable<string>} dataCallback - A callback returning all values that will be converted into a datalist `<option>`
  * @param {Object} [options]
- * @param {null | string} [options.value] - Value of the search input
- * @param {null | Node} [options.parent] - The parent element of the search input; defaults to {@link document.body}
- * @param {null | number} [options.maxLength] - Maximum input length of the search input
+ * @param {string} [options.value] - Value of the search input
+ * @param {Node} [options.parent] - The parent element of the search input; defaults to {@link document.body}
+ * @param {number} [options.maxLength] - Maximum input length of the search input
  * @returns {HTMLInputElement} - The newly created search input
  */
 declare function ElementCreateSearchInput(id: string | null, dataCallback: () => Iterable<string>, options?: {
-    value?: null | string;
-    parent?: null | Node;
-    maxLength?: null | number;
+    value?: string;
+    parent?: Node;
+    maxLength?: number;
 }): HTMLInputElement;
 /**
  * Returns the element's document- or shadow-root.
@@ -274,10 +281,10 @@ declare function ElementGetRoot(elem: Node): Document | ShadowRoot;
 declare function ElementCheckVisibility(el: Element, options?: CheckVisibilityOptions): boolean;
 /**
  * Get an element by its ID or DOM element reference, returning null if it does not exist.
- * @param {ElementHelp.ElementOrId} elementOrId
- * @returns { HTMLElement | null }
+ * @param {ElementHelp.ElementOrId | null} elementOrId
+ * @returns {HTMLElement | null}
  */
-declare function ElementWrap(elementOrId: ElementHelp.ElementOrId): HTMLElement | null;
+declare function ElementWrap(elementOrId: ElementHelp.ElementOrId | null): HTMLElement | null;
 /**
  * Scales a given height value relative to the current canvas height.
  * @param {number} height
@@ -327,9 +334,9 @@ declare function ElementSetSize(elementOrId: ElementHelp.ElementOrId, width?: nu
 declare function ElementSetFontSize(elementOrId: ElementHelp.ElementOrId, targetFontSize?: number | "auto"): void;
 /**
  * Given an HTML element, reduce its font size until it fully fits into its visual width
- * @param {HTMLElement} el
+ * @param {HTMLElement | Element} el
  */
-declare function ElementFitText(el: HTMLElement): void;
+declare function ElementFitText(el: HTMLElement | Element): void;
 declare function ElementGenerateID(): string;
 /** @satisfies {ElementNoParent} */
 declare const ElementNoParent: 0;
@@ -413,11 +420,11 @@ declare namespace ElementButton {
      * @private
      * @param {string} id
      * @param {string} [img]
-     * @param {string} [imgColor]
-     * @param {Omit<HTMLOptions<"img">, "tag">} [options]
-     * @returns {HTMLImageElement | HTMLDivElement}
+     * @param {null | string} [imgColor]
+     * @param {Omit<HTMLOptions<"img" | "div">, "tag">} [options]
+     * @returns {HTMLImageElement | HTMLDivElement | null}
      */
-    function _ParseImage(id: string, img?: string, imgColor?: string, options?: Omit<HTMLOptions<"img">, "tag">): HTMLImageElement | HTMLDivElement;
+    function _ParseImage(id: string, img?: string, imgColor?: null | string, options?: Omit<HTMLOptions<"img" | "div">, "tag">): HTMLImageElement | HTMLDivElement | null;
     /**
      * @private
      * @param {string} id
@@ -430,10 +437,10 @@ declare namespace ElementButton {
     /**
      * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
      * @param {string} id - The ID of the parent element
-     * @param {readonly (InventoryIcon | ElementButton.CustomIcon)[]} [icons] - The (optional) list of icons
+     * @param {readonly (InventoryIcon | ElementButton.CustomIcon | null | undefined)[]} [icons] - The (optional) list of icons
      * @returns {null | { iconGrid: HTMLDivElement, tooltip: [string, HTMLElement] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
      */
-    function _ParseIcons(id: string, icons?: readonly (InventoryIcon | ElementButton.CustomIcon)[]): null | {
+    function _ParseIcons(id: string, icons?: readonly (InventoryIcon | ElementButton.CustomIcon | null | undefined)[]): null | {
         iconGrid: HTMLDivElement;
         tooltip: [string, HTMLElement];
     };
@@ -441,20 +448,20 @@ declare namespace ElementButton {
      * @private
      * @param {string} id
      * @param {"left" | "right" | "top" | "bottom"} [position]
-     * @param {readonly (null | string | Node | HTMLOptions<any>)[]} [children]
+     * @param {readonly (null | undefined | string | Node | HTMLOptions<any>)[]} [children]
      * @param {Omit<HTMLOptions<"div">, "tag">} [options]
      * @returns {null | HTMLDivElement}
      */
-    function _ParseTooltip(id: string, position?: "left" | "right" | "top" | "bottom", children?: readonly (null | string | Node | HTMLOptions<any>)[], options?: Omit<HTMLOptions<"div">, "tag">): null | HTMLDivElement;
+    function _ParseTooltip(id: string, position?: "left" | "right" | "top" | "bottom", children?: readonly (null | undefined | string | Node | HTMLOptions<any>)[], options?: Omit<HTMLOptions<"div">, "tag">): null | HTMLDivElement;
     /**
      * Create a generic button.
      * @param {null | string} id - The ID of the to-be created search button
      * @param {(this: HTMLButtonElement, ev: PointerEvent) => any} onClick - The click event listener to-be attached to the tooltip
      * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
-     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
+     * @param {Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
      * @returns {HTMLButtonElement} - The created button
      */
-    function Create(id: null | string, onClick: (this: HTMLButtonElement, ev: PointerEvent) => any, options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    function Create(id: null | string, onClick: (this: HTMLButtonElement, ev: PointerEvent) => any, options?: null | ElementButton.Options, htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
     /**
      * Create a button for an asset or item, including image, label and icons.
      * @param {string | null} idPrefix - The ID of the to-be created search button
@@ -526,7 +533,7 @@ declare namespace ElementMenu {
      * @param {Object} [options]
      * @param {"ltr" | "rtl"} [options.direction] - The direction of the menu. Should match the value of the CSS `direction` property if provided
      * @param {"menubar" | "menu"} [options.role] - The role of the menu/menubar
-     * @param {null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @param {null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional {@link ElementCreate} options to-be applied to the respective (child) element
      * @returns {HTMLDivElement} - The menu
      */
     export function Create(id: string | null, menuItems: readonly (string | Node | HTMLOptionsUnion)[], options?: {
@@ -553,10 +560,10 @@ declare namespace ElementCheckbox {
     function _pointerup(this: Document | ShadowRoot, ev: PointerEvent): void;
     /**
      * Construct and return a DOM checkbox element (`<input type="checkbox">`)
-     * @param {null | string} id - The ID of the element, or `null` if one must be assigned automatically
-     * @param {null | ((this: HTMLInputElement, ev: Event) => any)} onChange - The change event listener to-be fired upon checkbox clicks
-     * @param {null | ElementCheckbox.Options} options - High level options for the to-be created checkbox
-     * @param {null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @param {null | string} [id] - The ID of the element, or `null` if one must be assigned automatically
+     * @param {null | ((this: HTMLInputElement, ev: Event) => any)} [onChange] - The change event listener to-be fired upon checkbox clicks
+     * @param {null | ElementCheckbox.Options} [options] - High level options for the to-be created checkbox
+     * @param {null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional {@link ElementCreate} options to-be applied to the respective (child) element
      */
     function Create(id?: null | string, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.Options, htmlOptions?: null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>): HTMLElement;
     /**

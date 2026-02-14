@@ -256,12 +256,12 @@ declare function DrawText(Text: string, X: number, Y: number, Color: string, Bac
  * @param {number} Height - Height of the component
  * @param {string} Label - Text to display in the button
  * @param {string} Color - Color of the component
- * @param {string} [Image] - URL of the image to draw inside the button, if applicable
- * @param {string} [HoveringText] - Text of the tooltip, if applicable
+ * @param {null | string} [Image] - URL of the image to draw inside the button, if applicable
+ * @param {null | string} [HoveringText] - Text of the tooltip, if applicable
  * @param {boolean} [Disabled] - Disables the hovering options if set to true
  * @returns {void} - Nothing
  */
-declare function DrawButton(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: string, HoveringText?: string, Disabled?: boolean): void;
+declare function DrawButton(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: null | string, HoveringText?: null | string, Disabled?: boolean): void;
 /**
  * Draws a checkbox component
  * @param {number} Left - Position of the component from the left of the canvas
@@ -283,14 +283,14 @@ declare function DrawCheckbox(Left: number, Top: number, Width: number, Height: 
  * @param {number} Height - Height of the component
  * @param {string} Label - Text inside the component
  * @param {string} Color - Color of the component
- * @param {string} [Image] - Image URL to draw in the component
- * @param {() => string} [BackText] - Text for the back button tooltip
- * @param {() => string} [NextText] - Text for the next button tooltip
+ * @param {null | string} [Image] - Image URL to draw in the component
+ * @param {null | (() => string)} [BackText] - Text for the back button tooltip
+ * @param {null | (() => string)} [NextText] - Text for the next button tooltip
  * @param {boolean} [Disabled] - Disables the hovering options if set to true
- * @param {number} [ArrowWidth] - How much of the button the previous/next sections cover. By default, half each.
+ * @param {null | number} [ArrowWidth] - How much of the button the previous/next sections cover. By default, half each.
  * @returns {void} - Nothing
  */
-declare function DrawBackNextButton(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: string, BackText?: () => string, NextText?: () => string, Disabled?: boolean, ArrowWidth?: number): void;
+declare function DrawBackNextButton(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: null | string, BackText?: null | (() => string), NextText?: null | (() => string), Disabled?: boolean, ArrowWidth?: null | number): void;
 /**
  * Draw the hovering text tooltip
  * @param {number} Left - Position of the tooltip from the left of the canvas
@@ -572,7 +572,6 @@ declare let TempCanvas: CanvasRenderingContext2D;
  * @type {CanvasRenderingContext2D}
  */
 declare let ColorCanvas: CanvasRenderingContext2D;
-declare var DialogLeaveDueToItem: boolean;
 declare var BlindFlash: boolean;
 declare var DrawingBlindFlashTimer: number;
 /** @type {Map<string, HTMLImageElement>} */

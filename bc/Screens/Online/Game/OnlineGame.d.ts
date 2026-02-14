@@ -71,5 +71,5 @@ declare function OnlineGameDrawCharacter(C: Character, X: number, Y: number, Zoo
 declare function OnlineGameHasOptions(): boolean;
 /** @type {null | string[][]} */
 declare let OnlineGameDictionary: null | string[][];
-/** @type { ()=>void | undefined } */
-declare let OnlineGameTranslateResolve: () => void | undefined;
+/** @type {((gameDict: string[][]) => void) | undefined} */
+declare let OnlineGameTranslateResolve: ((gameDict: string[][]) => void) | undefined;

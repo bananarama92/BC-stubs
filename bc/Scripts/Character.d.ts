@@ -355,6 +355,13 @@ declare function CharacterAppearsInverted(C: Character): boolean;
  */
 declare function CharacterCanKneel(C: Character): boolean;
 /**
+ * Checks whether a kneeling pose is *valid* (i.e. not blocked by items) for the character.
+ * Use {@link CharacterCanKneel} to check whether they should be able to unaided (this function only checks validity).
+ * @param {Character} C - The character to check
+ * @returns {boolean} - Returns true if the character can be set to a kneeling pose, false otherwise
+ */
+declare function CharacterIsKneelValid(C: Character): boolean;
+/**
  * Determines how much the character's view should be darkened based on their blind level. 1 is fully visible, 0 is pitch black.
  * @param {Character} C - The character to check
  * @param {boolean} [eyesOnly=false] - If TRUE only check whether the character has eyes closed, and ignore item effects
