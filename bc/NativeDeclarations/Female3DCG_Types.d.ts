@@ -816,6 +816,7 @@ interface AttributionDefinition {
 	Author?: string;
 	Email?: string;
 	License?: string;
+	OriginalName?: string;
 }
 
 interface AssetLayerDefinition extends AssetCommonPropertiesGroupAssetLayer, AssetCommonPropertiesAssetLayer {

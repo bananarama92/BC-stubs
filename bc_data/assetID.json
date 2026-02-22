@@ -207,7 +207,8 @@
             "CocktailDress": 87,
             "MaidBikini": 88,
             "OffTheShoulderTop": 89,
-            "RuffledDress": 90
+            "RuffledDress": 90,
+            "MaidDress3": 91
         }
     },
     "ClothAccessory": {

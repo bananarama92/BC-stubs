@@ -349,18 +349,13 @@ declare function CharacterGetLoversNumbers(C: Character, MembersOnly?: boolean):
  */
 declare function CharacterAppearsInverted(C: Character): boolean;
 /**
- * Checks whether the given character can kneel unaided
+ * Checks whether the given character can kneel. {@link minimumStatus} determines to what extent the character must be able to kneel for this to pass.
  * @param {Character} C - The character to check
- * @returns {boolean} - Returns true if the character is capable of kneeling unaided, false otherwise
+ * @param {PoseChangeStatus} [minimumStatus=PoseChangeStatus.ALWAYS] - The threshold pose change status required for this check to succeed.
+ * By default, the player must be able to kneel unaided, but this can be set lower (to allow struggling to kneel, aid, etc.).
+ * @returns {boolean} - Returns true if the character's ability to kneel meets the specified threshold, false otherwise
  */
-declare function CharacterCanKneel(C: Character): boolean;
-/**
- * Checks whether a kneeling pose is *valid* (i.e. not blocked by items) for the character.
- * Use {@link CharacterCanKneel} to check whether they should be able to unaided (this function only checks validity).
- * @param {Character} C - The character to check
- * @returns {boolean} - Returns true if the character can be set to a kneeling pose, false otherwise
- */
-declare function CharacterIsKneelValid(C: Character): boolean;
+declare function CharacterCanKneel(C: Character, minimumStatus?: PoseChangeStatus): boolean;
 /**
  * Determines how much the character's view should be darkened based on their blind level. 1 is fully visible, 0 is pitch black.
  * @param {Character} C - The character to check

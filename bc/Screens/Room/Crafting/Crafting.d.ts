@@ -1,5 +1,5 @@
 /**
- * Checks if a {@link CraftingItem["Effect"]} prerequisite is met
+ * Checks if a {@link CraftingItem["Effects"]} prerequisite is met
  * @param {CraftingItemSelected | CraftingItem} craft
  * @param {CraftingPropertyType} effect
  */
@@ -10,8 +10,8 @@ declare function CraftingCheckEffectsPrerequisite(craft: CraftingItemSelected | 
  */
 declare function CraftingPropertyUpdateButtons(craft: CraftingItemSelected): void;
 /**
- * Construct a record mapping all crafting-valid asset names to a list of matching elligble assets.
- * Elligble assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
+ * Construct a record mapping all crafting-valid asset names to a list of matching eligible assets.
+ * Eligible assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
  * @see {@link CraftingAssets}
  * @returns {Record<string, Asset[]>}
  */
@@ -46,7 +46,7 @@ declare function CraftingPaste(event: ClipboardEvent): void;
 declare function CraftingUnload(): void;
 /**
  * Update {@link CraftingSelectedItem.ItemProperties} with a select few properties from the passed item.
- * @param {Item} item - The item whose properties should be coppied.
+ * @param {Item} item - The item whose properties should be copied.
  * @returns {void}
  */
 declare function CraftingUpdateFromItem(item: Item): void;
@@ -134,7 +134,7 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): boolea
  */
 declare function CraftingItemListBuild(): Asset[];
 /**
- * Validate and sanitinize crafting properties of the passed item inplace.
+ * Validate and sanitize crafting properties of the passed item inplace.
  * @param {CraftingItem} Craft - The crafted item properties or `null`
  * @param {Asset | null} asset - The matching Asset. Will be extracted from the player inventory if `null`
  * @param {boolean} Warn - Whether a warning should logged whenever the crafting validation fails
@@ -180,9 +180,9 @@ declare let CraftingReorderList: number[];
 /** @type {CraftingReorderType} */
 declare let CraftingReorderMode: CraftingReorderType;
 /**
- * A record mapping all crafting-valid asset names to a list of matching elligble assets.
+ * A record mapping all crafting-valid asset names to a list of matching eligible assets.
  *
- * Elligble assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
+ * Eligible assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
  *
  * The first asset in each list is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
  * @type {Record<string, Asset[]>}
@@ -214,7 +214,7 @@ declare const CraftingEffectsPrerequisite: Record<CraftingPropertyType, {
 }>;
 /**
  * An enum with status codes for crafting validation.
- * @property OK - The validation proceded without errors
+ * @property OK - The validation proceeded without errors
  * @property ERROR - The validation produced one or more errors that were successfully resolved
  * @property CRITICAL_ERROR - The validation produced an unrecoverable error
  * @type {{OK: 2, ERROR: 1, CRITICAL_ERROR: 0}}

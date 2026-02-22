@@ -1921,7 +1921,7 @@ interface Character {
 	ExpressionQueue?: ExpressionQueueItem[];
 	CanTalk: () => boolean;
 	CanWalk: () => boolean;
-	CanKneel: () => boolean;
+	CanKneel: (minimumStatus?: PoseChangeStatus) => boolean;
 	CanInteract: () => boolean;
 
 	/**
@@ -5142,6 +5142,21 @@ interface ChatRoomMapObject extends ChatRoomMapDoodad {
 	IsVisible?: () => boolean;
 	BuildImageName?: (X: number, Y: number) => string;
 }
+
+interface ChatRoomMapEffectStaticLighting {
+	Type: "StaticLighting";
+	TypeId: 1,
+	ID: number,
+	/**
+	 * R [0; 255], G [0; 255], B [0; 255], A [0.0; 1.0]
+	 */
+	Color: [number, number, number, number];
+}
+
+/**
+ * A union of all effect types.
+ */
+type ChatRoomMapEffect = ChatRoomMapEffectStaticLighting;
 
 interface ChatRoomMapMovement {
 	X: number;
