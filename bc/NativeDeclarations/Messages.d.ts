@@ -240,6 +240,7 @@ interface ServerChatRoomMapData {
 	Fog?: boolean;
 	Tiles?: string;
 	Objects?: string;
+	Effects?: string;
 }
 
 interface ServerChatRoomCustomData {
