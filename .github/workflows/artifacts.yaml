@@ -91,16 +91,16 @@ jobs:
           # (xref https://github.com/bananarama92/BC-stubs/issues/18)
           python ../../namespace_function_sanitize.py .
 
+          # Get rid of JSDoc @private/@protected comments as TS lacks support for those in anonymous classes because... reasons?
+          # (xref https://github.com/microsoft/TypeScript/issues/30355)
+          python ../../remove_private_protected.py .
+
           set +e
           npx -p typescript tsc
           set -e
 
           rm -rf ../../bc
           mv dist ../../bc
-
-      - name: List NPM packages
-        run: |
-          npm list
 
       - name: Update BC-data
         run: |
