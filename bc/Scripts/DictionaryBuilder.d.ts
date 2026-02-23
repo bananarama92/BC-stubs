@@ -228,17 +228,17 @@ declare class DictionaryBuilder {
      * Adds a dictionary entry to the builder
      * @param {ChatMessageDictionaryEntry} entry - The dictionary entry to add
      * @returns {boolean} - True if the entry was successfully added, false otherwise
-     * @protected
+     * protected
      */
-    protected _addEntry(entry: ChatMessageDictionaryEntry): boolean;
+    _addEntry(entry: ChatMessageDictionaryEntry): boolean;
     /**
      * Adds a character reference dictionary entry for the given character reference tag and character.
      * @param {CharacterReferenceTag} tag - The character reference tag that should be added
      * @param {Character} character - The character that should be referenced
      * @returns {this}
-     * @private
+     * private
      */
-    private _addCharacterReference;
+    _addCharacterReference(tag: CharacterReferenceTag, character: Character): this;
 }
 /**
  * A {@link DictionaryBuilder} class which adds its dictionary entries based on a boolean condition. If the condition

@@ -122,7 +122,7 @@ declare namespace ColorPicker {
     }
     /**
      * Unpack and validate the {@link HTMLFieldSetElement.elements} of the passed `fieldset[name='color-picker']` element.
-     * @private
+     * private
      * @param {HTMLFieldSetElement} fieldset
      * @param {null | { checkValidity?: boolean }} options
      */
@@ -155,7 +155,7 @@ declare namespace ColorPicker {
     function create(id: null | string, options?: null | Pick<ColorPickerInitOptions, "colorState" | "onInput">): HTMLFieldSetElement;
     /**
      * {@link ColorPicker.setColor} helper for parsing color values (be it stringified or as HSV)
-     * @private
+     * private
      * @param {Pick<ColorPickerColorInput, "colorString" | "hsv">} value
      * @param {HTMLInputElement} outputInput
      * @param {null | number} opacity
@@ -167,7 +167,7 @@ declare namespace ColorPicker {
     };
     /**
      * {@link ColorPicker.setColor} helper for parsing opacity values
-     * @private
+     * private
      * @param {Pick<ColorPickerColorInput, "opacity" | "colorString">} value
      * @param {HTMLInputElement} opacityInput
      * @param {null | { overrideEditOpacity?: boolean }} options

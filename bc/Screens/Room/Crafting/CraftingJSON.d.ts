@@ -11,7 +11,7 @@ declare namespace CraftingJSON {
         dragstart: (this: HTMLElement, ev: DragEvent) => void;
     };
     /**
-     * @private
+     * private
      * @param {Element} fieldset
      * @param {Element} radioContainer
      * @param {Map<{ inputNew: HTMLInputElement, inputOld: HTMLInputElement }, boolean>} checkLog

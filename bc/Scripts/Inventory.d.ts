@@ -546,7 +546,7 @@ declare function InventoryExtractLockProperties(property: ItemProperties): ItemP
 declare namespace InventoryPrerequisiteConflicts {
     let GagPriorities: Partial<Record<AssetGroupName, number>>;
     /**
-     * @private
+     * private
      * @template {keyof PropertiesArray} T
      * @param {T} fieldName
      * @param {Character} C - The character on which we check for prerequisites

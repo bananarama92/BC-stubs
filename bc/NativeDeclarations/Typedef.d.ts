@@ -1819,7 +1819,7 @@ interface Character {
 	InventoryData?: string;
 	Appearance: Item[];
 	/**
-	 * @private
+	 * private
 	 * @see {@link Character.Stage}
 	 */
 	_Stage: string;
@@ -1827,7 +1827,7 @@ interface Character {
 	get Stage(): string;
 	set Stage(value: string);
 	/**
-	 * @private
+	 * private
 	 * @see {@link Character.CurrentDialog}
 	 */
 	_CurrentDialog: string;

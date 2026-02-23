@@ -1723,7 +1723,7 @@ declare namespace ChatRoomSep {
     let _ClickScrollUp: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
     /**
      * Return a {@link HTMLElement.InnerHTML} representation of the passed button's room name
-     * @private
+     * private
      * @param {HTMLButtonElement} button
      * @returns {(string | HTMLElement)[]}
      */

@@ -97,14 +97,14 @@ declare namespace KeybindingManager {
  * Handles registration, updates, serialization, and event handling.
  */
 declare class KeybindManager {
-    /** @private @type {Map<string, Keybindings.Keybinding>} */
-    private keybindings;
-    /** @private @type {Map<string, Keybindings.Category>} */
-    private categories;
-    /** @private @type {Map<string, Keybindings.Context>} */
-    private contexts;
-    /** @private @type {Map<string, Keybindings.UninitializedKeybinding>} */
-    private uninitializedKeybindings;
+    /** private @type {Map<string, Keybindings.Keybinding>} */
+    keybindings: Map<string, Keybindings.Keybinding>;
+    /** private @type {Map<string, Keybindings.Category>} */
+    categories: Map<string, Keybindings.Category>;
+    /** private @type {Map<string, Keybindings.Context>} */
+    contexts: Map<string, Keybindings.Context>;
+    /** private @type {Map<string, Keybindings.UninitializedKeybinding>} */
+    uninitializedKeybindings: Map<string, Keybindings.UninitializedKeybinding>;
     /**
      * Registers a new keybinding category.
      * Categories are sorted alphabetically by name after insertion.
@@ -259,35 +259,35 @@ declare class KeybindManager {
      * Completes the registration of an uninitialized keybinding.
      * Used when a binding exists in storage but not in defaults at load time.
      *
-     * @private
+     * private
      * @param {Keybindings.Keybinding} keybinding
      * @return {Keybindings.Keybinding}
      */
-    private _finishUninitializedKeybinding;
+    _finishUninitializedKeybinding(keybinding: Keybindings.Keybinding): Keybindings.Keybinding;
     /**
      * Checks if two modifier sets match exactly.
      *
-     * @private
+     * private
      * @param {Set<Keybindings.ModifierKey>} modifiers1
      * @param {Set<Keybindings.ModifierKey>} modifiers2
      * @returns {boolean}
      */
-    private _areModifiersConflicting;
+    _areModifiersConflicting(modifiers1: Set<Keybindings.ModifierKey>, modifiers2: Set<Keybindings.ModifierKey>): boolean;
     /**
      * Checks if two context sets match exactly.
      *
-     * @private
+     * private
      * @param {Set<string>} contexts1
      * @param {Set<string>} contexts2
      * @returns {boolean}
      */
-    private _areContextsConflicting;
+    _areContextsConflicting(contexts1: Set<string>, contexts2: Set<string>): boolean;
     /**
      * Registers an uninitialized keybinding.
      *
-     * @private
+     * private
      * @param {Keybindings.UninitializedKeybinding} keybinding
      */
-    private _registerUninitializedKeybinding;
+    _registerUninitializedKeybinding(keybinding: Keybindings.UninitializedKeybinding): void;
 }
 declare var KeyManager: KeybindManager;

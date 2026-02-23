@@ -298,7 +298,7 @@ declare var ServerAccountUpdate: {
     QueueData(Data: ServerAccountUpdateRequest, Force?: boolean): void;
 };
 /**
- * @private Use the {@link ServerIsLoggedIn} function instead.
+ * private Use the {@link ServerIsLoggedIn} function instead.
  * @type {boolean}
  */
 declare let ServerIsLoggedIn_: boolean;
