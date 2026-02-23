@@ -417,7 +417,7 @@ declare namespace ElementButton {
     function _KeyDownRadio(this: HTMLElement, ev: KeyboardEvent): void;
     function _ClickCheckbox(this: HTMLButtonElement, ev: Event): void;
     /**
-     * @private
+     * private
      * @param {string} id
      * @param {string} [img]
      * @param {null | string} [imgColor]
@@ -426,7 +426,7 @@ declare namespace ElementButton {
      */
     function _ParseImage(id: string, img?: string, imgColor?: null | string, options?: Omit<HTMLOptions<"img" | "div">, "tag">): HTMLImageElement | HTMLDivElement | null;
     /**
-     * @private
+     * private
      * @param {string} id
      * @param {ElementButton.StaticNode} [label]
      * @param {"top" | "center" | "bottom" | "left" | "right"} [position]
@@ -445,7 +445,7 @@ declare namespace ElementButton {
         tooltip: [string, HTMLElement];
     };
     /**
-     * @private
+     * private
      * @param {string} id
      * @param {"left" | "right" | "top" | "bottom"} [position]
      * @param {readonly (null | undefined | string | Node | HTMLOptions<any>)[]} [children]
@@ -501,7 +501,7 @@ declare namespace ElementButton {
 declare namespace ElementMenu {
     export let _observers: WeakMap<Element, MutationObserver>;
     /**
-     * @private
+     * private
      * @satisfies {MutationCallback}
      * @param {readonly { addedNodes: readonly Node[] | NodeList, target: Node }[]} mutationList
      */
@@ -634,7 +634,7 @@ declare namespace ElementDOMScreen {
     let _statusIDMap: WeakMap<Element, number>;
     /**
      * Timer handler for {@link ElementDOMScreen.SetStatus}
-     * @private
+     * private
      * @satisfies {TimerHandler}
      * @param {Element} headingElem The screen's `h1` element
      * @param {Element} statusElem The screen's `[role='status']` element
@@ -668,10 +668,10 @@ declare class HTMLColorTintElement extends HTMLElement {
     /** @type {null | ElementInternals} */
     internals_: null | ElementInternals;
     /**
-     * @private
+     * private
      * @type {null | string}
      */
-    private _pressedOldValue;
+    _pressedOldValue: null | string;
     connectedCallback(): void;
     /**
      * Sets or retrieves the initial contents of the object.
@@ -747,10 +747,10 @@ declare class HTMLColorTintElement extends HTMLElement {
      */
     reportValidity(): boolean;
     /**
-     * @private
+     * private
      * @type {Readonly<HSVColor>}
      */
-    private _value;
+    _value: Readonly<HSVColor>;
     set name(value: string);
     /**
      * Sets or retrieves the name of the object.
@@ -761,15 +761,18 @@ declare class HTMLColorTintElement extends HTMLElement {
     get name(): string;
     /**
      * Set the position the knob
-     * @private
+     * private
      * @param {number} left - The relative left position on a scale of 0-100
      * @param {number} top - The relative top position on a scale of 0-100
      */
-    private _setKnobPosition;
+    _setKnobPosition(left: number, top: number): void;
     /**
      * Get the position the knob
-     * @private
+     * private
      * @returns {{ left: number, top: number }} - The position of the knob on a scale of 0-100
      */
-    private _getKnobPosition;
+    _getKnobPosition(): {
+        left: number;
+        top: number;
+    };
 }

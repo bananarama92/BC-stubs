@@ -141,7 +141,7 @@ declare let CommandsKey: string;
 declare let CommandText: TextCache;
 declare namespace CommandsHelp {
     /**
-     * @private
+     * private
      * @param {HTMLElement} help
      */
     function _Publish(help: HTMLElement): void;

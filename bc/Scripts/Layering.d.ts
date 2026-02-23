@@ -29,32 +29,32 @@ declare namespace Layering {
     }>;
     let _ExitCallbacks: ((screen: string, C: Character, item: Item) => void)[];
     /**
-     * @private
+     * private
      * Initialize the object-based variant of {@link AssetLayerOverridePriority}
      */
     function _InitOverridePriorityObject(): void;
     /**
-     * @private
+     * private
      * @param {string} name - The name of the layer
      * @param {number} priority - The stringified layer priority
      * @param {string} defaultPriority - The stringified default priority of the layer
      */
     function _ApplyLayerPriority(name: string, priority: number, defaultPriority: string): void;
     /**
-     * @private
+     * private
      * @param {number} priority - The layer priority
      * @param {string} defaultPriority - The stringified default priority of the layer
      */
     function _ApplyAssetPriority(priority: number, defaultPriority: string): void;
     /**
      * Event listener for `input` events involving layer priorities
-     * @private
+     * private
      * @param {Event} event
      */
     function _LayerInputListener(event: Event): void;
     /**
      * Event listener for `input` events involving asset priorities
-     * @private
+     * private
      * @param {Event} event
      */
     function _AssetInputListener(event: Event): void;
@@ -63,25 +63,25 @@ declare namespace Layering {
      * Event listener for `click` events of the reset button
      * @this {HTMLButtonElement}
      * @param {Event} ev
-     * @private
+     * private
      */
     function _ResetClickListener(this: HTMLButtonElement, ev: Event): void;
     /**
      * Event listener for `click` events of the show hidden layers button
      * @this {HTMLButtonElement}
      * @param {Event} ev
-     * @private
+     * private
      */
     function _ShowLayersClickListener(this: HTMLButtonElement, ev: Event): void;
     /**
      * Update the background colors of the `number`-based input elements, the color change depending on whether one is changing an asset- or layer-specific priority.
-     * @private
+     * private
      * @param {"layer-priority" | "asset-priority"} activeType
      */
     function _UpdateInputColors(activeType: "layer-priority" | "asset-priority"): void;
     /**
      * Group all layers by their {@link AssetLayer.CopyLayerColor} properties
-     * @private
+     * private
      * @param {readonly AssetLayer[]} layers
      * @returns {Record<string, AssetLayer[]>}
      */
@@ -90,14 +90,14 @@ declare namespace Layering {
      * Return the default `Property.OverridePriority` of the current item.
      *
      * This is generally `undefined`, though certain extended item options do overwrite it.
-     * @private
+     * private
      * @returns {undefined | AssetLayerOverridePriority}
      */
     function _GetDefaultPriority(): undefined | AssetLayerOverridePriority;
     /**
      * Update all input elements and buttons with the passed {@link Layering.Readonly} status.
      * @param {boolean} isReadonly
-     * @private
+     * private
      */
     function _ApplyReadonly(isReadonly: boolean): void;
     /**

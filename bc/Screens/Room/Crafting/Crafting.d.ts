@@ -341,7 +341,7 @@ declare namespace CraftingEventListeners {
 }
 declare namespace CraftingElements {
     /**
-     * @private
+     * private
      * @param {string} id
      * @param {string} controls
      * @param {string} placeholder
@@ -350,7 +350,7 @@ declare namespace CraftingElements {
     function _SearchInput(id: string, controls: string, placeholder: string, assetSearch?: boolean): HTMLInputElement;
     let _SearchCache: Map<"ALL" | AssetGroupItemName, readonly HTMLOptionElement[]>;
     /**
-     * @private
+     * private
      * @param {string} id
      * @param {(this: HTMLButtonElement, ev: Event) => any} onClick
      * @param {null | Asset} asset

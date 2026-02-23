@@ -34,7 +34,7 @@ declare const Shop2Vars: VariableContainer<{
     Push: boolean;
     /**
      * The current shop mode
-     * @private
+     * private
      * @type {ShopMode}
      */
     _Mode: ShopMode;
@@ -148,18 +148,18 @@ declare namespace Shop2Consts {
 declare namespace Shop2 {
     /**
      * Populate {@link Shop2Consts.BuyGroups} with buy groups.
-     * @private
+     * private
      */
     function _PopulateBuyGroups(): void;
     /**
      * Populate {@link Shop2InitVars.GroupDescriptions} with group descriptions and all corresponding group names
      * @param {readonly ShopItem[]} assets
-     * @private
+     * private
      */
     function _PopulateGroupDescriptions(assets: readonly ShopItem[]): void;
     /**
      * Populate {@link Shop2Consts.Keys} and {@link Shop2Consts.Remote} with the name of all asset keys and remotes.
-     * @private
+     * private
      */
     function _PopulateKeysAndRemotes(): void;
     /**
@@ -170,7 +170,7 @@ declare namespace Shop2 {
      * @param {number} h
      * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
      * @satisfies {ScreenDrawHandler}
-     * @private
+     * private
      */
     function _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
     /**
@@ -178,7 +178,7 @@ declare namespace Shop2 {
      * @param {MouseEvent | TouchEvent} event
      * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
      * @satisfies {MouseEventListener}
-     * @private
+     * private
      */
     function _AssetElementClick(event: MouseEvent | TouchEvent, assetIndex: number): void;
     /**

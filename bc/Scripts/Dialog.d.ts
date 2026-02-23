@@ -996,10 +996,10 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
     readonly clickStatusCallbacks: Record<string, DialogMenu<string, ClickedObj>["GetClickStatus"]>;
     /**
      * See {@link DialogMenu.shape}
-     * @private
+     * private
      * @type {null | RectTuple}
      */
-    private _shape;
+    _shape: null | RectTuple;
     set shape(value: RectTuple);
     /**
      * Get or set the position & shape of the current subscreen as defined by the root element.
@@ -1033,25 +1033,25 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
     /**
      * A set with the numeric IDs of to-be run reloads.
      * See {@link DialogMenu.Reload}
-     * @private
+     * private
      * @readonly
      * @type {Set<number>}
      */
-    private readonly _reloadQueue;
+    readonly _reloadQueue: Set<number>;
     /**
      * The highest reload ID currently in use.
      * See {@link DialogMenu.Reload}
-     * @private
+     * private
      * @type {number}
      */
-    private _reloadHighestID;
+    _reloadHighestID: number;
     /**
      * Promise object for queuing reloads, ensuring that they are run consecutively rather than concurrently if multiple calls are invoked (near) simultaneously.
      * See {@link DialogMenu.Reload}
-     * @private
+     * private
      * @type {Promise<boolean>}
      */
-    private _reloadPromise;
+    _reloadPromise: Promise<boolean>;
     /**
      * Initialize the {@link DialogMenu} subscreen.
      *
@@ -1369,16 +1369,16 @@ declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLi
     };
     /**
      * A {@link clearTimeout}-returned ID for temporarily disabling the exit button on mobile button clicks
-     * @private
+     * private
      * @type {null | number}
      */
-    private _mobileTimeoutID;
+    _mobileTimeoutID: null | number;
     /**
-     * @private
+     * private
      * @param {Character} C
      * @satisfies {TimerHandler}
      */
-    private _mobileTimeoutHandler;
+    _mobileTimeoutHandler(C: Character): void;
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
      * @abstract
@@ -1477,10 +1477,10 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
     };
     /**
      * See {@link _DialogExpressionMenu.facialExpressions}
-     * @private
+     * private
      * @type {null | Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>}
      */
-    private _facialExpressions;
+    _facialExpressions: null | Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>;
     /**
      * Get an object with all UI-configurable expression group names mapped to their respective expressions.
      * @type {Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>}
@@ -1571,10 +1571,10 @@ declare class _DialogPoseMenu<ModeType extends DialogSelfMenuName> extends _Dial
     };
     /**
      * See {@link poses}
-     * @private
+     * private
      * @type {null | Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>}
      */
-    private _poses;
+    _poses: null | Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>;
     /**
      * An object mapping all (potentially) button-valid pose categories to their respective poses.
      * @type {Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>}
@@ -1637,10 +1637,10 @@ declare class _DialogSavedExpressionsMenu<ModeType extends DialogSelfMenuName> e
     clickStatusCallbacks: DialogMenu<ModeType, number>["clickStatusCallbacks"];
     /**
      * See {@link expressionPreviews}
-     * @private
+     * private
      * @type {null | (null | Character)[]}
      */
-    private _expressionPreviews;
+    _expressionPreviews: null | (null | Character)[];
     /**
      * @type {readonly (null | Character)[]}
      */
