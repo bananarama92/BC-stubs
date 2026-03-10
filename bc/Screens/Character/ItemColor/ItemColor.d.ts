@@ -1,9 +1,9 @@
 /**
  * Sanitize the color of the passed item, returning an array of valid color strings and of length {@link Asset.ColorableLayerCount}.
  * @param {Item} item - The item whose colors are to be validated
- * @returns {string[]} - The validated colors returned as array
+ * @returns {BCColor[]} - The validated colors returned as array
  */
-declare function ItemColorSanitizeColor(item: Item): string[];
+declare function ItemColorSanitizeColor(item: Item): BCColor[];
 /**
  * Sanitize the properties of the passed item in relation to any and all color & opacity related fields.
  * @param {Item} item - The item whose properties are to be validated
@@ -168,17 +168,17 @@ declare function ItemColorIsSimple(item: Item): boolean;
 /**
  * Fetches the color button text key for the provided item color. If the item's color is already a string, the color string is returned.
  * Otherwise, returns "Many" or "Default" as appropriate.
- * @param {string | readonly string[]} color - The item color
- * @returns {string} - The appropriate color button key for the provided item color(s)
+ * @param {"None" | BCColor | readonly BCColor[]} color - The item color
+ * @returns {"Many" | BCColor} - The appropriate color button key for the provided item color(s)
  */
-declare function ItemColorGetColorButtonTextKey(color: string | readonly string[]): string;
+declare function ItemColorGetColorButtonTextKey(color: "None" | BCColor | readonly BCColor[]): "Many" | BCColor;
 /**
  * Fetches the color button text for the provided item color. If the item's color is already a string, the color string is returned.
  * Otherwise, returns "Many" or "Default" as appropriate.
- * @param {string | readonly string[]} color - The item color
+ * @param {BCColor | readonly BCColor[]} color - The item color
  * @returns {string} - The appropriate color button text for the provided item color(s), translated to the current game language
  */
-declare function ItemColorGetColorButtonText(color: string | readonly string[]): string;
+declare function ItemColorGetColorButtonText(color: BCColor | readonly BCColor[]): string;
 /**
  * Registers an exit callback to the item color UI which will be called when the UI is exited.
  * @param {ItemColorExitListener} callback - The exit listener to register
@@ -253,13 +253,13 @@ declare let ItemColorLayerNames: null | TextCache;
 declare let ItemColorGroupNames: null | TextCache;
 /**
  * All (hex code) colors used within the current lifetime of the ItemColor subscreen.
- * @type {Set<HexColor>}
+ * @type {Set<BCColor>}
  */
-declare const ItemColorHistory: Set<HexColor>;
+declare const ItemColorHistory: Set<BCColor>;
 /**
  * A debounced callback for when the item color picker changes its value. This sets the color for the currently selected set of color
  * indices
  * @deprecated - Superseded by {@link ColorPicker.eventListeners.inputItemColor}
- * @type {(color: string) => void}
+ * @type {(color: BCColor) => void}
  */
-declare const ItemColorOnPickerChange: (color: string) => void;
+declare const ItemColorOnPickerChange: (color: BCColor) => void;

@@ -346,7 +346,7 @@ interface AssetGroupDefinitionBase extends AssetCommonPropertiesGroupAsset, Asse
 	 *
 	 * Those are used when generating random appearances or cycling colors in the wardrobe
 	 */
-	Color?: HexColor[];
+	Color?: BCColor[];
 
 	/**
 	 * A group that will be used to copy the size info from
@@ -412,7 +412,7 @@ interface AssetGroupDefinitionBase extends AssetCommonPropertiesGroupAsset, Asse
 	 */
 	ArousalZone?: AssetGroupItemName;
 
-	ColorSuffix?: Record<string, string>;
+	ColorSuffix?: Partial<Record<"HEX_COLOR" | BCColor, BCColor>>;
 	ExpressionPrerequisite?: AssetPrerequisite[];
 	HasPreviewImages?: boolean;
 }
@@ -464,7 +464,7 @@ interface AssetCommonPropertiesAssetLayer {
 	/** A list of alpha mask definitions. */
 	Alpha?: Alpha.Definition[];
 
-	ColorSuffix?: Record<string, string>;
+	ColorSuffix?: Partial<Record<"HEX_COLOR" | BCColor, BCColor>>;
 
 	/** Whether the asset is drawn at an absolute position. */
 	FixedPosition?: boolean;
@@ -747,7 +747,7 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	/** Applies screen tints when the asset is worn */
 	Tint?: TintDefinition[];
 	/** The default tint color (unless overriden by {@link TintDefinition.DefaultColor} */
-	DefaultTint?: string;
+	DefaultTint?: BCColor;
 	Gender?: AssetGender;
 
 	/**

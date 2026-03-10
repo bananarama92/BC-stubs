@@ -94,9 +94,9 @@ declare function CraftingDecompressServerData(Data: string | undefined | (null |
 declare function CraftingLoadServer(Packet: string | (null | CraftingItem)[]): void;
 /**
  * Advance to the next crafting reordering mode, or set the mode to the specified value.
- * @param {CraftingReorderType} newmode - The mode to set.  If null, advance to next mode.
+ * @param {null | CraftingReorderType} newmode - The mode to set.  If null, advance to next mode.
  */
-declare function CraftingReorderModeSet(newmode?: CraftingReorderType): void;
+declare function CraftingReorderModeSet(newmode?: null | CraftingReorderType): void;
 declare function CraftingClick(event: MouseEvent | TouchEvent): void;
 /**
  * Refreshes the preview model with a slight delay so the item color process is done
@@ -105,9 +105,10 @@ declare function CraftingClick(event: MouseEvent | TouchEvent): void;
 declare function CraftingRefreshPreview(): void;
 /**
  * Converts the currently selected item into a crafting item.
+ * @param {CraftingItemSelected} item
  * @return {CraftingItem}
  * */
-declare function CraftingConvertSelectedToItem(): CraftingItem;
+declare function CraftingConvertSelectedToItem(item: CraftingItemSelected): CraftingItem;
 /**
  * Convert a crafting item to its selected format.
  * @param {CraftingItem} Craft
@@ -333,7 +334,8 @@ declare namespace CraftingEventListeners {
     function _ClickPadlock(this: HTMLButtonElement, ev: Event): void;
     function _ClickAsset(this: HTMLButtonElement, ev: Event): void;
     function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
-    let _InputSearch: (this: HTMLInputElement, ev: Event) => Promise<void>;
+    function _InputSearch(this: HTMLInputElement): Promise<void>;
+    let _InputSearchEffect: (this: HTMLInputElement, ev: Event) => Promise<void>;
     function _ClickAsciiDescription(this: HTMLInputElement, ev: Event): void;
     function _ClickGroup(this: HTMLButtonElement, ev: MouseEvent): void;
     let _FocusSearchAsset: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
@@ -345,9 +347,10 @@ declare namespace CraftingElements {
      * @param {string} id
      * @param {string} controls
      * @param {string} placeholder
+     * @param {"asset" | "lock" | "effect"} type
      * @returns {HTMLInputElement}
      */
-    function _SearchInput(id: string, controls: string, placeholder: string, assetSearch?: boolean): HTMLInputElement;
+    function _SearchInput(id: string, controls: string, placeholder: string, type: "asset" | "lock" | "effect"): HTMLInputElement;
     let _SearchCache: Map<"ALL" | AssetGroupItemName, readonly HTMLOptionElement[]>;
     /**
      * private
@@ -374,4 +377,4 @@ declare namespace CraftingElements {
  * @see {@link CratingValidationStruct}
  * @todo Let the Validate/GetDefault functions take the respective attribute rather than the entire {@link CraftingItem}
  */
-declare const CraftingValidationRecord: Record<keyof CraftingItem, CratingValidationStruct>;
+declare var CraftingValidationRecord: Record<keyof CraftingItem, CratingValidationStruct>;

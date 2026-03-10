@@ -13,13 +13,19 @@ declare namespace CraftingJSON {
     /**
      * private
      * @param {Element} fieldset
-     * @param {Element} radioContainer
+     * @param {null | Element} radioContainer
      * @param {Map<{ inputNew: HTMLInputElement, inputOld: HTMLInputElement }, boolean>} checkLog
      */
-    function _queueAdvance(fieldset: Element, radioContainer: Element, checkLog: Map<{
+    function _queueAdvance(fieldset: Element, radioContainer: null | Element, checkLog: Map<{
         inputNew: HTMLInputElement;
         inputOld: HTMLInputElement;
     }, boolean>): void;
+    /**
+     * private
+     * @param {null | HTMLElement} el
+     * @returns {el is HTMLElement}
+     */
+    function _isTooltip(el: null | HTMLElement): el is HTMLElement;
     namespace eventListeners {
         function focusTooltip(this: HTMLElement): void;
         function blurTooltip(this: HTMLElement): void;

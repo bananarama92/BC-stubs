@@ -105,6 +105,14 @@ declare function AsylumGGTSMessage(Msg: string, Target?: Character): void;
  */
 declare function AsylumGGTSSetTimer(): void;
 /**
+ * Replaces the punctuation and capitalization in given text depending on the GGTS level.
+ * Makes it easier to respond to GGTS queries on lower levels.
+ * @param {number} Level - GGTS level
+ * @param {string} Text - the text to sanitize
+ * @return {string} - sanitized text
+ */
+declare function AsylumGGTSSanitizeText(Level: number, Text: string): string;
+/**
  * Returns TRUE if the query was answered by character number M
  * @param {number} Level - The player GGTS level, at level 4 or more, capital letters and punctuation matters
  * @param {string} Text - The text to evaluate

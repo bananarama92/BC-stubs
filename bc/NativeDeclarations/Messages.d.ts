@@ -53,7 +53,7 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	ArousalSettings?: ArousalSettingsType;
 	OnlineSharedSettings?: CharacterOnlineSharedSettings;
 	Game?: CharacterGameParameters;
-	LabelColor?: string;
+	LabelColor?: "" | HexColor;
 	Appearance?: ServerAppearanceBundle;
 	Description?: string;
 	BlockItems?: ServerItemPermissionsPacked | ServerItemPermissions[];
@@ -436,7 +436,7 @@ interface ServerChatRoomSearchRequest {
 	Language: "" | ServerChatRoomLanguage | ServerChatRoomLanguage[];
     SearchDescs?: boolean;
 	ShowLocked?: boolean;
-    MapTypes?: string[];
+    MapTypes?: ChatRoomMapType[];
 }
 type ChatRoomSearchSettings = {
 	Language: "" | ServerChatRoomLanguage;
@@ -445,7 +445,7 @@ type ChatRoomSearchSettings = {
 	FullRooms: boolean;
 	ShowLocked: boolean;
 	SearchDescriptions: boolean;
-	MapTypes: string;
+	MapTypes: "" | ChatRoomMapType;
 	RoomMinSize: number;
 	RoomMaxSize: number;
 	FilterTerms: string;
@@ -1001,8 +1001,8 @@ interface ServerCharacterArousalResponse {
 interface ServerCharacterItemUpdate {
 	Target: number;
 	Group: AssetGroupName;
-	Name?: string;
-	Color: string | string[];
+	Name: string | undefined;
+	Color: ItemColor;
 	Difficulty: number;
 	Property?: ItemProperties;
 	Craft?: CraftingItem;

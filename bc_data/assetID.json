@@ -208,7 +208,11 @@
             "MaidBikini": 88,
             "OffTheShoulderTop": 89,
             "RuffledDress": 90,
-            "MaidDress3": 91
+            "MaidDress3": 91,
+            "Cow": 92,
+            "CrimsonCloudsInkRhymeQipaoDress": 93,
+            "LolitaShortDress": 94,
+            "MaidDress4": 95
         }
     },
     "ClothAccessory": {
@@ -321,7 +325,8 @@
             "OpenLeatherSkirt": 55,
             "PVCHobbleSkirt": 56,
             "YogaPants": 57,
-            "SkinnyJeans": 58
+            "SkinnyJeans": 58,
+            "PencilSkirt2": 59
         }
     },
     "Corset": {
@@ -415,7 +420,8 @@
             "Tanuki": 8,
             "UndershadowedBlurred": 9,
             "UndershadowedSolid": 10,
-            "Wings": 11
+            "Wings": 11,
+            "Running": 12
         }
     },
     "FacialHair": {
@@ -460,7 +466,8 @@
             "ComboBelt": 7,
             "FemPelvisHarness": 8,
             "ButterflyGarter": 9,
-            "BowBelt": 10
+            "BowBelt": 10,
+            "LaceLegRing": 11
         }
     },
     "Glasses": {
@@ -1680,7 +1687,9 @@
             "AsylumMuzzle": 96,
             "Cigarette": 97,
             "CompGag": 98,
-            "RoseBallGag": 99
+            "RoseBallGag": 99,
+            "BishopGag": 100,
+            "PumpkinHarnessGag": 101
         }
     },
     "ItemMouth2": {
@@ -1784,7 +1793,9 @@
             "HorrorMuzzle": 95,
             "AsylumMuzzle": 96,
             "CompGag": 97,
-            "RoseBallGag": 98
+            "RoseBallGag": 98,
+            "BishopGag": 99,
+            "PumpkinHarnessGag": 100
         }
     },
     "ItemMouth3": {
@@ -1885,7 +1896,9 @@
             "AOMGag": 92,
             "HorrorMuzzle": 93,
             "AsylumMuzzle": 94,
-            "RoseBallGag": 95
+            "RoseBallGag": 95,
+            "BishopGag": 96,
+            "PumpkinHarnessGag": 97
         }
     },
     "ItemNeck": {
@@ -1941,7 +1954,8 @@
             "ChainCollar": 47,
             "MCuffCollar": 48,
             "SSpikedCollar": 49,
-            "SteampunkCollar": 50
+            "SteampunkCollar": 50,
+            "RibbonCollar": 51
         }
     },
     "ItemNeckAccessories": {
@@ -2491,7 +2505,9 @@
             "HoofBoots": 45,
             "CombatBoots": 46,
             "ZipperBBoots": 47,
-            "PumpHighHeels": 48
+            "PumpHighHeels": 48,
+            "Slippers": 49,
+            "ZipperLeatherBoots": 50
         }
     },
     "Socks": {

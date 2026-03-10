@@ -74,16 +74,16 @@ declare function CommonDrawApplyLayerAlphaMasks(C: Character, layer: AssetLayer,
  * @param {Item} item
  * @param {AssetLayer} layer
  * @param {AssetGroupName} groupName
- * @param {HexColor} [initialColor] Used as the starting value to check that specific color and fully resolve it
+ * @param {BCColor} [initialColor] Used as the starting value to check that specific color and fully resolve it
  */
-declare function CommonDrawResolveLayerColor(C: Character, item: Item, layer: AssetLayer, groupName: AssetGroupName, initialColor?: HexColor): string;
+declare function CommonDrawResolveLayerColor(C: Character, item: Item, layer: AssetLayer, groupName: AssetGroupName, initialColor?: BCColor): BCColor;
 /**
  * Determines whether the provided color is valid
  * @param {string} Color - The color
  * @param {AssetGroup} AssetGroup - The asset group the color is being used fo
- * @returns {boolean} - Whether the color is valid
+ * @returns {Color is BCColor} - Whether the color is valid
  */
-declare function CommonDrawColorValid(Color: string, AssetGroup: AssetGroup): boolean;
+declare function CommonDrawColorValid(Color: string, AssetGroup: AssetGroup): Color is BCColor;
 /**
  * Finds the correct pose to draw for drawable layer for the provided character from the provided list of allowed poses
  * @param {Character} C - The character to check for poses against

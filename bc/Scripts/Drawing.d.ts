@@ -6,10 +6,10 @@
 declare function DrawHexToRGB(color: string): RGBColor;
 /**
  * Converts a RGB color to a hex color string
- * @param {readonly number[]} color - RGB color to conver
- * @returns {string} - Hex color string
+ * @param {readonly [R: number, G: number, B: number]} color - RGB color to conver
+ * @returns {HexColor} - Hex color string
  */
-declare function DrawRGBToHex(color: readonly number[]): string;
+declare function DrawRGBToHex(color: readonly [R: number, G: number, B: number]): HexColor;
 /**
  * Loads the canvas to draw on with its style and event listeners.
  * @returns {void} - Nothing

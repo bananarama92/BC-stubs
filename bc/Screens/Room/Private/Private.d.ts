@@ -634,10 +634,10 @@ declare function PrivateStartGirlfriend(): void;
 /**
  * Puts a wedding ring of a specified color on a specified character
  * @param {Character} C - The character that must wear the ring.
- * @param {string} Color - The color of the ring #D0D000 is gold, #B0B0B0 is silver.
+ * @param {BCColor} Color - The color of the ring #D0D000 is gold, #B0B0B0 is silver.
  * @returns {void} - Nothing.
  */
-declare function PrivateWearRing(C: Character, Color: string): void;
+declare function PrivateWearRing(C: Character, Color: BCColor): void;
 /**
  * Triggered when the player upgrades her NPC girlfriend to Fiancee
  * @returns {void} - Nothing.

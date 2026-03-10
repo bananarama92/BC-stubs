@@ -156,11 +156,11 @@ declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, it
 /**
  * Parses an item color, based on the allowed colorable layers on an asset, and the asset's color schema
  * @param {Asset} asset - The asset on which the color is set
- * @param {string | readonly string[]} color - The color value to parse
- * @param {readonly string[]} schema - The color schema to validate against
- * @returns {string|string[]} - A parsed valid item color
+ * @param {BCColor | readonly BCColor[]} color - The color value to parse
+ * @param {readonly BCColor[]} schema - The color schema to validate against
+ * @returns {BCColor | BCColor[]} - A parsed valid item color
  */
-declare function ServerParseColor(asset: Asset, color: string | readonly string[], schema: readonly string[]): string | string[];
+declare function ServerParseColor(asset: Asset, color: BCColor | readonly BCColor[], schema: readonly BCColor[]): BCColor | BCColor[];
 /**
  * Populates an appearance diff map with any required items, to ensure that all asset groups are present that need to
  * be.
@@ -171,12 +171,12 @@ declare function ServerParseColor(asset: Asset, color: string | readonly string[
 declare function ServerAddRequiredAppearance(assetFamily: IAssetFamily, diffMap: AppearanceDiffMap): void;
 /**
  * Validates and returns a color against a color schema
- * @param {string} Color - The color to validate
- * @param {readonly string[]} Schema - The color schema to validate against (a list of accepted Color values)
- * @returns {string} - The color if it is a valid hex color string or part of the color schema, or the default color
+ * @param {BCColor} Color - The color to validate
+ * @param {readonly BCColor[]} Schema - The color schema to validate against (a list of accepted Color values)
+ * @returns {BCColor} - The color if it is a valid hex color string or part of the color schema, or the default color
  *     from the color schema otherwise
  */
-declare function ServerValidateColorAgainstSchema(Color: string, Schema: readonly string[]): string;
+declare function ServerValidateColorAgainstSchema(Color: BCColor, Schema: readonly BCColor[]): BCColor;
 /**
  * Syncs the player appearance with the server database.
  *
@@ -277,14 +277,17 @@ declare const ServerScriptWarningStyle: string;
 /** @readonly */
 declare var ServerAccountUpdate: {
     /**
+     * private
      * @type {Map<keyof ServerAccountUpdateRequest, any>}
      */
     Queue: Map<keyof ServerAccountUpdateRequest, any>;
     /**
+     * private
      * @type {null | ReturnType<typeof setTimeout>}
      */
     Timeout: null | ReturnType<typeof setTimeout>;
     /**
+     * private
      * @type {number}
      */
     Start: number;
@@ -419,7 +422,7 @@ declare namespace ServerAccountDataSyncedValidate {
         ClubCard: GameClubCardParameters;
         Prison: GamePrisonParameters;
     };
-    function LabelColor(arg: string, C: Character): string;
+    function LabelColor(arg: Partial<"" | `#${string}`>, C: Character): `#${string}`;
     function Creation(arg: number, C: Character): number;
     function Description(arg: string, C: Character): string;
     function Ownership(arg: Partial<ServerOwnership>, C: Character): {

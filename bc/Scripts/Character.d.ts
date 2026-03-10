@@ -38,10 +38,10 @@ declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo<any>): v
  * Sets the clothes based on a character archetype
  * @param {Character} C - Character to set the clothes for
  * @param {"Maid" | "Mistress" | "Employee" | "AnimeGirl" | "Bunny" | "Succubus"} Archetype - Archetype to determine the clothes to put on
- * @param {string} [ForceColor] - Color to use for the added clothes
+ * @param {BCColor} [ForceColor] - Color to use for the added clothes
  * @returns {void} - Nothing
  */
-declare function CharacterArchetypeClothes(C: Character, Archetype: "Maid" | "Mistress" | "Employee" | "AnimeGirl" | "Bunny" | "Succubus", ForceColor?: string): void;
+declare function CharacterArchetypeClothes(C: Character, Archetype: "Maid" | "Mistress" | "Employee" | "AnimeGirl" | "Bunny" | "Succubus", ForceColor?: BCColor): void;
 /**
  * Loads an NPC into the character array. The appearance is randomized, and a type can be provided to dress them in a given style.
  * @template {ModuleType} T
