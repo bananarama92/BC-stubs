@@ -62,8 +62,8 @@ declare var NurseryCoolDownTime: number;
 /** @type {null | Item[]} */
 declare var NurseryPlayerAppearance: null | Item[];
 declare var RandomNumber: number;
-/** @type {null | string} */
-declare var RandomResult: null | string;
+/** @type {null | BCColor} */
+declare var RandomResult: null | BCColor;
 /** @type {null | string} */
 declare var RandomResultB: null | string;
 declare var PreviousDress: string;

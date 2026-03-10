@@ -191,13 +191,13 @@ declare function AppearancePreviewUseCharacter(assetGroup: AssetGroup | null): b
  * @param {Character} C - The character whose appearance should be changed
  * @param {AssetGroupName} Group - The name of the corresponding groupr for the item
  * @param {Asset|null} ItemAsset - The asset collection of the item to be changed
- * @param {string|string[]} [NewColor] - The new color (as "#xxyyzz" hex value) for that item
- * @param {number} [DifficultyFactor=0] - The difficulty, on top of the base asset difficulty, that should be assigned
+ * @param {null | ItemColor} [NewColor] - The new color (as "#xxyyzz" hex value) for that item
+ * @param {null | number} [DifficultyFactor=0] - The difficulty, on top of the base asset difficulty, that should be assigned
  * to the item
- * @param {number} [ItemMemberNumber=-1] - The member number of the player adding the item - defaults to -1
+ * @param {null | number} [ItemMemberNumber=-1] - The member number of the player adding the item - defaults to -1
  * @returns {Item | null} - Thew newly created item or `undefined` if the asset does not exist
  */
-declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName, ItemAsset: Asset | null, NewColor?: string | string[], DifficultyFactor?: number, ItemMemberNumber?: number): Item | null;
+declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName, ItemAsset: Asset | null, NewColor?: null | ItemColor, DifficultyFactor?: null | number, ItemMemberNumber?: null | number): Item | null;
 /**
  * Cycle in the appearance assets to find the next item in a group
  * @param {Character} C - The character whose assets are used
@@ -223,11 +223,11 @@ declare function CharacterAppearanceMoveGroup(C: Character, Move: number): void;
 /**
  * Sets the color for a specific group
  * @param {Character} C - The character whose item group should be colored
- * @param {string} Color - The color (in the format "#rrggbb") to be applied to the group
+ * @param {BCColor} Color - The color (in the format "#rrggbb") to be applied to the group
  * @param {AssetGroupName} Group - The name of the group, whose color should be changed
  * @returns {void} - Nothing
  */
-declare function CharacterAppearanceSetColorForGroup(C: Character, Color: string, Group: AssetGroupName): void;
+declare function CharacterAppearanceSetColorForGroup(C: Character, Color: BCColor, Group: AssetGroupName): void;
 /**
  * Advance to the next reordering mode, or set the mode to the specified
  * value.  The reordering mode cycles through the values:

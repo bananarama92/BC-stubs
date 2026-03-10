@@ -93,4 +93,5 @@ declare var CollegeTheaterBackground: string;
 /** @type {null | NPCCharacter} */
 declare var CollegeTheaterJulia: null | NPCCharacter;
 declare var CollegeTheaterJuliaLove: number;
-declare var CollegeTheaterRandomColors: string[];
+/** @type {BCColor[]} */
+declare var CollegeTheaterRandomColors: BCColor[];

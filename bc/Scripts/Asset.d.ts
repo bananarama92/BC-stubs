@@ -223,11 +223,11 @@ declare function AssetLayerSort(layers: AssetLayer[]): AssetLayer[];
 /**
  * Convert {@link AssetDefinition} default color into a {@link Asset} default color list
  * @param {number} colorableLayerCount The number of colorable layers
- * @param {string} fillValue The default color. Usually `"Default"` though skin colors can also be supplied on occasion.
- * @param {string | readonly string[]} [color] See {@link AssetDefinition.DefaultColor}
- * @returns {string[]} See {@link Asset.DefaultColor}
+ * @param {BCColor} fillValue The default color. Usually `"Default"` though skin colors can also be supplied on occasion.
+ * @param {BCColor | readonly BCColor[]} [color] See {@link AssetDefinition.DefaultColor}
+ * @returns {BCColor[]} See {@link Asset.DefaultColor}
  */
-declare function AssetParseDefaultColor(colorableLayerCount: number, fillValue: string, color?: string | readonly string[]): string[];
+declare function AssetParseDefaultColor(colorableLayerCount: number, fillValue: BCColor, color?: BCColor | readonly BCColor[]): BCColor[];
 /**
  * Get the translated string for an asset-specific message
  * @param {string} msg

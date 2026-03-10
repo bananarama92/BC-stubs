@@ -33,3 +33,19 @@ declare namespace ElementSwipe {
 		animation?: Animation;
 	}
 }
+
+declare namespace ElementUnpackIDs {
+	/** Further options for {@link ElementUnpackIDs}. */
+	interface Options<T extends HTMLElement = HTMLElement> {
+		/**
+		 * The root node.
+		 * Generally only relevant when working within a shadow root or some other {@link DocumentFragment} that is not {@link document}.
+		 */
+		root?: Element;
+		/**
+		 * An {@link Array.filter} callback for filtering out specific element types.
+		 * Defaults to just filtering out `null` entries.
+		 */
+		filter?: (value: null | HTMLElement, index: number, array: (null | HTMLElement)[]) => value is T;
+	}
+}

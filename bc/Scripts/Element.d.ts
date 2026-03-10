@@ -659,6 +659,33 @@ declare namespace ElementDOMScreen {
      */
     function setHeading(root: ElementHelp.ElementOrId, heading: string | Element | readonly (string | Element)[]): void;
 }
+declare namespace ElementUnpackIDs {
+    /**
+     * Convert a list of IDs into their corresponding elements.
+     * @template {HTMLElement} [T=HTMLElement]
+     * @param {readonly string[]} list The list of element IDs
+     * @param {null | ElementUnpackIDs.Options<T>} [options] Further options
+     * @returns {T[]} The list of elements (may or may not be shorter than the ID list)
+     */
+    function fromList<T extends HTMLElement = HTMLElement>(list: readonly string[], options?: null | ElementUnpackIDs.Options<T>): T[];
+    /**
+     * Convert a space-separated stringified ID list into their corresponding elements.
+     * @template {HTMLElement} [T=HTMLElement]
+     * @param {string} string The stringified list of comma-separated element IDs
+     * @param {null | ElementUnpackIDs.Options<T>} [options] Further options
+     * @returns {T[]} The list of elements (may or may not be shorter than the ID list)
+     */
+    function fromString<T extends HTMLElement = HTMLElement>(string: string, options?: null | ElementUnpackIDs.Options<T>): T[];
+    /**
+     * Grab an attribute containing a space-separated stringified ID list and convert them into their corresponding elements.
+     * @template {HTMLElement} [T=HTMLElement]
+     * @param {Element} element The element
+     * @param {string} attrName The name of the attribute with the element IDs
+     * @param {null | Exclude<ElementUnpackIDs.Options<T>, "root">} [options] Further options
+     * @returns {T[]} The list of elements (may or may not be shorter than the ID list)
+     */
+    function fromAttribute<T extends HTMLElement = HTMLElement>(element: Element, attrName: string, options?: null | Exclude<ElementUnpackIDs.Options<T>, "root">): T[];
+}
 /**
  * HTML element for color tint pickers, functioning as some kind of 2D `<input type='range'>` input for selecting the color's saturation and brightness.
  */
@@ -673,6 +700,14 @@ declare class HTMLColorTintElement extends HTMLElement {
      */
     _pressedOldValue: null | string;
     connectedCallback(): void;
+    set value(value: HexColor);
+    /**
+     * Sets or retrieves the initial contents of the object.
+     *
+     * See {@link HTMLInputElement.value}
+     * @type {HexColor}
+     */
+    get value(): HexColor;
     /**
      * Sets or retrieves the initial contents of the object.
      *
@@ -680,14 +715,6 @@ declare class HTMLColorTintElement extends HTMLElement {
      * @type {string}
      */
     defaultValue: string;
-    set value(value: string);
-    /**
-     * Sets or retrieves the initial contents of the object.
-     *
-     * See {@link HTMLInputElement.value}
-     * @type {string}
-     */
-    get value(): string;
     /**
      * @param {string} name
      * @param {null | string} oldValue

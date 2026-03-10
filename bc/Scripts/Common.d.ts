@@ -150,11 +150,11 @@ declare function CommonTime(): number;
  * Checks if a given value is a valid HEX color code (optionally with alpha channel)
  * @param {string | undefined} Value - Potential HEX color code
  * @param {null | { allowAlpha?: boolean }} [options]
- * @returns {boolean} - Returns TRUE if the string is a valid HEX color
+ * @returns {Value is HexColor} - Returns TRUE if the string is a valid HEX color
  */
 declare function CommonIsColor(Value: string | undefined, options?: null | {
     allowAlpha?: boolean;
-}): boolean;
+}): Value is HexColor;
 /**
  * Checks whether an item's color has a valid value that can be interpreted by the drawing
  * functions. Valid values are null, undefined, strings, and an array containing any of the
@@ -163,6 +163,12 @@ declare function CommonIsColor(Value: string | undefined, options?: null | {
  * @returns {boolean} - Returns TRUE if the color is a valid item color
  */
 declare function CommonColorIsValid(Color?: null | string | readonly (null | string)[]): boolean;
+/**
+ * Remove the (potential present) alpha component of the passed color hex code, turning the likes of `RRGGBB(AA)` into `RRGGBB`.
+ * @param {HexColor} color The color hex code
+ * @returns {HexColor} The color hex code with its (potentially present) alpha component removed
+ */
+declare function CommonColorTrimAlpha(color: HexColor): HexColor;
 /**
  * Check that the passed string looks like an acceptable email address.
  *

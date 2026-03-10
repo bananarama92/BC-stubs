@@ -15,10 +15,11 @@ declare function ValidationCreateDiffParams(C: Character, sourceMemberNumber: nu
  * @param {Item|null} previousItem - The previous item that the target character had equipped (or null if none)
  * @param {Item|null} newItem - The new item to equip (may be identical to the previous item, or null if removing)
  * @param {AppearanceUpdateParameters} params - The appearance update parameters that apply to the diff
+ * @param {boolean} unknownAsset - Whether the incoming item is from an asset we're missing
  * @returns {ItemDiffResolution} - The diff resolution - a wrapper object containing the final item and a flag
  * indicating whether or not the change was valid.
  */
-declare function ValidationResolveAppearanceDiff(groupName: AssetGroupName, previousItem: Item | null, newItem: Item | null, params: AppearanceUpdateParameters): ItemDiffResolution;
+declare function ValidationResolveAppearanceDiff(groupName: AssetGroupName, previousItem: Item | null, newItem: Item | null, params: AppearanceUpdateParameters, unknownAsset: boolean): ItemDiffResolution;
 /**
  * Check whether newArray is different from oldArray.
  * @template T

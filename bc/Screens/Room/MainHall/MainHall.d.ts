@@ -256,7 +256,8 @@ declare var MainHallPunishmentList: ({
     ItemHands: string;
 })[];
 declare var MainHallPunishmentChoice: number;
-declare var MainHallRopeColor: string;
+/** @type {BCColor} */
+declare var MainHallRopeColor: BCColor;
 declare namespace MainHallAllowIDToScreenMap {
     let Shop: string;
     let Private: string;

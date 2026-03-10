@@ -649,10 +649,10 @@ declare function DialogSetTightenLoosenItem(Item: Item): void;
 /**
  * Validates that the player is allowed to change the item color and swaps it on the fly
  * @param {Character} C - The player who wants to change the color
- * @param {string} Color - The new color in the format "#rrggbb"
+ * @param {BCColor} Color - The new color in the format "#rrggbb"
  * @returns {void} - Nothing
  */
-declare function DialogChangeItemColor(C: Character, Color: string): void;
+declare function DialogChangeItemColor(C: Character, Color: BCColor): void;
 /**
  * Returns the button image name for a dialog menu button based on the button name.
  * @param {DialogMenuButton} ButtonName - The menu button name
@@ -780,9 +780,9 @@ declare function DialogMouseDown(event: MouseEvent | TouchEvent): void;
 declare var DialogTextDefaultDuration: number;
 /**
  * The default color to use when applying items.
- * @type {null | string}
+ * @type {null | HexColor}
  */
-declare var DialogColorSelect: null | string;
+declare var DialogColorSelect: null | HexColor;
 /**
  * The list of available items for the selected group.
  * @type {DialogInventoryItem[]}

@@ -75,6 +75,7 @@ declare var ToastManager: {
      * Fills in any missing option fields with default values, then
      * attempts to process the queue to show toasts if slots are available.
      *
+     * private
      * @param {Toasts.Options} options - Configuration for the toast.
      * @returns {void}
      */
@@ -84,6 +85,7 @@ declare var ToastManager: {
      * if the active count is not currently at max capacity. Removes displayed toasts
      * from the queue and updates the active count.
      *
+     * private
      * @returns {void}
      */
     _process(): void;
@@ -91,6 +93,7 @@ declare var ToastManager: {
      * Builds the toast element, hooks up animations, buttons, and timers,
      * and tracks its lifetime until Void kidnaps it.
      *
+     * private
      * @param {Required<Toasts.Options>} _ - Fully resolved options for the toast to display.
      * @returns {void}
      */
@@ -98,6 +101,7 @@ declare var ToastManager: {
     /**
      * Retrieves an existing container element for toasts, or creates a new one if none exists.
      *
+     * private
      * @returns {HTMLDivElement} The container <div> element.
      */
     _getOrCreateContainer(): HTMLDivElement;
@@ -106,6 +110,7 @@ declare var ToastManager: {
      * Calls onFinish when the progress reaches its maximum. Returns a function that can
      * be called to stop the animation prematurely.
      *
+     * private
      * @param {HTMLProgressElement} progress - The <progress> element to animate.
      * @param {() => void | undefined} onFinish - Callback invoked when the animation completes.
      * @param {number} durationMs - Total time in milliseconds for the progress to fill.

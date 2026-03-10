@@ -122,7 +122,7 @@ type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 	/** Event listeners that will be attached to the HTML element (see {@link HTMLElement.addEventListener}). */
 	eventListeners?: { [k in keyof HTMLElementEventMap]?: (this: HTMLElementTagNameMap[T], event: HTMLElementEventMap[k]) => any };
 	/** The elements parent (if any) to which it will be attached (see {@link HTMLElement.parentElement}). */
-	parent?: ElementNoParent | Node;
+	parent?: null | ElementNoParent | Node;
 	/** A list of CSS classes to-be assigned to the element (see {@link HTMLElement.classList}). */
 	classList?: readonly (null | undefined | string)[];
 	/** Any to-be added child elements. */
@@ -1109,12 +1109,12 @@ interface AssetGroup {
 	readonly AllowColorize: boolean;
 	readonly AllowCustomize: boolean;
 	readonly Random?: boolean;
-	readonly ColorSchema: readonly string[];
+	readonly ColorSchema: readonly BCColor[];
 	/**
 	 * The first color in the groups {@link ColorSchema}.
 	 * The value is used for padding the {@link Asset.DefaultColor} array if required.
 	 */
-	readonly DefaultColor: string;
+	readonly DefaultColor: BCColor;
 	readonly ParentSize: AssetGroupName | "";
 	readonly ParentColor: AssetGroupName | "";
 	readonly Clothing: boolean;
@@ -1153,7 +1153,7 @@ interface AssetGroup {
 
 	/** A dict mapping colors to custom filename suffices.
 	The "HEX_COLOR" key is special-cased to apply to all color hex codes. */
-	readonly ColorSuffix: Readonly<Record<string, string>>;
+	readonly ColorSuffix: Readonly<Partial<Record<"HEX_COLOR" | BCColor, BCColor>>>;
 	readonly ExpressionPrerequisite?: readonly AssetPrerequisite[];
 	readonly HasPreviewImages: boolean;
 	/** Return whether this group belongs to the `Appearance` {@link AssetGroup.Category} */
@@ -1258,13 +1258,13 @@ interface AssetLayer {
 	readonly ShowForAttribute: readonly AssetAttribute[] | null;
 	/** Used along with a hook to make layers of an asset disappear in some cases. */
 	readonly Visibility: "Player" | "AllExceptPlayerDialog" | "Others" | "OthersExceptDialog" | "Owner" | "Lovers" | "Mistresses" | null;
-	readonly ColorSuffix: Readonly<Record<string, string>> | null;
+	readonly ColorSuffix: Readonly<Partial<Record<"HEX_COLOR" | BCColor, BCColor>>> | null;
 }
 
 interface TintDefinition {
-	Color: number | string;
+	Color: number | BCColor;
 	Strength: number;
-	DefaultColor?: string;
+	DefaultColor?: BCColor;
 }
 
 interface ResolvedTintDefinition extends TintDefinition {
@@ -1375,7 +1375,7 @@ interface Asset {
 	/**
 	 * The default color of the item: an array of length {@link Asset.ColorableLayerCount} consisting of {@link AssetGroup.DefaultColor} and/or valid color hex codes.
 	 */
-	readonly DefaultColor: readonly string[];
+	readonly DefaultColor: readonly BCColor[];
 	readonly Opacity: number;
 	readonly MinOpacity: number;
 	readonly MaxOpacity: number;
@@ -1404,7 +1404,7 @@ interface Asset {
 	/** A list of {@link TypeRecord} keys for which a single layer expects multiple type-specific .png files. */
 	readonly CreateLayerTypes: readonly string[];
 	/** A record that maps {@link ExtendedItemData.name} to a set with all option indices that support locks */
-	readonly AllowLockType: null | Record<string, Set<number>>;
+	readonly AllowLockType: null | Partial<Record<string, Set<number>>>;
 	/** @deprecated Removed without replacement: items _must_ support a "color all layers" button (to the extent that the item is colorable in the first place) */
 	readonly AllowColorizeAll?: never;
 	readonly AvailableLocations: readonly string[];
@@ -1421,10 +1421,10 @@ interface Asset {
 	readonly PreviewIcons: readonly InventoryIcon[];
 	readonly Tint: readonly Readonly<TintDefinition>[];
 	readonly AllowTint: boolean;
-	readonly DefaultTint?: string;
+	readonly DefaultTint?: BCColor;
 	readonly Gender?: AssetGender;
 	readonly CraftGroup: string;
-	readonly ColorSuffix: Readonly<Record<string, string>>;
+	readonly ColorSuffix: Readonly<Partial<Record<"HEX_COLOR" | BCColor, BCColor>>>;
 	readonly FullAlpha: boolean;
 	readonly ExpressionPrerequisite?: readonly AssetPrerequisite[];
 	readonly AllowColorize: boolean;
@@ -1520,7 +1520,7 @@ interface ItemActivity {
 	Blocked?: ItemActivityRestriction;
 }
 
-type ItemColor = string | string[];
+type ItemColor = BCColor | BCColor[];
 
 /** An item is a pair of asset and its dynamic properties that define a worn asset. */
 interface Item {
@@ -1538,7 +1538,7 @@ interface ItemColorProperties extends ItemProperties {
 
 /** An item subtype with a guaranteed color and opacity field. */
 interface ItemColorItem extends Item {
-	Color: string[];
+	Color: BCColor[];
 	Property: ItemColorProperties;
 }
 
@@ -2095,7 +2095,7 @@ interface Character {
 	AppearanceFull?: Item[]; // Private NPCs only
 	// Online character properties
 	Title?: TitleName;
-	LabelColor?: HexColor;
+	LabelColor?: "" | HexColor;
 	Creation?: number; // technically never as it is Online-only
 	Description?: string; // technically never as it is Online-only
 	OnlineSharedSettings?: CharacterOnlineSharedSettings;  // technically never as it is Online-only
@@ -2283,7 +2283,7 @@ interface PlayerCharacter extends Character {
 	// All the following are guaranteed to be set on login
 	MemberNumber: number;
 	Nickname: string;
-	LabelColor: HexColor;
+	LabelColor: "" | HexColor;
 	Game: CharacterGameParameters;
 	Description: string;
 	Creation: number;
@@ -4051,7 +4051,7 @@ type DrawOptions = {
 	/** Zoom factor */
 	Zoom?: number;
 	/* Color of the image to draw */
-	HexColor?: string;
+	HexColor?: HexColor;
 	/* Whether or not it is drawn in full alpha mode */
 	FullAlpha?: boolean;
 	/** A list of alpha masks to apply to the call */
@@ -4108,7 +4108,7 @@ type DrawImageCallback = (
  * @param {string} src - The URL of the image to draw
  * @param {number} x - The x coordinate to draw the image at
  * @param {number} y - The y coordinate to draw the image at
- * @param {string} color - The color to apply to the image
+ * @param {BCColor} color - The color to apply to the image
  * @param {boolean} fullAlpha - Whether or not to apply color to the entire image
  * @param {RectTuple[]} [alphaMasks] - A list of alpha masks to apply to the image when drawing
  * @param {number} [opacity=1] - The opacity at which to draw the image with
@@ -4163,7 +4163,7 @@ interface DynamicDrawingData<T extends Record<string, any> = Record<string, unkn
 	Y: number;
 	CA: Item;
 	GroupName: AssetGroupName;
-	Color: string;
+	Color: BCColor;
 	Opacity: number;
 	Property: ItemProperties;
 	A: Asset;
@@ -4186,7 +4186,7 @@ interface DynamicBeforeDrawOverrides {
 	Property?: ItemProperties;
 	CA?: Item;
 	GroupName?: AssetGroupName;
-	Color?: string;
+	Color?: BCColor;
 	Opacity?: number;
 	X?: number;
 	Y?: number;
@@ -4356,13 +4356,10 @@ interface CraftingItemSelected {
 	 * The first member of the {@link CraftingItemSelected.Assets} array.
 	 *
 	 * The asset is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
+	 *
+	 * Will be `undefined` upon creating a new craft prior to the user picking the underlying item.
 	 */
 	get Asset(): Asset | undefined;
-	/**
-	 * The crafted item propertty.
-	 * @deprecated superseded by {@link CraftingItemSelected .Effects}
-	 */
-	Property: CraftingPropertyType;
 	/** The crafted item properties mapped to their property strength. */
 	Effects: Partial<Record<CraftingPropertyType, number>>;
 	/** The lock as equipped on the item or, if absent, `null`. */
@@ -4381,8 +4378,8 @@ interface CraftingItemSelected {
 	 */
 	ItemProperty: ItemProperties;
 	/** Get or set the `OverridePriority` property of {@link CraftingItemSelected.ItemProperty} */
-	get OverridePriority(): null | AssetLayerOverridePriority;
-	set OverridePriority(value: null | AssetLayerOverridePriority);
+	get OverridePriority(): undefined | AssetLayerOverridePriority;
+	set OverridePriority(value: undefined | AssetLayerOverridePriority);
  }
 
 /**
@@ -4452,9 +4449,9 @@ interface ColorGroup {
 
 /** A fully mutable subset of {@link ItemColorStateType} */
 interface ItemColorExitState extends Pick<ItemColorStateType, "colors" | "initialColors" | "defaultColors" | "opacity" | "initialOpacity" | "defaultOpacity" | "editOpacity" > {
-	initialColors: string[];
+	initialColors: BCColor[];
 	initialOpacity: number[];
-	defaultColors: string[];
+	defaultColors: BCColor[];
 	defaultOpacity: number[];
 }
 
@@ -4474,14 +4471,14 @@ type ItemColorExitListener = (
 interface ItemColorStateType {
 	colorGroups: ColorGroup[];
 	/** The colors of the item */
-	colors: string[];
+	colors: BCColor[];
 	/** The initial colors of the item prior to editing */
-	initialColors: readonly string[];
+	initialColors: readonly BCColor[];
 	/**
 	 * The underlying assets default colors.
 	 * @see {@link Asset.DefaultColor}
 	 */
-	defaultColors: readonly string[];
+	defaultColors: readonly BCColor[];
 	/** The opacity of the item */
 	opacity: number[];
 	/** The initial opacity of the item prior to editing */
@@ -4508,7 +4505,21 @@ interface ItemColorStateType {
 }
 
 /** A hexadecimal color code */
-type HexColor = string;
+type HexColor = `#${string}`;
+
+/**
+ * A hexadecimal color code or one of BC's more specialized color literals (which an item may or may not support).
+ *
+ * * `Default`: Use the default color of the .png without modification
+ * * `White`/`Black`/`Asian`: Use skin color specific .png files (used by the body)
+ */
+type BCColor = (
+	"Default"
+	| "Black"
+	| "White"
+	| "Asian"
+	| HexColor
+)
 
 /** A HSV color value */
 interface HSVColor {
@@ -5150,7 +5161,7 @@ interface ChatRoomMapEffectStaticLighting {
 	/**
 	 * R [0; 255], G [0; 255], B [0; 255], A [0.0; 1.0]
 	 */
-	Color: [number, number, number, number];
+	Color: [r: number, g: number, b: number, a: number];
 }
 
 /**
