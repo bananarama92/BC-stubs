@@ -438,132 +438,220 @@ declare const ChatRoomMapViewEffectList: ChatRoomMapEffect[];
 declare const ChatRoomMapViewTileList: ChatRoomMapTile[];
 /** @type {ChatRoomMapObject[]} */
 declare const ChatRoomMapViewObjectList: ChatRoomMapObject[];
-/**
- * @namespace
- * @description
- * # Binary-encoded map data
- * This module implements the new way of encoding the map data.
- *
- * At its core lies the concept of a BitString: a stream of tightly-packed
- * numbers with arbitrary bit width. This allows us to store data way more efficiently
- * than using plain JSONs, even if they are packed with LZString.
- *
- * # Compatibility
- * Binary encoding, while efficient, requires a very careful architectural approach to ensure
- * maximum compatibility. Notable, we must ensure that:
- *
- * - Exported map strings from any older game version *always* remain compatible
- *   with the newer game versions. Players losing their old saved maps is an unacceptable
- *   outcome; we must ensure that we recover as much data as possible from those old saves.
- * - Map data synced between the players in a map-enabled room must be readable
- *   by the clients one version older than the current one. This is to ensure
- *   that during the beta period the main branch players could join and play
- *   the rooms created by beta players. This is not as strict of a requirement
- *   as the previous point, but is still important.
- * - Exported map strings from the newer version must be usable by the players
- *   using a game one version older. This ensures that the beta players can share
- *   map strings with non-beta ones, and is the least concern among others, since
- *   beta periods are quite short and *sharing* the map string doesn't happen too often.
- *   Still, it is good to at least make some effort to allow it.
- *
- * Binary encoding makes achieving those requirements non-trivial, because
- * to decode a given BitString the game must know exactly what were the bit widths
- * of the integers encoded into it, and also their meaning. If we just change
- * the code that encodes the map data, then we would no longer able to decode the old data.
- *
- * To solve this issue, we introduce the concept of codec versions. A version
- * is a number that we write into the bit stream before the actual data, which
- * would allow the game to understand which codec was used to encode the data,
- * and call it to decode the data.
- *
- * Whenever we need to sufficiently change the encoding scheme, we copy
- * the latest codec, increase its version and make the required changes.
- * Copying and pasting the code, while usually not advised, would be a better approach
- * in this specific case. This way, we ensure that the old codecs remain "frozen"
- * in time, so no matter how old the map data is, we always have an appropriate codec
- * for it.
- *
- * One issue which may arise in the future is the change in the schemas
- * of the objects we encode. In this case, we would need an additional "migrations" layer
- * which would take the old decoded data and convert it to the one we currently require.
- *
- * Solving the issue of letting the old clients to use the data from beta versions
- * is not that straightforward, and on the most occasions we would require ad-hoc solutions.
- * For example, during the beta period we may use two fields, `Data` and `DataOld`,
- * with the former containing the data encoded with the most recent codec,
- * and the latter having the data encoded with the previous codec.
- * Of course, depending on the nature of the required changes, it may be possible
- * to make a more space-efficient solution.
- *
- * # Future work
- * Currently, we only binary-encode the map effects, to remain in the scope of the original MR.
- * We do this by storing the encoded map effects in the {@link ChatRoomData.MapData.Effects}
- * global value, while {@link ChatRoomData.MapData.Tiles} and {@link ChatRoomData.MapData.Objects}
- * remain unchanged. Thus, we don't need to change much of the existing code, which
- * continues to use those latter fields.
- *
- * In future MRs we hope to unify the encoding of tiles, objects and effects, writing them all
- * into a single BitString. This would allow us to have much greater compression and save
- * a lot of traffic.
- *
- * Later, all map data would be stored in {@link ChatRoomMapManager.Map} global value
- * instead of {@link ChatRoomData.MapData}. This is because we're no longer storing
- * the map data as simple strings which we can trivially serialize and send to the server.
- * Ideally, the outside code would use {@link ChatRoomMapManager} methods to obtain
- * the encoded map data when needed (e.g. sending it to the server, or saving the map data
- * for room recreation, or exporting the room via a room code). Failing that,
- * we can continue the approach used in the initial version of this system: having the decoded
- * map data in {@link ChatRoomMapManager.Map} and maintain the encoded representation
- * of this map in {@link ChatRoomData.MapData}.
- *
- * After that we would have an avenue for encoding additional arbitrary data within each tile
- * while retaining the compact encoding. This, then, would allow us to have any sorts of "tile settings",
- * which would be a great addition to the map rooms in the Club.
- *
- * # Mod compatibility
- * This module is a work in progress and would change significantly in the future.
- * As such, only the minimum amount of public APIs is exposed as of now. Mod authors
- * are advised to not rely on its current behavior if at all possible.
- * We expect to expose more public APIs in the future as the module matures.
- *
- * # General design choices
- * While being public, {@link ChatRoomMapManager.Map} preferably should be only
- * accessed inside this file as it is an implementation detail of this module.
- * If the outside code requires to access something in this module, it's best
- * to provide a separate function in the {@link ChatRoomMapManager} namespace,
- * or a global one.
- *
- * # Codecs general overview
- * ## Version 0
- * The initial codecs version. Only encoding map effects. Only allows for a single
- * map effect per tile (the groundwork for having multiple effects per tile is laid,
- * but the rest of the code is not ready for it).
- *
- * Effects are encoded by their IDs, similar to the original Tiles and Objects encoding.
- * A simple RLE compression is applied to the "flat" effects array, with a small twist:
- * we use larger bit width for storing run-lengths of the blank effect sequences.
- * This allows us to more efficiently encode the typical maps where the most of
- * the tiles would have blank effects.
- *
- * Additionally, we modify the effect IDs in the following way:
- * 1. First, we subtract the lowest used effect ID
- *    ({@link ChatRoomMapViewEffectStartID} in the most cases) from them, getting
- *    what we call "shifted" IDs which begin from zero.
- * 2. Next, we create the list of all used "shifted" IDs and write them in the stream.
- *    The usage of "shifted" IDs ensures this array is very compact no matter what
- *    our {@link ChatRoomMapViewEffectStartID} is.
- * 3. Finally, when writing the effect IDs, we instead use the indexes in the list
- *    from the previous step, and call them the "remapped" IDs.
- *
- * This allows us to write the least possible amount of data per effect ID: for example,
- * if only one effect - besides the blank - is used in a map, then each mention of that ID
- * would only require a single bit of data, no matter what the actual value of this effect is.
- *
- * This scheme results in a sufficiently efficient compression rate in practice.
- * - For maps without effects we will be sending 24 additional bytes (after base64 encoding).
- * - Maps with a few patches of effects require around 0.5-1 bits per tile (after base64 encoding).
- * - Moderately sophisticated maps with a lot of different effects require somewhere around 1.5-3 bits per tile.
- * - In the worst case scenario (a map fully filled with all possible effects without repetitions),
- *   we would require slightly above 5.3 bits per tile after base64 encoding.
- */
-declare const ChatRoomMapManager: any;
+declare namespace ChatRoomMapManager {
+    let Map: {
+        /**
+         * @type {MapData}
+         * private
+         */
+        _mapData: {
+            /**
+             * @type {ChatRoomMapEffect[][]}
+             */
+            effects: ChatRoomMapEffect[][];
+            /**
+             * Removes all effects from the map.
+             */
+            removeAllEffects(): void;
+        };
+        /**
+         * @type {number}
+         * private
+         */
+        _dirtyFlags: number;
+        /**
+         * Get the current active effects array at a given coordinates.
+         * @param {number} x
+         * @param {number} y
+         * @returns {ChatRoomMapEffect[]}
+         */
+        getEffectsByXY(x: number, y: number): ChatRoomMapEffect[];
+        /**
+         * Get the current active effects array at a given tile index.
+         * @param {number} tileIndex the index of a map tile, as returned by ChatRoomMapViewCoordinatesToIndex.
+         * @returns {ChatRoomMapEffect[]}
+         */
+        getEffectsByIndex(tileIndex: number): ChatRoomMapEffect[];
+        /**
+         * Sets the list of active effects at given coordinates.
+         * @param {number} x
+         * @param {number} y
+         * @param {ChatRoomMapEffect[]} effects
+         * @returns {void}
+         */
+        setEffectsByXY(x: number, y: number, effects: ChatRoomMapEffect[]): void;
+        /**
+         * Sets the list of active effects at a given tile index.
+         * @param {number} tileIndex
+         * @param {ChatRoomMapEffect[]} effects
+         * @returns {void}
+         */
+        setEffectsByIndex(tileIndex: number, effects: ChatRoomMapEffect[]): void;
+        /**
+         * Clears the list of active effects at given coordinates.
+         * @param {number} x
+         * @param {number} y
+         * @returns {void}
+         */
+        clearEffectsByXY(x: number, y: number): void;
+        /**
+         * Clears the list of active effects at a given tile index.
+         * @param {number} tileIndex
+         * @returns {void}
+         */
+        clearEffectsByIndex(tileIndex: number): void;
+        /**
+         * Returns the effects list for each tile in the map, one array element per tile.
+         * Currently for efficiency does not copy the underlying array.
+         * The users must not modify the returned array directly.
+         * @return {ChatRoomMapEffect[][]}
+         */
+        getAllEffects(): ChatRoomMapEffect[][];
+        /**
+         * Replaces all current effects with the parsed effects array.
+         * For efficiency does not copy the passed effects.
+         * The users must not modify the passed effects array afterward.
+         * @param {ChatRoomMapEffect[][]} effectsList
+         * @returns {void}
+         */
+        replaceAllEffects(effectsList: ChatRoomMapEffect[][]): void;
+        /**
+         * Removes all effects from the map.
+         * @returns {void}
+         */
+        removeAllEffects(): void;
+        /**
+         * Mark a specific part of the map data as dirty, that is, changed and not yet synchronized with the server.
+         * @param {number} flag
+         * private
+         */
+        _markDirty(flag: number): void;
+        /**
+         * Marks a specific part of the map data as clean, that is, synchronized with the server.
+         * @returns {void}
+         */
+        _markClean(flag: any): void;
+        /**
+         * Marks the current effects data as dirty, that is, changed and not yet synchronized with the server.
+         * @returns {void}
+         */
+        markDirtyEffects(): void;
+        /**
+         * Marks the current effects data as clean, that is, synchronized with the server.
+         * @returns {void}
+         */
+        markCleanEffects(): void;
+        /**
+         * Checks whether the current effects data is dirty, that is, whether it needs
+         * to be synchronized with the server.
+         * @returns {boolean}
+         */
+        isDirtyEffects(): boolean;
+        /**
+         * Marks the current tiles data as dirty, that is, changed and not yet synchronized with the server.
+         * @returns {void}
+         */
+        markDirtyTiles(): void;
+        /**
+         * Marks the current tiles data as clean, that is, synchronized with the server.
+         * @returns {void}
+         */
+        markCleanTiles(): void;
+        /**
+         * Checks whether the current tiles data is dirty, that is, whether it needs
+         * to be synchronized with the server.
+         * @returns {boolean}
+         */
+        isDirtyTiles(): boolean;
+        /**
+         * Marks the current objects data as dirty, that is, changed and not yet synchronized with the server.
+         * @returns {void}
+         */
+        markDirtyObjects(): void;
+        /**
+         * Marks the current objects data as clean, that is, synchronized with the server.
+         * @returns {void}
+         */
+        markCleanObjects(): void;
+        /**
+         * Checks whether the current objects data is dirty, that is, whether it needs
+         * to be synchronized with the server.
+         * @returns {boolean}
+         */
+        isDirtyObjects(): boolean;
+        /**
+         * Mark all data in the current map as clean.
+         * @returns {void}
+         */
+        markCleanAll(): void;
+        /**
+         * Exports the current map data, including the tiles/objects,
+         * as a string that could be copied and stored by the players.
+         * @returns {string | undefined} the exported string, or `undefined`
+         * if there was an error while exporting the map.
+         */
+        exportString(): string | undefined;
+        /**
+         * Imports the map string that was exported earlier with {@link MapManager.exportString}
+         * method.
+         *
+         * This method must be as much compatible as possible, recovering as much information
+         * as possible from the exported map strings from any previous version of the game
+         * to prevent the players losing their stored maps.
+         *
+         * This method modifies the state of the current map and returns `true` in case of a successful import.
+         * If the string is malformed and cannot be parsed, the method returns `false` and doesn't modify
+         * any state.
+         * @param {string} mapString
+         * @returns {boolean} `true` if the string was successfully parsed and the current map data is updated,
+         * `false` otherwise
+         */
+        importString(mapString: string): boolean;
+        /**
+         * Encodes the current map data and updates the global {@link ChatRoomData.MapData} value.
+         * This function must be called after the map was changed and before it is sent to the server.
+         * Ideally we want to have a single function to build the encoded map data only
+         * when required, but it would require a significant API change of the outside code.
+         *
+         * For places where the synchronization happens, see {@link ChatRoomGetSettings} usages.
+         *
+         * This function is not supposed to fail; if it indicates an error by returning `false`,
+         * this means we have a bug in our code.
+         * @return {boolean} `true` if we successfully encoded the map data; `false` if
+         * there was an error and the global state remains unchanged.
+         */
+        updateGlobalMapData(): boolean;
+        /**
+         * Loads the data from {@link ChatRoomData.MapData} and replaces the current map data with the one
+         * stored in it.
+         * @return {boolean} `true` if the global map data was parsed successfully. `false` if
+         * the global map data is invalid, no data is changed in this case.
+         */
+        loadGlobalMapData(): boolean;
+        /**
+         * @returns {string | undefined}
+         * private
+         */
+        _encodeEffects(): string | undefined;
+        /**
+         * @param {string | undefined} str
+         * @returns {ChatRoomMapEffect[][] | undefined}
+         * private
+         */
+        _decodeEffects(str: string | undefined): ChatRoomMapEffect[][] | undefined;
+    };
+    /**
+     * This function should be called each time the external code updates {@link ChatRoomData.MapData}.
+     *
+     * This function decodes the updated map data and replaces
+     * the data stored in ${@link ChatRoomMapManager.Map} with the decoded map.
+     * @returns {void}
+     */
+    function OnMapDataUpdated(): void;
+    /**
+     * Initializes the map with the current global data if needed.
+     * Must be called in {@link ChatRoomMapViewActivate}.
+     * @returns {void}
+     */
+    function OnViewActivate(): void;
+}
