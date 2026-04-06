@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/bananarama92/BC-stubs#readme",
   "dependencies": {
-    "socket.io-client": "4.6.1"
+    "socket.io-client": "4.6.1",
+    "@total-typescript/ts-reset": "^0.6.1"
   },
   "typeScriptVersion": "^5.9.3"
 }
