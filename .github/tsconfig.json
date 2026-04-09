@@ -12,6 +12,6 @@
     "outDir": "dist",
     "pretty": true,
     "esModuleInterop": true,
-    "lib": ["es2021", "dom"]
+    "lib": ["ES2021", "DOM", "DOM.Iterable"]
   }
 }
