@@ -1,6 +1,6 @@
 declare function MiniGameChessStart(Depth: any, PlayerColor: any): void;
-declare var MiniGameChessBoard: any;
-declare var MiniGameChessGame: any;
+declare var MiniGameChessBoard: null;
+declare var MiniGameChessGame: null;
 /**
  * Dummy name for the module in Scripts/lib/chessboard
  */

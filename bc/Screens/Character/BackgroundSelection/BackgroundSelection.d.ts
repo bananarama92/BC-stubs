@@ -62,15 +62,21 @@ declare var BackgroundSelectionList: string[];
 /** @type {BackgroundTag[]} */
 declare var BackgroundSelectionTagList: BackgroundTag[];
 declare var BackgroundSelectionIndex: number;
-/** @type {string | null} */
-declare var BackgroundSelectionSelect: string | null;
+/** @type {string} */
+declare var BackgroundSelectionSelect: string;
 declare var BackgroundSelectionSize: number;
 declare var BackgroundSelectionOffset: number;
 /** @type {null | ((selection: string, setBackground: boolean) => void)} */
 declare var BackgroundSelectionCallback: null | ((selection: string, setBackground: boolean) => void);
-/** @type {never} */
+/**
+ * @type {never}
+ * @deprecated
+ */
 declare var BackgroundSelectionReturnScreen: never;
-/** @type {never} */
+/**
+ * @type {never}
+ * @deprecated
+ */
 declare var BackgroundSelectionAll: never;
 /** @type {string[]} */
 declare var BackgroundSelectionView: string[];

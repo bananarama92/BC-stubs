@@ -27,7 +27,7 @@ declare function StruggleProgressGetOperation(C: Character, PrevItem: Item, Next
  */
 declare function StruggleAllowLoosen(): boolean;
 declare function StruggleKeyDown(event: KeyboardEvent): boolean;
-declare function StruggleMouseDown(event: MouseEvent | TouchEvent): void;
+declare function StruggleMouseDown(event: PointerEvent): void;
 /**
  * Handles the minigames' Click event, whether on the selection screen or in the minigame themselves.
  *
@@ -84,10 +84,10 @@ declare function StruggleMinigameIsRunning(): boolean;
  * @param {Character} C - The character currently doing the struggling, either on itself (ie. as Player), or on someone else.
  * @param {StruggleKnownMinigames} MiniGame - The minigame to start
  * @param {Item | null} PrevItem - The item currently being present on the character, or null if none
- * @param {Item} NextItem - The item currently being added on the character, or null if it's a removal
+ * @param {Item | null} NextItem - The item currently being added on the character, or null if it's a removal
  * @param {StruggleCompletionCallback} Completion - A callback that will be called when the minigame ends
  */
-declare function StruggleMinigameStart(C: Character, MiniGame: StruggleKnownMinigames, PrevItem: Item | null, NextItem: Item, Completion: StruggleCompletionCallback): void;
+declare function StruggleMinigameStart(C: Character, MiniGame: StruggleKnownMinigames, PrevItem: Item | null, NextItem: Item | null, Completion: StruggleCompletionCallback): void;
 /**
  * Stop the struggle minigame and reset it so it can be reentered.
  *
@@ -151,11 +151,11 @@ declare function StruggleStrengthProcess(Decrease?: boolean): void;
  * escapee being bound in a way.
  *
  * @param {Character} C - The character who tries to struggle
- * @param {Item} PrevItem - The item, the character wants to struggle out of
- * @param {Item} [NextItem] - The item that should substitute the first one
+ * @param {Item | null} PrevItem - The item, the character wants to struggle out of
+ * @param {Item | null} [NextItem] - The item that should substitute the first one
  * @returns {{difficulty: number; auto: number; timer: number; }} - Nothing
  */
-declare function StruggleStrengthGetDifficulty(C: Character, PrevItem: Item, NextItem?: Item): {
+declare function StruggleStrengthGetDifficulty(C: Character, PrevItem: Item | null, NextItem?: Item | null): {
     difficulty: number;
     auto: number;
     timer: number;
@@ -341,7 +341,7 @@ declare var StruggleProgressOperation: string;
  * FIXME: the value is calculated by the minigame, but the skill is selected by Dialog when the minigame stops.
  */
 declare var StruggleProgressSkill: number;
-declare var StruggleProgressLastKeyPress: any;
+declare var StruggleProgressLastKeyPress: null;
 /**
  * The difficulty of the struggle minigame.
  */

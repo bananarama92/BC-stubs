@@ -42,7 +42,7 @@ declare function PlatformDialogChangeValue(CurrentValue: number, Change: number,
  * @param {number} Domination - The domination value that changed
  * @returns {Object} - A unused object
  */
-declare function PlatformDialogSetIdlePose(Character: Platform.DialogCharacter, Love: number, Domination: number): any;
+declare function PlatformDialogSetIdlePose(Character: Platform.DialogCharacter, Love: number, Domination: number): Object;
 /**
  * Pick an answer in a specific dialog
  * @param {number} Position - The position of the answer picked
@@ -151,19 +151,20 @@ declare function PlatformDialogRelationshipChange(): void;
  * @returns {void} - Nothing
  */
 declare function PlatformDialogOutputAll(): void;
-declare var PlatformDialog: any;
-declare var PlatformDialogBackground: any;
-declare var PlatformDialogText: any;
-declare var PlatformDialogAnswer: any;
+declare var PlatformDialog: null;
+/** @type {undefined | string} */
+declare var PlatformDialogBackground: undefined | string;
+declare var PlatformDialogText: null;
+declare var PlatformDialogAnswer: null;
 declare var PlatformDialogAnswerPosition: number;
 declare var PlatformDialogAnswerLength: number;
-declare var PlatformDialogReply: any;
-declare var PlatformDialogGoto: any;
-declare var PlatformDialogCharacterDisplay: any;
+declare var PlatformDialogReply: null;
+declare var PlatformDialogGoto: null;
+declare var PlatformDialogCharacterDisplay: null;
 declare var PlatformDialogPosition: number;
 /** @type {Platform.DialogCharacter[]} */
 declare var PlatformDialogCharacter: Platform.DialogCharacter[];
-declare var PlatformDialogAudio: any;
+declare var PlatformDialogAudio: null;
 declare var PlatformDialogControllerHandle: boolean;
 declare var PlatformDialogAudioStyle: string[];
 /** @type {Platform.DialogCharacter[]} */
@@ -713,7 +714,7 @@ declare var PlatformDialogData: ({
         Entry?: undefined;
     } | {
         TextScript(): "Yes, you can have your orgasm my maid." | "(She smiles and watches you carefully.)";
-        AudioScript(): string;
+        AudioScript(): "O231" | null;
         Character: {
             Name: string;
             Status: string;

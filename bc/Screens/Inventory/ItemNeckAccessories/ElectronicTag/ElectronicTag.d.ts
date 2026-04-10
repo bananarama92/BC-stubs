@@ -1,1 +1,1 @@
-declare function AssetsItemNeckAccessoriesElectronicTagAfterDrawHook(data: TextItemData, originalFunction: (drawData: DynamicDrawingData<Record<string, unknown>>) => void, drawData: DynamicDrawingData<Record<string, unknown>>): void;
+declare function AssetsItemNeckAccessoriesElectronicTagAfterDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData<AnimationPersistentData>) => void) | null, drawData: DynamicDrawingData<AnimationPersistentData>): void;

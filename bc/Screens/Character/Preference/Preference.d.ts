@@ -17,19 +17,15 @@ declare function PreferenceRun(): void;
  */
 declare function PreferenceClick(): void;
 declare function PreferenceExit(): void;
-/**
- * Clear all GUI data and DOM elements creates by the preference screen load function
- * We don't do this in exit function for disconnects do not trigger the exit function
- */
 declare function PreferenceUnload(): void;
-declare function PreferenceResize(onLoad: any): void;
-declare function PreferenceKeyUp(event: any): void;
+declare function PreferenceResize(load: boolean): void;
+declare function PreferenceKeyUp(event: KeyboardEvent): boolean;
 /**
  * @param {string} subscreenName
  * @returns
  */
 declare function PreferenceSubscreenCreateSubscreen(subscreenName: string): HTMLDivElement;
-declare function PreferenceSubscreenResize(onLoad: any): void;
+declare function PreferenceSubscreenResize(load: boolean): void;
 /**
  * Exit from a specific subscreen by running its handler and checking its validity
  */
@@ -103,7 +99,7 @@ declare var PreferenceMessage: string;
 /**
  * The currently active subscreen
  *
- * @type {PreferenceSubscreen?}
+ * @type {PreferenceSubscreen | null}
  */
 declare var PreferenceSubscreen: PreferenceSubscreen | null;
 /**
@@ -125,17 +121,17 @@ declare const PreferenceIDs: Readonly<{
     title: "preference-subscreen-hgroup";
 }>;
 declare namespace PreferenceActivityEnjoymentDefault {
-    let Name: ActivityName | undefined;
+    let Name: never;
     let Self: ArousalFactor;
     let Other: ArousalFactor;
 }
 declare namespace PreferenceArousalFetishDefault {
-    let Name_1: FetishName | undefined;
+    let Name_1: never;
     export { Name_1 as Name };
     export let Factor: ArousalFactor;
 }
 declare namespace PreferenceArousalZoneDefault {
-    let Name_2: AssetGroupItemName | undefined;
+    let Name_2: never;
     export { Name_2 as Name };
     let Factor_1: ArousalFactor;
     export { Factor_1 as Factor };
@@ -184,10 +180,10 @@ declare var PreferenceChatSettingsDefault: Required<ChatSettingsType>;
 declare var PreferenceChatSettingsValidate: { [k in keyof Required<ChatSettingsType>]: (arg: ChatSettingsType[k], C: Character) => ChatSettingsType[k]; };
 /**
  * Namespace with default values for {@link VisualSettingsType} properties.
- * @type {Required<VisualSettingsType>}
+ * @type {VisualSettingsType}
  * @namespace
  */
-declare var PreferenceVisualSettingsDefault: Required<VisualSettingsType>;
+declare var PreferenceVisualSettingsDefault: VisualSettingsType;
 /**
  * Namespace with functions for validating {@link VisualSettingsType} properties
  * @type {{ [k in keyof Required<VisualSettingsType>]: (arg: VisualSettingsType[k], C: Character) => VisualSettingsType[k] }}
@@ -289,7 +285,7 @@ declare var PreferenceGenderSettingsDefault: Required<GenderSettingsType>;
  * @param {T} shape
  * @returns {(arg: T) => T}
  */
-declare function hasSameShape<T extends unknown>(shape: T): (arg: T) => T;
+declare function hasSameShape<T extends object>(shape: T): (arg: T) => T;
 /**
  * Namespace with functions for validating {@link GenderSettingsType} properties
  * @type {{ [k in keyof Required<GenderSettingsType>]: (arg: GenderSettingsType[k], C: Character) => GenderSettingsType[k] }}

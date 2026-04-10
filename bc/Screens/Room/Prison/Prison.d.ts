@@ -17,7 +17,7 @@ declare function PrisonSubCanStripSearch(): boolean;
 declare function PrisonSubCanClothBack(): boolean;
 declare function PrisonLoad(): Promise<void>;
 declare function PrisonRun(time: number): void;
-declare function PrisonClick(event: MouseEvent | TouchEvent): void;
+declare function PrisonClick(event: PointerEvent): void;
 /**
  * Player going in cell
  */
@@ -139,7 +139,7 @@ declare function PrisonWearPoliceEquipment(C: any): void;
 /**
  * Determine how strongly the player is wanted for MainHall
  */
-declare function PrisonWantedPlayer(): 1 | 3 | 5 | 7;
+declare function PrisonWantedPlayer(): 1 | 3 | 5 | 7 | undefined;
 /**
  * Catch by Police in MainHall
  */

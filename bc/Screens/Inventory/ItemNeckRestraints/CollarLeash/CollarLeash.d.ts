@@ -1,3 +1,3 @@
-declare function AssetsItemNeckRestraintsCollarLeashBeforeDraw(drawData: DynamicDrawingData<Record<string, unknown>>): DynamicBeforeDrawOverrides;
-declare function AssetsItemNeckRestraintsChainLeashBeforeDraw(drawData: DynamicDrawingData<Record<string, unknown>>): DynamicBeforeDrawOverrides;
-declare function AssetsItemNeckRestraintsChokeChainBeforeDraw(drawData: DynamicDrawingData<Record<string, unknown>>): DynamicBeforeDrawOverrides;
+declare function AssetsItemNeckRestraintsCollarLeashBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides;
+declare function AssetsItemNeckRestraintsChainLeashBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides;
+declare function AssetsItemNeckRestraintsChokeChainBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides;

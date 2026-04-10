@@ -1,6 +1,6 @@
 {
   "name": "bc-stubs",
-  "version": "126.0.0",
+  "version": "127.0.0-Beta.1",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/bananarama92/BC-stubs.git"
@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/bananarama92/BC-stubs#readme",
   "dependencies": {
-    "socket.io-client": "4.6.1"
+    "socket.io-client": "4.6.1",
+    "@total-typescript/ts-reset": "^0.6.1"
   },
   "typeScriptVersion": "^5.9.3"
 }

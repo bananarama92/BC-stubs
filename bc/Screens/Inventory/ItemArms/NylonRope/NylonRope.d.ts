@@ -1,1 +1,1 @@
-declare function AssetsItemArmsNylonRopeBeforeDraw(drawData: DynamicDrawingData<Record<string, unknown>>): DynamicBeforeDrawOverrides;
+declare function AssetsItemArmsNylonRopeBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides;

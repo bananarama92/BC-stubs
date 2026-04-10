@@ -1,5 +1,6 @@
 /**
  * Debug logging function for activities
+ * @param {any[]} args
  */
 declare function ActivityLog(...args: any[]): void;
 /**
@@ -87,7 +88,7 @@ declare function ActivityCheckPrerequisites(activity: Activity, acting: Characte
  * @param {Activity} activity
  * @param {AssetGroup} targetGroup
  */
-declare function ActivityGenerateItemActivitiesFromNeed(acting: Character, acted: Character, needsItem: ActivityNameItem, activity: Activity, targetGroup: AssetGroup, useTargetItems?: boolean): any[];
+declare function ActivityGenerateItemActivitiesFromNeed(acting: Character, acted: Character, needsItem: ActivityNameItem, activity: Activity, targetGroup: AssetGroup, useTargetItems?: boolean): ItemActivity[];
 /**
  * Builds the allowed activities on a group given the character's settings.
  * @param {Character} character - The character for which to build the activity dialog options
@@ -111,10 +112,10 @@ declare function ActivityCanBeDone(C: Character, Activity: ActivityName, Group: 
  * @param {AssetGroupItemName} Z - The group/zone name where the activity was performed
  * @param {number} [Count=1] - If the activity is done repeatedly, this defines the number of times, the activity is done.
  * If you don't want an activity to modify arousal, set this parameter to '0'
- * @param {Asset} [Asset] - The asset used to perform the activity
+ * @param {Asset | null} [Asset] - The asset used to perform the activity
  * @return {void} - Nothing
  */
-declare function ActivityEffect(S: Character, C: Character, A: ActivityName | Activity, Z: AssetGroupItemName, Count?: number, Asset?: Asset): void;
+declare function ActivityEffect(S: Character, C: Character, A: ActivityName | Activity, Z: AssetGroupItemName, Count?: number, Asset?: Asset | null): void;
 /**
  * Used for arousal events that are not activities, such as stimulation events
  * @param {Character} S - The character performing the activity
@@ -146,10 +147,10 @@ declare function ActivitySetArousal(C: Character, Progress: number): void;
  * @param {null | Activity} Activity - The activity for which the timer is for
  * @param {AssetGroupItemName | "ActivityOnOther"} Zone - The target zone of the activity
  * @param {number} Progress - Progress to set
- * @param {Asset} [Asset] - The asset used to perform the activity
+ * @param {Asset | null} [Asset] - The asset used to perform the activity
  * @return {void} - Nothing
  */
-declare function ActivitySetArousalTimer(C: Character, Activity: null | Activity, Zone: AssetGroupItemName | "ActivityOnOther", Progress: number, Asset?: Asset): void;
+declare function ActivitySetArousalTimer(C: Character, Activity: null | Activity, Zone: AssetGroupItemName | "ActivityOnOther", Progress: number, Asset?: Asset | null): void;
 /**
  * Draws the arousal progress bar at the given coordinates for every orgasm timer.
  * @param {number} X - Position on the X axis
@@ -221,10 +222,10 @@ declare function ActivityVibratorLevel(C: Character, Level: 0 | 1 | 2 | 3 | 4): 
  * @param {Character} Target - The character on which the activity was performed
  * @param {Activity} Activity - The activity performed
  * @param {AssetGroup} Group - The group on which the activity is performed
- * @param {Asset} [Asset] - The asset used to perform the activity
+ * @param {Asset | null} [Asset] - The asset used to perform the activity
  * @returns {void} - Nothing
  */
-declare function ActivityRunSelf(Source: Character, Target: Character, Activity: Activity, Group: AssetGroup, Asset?: Asset): void;
+declare function ActivityRunSelf(Source: Character, Target: Character, Activity: Activity, Group: AssetGroup, Asset?: Asset | null): void;
 /**
  * Build the chat tag needed for lookup in ActivityDictionary.csv
  * @param {Character} character
@@ -262,8 +263,8 @@ declare function ActivityFetishItemFactor(C: Character, Type: FetishName): numbe
  * @return {number} - The negative/positive number will have negative/positive impact on arousal
  */
 declare function ActivityFetishFactor(C: Character): number;
-/** @type {null | string[][]} */
-declare var ActivityDictionary: null | string[][];
+/** @type {string[][]} */
+declare var ActivityDictionary: string[][];
 declare var ActivityOrgasmGameButtonX: number;
 declare var ActivityOrgasmGameButtonY: number;
 declare var ActivityOrgasmGameProgress: number;
@@ -272,6 +273,6 @@ declare var ActivityOrgasmGameResistCount: number;
 declare var ActivityOrgasmGameTimer: number;
 declare var ActivityOrgasmResistLabel: string;
 declare var ActivityOrgasmRuined: boolean;
-/** @type { ()=>void | undefined } */
-declare let ActivityTranslateResolve: () => void | undefined;
+/** @type { (() => void) | undefined } */
+declare let ActivityTranslateResolve: (() => void) | undefined;
 declare let ActivityDebug: boolean;

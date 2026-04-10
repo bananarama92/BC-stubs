@@ -212,7 +212,11 @@
             "Cow": 92,
             "CrimsonCloudsInkRhymeQipaoDress": 93,
             "LolitaShortDress": 94,
-            "MaidDress4": 95
+            "MaidDress4": 95,
+            "AllureSidecut": 96,
+            "BrocadeCloudsSnowEmbroideryQipao": 97,
+            "CrossStrapDress": 98,
+            "GardenDress": 99
         }
     },
     "ClothAccessory": {
@@ -261,7 +265,8 @@
             "WitchShawl": 40,
             "XmasLongShawl": 41,
             "XmasShortShawl": 42,
-            "BowBelt": 43
+            "BowBelt": 43,
+            "BowAccessory": 44
         }
     },
     "ClothLower": {
@@ -326,7 +331,13 @@
             "PVCHobbleSkirt": 56,
             "YogaPants": 57,
             "SkinnyJeans": 58,
-            "PencilSkirt2": 59
+            "PencilSkirt2": 59,
+            "BlackButterflySkirt": 60,
+            "Halfpleatedskirt": 61,
+            "LacePants": 62,
+            "Shapewear2": 63,
+            "SlitColumnSkirt": 64,
+            "WoolenHighWaistSkirt": 65
         }
     },
     "Corset": {
@@ -576,7 +587,8 @@
             "CustomizableElfEars": 50,
             "CustomizableFluffyEars1": 51,
             "CustomizableFluffyEars2": 52,
-            "CustomizableFluffyEars3": 53
+            "CustomizableFluffyEars3": 53,
+            "Antenna": 54
         }
     },
     "HairAccessory2": {
@@ -933,7 +945,8 @@
             "VintageHat": 43,
             "CheapHelmet": 44,
             "FlatCap": 45,
-            "Gat": 46
+            "Gat": 46,
+            "JesterHat": 47
         }
     },
     "Head": {
@@ -2307,7 +2320,8 @@
             "FaceScars": 32,
             "NecromancerHelmet": 33,
             "Kigu2Hood": 34,
-            "Splatters": 35
+            "Splatters": 35,
+            "KirugumiMask": 36
         }
     },
     "Mouth": {
@@ -2415,7 +2429,8 @@
             "LatexDiaper": 51,
             "UntrainersThin": 52,
             "SportPanties": 53,
-            "PullDownPanties": 54
+            "PullDownPanties": 54,
+            "PearlStrapPanties": 55
         }
     },
     "Pronouns": {
@@ -2423,7 +2438,8 @@
         "assets": {
             "HeHim": 0,
             "SheHer": 1,
-            "TheyThem": 2
+            "TheyThem": 2,
+            "ItIt": 3
         }
     },
     "Pussy": {
@@ -2539,7 +2555,8 @@
             "VSocks1": 23,
             "YuletideVelvetWarmth": 24,
             "LongFishnets": 25,
-            "RippedPantyhose": 26
+            "RippedPantyhose": 26,
+            "NetSocks": 27
         }
     },
     "SocksLeft": {
@@ -2694,7 +2711,9 @@
             "SteampunkWings": 9,
             "SuccubusFeather": 10,
             "SuccubusWings": 11,
-            "DragonWings": 12
+            "DragonWings": 12,
+            "SeraphWings": 13,
+            "Wing1": 14
         }
     },
     "AnkletLeft": {

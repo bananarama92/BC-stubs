@@ -213,7 +213,7 @@ declare function ServerAccountBeep(data: ServerAccountBeepResponse): void;
  * @param {boolean} [options.includeRoom] - If set, we'll include the current room data we're in
  */
 declare function ServerSendBeepMessage(target: number, msg?: string, options?: {
-    includeRoom?: boolean;
+    includeRoom?: boolean | undefined;
 }): void;
 /**
  * Show a message as a beep
@@ -228,11 +228,11 @@ declare function ServerSendBeepMessage(target: number, msg?: string, options?: {
  * @param {string} [title]
  */
 declare function ServerShowBeep(message: string, duration: number, options?: {
-    onClick?: (this: HTMLDivElement, event: MouseEvent) => void;
-    memberNumber?: number;
-    memberName?: string;
-    chatRoomName?: string;
-    silent?: boolean;
+    onClick?: ((this: HTMLDivElement, event: MouseEvent) => void) | undefined;
+    memberNumber?: number | undefined;
+    memberName?: string | undefined;
+    chatRoomName?: string | undefined;
+    silent?: boolean | undefined;
 }, title?: string): void;
 /**
  * Callback used to parse received information related to the player ownership data
@@ -255,6 +255,28 @@ declare function ServerAccountLovership(data: object): void;
  * @returns {boolean}
  */
 declare function ServerChatRoomGetAllowItem(Source: Character, Target: Character): boolean;
+/**
+ * Run a promise along with a timeout
+ *
+ * @template T
+ * @param {number} timeout
+ * @param {((resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void)} executor
+ * @return {Promise<T>}
+ */
+declare function ServerPromiseWithTimeout<T>(timeout: number, executor: ((resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void)): Promise<T>;
+/**
+ * Perform a search query against the server
+ * @param {string} queryString
+ * @param {Omit<ServerChatRoomSearchRequest, "Query">} options
+ * @return {Promise<Result<ServerChatRoomSearchResultResponse, ServerError>>}
+ */
+declare function ServerRoomSearch(queryString: string, options: Omit<ServerChatRoomSearchRequest, "Query">): Promise<Result<ServerChatRoomSearchResultResponse, ServerError>>;
+/**
+ * Perform a join query against the server
+ * @param {string} roomName
+ * @return {Promise<Result<string, ServerError>>}
+ */
+declare function ServerRoomJoin(roomName: string): Promise<Result<string, ServerError>>;
 /** @type {SocketIO.Socket} */
 declare var ServerSocket: SocketIO.Socket;
 declare var ServerURL: string;
@@ -371,17 +393,18 @@ declare namespace ServerValidation {
     function isValidNotification(defaultNotif: NotificationSetting): (arg: NotificationSetting) => NotificationSetting;
 }
 declare namespace ServerAccountDataSyncedValidate {
-    function Title(arg: Partial<TitleName>, C: Character): Partial<TitleName>;
-    function Nickname(arg: string, C: Character): string;
+    function Title(arg: Partial<TitleName | undefined>, C: Character): Partial<TitleName | undefined>;
+    function Nickname(arg: Partial<string | undefined>, C: Character): string | undefined;
+    function Money(arg: number, C: Character): number;
     function AllowedInteractions(arg: Partial<AllowedInteractions>, C: Character): AllowedInteractions;
     function Difficulty(arg: Partial<{
         Level: DifficultyLevel;
         LastChange: number;
-    }>, C: Character): {
+    } | undefined>, C: Character): {
         Level: DifficultyLevel;
-        LastChange: number;
+        LastChange: number | undefined;
     };
-    function ArousalSettings(arg: Partial<ArousalSettingsType>, C: Character): {
+    function ArousalSettings(arg: Partial<ArousalSettingsType | undefined>, C: Character): {
         Active: ArousalActiveName;
         Visible: ArousalVisibleName;
         ShowOtherMeter: boolean;
@@ -402,7 +425,7 @@ declare namespace ServerAccountDataSyncedValidate {
         OrgasmCount: number;
         DisableAdvancedVibes: boolean;
     };
-    function OnlineSharedSettings(arg: Partial<CharacterOnlineSharedSettings>, C: Character): {
+    function OnlineSharedSettings(arg: Partial<CharacterOnlineSharedSettings | undefined>, C: Character): {
         AllowFullWardrobeAccess: boolean;
         BlockBodyCosplay: boolean;
         AllowPlayerLeashing: boolean;
@@ -413,34 +436,37 @@ declare namespace ServerAccountDataSyncedValidate {
         ScriptPermissions: ScriptPermissions;
         WheelFortune: string;
     };
-    function Crafting(arg: string, C: Character): CraftingItem[];
-    function Game(arg: Partial<CharacterGameParameters>, C: Character): {
-        LARP: GameLARPParameters;
-        MagicBattle: GameMagicBattleParameters;
-        GGTS: GameGGTSParameters;
-        Poker: GamePokerParameters;
-        ClubCard: GameClubCardParameters;
-        Prison: GamePrisonParameters;
+    function Crafting(arg: Partial<string | undefined>, C: Character): (CraftingItem | null)[];
+    function Game(arg: Partial<CharacterGameParameters | undefined>, C: Character): {
+        LARP: GameLARPParameters | undefined;
+        MagicBattle: GameMagicBattleParameters | undefined;
+        GGTS: GameGGTSParameters | undefined;
+        Poker: GamePokerParameters | undefined;
+        ClubCard: GameClubCardParameters | undefined;
+        Prison: GamePrisonParameters | undefined;
+        MagicSchoolFindsAround: GameMagicSchoolFindsAroundParameters | undefined;
     };
-    function LabelColor(arg: Partial<"" | `#${string}`>, C: Character): `#${string}`;
-    function Creation(arg: number, C: Character): number;
-    function Description(arg: string, C: Character): string;
-    function Ownership(arg: Partial<ServerOwnership>, C: Character): {
+    function LabelColor(arg: Partial<"" | `#${string}` | undefined>, C: Character): `#${string}`;
+    function Creation(arg: number, C: Character): number | undefined;
+    function Description(arg: Partial<string | undefined>, C: Character): string;
+    function Lover(arg: Partial<string | undefined>, C: Character): string | undefined;
+    function Owner(arg: Partial<string | undefined>, C: Character): string;
+    function Ownership(arg: Partial<ServerOwnership | undefined>, C: Character): {
         Name: string;
         MemberNumber: number;
-        Notes: string;
+        Notes: string | undefined;
         Stage: 0 | 1;
         Start: number;
-    };
-    function Lovership(arg: ServerLovership[], C: Character): Lovership[];
-    function Reputation(arg: {
+    } | null;
+    function Lovership(arg: Partial<ServerLovership[] | undefined>, C: Character): Lovership[];
+    function Reputation(arg: Partial<{
         Type: ReputationType;
         Value: number;
-    }[], C: Character): Reputation[];
-    function WhiteList(arg: number[], C: Character): number[];
-    function BlackList(arg: number[], C: Character): number[];
-    function MapData(arg: Partial<ChatRoomMapData>, C: Character): ChatRoomMapData;
-    function ChatSearchSettings(arg: ServerAccountDataSynced["ChatSearchSettings"], C: Character): ServerAccountDataSynced["ChatSearchSettings"];
+    }[] | undefined>, C: Character): Reputation[];
+    function WhiteList(arg: (number | undefined)[], C: Character): number[];
+    function BlackList(arg: (number | undefined)[], C: Character): number[];
+    function MapData(arg: Partial<ChatRoomMapData | undefined>, C: Character): ChatRoomMapData;
+    function ChatSearchSettings(arg: ServerAccountDataSynced["ChatSearchSettings"], C: Character): ChatRoomSearchSettings;
 }
 /**
  * Namespace with default values for {@link ChatRoomSearchSettings} properties.
@@ -448,6 +474,29 @@ declare namespace ServerAccountDataSyncedValidate {
  * @namespace
  */
 declare const ServerChatRoomSearchSettingsValidate: { [k in keyof Required<ChatRoomSearchSettings>]: (arg: ChatRoomSearchSettings[k], C: Character) => ChatRoomSearchSettings[k]; };
+declare const ServerDefaultTimeout: 1000;
+declare class ServerError extends Error {
+}
+declare class ServerTimeoutError extends ServerError {
+}
+declare class ServerInProgressError extends ServerError {
+}
+declare class ServerJoinError extends ServerError {
+    /**
+     * @param {ServerChatRoomJoinFailedResponse} type
+     * @param {string} [message]
+     */
+    constructor(type: ServerChatRoomJoinFailedResponse, message?: string);
+    /**
+     * @type {ServerChatRoomJoinFailedResponse} name
+     */
+    name: ServerChatRoomJoinFailedResponse;
+}
+declare let ServerRoomSearchLastQueryTime: number;
+/** @type {ServerChatRoomSearchRequest | null} */
+declare let ServerRoomSearchLastQuery: ServerChatRoomSearchRequest | null;
+declare let ServerRoomJoinLastQuery: string;
+declare let ServerRoomJoinLastQueryTime: number;
 type ServerChatRoomChecksOptions = {
     screen?: ScreenName;
     module?: ModuleType;

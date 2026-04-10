@@ -98,7 +98,7 @@ declare function ControllerSupportKeyDown(event: KeyboardEvent): boolean;
  * @param {[X: number, Y: number][]} points
  * @param {"Up"|"Down"|"Left"|"Right"} direction
  */
-declare function ControllerFindClosestPoint(point: [X: number, Y: number], points: [X: number, Y: number][], direction: "Up" | "Down" | "Left" | "Right"): number[];
+declare function ControllerFindClosestPoint(point: [X: number, Y: number], points: [X: number, Y: number][], direction: "Up" | "Down" | "Left" | "Right"): number[] | null;
 /**
  * Moves the pointer throught the active zones in the direction wanted.
  *

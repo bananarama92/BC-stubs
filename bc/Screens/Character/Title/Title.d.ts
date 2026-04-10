@@ -45,8 +45,11 @@ declare function TitleExit(): void;
 declare function TitleResize(): void;
 declare function TitleSearch(): void;
 declare var TitleBackground: string;
-/** @type {null | TitleName} */
-declare var TitleSelectedTitle: null | TitleName;
+/**
+ * Bound to screen lifetime
+ * @type {TitleName}
+ */
+declare var TitleSelectedTitle: TitleName;
 /** @type {null | "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked"} */
 declare var TitleNicknameStatus: null | "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
 /** @deprecated */

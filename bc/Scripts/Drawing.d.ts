@@ -48,10 +48,11 @@ declare function DrawGetImageOnError(Img: HTMLImageElement & {
  * @param {number} Zoom - Zoom factor
  * @param {number} Level - Current vibration level on a scale of 0 to 4. Must be INTEGER
  * @param {boolean} Animated - Whether or not animations should be played
+ * @param {number} AnimFactor
  * @param {boolean} Orgasm - Whether or not the meter is in recover from orgasm mode
  * @returns {void} - Nothing
  */
-declare function DrawArousalGlow(X: number, Y: number, Zoom: number, Level: number, Animated: boolean, AnimFactor: any, Orgasm: boolean): void;
+declare function DrawArousalGlow(X: number, Y: number, Zoom: number, Level: number, Animated: boolean, AnimFactor: number, Orgasm: boolean): void;
 /**
  * Draws the arousal meter on screen
  * @param {number} X - Position of the meter on the X axis
@@ -93,7 +94,7 @@ declare function DrawCharacter(C: Character, X: number, Y: number, Zoom: number,
  * @param {number} HeightRatio - The displayed height ratio of the character
  * @param {string} Color - Color of the zone outline
  * @param {number} [Thickness=3] - Thickness of the outline
- * @param {string} FillColor - If non-empty, the color to fill the rectangle with
+ * @param {string} [FillColor] - If non-empty, the color to fill the rectangle with
  * @returns {void} - Nothing
  */
 declare function DrawAssetGroupZone(C: Character, Zone: readonly RectTuple[], Zoom: number, X: number, Y: number, HeightRatio: number, Color: string, Thickness?: number, FillColor?: string): void;
@@ -374,15 +375,15 @@ declare function DrawGetCustomBackground(C: Character): string | undefined;
  * @param {boolean} [opts.inverted=false] Whether the background should be flipped upside-down
  * @param {number} [opts.blur=1.0] How blurry the background is
  * @param {number} [opts.darken=0.0] How darkened the background is (1 is bright, 0 is pitch black)
- * @param {RGBAColor[]} [opts.tints] Tints to apply to the background
+ * @param {readonly RGBAColor[]} [opts.tints] Tints to apply to the background
  * @param {DrawingResizeMode} [opts.sizeMode] The method of resizing the background
  */
 declare function DrawRoomBackground(URL: string, bounds: Rect, opts?: {
-    inverted?: boolean;
-    blur?: number;
-    darken?: number;
-    tints?: RGBAColor[];
-    sizeMode?: DrawingResizeMode;
+    inverted?: boolean | undefined;
+    blur?: number | undefined;
+    darken?: number | undefined;
+    tints?: readonly RGBAColor[] | undefined;
+    sizeMode?: number | undefined;
 }): void;
 /**
  * Perform a global screen flash effect when a blindfold gets removed
@@ -420,9 +421,9 @@ declare function DrawLoadingScreen(time: number): void;
 /**
  *
  * @param {boolean} skipVFX
- * @returns
+ * @returns {undefined | string}
  */
-declare function DrawGetBackgroundURL(skipVFX: boolean): string;
+declare function DrawGetBackgroundURL(skipVFX: boolean): undefined | string;
 /**
  * Constantly looping draw process. Draws beeps, handles the screen size, handles the current blindfold state and draws the current screen.
  * @param {number} time - The current time for frame
@@ -492,14 +493,14 @@ declare function DrawPreviewIcons(icons: readonly InventoryIcon[], X: number, Y:
 declare function DrawCanvasPreview(X: number, Y: number, Canvas: HTMLCanvasElement, Description: string, Options: PreviewDrawOptions): void;
 /**
  * Returns a rectangular subsection of a canvas
- * @param {HTMLCanvasElement} Canvas - The source canvas to take a section of
+ * @param {null | HTMLCanvasElement} Canvas - The source canvas to take a section of
  * @param {number} Left - The starting X co-ordinate of the section
  * @param {number} Top - The starting Y co-ordinate of the section
  * @param {number} Width - The width of the section to take
  * @param {number} Height - The height of the section to take
  * @returns {HTMLCanvasElement} - The new canvas containing the section
  */
-declare function DrawCanvasSegment(Canvas: HTMLCanvasElement, Left: number, Top: number, Width: number, Height: number): HTMLCanvasElement;
+declare function DrawCanvasSegment(Canvas: null | HTMLCanvasElement, Left: number, Top: number, Width: number, Height: number): HTMLCanvasElement;
 /**
  * Returns a rectangular subsection of the character image
  * @param {Character} C - The character to copy part of
@@ -539,6 +540,12 @@ declare function RectMakeRect(x: number, y: number, w: number, h: number): Rect;
  * @returns {RectTuple}
  */
 declare function RectGetFrame(rect: Rect): RectTuple;
+/**
+ * Get the rect's origin point
+ * @param {Rect | RectTuple} rect
+ * @return {[x: number, y: number]}
+ */
+declare function RectGetOrigin(rect: Rect | RectTuple): [x: number, y: number];
 /**
  * Offsets a rect by the given amount
  * @param {Rect} rect
@@ -585,9 +592,9 @@ declare var DrawLastCharacters: Character[];
 /**
  * A list of elements to draw at the end of the drawing process.
  * Mostly used for hovering button labels.
- * @type {Function[]}
+ * @type {(() => void)[]}
  */
-declare var DrawHoverElements: Function[];
+declare var DrawHoverElements: (() => void)[];
 /**
  * The last canvas position in format `[left, top, width, height]`
  * @type {RectTuple}
@@ -616,8 +623,24 @@ declare let DrawCacheTextureAlphaMasks: Map<string, HTMLCanvasElement>;
  */
 declare const DrawingGetTextSize: MemoizedFunction<(Text: string, Width: number) => [text: string, size: number]>;
 declare var DrawScreenFlashTime: number;
-declare var DrawScreenFlashColor: any;
+/** @type {null | string} */
+declare var DrawScreenFlashColor: null | string;
 declare var DrawScreenFlashStrength: number;
+declare namespace DrawSkipVFX {
+    let _list: ((module: ModuleType, screen: ScreenName) => boolean)[];
+    /**
+     * Register either a function or a module and/or screen name for which VFX drawing must be skipped
+     * @param  {...(PartialScreenSpecifier | ((module: ModuleType, screen: ScreenName) => boolean))} args The to-be registered functions/screen-/module names
+     */
+    function register(...args: (PartialScreenSpecifier | ((module: ModuleType, screen: ScreenName) => boolean))[]): void;
+    /**
+     * Evaluate whether VFX drawing must be skipped for the passed module and screen
+     * @param {ModuleType} module The module
+     * @param {ScreenName} screen The screen within the module
+     * @returns {boolean} Whether VFX drawing must be skipped
+     */
+    function evaluate(module: ModuleType, screen: ScreenName): boolean;
+}
 /** The default width of item previews */
 declare const DrawAssetPreviewDefaultWidth: 225;
 /** The default height of item previews */

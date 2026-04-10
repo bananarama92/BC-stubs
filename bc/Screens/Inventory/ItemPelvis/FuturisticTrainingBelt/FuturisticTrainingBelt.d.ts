@@ -1,7 +1,7 @@
 declare function InventoryItemPelvisFuturisticTrainingBeltLoadHook(data: VibratingItemData, originalFunction: () => void): void;
 declare function InventoryItemPelvisFuturisticTrainingBeltDrawHook(data: VibratingItemData, originalFunction: () => void): void;
 declare function InventoryItemPelvisFuturisticTrainingBeltClickHook(data: VibratingItemData, originalFunction: () => void): void;
-declare function InventoryItemPelvisFuturisticTrainingBeltExitHook(data: VibratingItemData, originalFunction: () => void): void;
+declare function InventoryItemPelvisFuturisticTrainingBeltExitHook(data: VibratingItemData, originalFunction: (() => void) | null): void;
 declare function InventoryItemPelvisFuturisticTrainingBeltPublishAction(C: Character, item: Item, newOption: ExtendedItemOption, previousOption: ExtendedItemOption): void;
 /**
  * Not called.
@@ -58,7 +58,7 @@ declare function AssetsItemPelvisFuturisticTrainingBeltScriptUpdatePlayer(data: 
  * @returns
  */
 declare function AssetsItemPelvisFuturisticTrainingBeltScriptStateMachine(data: VibratingItemData, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;
-declare function AssetsItemPelvisFuturisticTrainingBeltScriptDraw(data: VibratingItemData, originalFunction: (drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>) => void, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;
+declare function AssetsItemPelvisFuturisticTrainingBeltScriptDraw(data: VibratingItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;
 declare var FuturisticTrainingBeltPermissions: string[];
 declare var FuturisticTrainingBeltSpeechPunishments: string[];
 declare var FuturisticTrainingBeltModes: string[];

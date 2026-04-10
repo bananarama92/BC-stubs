@@ -85,12 +85,12 @@ declare function CommonGet(Path: string, Callback: (this: XMLHttpRequest, xhr: X
  * @returns {void} - Nothing
  */
 declare function CommonGetRetry(Path: string, Callback: (this: XMLHttpRequest, xhr: XMLHttpRequest) => void, RetriesLeft?: number): void;
-declare function CommonMouseDown(event: MouseEvent | TouchEvent): void;
-declare function CommonMouseUp(event: MouseEvent | TouchEvent): void;
-declare function CommonMouseMove(event: MouseEvent | TouchEvent): void;
+declare function CommonMouseDown(event: PointerEvent): void;
+declare function CommonMouseUp(event: PointerEvent): void;
+declare function CommonMouseMove(event: PointerEvent): void;
 declare function CommonMouseWheel(event: WheelEvent): void;
 declare function CommonResize(load: boolean): void;
-declare function CommonClick(event: MouseEvent | TouchEvent): void;
+declare function CommonClick(event: PointerEvent): void;
 /**
  * Returns TRUE if a section of the screen is currently touched on a mobile device
  * @param {number} X - The X position
@@ -110,9 +110,9 @@ declare function CommonDynamicFunction(FunctionName: string): void;
 /**
  * Calls a dynamic function with parameters (if it exists), also allow ! in front to reverse the result. The dynamic function is the provided function name in the dialog option object and it is prefixed by the current screen.
  * @param {string} FunctionName - Function name to call dynamically
- * @returns {unknown | boolean} - Returns what the dynamic function returns or FALSE if the function does not exist
+ * @returns {unknown} - Returns what the dynamic function returns, or throws if it can't be called
  */
-declare function CommonDynamicFunctionParams(FunctionName: string): unknown | boolean;
+declare function CommonDynamicFunctionParams(FunctionName: string): unknown;
 /**
  *  Calls a named global function with the passed in arguments, if the named function exists. Differs from
  *  CommonDynamicFunctionParams in that arguments are not parsed from the passed in FunctionName string, but
@@ -417,16 +417,16 @@ declare function CommonIsFinite(value: unknown, min?: number, max?: number): val
 /**
  * A version of {@link Array.isArray} more friendly towards readonly arrays.
  * @param {unknown} arg - The to-be validated object
- * @returns {arg is (arg extends readonly unknown[] ? readonly unknown[] : unknown[])} Whether the passed object is a (potentially readonly) array
+ * @returns {arg is readonly unknown[]} Whether the passed object is a (potentially readonly) array
  */
-declare function CommonIsArray(arg: unknown): arg is (unknown extends readonly unknown[] ? readonly unknown[] : unknown[]);
+declare function CommonIsArray(arg: unknown): arg is readonly unknown[];
 /**
  * A {@link Object.keys} variant annotated to return respect literal key types
  * @template {object} T
  * @param {T} obj A record with string-based keys
  * @returns {(keyof T)[]} The keys in the passed record
  */
-declare function CommonKeys<T extends unknown>(obj: T): (keyof T)[];
+declare function CommonKeys<T extends object>(obj: T): (keyof T)[];
 /**
  * A {@link Object.entries} variant annotated to return respect literal key types
  * @template {{}} T
@@ -639,7 +639,7 @@ declare function CommonStringPartitionReplace<T>(string: string, replacers: Reco
  *
  * @param {RoomName} screen
  */
-declare function CommonScreenName(screen: RoomName): string;
+declare function CommonScreenName(screen: RoomName): string | undefined;
 /**
  * Generates the path to a translation CSV file for a screen
  *
@@ -840,14 +840,21 @@ declare function CommonStringSplice(string: string, index: number, value: string
  * @returns {T}
  */
 declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
+/**
+ * I am a testing function for typescript to evaluate and should not be executed during runtime nor removed.
+ *
+ * Checks whether all all `window`-defined backgrounds and screen functions have an appropriate signature.
+ * @returns {void}
+ */
+declare function CommonTestSatisfies(): void;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {ModuleType} */
 declare var CurrentModule: ModuleType;
 /** @type {ModuleScreens[CurrentModule]} */
 declare var CurrentScreen: ModuleScreens[keyof ModuleScreens];
-/** @type {ScreenFunctions} */
-declare var CurrentScreenFunctions: ScreenFunctions;
+/** @type {Required<ScreenFunctions>} */
+declare var CurrentScreenFunctions: Required<ScreenFunctions>;
 /** @type {Character|NPCCharacter|null} */
 declare var CurrentCharacter: Character | NPCCharacter | null;
 declare var CurrentOnlinePlayers: number;
@@ -941,12 +948,12 @@ declare namespace CommonKey {
     /**
      * A {@link ScreenFunctions.KeyDown} helper function for implementing the navigation key handling of scrollable elements.
      * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
-     * @param {HTMLElement} scrollableElem - The scrollable element
+     * @param {Element} scrollableElem - The scrollable element
      * @param {KeyboardEvent} event - The `keydown` event
-     * @param {(scrollableElem: HTMLElement) => number} getArrowScrollDistance - A callback for computing the (absolute) scroll distance for up/down arrow key presses
+     * @param {(scrollableElem: Element) => number} getArrowScrollDistance - A callback for computing the (absolute) scroll distance for up/down arrow key presses
      * @returns {boolean} - Whether a navigation key was (successfuly pressed)
      */
-    function NavigationKeyDown(scrollableElem: HTMLElement, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: HTMLElement) => number): boolean;
+    function NavigationKeyDown(scrollableElem: Element, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: Element) => number): boolean;
     /**
      * A {@link ScreenFunctions.KeyDown} helper function for automatically forwarding key presses to the passed input element.
      * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - The input or textarea element in question
@@ -974,3 +981,46 @@ declare namespace CommonKey {
  * @returns A new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
  */
 declare var CommonRegEscape: Function;
+/**
+ * A class representing the result of a failable operation
+ * @template T
+ * @template {Error} [E=Error]
+ */
+declare class Result<T, E extends Error = Error> {
+    /**
+     * Build a Result for a successful operation
+     * @template T
+     * @param {T} value
+     * @returns
+     */
+    static success<T_1>(value: T_1): Result<T_1, Error>;
+    /**
+     * Build a Result for a failed operation
+     * @param {Error} error
+     * @returns
+     */
+    static failure(error: Error): Result<null, Error>;
+    /**
+     * Create a new Result representing the status of a failable operation
+     * @param {T} value
+     * @param {E | null} [error]
+     */
+    constructor(value: T, error?: E | null);
+    /** @type {T} */
+    value: T;
+    /** @type {E | null} */
+    error: E | null;
+    /**
+     * Returns whether the operation was a success
+     */
+    get ok(): boolean;
+    /**
+     * Returns whether the operation was a failure
+     */
+    get err(): boolean;
+    /**
+     * Unwrap the result
+     * This either returns the successful return of the operation, or throws the error it reported
+     */
+    unwrap(): T;
+}

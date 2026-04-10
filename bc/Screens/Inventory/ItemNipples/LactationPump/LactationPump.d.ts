@@ -4,6 +4,6 @@ declare function AssetsItemNipplesLactationPumpScriptDraw(drawData: DynamicScrip
 /** Minimum time (in ms) the pump waits between its messages. Max is two times that. */
 declare const LactationPumpDuration: number;
 type LactationPumpPersistentData = {
-    LastSuction?: number;
-    SuctionDuration?: number;
+    LastSuction?: number | undefined;
+    SuctionDuration?: number | undefined;
 };

@@ -20,7 +20,7 @@ declare function EmptyStruggleProgress(): boolean;
 declare function EmptySlaveMarketReadyForBondageTraining(): boolean;
 declare function EmptyLoad(): Promise<void>;
 declare function EmptyRun(time: number): void;
-declare function EmptyClick(event: MouseEvent | TouchEvent): void;
+declare function EmptyClick(event: PointerEvent): void;
 /**
  * Used to return the player to the main hall from the empty room when in the management room
  * @returns {void} - Nothing

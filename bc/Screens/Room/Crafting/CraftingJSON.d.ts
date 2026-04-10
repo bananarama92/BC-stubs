@@ -34,7 +34,7 @@ declare namespace CraftingJSON {
         function dragover(this: HTMLElement, ev: DragEvent): void;
         function drop(this: HTMLElement, ev: DragEvent): void;
         function dragend(this: HTMLElement, ev: DragEvent): void;
-        function clickCancel(this: HTMLElement): void;
+        function clickCancel(): void;
         function clickAccept(this: HTMLElement, ev: Event): void;
         let changeFile: (this: HTMLInputElement) => Promise<void>;
         function inputFile(this: HTMLInputElement): void;

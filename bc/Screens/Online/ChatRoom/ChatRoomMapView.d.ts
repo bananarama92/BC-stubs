@@ -346,7 +346,7 @@ declare function ChatRoomMapViewMouseDown(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewMouseMove(): void;
-declare function ChatRoomMapViewMouseUp(event: MouseEvent | TouchEvent): void;
+declare function ChatRoomMapViewMouseUp(event: PointerEvent): void;
 declare function ChatRoomMapViewMouseWheel(event: WheelEvent): void;
 /**
  * Copies the current map in the clipboard.  Called from the chat field command "mapcopy"

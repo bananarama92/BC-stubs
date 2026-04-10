@@ -16,6 +16,6 @@ declare function NicknameManagementClick(): void;
  */
 declare function NicknameManagementExit(Save?: boolean): void;
 declare var NicknameManagementBackground: string;
-/** @type {null | Character | NPCCharacter} */
-declare var NicknameManagementTarget: null | Character | NPCCharacter;
+/** @type {Character} */
+declare var NicknameManagementTarget: Character;
 declare var NicknameManagementLock: boolean;

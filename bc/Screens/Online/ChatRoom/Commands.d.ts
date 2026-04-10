@@ -258,10 +258,10 @@ declare namespace CommandsChangelog {
      * @returns {HTMLDivElement} - The newly created changelog
      */
     function Parse(innerHTML: string, options?: {
-        id?: null | string;
-        href?: null | string;
-        startID?: null | string;
-        stopID?: null | string;
+        id?: string | null | undefined;
+        href?: string | null | undefined;
+        startID?: string | null | undefined;
+        stopID?: string | null | undefined;
     }): HTMLDivElement;
     /**
      * Construct a changelog from the passed stringified HTML and publish it to the chat room chatlog.
@@ -275,9 +275,9 @@ declare namespace CommandsChangelog {
      * @returns {HTMLDivElement} - The newly created changelog
      */
     function Publish(innerHTML: string, options?: {
-        id?: null | string;
-        href?: null | string;
-        startID?: null | string;
-        stopID?: null | string;
+        id?: string | null | undefined;
+        href?: string | null | undefined;
+        startID?: string | null | undefined;
+        stopID?: string | null | undefined;
     }): HTMLDivElement;
 }

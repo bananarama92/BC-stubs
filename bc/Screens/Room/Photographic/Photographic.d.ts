@@ -75,7 +75,7 @@ declare var PhotographicBackground: string;
 /** @type {null | NPCCharacter} */
 declare var PhotographicSub: null | NPCCharacter;
 declare var PhotographicGroupStarted: boolean;
-declare var PhotographicCurrendGroup: any;
+declare var PhotographicCurrendGroup: null;
 /** @type {null | Item[]} */
 declare var PhotographicSubAppearance: null | Item[];
 declare var PhotographicSelectText: string;

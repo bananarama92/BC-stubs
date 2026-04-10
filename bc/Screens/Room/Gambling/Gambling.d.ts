@@ -110,7 +110,7 @@ declare function GamblingLoad(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function GamblingRun(): void;
-declare function GamblingClick(event: MouseEvent | TouchEvent): void;
+declare function GamblingClick(event: PointerEvent): void;
 /**
  * Enable the rendering of the player dice info
  * @returns {true} - Always true

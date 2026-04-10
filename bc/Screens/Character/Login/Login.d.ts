@@ -40,9 +40,9 @@ declare function LoginPerformInventoryFixups(Inventory: InventoryBundle[]): void
 declare function LoginPerformAppearanceFixups(Appearance: ItemBundle[]): boolean;
 /**
  * Perform the crafting fixups needed
- * @param {readonly CraftingItem[]} Crafting - The server-provided, uncompressed crafting data
+ * @param {readonly (CraftingItem | null)[]} Crafting - The server-provided, uncompressed crafting data
  */
-declare function LoginPerformCraftingFixups(Crafting: readonly CraftingItem[]): void;
+declare function LoginPerformCraftingFixups(Crafting: readonly (CraftingItem | null)[]): void;
 /**
  * Make sure the slave collar is equipped or unequipped based on the owner
  * @returns {void} Nothing
@@ -171,8 +171,8 @@ declare var LoginErrorMessage: string;
  * The dummy on the login screen.
  *
  * Lifetime bound to the screen.
- * @type {NPCCharacter} */
-declare var LoginCharacter: NPCCharacter;
+ * @type {NPCCharacter | null} */
+declare var LoginCharacter: NPCCharacter | null;
 declare const LoginIDs: Readonly<{
     name: "InputName";
     password: "InputPassword";

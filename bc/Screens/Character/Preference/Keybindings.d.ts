@@ -55,7 +55,7 @@ declare namespace KeyGUI {
      */
     function buildKeybinding(keybinding: Keybindings.Keybinding): HTMLDivElement;
     /** @param {Keybindings.Category} categoryObject */
-    function buildCategory(categoryObject: Keybindings.Category): HTMLFieldSetElement;
+    function buildCategory(categoryObject: Keybindings.Category): HTMLFieldSetElement | undefined;
     function buildSearchInput(): HTMLLabelElement;
     function buildSearchModeDropdown(): HTMLLabelElement;
     function buildFilteringMenu(): HTMLElement;

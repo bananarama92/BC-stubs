@@ -497,7 +497,12 @@ interface ServerChatRoomAdminSwapRequest {
 
 type ServerChatRoomAdminRequest = ServerChatRoomAdminUpdateRequest | ServerChatRoomAdminMoveRequest | ServerChatRoomAdminSwapRequest;
 
-type ServerChatRoomSearchResponse = "JoinedRoom" | "AlreadyInRoom" | "RoomLocked" | "RoomBanned" | "RoomKicked" | "RoomFull" | "CannotFindRoom" | "AccountError" | "InvalidRoomData";
+type ServerChatRoomJoinResponse = "JoinedRoom" | "RoomKicked" | ServerChatRoomJoinFailedResponse;
+type ServerChatRoomJoinFailedResponse = "AlreadyInRoom" | "RoomLocked" | "RoomBanned" | "RoomFull" | "CannotFindRoom" | "AccountError" | "InvalidRoomData";
+/**
+ * @deprecated Use {@link ServerChatRoomJoinResponse}
+ */
+type ServerChatRoomSearchResponse = ServerChatRoomJoinResponse;
 
 /** Base interface for a chat message */
 interface ServerChatRoomMessageBase {
@@ -1047,7 +1052,7 @@ interface ServerToClientEvents {
 
 	ChatRoomSearchResult: (data: ServerChatRoomSearchResultResponse) => void;
 	ChatRoomCreateResponse: (data: ServerChatRoomCreateResponse) => void;
-	ChatRoomSearchResponse: (data: ServerChatRoomSearchResponse) => void;
+	ChatRoomSearchResponse: (data: ServerChatRoomJoinResponse) => void;
 
 	ChatRoomMessage: (data: ServerChatRoomMessage) => void;
 	ChatRoomGameResponse: (data: ServerChatRoomGameResponse) => void;

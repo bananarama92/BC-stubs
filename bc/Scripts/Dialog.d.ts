@@ -95,9 +95,8 @@ declare function DialogLogQuery<T extends LogGroupType>(LogType: LogNameType[T],
 /**
  * Sets the AllowItem flag on the current character
  * @param {string} Allow - The flag to set. Either "TRUE" or "FALSE"
- * @returns {boolean} - The boolean version of the flag
  */
-declare function DialogAllowItem(Allow: string): boolean;
+declare function DialogAllowItem(Allow: string): void;
 /**
  * Returns the value of the AllowItem flag of a given character
  * @param {string | Character} C - The character whose flag should be returned.
@@ -107,9 +106,10 @@ declare function DialogAllowItem(Allow: string): boolean;
 declare function DialogDoAllowItem(C: string | Character): boolean;
 /**
  * Returns TRUE if the AllowItem flag doesn't allow putting an item on the current character
+ * @param {string | Character} C
  * @returns {boolean} - The reversed value of the given character's AllowItem flag
  */
-declare function DialogDontAllowItemPermission(C: any): boolean;
+declare function DialogDontAllowItemPermission(C: string | Character): boolean;
 /**
  * Returns TRUE if no item can be used by the player on the current character because of the map distance
  * @returns {boolean} - TRUE if distance is too far (more than 1 tile)
@@ -348,7 +348,7 @@ declare function DialogMenuBack(): void;
 /**
  * Returns whether the current mode shows items.
  */
-declare function DialogModeShowsInventory(): boolean;
+declare function DialogModeShowsInventory(): boolean | null;
 /**
  * Helper used to check whether the player is in the Appearance screen
  */
@@ -391,10 +391,10 @@ declare function DialogInventoryCreateItem(C: Character, item: Item, isWorn: boo
  * Returns settings for an item based on whether the player and target have favorited it, if any
  * @param {Character} C - The targeted character
  * @param {Asset} asset - The asset to check favorite settings for
- * @param {string} [type=null] - The type of the asset to check favorite settings for
+ * @param {string | null} [type] - The type of the asset to check favorite settings for
  * @returns {FavoriteState} - The details to use for the asset
  */
-declare function DialogGetFavoriteStateDetails(C: Character, asset: Asset, type?: string): FavoriteState;
+declare function DialogGetFavoriteStateDetails(C: Character, asset: Asset, type?: string | null): FavoriteState;
 /**
  * Return icons representing the asset's current lock state
  * @param {Item} item
@@ -567,10 +567,10 @@ declare function DialogChangeMode(mode: DialogMenuMode, reset?: boolean): void;
 /**
  * Change the given character's focused group.
  * @param {Character} C - The character to change the focus of.
- * @param {AssetItemGroup|string} Group - The group that should gain focus.
+ * @param {AssetItemGroup|string|null} Group - The group that should gain focus. `null` deselects the current group
  */
-declare function DialogChangeFocusToGroup(C: Character, Group: AssetItemGroup | string): void;
-declare function DialogClick(event: MouseEvent | TouchEvent): void;
+declare function DialogChangeFocusToGroup(C: Character, Group: AssetItemGroup | string | null): void;
+declare function DialogClick(event: PointerEvent): void;
 declare function DialogResize(load: boolean): void;
 /**
  * Returns whether the clicked co-ordinates are inside the asset zone
@@ -615,15 +615,16 @@ declare function DialogFindFacialExpressionMenuGroup(ExpressionGroup: Expression
 /**
  * Displays the given text for 5 seconds
  * @param {string} status - The text to be displayed
- * @param {number} timer - the number of milliseconds to display the message for
- * @param {null | { asset?: Asset, group?: AssetGroup, C?: Character }} replace - Attempt to perform replacements within the `status` text
+ * @param {number} [timer] - the number of milliseconds to display the message for
+ * @param {null | { asset?: Asset | null, group?: AssetGroup | null, C?: Character | null }} [replace] - Attempt to perform replacements within the `status` text
+ * @param {string | null} [id]
  * @returns {void} - Nothing
  */
 declare function DialogSetStatus(status: string, timer?: number, replace?: null | {
-    asset?: Asset;
-    group?: AssetGroup;
-    C?: Character;
-}, id?: any): void;
+    asset?: Asset | null;
+    group?: AssetGroup | null;
+    C?: Character | null;
+}, id?: string | null): void;
 /**
  * Timer handler for managing timed dialog statuses.
  * @param {Element} elem - The relevant `span.dialog-status` element
@@ -682,14 +683,14 @@ declare function DialogFindPlayer(KeyWord: string): string;
  * Searches in the dialog for a specific stage keyword and returns that dialog option if we find it
  * @param {Character} C - The character whose dialog option*
  * @param {string} KeyWord1 - The key word to search for
- * @param {string} [KeyWord2] - An optionally given second key word. is only looked for, if specified and the first
+ * @param {string | null} [KeyWord2] - An optionally given second key word. is only looked for, if specified and the first
  * keyword was not found.
  * @param {boolean} [ReturnPrevious=true] - If specified, returns the previous dialog, if neither of the the two key words were found
  ns should be searched
  * @returns {string} - The name of a dialog. That can either be the one with the keyword or the previous dialog.
  * An empty string is returned, if neither keyword was found and no previous dialog was given.
  */
-declare function DialogFind(C: Character, KeyWord1: string, KeyWord2?: string, ReturnPrevious?: boolean): string;
+declare function DialogFind(C: Character, KeyWord1: string, KeyWord2?: string | null, ReturnPrevious?: boolean): string;
 /**
  * Searches in the dialog for a specific stage keyword and returns that dialog option if we find it and replace the names
  * @param {Character} C - The character whose dialog options should be searched
@@ -767,13 +768,25 @@ declare function DialogActualNameForGroup(C: Character, G: AssetGroup): string;
  *
  * @param {Character} C
  * @param {DialogStruggleActionType} Action
- * @param {Item} PrevItem
- * @param {Item} NextItem
+ * @param {Item | null} PrevItem
+ * @param {Item | null} NextItem
  */
-declare function DialogStruggleStart(C: Character, Action: DialogStruggleActionType, PrevItem: Item, NextItem: Item): void;
+declare function DialogStruggleStart(C: Character, Action: DialogStruggleActionType, PrevItem: Item | null, NextItem: Item | null): void;
 declare function DialogStruggleStop(character: Character, game: StruggleKnownMinigames, data: StruggleCompletionData): void;
 declare function DialogKeyDown(event: KeyboardEvent): boolean;
-declare function DialogMouseDown(event: MouseEvent | TouchEvent): void;
+declare function DialogMouseDown(event: PointerEvent): void;
+/**
+ * Make an NPC invisible
+ * @param {NPCCharacter} npc
+ * @returns {void} - Nothing
+ */
+declare function DialogHideNPC(npc: NPCCharacter): void;
+/**
+ * Make an NPC invisible
+ * @param {NPCCharacter} npc
+ * @returns {void} - Nothing
+ */
+declare function DialogRevealNPC(npc: NPCCharacter): void;
 /** The duration temporary status message show up for, in ms
  * @type {number}
  */
@@ -812,8 +825,8 @@ declare var DialogTightenLoosenItem: Item | null;
  * @type {Item|null}
  */
 declare var DialogFocusSourceItem: Item | null;
-/** @type {null | ReturnType<typeof setTimeout>} */
-declare var DialogFocusItemColorizationRedrawTimer: null | ReturnType<typeof setTimeout>;
+/** @type {ReturnType<typeof setTimeout>} */
+declare var DialogFocusItemColorizationRedrawTimer: ReturnType<typeof setTimeout>;
 /**
  * The list of currently visible menu item buttons.
  * @type {DialogMenuButton[]}
@@ -826,12 +839,12 @@ declare var DialogMenuButton: DialogMenuButton[];
 declare var DialogMenuMode: null | DialogMenuMode;
 /**
  * The group that was selected before we entered the expression coloring screen
- * @type {{mode: DialogMenuMode, group: AssetItemGroup}}
+ * @type {{mode: DialogMenuMode, group: AssetItemGroup} | null}
  */
 declare var DialogExpressionPreviousMode: {
     mode: DialogMenuMode;
     group: AssetItemGroup;
-};
+} | null;
 declare var DialogFacialExpressionsSelectedBlindnessLevel: number;
 declare var DialogExtendedMessage: string;
 /**
@@ -863,19 +876,19 @@ declare var DialogGamingReturnScreen: ScreenSpecifier | null;
 declare var DialogButtonDisabledTester: RegExp;
 /**
  * The attempted action that's leading the player to struggle.
- * @type {DialogStruggleActionType?}
+ * @type {DialogStruggleActionType | null}
  */
 declare let DialogStruggleAction: DialogStruggleActionType | null;
 /**
  * The item we're struggling out of, or swapping from.
- * @type {Item}
+ * @type {Item | null}
  */
-declare let DialogStrugglePrevItem: Item;
+declare let DialogStrugglePrevItem: Item | null;
 /**
  * The item we're swapping to.
- * @type {Item}
+ * @type {Item | null}
  */
-declare let DialogStruggleNextItem: Item;
+declare let DialogStruggleNextItem: Item | null;
 /** Whether we went through the struggle selection screen or went straight through. */
 declare let DialogStruggleSelectMinigame: boolean;
 /** @type {Map<string, string>} */
@@ -901,7 +914,7 @@ declare namespace DialogEffectIcons {
      * @returns {InventoryIcon[]} - A list of icon names.
      */
     function GetIcons(item: Item): InventoryIcon[];
-    function GetEffectIcons(effects: Iterable<EffectName>, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon[];
+    function GetEffectIcons(effects: Iterable<EffectName>, craftEffect?: Partial<Record<CraftingPropertyType, number>>): InventoryIcon[];
     function _GetGagIcon(effect: EffectName, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon;
     function _GetBlindIcon(effect: EffectName, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon;
     function _GetDeafIcon(effect: EffectName): undefined | InventoryIcon;
@@ -1000,13 +1013,13 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
      * @type {null | RectTuple}
      */
     _shape: null | RectTuple;
-    set shape(value: RectTuple);
+    set shape(value: RectTuple | null);
     /**
      * Get or set the position & shape of the current subscreen as defined by the root element.
      *
      * Performs a {@link DialogMenu.Resize} if a new shape is assigned.
      */
-    get shape(): RectTuple;
+    get shape(): RectTuple | null;
     /**
      * The default position & shape of the current subscreen as defined by the root element.
      *
@@ -1071,7 +1084,7 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
      */
     _Load(): HTMLElement;
     Unload(): void;
-    Click(event: MouseEvent | TouchEvent): void;
+    Click(event: PointerEvent): void;
     Draw(): void;
     Run(time: number): void;
     Resize(load: boolean): void;
@@ -1153,9 +1166,9 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
      * Return the underlying item or activity object of the passed grid button.
      * @abstract
      * @param {HTMLButtonElement} button - The clicked button
-     * @returns {ClickedObj | undefined} - The button's underlying item or activity object
+     * @returns {ClickedObj | null} - The button's underlying item or activity object
      */
-    _GetClickedObject(button: HTMLButtonElement): ClickedObj | undefined;
+    _GetClickedObject(button: HTMLButtonElement): ClickedObj | null;
     /**
      * Helper function for handling the clicks of successfully validated grid button clicks.
      * @abstract
@@ -1191,13 +1204,13 @@ declare class _DialogFocusMenu<ModeType extends string = string, ClickedObj = an
      * @param {ModeType} mode The name of the mode associated with this instance
      */
     constructor(mode: ModeType);
-    set focusGroup(value: AssetItemGroup);
+    set focusGroup(value: AssetItemGroup | null);
     /**
      * Get or set the currently selected group.
      *
      * Performs a hard {@link DialogMenu.Reload} if a new focus group is assigned.
      */
-    get focusGroup(): AssetItemGroup;
+    get focusGroup(): AssetItemGroup | null;
     eventListeners: {
         _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
         _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
@@ -1228,15 +1241,15 @@ declare class _DialogItemMenu<T extends string> extends _DialogFocusMenu<T, Dial
     _initPropertyNames: readonly ["C", "focusGroup"];
     /** @satisfies {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
     clickStatusCallbacks: {
-        InventoryBlockedOrLimited: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
-        InventoryDisallow: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
-        CanInteract: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
-        InventoryGroupIsAvailable: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
-        AsylumGGTSControlItem: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
-        DialogAllowItemClick: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
-        DialogCanUnlock: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
-        InventoryChatRoomAllow: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
-        SelfBondage: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item) => string;
+        InventoryBlockedOrLimited: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        InventoryDisallow: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        CanInteract: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        InventoryGroupIsAvailable: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        AsylumGGTSControlItem: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        DialogAllowItemClick: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        DialogCanUnlock: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        InventoryChatRoomAllow: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        SelfBondage: (C: Character, clickedItem: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
     };
 }
 /**
@@ -1260,9 +1273,9 @@ declare class _DialogLockingMenu<T extends string> extends _DialogFocusMenu<T, D
     _initPropertyNames: readonly ["C", "focusGroup"];
     /** @satisfies {DialogMenu<T, DialogInventoryItem>["clickStatusCallbacks"]} */
     clickStatusCallbacks: {
-        InventoryBlockedOrLimited: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item) => string;
-        CurrentItem: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item) => string;
-        InventoryDoesItemAllowLock: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item) => string;
+        InventoryBlockedOrLimited: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        CurrentItem: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
+        InventoryDoesItemAllowLock: (C: Character, clickedLock: DialogInventoryItem, equippedItem: Item | null | undefined) => string | null;
     };
 }
 /**
@@ -1360,25 +1373,13 @@ declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLi
     /** @type {DialogMenu<string, DialogLine>["clickStatusCallbacks"]} */
     clickStatusCallbacks: DialogMenu<string, DialogLine>["clickStatusCallbacks"];
     eventListeners: {
-        _ClickMenubarExit(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickMenubarExit(this: HTMLButtonElement, ev: PointerEvent): void;
         _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
         _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
         _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
         _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
-    /**
-     * A {@link clearTimeout}-returned ID for temporarily disabling the exit button on mobile button clicks
-     * private
-     * @type {null | number}
-     */
-    _mobileTimeoutID: null | number;
-    /**
-     * private
-     * @param {Character} C
-     * @satisfies {TimerHandler}
-     */
-    _mobileTimeoutHandler(C: Character): void;
     /**
      * A {@link DialogMenu.Reload} helper function for reloading {@link DialogMenu.ids.status} elements.
      * @abstract
@@ -1473,7 +1474,7 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
     }>;
     /** @satisfies {DialogMenu<ModeType, ExpressionPair>["clickStatusCallbacks"]} */
     clickStatusCallbacks: {
-        CharacterIsExpressionAllowed: (C: Character, clickedItem: ExpressionPair, equippedItem: Item) => string;
+        CharacterIsExpressionAllowed: (C: Character, clickedItem: ExpressionPair, equippedItem: Item | null | undefined) => string | null;
     };
     /**
      * See {@link _DialogExpressionMenu.facialExpressions}
@@ -1486,7 +1487,7 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
      * @type {Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>}
      */
     get facialExpressions(): Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>;
-    get focusGroup(): AssetAppearanceGroup;
+    get focusGroup(): AssetAppearanceGroup | null;
     /** @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>} */
     eventListeners: {
         _expressionRadioGroupClick(this: HTMLButtonElement, ev: MouseEvent): void;
@@ -1566,8 +1567,8 @@ declare class _DialogPoseMenu<ModeType extends DialogSelfMenuName> extends _Dial
     }>;
     /** @satisfies {DialogMenu<ModeType, Pose>["clickStatusCallbacks"]} */
     clickStatusCallbacks: {
-        PoseAvailable(C: Character, pose: Pose): string;
-        ChatRoomOwnerPresenceRule(C: Character, pose: Pose): string;
+        PoseAvailable(C: Character, pose: Pose): string | null;
+        ChatRoomOwnerPresenceRule(C: Character, pose: Pose): string | null;
     };
     /**
      * See {@link poses}

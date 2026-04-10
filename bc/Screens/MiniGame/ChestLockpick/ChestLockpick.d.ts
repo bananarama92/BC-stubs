@@ -15,8 +15,8 @@ declare function ChestLockpickMouseDown(): void;
  */
 declare function ChestLockpickClick(): void;
 declare function ChestLockpickKeyDown(event: KeyboardEvent): boolean;
-/** @type {null | string} */
-declare var ChestLockpickBackground: null | string;
+/** @type {undefined | string} */
+declare var ChestLockpickBackground: undefined | string;
 declare var ChestLockpickChestImage: string;
 declare var ChestLockpickSpeed: number;
 declare var ChestLockpickAngle: number;

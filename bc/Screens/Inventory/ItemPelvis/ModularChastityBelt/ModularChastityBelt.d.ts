@@ -16,7 +16,7 @@ declare function InventoryItemPelvisModularChastityBeltDrawShockModule(_offset: 
  */
 declare function InventoryItemPelvisModularChastityBeltDrawVoiceControl(_offset: number): void;
 declare function InventoryItemPelvisModularChastityBeltDrawVoiceControlCleanup(): void;
-declare function InventoryItemPelvisModularChastityBeltExitHook(data: ModularItemData, originalFunction: () => void): void;
+declare function InventoryItemPelvisModularChastityBeltExitHook(data: ModularItemData, originalFunction: (() => void) | null): void;
 declare function InventoryItemPelvisModularChastityBeltClickHook(data: ModularItemData, originalFunction: () => void): void;
 /**
  * @param {number} _offset //How many pixels down will the UI be shifted
@@ -35,7 +35,7 @@ declare function InventoryItemPelvisModularChastityBeltResetDeny(): void;
  * @param {number} _offset //How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltClickShockModule(_offset: number): void;
-declare function InventoryItemPelvisModularChastityBeltScriptDrawHook(data: ModularItemData, originalFunction: (drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>) => void, drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>): void;
+declare function InventoryItemPelvisModularChastityBeltScriptDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>): void;
 /**
  * @param {ModularItemData} data
  * @param {Character} C
@@ -57,7 +57,7 @@ declare function InventoryItemPelvisModularChastityBeltDetectMsg(msg: string, Tr
  * @param {boolean} isPlayerInChatRoom
  * @param {number} ShockCooldown
  */
-declare function InventoryItemPelvisModularChastityBeltCheckPunish(Item: Item, C: Character, OrgasmDetected: boolean, isPlayerInChatRoom: boolean, ShockCooldown: number): "Struggle" | "Orgasm" | "StandUp" | "StruggleOther";
+declare function InventoryItemPelvisModularChastityBeltCheckPunish(Item: Item, C: Character, OrgasmDetected: boolean, isPlayerInChatRoom: boolean, ShockCooldown: number): "Struggle" | "Orgasm" | "StandUp" | "StruggleOther" | null;
 /**
  * @param {boolean} PunishStandup
  * @param {Character} C

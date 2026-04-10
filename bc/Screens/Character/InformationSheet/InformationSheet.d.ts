@@ -25,7 +25,12 @@ declare function InformationSheetUnload(): void;
 declare function InformationSheetLoadCharacter(C: Character): void;
 declare function InformationSheetResize(): void;
 declare var InformationSheetBackground: string;
-/** @type {null | Character | NPCCharacter} */
+/**
+ * The character we're showing the information of.
+ *
+ * Also used by OnlineProfile.js
+ * @type {null | Character | NPCCharacter}
+ */
 declare var InformationSheetSelection: null | Character | NPCCharacter;
 /** @type {ScreenSpecifier | null} */
 declare var InformationSheetReturnScreen: ScreenSpecifier | null;

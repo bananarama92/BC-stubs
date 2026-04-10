@@ -118,7 +118,7 @@ type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 	 */
 	dataAttributes?: Partial<Record<string, number | string | boolean>>;
 	/** CSS style declarations that will be set on the HTML element (see {@link HTMLElement.style}). */
-	style?: Record<string, string>;
+	style?: Record<string, string | undefined>;
 	/** Event listeners that will be attached to the HTML element (see {@link HTMLElement.addEventListener}). */
 	eventListeners?: { [k in keyof HTMLElementEventMap]?: (this: HTMLElementTagNameMap[T], event: HTMLElementEventMap[k]) => any };
 	/** The elements parent (if any) to which it will be attached (see {@link HTMLElement.parentElement}). */
@@ -133,9 +133,9 @@ type HTMLOptions<T extends keyof HTMLElementTagNameMap> = {
 
 interface HTMLElementEventMap {
 	/** Custom event fired by {@link ElementButton.Create} buttons whenever a click-event encounters `aria-disabled: "true"`. */
-	bcClickDisabled: MouseEvent;
+	bcClickDisabled: PointerEvent;
 	/** Custom event fired by {@link ElementButton.Create} buttons whenever a touch is hold for 300 ms. */
-	bcTouchHold: MouseEvent;
+	bcTouchHold: PointerEvent;
 }
 
 interface HTMLElementTagNameMap {
@@ -192,7 +192,7 @@ declare namespace ElementButton {
 		 */
 		icons?: readonly (null | undefined | InventoryIcon | CustomIcon)[];
 		/** The role of the button. All accepted values are currently special-cased in order to set role-specific event listeners and/or attributes. */
-		role?: "radio" | "combobox" | "checkbox" | "menuitemradio" | "menuitemcheckbox" | "spinbutton";
+		role?: "radio" | "combobox" | "checkbox" | "menuitemradio" | "menuitemcheckbox" | "spinbutton" | "menuitem" | "switch";
 		/** Whether to limit the default styling of the button's border and background */
 		noStyling?: boolean;
 		/** Whether the button should be disabled or not */
@@ -373,7 +373,7 @@ declare namespace ElementDOMScreen {
 		/** The parent element of the to-be returned screen (if any) */
 		parent?: Node;
 		/** Buttons for in the header's menubar (see `.screen-header [role="menubar"]`) */
-		menubarButtons?: readonly HTMLButtonElement[];
+		menubarButtons?: readonly HTMLElement[];
 		/** Content for within the main section (see `.screen-main`) */
 		mainContent?: readonly (Node | string | HTMLOptionsUnion)[];
 		/** Whether an extra `aside.screen-aside-l` section should be added to the left of `.screen-main` */
@@ -405,7 +405,7 @@ declare namespace DialogMenu {
 		/** Whether to hard reset and reconstruct the button grid, rather than just re-evaluating the existing button's states via a soft reset. */
 		reset?: boolean;
 		/** The to-be assigned custom status message */
-		status?: string;
+		status?: string | null;
 		/** Display the {@link ReloadOptions.status} message on a timer; units are in ms */
 		statusTimer?: number;
 		/**
@@ -487,7 +487,7 @@ type DialogStruggleActionType = "ActionUse" | "ActionSwap" | "ActionRemove" | "A
 
 type CharacterType = "player" | "online" | "npc" | "simple";
 
-type CharacterPronouns = "SheHer" | "HeHim" | "TheyThem";
+type CharacterPronouns = "SheHer" | "HeHim" | "TheyThem" | "ItIt";
 
 type VibratorIntensity = -1 | 0 | 1 | 2 | 3;
 
@@ -680,8 +680,6 @@ type ItemColorMode = "Default" | "ColorPicker";
 
 type CharacterHook = "BeforeSortLayers" | "AfterLoadCanvas";
 
-type AnimationDataTypes = "AssetGroup" | "" | "DynamicPlayerCanvas" | "PersistentData" | "Rebuild" | "RefreshTime" | "RefreshRate";
-
 type ChatColorThemeType = "Light" | "Dark" | "Light2" | "Dark2";
 type ChatEnterLeaveType = "Normal" | "Smaller" | "Hidden";
 type ChatMemberNumbersType = "Always" | "Never" | "OnMouseover";
@@ -700,6 +698,23 @@ type GraphicsFontName =
 	"Arial" | "TimesNewRoman" | "Papyrus" | "ComicSans" | "Impact" | "HelveticaNeue" | "Verdana" |
 	"CenturyGothic" | "Georgia" | "CourierNew" | "Copperplate"
 	;
+
+type AnimationDataKey = string;
+type AnimationPersistentData = {
+	[key in `GroupData${string}` | "Group"]?: { Subscriptions: AnimationDataKey[] };
+};
+interface AnimationPersistentStorage extends Record<string, Record<string, any>> {
+	readonly AssetGroup: Record<AnimationDataKey, Record<string, { Subscriptions: AnimationDataKey[] }>>,
+	/** Unknown value type; seems to be unused */
+	readonly "": Record<AnimationDataKey, never>,
+	/** Unknown value type; seems to be unused */
+	readonly DynamicPlayerCanvas: Record<AnimationDataKey, never>,
+	readonly PersistentData: Record<AnimationDataKey, AnimationPersistentData>,
+	readonly Rebuild: Record<AnimationDataKey, boolean>,
+	readonly RefreshTime: Record<AnimationDataKey, number>,
+	readonly RefreshRate: Record<AnimationDataKey, number>,
+}
+type AnimationDataTypes = keyof AnimationPersistentStorage;
 
 type PreferenceSubscreenName =
 	"General" | "Difficulty" | "Restriction" | "Chat" | "CensoredWords" | "Audio" | "Arousal" |
@@ -739,8 +754,6 @@ type BackgroundTag =
 	"Club" | "College" | "Regular house" | "Dungeon" | "Asylum" | "Pandora" | "Club Cards"
 	;
 
-type MagicSchoolHouse = "Maiestas" | "Vincula" | "Amplector" | "Corporis";
-
 interface ModuleScreens {
 	Character:
 		| "Appearance"
@@ -750,11 +763,9 @@ interface ModuleScreens {
 		| "Disclaimer"
 		| "FriendList"
 		| "InformationSheet"
-		| "ItemColor"
 		| "Login"
 		| "OnlineProfile"
 		| "PasswordReset"
-		| "Player"
 		| "Preference"
 		| "Relog"
 		| "Title"
@@ -776,7 +787,6 @@ interface ModuleScreens {
 		| "HorseWalk"
 		| "Kidnap"
 		| "KinkyDungeon"
-		| "Lockpick"
 		| "MagicBattle" | "MagicPuzzle"
 		| "MaidCleaning" | "MaidDrinks"
 		| "PlayerAuction"
@@ -792,7 +802,7 @@ interface ModuleScreens {
 		| "ChatAdmin" | "ChatAdminRoomCustomization" | "ChatBlockItem"
 		| "ChatRoom" | "ChatSearch" | "ChatSelect"
 		| "ForbiddenWords"
-		| "Game" | "GameClubCard" | "GameLARP" | "GameMagicBattle"
+		| "GameClubCard" | "GameLARP" | "GameMagicBattle"
 		| "NicknameManagement"
 		| "WheelFortuneCustomize"
 		;
@@ -842,6 +852,9 @@ interface ScreenSpecifierOptions {
 
 type _ScreenSpecifier<T extends ModuleType> = [module: T, screen: ModuleScreens[T], options?: null | ScreenSpecifierOptions];
 type ScreenSpecifier = _ScreenSpecifier<"Character"> | _ScreenSpecifier<"Cutscene"> | _ScreenSpecifier<"MiniGame"> | _ScreenSpecifier<"Online"> | _ScreenSpecifier<"Room">;
+
+type _PartialScreenSpecifier<T extends ModuleType> = { module?: T, screen?: ModuleScreens[T] };
+type PartialScreenSpecifier = _PartialScreenSpecifier<"Character"> | _PartialScreenSpecifier<"Cutscene"> | _PartialScreenSpecifier<"MiniGame"> | _PartialScreenSpecifier<"Online"> | _PartialScreenSpecifier<"Room">;
 
 type AssetCategory = "Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" | "Smoking";
 
@@ -1205,8 +1218,8 @@ interface AssetLayer {
 	/** The name of the layer - may be null if the asset only contains a single default layer */
 	readonly Name: LayerName | null;
 	/** Specify a body type to override the asset with. */
-	readonly StyleOverride?: string [];
-	readonly CreateLayerTypesOverride?: number [];
+	readonly StyleOverride?: BodyStyle[];
+	readonly CreateLayerTypesOverride?: number[];
 	/** Specify a list of CLT asset layers to override. */
 	readonly AllowColorize: boolean;
 	/** if not null, specifies that this layer should always copy the color of the named layer */
@@ -1324,8 +1337,8 @@ interface Asset {
 	readonly HideItemAttribute: readonly AssetAttribute[];
 	readonly Require: readonly AssetGroupBodyName[];
 	readonly SetPose?: readonly AssetPoseName[];
-	readonly StyleOverride?: string[];
-	readonly SupportedStyles?: string[];
+	readonly StyleOverride?: BodyStyle[];
+	readonly SupportedStyles?: BodyStyle[];
 	readonly CreateLayerTypesOverride?: number[];
 	readonly DrawOffset?: {
 				Group?: AssetGroupName;
@@ -1352,6 +1365,11 @@ interface Asset {
 	readonly DrawingLeft: TopLeft.Data;
 	readonly DrawingTop: TopLeft.Data;
 	readonly HeightModifier: number;
+	/**
+	 * The height of the character as set in the special `Height` appearance group.
+	 *
+	 * Is represented by a number in the `[0.9, 1.0]` interval.
+	 */
 	readonly ZoomModifier: number;
 	readonly Alpha: null | readonly Alpha.Data[];
 	readonly Prerequisite: readonly AssetPrerequisite[];
@@ -1431,6 +1449,26 @@ interface Asset {
 }
 
 //#endregion
+
+/** See {@link CharacterAppearanceGetCurrentValue} */
+interface CharacterAppearanceValues {
+	/** See {@link Asset.Name} */
+	Name: string;
+	/** See {@link Asset.Description} */
+	Description: string;
+	/** See {@link Asset.DefaultColor} and {@link Item.Color} */
+	Color: ItemColor;
+	/** The index within {@link Character.Apperance} */
+	ID: number;
+	/** See {@link Asset.Effect} */
+	Effect: readonly EffectName[];
+	/** The asset */
+	Asset: Asset;
+	/** The item */
+	Full: Item;
+	/** See {@link Asset.ZoomModifier} */
+	Zoom: number;
+}
 
 type ItemBundle = ServerItemBundle;
 
@@ -1628,7 +1666,7 @@ interface Lovership {
  * @see {@link CommonKeyMove}
  */
 type KeyboardEventListener = (event: KeyboardEvent) => boolean;
-type MouseEventListener = (event: MouseEvent | TouchEvent) => void;
+type MouseEventListener = (event: PointerEvent) => void;
 type MouseWheelEventListener = (event: WheelEvent) => void;
 type ClipboardEventListener = (event: ClipboardEvent) => void;
 
@@ -1650,27 +1688,27 @@ interface ScreenFunctions {
 	Run: ScreenRunHandler;
 	/**
 	 * Called if the user presses the mouse button or touches the touchscreen on the canvas
-	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
+	 * @param {PointerEvent} event - The event that triggered this
 	 */
 	MouseDown?: MouseEventListener;
 		/**
 	 * Called if the user releases the mouse button or the touchscreen on the canvas
-	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
+	 * @param {PointerEvent} event - The event that triggered this
 	 */
 	MouseUp?: MouseEventListener;
 	/**
 	 * Called if the user moves the mouse cursor or the touch on the touchscreen over the canvas
-	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
+	 * @param {PointerEvent} event - The event that triggered this
 	 */
 	MouseMove?: MouseEventListener;
 	/**
 	 * Called if the user moves the mouse wheel on the canvas
-	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
+	 * @param {PointerEvent} event - The event that triggered this
 	 */
 	MouseWheel?: MouseWheelEventListener;
 	/**
 	 * Called if the user clicks on the canvas
-	 * @param {MouseEvent | TouchEvent} event - The event that triggered this
+	 * @param {PointerEvent} event - The event that triggered this
 	 */
 	Click: MouseEventListener;
 
@@ -1705,6 +1743,29 @@ interface ScreenFunctions {
 	Exit?: ScreenExitHandler;
 }
 
+// Explicitly insert all backgrounds & screen functions into the window namespace such that they can
+// easily be looked up with the likes of `window[`${CurrentScreen}Background`]`.
+// Note that most of them can still be undefined
+/** See {@link CommonTestSatisfies} */
+type ScreenFunctionsSymbols = Prettify<(
+	{ [key in `${RoomName}Background`]?: string }
+	& { [key in `${RoomName}Run`]: ScreenRunHandler }
+	& { [key in `${RoomName}MouseDown`]?: MouseEventListener }
+	& { [key in `${RoomName}MouseUp`]?: MouseEventListener }
+	& { [key in `${RoomName}MouseMove`]?: MouseEventListener }
+	& { [key in `${RoomName}MouseWheel`]?: MouseWheelEventListener }
+	& { [key in `${RoomName}Click`]: MouseEventListener }
+	& { [key in `${RoomName}Load`]?: ScreenLoadHandler }
+	& { [key in `${RoomName}Unload`]?: ScreenUnloadHandler }
+	& { [key in `${RoomName}Draw`]?: ScreenDrawHandler }
+	& { [key in `${RoomName}Resize`]?: ScreenResizeHandler }
+	& { [key in `${RoomName}KeyDown`]?: KeyboardEventListener }
+	& { [key in `${RoomName}KeyUp`]?: KeyboardEventListener }
+	& { [key in `${RoomName}Paste`]?: ClipboardEventListener }
+	& { [key in `${RoomName}Exit`]?: ScreenExitHandler }
+)>;
+interface Window extends ScreenFunctionsSymbols {}
+
 //#region Characters
 
 /** The different types of (mutually exclusive) permissions an item or item option can have */
@@ -1734,13 +1795,13 @@ type ScriptPermissions = Record<ScriptPermissionProperty, ScriptPermission>;
 
 interface DialogLine {
 	Stage: string;
-	NextStage: string;
-	Option: string;
-	Result: string;
-	Function: string;
-	Prerequisite: string;
-	Group: string;
-	Trait: string;
+	NextStage: string | null;
+	Option: string | null;
+	Result: string | null;
+	Function: string | null;
+	Prerequisite: string | null;
+	Group: string | null;
+	Trait: string | null;
 }
 
 interface DialogInfo<T extends ModuleType> {
@@ -1813,7 +1874,7 @@ interface Character {
 	Name: string;
 	Nickname?: string; // technically never as it's Online-only
 	Owner: string;
-	Lover: string;
+	Lover?: string;
 	Money: number;
 	Inventory: InventoryItem[];
 	InventoryData?: string;
@@ -1992,6 +2053,11 @@ interface Character {
 	HeightRatio: number;
 	HasHiddenItems: boolean;
 	SavedColors: HSVColor[];
+	/**
+	 * private
+	 * The cached blind level; use {@link Character.GetBlindLevel} instead.
+	 */
+	_BlindLevel?: number;
 	GetBlindLevel: (eyesOnly?: boolean) => number;
 	GetBlurLevel: () => number;
 	IsLocked: () => boolean;
@@ -2009,8 +2075,8 @@ interface Character {
 	CanPickLocks: () => boolean;
 	IsEdged: () => boolean;
 	IsPlayer: () => this is PlayerCharacter;
-	get X(): number | null;
-	get Y(): number | null;
+	get X(): number;
+	get Y(): number;
 	set X(X: number);
 	set Y(Y: number);
 	get Position(): ChatRoomMapPos | null;
@@ -2048,19 +2114,19 @@ interface Character {
 	/**
 	 * Check if the player is ghosting the given target character (or member number)
 	 */
-	HasOnGhostlist: (this: PlayerCharacter, target?: Character | number) => boolean;
+	HasOnGhostlist: (this: PlayerCharacter, target: Character | number) => boolean;
 	/**
 	 * Check if the player is blacklisting the given target character (or member number)
 	 */
-	HasOnBlacklist: (target?: Character | number) => boolean;
+	HasOnBlacklist: (target: Character | number) => boolean;
 	/**
 	 * Check if the player is whitelisting the given target character (or member number)
 	 */
-	HasOnWhitelist: (target?: Character | number) => boolean;
+	HasOnWhitelist: (target: Character | number) => boolean;
 	/**
 	 * Check if the player is friend with the given target character (or member number)
 	 */
-	HasOnFriendlist: (this: PlayerCharacter, target?: Character | number) => boolean;
+	HasOnFriendlist: (this: PlayerCharacter, target: Character | number) => boolean;
 	/**
 	 * Check if this character is ghosted by the player
 	 */
@@ -2172,6 +2238,7 @@ interface NPCCharacter extends Character {
 	Event?: NPCEvent[];
 	Affection?: number;
 	Domination?: number;
+	SavedName?: string;
 }
 
 /** Movie Studio */
@@ -2282,8 +2349,8 @@ type DifficultyLevel =
 interface PlayerCharacter extends Character {
 	// All the following are guaranteed to be set on login
 	MemberNumber: number;
-	Nickname: string;
-	LabelColor: "" | HexColor;
+	Nickname?: string;
+	LabelColor: HexColor;
 	Game: CharacterGameParameters;
 	Description: string;
 	Creation: number;
@@ -2319,7 +2386,7 @@ interface PlayerCharacter extends Character {
 	GhostList: number[];
 	Wardrobe: (ItemBundle[] | null)[];
 	WardrobeCharacterNames: string[];
-	SavedExpressions?: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
+	SavedExpressions: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
 	SavedColors: HSVColor[];
 	FriendList: number[];
 	FriendNames: Map<number, string>;
@@ -2491,10 +2558,6 @@ interface PlayerOnlineSettings {
 	ShowRoomCustomization: 0 | 1 | 2 | 3; // 0 - Never, 1 - No by default, 2 - Yes by default, 3 - Always
 	FriendListAutoRefresh: boolean;
 	DefaultChatRoomBackground: string;
-	/**
-	 * @deprecated
-	 */
-	SearchShowsFullRooms: never;
 }
 
 /** Pandora Player extension */
@@ -2845,7 +2908,7 @@ declare namespace ExtendedItemCallbacks {
 	 * @param drawData The dynamic draw data
 	 */
 	type AfterDraw<
-		PersistentData extends Record<string, any> = Record<string, unknown>
+		PersistentData extends AnimationPersistentData = AnimationPersistentData
 	> = ExtendedItemCallback<[drawData: DynamicDrawingData<PersistentData>]>;
 	/**
 	 * Callback for extended item `BeforeDraw` functions.
@@ -2854,7 +2917,7 @@ declare namespace ExtendedItemCallbacks {
 	 * @returns A record with any and all to-be overriden draw data
 	 */
 	type BeforeDraw<
-		PersistentData extends Record<string, any> = Record<string, unknown>
+		PersistentData extends AnimationPersistentData = AnimationPersistentData
 	> = ExtendedItemCallback<[drawData: DynamicDrawingData<PersistentData>], DynamicBeforeDrawOverrides>;
 	/**
 	 * Callback for extended item `ScriptDraw` functions.
@@ -2862,7 +2925,7 @@ declare namespace ExtendedItemCallbacks {
 	 * @param drawData The dynamic draw data
 	 */
 	type ScriptDraw<
-		PersistentData extends Record<string, any> = Record<string, unknown>
+		PersistentData extends AnimationPersistentData = AnimationPersistentData
 	> = ExtendedItemCallback<[drawData: DynamicScriptCallbackData<PersistentData>]>;
 }
 
@@ -2977,7 +3040,7 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	 */
 	type AfterDraw<
 		DataType extends ExtendedItemData<any>,
-		PersistentData extends Record<string, any> = Record<string, unknown>
+		PersistentData extends AnimationPersistentData = AnimationPersistentData
 	> = ExtendedItemScriptHookCallback<DataType, [drawData: DynamicDrawingData<PersistentData>]>;
 	/**
 	 * Callback for extended item `BeforeDraw` functions.
@@ -2989,7 +3052,7 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	 */
 	type BeforeDraw<
 		DataType extends ExtendedItemData<any>,
-		PersistentData extends Record<string, any> = Record<string, unknown>
+		PersistentData extends AnimationPersistentData = AnimationPersistentData
 	> = ExtendedItemScriptHookCallback<DataType, [drawData: DynamicDrawingData<PersistentData>], DynamicBeforeDrawOverrides>;
 	/**
 	 * Callback for extended item `ScriptDraw` functions.
@@ -3000,7 +3063,7 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	 */
 	type ScriptDraw<
 		DataType extends ExtendedItemData<any>,
-		PersistentData extends Record<string, any> = Record<string, unknown>
+		PersistentData extends AnimationPersistentData = AnimationPersistentData
 	> = ExtendedItemScriptHookCallback<DataType, [drawData: DynamicScriptCallbackData<PersistentData>]>;
 }
 
@@ -3945,7 +4008,11 @@ interface GamePrisonParameters {
 }
 
 interface GameMagicSchoolFindsAroundParameters {
-	KitsuneQuestProgress?: number;
+    KitsuneQuestProgress?: number;
+    TheresaQuestProgress?: number;
+    TheresaBadWords?: string[];
+    TheresaTooRude?: boolean;
+    TheresaHideUntil?: number;
 }
 
 //#endregion
@@ -3995,6 +4062,13 @@ interface GameGGTSParameters {
 	Strike: number;
 	Rule: string[];
 }
+
+// #endregion
+
+// #region Magic Battle & School stuff
+
+type MagicSchoolHouse = "Maiestas" | "Vincula" | "Amplector" | "Corporis";
+type MagicSchoolSpell = "Hogtie" | "ReleaseHogtie" | "FlyingHogtie" | "Arousal" | "Tickle" | "Pain" | "SwitchRope" | "SwitchChain" | "Fail" | "Tight";
 
 // #endregion
 
@@ -4157,7 +4231,7 @@ interface CommonDrawCallbacks {
 	drawImageColorizeBlink: DrawImageColorizeCallback;
 }
 
-interface DynamicDrawingData<T extends Record<string, any> = Record<string, unknown>> {
+interface DynamicDrawingData<T extends AnimationPersistentData = AnimationPersistentData> {
 	C: Character;
 	X: number;
 	Y: number;
@@ -4198,7 +4272,7 @@ interface DynamicBeforeDrawOverrides {
 
 type DynamicDrawTextEffect = "burn";
 
-interface DynamicScriptCallbackData<T extends Record<string, any> = Record<string, unknown>> {
+interface DynamicScriptCallbackData<T extends AnimationPersistentData = AnimationPersistentData> {
 	C: Character;
 	Item: Item;
 	PersistentData: () => T;
@@ -4258,8 +4332,15 @@ interface PandoraBaseRoom {
 
 //#region Crafting items
 
+/**
+ * The available crafting subscreens.
+ *
+ * Note that this list _may_ be incomplete, as additional entries can be added be added by third parties via {@link CraftingSlotModes}
+ */
 type CraftingMode = (
 	"Slot"
+	| "Reorder"
+	| "Delete"
 	| "Name"
 	| "Color"
 	| "Extended"
@@ -4267,8 +4348,83 @@ type CraftingMode = (
 	| "OverridePriority"
 );
 
-type CraftingReorderType = "None" | "Select" | "Place";
+/**
+ * A namespace with helper types for implementing custom crafting slot modes; modes that can be added by adding a callback to {@link CraftingSlots.modeData}.
+ */
+declare namespace CraftingSlotsMode {
+	/** The return type of {@link Callback} representing mode-specific heading and mode-accept-button customization */
+	interface Result {
+		/**
+		 * The color of the `mode-accept` button's question mark icon.
+		 * @default "white"
+		 */
+		modeAcceptQuestionColor?: string;
+		/**
+		 * The image source of the `mode-accept` button.
+		 * @default "./Icons/Crafting.png"
+		 */
+		modeAcceptImgSrc?: string;
+		/**
+		 * The tooltip content of the `mode-accept` button.
+		 *
+		 * Should contain a more extensive description of the relevant crafting mode (if so required; see {@link Result.heading}).
+		 * @default undefined
+		 */
+		modeAcceptTooltip?: string | Node | readonly (string | Node)[];
+		/**
+		 * A click listener for the `mode-accept` button.
+		 *
+		 * If present, the button should serve a "accept all changes" type of role.
+		 *
+		 * If absent, disable the button.
+		 * @default undefined
+		 */
+		modeAcceptListener?: null | ((this: HTMLButtonElement, ev: PointerEvent) => void);
+		/**
+		 * The content of the main crafting slot heading.
+		 *
+		 * Must contain a 1-line summary of the relevant crafting mode. See {@link Result.modeAcceptTooltip} if a more extensive description is also desired.
+		 */
+		heading: string | Node | readonly (string | Node )[];
+	}
 
+	/** Arguments for {@link Callback} representing a crafting item + button pair */
+	interface Args {
+		/** The crafting item (if any) associated with the button */
+		craft: null | CraftingItem;
+		/** The `.crafting-slot-button` button in question */
+		button: HTMLButtonElement;
+		/** Multi select listeners that can be attached to the button in order to implement `click` and `shift + click` selection behavior */
+		multiSelectListeners: {
+			click: (this: HTMLButtonElement, ev: PointerEvent) => void,
+			focus: (this: HTMLButtonElement, ev: FocusEvent) => void,
+		};
+	}
+
+	/**
+	 * The to-be registered callback
+	 * @param crafts A list of crafting arguments, which most prominently include the crafting items and their respective buttons
+	 * @returns The final mode-specific config
+	 */
+	type Callback = (crafts: readonly Args[]) => Result;
+
+	type Data = {
+		/** The `<select>` label associated with the registered slot mode. If absent, default to the `TextGet(Label${SlotModeName})` output */
+		selectLabel?: string;
+		/** The to-be registered callback used for setting up mode-specific configurations */
+		readonly callback: Callback;
+	}
+}
+
+/** All registered crafting slot modes (see {@link CraftingSlotsMode}) */
+interface CraftingSlotModeData extends Record<Extract<CraftingMode, "Slot" | "Reorder" | "Delete">, CraftingSlotsMode.Data> {
+	Slot: CraftingSlotsMode.Data;
+	Reorder: CraftingSlotsMode.Data;
+	Delete: CraftingSlotsMode.Data;
+}
+
+/** All `Slot`-adjecant crafting modes */
+type CraftingSlotModes = keyof CraftingSlotModeData;
 
 /**
  * A struct with an items crafting-related information.
@@ -4564,14 +4720,14 @@ interface ColorPickerInitOptions {
 	dispatch?: boolean;
 }
 
-//#end region
+// #end region
 
 // #region Log
 
 interface LogRecord {
 	Name: LogNameType[LogGroupType];
 	Group: LogGroupType;
-	Value: number;
+	Value: number | undefined;
 }
 
 /** The logging groups as supported by the {@link LogRecord.Group} */
@@ -4662,7 +4818,7 @@ interface LogNameType {
 interface FavoriteState {
 	TargetFavorite: boolean;
 	PlayerFavorite: boolean;
-	Icon: FavoriteIcon;
+	Icon?: FavoriteIcon;
 	UsableOrder: DialogSortOrder;
 	UnusableOrder: DialogSortOrder;
 }
@@ -4759,9 +4915,9 @@ interface ArousalSettingsType {
 	Activity: string;
 	Zone: string;
 	Fetish: string;
-	OrgasmTimer?: number;
-	OrgasmStage?: 0 | 1 | 2;
-	OrgasmCount?: number;
+	OrgasmTimer: number;
+	OrgasmStage: 0 | 1 | 2;
+	OrgasmCount: number;
 	DisableAdvancedVibes: boolean;
 }
 

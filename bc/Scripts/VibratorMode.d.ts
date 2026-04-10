@@ -173,7 +173,7 @@ declare var VibratorModeOptions: {
  */
 declare const VibratorModeOff: VibratingItemOptionConfig;
 /** A list with all advanced vibrator mode-names. */
-declare const VibratorModesAdvanced: VibratorMode[];
+declare const VibratorModesAdvanced: (VibratorMode | undefined)[];
 /**
  * A lookup for the vibrator configurations for each registered vibrator item
  * @const

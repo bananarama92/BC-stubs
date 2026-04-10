@@ -1,7 +1,7 @@
 declare function NurseryPlayerIsPacified(): boolean;
 declare function NurseryPlayerIsHarnessPacified(): boolean;
 declare function NurseryPlayerLostBinky(): boolean;
-declare function NurseryPlayerLostBinkyAgain(): boolean;
+declare function NurseryPlayerLostBinkyAgain(): boolean | null;
 declare function NurseryPlayerWearingBabyDress(): boolean;
 declare function NurseryPlayerReadyToAppologise(): boolean;
 declare function NurseryPlayerDiapered(): boolean;
@@ -47,7 +47,7 @@ declare function NurseryGoodBehaviour(): void;
 declare var NurseryBackground: string;
 /** @type {null | string} */
 declare var NurserySituation: null | string;
-declare var NurseryJustClicked: any;
+declare var NurseryJustClicked: null;
 /** @type {null | NPCCharacter} */
 declare var NurseryNurse: null | NPCCharacter;
 /** @type {null | NPCCharacter} */

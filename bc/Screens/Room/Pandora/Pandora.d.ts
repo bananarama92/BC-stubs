@@ -403,8 +403,8 @@ declare var PandoraDirectionListFrom: PandoraFloorDirection[];
 /** @type {""|"Search"|"Rest"|"Paint"} */
 declare var PandoraMode: "" | "Search" | "Rest" | "Paint";
 declare var PandoraModeTimer: number;
-declare var PandoraModeAppearance: any;
-declare var PandoraMessage: any;
+declare var PandoraModeAppearance: null;
+declare var PandoraMessage: null;
 /** @type {NPCCharacter[]} */
 declare var PandoraParty: NPCCharacter[];
 /** @type {null | NPCCharacter} */

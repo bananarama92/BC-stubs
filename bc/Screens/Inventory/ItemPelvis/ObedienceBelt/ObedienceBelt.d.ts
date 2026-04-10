@@ -11,7 +11,7 @@ declare function InventoryObedienceBeltCheckPunish(Item: Item, C: Character): ""
  */
 declare function AssetsItemPelvisObedienceBeltUpdate(data: DynamicScriptCallbackData<ObedienceBeltPersistentData>, LastTime: number): void;
 declare function AssetsItemPelvisObedienceBeltScriptDraw(drawData: DynamicScriptCallbackData<ObedienceBeltPersistentData>): void;
-declare function AssetsItemPelvisObedienceBeltAfterDrawHook(data: TextItemData, originalFunction: (drawData: DynamicDrawingData<ObedienceBeltPersistentData>) => void, drawData: DynamicDrawingData<ObedienceBeltPersistentData>): void;
+declare function AssetsItemPelvisObedienceBeltAfterDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData<ObedienceBeltPersistentData>) => void) | null, drawData: DynamicDrawingData<ObedienceBeltPersistentData>): void;
 type ObedienceBeltPersistentData = {
     UpdateTime?: number;
     LastMessageLen?: number;

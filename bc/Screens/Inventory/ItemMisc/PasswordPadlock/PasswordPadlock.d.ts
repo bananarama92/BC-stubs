@@ -5,7 +5,7 @@ declare function InventoryItemMiscPasswordPadlockClickHook(data: NoArchItemData,
 declare function InventoryItemMiscPasswordPadlockControlsClick(): void;
 declare function InventoryItemMiscPasswordPadlockHandleOpenClick(): void;
 declare function InventoryItemMiscPasswordPadlockHandleFirstSet(): void;
-declare function InventoryItemMiscPasswordPadlockExitHook(data: NoArchItemData, originalFunction: () => void): void;
+declare function InventoryItemMiscPasswordPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 declare function InventoryItemMiscPasswordPadlockIsSet(): boolean;
 declare function InventoryItemMiscPasswordPadlockPublishPasswordChange(C: any): void;
 declare const InventoryItemMiscPasswordPadlockPasswordRegex: RegExp;

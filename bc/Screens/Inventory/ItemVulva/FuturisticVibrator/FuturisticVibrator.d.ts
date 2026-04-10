@@ -12,7 +12,7 @@ declare function InventoryItemVulvaFuturisticVibratorPreviousAccessMode(current:
 declare function InventoryItemVulvaFuturisticVibratorNextAccessMode(current: ItemVulvaFuturisticVibratorAccessMode): ItemVulvaFuturisticVibratorAccessMode;
 declare function InventoryItemVulvaFuturisticVibratorClickHook(data: VibratingItemData, originalFunction: () => void): void;
 declare function InventoryItemVulvaFuturisticVibratorClickSet(): void;
-declare function InventoryItemVulvaFuturisticVibratorExitHook(data: VibratingItemData, originalFunction: () => void): void;
+declare function InventoryItemVulvaFuturisticVibratorExitHook(data: VibratingItemData, originalFunction: (() => void) | null): void;
 /**
  * @param {string} msg
  * @param {readonly string[]} TriggerValues
@@ -46,7 +46,7 @@ declare function InventoryItemVulvaFuturisticVibratorSetMode(data: VibratingItem
  * @param {number} LastTime
  */
 declare function InventoryItemVulvaFuturisticVibratorHandleChat(data: VibratingItemData, C: Character, Item: Item, LastTime: number): void;
-declare function AssetsItemVulvaFuturisticVibratorScriptDrawHook(data: VibratingItemData, originalFunction: (drawData: DynamicScriptCallbackData<FuturisticVibratorPersistentData>) => void, drawData: DynamicScriptCallbackData<FuturisticVibratorPersistentData>): void;
+declare function AssetsItemVulvaFuturisticVibratorScriptDrawHook(data: VibratingItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticVibratorPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticVibratorPersistentData>): void;
 declare var ItemVulvaFuturisticVibratorTriggers: string[];
 /** @type {string[]} */
 declare var ItemVulvaFuturisticVibratorTriggerValues: string[];

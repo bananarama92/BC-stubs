@@ -54,9 +54,9 @@ declare function LogContain<T extends LogGroupType>(LogName: LogNameType[T], Log
  * @template {LogGroupType} T
  * @param {LogNameType[T]} QueryLogName - The name of the log to query the value
  * @param {T} QueryLogGroup - The name of the log's group
- * @returns {number | null} - Returns the value of the log which is a date represented in ms or undefined. Returns null if no matching log is found.
+ * @returns {number | null | undefined} - Returns the value of the log which is a date represented in ms or undefined. Returns null if no matching log is found.
  */
-declare function LogValue<T extends LogGroupType>(QueryLogName: LogNameType[T], QueryLogGroup: T): number | null;
+declare function LogValue<T extends LogGroupType>(QueryLogName: LogNameType[T], QueryLogGroup: T): number | null | undefined;
 /**
  * Loads the account log.
  * @param {readonly LogRecord[]} NewLog - Existing logs received by the server

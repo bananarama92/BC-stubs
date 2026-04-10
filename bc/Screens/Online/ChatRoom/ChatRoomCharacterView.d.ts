@@ -3,15 +3,8 @@
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
 declare function ChatRoomCharacterViewIsActive(): boolean;
-/**
- * Run handler for the chat room character view
- */
-declare function ChatRoomCharacterViewRun(): void;
-/**
- * Handles clicks the chatroom screen view.
- * @returns {void} - Nothing.
- */
-declare function ChatRoomCharacterViewClick(event: any): void;
+declare function ChatRoomCharacterViewRun(time: number): void;
+declare function ChatRoomCharacterViewClick(event: PointerEvent): void;
 declare function ChatRoomCharacterViewKeyDown(event: KeyboardEvent): boolean;
 /**
  * Returns TRUE if the player can leave
