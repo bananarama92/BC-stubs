@@ -32,7 +32,7 @@ declare function FuturisticAccessDraw(Data: ExtendedItemData<any>, OriginalFunct
  * @returns {void} - Nothing
  */
 declare function FuturisticAccessExit(): void;
-declare function FuturisticAccessValidate(data: ExtendedItemData<any>, originalFunction: (C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean) => string, C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean): string;
+declare function FuturisticAccessValidate(data: ExtendedItemData<any>, originalFunction: ((C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean | undefined) => string) | null, C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean | undefined): string;
 declare function InventoryItemFuturisticLoadAccessDenied(): void;
 /**
  * Draw the futuristic item ACCESS DENIED screen
@@ -47,11 +47,11 @@ declare function InventoryItemFuturisticClickAccessDenied(data: ExtendedItemData
 /**
  * Validates, if the chosen option is possible. Sets the global variable 'DialogExtendedMessage' to the appropriate error message, if not.
  * @param {Character} C - The character to validate the option
- * @param {Item} Item - The equipped item
- * @param {boolean} changeWhenLocked - See {@link ExtendedItemOption.ChangeWhenLocked}
+ * @param {Item | null} Item - The equipped item
+ * @param {boolean} [changeWhenLocked] - See {@link ExtendedItemOption.ChangeWhenLocked}
  * @returns {string} - Returns false and sets DialogExtendedMessage, if the chosen option is not possible.
  */
-declare function InventoryItemFuturisticValidate(C: Character, Item?: Item, changeWhenLocked?: boolean): string;
+declare function InventoryItemFuturisticValidate(C: Character, Item?: Item | null, changeWhenLocked?: boolean): string;
 /**
  * Publish a chat message for denied access.
  *

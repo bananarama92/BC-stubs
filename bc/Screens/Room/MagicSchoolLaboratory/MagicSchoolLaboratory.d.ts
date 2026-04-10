@@ -127,6 +127,15 @@ declare function MagicSchoolLaboratoryUngagPlayer(RepChange: any): void;
  */
 declare function MagicSchoolLaboratoryReleasePlayer(RepChange: any): void;
 /**
+ * @param {NPCCharacter} npc
+ */
+declare function MagicSchoolLaboratoryGetAllSpellsForNpc(npc: NPCCharacter): MagicSchoolSpell[];
+/**
+ * @param {NPCCharacter} npc
+ * @param {MagicSchoolSpell | undefined} lastSpell
+ */
+declare function MagicSchoolLaboratoryApplyRandomSpellEffects(npc: NPCCharacter, lastSpell: MagicSchoolSpell | undefined): "Tickle" | "Tight" | "Hogtie" | "Arousal" | "Fail" | "ReleaseHogtie" | "FlyingHogtie" | "Pain" | "SwitchRope" | "SwitchChain";
+/**
  * When the player lost a battle and the student tests a spell on her
  * @returns {void} - Nothing
  */
@@ -162,5 +171,6 @@ declare var MagicSchoolLaboratoryTeacher: null | NPCCharacter;
 /** @type {null | NPCCharacter} */
 declare var MagicSchoolLaboratoryStudent: null | NPCCharacter;
 declare var MagicSchoolLaboratoryBattleWage: string;
-declare var MagicSchoolLaboratoryLastSpell: string;
+/** @type {MagicSchoolSpell | undefined} */
+declare var MagicSchoolLaboratoryLastSpell: MagicSchoolSpell | undefined;
 declare var MagicSchoolLaboratorySpellCount: number;

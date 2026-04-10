@@ -77,7 +77,7 @@ declare function DynamicDrawApplyOptions(ctx: CanvasRenderingContext2D, { fontSi
  * @type {object}
  * @property {number} [fontSize] - The target font size. Note that if space is constrained, the actual drawn font size will be reduced
  * automatically to fit. Defaults to 30px.
- * @property {string} [fontFamily] - The desired font family to draw text in. This can be a single font name, or a full CSS font stack
+ * @property {string | null} [fontFamily] - The desired font family to draw text in. This can be a single font name, or a full CSS font stack
  * (e.g. "'Helvetica', 'Arial', sans-serif"). Defaults to the player's chosen global font.
  * @property {CanvasTextAlign} [textAlign] - The text alignment to use. Can be any valid
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-align text alignment}. Not applicable to the {@link DynamicDrawTextArc}
@@ -206,72 +206,72 @@ type DynamicDrawOptions = {
      * - The target font size. Note that if space is constrained, the actual drawn font size will be reduced
      * automatically to fit. Defaults to 30px.
      */
-    fontSize?: number;
+    fontSize?: number | undefined;
     /**
      * - The desired font family to draw text in. This can be a single font name, or a full CSS font stack
      * (e.g. "'Helvetica', 'Arial', sans-serif"). Defaults to the player's chosen global font.
      */
-    fontFamily?: string;
+    fontFamily?: string | null | undefined;
     /**
      * - The text alignment to use. Can be any valid
      * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-align text alignment}. Not applicable to the {@link DynamicDrawTextArc}function. Defaults to "center".
      */
-    textAlign?: CanvasTextAlign;
+    textAlign?: CanvasTextAlign | undefined;
     /**
      * - The text baseline to use. Can be any valid
      * {@link https://developer.mozilla.org/en-us/docs/Web/CSS/vertical-align vertical alignment}. Defaults to "middle".
      */
-    textBaseline?: CanvasTextBaseline;
+    textBaseline?: CanvasTextBaseline | undefined;
     /**
      * - The color that the text should be drawn in. Can be any valid CSS color string. Defaults to "#000".
      */
-    color?: string;
+    color?: string | undefined;
     /**
      * - The stroke color that should be used for the text. Can be any valid CSS color
      * string. Defaults to the same value as the `color` property.
      */
-    strokeColor?: string;
+    strokeColor?: string | undefined;
     /**
      * - The stroke width that should be used when stroking the text. Only used if a `strokeColor` is defined. Defaults to 1.
      */
-    strokeWidth?: number;
+    strokeWidth?: number | undefined;
     /**
      * - A dynamic text effect to apply. No effects are applied by default.
      */
-    effect?: DynamicDrawTextEffect;
+    effect?: "burn" | undefined;
     /**
      * - The maximum width of the drawn text. Not applicable to the {@link DynamicDrawTextFromTo} function, as
      * constraints are defined by the endpoints. When defined for the {@link DynamicDrawTextArc} function, it defines the maximum width of the
      * text perpendicular to the radius line on which the text is centered. Unlimited by default.
      */
-    width?: number;
+    width?: number | undefined;
     /**
      * - Whether or not the text should be fully contained in the box defined by the from/to coordinates. Only
      * applicable to the {@link DynamicDrawTextFromTo} function. Defaults to true.
      */
-    contain?: boolean;
+    contain?: boolean | undefined;
     /**
      * - The angle at which the text should be drawn, relative to the center of the circle. Angles are measured
      * clockwise in radians starting at the vertical 12 o'clock position. For example 0 corresponds to 12 o'clock, PI/2 corresponds to
      * 3 o'clock, PI corresponds to 6 o'clock, and 3PI/2 corresponds to 9 o'clock. Only applicable to the {@link DynamicDrawTextArc} function.
      * Defaults to 0.
      */
-    angle?: number;
+    angle?: number | undefined;
     /**
      * - The radius in pixels of the circle whose arc the text should be drawn along. A smaller radius will result
      * in a greater text curvature and vice versa. Only applicable to the {@link DynamicDrawTextArc} function. Defaults to 450px.
      */
-    radius?: number;
+    radius?: number | undefined;
     /**
      * - The maximum angle that the text should be drawn along. This effectively determines the maximum length of
      * the arc along which the text will be drawn. Only applicable to the {@link DynamicDrawTextArc} function. Defaults to PI (a semicircle).
      */
-    maxAngle?: number;
+    maxAngle?: number | undefined;
     /**
      * - The direction the text should be drawn in along the circular arc. Only applicable to
      * the {@link DynamicDrawTextArc} function. Defaults to {@link DynamicDrawTextDirection.CLOCKWISE};
      */
-    direction?: DynamicDrawTextDirection;
+    direction?: number | undefined;
     /**
      * - The direction of the curve of the text. This determines whether the center of the text
      * curves upwards ({@link DynamicDrawTextCurve.SMILEY}) or downwards ({@link DynamicDrawTextCurve.FROWNY}). Only applicable to the
@@ -279,7 +279,7 @@ type DynamicDrawOptions = {
      *
      * A drawing callback, used to add drawing effects to dynamic text.
      */
-    textCurve?: DynamicDrawTextCurve;
+    textCurve?: number | undefined;
 };
 /**
  * DynamicDraw.js
@@ -289,7 +289,7 @@ type DynamicDrawOptions = {
  * An options hash that can be used to customize dynamically drawn text. No options need be specified, and some options are only applicable
  * to certain drawing functions.
  */
-type DynamicDrawTextEffectFunction = (text: string, ctx: CanvasRenderingContext2D, x: number, y: number, options?: DynamicDrawOptions) => any;
+type DynamicDrawTextEffectFunction = (text: string, ctx: CanvasRenderingContext2D, x: number, y: number, options?: DynamicDrawOptions | undefined) => any;
 /**
  * DynamicDraw.js
  * --------------
@@ -302,9 +302,9 @@ type DynamicDrawTextEffectDefinition = {
     /**
      * - A drawing callback that is called before the dynamic text is drawn
      */
-    before?: DynamicDrawTextEffectFunction;
+    before?: DynamicDrawTextEffectFunction | undefined;
     /**
      * - A drawing callback that is called after the dynamic text is drawn
      */
-    after?: DynamicDrawTextEffectFunction;
+    after?: DynamicDrawTextEffectFunction | undefined;
 };

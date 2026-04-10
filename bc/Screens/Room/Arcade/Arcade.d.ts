@@ -81,7 +81,7 @@ declare var ArcadeBackground: string;
 declare var ArcadeEmployee: null | NPCCharacter;
 /** @type {null | NPCCharacter} */
 declare var ArcadePlayer: null | NPCCharacter;
-declare var ArcadeAskedFor: any;
+declare var ArcadeAskedFor: null;
 declare var ArcadePrice: number;
 declare var ArcadeDeviousChallenge: boolean;
 declare var ArcadeCannotDoDeviousChallenge: boolean;

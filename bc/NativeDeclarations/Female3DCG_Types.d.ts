@@ -11,6 +11,8 @@ interface Fetish {
 	GetFactor(C: Character): number;
 }
 
+type BodyStyle = "EchoV1" | "EchoV2" | AssetGroupName;
+
 /** Types for representing the left/top coordinate of a target draw rect. */
 declare namespace TopLeft {
 	/**
@@ -405,7 +407,7 @@ interface AssetGroupDefinitionBase extends AssetCommonPropertiesGroupAsset, Asse
 	MirrorActivitiesFrom?: AssetGroupItemName;
 
 	/**
-	 * The group actually recieving arousal events
+	 * The group actually receiving arousal events
 	 *
 	 * Used to proxy around a group that does not have activities
 	 * enabled (and thus arousal settings.
@@ -522,7 +524,7 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	NotVisibleOnScreen?: string[];
 
 	/** Specify body type overrides that live in the asset override folder */
-	StyleOverride?: string[];
+	StyleOverride?: BodyStyle[];
 	CreateLayerTypesOverride?: number[];
 
 	DrawOffset?: {
@@ -631,6 +633,12 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	MaxTimer?: number;
 
 	Height?: number;
+	/**
+	 * The height of the character as set in the special `Height` appearance group.
+	 *
+	 * Is represented by a number in the `[0.9, 1.0]` interval.
+	 * @default 1.0
+	 */
 	Zoom?: number;
 	Prerequisite?: AssetPrerequisite | AssetPrerequisite[];
 	Extended?: boolean;
@@ -766,6 +774,7 @@ declare namespace AssetDefinition {
 	/** An {@link AssetDefinition} subtype for assets whose group is of the `Item` category. */
 	interface Item extends AssetDefinitionBase {
 		BodyCosplay?: false;
+		Zoom?: never;
 	}
 	/** An {@link AssetDefinition} subtype for assets whose group is of the `Appearance` category. */
 	interface Appearance extends AssetDefinitionBase {
@@ -880,7 +889,7 @@ interface AssetLayerDefinition extends AssetCommonPropertiesGroupAssetLayer, Ass
 	/**
 	 * Specify body type overrides that live in the asset override folder
 	 */
-	StyleOverride?: string[];
+	StyleOverride?: BodyStyle[];
 	CreateLayerTypesOverride?: number[];
 
 	MirrorExpression?: AssetGroupName;
@@ -937,7 +946,7 @@ interface ExtendedItemConfig<OptionType extends ExtendedItemOption> {
 	/** A record containing various dialog keys used by the extended item screen */
 	DialogPrefix?: ExtendedItemCapsDialog<any, OptionType>;
 	/**
-	 * A recond containing functions that are run on load, click, draw, exit, and validate, with the original archetype function
+	 * A record containing functions that are run on load, click, draw, exit, and validate, with the original archetype function
 	 * and parameters passed on to them. If undefined, these are ignored.
 	 * Note that scripthook functions must be loaded before `Female3DCGExtended.js` in `index.html`.
 	 */
@@ -1138,7 +1147,7 @@ interface TypedItemConfig extends ExtendedItemConfig<TypedItemOption> {
 	 */
 	ChangeWhenLocked?: boolean;
 	/**
-	 * A recond containing functions that are run on load, click, draw, exit, validate and publishaction,
+	 * A record containing functions that are run on load, click, draw, exit, validate and publishaction,
 	 * with the original archetype function and parameters passed on to them. If undefined, these are ignored.
 	 * Note that scripthook functions must be loaded before `Female3DCGExtended.js` in `index.html`.
 	 */
@@ -1193,7 +1202,7 @@ interface ModularItemConfig extends ExtendedItemConfig<ModularItemOption> {
 		Chat?: string | ExtendedItemChatCallback<ModularItemOption>;
 	};
 	/**
-	 * A recond containing functions that are run on load, click, draw, exit, and validate, with the original archetype function
+	 * A record containing functions that are run on load, click, draw, exit, and validate, with the original archetype function
 	 * and parameters passed on to them. If undefined, these are ignored.
 	 * Note that scripthook functions must be loaded before `Female3DCGExtended.js` in `index.html`.
 	 */

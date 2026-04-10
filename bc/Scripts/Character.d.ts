@@ -30,7 +30,7 @@ declare function CharacterBuildDialog(C: Character, CSV: readonly string[][], fu
 /**
  * Loads the content of a CSV file to build the character dialog. Can override the current screen.
  * @param {Character} C - Character for which to build the dialog objects
- * @param {DialogInfo} [info]
+ * @param {DialogInfo<any>} [info]
  * @returns {void} - Nothing
  */
 declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo<any>): void;
@@ -46,12 +46,12 @@ declare function CharacterArchetypeClothes(C: Character, Archetype: "Maid" | "Mi
  * Loads an NPC into the character array. The appearance is randomized, and a type can be provided to dress them in a given style.
  * @template {ModuleType} T
  * @param {string} CharacterID - The unique identifier for the NPC
- * @param {string} [NPCType] - The dialog used by the NPC.  Defaults to CharacterID if not specified.
+ * @param {null | string} [NPCType] - The dialog used by the NPC.  Defaults to CharacterID if not specified.
  * @param {null | T} module
  * @param {null | ModuleScreens[T]} screen
  * @returns {NPCCharacter} - The randomly generated NPC
  */
-declare function CharacterLoadNPC<T extends ModuleType>(CharacterID: string, NPCType?: string, module?: null | T, screen?: null | ModuleScreens[T]): NPCCharacter;
+declare function CharacterLoadNPC<T extends ModuleType>(CharacterID: string, NPCType?: null | string, module?: null | T, screen?: null | ModuleScreens[T]): NPCCharacter;
 /**
  * Create a minimal character object
  * @param {string} CharacterID - The account name to give to the character
@@ -99,11 +99,11 @@ declare function CharacterLoadAttributes(C: Character): void;
 /**
  * Returns a list of effects for a character from some or all groups
  * @param {Character} C - The character to check
- * @param {readonly AssetGroupName[]} [Groups=null] - Optional: The list of groups to consider. If none defined, check all groups
+ * @param {readonly AssetGroupName[] | undefined} [Groups=null] - Optional: The list of groups to consider. If none defined, check all groups
  * @param {boolean} [AllowDuplicates=false] - Optional: If true, keep duplicates of the same effect provided they're taken from different groups
  * @returns {EffectName[]} - A list of effects
  */
-declare function CharacterGetEffects(C: Character, Groups?: readonly AssetGroupName[], AllowDuplicates?: boolean): EffectName[];
+declare function CharacterGetEffects(C: Character, Groups?: readonly AssetGroupName[] | undefined, AllowDuplicates?: boolean): EffectName[];
 /**
  * Loads a character's tints, resolving tint definitions against items from the character's appearance
  * @param {Character} C - Character whose tints should be loaded
@@ -254,13 +254,13 @@ declare function CharacterFullRandomRestrain(C: Character, Ratio?: "FEW" | "LOT"
  *
  * @param {Character} C - Character for which to set the expression of
  * @param {ExpressionGroupName | "Eyes1"} AssetGroup - Asset group for the expression
- * @param {null | ExpressionName} Expression - Name of the expression to use
+ * @param {ExpressionName | undefined} Expression - Name of the expression to use
  * @param {number} [Timer] - Optional: time the expression will last, in seconds. Will send a null expression to expression queue. If expression to set is null, this is ignored.
  * @param {ItemColor} [Color] - Optional: color of the expression to set
  * @param {boolean} [fromQueue] - Internal: used to skip queuing the expression change if it comes from the queued expressions
  * @returns {void} - Nothing
  */
-declare function CharacterSetFacialExpression(C: Character, AssetGroup: ExpressionGroupName | "Eyes1", Expression: null | ExpressionName, Timer?: number, Color?: ItemColor, fromQueue?: boolean): void;
+declare function CharacterSetFacialExpression(C: Character, AssetGroup: ExpressionGroupName | "Eyes1", Expression: ExpressionName | undefined, Timer?: number, Color?: ItemColor, fromQueue?: boolean): void;
 /**
  * Resets the character's facial expression to the default
  * @param {Character} C - Character for which to reset the expression of
@@ -289,10 +289,10 @@ declare function CharacterIsExpressionAllowed(C: Character, Item: Item, Expressi
 declare function CharacterGetCurrent(): Character | null;
 /**
  * Compresses a character wardrobe from an array to a LZ string to use less storage space
- * @param {readonly ItemBundle[][]} Wardrobe - Uncompressed wardrobe
+ * @param {readonly (ItemBundle[] | null)[]} Wardrobe - Uncompressed wardrobe
  * @returns {string} - The compressed wardrobe
  */
-declare function CharacterCompressWardrobe(Wardrobe: readonly ItemBundle[][]): string;
+declare function CharacterCompressWardrobe(Wardrobe: readonly (ItemBundle[] | null)[]): string;
 /**
  * Decompresses a character wardrobe from a LZ String to an array if it was previously compressed (For backward compatibility with old
  * wardrobes)
@@ -389,9 +389,10 @@ declare function CharacterCheckHooks(C: Character, IgnoreHooks: boolean): boolea
  * @param {Character} FromC - The character from which to pick the item
  * @param {Character} ToC - The character on which we must put the item
  * @param {AssetGroupName} Group - The item group to transfer (Cloth, Hat, etc.)
+ * @param {boolean} [Refresh] - Perform a character refresh
  * @returns {void} - Nothing
  */
-declare function CharacterTransferItem(FromC: Character, ToC: Character, Group: AssetGroupName, Refresh: any): void;
+declare function CharacterTransferItem(FromC: Character, ToC: Character, Group: AssetGroupName, Refresh?: boolean): void;
 /**
  * Check if the given character can be aroused at all.
  * @param {Character} C - The character to test
@@ -443,17 +444,17 @@ declare function CharacterCanChangeNickname(C: Character): boolean;
  *
  * @param {Character} C - The character to change the nickname of.
  * @param {string} Nick - The name to use as the new nickname. An empty string uses the character's real name.
- * @return {"NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked"} null if the nickname was valid, or an explanation for why the nickname was rejected.
+ * @return {"NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked" | null} null if the nickname was valid, or an explanation for why the nickname was rejected.
  */
-declare function CharacterSetNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
+declare function CharacterSetNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked" | null;
 /**
  * Validate the given character's nickname
  *
  * @param {Character} C - The character to change the nickname of.
  * @param {string} Nick - The name to use as the new nickname. An empty string uses the character's real name.
- * @return {"NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked"} null if the nickname was valid, or an explanation for why the nickname was rejected.
+ * @return {"NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked" | null} null if the nickname was valid, or an explanation for why the nickname was rejected.
  */
-declare function CharacterValidateNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
+declare function CharacterValidateNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked" | null;
 /**
  * Update the owners note on the specified character.  The Player must be the owner of this character.
  * Notes will be truncated to max 4000 chars.
@@ -509,7 +510,7 @@ declare function CharacterCanChangeToPose(C: Character, poseName: AssetPoseName)
  * @param {"black" | "white" | "ghost" | "friend"} list
  */
 declare function CharacterIsOnList(listOwner: Character, listTarget: Character | number, list: "black" | "white" | "ghost" | "friend"): boolean;
-/** @type Character[] */
+/** @type {Character[]} */
 declare var Character: Character[];
 declare var CharacterNextId: number;
 /** @type {Map<BlindEffectName, number>} */

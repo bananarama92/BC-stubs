@@ -39,7 +39,7 @@ declare function CommonDrawAppearanceBuild(C: Character, { clearRect, clearRectB
  * @param {Item} item
  * @param {AssetLayer} layer
  */
-declare function CommonDrawResolveLayerExpression(C: Character, item: Item, layer: AssetLayer): ExpressionName;
+declare function CommonDrawResolveLayerExpression(C: Character, item: Item, layer: AssetLayer): ExpressionName | undefined;
 /**
  * Get the X and Y drawing coordinates for a layer
  *
@@ -50,8 +50,8 @@ declare function CommonDrawResolveLayerExpression(C: Character, item: Item, laye
  * @param {null | ItemProperties} properties
  */
 declare function CommonDrawComputeDrawingCoordinates(C: Character, asset: Asset, layer: AssetLayer, groupName: AssetGroupName, properties?: null | ItemProperties): {
-    X: number;
-    Y: number;
+    X: number | undefined;
+    Y: number | undefined;
     fixedYOffset: number;
 };
 /**

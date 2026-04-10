@@ -560,24 +560,24 @@ declare function ChatRoomStruggleDraw(): void;
 declare function ChatRoomMenuDraw(): void;
 /**
  * Redirects the Mouse Down event to the map if needed
- * @param {MouseEvent | TouchEvent} event
+ * @param {PointerEvent} event
  * @returns {void} - Nothing
  */
-declare function ChatRoomMouseDown(event: MouseEvent | TouchEvent): void;
+declare function ChatRoomMouseDown(event: PointerEvent): void;
 /**
  * Redirects the Mouse Up event to the map if needed
- * @param {MouseEvent | TouchEvent} event
+ * @param {PointerEvent} event
  * @returns {void} - Nothing
  */
-declare function ChatRoomMouseUp(event: MouseEvent | TouchEvent): void;
+declare function ChatRoomMouseUp(event: PointerEvent): void;
 /**
  * Redirects the Mouse Move event to the map if needed
- * @param {MouseEvent | TouchEvent} event
+ * @param {PointerEvent} event
  * @returns {void} - Nothing
  */
-declare function ChatRoomMouseMove(event: MouseEvent | TouchEvent): void;
+declare function ChatRoomMouseMove(event: PointerEvent): void;
 declare function ChatRoomMouseWheel(event: WheelEvent): void;
-declare function ChatRoomClick(event: MouseEvent | TouchEvent): void;
+declare function ChatRoomClick(event: PointerEvent): void;
 /**
  * The handler for the "Kneel" top menu button
  */
@@ -594,7 +594,7 @@ declare function ChatRoomOpenInformationScreen(): void;
  * The handler for the "Admin" button
  */
 declare function ChatRoomOpenAdminScreen(): void;
-declare function ChatRoomMenuClick(event: MouseEvent | TouchEvent): void;
+declare function ChatRoomMenuClick(event: PointerEvent): void;
 declare function ChatRoomAttemptStandMinigameEnd(): void;
 /**
  * Checks if the given chat room visibility property causes it to be "private" (has any form of visibility control)
@@ -758,11 +758,11 @@ declare function ChatRoomSendAttemptEmote(msg: string): void;
  *
  * @param {Character} C - Character on which the action is done.
  * @param {string} Action - Action modifier
- * @param {Item | null} PrevItem - The item that has been removed.
- * @param {Item | null} NextItem - The item that has been added.
+ * @param {Item | null | undefined} PrevItem - The item that has been removed.
+ * @param {Item | null | undefined} NextItem - The item that has been added.
  * @returns {boolean} - whether we published anything to the chat.
  */
-declare function ChatRoomPublishAction(C: Character, Action: string, PrevItem: Item | null, NextItem: Item | null): boolean;
+declare function ChatRoomPublishAction(C: Character, Action: string, PrevItem: Item | null | undefined, NextItem: Item | null | undefined): boolean;
 /**
  * Updates an item on character for everyone in a chat room - replaces ChatRoomCharacterUpdate to cut on the lag.
  *
@@ -1495,7 +1495,7 @@ declare function ChatRoomGetCharacter(spec: string | number): Character | null;
 /**
  * Returns the currently running game in the room
  */
-declare function ChatRoomGetGame(): ServerChatRoomGame;
+declare function ChatRoomGetGame(): ServerChatRoomGame | null;
 declare namespace ChatRoomSpaceType {
     let MIXED: "X";
     let FEMALE_ONLY: "";
@@ -1615,7 +1615,7 @@ declare var ChatRoomJoinLeash: string;
 declare var ChatRoomCustomized: boolean;
 declare var ChatRoomCustomBackground: string;
 declare var ChatRoomCustomFilter: string;
-declare var ChatRoomCustomSizeMode: any;
+declare var ChatRoomCustomSizeMode: null;
 /**
  * The list of chat room views
  * @type {Record<"Character"|"Map", ChatRoomView>}
@@ -1719,8 +1719,8 @@ declare namespace ChatRoomResizeManager {
 }
 declare namespace ChatRoomSep {
     let ActiveElem: null | HTMLDivElement;
-    let _ClickCollapse: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
-    let _ClickScrollUp: (this: HTMLButtonElement, event: MouseEvent | TouchEvent) => Promise<void>;
+    let _ClickCollapse: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
+    let _ClickScrollUp: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
     /**
      * Return a {@link HTMLElement.InnerHTML} representation of the passed button's room name
      * private

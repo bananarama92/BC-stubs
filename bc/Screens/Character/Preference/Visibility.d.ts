@@ -49,7 +49,7 @@ declare function PreferenceSubscreenVisibilityUnload(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceVisibilityExit(SaveChanges: boolean): void;
-/** @type {{ Group: AssetGroup, Assets: { Asset: Asset, Hidden: boolean, Blocked: boolean, Limited: boolean}[]}[]} */
+/** @type {{ Group: AssetGroup, Assets: { Asset: Asset, Hidden: boolean, Blocked: boolean, Limited: boolean }[]}[]} */
 declare var PreferenceVisibilityGroupList: {
     Group: AssetGroup;
     Assets: {
@@ -64,8 +64,11 @@ declare var PreferenceVisibilityAssetIndex: number;
 declare var PreferenceVisibilityHideChecked: boolean;
 declare var PreferenceVisibilityBlockChecked: boolean;
 declare var PreferenceVisibilityCanBlock: boolean;
-/** @type {null | Asset} */
-declare var PreferenceVisibilityPreviewAsset: null | Asset;
+/**
+ * Bound to screen lifetime
+ * @type {Asset}
+ */
+declare var PreferenceVisibilityPreviewAsset: Asset;
 declare var PreferenceVisibilityResetClicked: boolean;
 /** @type {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} */
 declare var PreferenceVisibilityRecord: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;

@@ -92,12 +92,7 @@ declare function CraftingDecompressServerData(Data: string | undefined | (null |
  * @returns {void} - Nothing
  */
 declare function CraftingLoadServer(Packet: string | (null | CraftingItem)[]): void;
-/**
- * Advance to the next crafting reordering mode, or set the mode to the specified value.
- * @param {null | CraftingReorderType} newmode - The mode to set.  If null, advance to next mode.
- */
-declare function CraftingReorderModeSet(newmode?: null | CraftingReorderType): void;
-declare function CraftingClick(event: MouseEvent | TouchEvent): void;
+declare function CraftingClick(event: PointerEvent): void;
 /**
  * Refreshes the preview model with a slight delay so the item color process is done
  * @returns {void} - Nothing
@@ -154,8 +149,6 @@ declare var CraftingBackground: string;
  * @type {CraftingMode}
  */
 declare let CraftingMode: CraftingMode;
-/** Whether selecting a crafted item in the crafting screen should destroy it. */
-declare let CraftingDestroy: boolean;
 /** The index of the selected crafted item within the crafting screen. */
 declare let CraftingSlot: number;
 /**
@@ -163,8 +156,6 @@ declare let CraftingSlot: number;
  * @type {CraftingItemSelected | null}
  */
 declare let CraftingSelectedItem: CraftingItemSelected | null;
-/** An offset used for the pagination of {@link Player.Crafting}. */
-declare let CraftingOffset: number;
 /**
  * The character used for the crafting preview.
  * @type {Character | null}
@@ -174,12 +165,6 @@ declare let CraftingPreview: Character | null;
 declare let CraftingNakedPreview: boolean;
 /** Whether exiting the crafting menu should return you to the chatroom or, otherwise, the main hall. */
 declare let CraftingReturnToChatroom: boolean;
-/** List of item indices collected for swapping.
- * @type {number[]}
- */
-declare let CraftingReorderList: number[];
-/** @type {CraftingReorderType} */
-declare let CraftingReorderMode: CraftingReorderType;
 /**
  * A record mapping all crafting-valid asset names to a list of matching eligible assets.
  *
@@ -238,9 +223,6 @@ declare const CraftingLockList: readonly (AssetLockType | "")[];
 declare const CraftingPropertyExclude: Set<keyof ItemProperties>;
 declare namespace CraftingID {
     let root: "crafting-screen";
-    let topBar: "crafting-top-bar";
-    let header: "crafting-header";
-    let menuBar: "crafting-menu-bar";
     let downloadButton: "crafting-download-button";
     let uploadButton: "crafting-upload-button";
     let acceptButton: "crafting-accept-button";

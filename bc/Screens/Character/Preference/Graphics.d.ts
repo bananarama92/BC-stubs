@@ -32,11 +32,14 @@ declare var PreferenceGraphicsFontList: GraphicsFontName[];
 /** @type {WebGLPowerPreference[]} */
 declare var PreferenceGraphicsPowerModes: WebGLPowerPreference[];
 declare var PreferenceGraphicsFontIndex: number;
-/** @type {null | number} */
-declare var PreferenceGraphicsAnimationQualityIndex: null | number;
-/** @type {null | number} */
-declare var PreferenceGraphicsPowerModeIndex: null | number;
-/** @type {null | WebGLContextAttributes} */
-declare var PreferenceGraphicsWebGLOptions: null | WebGLContextAttributes;
+/** @type {number} */
+declare var PreferenceGraphicsAnimationQualityIndex: number;
+/** @type {number} */
+declare var PreferenceGraphicsPowerModeIndex: number;
+/**
+ * Tied to the screen's lifetime
+ * @type {WebGLContextAttributes}
+ */
+declare var PreferenceGraphicsWebGLOptions: WebGLContextAttributes;
 declare var PreferenceGraphicsAnimationQualityList: number[];
 declare var PreferenceGraphicsFrameLimit: number[];

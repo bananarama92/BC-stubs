@@ -83,7 +83,7 @@ declare function ManagementOwnerRefused(): boolean;
  * Helper function to check a group's unlockability.
  * @param {AssetGroupItemName} groupName - The name of the group to unlock
  */
-declare function ManagementCanUnlockGroup(groupName: AssetGroupItemName): boolean;
+declare function ManagementCanUnlockGroup(groupName: AssetGroupItemName): any;
 /**
  * Checks if the mistress can remove the player's chastity bra
  * @returns {boolean} - TRUE if the mistress can remove the item. (Not owner locked while owned and has at least 25$.)

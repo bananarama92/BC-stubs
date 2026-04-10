@@ -228,7 +228,7 @@ declare class KeybindManager {
      * @param {Keybindings.KeyCombo} kb1
      * @param {Keybindings.KeyCombo} kb2
      */
-    _isKeyComboEqual(kb1: Keybindings.KeyCombo, kb2: Keybindings.KeyCombo): boolean;
+    _isKeyComboEqual(kb1: Keybindings.KeyCombo, kb2: Keybindings.KeyCombo): boolean | "" | null;
     /**
      * Extracts modifier keys from a `KeyboardEvent` into a Set.
      *
@@ -254,7 +254,7 @@ declare class KeybindManager {
      */
     deserialize(): void;
     /** @param {Keybindings.Keybinding} keybinding */
-    isDefaultCombo(keybinding: Keybindings.Keybinding): boolean;
+    isDefaultCombo(keybinding: Keybindings.Keybinding): boolean | "" | null;
     /**
      * Completes the registration of an uninitialized keybinding.
      * Used when a binding exists in storage but not in defaults at load time.

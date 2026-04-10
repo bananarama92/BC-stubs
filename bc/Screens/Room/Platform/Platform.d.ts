@@ -214,7 +214,7 @@ declare function PlatformAnimAvailable(C: Platform.Character, AnimationName: Pla
  * @param {Platform.SoundEffect[]} [HitAudio] - The damage done by the projectile
  * @returns {void} - Nothing
  */
-declare function PlatformCreateProjectile(Name: Platform.ProjectileName, Type: Platform.ProjectileType, FaceLeft: boolean, X: number, Y: number, Force: number, Gravity: number, Damage: number, HitAudio?: Platform.SoundEffect[]): void;
+declare function PlatformCreateProjectile(Name: Platform.ProjectileName, Type: Platform.ProjectileType, FaceLeft: boolean, X: number, Y: number, Force: number, Gravity: number | undefined, Damage: number, HitAudio?: Platform.SoundEffect[]): void;
 /**
  * Calculates the projectiles
  * @param {number} Time - The current time stamp of the frame
@@ -345,18 +345,8 @@ declare function PlatformCastHeal(C: Platform.Character): void;
  * @returns {void} - Nothing
  */
 declare function PlatformEventKeyDown(Code: Platform.KeyCode): void;
-/**
- * Handles keys pressed
- * @param {KeyboardEvent} e - The key pressed
- * @returns {boolean} - TRUE if we handled the key pressed
- */
-declare function PlatformKeyDown(e: KeyboardEvent): boolean;
-/**
- * Handles keys released
- * @param {KeyboardEvent} e - The key released
- * @returns {void} - Nothing
- */
-declare function PlatformKeyUp(e: KeyboardEvent): void;
+declare function PlatformKeyDown(event: KeyboardEvent): boolean;
+declare function PlatformKeyUp(event: KeyboardEvent): boolean;
 /**
  * Handles the controller inputs
  * @param {readonly GamepadButton[]} buttons - The buttons pressed on the controller
@@ -391,7 +381,7 @@ declare var PlatformRunStandaloneMode: boolean;
 declare var PlatformChar: Platform.Character[];
 /** @type {Platform.DialogCharacter | null} */
 declare var PlatformFocusCharacter: Platform.DialogCharacter | null;
-declare var PlatformPlayer: any;
+declare var PlatformPlayer: null;
 /** @type {number | null} */
 declare var PlatformLastTime: number | null;
 /** @type {Platform.KeyCode[]} */
@@ -401,21 +391,21 @@ declare var PlatformViewX: number;
 declare var PlatformViewY: number;
 /** @type {Platform.Room | null} */
 declare var PlatformRoom: Platform.Room | null;
-declare var PlatformMusic: any;
+declare var PlatformMusic: null;
 declare var PlatformAllowAudio: boolean;
 declare var PlatformGravitySpeed: number;
 declare var PlatformLastKeyCode: string;
 declare var PlatformLastKeyTime: number;
 declare var PlatformExperienceForLevel: number[];
 declare var PlatformShowHitBox: boolean;
-declare var PlatformMessage: any;
-declare var PlatformHeal: any;
+declare var PlatformMessage: null;
+declare var PlatformHeal: null;
 /** @type {Platform.Event[]} */
 declare var PlatformEvent: Platform.Event[];
 declare var PlatformTempEvent: any[];
-declare var PlatformPlayerIdleTimer: any;
+declare var PlatformPlayerIdleTimer: null;
 declare var PlatformPlayerIdleLast: string;
-declare var PlatformDrawUpArrow: any[];
+declare var PlatformDrawUpArrow: null[];
 /** @type {readonly GamepadButton[]} */
 declare var PlatformButtons: readonly GamepadButton[];
 declare var PlatformRunDirection: string;

@@ -54,8 +54,11 @@ declare var PreferenceArousalVisibleIndex: number;
 /** @type {ArousalAffectStutterName[]} */
 declare var PreferenceArousalAffectStutterList: ArousalAffectStutterName[];
 declare var PreferenceArousalAffectStutterIndex: number;
-/** @type {null | ActivityName[]} */
-declare var PreferenceArousalActivityList: null | ActivityName[];
+/**
+ * Initialized by {@link PreferenceSubscreenArousalLoad}
+ * @type {ActivityName[]}
+ */
+declare var PreferenceArousalActivityList: ActivityName[];
 declare var PreferenceArousalActivityIndex: number;
 /** @type {never} */
 declare var PreferenceArousalActivityFactorSelf: never;
@@ -63,8 +66,11 @@ declare var PreferenceArousalActivityFactorSelf: never;
 declare var PreferenceArousalActivityFactorOther: never;
 /** @type {never} */
 declare var PreferenceArousalZoneFactor: never;
-/** @type {null | FetishName[]} */
-declare var PreferenceArousalFetishList: null | FetishName[];
+/**
+ * Initialized by {@link PreferenceSubscreenArousalLoad}
+ * @type {FetishName[]}
+ */
+declare var PreferenceArousalFetishList: FetishName[];
 declare var PreferenceArousalFetishIndex: number;
 /** @type {never} */
 declare var PreferenceArousalFetishFactor: never;

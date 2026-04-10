@@ -58,7 +58,7 @@ declare namespace Layering {
      * @param {Event} event
      */
     function _AssetInputListener(event: Event): void;
-    let _CharacterRefresh: (C: Character, Push?: boolean, RefreshDialog?: boolean) => void;
+    let _CharacterRefresh: (C: Character, Push?: boolean | undefined, RefreshDialog?: boolean | undefined) => void;
     /**
      * Event listener for `click` events of the reset button
      * @this {HTMLButtonElement}

@@ -2,7 +2,7 @@ declare function FriendListLoad(): Promise<void>;
 declare function FriendListResize(load: boolean): void;
 declare function FriendListRun(time: number): void;
 declare function FriendListDraw(): void;
-declare function FriendListClick(event: MouseEvent | TouchEvent): void;
+declare function FriendListClick(event: PointerEvent): void;
 declare function FriendListKeyDown(event: KeyboardEvent): boolean;
 declare function FriendListUnload(): void;
 declare function FriendListExit(): void;
@@ -31,9 +31,9 @@ declare function FriendListShow(): Promise<void>;
 declare function FriendListShowBeep(i: number): Promise<void>;
 /**
  * Exits the friendlist
- * @param {string} room The room to search for
+ * @param {string | undefined} room The room to search for
  */
-declare function FriendListChatSearch(room: string): Promise<void>;
+declare function FriendListChatSearch(room: string | undefined): Promise<void>;
 /**
  * Loads the friend list data into the HTML div element.
  * @param {ServerFriendInfo[]} data - An array of data, we receive from the server

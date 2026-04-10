@@ -32,6 +32,18 @@ declare function TextPrefetch(Module: string, TextGroup: string): TextCache;
  */
 declare function TextPrefetchFile(file: string): TextCache;
 /**
+ * Finds the text value linked to the tag in the buffer, partition the text value into separate parts using the given replacer keys, and then substitute them with replacer values
+ * @template T
+ * @param {string} textTag Tag for the text to find
+ * @param {Record<string, T>} replacers An object mapping replacement terms to values. Note that {@link Node} elements are cloned prior to the replacement
+ * @param {Object} [options]
+ * @param {TextCache} [options.textCache] A custom text cache from which to retrieve the text; defaults to {@link TextScreenCache}
+ * @returns {(string | T)[]} The text associated to the tag, split into a list according to the passed replacers. Missing tag texts will be interpreted as empty strings.
+ */
+declare function TextSubstitute<T>(textTag: string, replacers: Record<string, T>, options?: {
+    textCache?: TextCache | undefined;
+}): (string | T)[];
+/**
  * @param {string} msg
  * @returns {string}
  */
@@ -42,6 +54,7 @@ declare let TextScreenCache: TextCache | null;
 declare const TextAllScreenCache: Map<string, TextCache>;
 /** Prefix for the Text-generated warning message on a missing key */
 declare const TEXT_NOT_FOUND_PREFIX: "MISSING TEXT IN";
+declare var TextLogMissingStrings: boolean;
 declare const InterfaceStringsPath: "Screens/Interface.csv";
 /**
  * A class that can be used to cache a simple key/value CSV file for easy text lookups. Text lookups will be automatically translated to

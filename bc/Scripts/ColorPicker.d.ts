@@ -1,10 +1,4 @@
 /**
- * Helper to guard for TouchEvents
- * @param {Event} event
- * @returns {event is TouchEvent}
- */
-declare function isTouchEvent(event: Event): event is TouchEvent;
-/**
  * Gets the coordinates of the current event on the canvas
  * @deprecated
  * @param {MouseEvent|TouchEvent} Event - The touch/mouse event
@@ -113,9 +107,6 @@ declare namespace ColorPicker {
         function clickReset(this: HTMLButtonElement, ev: PointerEvent): void;
         function clickCopy(this: HTMLButtonElement, ev: PointerEvent): void;
         function clickPaste(this: HTMLButtonElement, ev: PointerEvent): void;
-        function inputItemColor(elem: HTMLFieldSetElement, ev: CustomEvent<{
-            source: "hue" | "opacity" | "tint" | "output";
-        }>): any;
         function focusoutFieldset(this: HTMLFieldSetElement, ev: FocusEvent): void;
         function clickComboBox(this: HTMLButtonElement, ev: PointerEvent): void;
         function focusComboLabel(this: HTMLElement, ev: FocusEvent): void;
@@ -136,7 +127,7 @@ declare namespace ColorPicker {
         savedColorGroup: HTMLFieldSetElement;
         savedColorOutput: HTMLOutputElement;
         save: HTMLButtonElement;
-    };
+    } | null;
     /**
      * @param {null | string} id
      * @param {readonly { value: string, label: string }[]} optionList

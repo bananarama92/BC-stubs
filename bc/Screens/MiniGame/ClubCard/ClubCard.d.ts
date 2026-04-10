@@ -117,7 +117,7 @@ declare function ClubCardGenerateUniqueID(cardID: number): string;
  * @param {string|null} Function2 - The function of the second button
  * @returns {void} - Nothing
  */
-declare function ClubCardCreatePopup(Mode: string, Text?: string | null, Button1?: string | null, Button2?: string | null, Function1?: string | null, Function2?: string | null, CardsPool?: any): void;
+declare function ClubCardCreatePopup(Mode: string, Text?: string | null, Button1?: string | null, Button2?: string | null, Function1?: string | null, Function2?: string | null, CardsPool?: null): void;
 /**
  * Destroys the current popup
  * @returns {void} - Nothing
@@ -682,19 +682,19 @@ declare function ClubCardUpdateCardAnimations(Timestamp: number): void;
  * @param {Function|null} [onComplete] - Function called after the animation completes.
  * @param {number} [duration=200] - Animation duration in milliseconds.
  */
-declare function ClubCardMoveCard(card: ClubCard, priority: number, startPosition: any, endPosition: any, hideOriginal?: boolean, keepOriginalHidden?: boolean, onStart?: Function | null, onComplete?: Function | null, duration?: number): void;
+declare function ClubCardMoveCard(card: ClubCard, priority: number, startPosition: Object, endPosition: Object, hideOriginal?: boolean, keepOriginalHidden?: boolean, onStart?: Function | null, onComplete?: Function | null, duration?: number): void;
 /**
  * Moves a card to the preview position (original card stays hidden after).
  */
-declare function ClubCardMoveCardToPreview(card: any, onStart?: any, onComplete?: any, duration?: number): void;
+declare function ClubCardMoveCardToPreview(card: any, onStart?: null, onComplete?: null, duration?: number): void;
 /**
  * Returns a card from preview back to its original position.
  */
-declare function ClubCardReturnCardFromPreview(card: any, onStart?: any, onComplete?: any, duration?: number): void;
+declare function ClubCardReturnCardFromPreview(card: any, onStart?: null, onComplete?: null, duration?: number): void;
 /**
  * Returns a card from pending state back to its original position.
  */
-declare function ClubCardReturnCardFromPending(card: any, onStart?: any, onComplete?: any, duration?: number): void;
+declare function ClubCardReturnCardFromPending(card: any, onStart?: null, onComplete?: null, duration?: number): void;
 /**
  * Moves a card from preview to pending state.
  * @param {ClubCard} card - The card to be moved.
@@ -847,7 +847,7 @@ declare var ClubCardHover: null | ClubCard;
  * @type {null | ClubCard}
  * */
 declare var ClubCardFocus: null | ClubCard;
-declare var ClubCardFocusAI: any;
+declare var ClubCardFocusAI: null;
 declare var ClubCardTurnIndex: number;
 declare var ClubCardTurnCardPlayed: number;
 declare var ClubCardTurnEndDraw: boolean;

@@ -86,7 +86,7 @@ declare class NotificationEventHandler {
     eventType: NotificationEventType;
     settings: NotificationSetting;
     raisedCount: number;
-    popup: Notification;
+    popup: Notification | null;
     /**
      * Raise a notification
      * @param {NotificationData} data - Data relating to the event that can be passed into a popup

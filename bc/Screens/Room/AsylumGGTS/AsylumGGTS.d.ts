@@ -89,10 +89,9 @@ declare function AsylumGGTSBuildPrivate(): void;
 /**
  * Gets the new character name based on it's GGTS level
  * @param {Character} C - The character to rename
- * @param {string} Name - The normal (sanitized) display name of the character
  * @returns {string} - The new name for that character
  */
-declare function AsylumGGTSCharacterName(C: Character, Name: string): string;
+declare function AsylumGGTSCharacterName(C: Character): string;
 /**
  * Sends a chat message from the GGTS.  GGTS slowly replaces the player name by the player number as level rises.
  * @param {string} Msg - The message to publish
@@ -325,7 +324,7 @@ declare function AsylumGGTSDialogInteraction(Interaction: string): void;
  * @param {ServerChatRoomMessage} data - The full message recieved
  * @returns {Object} - Nothing to be used
  */
-declare function AsylumGGTSHiddenMessage(SenderCharacter: Character, Interaction: string, data: ServerChatRoomMessage): any;
+declare function AsylumGGTSHiddenMessage(SenderCharacter: Character, Interaction: string, data: ServerChatRoomMessage): Object;
 /**
  * GGTS Draws the level, the number of strikes and a progress bar, level 6 shows the time in a gold frame
  * @param {Character} C - Character to draw the info for

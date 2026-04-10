@@ -1,5 +1,5 @@
 declare function Shop2Load(): Promise<void>;
-declare function Shop2Click(event: MouseEvent | TouchEvent): void;
+declare function Shop2Click(event: PointerEvent): void;
 declare function Shop2Draw(): void;
 declare function Shop2Run(time: number): void;
 declare function Shop2Resize(load: boolean): void;
@@ -175,12 +175,12 @@ declare namespace Shop2 {
     function _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
     /**
      * Click function for a single item in the shop
-     * @param {MouseEvent | TouchEvent} event
+     * @param {PointerEvent} event
      * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
      * @satisfies {MouseEventListener}
      * private
      */
-    function _AssetElementClick(event: MouseEvent | TouchEvent, assetIndex: number): void;
+    function _AssetElementClick(event: PointerEvent, assetIndex: number): void;
     /**
      * Construct screen functions for the <=12 items displayed in the shop.
      * @returns {Record<string, ShopScreenFunctions>}

@@ -1,6 +1,6 @@
 declare function InventoryItemMouthFuturisticPanelGagDrawHook(data: ModularItemData, originalFunction: () => void): void;
 declare function InventoryItemMouthFuturisticPanelGagClickHook(data: ModularItemData, originalFunction: () => void): void;
-declare function InventoryItemMouthFuturisticPanelGagSetOptionHook(data: ModularItemData, originalFunction: (C: Character, item: Item, newOption: ModularItemOption, previousOption: ModularItemOption, push: boolean, refresh: boolean) => void, C: Character, item: Item, newOption: ModularItemOption, previousOption: ModularItemOption, push: boolean, refresh: boolean): void;
+declare function InventoryItemMouthFuturisticPanelGagSetOptionHook(data: ModularItemData, originalFunction: ((C: Character, item: Item, newOption: ModularItemOption, previousOption: ModularItemOption, push: boolean, refresh: boolean) => void) | null, C: Character, item: Item, newOption: ModularItemOption, previousOption: ModularItemOption, push: boolean, refresh: boolean): void;
 /**
  * Send message for an automatic gag inflation.
  * @param {Character} C - The selected character
@@ -38,8 +38,8 @@ declare function InventoryItemMouthFuturisticPanelGagTrigger(data: ModularItemDa
  * @param {DynamicScriptCallbackData<FuturisticPanelGagPersistentData>} drawData
  */
 declare function AssetsItemMouthFuturisticPanelGagScriptUpdatePlayer(data: ModularItemData, drawData: DynamicScriptCallbackData<FuturisticPanelGagPersistentData>): void;
-declare function AssetsItemMouthFuturisticPanelGagScriptDrawHook(data: ModularItemData, originalFunction: (drawData: DynamicScriptCallbackData<FuturisticPanelGagPersistentData>) => void, drawData: DynamicScriptCallbackData<FuturisticPanelGagPersistentData>): void;
-declare function AssetsItemMouthFuturisticPanelGagBeforeDrawHook(data: ModularItemData, originalFunction: (drawData: DynamicDrawingData<FuturisticPanelGagPersistentData>) => DynamicBeforeDrawOverrides, drawData: DynamicDrawingData<FuturisticPanelGagPersistentData>): DynamicBeforeDrawOverrides;
+declare function AssetsItemMouthFuturisticPanelGagScriptDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticPanelGagPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticPanelGagPersistentData>): void;
+declare function AssetsItemMouthFuturisticPanelGagBeforeDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicDrawingData<FuturisticPanelGagPersistentData>) => DynamicBeforeDrawOverrides) | null, drawData: DynamicDrawingData<FuturisticPanelGagPersistentData>): DynamicBeforeDrawOverrides;
 type FuturisticPanelGagPersistentData = {
     LastMessageLen?: number;
     UpdateTime?: number;

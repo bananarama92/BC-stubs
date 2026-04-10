@@ -81,11 +81,11 @@ declare function PreferenceGetZoneFactor(C: Character, ZoneName: AssetGroupItemN
  * Sets the arousal zone data for a specific body zone on the player
  * @param {Character} C - The character, for whom the love factor of a particular zone should be set
  * @param {AssetGroupItemName} ZoneName - The name of the zone, the factor should be set for
- * @param {ArousalFactor} Factor - The factor of the zone (0 is horrible, 2 is normal, 4 is great)
- * @param {boolean} CanOrgasm - Sets, if the character can cum from the given zone (true) or not (false)
+ * @param {null | ArousalFactor} [Factor] - The factor of the zone (0 is horrible, 2 is normal, 4 is great)
+ * @param {null | boolean} [CanOrgasm] - Sets, if the character can cum from the given zone (true) or not (false)
  * @returns {void} - Nothing
  */
-declare function PreferenceSetArousalZone(C: Character, ZoneName: AssetGroupItemName, Factor?: ArousalFactor, CanOrgasm?: boolean): void;
+declare function PreferenceSetArousalZone(C: Character, ZoneName: AssetGroupItemName, Factor?: null | ArousalFactor, CanOrgasm?: null | boolean): void;
 /**
  * Determines, if a player can reach on orgasm from a particular zone
  * @param {Character} C - The character whose ability to orgasm we check
@@ -119,12 +119,3 @@ declare function PreferenceInitPlayer(C: PlayerCharacter, data: Partial<ServerAc
  * @returns {NotificationSetting} - The setting to use
  */
 declare function PreferenceInitNotificationSetting(setting: boolean, audio: NotificationAudioType, defaultAlertType?: NotificationAlertType): NotificationSetting;
-/**
- * Migrates a named preference from one preference object to another if not already migrated
- * @param {object} from - The preference object to migrate from
- * @param {object} to - The preference object to migrate to
- * @param {string} prefName - The name of the preference to migrate
- * @param {any} defaultValue - The default value for the preference if it doesn't exist
- * @returns {void} - Nothing
- */
-declare function PreferenceMigrate(from: object, to: object, prefName: string, defaultValue: any): void;

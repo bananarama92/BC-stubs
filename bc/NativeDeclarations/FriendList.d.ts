@@ -5,13 +5,15 @@ type FriendListSortingDirection = 'Asc' | 'Desc';
 
 type FriendListReturn<T extends ModuleType> = { Screen: ModuleScreens[T], Module: T, IsInChatRoom?: boolean, hasScrolledChat?: boolean };
 
+type FriendRelationType = "Friend" | "Owner" | "Lover" | "Submissive";
+
 type FriendRawData = {
   memberNumber?: number; /* undefined for NPCs */
   memberName: string;
   memberNickname?: string;
   chatRoom?: FriendRawRoom;
   beep?: FriendRawBeep;
-  relationType?: string;
+  relationType?: FriendRelationType;
   canDelete?: boolean;
 }
 

@@ -4,4 +4,4 @@
  * @returns {ExtendedItemConfigDrawData<{}>} - The array with X & Y coordinates
  */
 declare function InventoryItemNeckAccessoriesCollarNameTagGetDrawData(Count: number, X?: number, Y?: number): ExtendedItemConfigDrawData<{}>;
-declare function InventoryItemNeckAccessoriesCollarNameTagPublishActionHook(data: TypedItemData, originalFunction: (C: Character, item: Item, newOption: TypedItemOption, previousOption: TypedItemOption) => void, C: Character, item: Item, newOption: TypedItemOption, previousOption: TypedItemOption): void;
+declare function InventoryItemNeckAccessoriesCollarNameTagPublishActionHook(data: TypedItemData, originalFunction: ((C: Character, item: Item, newOption: TypedItemOption, previousOption: TypedItemOption) => void) | null, C: Character, item: Item, newOption: TypedItemOption, previousOption: TypedItemOption): void;

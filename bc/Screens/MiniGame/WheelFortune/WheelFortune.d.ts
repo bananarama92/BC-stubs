@@ -51,35 +51,15 @@ declare function WheelFortuneLoad(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function WheelFortuneDrawWheel(FullWheel: string, Pos: number, MaxPos: number, X: number, Y: number, Zoom: number): void;
-/**
- * Runs the lucky wheel mini game
- * @returns {void} - Nothing
- */
-declare function WheelFortuneRun(): void;
-/**
- * Handles clicks during the mini game
- * @returns {void} - Nothing
- */
-declare function WheelFortuneClick(): void;
-/**
- * If the user clicks to spin the wheel, we keep the starting position
- * @returns {void} - Nothing
- */
-declare function WheelFortuneMouseDown(): void;
-/**
- * If the user releases the mouse/finger to spin the wheel
- * @returns {void} - Nothing
- */
-declare function WheelFortuneMouseUp(): void;
+declare function WheelFortuneRun(time: number): void;
+declare function WheelFortuneClick(event: PointerEvent): void;
+declare function WheelFortuneMouseDown(event: PointerEvent): void;
+declare function WheelFortuneMouseUp(event: PointerEvent): void;
 /**
  * When the wheel result is set, we publish it and return to the chat room
  * @returns {void} - Nothing
  */
 declare function WheelFortuneResult(): void;
-/**
- * When the mini exits
- * @returns {void} - Nothing
- */
 declare function WheelFortuneExit(): void;
 declare var WheelFortuneBackground: string;
 /** @type {ScreenSpecifier | null} */

@@ -10,7 +10,7 @@ declare function ChatSearchLoad(): Promise<void>;
 declare function ChatSearchResize(load: boolean): void;
 declare function ChatSearchUnload(): void;
 declare function ChatSearchRun(time: number): void;
-declare function ChatSearchClick(event: MouseEvent | TouchEvent): void;
+declare function ChatSearchClick(event: PointerEvent): void;
 /**
  * Returns the rooms to be displayed
  * @returns {ChatRoomSearchResult[]}
@@ -90,7 +90,7 @@ declare function ChatSearchGridUpdate(rooms: ChatRoomSearchResult[]): void;
  * @param {ChatRoomSearchResult} room
  * @returns
  */
-declare function ChatSearchClickRoom(room: ChatRoomSearchResult): boolean | void;
+declare function ChatSearchClickRoom(room: ChatRoomSearchResult): false | void;
 /**
  * Creates a grid button for the given room
  * @param {ChatRoomSearchResult} room
@@ -158,18 +158,18 @@ declare function ChatSearchToggleHiddenMode(): void;
  * @param {ChatRoomSearchResult | number} C - Index of the room within ChatSearchHiddenResult
  * @param {boolean} Confirmed - False when clicking on room list, true when clicking Confirm button
  */
-declare function ChatSearchClickUnhideRoom(C: ChatRoomSearchResult | number, Confirmed: boolean): boolean;
+declare function ChatSearchClickUnhideRoom(C: ChatRoomSearchResult | number, Confirmed: boolean): false | undefined;
 /**
  * Handles the reception of the server response when joining a room or when getting banned/kicked
- * @param {ServerChatRoomSearchResponse} data - Response from the server
+ * @param {ServerChatRoomJoinResponse} data - Response from the server
  * @returns {void} - Nothing
  */
-declare function ChatSearchResponse(data: ServerChatRoomSearchResponse): void;
+declare function ChatSearchResponse(data: ServerChatRoomJoinResponse): void;
 /**
  * Sends a toast message based on the given response type
- * @param {ServerChatRoomSearchResponse} type
+ * @param {ServerChatRoomJoinResponse} type
  */
-declare function ChatSearchSendToast(type: ServerChatRoomSearchResponse): void;
+declare function ChatSearchSendToast(type: ServerChatRoomJoinResponse): void;
 /**
  * Censors the chat search result name and description based on the player preference
  * @param {ServerChatRoomSearchData} searchData - The (potentially) to-be censored search result
@@ -202,9 +202,9 @@ declare function ChatSearchAutoJoinRoom(): void;
 /**
  * Sends the search query data to the server. The response will be handled by ChatSearchResponse once it is received
  * @param {string} Query - The search term to look for
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function ChatSearchQuery(Query: string): void;
+declare function ChatSearchQuery(Query: string): Promise<void>;
 /**
  * Sorts the room result based on a player's settings
  * @returns {void} - Nothing
@@ -262,8 +262,11 @@ declare var ChatSearchBackgroundTagList: BackgroundTag[];
 declare var ChatSearchResult: ChatRoomSearchResult[];
 /** @type {ChatRoomSearchResult[]} */
 declare var ChatSearchHiddenResult: ChatRoomSearchResult[];
-/** @type {ServerChatRoomSearchRequest | null} */
-declare var ChatSearchLastSearchDataJSON: ServerChatRoomSearchRequest | null;
+/**
+ * @type {never}
+ * @deprecated Use {@link ServerRoomSearch()}
+ */
+declare var ChatSearchLastSearchDataJSON: never;
 declare var ChatSearchLastQuerySearchTime: number;
 declare var ChatSearchLastQueryJoin: string;
 declare var ChatSearchLastQueryJoinTime: number;

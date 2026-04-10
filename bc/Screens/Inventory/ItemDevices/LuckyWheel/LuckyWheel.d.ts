@@ -10,7 +10,7 @@ declare function InventoryItemDevicesLuckyWheelInitHook(data: ModularItemData, o
 declare function InventoryItemDevicesLuckyWheelg0LoadHook(data: NoArchItemData, originalFunction: () => void): void;
 declare function InventoryItemDevicesLuckyWheelg0DrawHook(data: NoArchItemData, originalFunction: () => void): void;
 declare function InventoryItemDevicesLuckyWheelg0ClickHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemDevicesLuckyWheelg0ExitHook(data: NoArchItemData, originalFunction: () => void): void;
+declare function InventoryItemDevicesLuckyWheelg0ExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 declare function InventoryItemDevicesLuckyWheelUpdate(): void;
 declare function InventoryItemDevicesLuckyWheelTrigger(): void;
 /**

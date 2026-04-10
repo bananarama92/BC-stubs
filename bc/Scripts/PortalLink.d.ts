@@ -1,11 +1,11 @@
 declare function PortalLinkRecieverLoadHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
 declare function PortalLinkRecieverDrawHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
 declare function PortalLinkRecieverClickHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
-declare function PortalLinkRecieverExitHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
+declare function PortalLinkRecieverExitHook(data: ExtendedItemData<any>, originalFunction: (() => void) | null): void;
 declare function PortalLinkTransmitterLoadHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
 declare function PortalLinkTransmitterDrawHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
 declare function PortalLinkTransmitterClickHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
-declare function PortalLinkTransmitterExitHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
+declare function PortalLinkTransmitterExitHook(data: ExtendedItemData<any>, originalFunction: (() => void) | null): void;
 /**
  * Draw the sync code UI depending on the mode.
  * Reciever has Random and Copy to clipboard buttons, transmitter has
@@ -26,7 +26,7 @@ declare function PortalLinkCodeChanged(C: Character, Item: Item, reciever: boole
  * Get the transmitter sync code from a character
  * @param {Character} C
  */
-declare function PortalLinkGetTransmitterCode(C: Character): string;
+declare function PortalLinkGetTransmitterCode(C: Character): string | undefined;
 /**
  * Get the list of all items that match a given sync code in the chatroom.
  * @param {string} linkCode

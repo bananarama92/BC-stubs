@@ -221,9 +221,10 @@ declare class DictionaryBuilder {
     /**
      * Adds a changeKey dictionary entry
      * @param {("gold" | "silver" | "bronze")[]} keys
+     * @param {boolean} giveKey
      * @returns
      */
-    mapViewChangeKey(keys: ("gold" | "silver" | "bronze")[], giveKey: any): this;
+    mapViewChangeKey(keys: ("gold" | "silver" | "bronze")[], giveKey: boolean): this;
     /**
      * Adds a dictionary entry to the builder
      * @param {ChatMessageDictionaryEntry} entry - The dictionary entry to add

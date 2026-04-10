@@ -29,10 +29,10 @@ declare function OnlineProfileRun(): void;
 declare function OnlineProfileClick(): void;
 /**
  * Handles exiting while in the online profile screen. It removes the input and saves the description.
- * @param {boolean} Save - Whether or not we should save the changes
+ * @param {boolean} [Save] - Whether or not we should save the changes
  * @returns {void} - Nothing
  */
-declare function OnlineProfileExit(Save: boolean): void;
+declare function OnlineProfileExit(Save?: boolean): void;
 /** @type { "Description" | "OwnersNotes" } */
 declare var OnlineProfileMode: "Description" | "OwnersNotes";
 declare var OnlineProfileTextDesc: string;

@@ -111,12 +111,13 @@ declare function CharacterAppearanceSetHeightModifiers(C: Character): void;
 declare function CharacterAppearanceBuildCanvas(C: Character): void;
 /**
  * Returns a value from the character current appearance
+ * @template {keyof CharacterAppearanceValues} T
  * @param {Character} C - The character to get values from
  * @param {AssetGroupName} Group - The name of the group, whose values we want to get
- * @param {string} Type - The name of the value, we want to get
- * @returns {*} - The return value
+ * @param {T} Type - The name of the value, we want to get
+ * @returns {CharacterAppearanceValues[T] | "None"} - The return value
  */
-declare function CharacterAppearanceGetCurrentValue(C: Character, Group: AssetGroupName, Type: string): any;
+declare function CharacterAppearanceGetCurrentValue<T extends keyof CharacterAppearanceValues>(C: Character, Group: AssetGroupName, Type: T): CharacterAppearanceValues[T] | "None";
 /**
  * Repositions the character horizonally to centre them, since shorter characters will shrink towards the left
  * @param {Character} C - The character to reposition
@@ -401,8 +402,7 @@ declare var CharacterAppearanceGroups: AssetGroup[];
 declare var CharacterAppearanceAssets: Asset[];
 /** @type {AssetGroupName} */
 declare var CharacterAppearanceColorPickerGroupName: AssetGroupName;
-declare var CharacterAppearanceColorPickerBackup: string;
-declare var CharacterAppearanceColorPickerRefreshTimer: any;
+declare var CharacterAppearanceColorPickerRefreshTimer: undefined;
 /**
  * The character we're editing the appearance of.
  *

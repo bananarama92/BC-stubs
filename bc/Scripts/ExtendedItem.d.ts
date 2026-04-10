@@ -225,11 +225,11 @@ declare function ExtendedItemCustomDraw(Name: string, X: number, Y: number, imag
  * @param {string} [options.textColor]
  */
 declare function ExtendedItemDrawCheckbox(name: string, x: number, y: number, isChecked: boolean, options?: {
-    text?: string;
-    width?: number;
-    height?: number;
-    changeWhenLocked?: boolean;
-    textColor?: string;
+    text?: string | undefined;
+    width?: number | undefined;
+    height?: number | undefined;
+    changeWhenLocked?: boolean | undefined;
+    textColor?: string | undefined;
 }): void;
 /**
  * Helper click function for creating custom buttons, including extended item permission support.
@@ -354,10 +354,10 @@ declare function ExtendedItemParseOptions<T extends Pick<ExtendedItemOption, "Pr
  * @returns {void}
  */
 declare function ExtendedItemSetOptionByRecord(C: Character, itemOrGroupName: AssetGroupName | Item, typeRecord?: null | TypeRecord, options?: {
-    push?: boolean;
-    C_Source?: Character;
-    refresh?: boolean;
-    properties?: ItemProperties;
+    push?: boolean | undefined;
+    C_Source?: Character | undefined;
+    refresh?: boolean | undefined;
+    properties?: ItemProperties | undefined;
 }): void;
 /**
  * Take an old {@link ItemProperties.Type} and convert it into a {@link ItemProperties.TypeRecord}.

@@ -43,11 +43,7 @@ declare function ClubCardBuilderInputChanged(): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardBuilderFilterLoad(): void;
-/**
- * Loads the club card deck builder
- * @returns {void} - Nothing
- */
-declare function ClubCardBuilderLoad(): void;
+declare function ClubCardBuilderLoad(): Promise<void>;
 /**
  * Returns the deck name on slot "Deck"
  * @param {number} Deck - The deck #
@@ -60,16 +56,8 @@ declare function ClubCardBuilderGetDeckName(Deck: number): string;
  * @returns {void} - Nothing
  */
 declare function ClubCardBuilderRenameMode(Deck: number): void;
-/**
- * Runs the club card deck builder
- * @returns {void} - Nothing
- */
-declare function ClubCardBuilderRun(): void;
-/**
- * Handles clicks during the club card game
- * @returns {void} - Nothing
- */
-declare function ClubCardBuilderClick(): void;
+declare function ClubCardBuilderRun(time: number): void;
+declare function ClubCardBuilderClick(event: PointerEvent): void;
 declare function ClubCardBuilderUnload(): void;
 declare var ClubCardBuilderBackground: string;
 declare var ClubCardBuilderDeckIndex: number;
@@ -91,7 +79,7 @@ declare const ClubCardBuilderFilterGroupFilters: Record<ClubCardTag, (card: Club
 declare var ClubCardBuilderRenameIndex: number;
 declare var ClubCardBuilderCustomizationIndex: string;
 declare var ClubCardBuilderSelectedCardBack: number;
-declare var ClubCardBuilderCardBackFocus: any;
+declare var ClubCardBuilderCardBackFocus: null;
 declare var ClubCardBuilderCardBackCount: number;
 declare var ClubCardBuilderView: ClubCard[];
 declare var ClubCardBuilderDefaultDeck: number[];

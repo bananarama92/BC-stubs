@@ -896,6 +896,6 @@ declare var PrivateBeltList: string[];
 declare var PrivateEntryEvent: boolean;
 declare var PrivateClubCardVictoryMode: boolean;
 declare var PrivateClubCardDefeatConsequence: string[];
-declare var PrivateGiftRegular: any;
-declare var PrivateGiftRestraint: any;
+declare var PrivateGiftRegular: null;
+declare var PrivateGiftRestraint: null;
 declare var PrivateBaseDecay: number;
