@@ -2,7 +2,8 @@
   "include": ["Assets", "Audio", "Backgrounds", "Icons", "Screens", "Scripts"],
   "exclude": [
     "Screens/MiniGame/KinkyDungeon",
-    "Scripts/MessagesPatch.d.ts"
+    "Scripts/MessagesPatch.d.ts",
+    "Scripts/DeclarationsExpensive.d.ts"
   ],
   "compilerOptions": {
     "allowJs": true,
