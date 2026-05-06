@@ -10,4 +10,4 @@ type KennelPersistentData = {
     DrawRequested?: boolean;
     MustChange?: boolean;
     ChangeTime?: number;
-};
+} & AnimationPersistentData;

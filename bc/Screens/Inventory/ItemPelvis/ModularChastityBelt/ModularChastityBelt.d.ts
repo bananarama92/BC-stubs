@@ -82,4 +82,4 @@ type ModularChastityBeltPersistentData = {
     ChatroomCheck?: boolean;
     SyncNeeded?: boolean;
     SyncCooldown?: number;
-};
+} & AnimationPersistentData;

@@ -1,10 +1,12 @@
 declare function InventoryItemMiscMistressTimerPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
 declare function InventoryItemMiscMistressTimerPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
-/**
- *
- * @param {number} TimeToAdd
- * @param {boolean} PlayerMemberNumberToList
- */
-declare function InventoryItemMiscMistressTimerPadlockAdd(TimeToAdd: number, PlayerMemberNumberToList?: boolean): void;
-declare const MistressTimerChooseList: number[];
-declare let MistressTimerChooseIndex: number;
+declare function InventoryItemMiscMistressTimerPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
+declare const MistressTimerChooseOptions: {
+    unit: {
+        label: string;
+        seconds: number;
+    };
+    values: number[];
+}[];
+declare let MistressTimerChooseOptionsIndex: number;
+declare let MistressTimerChooseIndexes: number[];

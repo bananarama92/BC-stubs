@@ -8,9 +8,8 @@ type TitleName =
 	"InfilrationOperative" | "InfilrationSuperspy" | "MagicSchoolWizard" | "MagicSchoolMagus" |
 	"MagicSchoolMagician" | "MagicSchoolSorcerer" | "MagicSchoolSage" | "MagicSchoolOracle" |
 	"MagicSchoolWitch" | "MagicSchoolWarlock" | "Duchess" | "Duke" | "LittleOne" | "Baby" | "DL" |
-	"BondageBaby" | "Switch" | "Princess" |	"Prince" | "Liege" | "Majesty" | "Missy" | "Sissy" | "Tomboy" | "Femboy" | "GoodOne" |
-	"Pet" | "Dragon" |  "Vampire" | "Turtle" | "Thing" | "Elf" | "Drow" | "Pixie" | "Brat" | "Kitten" | "Puppy" | "Foxy" |
+	"BondageBaby" | "Switch" | "Princess" | "Prince" | "Liege" | "Majesty" | "Missy" | "Sissy" | "Tomboy" | "Femboy" | "GoodOne" |
+	"Pet" | "Dragon" | "Vampire" | "Turtle" | "Thing" | "Elf" | "Drow" | "Pixie" | "Brat" | "Kitten" | "Puppy" | "Foxy" | "Wolf" | "Monster" | "Shapeshifter" |
 	"Bunny" | "Doll" | "Demon" | "Angel" | "Alien" | "Captain" | "Admiral" | "Succubus" | "Incubus" | "Concubus" |
 	"GoodGirl" | "GoodBoy" | "GoodSlaveGirl" | "GoodSlaveBoy" | "GoodSlave" | "Drone" | "FreeUse" |
-	"Archbishop" | "Bishop" | "Archjudge" | "Judge" | "Champion" | "Matron" | "Patriarch" | "Primaris"
-	;
+	"Archbishop" | "Bishop" | "Archjudge" | "Judge" | "Champion" | "Matron" | "Patriarch" | "Primaris";

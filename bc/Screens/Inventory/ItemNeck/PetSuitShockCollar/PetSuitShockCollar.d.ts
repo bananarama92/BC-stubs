@@ -19,4 +19,4 @@ type PetSuitShockCollarPersistentData = {
     LastMessageLen?: number;
     LastTriggerCount?: number;
     DisplayCount?: number;
-};
+} & AnimationPersistentData;

@@ -58,7 +58,7 @@ declare function AssetsItemPelvisFuturisticTrainingBeltScriptUpdatePlayer(data: 
  * @returns
  */
 declare function AssetsItemPelvisFuturisticTrainingBeltScriptStateMachine(data: VibratingItemData, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;
-declare function AssetsItemPelvisFuturisticTrainingBeltScriptDraw(data: VibratingItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;
+declare function AssetsItemPelvisFuturisticTrainingBeltScriptDrawHook(data: VibratingItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;
 declare var FuturisticTrainingBeltPermissions: string[];
 declare var FuturisticTrainingBeltSpeechPunishments: string[];
 declare var FuturisticTrainingBeltModes: string[];
@@ -90,4 +90,4 @@ type FuturisticTrainingBeltPersistentData = {
     DeviceState?: number;
     DeviceStateTimer?: number;
     DeviceVibeMode?: VibratorMode;
-};
+} & AnimationPersistentData;

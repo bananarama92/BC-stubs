@@ -443,18 +443,18 @@ declare function CharacterCanChangeNickname(C: Character): boolean;
  * Note that changing any nickname but yours (ie. Player) is not supported.
  *
  * @param {Character} C - The character to change the nickname of.
- * @param {string} Nick - The name to use as the new nickname. An empty string uses the character's real name.
- * @return {"NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked" | null} null if the nickname was valid, or an explanation for why the nickname was rejected.
+ * @param {null | string} Nick - The name to use as the new nickname. An empty string uses the character's real name.
+ * @return {null | NicknameStatus} null if the nickname was valid, or an explanation for why the nickname was rejected.
  */
-declare function CharacterSetNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked" | null;
+declare function CharacterSetNickname(C: Character, Nick: null | string, fromOwner?: boolean): null | NicknameStatus;
 /**
  * Validate the given character's nickname
  *
  * @param {Character} C - The character to change the nickname of.
- * @param {string} Nick - The name to use as the new nickname. An empty string uses the character's real name.
- * @return {"NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked" | null} null if the nickname was valid, or an explanation for why the nickname was rejected.
+ * @param {string} Nick - The name to use as the new nickname.
+ * @return {null | NicknameStatus} null if the nickname was valid, or an explanation for why the nickname was rejected.
  */
-declare function CharacterValidateNickname(C: Character, Nick: string, fromOwner?: boolean): "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked" | null;
+declare function CharacterValidateNickname(C: Character, Nick: string, fromOwner?: boolean): null | NicknameStatus;
 /**
  * Update the owners note on the specified character.  The Player must be the owner of this character.
  * Notes will be truncated to max 4000 chars.

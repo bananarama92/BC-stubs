@@ -216,7 +216,10 @@
             "AllureSidecut": 96,
             "BrocadeCloudsSnowEmbroideryQipao": 97,
             "CrossStrapDress": 98,
-            "GardenDress": 99
+            "GardenDress": 99,
+            "CasualDroppedSuit": 100,
+            "LittleFormalShirt": 101,
+            "StarryOceanEveningGown": 102
         }
     },
     "ClothAccessory": {
@@ -337,7 +340,8 @@
             "LacePants": 62,
             "Shapewear2": 63,
             "SlitColumnSkirt": 64,
-            "WoolenHighWaistSkirt": 65
+            "WoolenHighWaistSkirt": 65,
+            "SuspenderPants": 66
         }
     },
     "Corset": {
@@ -588,7 +592,8 @@
             "CustomizableFluffyEars1": 51,
             "CustomizableFluffyEars2": 52,
             "CustomizableFluffyEars3": 53,
-            "Antenna": 54
+            "Antenna": 54,
+            "WingedHeadpiece": 55
         }
     },
     "HairAccessory2": {
@@ -1385,7 +1390,10 @@
             "MiniDolls": 74,
             "Wipes": 75,
             "DragonPlush": 76,
-            "GiftBox": 77
+            "GiftBox": 77,
+            "Chocolate": 78,
+            "ElectricGuitar": 79,
+            "Laptop": 80
         }
     },
     "ItemHands": {
@@ -2039,7 +2047,8 @@
             "StretchClovers": 17,
             "TapedVibeEggs": 18,
             "VibeNippleClamp": 19,
-            "VibratorRemote": 20
+            "VibratorRemote": 20,
+            "XmasBell": 21
         }
     },
     "ItemNipplesPiercings": {
@@ -2235,7 +2244,8 @@
             "LatexNulge": 31,
             "LockingCockring": 32,
             "Ballspreader": 33,
-            "MysteryBox": 34
+            "MysteryBox": 34,
+            "UsedCondom": 35
         }
     },
     "ItemVulvaPiercings": {

@@ -83,6 +83,7 @@ declare function ElementCreateInput(ID: string | null, Type: string, Value?: nul
 declare function ElementCreateRangeInput(id: string | null, value: number, min: number, max: number, step: number, thumbIcon?: ThumbIcon, vertical?: boolean): HTMLInputElement;
 /**
  * Construct a `<select>`-based dropdown menu.
+ * @deprecated - Use {@link ElementDropdown.Create} instead
  * @param {string | null} id - The name of the select item.
  * @param {readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
  * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
@@ -351,6 +352,41 @@ declare function ElementFitText(el: HTMLElement | Element): void;
 declare function ElementGenerateID(): string;
 /** @satisfies {ElementNoParent} */
 declare const ElementNoParent: 0;
+declare namespace ElementDropdown {
+    /**
+     * Construct a `<select>`-based dropdown menu.
+     * @param {string | null} id - The name of the select item.
+     * @param {readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
+     * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
+     * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number, name?: string }} [options] - Additional `<select>`-specific properties
+     * @param {null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @returns {HTMLSelectElement} - The created element
+     */
+    function Create(id: string | null, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[], onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
+        required?: boolean;
+        multiple?: boolean;
+        disabled?: boolean;
+        size?: number;
+        name?: string;
+    }, htmlOptions?: null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>): HTMLSelectElement;
+    /**
+     * Construct a `<select>`-based dropdown menu.
+     * @param {string | null} id - The name of the select item.
+     * @param {readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
+     * @param {string} label - The label of the dropdown menu.
+     * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
+     * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number, name?: string }} [options] - Additional `<select>`-specific properties
+     * @param {null | Partial<Record<"select" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @returns {HTMLLabelElement} - The created element
+     */
+    function CreateLabelled(id: string | null, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[], label: string, onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
+        required?: boolean;
+        multiple?: boolean;
+        disabled?: boolean;
+        size?: number;
+        name?: string;
+    }, htmlOptions?: null | Partial<Record<"select" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>): HTMLLabelElement;
+}
 declare namespace ElementCheckboxDropdown {
     /**
      * @param {string} idPrefix

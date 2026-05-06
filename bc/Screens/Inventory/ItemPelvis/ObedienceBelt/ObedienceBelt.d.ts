@@ -16,4 +16,4 @@ type ObedienceBeltPersistentData = {
     UpdateTime?: number;
     LastMessageLen?: number;
     CheckTime?: number;
-};
+} & AnimationPersistentData;

@@ -260,9 +260,10 @@ declare function DrawText(Text: string, X: number, Y: number, Color: string, Bac
  * @param {null | string} [Image] - URL of the image to draw inside the button, if applicable
  * @param {null | string} [HoveringText] - Text of the tooltip, if applicable
  * @param {boolean} [Disabled] - Disables the hovering options if set to true
+ * @param {null | Rect} [tooltipPosition] - The position of the tooltip
  * @returns {void} - Nothing
  */
-declare function DrawButton(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: null | string, HoveringText?: null | string, Disabled?: boolean): void;
+declare function DrawButton(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: null | string, HoveringText?: null | string, Disabled?: boolean, tooltipPosition?: null | Rect): void;
 /**
  * Draws a checkbox component
  * @param {number} Left - Position of the component from the left of the canvas
@@ -289,9 +290,10 @@ declare function DrawCheckbox(Left: number, Top: number, Width: number, Height: 
  * @param {null | (() => string)} [NextText] - Text for the next button tooltip
  * @param {boolean} [Disabled] - Disables the hovering options if set to true
  * @param {null | number} [ArrowWidth] - How much of the button the previous/next sections cover. By default, half each.
+ * @param {null | Rect} [tooltipPosition] - The position of the tooltip
  * @returns {void} - Nothing
  */
-declare function DrawBackNextButton(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: null | string, BackText?: null | (() => string), NextText?: null | (() => string), Disabled?: boolean, ArrowWidth?: null | number): void;
+declare function DrawBackNextButton(Left: number, Top: number, Width: number, Height: number, Label: string, Color: string, Image?: null | string, BackText?: null | (() => string), NextText?: null | (() => string), Disabled?: boolean, ArrowWidth?: null | number, tooltipPosition?: null | Rect): void;
 /**
  * Draw the hovering text tooltip
  * @param {number} Left - Position of the tooltip from the left of the canvas
@@ -364,7 +366,8 @@ declare function DrawLineCorner(x0: number, y0: number, x1: number, y1: number, 
  * Gets a character's custom background from the assets it wears
  *
  * @param {Character} C - The character to get the background for
- * @returns {string | undefined} - Path to the custom background, or undefined if none
+ * @returns {string | undefined} either `undefined` for no custom background, `""` for black, or
+ * the filename to a background in the Backgrounds directory
  */
 declare function DrawGetCustomBackground(C: Character): string | undefined;
 /**
@@ -580,6 +583,11 @@ declare let TempCanvas: CanvasRenderingContext2D;
  */
 declare let ColorCanvas: CanvasRenderingContext2D;
 declare var BlindFlash: boolean;
+/**
+ * Whether a blindfold removal screen flash should _potentially_ be performed the next time the player character is refreshed.
+ * Generally assigned by {@link InventoryRemove}.
+ */
+declare var BlindFlashQueue: boolean;
 declare var DrawingBlindFlashTimer: number;
 /** @type {Map<string, HTMLImageElement>} */
 declare const DrawCacheImage: Map<string, HTMLImageElement>;

@@ -591,6 +591,6 @@ declare namespace InventoryPrerequisiteConflicts {
     }): string;
 }
 /** @satisfies {Set<keyof PropertiesArray>} */
-declare const PropertiesArrayLike: Set<"Block" | "Hide" | "AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "Prerequisite" | "ExpressionTrigger" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "AllowExpression" | "Alpha" | "MemberNumberList" | "UnHide" | "Texts">;
+declare const PropertiesArrayLike: Set<"Block" | "Hide" | "AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "Prerequisite" | "ExpressionTrigger" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "AllowExpression" | "MemberNumberList" | "UnHide" | "Texts">;
 /** @satisfies {Set<keyof PropertiesRecord>} */
 declare const PropertiesObjectLike: Set<"AllowLockType" | "ActivityExpression" | "RemoveItemOnRemove" | "PoseMapping" | "TypeRecord">;

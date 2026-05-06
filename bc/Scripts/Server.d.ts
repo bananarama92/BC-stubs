@@ -351,9 +351,9 @@ declare namespace ServerValidation {
     /**
      * Private helper to quickly check boolean settings
      * @param {boolean} defaultValue
-     * @returns {(arg: boolean) => boolean}
+     * @returns {(arg: boolean | undefined) => boolean}
      */
-    function isBool(defaultValue: boolean): (arg: boolean) => boolean;
+    function isBool(defaultValue: boolean): (arg: boolean | undefined) => boolean;
     /**
      * Private helper to quickly check items in lists
      * @template T
@@ -388,9 +388,9 @@ declare namespace ServerValidation {
     /**
      * Private helper to quick check notification settings
      * @param {NotificationSetting} defaultNotif
-     * @returns {(arg: NotificationSetting) => NotificationSetting}
+     * @returns {(arg: Partial<NotificationSetting>) => NotificationSetting}
      */
-    function isValidNotification(defaultNotif: NotificationSetting): (arg: NotificationSetting) => NotificationSetting;
+    function isValidNotification(defaultNotif: NotificationSetting): (arg: Partial<NotificationSetting>) => NotificationSetting;
 }
 declare namespace ServerAccountDataSyncedValidate {
     function Title(arg: Partial<TitleName | undefined>, C: Character): Partial<TitleName | undefined>;
@@ -410,9 +410,9 @@ declare namespace ServerAccountDataSyncedValidate {
         ShowOtherMeter: boolean;
         AffectExpression: boolean;
         AffectStutter: ArousalAffectStutterName;
-        VFX: SettingsVFXName;
-        VFXVibrator: SettingsVFXVibratorName;
-        VFXFilter: SettingsVFXFilterName;
+        VFX: GraphicsVFXName;
+        VFXVibrator: GraphicsVFXVibratorName;
+        VFXFilter: GraphicsVFXFilterName;
         Progress: number;
         ProgressTimer: number;
         VibratorLevel: 0 | 1 | 2 | 3 | 4;
@@ -474,7 +474,7 @@ declare namespace ServerAccountDataSyncedValidate {
  * @namespace
  */
 declare const ServerChatRoomSearchSettingsValidate: { [k in keyof Required<ChatRoomSearchSettings>]: (arg: ChatRoomSearchSettings[k], C: Character) => ChatRoomSearchSettings[k]; };
-declare const ServerDefaultTimeout: 1000;
+declare const ServerDefaultTimeout: 3000;
 declare class ServerError extends Error {
 }
 declare class ServerTimeoutError extends ServerError {

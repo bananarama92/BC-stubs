@@ -23,10 +23,10 @@ declare var PreferenceChatEnterLeaveList: ChatEnterLeaveType[];
 declare var PreferenceChatMemberNumbersList: ChatMemberNumbersType[];
 /** @type {ChatFontSizeType[]} */
 declare var PreferenceChatFontSizeList: ChatFontSizeType[];
-/** @type {PreferenceChatCheckboxOption[]} */
-declare const PreferenceSubscreenChatCheckboxes: PreferenceChatCheckboxOption[];
-/** @type {Record<string, PreferenceChatDropdownOption>} */
-declare const PreferenceSubscreenChatDropdowns: Record<string, PreferenceChatDropdownOption>;
+/** @type {PreferenceCheckboxOption[]} */
+declare const PreferenceSubscreenChatCheckboxes: PreferenceCheckboxOption[];
+/** @type {Record<string, PreferenceDropdownOption>} */
+declare const PreferenceSubscreenChatDropdowns: Record<string, PreferenceDropdownOption>;
 declare const PreferenceSubscreenChatIDs: Readonly<{
     grid: "preference-chat-grid";
 }>;

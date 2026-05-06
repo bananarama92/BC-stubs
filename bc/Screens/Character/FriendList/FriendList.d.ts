@@ -5,7 +5,8 @@ declare function FriendListDraw(): void;
 declare function FriendListClick(event: PointerEvent): void;
 declare function FriendListKeyDown(event: KeyboardEvent): boolean;
 declare function FriendListUnload(): void;
-declare function FriendListExit(): void;
+/** @t ype {ScreenExitHandler} */
+declare function FriendListExit(): Promise<void>;
 /**
  * Creates beep message menu
  * @param {number} MemberNumber Member number of target player
@@ -20,10 +21,6 @@ declare function FriendListBeepMenuClose(): void;
  * Sends the beep and message on send click
  */
 declare function FriendListBeepMenuSend(): void;
-/**
- * Opens the friendlist from any screen
- */
-declare function FriendListShow(): Promise<void>;
 /**
  * Shows the wanted beep on click from beep list
  * @param {number} i index of the beep
@@ -51,12 +48,61 @@ declare function FriendListChatSearch(room: string | undefined): Promise<void>;
  */
 declare function FriendListLoadFriendList(data: ServerFriendInfo[]): void;
 /**
- * When the user wants to delete someone from her friend list this must be confirmed.
- * This function either displays the confirm message or deletes the friend from the player's friendlist
+ * When the user wants to delete someone from their friend list this must be confirmed.
+ * This function either displays the confirm message or deletes the friend from the friendlist
  * @param {number} MemberNumber - The member to delete from the friendlist
  * @returns {void} - Nothing
  */
 declare function FriendListDelete(MemberNumber: number): void;
+/**
+ * Registers an action for the friend list action menu.
+ * @param {FriendListActionDefinition} action
+ */
+declare function FriendListRegisterAction(action: FriendListActionDefinition): void;
+/**
+ * @param {FriendListActionContext} friend
+ * @returns {FriendListActionDefinition[]}
+ */
+declare function FriendListGetAvailableActions(friend: FriendListActionContext): FriendListActionDefinition[];
+/**
+ * @param {FriendListActionDefinition} action
+ * @param {FriendListActionContext} friend
+ * @returns {HTMLElement}
+ */
+declare function FriendListCreateActionItem(action: FriendListActionDefinition, friend: FriendListActionContext): HTMLElement;
+/**
+ * @param {FriendRawData} friend
+ * @returns {FriendListActionContext}
+ */
+declare function FriendListBuildActionContext(friend: FriendRawData): FriendListActionContext;
+/**
+ * @param {FriendRawData} friend
+ * @returns {HTMLElement}
+ */
+declare function FriendListCreateActionsCell(friend: FriendRawData): HTMLElement;
+/**
+ * Closes the actions popover if focus is no longer on this menu (or a descendant). {@link FriendListCloseActionsMenu} syncs the trigger and popover.
+ * @this {HTMLElement}
+ * @param {FocusEvent} ev
+ */
+declare function FriendListActionsMenuFocusOut(this: HTMLElement, ev: FocusEvent): void;
+/**
+ * @this {HTMLButtonElement}
+ * @param {number} memberNumber
+ */
+declare function FriendListToggleActionsMenu(this: HTMLButtonElement, memberNumber: number): void;
+declare function FriendListCloseActionsMenu(): void;
+/**
+ * @param {Element} wrapper
+ * @param {HTMLElement} menu
+ */
+declare function FriendListPositionActionsMenu(wrapper: Element, menu: HTMLElement): void;
+declare function FriendListRepositionActionsMenu(): void;
+/**
+ * Prompts for a comma-separated list of members to add.
+ * @returns {void} - Nothing
+ */
+declare function FriendListAddFriends(): void;
 /**
  * Handles mode changes for friend list
  * @param {number} modeIndex - mode to change to
@@ -91,8 +137,36 @@ declare function FriendListChangeSortingMode(sortingMode: FriendListSortingMode)
  * @this {HTMLButtonElement}
  */
 declare function FriendListToggleAutoRefresh(this: HTMLButtonElement): void;
+/**
+ * Checks if the given member number is pending friend request.
+ * @param {number} memberNumber
+ * @returns {boolean}
+ */
+declare function FriendListIsPending(memberNumber: number): boolean;
+/**
+ * Gets the relation type of the given member number.
+ * @param {number} memberNumber
+ * @returns {FriendListRelationType}
+ */
+declare function FriendListGetRelationType(memberNumber: number): FriendListRelationType;
+/**
+ * Checks if the player can delete the given member number from their friendlist.
+ * @param {number} memberNumber
+ * @returns {boolean}
+ */
+declare function FriendListCanDelete(memberNumber: number): boolean;
+/**
+ * Checks if the player can add the given member number to their friendlist.
+ * @param {number} memberNumber
+ * @returns {boolean}
+ */
+declare function FriendListCanAdd(memberNumber: number): boolean;
+/**
+ * Opens the friendlist from any screen
+ */
+declare function FriendListShow(): Promise<void>;
 declare var FriendListBackground: string;
-/** @type {number[]} */
+/** @deprecated @type {number[]} */
 declare var FriendListConfirmDelete: number[];
 /** @type {FriendListReturn<any> | null} */
 declare var FriendListReturn: FriendListReturn<any> | null;
@@ -108,6 +182,8 @@ declare var FriendListBeepShowRoom: boolean;
 declare let FriendListSortingMode: FriendListSortingMode;
 /** @type {FriendListSortingDirection} */
 declare let FriendListSortingDirection: FriendListSortingDirection;
+/** @type {Record<string, FriendListActionDefinition>} */
+declare var FriendListActionDefinitions: Record<string, FriendListActionDefinition>;
 declare namespace FriendListAutoRefresh {
     let interval: number;
     let nextRefresh: number;
@@ -122,6 +198,7 @@ declare const FriendListIDs: Readonly<{
     modeTitle: "friend-list-mode-title";
     searchInput: "friend-list-search-input";
     btnAutoRefresh: "friend-list-button-auto-refresh";
+    btnAddFriend: "friend-list-button-add-friend";
     btnRefresh: "friend-list-button-refresh";
     btnPrev: "friend-list-button-prev";
     btnNext: "friend-list-button-next";

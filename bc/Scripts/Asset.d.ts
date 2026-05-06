@@ -30,9 +30,10 @@ declare function AssetActivityMirrorGroupSet(group: AssetGroup): void;
  * @param {AssetGroup} Group
  * @param {AssetDefinition} AssetDef
  * @param {ExtendedItemMainConfig} ExtendedConfig
+ * @param {AssetGroupDefinition} GroupDef
  * @returns {void} - Nothing
  */
-declare function AssetAdd(Group: AssetGroup, AssetDef: AssetDefinition, ExtendedConfig: ExtendedItemMainConfig): void;
+declare function AssetAdd(Group: AssetGroup, AssetDef: AssetDefinition, ExtendedConfig: ExtendedItemMainConfig, GroupDef: AssetGroupDefinition): void;
 /**
  * Automatically generated pose-related asset prerequisites
  * @param {Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>} asset The asset or any other object with the expected asset interface subset
@@ -68,9 +69,11 @@ declare function AssetFindExtendedConfig(ExtendedConfig: ExtendedItemMainConfig,
  * @param {AssetLayerDefinition} Layer - The raw layer definition
  * @param {Asset} A - The built asset
  * @param {number} I - The index of the layer within the asset
+ * @param {AssetDefinition} AssetDef - The definition for the built asset
+ * @param {AssetGroupDefinition} GroupDef - The definition for the built asset's group
  * @return {AssetLayer} - A Layer object representing the drawable properties of the given layer
  */
-declare function AssetMapLayer(Layer: AssetLayerDefinition, A: Asset, I: number): AssetLayer;
+declare function AssetMapLayer(Layer: AssetLayerDefinition, A: Asset, I: number, AssetDef: AssetDefinition, GroupDef: AssetGroupDefinition): AssetLayer;
 /**
  *
  * @param {null | undefined | AssetPoseMapping} poseMapping
@@ -109,11 +112,11 @@ declare function AssetParseAlpha(alphaDef: undefined | Alpha.Definition[], warni
 /**
  * Parse the passed layers alpha mask definitions.
  * @param {AssetLayerDefinition} Layer - The raw layer definition
- * @param {Asset} NewAsset - The raw asset definition
+ * @param {AssetDefinition} NewAsset - The raw asset definition
  * @param {number} I - The index of the layer within its asset
  * @return {Alpha.Data[]} - a list of alpha mask data for the layer
  */
-declare function AssetParseLayerAlpha(Layer: AssetLayerDefinition, NewAsset: Asset, I: number): Alpha.Data[];
+declare function AssetParseLayerAlpha(Layer: AssetLayerDefinition, NewAsset: AssetDefinition, I: number): Alpha.Data[];
 /**
  * Assigns color indices to the layers of an asset. These determine which colors get applied to the layer. Also adds
  * a count of colorable layers to the asset definition.

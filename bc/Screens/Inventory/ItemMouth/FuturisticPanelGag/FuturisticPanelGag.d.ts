@@ -31,7 +31,7 @@ declare function InventoryItemMouthFuturisticPanelGagTriggerGetOptions(data: Mod
  */
 declare function InventoryItemMouthFuturisticPanelGagTrigger(data: ModularItemData, C: Character, Item: Item, Deflate: boolean): void;
 /**
- * @typedef {{ LastMessageLen?: number, UpdateTime?: number, ChangeTime?: number }} FuturisticPanelGagPersistentData
+ * @typedef {{ LastMessageLen?: number, UpdateTime?: number, ChangeTime?: number } & AnimationPersistentData} FuturisticPanelGagPersistentData
  */
 /**
  * @param {ModularItemData} data
@@ -44,4 +44,4 @@ type FuturisticPanelGagPersistentData = {
     LastMessageLen?: number;
     UpdateTime?: number;
     ChangeTime?: number;
-};
+} & AnimationPersistentData;

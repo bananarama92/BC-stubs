@@ -50,8 +50,8 @@ declare var TitleBackground: string;
  * @type {TitleName}
  */
 declare var TitleSelectedTitle: TitleName;
-/** @type {null | "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked"} */
-declare var TitleNicknameStatus: null | "NicknameTooLong" | "NicknameInvalidChars" | "NicknameLocked";
+/** @type {null | NicknameStatus} */
+declare var TitleNicknameStatus: null | NicknameStatus;
 /** @deprecated */
 declare let TitleOffset: number;
 /** @type {{ Name: TitleName; Requirement: () => boolean; Earned?: boolean, Force?: boolean }[]} */

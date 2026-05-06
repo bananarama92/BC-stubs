@@ -14,4 +14,4 @@ declare function AssetsItemBreastFuturisticBraScriptDraw(drawData: DynamicScript
 type FuturisticBraPersistentData = {
     UpdateTime?: number;
     ShowHeart?: boolean;
-};
+} & AnimationPersistentData;

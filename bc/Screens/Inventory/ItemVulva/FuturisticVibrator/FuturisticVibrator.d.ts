@@ -62,4 +62,4 @@ type FuturisticVibratorPersistentData = {
     Mode?: VibratorMode;
     ChangeTime?: number;
     LastChange?: number;
-};
+} & AnimationPersistentData;

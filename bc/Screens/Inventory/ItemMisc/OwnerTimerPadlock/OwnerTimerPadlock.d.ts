@@ -17,10 +17,29 @@ declare function InventoryItemMiscOwnerTimerPadlockDrawHook({ asset }: NoArchIte
  * @satisfies {ExtendedItemScriptHookCallbacks.Draw<NoArchItemData>}
  */
 declare function InventoryItemMiscOwnerTimerPadlockClickHook(data: NoArchItemData, originalFunction: null | (() => void), validator?: (C: Character) => boolean): void;
+declare function InventoryItemMiscOwnerTimerPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 /**
- * @param {number} TimeToAdd
+ * @param {number} TimeToAddSeconds
+ * @param {{label: string, seconds: number}} DisplayTimeUnit
  * @param {boolean} PlayerMemberNumberToList
+ * @param {boolean} LeaveDialog
  */
-declare function InventoryItemMiscOwnerTimerPadlockAdd(TimeToAdd: number, PlayerMemberNumberToList?: boolean): void;
-declare const OwnerTimerChooseList: number[];
-declare let OwnerTimerChooseIndex: number;
+declare function InventoryItemMiscTimerPadlockAdd(TimeToAddSeconds: number, DisplayTimeUnit: {
+    label: string;
+    seconds: number;
+}, PlayerMemberNumberToList?: boolean, LeaveDialog?: boolean): void;
+/**
+ * Sends a global chat message of how much time was added or removed from a
+ * Timer Padlock.
+ */
+declare function InventoryItemMiscSendTimerPadlockChangeMessage(): void;
+declare const OwnerTimerChooseOptions: {
+    unit: {
+        label: string;
+        seconds: number;
+    };
+    values: number[];
+}[];
+declare let OwnerTimerChooseOptionsIndex: number;
+declare let OwnerTimerChooseIndexes: number[];
+declare let TimerPadlockAccumulatedSeconds: number;
