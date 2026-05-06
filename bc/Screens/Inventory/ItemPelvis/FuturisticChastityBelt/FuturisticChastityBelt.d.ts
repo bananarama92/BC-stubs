@@ -21,4 +21,4 @@ declare var InventoryItemPelvisFuturisticChastityBeltTamperZones: string[];
 type FuturisticChastityBeltPersistentData = {
     UpdateTime?: number;
     LastMessageLen?: number;
-};
+} & AnimationPersistentData;

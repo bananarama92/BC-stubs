@@ -5,7 +5,7 @@ type FriendListSortingDirection = 'Asc' | 'Desc';
 
 type FriendListReturn<T extends ModuleType> = { Screen: ModuleScreens[T], Module: T, IsInChatRoom?: boolean, hasScrolledChat?: boolean };
 
-type FriendRelationType = "Friend" | "Owner" | "Lover" | "Submissive";
+type FriendListRelationType = "Friend" | "Pending" | "Owner" | "Lover" | "Submissive";
 
 type FriendRawData = {
   memberNumber?: number; /* undefined for NPCs */
@@ -13,8 +13,12 @@ type FriendRawData = {
   memberNickname?: string;
   chatRoom?: FriendRawRoom;
   beep?: FriendRawBeep;
-  relationType?: FriendRelationType;
-  canDelete?: boolean;
+  relationType: FriendListRelationType;
+  canDelete: boolean;
+	canAdd: boolean;
+	isOnline: boolean;
+	canBeep: boolean;
+  pending: boolean;
 }
 
 type FriendRawRoom = {
@@ -28,7 +32,6 @@ type FriendRawBeep = {
   beepIndex?: number;
   caption: string;
   hasMessage?: boolean;
-  canBeep?: boolean;
 };
 
 interface FriendListIcon {
@@ -38,4 +41,24 @@ interface FriendListIcon {
   tooltipKey: string;
   /** A string to-be used for sorting the icon-containing column cells */
   sortKey: string;
+}
+
+interface FriendListActionContext {
+	memberNumber: number;
+	memberName: string;
+	canDelete?: boolean;
+	canAdd?: boolean;
+	canBeep?: boolean;
+	isOnline?: boolean;
+	pending?: boolean;
+	relationType?: FriendListRelationType;
+}
+
+interface FriendListActionDefinition {
+	id: string;
+	getLabel: (context: FriendListActionContext) => string;
+	onClick: (context: FriendListActionContext) => void;
+	getIcon?: (context: FriendListActionContext) => string;
+	isVisible?: (context: FriendListActionContext) => boolean;
+	isEnabled?: (context: FriendListActionContext) => boolean;
 }

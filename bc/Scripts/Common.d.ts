@@ -118,18 +118,20 @@ declare function CommonDynamicFunctionParams(FunctionName: string): unknown;
  *  CommonDynamicFunctionParams in that arguments are not parsed from the passed in FunctionName string, but
  *  passed directly into the function call, allowing for more complex JS objects to be passed in. This
  *  function will not log to console if the provided function name does not exist as a global function.
- * @param {string} FunctionName - The name of the global function to call
- * @param {readonly any[]} args - zero or more arguments to be passed to the function (optional)
- * @returns {any} - returns the result of the function call, or undefined if the function name isn't valid
+ * @template {keyof WindowFunctions} T
+ * @param {T} FunctionName - The name of the global function to call
+ * @param {Parameters<Window[T]>} args - zero or more arguments to be passed to the function (optional)
+ * @returns {Window[T] extends undefined ? undefined | ReturnType<Window[T]> : ReturnType<Window[T]>} - returns the result of the function call, or undefined if the function name isn't valid
  */
-declare function CommonCallFunctionByName(FunctionName: string, ...args: readonly any[]): any;
+declare function CommonCallFunctionByName<T extends keyof WindowFunctions>(FunctionName: T, ...args: Parameters<Window[T]>): Window[T] extends undefined ? undefined | ReturnType<Window[T]> : ReturnType<Window[T]>;
 /**
  * Behaves exactly like CommonCallFunctionByName, but logs a warning if the function name is invalid.
- * @param {string} FunctionName - The name of the global function to call
- * @param {readonly any[]} args - zero or more arguments to be passed to the function (optional)
- * @returns {any} - returns the result of the function call, or undefined if the function name isn't valid
+ * @template {keyof WindowFunctions} T
+ * @param {T} FunctionName - The name of the global function to call
+ * @param {Parameters<Window[T]>} args - zero or more arguments to be passed to the function (optional)
+ * @returns {Window[T] extends undefined ? undefined | ReturnType<Window[T]> : ReturnType<Window[T]>} - returns the result of the function call, or undefined if the function name isn't valid
  */
-declare function CommonCallFunctionByNameWarn(FunctionName: string, ...args: readonly any[]): any;
+declare function CommonCallFunctionByNameWarn<T extends keyof WindowFunctions>(FunctionName: T, ...args: Parameters<Window[T]>): Window[T] extends undefined ? undefined | ReturnType<Window[T]> : ReturnType<Window[T]>;
 /**
  * Get the current screen
  * @returns {ScreenSpecifier}
@@ -840,13 +842,6 @@ declare function CommonStringSplice(string: string, index: number, value: string
  * @returns {T}
  */
 declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
-/**
- * I am a testing function for typescript to evaluate and should not be executed during runtime nor removed.
- *
- * Checks whether all all `window`-defined backgrounds and screen functions have an appropriate signature.
- * @returns {void}
- */
-declare function CommonTestSatisfies(): void;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {ModuleType} */
@@ -883,6 +878,24 @@ declare var CommonPhotoMode: boolean;
  * @type {Record<"SOURCE_CHAR"|"DEST_CHAR"|"DEST_CHAR_NAME"|"TARGET_CHAR"|"TARGET_CHAR_NAME"|"ASSET_NAME"|"AUTOMATIC", CommonChatTags>}
  */
 declare const CommonChatTags: Record<"SOURCE_CHAR" | "DEST_CHAR" | "DEST_CHAR_NAME" | "TARGET_CHAR" | "TARGET_CHAR_NAME" | "ASSET_NAME" | "AUTOMATIC", CommonChatTags>;
+declare namespace TimeUnits {
+    namespace MINUTES {
+        let label: string;
+        let seconds: number;
+    }
+    namespace HOURS {
+        let label_1: string;
+        export { label_1 as label };
+        let seconds_1: number;
+        export { seconds_1 as seconds };
+    }
+    namespace DAYS {
+        let label_2: string;
+        export { label_2 as label };
+        let seconds_2: number;
+        export { seconds_2 as seconds };
+    }
+}
 /**
  * A map of keys to common font stack definitions. Each stack definition is a
  * two-item array whose first item is an ordered list of fonts, and whose

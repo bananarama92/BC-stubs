@@ -167,9 +167,9 @@ declare function ChatSearchClickUnhideRoom(C: ChatRoomSearchResult | number, Con
 declare function ChatSearchResponse(data: ServerChatRoomJoinResponse): void;
 /**
  * Sends a toast message based on the given response type
- * @param {ServerChatRoomJoinResponse} type
+ * @param {ServerChatRoomJoinResponse | "ServerTimeoutError" | "ServerInProgressError"} type
  */
-declare function ChatSearchSendToast(type: ServerChatRoomJoinResponse): void;
+declare function ChatSearchSendToast(type: ServerChatRoomJoinResponse | "ServerTimeoutError" | "ServerInProgressError"): void;
 /**
  * Censors the chat search result name and description based on the player preference
  * @param {ServerChatRoomSearchData} searchData - The (potentially) to-be censored search result

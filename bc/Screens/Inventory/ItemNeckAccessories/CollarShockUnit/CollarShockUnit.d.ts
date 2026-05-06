@@ -7,4 +7,4 @@ type ShockUnitPersistentData = {
     ChangeTime?: number;
     DisplayCount?: number;
     LastTriggerCount?: number;
-};
+} & AnimationPersistentData;

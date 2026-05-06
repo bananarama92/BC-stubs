@@ -555,9 +555,33 @@ declare function ChatRoomDrawArousalOverlay(): boolean;
 declare function ChatRoomStruggleDraw(): void;
 /**
  * Draws the chat room menu buttons
+ * @deprecated Use {@link ChatRoomTopMenuSync} instead
  * @returns {void} - Nothing
  */
 declare function ChatRoomMenuDraw(): void;
+/**
+ * Icon/color/tooltip state for one top-menu entry.
+ * @param {ChatRoomMenuButton} menuId
+ * @returns {{ image: string, state: ChatRoom.TopBarButtonState, hoverText: string | Node | readonly (string | Node)[] }}
+ */
+declare function ChatRoomMenuButtonVisualState(menuId: ChatRoomMenuButton): {
+    image: string;
+    state: ChatRoom.TopBarButtonState;
+    hoverText: string | Node | readonly (string | Node)[];
+};
+/**
+ * @returns {void}
+ */
+declare function ChatRoomTopMenuPosition(): void;
+/**
+ * @returns {void}
+ */
+declare function ChatRoomTopMenuEnsure(): void;
+/**
+ * Syncs the DOM top menu with {@link ChatRoomMenuButtons} and per-button visuals.
+ * @returns {void}
+ */
+declare function ChatRoomTopMenuSync(): void;
 /**
  * Redirects the Mouse Down event to the map if needed
  * @param {PointerEvent} event
@@ -595,6 +619,13 @@ declare function ChatRoomOpenInformationScreen(): void;
  */
 declare function ChatRoomOpenAdminScreen(): void;
 declare function ChatRoomMenuClick(event: PointerEvent): void;
+/**
+ * Runs the action for one top-menu button (formerly canvas hit-test + switch).
+ * @param {ChatRoomMenuButton} action
+ * @param {MouseEvent} event
+ * @returns {void}
+ */
+declare function ChatRoomMenuPerformAction(action: ChatRoomMenuButton, event: MouseEvent): void;
 declare function ChatRoomAttemptStandMinigameEnd(): void;
 /**
  * Checks if the given chat room visibility property causes it to be "private" (has any form of visibility control)
@@ -1215,9 +1246,10 @@ declare function ChatRoomFriendMessage(SenderCharacter: Character, data: ServerC
  * @param {boolean} adding - If TRUE adding to the list, if FALSE removing from the list
  * @param {number} memberNumber - The member number to add/remove
  * @param {"FriendRequest"} [notification] - used to send notifications
+ * @param {boolean} [sync = true] - if true, will sync the list to the server
  * @returns {void} - Nothing
  */
-declare function ChatRoomListUpdate(list: number[], adding: boolean, memberNumber: number, notification?: "FriendRequest"): void;
+declare function ChatRoomListUpdate(list: number[], adding: boolean, memberNumber: number, notification?: "FriendRequest", sync?: boolean): void;
 /**
  * Adds a list of character(s) into the Focus List
  * @param {Character[]} characters - Characters to add
@@ -1693,6 +1725,11 @@ declare var ChatRoomHideIconState: number;
  * @type {ChatRoomMenuButton[]}
  * */
 declare var ChatRoomMenuButtons: ChatRoomMenuButton[];
+/**
+ * A stringified, `\0`-joined list of menu button names. Used for determining whether the top menubar needs to be refreshed.
+ * @type {string}
+ */
+declare let ChatRoomTopMenuBuiltSig: string;
 declare let ChatRoomFontSize: number;
 declare namespace ChatRoomFontSizes {
     let Small: number;

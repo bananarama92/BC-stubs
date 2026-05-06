@@ -16,6 +16,12 @@ declare function TimerToString(T: number): string;
  */
 declare function TimerHourToString(T: Date): string;
 /**
+ * Returns a literal string of the time remaining on a given timer
+ * @param {number} T - Time to convert to a string in ms
+ * @returns {string} - The time string in "DD days HH hours MM minutes" format
+ */
+declare function TimerToDaysHoursMinutesString(T: number): string;
+/**
  * Check if we must remove items from characters. (Expressions, items being removed, locks, etc.)
  * @returns {void} - Nothing
  */

@@ -14,8 +14,8 @@ declare function PreferenceSubscreenImmersionResize(onLoad: any): void;
  * @param {boolean} disableButtons
  */
 declare function PreferenceSubscreenImmersionCheckStates(disableButtons: boolean): void;
-/** @type {SettingsSensDepName[]} */
-declare var PreferenceSettingsSensDepList: SettingsSensDepName[];
+/** @type {ImmersionSensDepName[]} */
+declare var PreferenceSettingsSensDepList: ImmersionSensDepName[];
 /** @type {{label: string, check: () => boolean, click: (value: boolean) => void, disabled?: (disableButtons: boolean) => boolean}[]} */
 declare const PreferenceSubscreenImmersionCheckboxes: {
     label: string;

@@ -96,20 +96,14 @@ declare function DialogLogQuery<T extends LogGroupType>(LogType: LogNameType[T],
  * Sets the AllowItem flag on the current character
  * @param {string} Allow - The flag to set. Either "TRUE" or "FALSE"
  */
-declare function DialogAllowItem(Allow: string): void;
+declare function DialogSetAllowItem(Allow: string): void;
 /**
  * Returns the value of the AllowItem flag of a given character
  * @param {string | Character} C - The character whose flag should be returned.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {boolean} - The value of the given character's AllowItem flag
  */
-declare function DialogDoAllowItem(C: string | Character): boolean;
-/**
- * Returns TRUE if the AllowItem flag doesn't allow putting an item on the current character
- * @param {string | Character} C
- * @returns {boolean} - The reversed value of the given character's AllowItem flag
- */
-declare function DialogDontAllowItemPermission(C: string | Character): boolean;
+declare function DialogAllowsItem(C: string | Character): boolean;
 /**
  * Returns TRUE if no item can be used by the player on the current character because of the map distance
  * @returns {boolean} - TRUE if distance is too far (more than 1 tile)
@@ -656,23 +650,23 @@ declare function DialogSetTightenLoosenItem(Item: Item): void;
 declare function DialogChangeItemColor(C: Character, Color: BCColor): void;
 /**
  * Returns the button image name for a dialog menu button based on the button name.
- * @param {DialogMenuButton} ButtonName - The menu button name
- * @param {Item} FocusItem - The focused item
+ * @param {DialogMenuButtonType} ButtonName - The menu button name
+ * @param {Item | null} FocusItem - The focused item
  * @returns {string} - The button image name
  */
-declare function DialogGetMenuButtonImage(ButtonName: DialogMenuButton, FocusItem: Item): string;
+declare function DialogGetMenuButtonImage(ButtonName: DialogMenuButtonType, FocusItem: Item | null): string;
 /**
  * Returns the background color of a dialog menu button based on the button name.
- * @param {DialogMenuButton} ButtonName - The menu button name
+ * @param {DialogMenuButtonType} ButtonName - The menu button name
  * @returns {string} - The background color that the menu button should use
  */
-declare function DialogGetMenuButtonColor(ButtonName: DialogMenuButton): string;
+declare function DialogGetMenuButtonColor(ButtonName: DialogMenuButtonType): string;
 /**
  * Determines whether or not a given dialog menu button should be disabled based on the button name.
- * @param {DialogMenuButton} ButtonName - The menu button name
+ * @param {DialogMenuButtonType} ButtonName - The menu button name
  * @returns {boolean} - TRUE if the menu button should be disabled, FALSE otherwise
  */
-declare function DialogIsMenuButtonDisabled(ButtonName: DialogMenuButton): boolean;
+declare function DialogIsMenuButtonDisabled(ButtonName: DialogMenuButtonType): boolean;
 /**
  * Searches in the dialog for a specific stage keyword and returns that dialog option if we find it, error otherwise
  * @param {string} KeyWord - The key word to search for
@@ -829,9 +823,9 @@ declare var DialogFocusSourceItem: Item | null;
 declare var DialogFocusItemColorizationRedrawTimer: ReturnType<typeof setTimeout>;
 /**
  * The list of currently visible menu item buttons.
- * @type {DialogMenuButton[]}
+ * @type {DialogMenuButtonType[]}
  */
-declare var DialogMenuButton: DialogMenuButton[];
+declare var DialogMenuButton: DialogMenuButtonType[];
 /**
  * The dialog's current mode, what is currently shown.
  * @type {null | DialogMenuMode}

@@ -5,4 +5,4 @@ declare function AssetsItemNeckAccessoriesCollarAutoShockUnitScriptDrawHook(data
 type AutoShockUnitPersistentData = {
     ChangeTime?: number;
     LastMessageLen?: number;
-};
+} & AnimationPersistentData;

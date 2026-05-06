@@ -25,7 +25,7 @@ declare var PreferenceCensoredWordsList: string[];
 declare const PreferenceCensoredWordsIDs: Readonly<{
     grid: "preference-censored-words-grid";
     subtitle: "preference-censored-words-subtitle";
-    censorshipOption: "preference-censored-words-censorship-group";
+    censorshipOption: "dropdown-pair-CensoredWordsLevel";
     wordInput: "InputWord";
     wordInputGroup: "preference-censored-words-word-input-group";
     add: "preference-censored-words-add-button";

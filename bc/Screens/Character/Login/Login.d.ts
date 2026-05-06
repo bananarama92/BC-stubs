@@ -122,6 +122,11 @@ declare function LoginFixOwner(): void;
  */
 declare function LoginSetupPlayer(C: ServerAccountData): void;
 /**
+ * Routes the player to the correct post-login screen after the disclaimer flow completes.
+ * @returns {void} Nothing
+ */
+declare function LoginDone(): void;
+/**
  * Handles player login response data
  * @param {ServerLoginResponse} C - The Login response data - this will either be the player's character data if the
  * login was successful, or a string error message if the login failed.

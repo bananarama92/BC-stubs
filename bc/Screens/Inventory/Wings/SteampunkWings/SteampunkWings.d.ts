@@ -8,4 +8,4 @@ type SteampunkWingsPersistentData = {
     ChangeTime?: number;
     FrameTime?: number;
     DrawRequested?: boolean;
-};
+} & AnimationPersistentData;

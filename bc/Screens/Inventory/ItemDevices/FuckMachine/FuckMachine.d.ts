@@ -8,4 +8,4 @@ type FuckMachinePersistentData = {
     Mode?: VibratorMode;
     ChangeTime?: number;
     LastChange?: number;
-};
+} & AnimationPersistentData;

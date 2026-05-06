@@ -7,4 +7,4 @@ type ForbiddenChastityBraPersistentData = {
     LastMessageLen?: number;
     LastTriggerCount?: number;
     DisplayCount?: number;
-};
+} & AnimationPersistentData;

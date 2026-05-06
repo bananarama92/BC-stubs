@@ -38,5 +38,5 @@ type LuckyWheelPersistentData = {
     AnimationSpeed?: number;
     ChangeTime?: number;
     LightStep?: number;
-    Spinning: boolean;
-};
+    Spinning?: boolean;
+} & AnimationPersistentData;

@@ -71,7 +71,7 @@ declare function VibratorModePublishAction(data: VibratingItemData, C: Character
  */
 declare function VibratorModeSetAssetProperties(data: VibratingItemData): void;
 /**
- * @typedef {{ Mode?: VibratorMode, ChangeTime?: number, LastChange?: number }} VibratorModePersistentData
+ * @typedef {{ Mode?: VibratorMode, ChangeTime?: number, LastChange?: number } & AnimationPersistentData} VibratorModePersistentData
  */
 /**
  * Common dynamic script draw function for vibrators. This function is called every frame. TO make use of dynamic script draw on vibrators,
@@ -233,4 +233,4 @@ type VibratorModePersistentData = {
     Mode?: VibratorMode;
     ChangeTime?: number;
     LastChange?: number;
-};
+} & AnimationPersistentData;

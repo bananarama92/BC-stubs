@@ -21,10 +21,10 @@ declare function PreferenceUnload(): void;
 declare function PreferenceResize(load: boolean): void;
 declare function PreferenceKeyUp(event: KeyboardEvent): boolean;
 /**
- * @param {string} subscreenName
+ * @param {PreferenceSubscreenName} subscreenName
  * @returns
  */
-declare function PreferenceSubscreenCreateSubscreen(subscreenName: string): HTMLDivElement;
+declare function PreferenceSubscreenCreateSubscreen(subscreenName: PreferenceSubscreenName): HTMLDivElement;
 declare function PreferenceSubscreenResize(load: boolean): void;
 /**
  * Exit from a specific subscreen by running its handler and checking its validity
@@ -300,7 +300,7 @@ declare var PreferenceGenderSettingsValidate: { [k in keyof Required<GenderSetti
 declare var PreferenceNotificationSettingsDefault: Required<NotificationSettingsType>;
 /**
  * Namespace with functions for validating {@link NotificationSettingsType} properties
- * @type {{ [k in keyof Required<NotificationSettingsType>]: (arg: NotificationSettingsType[k], C: Character) => NotificationSettingsType[k] }}
+ * @type {{ [k in keyof Required<NotificationSettingsType>]: (arg: Partial<NotificationSettingsType[k]>, C: Character) => NotificationSettingsType[k] }}
  * @namespace
  */
-declare var PreferenceNotificationSettingsValidate: { [k in keyof Required<NotificationSettingsType>]: (arg: NotificationSettingsType[k], C: Character) => NotificationSettingsType[k]; };
+declare var PreferenceNotificationSettingsValidate: { [k in keyof Required<NotificationSettingsType>]: (arg: Partial<NotificationSettingsType[k]>, C: Character) => NotificationSettingsType[k]; };

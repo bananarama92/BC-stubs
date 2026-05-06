@@ -155,9 +155,9 @@ declare function ExtendedItemValidate<T extends ExtendedItemOption>(data: null |
  * extended item functions (e.g. if the currently focused it is the hemp rope arm restraint, this will return
  * "InventoryItemArmsHempRope", allowing functions like InventoryItemArmsHempRopeLoad to be called)
  * @param {Item} Item - The extended item in question; defaults to {@link DialogFocusItem}
- * @returns {string} The extended item function prefix for the currently focused item
+ * @returns {`Inventory${AssetGroupName}${string}`} The extended item function prefix for the currently focused item
  */
-declare function ExtendedItemFunctionPrefix(Item?: Item): string;
+declare function ExtendedItemFunctionPrefix(Item?: Item): `Inventory${AssetGroupName}${string}`;
 /**
  * Simple getter for the key of the currently focused extended item in the ExtendedItemOffsets lookup
  * @returns {string} The offset lookup key for the currently focused extended item
