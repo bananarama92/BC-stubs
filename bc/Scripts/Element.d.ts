@@ -211,9 +211,13 @@ declare function ElementToggleGeneratedElements(Screen: string, ShouldDisplay: b
 /**
  * Create a label for a given element
  * @param {string} label
- * @param {'left' | 'top'} position
+ * @param {HTMLElement | string} forId
+ * @param {object} [options]
+ * @param {'left' | 'top'} [options.position='top']
  */
-declare function ElementCreateSettingsLabel(label: string, position?: "left" | "top"): HTMLSpanElement;
+declare function ElementCreateSettingsLabel(label: string, forId: HTMLElement | string, options?: {
+    position?: "left" | "top" | undefined;
+}): HTMLLabelElement;
 /**
  * Create a group of radio buttons
  * @param {string} id
@@ -632,6 +636,17 @@ declare namespace ElementCheckbox {
      * @returns {HTMLLabelElement}
      */
     function CreateLabelled(id: null | string | undefined, label: string | Node | HTMLOptionsUnion, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.LabelOptions, htmlOptions?: null | Partial<Record<"checkbox" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>): HTMLLabelElement;
+}
+declare namespace ElementText {
+    /**
+     * Creates a paragraph node, optionally describing another element
+     * @param {string} contents
+     * @param {{ describes?: string | HTMLElement } | undefined} opts
+     * @returns
+     */
+    function CreateNote(contents: string, opts?: {
+        describes?: string | HTMLElement;
+    } | undefined): HTMLParagraphElement;
 }
 declare namespace ElementSwipe {
     /**

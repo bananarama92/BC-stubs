@@ -68,11 +68,6 @@ declare function ChatRoomOwnershipOptionIs(Option: ChatRoomOwnershipEvent): bool
  */
 declare function ChatRoomLovershipOptionIs(Option: ChatRoomLovershipEvent): boolean;
 /**
- * Returns TRUE if the room customization button can be used
- * @returns {boolean} - TRUE if can be used
- */
-declare function ChatRoomCustomizationButton(): boolean;
-/**
  * Checks if the player can take a drink from the current character's tray.
  * @returns {boolean} - TRUE if the current character is wearing a drinks tray and the player can interact.
  */
@@ -538,7 +533,18 @@ declare function ChatRoomStatusCheckExpiration(): void;
  */
 declare function ChatRoomCustomizationClear(): void;
 /**
+ * Returns whether the current chat room has customization enabled or not
+ */
+declare function ChatRoomIsCustomized(): boolean | undefined;
+/**
+ * Update the state of the room customization
+ * @param {boolean | undefined} toggle
+ * @returns
+ */
+declare function ChatRoomUpdateCustomization(toggle?: boolean | undefined): void;
+/**
  * Use the room customization features if needed
+ * @deprecated
  * @returns {void} - Nothing.
  */
 declare function ChatRoomCustomizationRun(): void;
@@ -629,10 +635,10 @@ declare function ChatRoomMenuPerformAction(action: ChatRoomMenuButton, event: Mo
 declare function ChatRoomAttemptStandMinigameEnd(): void;
 /**
  * Checks if the given chat room visibility property causes it to be "private" (has any form of visibility control)
- * @param {ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings} room - The visibility property to check
+ * @param {ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings | null | undefined} room - The visibility property to check
  * @returns {boolean} - Returns TRUE if the room is private. FALSE otherwise, or visibility is not set.
  */
-declare function ChatRoomDataIsPrivate(room: ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings): boolean;
+declare function ChatRoomDataIsPrivate(room: ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings | null | undefined): boolean;
 /**
  * Checks if the current chat room is "private" (has any form of visibility control)
  * @returns {boolean} - Returns TRUE if the room is private. FALSE otherwise, or if room doesn't exist.
@@ -640,10 +646,10 @@ declare function ChatRoomDataIsPrivate(room: ServerChatRoomData | ServerChatRoom
 declare function ChatRoomIsPrivate(): boolean;
 /**
  * Checks if the given chat room access property causes it to be "locked" (has any form of access control)
- * @param {ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings} room - The access property to check
+ * @param {ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings | null | undefined} room - The access property to check
  * @returns {boolean} - Returns TRUE if the room is locked. FALSE otherwise, or access is not set.
  */
-declare function ChatRoomDataIsLocked(room: ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings): boolean;
+declare function ChatRoomDataIsLocked(room: ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings | null | undefined): boolean;
 /**
  * Checks if the current chat room is "locked" (has any form of access control)
  * @returns {boolean} - Returns TRUE if the room is locked. FALSE otherwise, or if room doesn't exist.
@@ -1644,10 +1650,17 @@ declare var ChatRoomLeashPlayer: number | null;
  * @type {string}
  */
 declare var ChatRoomJoinLeash: string;
+/**
+ * Whether the chat room customization settings are user-enabled or not
+ */
 declare var ChatRoomCustomized: boolean;
-declare var ChatRoomCustomBackground: string;
-declare var ChatRoomCustomFilter: string;
-declare var ChatRoomCustomSizeMode: null;
+/** @satisfies {Record<"Never" | "DisabledByDefault" | "EnabledByDefault" | "Always", ChatRoomCustomizationType>} */
+declare const ChatRoomCustomization: Readonly<{
+    Never: 0;
+    DisabledByDefault: 1;
+    EnabledByDefault: 2;
+    Always: 3;
+}>;
 /**
  * The list of chat room views
  * @type {Record<"Character"|"Map", ChatRoomView>}

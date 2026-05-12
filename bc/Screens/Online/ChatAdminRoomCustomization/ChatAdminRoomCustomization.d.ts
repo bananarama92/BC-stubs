@@ -4,22 +4,18 @@
  */
 declare function ChatAdminRoomCustomizationCanEdit(): boolean;
 /**
- * Changes a customiation value from a chat room command
- * @param {"Image" | "Filter" | "Music"} Property - The custom property to change (Image, Filter or Music)
- * @param {string} Value - The value to set in that property
+ * Reconfigures the chat room's customisation
+ * @param {string[]} args - The value to set in that property
  * @returns {void} - Nothing
  */
-declare function ChatAdminRoomCustomizationCommand(Property: "Image" | "Filter" | "Music", Value: string): void;
+declare function ChatAdminRoomCustomizationCommand(args: string[]): void;
 declare function ChatAdminRoomCustomizationLoad(): Promise<void>;
+declare function ChatAdminRoomCustomizationResize(): void;
 declare function ChatAdminRoomCustomizationUnload(): void;
-/**
- * Plays or stop the background music
- * @param {string} Music - The URL of the music to play
- * @returns {void} - Nothing
- */
-declare function ChatAdminRoomCustomizationPlayMusic(Music: string): void;
+declare function ChatAdminRoomCustomizationPreviewMusic(): void;
 /**
  * Runs the customization on the current screen, can be called from elsewhere
+ * @deprecated DrawProcess knows how to handle custom backgrounds, and the music support is highly specific
  * @param {ServerChatRoomCustomData | null} Custom - The customization to apply
  * @param {Rect | null} DrawBGToRect - If non-null draw the background to these coordinates. Online chat rooms will use the tracked values elsewhere
  * @param {boolean} DrawBGEffects - If true and drawing a background then apply blur/dark/tint
@@ -40,14 +36,30 @@ declare function ChatAdminRoomCustomizationExit(): void;
 declare var ChatAdminRoomCustomizationBackground: string;
 /** @type {null | ServerChatRoomCustomData} */
 declare var ChatAdminRoomCustomizationCurrent: null | ServerChatRoomCustomData;
-/** @type {null | HTMLAudioElement} */
-declare var ChatAdminRoomCustomizationMusic: null | HTMLAudioElement;
+declare var ChatAdminRoomCustomizationIsPreviewing: boolean;
 /** @type {null | "MusicLibrary"} */
 declare var ChatAdminRoomCustomizationMode: null | "MusicLibrary";
-/** @type {number} */
-declare var ChatAdminRoomCustomizationSizeMode: number;
+/** @type {null | HTMLAudioElement} */
+declare var ChatAdminRoomCustomizationAudio: null | HTMLAudioElement;
+declare const ChatAdminRoomCustomizationImageFormats: string[];
 declare var ChatAdminRoomCustomizationMusicLibrary: {
     Name: string;
     URL: string;
     Source: string;
 }[];
+declare namespace ChatAdminRoomCustomizationIDs {
+    let subscreen: string;
+    let title: string;
+    let main: string;
+    let grid: string;
+    let cancelButton: string;
+    let previewButton: string;
+    let clearButton: string;
+    let saveButton: string;
+    let imageURLInput: string;
+    let imageFilterInput: string;
+    let imageFillModeSelect: string;
+    let musicURLInput: string;
+    let musicSyncCheckbox: string;
+    let openLibraryButton: string;
+}
