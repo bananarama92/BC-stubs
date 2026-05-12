@@ -231,7 +231,7 @@ type ServerChatRoomData = {
 	Language: ServerChatRoomLanguage;
 	Space: ServerChatRoomSpace;
 	MapData?: ServerChatRoomMapData;
-	Custom: ServerChatRoomCustomData;
+	Custom?: ServerChatRoomCustomData;
 	Character: ServerAccountDataSynced[];
 }
 
@@ -247,6 +247,11 @@ interface ServerChatRoomCustomData {
 	ImageURL?: string;
 	ImageFilter?: string;
 	MusicURL?: string;
+	/**
+	 * A timestamp representing when the music track was set, for synced playback.
+	 * `undefined` means unsynced.
+	 */
+	MusicStart?: number;
 	SizeMode?: number
 }
 

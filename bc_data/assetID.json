@@ -341,7 +341,8 @@
             "Shapewear2": 63,
             "SlitColumnSkirt": 64,
             "WoolenHighWaistSkirt": 65,
-            "SuspenderPants": 66
+            "SuspenderPants": 66,
+            "SideCutoutYogaPants": 67
         }
     },
     "Corset": {
@@ -593,7 +594,8 @@
             "CustomizableFluffyEars2": 52,
             "CustomizableFluffyEars3": 53,
             "Antenna": 54,
-            "WingedHeadpiece": 55
+            "WingedHeadpiece": 55,
+            "BlackCatEarsMirror": 56
         }
     },
     "HairAccessory2": {
@@ -1393,7 +1395,8 @@
             "GiftBox": 77,
             "Chocolate": 78,
             "ElectricGuitar": 79,
-            "Laptop": 80
+            "Laptop": 80,
+            "CustomPaddle": 81
         }
     },
     "ItemHands": {
@@ -2533,7 +2536,8 @@
             "ZipperBBoots": 47,
             "PumpHighHeels": 48,
             "Slippers": 49,
-            "ZipperLeatherBoots": 50
+            "ZipperLeatherBoots": 50,
+            "ToeNails": 51
         }
     },
     "Socks": {
@@ -2817,7 +2821,8 @@
             "BartenderVest": 5,
             "BartenderVestM": 6,
             "JacketHoodie": 7,
-            "Hoodie": 8
+            "Hoodie": 8,
+            "WoolCoat": 9
         }
     },
     "Decals": {

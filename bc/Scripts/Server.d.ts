@@ -365,6 +365,13 @@ declare namespace ServerValidation {
     /**
      * Private helper to quickly check numbers
      * @template {number} T
+     * @param {T} defaultValue
+     * @returns {(arg: T) => T}
+     */
+    function isNumber<T extends number>(defaultValue: T): (arg: T) => T;
+    /**
+     * Private helper to quickly check integers
+     * @template {number} T
      * @param {number} min
      * @param {number} max
      * @param {T} defaultValue
@@ -385,6 +392,12 @@ declare namespace ServerValidation {
      * @returns {(arg: any) => string | undefined}
      */
     function isStringOrUndefined(maxLength: number, defaultValue: string | undefined): (arg: any) => string | undefined;
+    /**
+     * Private helper to quickly check color codes
+     * @param {boolean} allowAlpha
+     * @param {HexColor | undefined} defaultValue
+     */
+    function isColorCode(allowAlpha: boolean | undefined, defaultValue: HexColor | undefined): (arg: any) => `#${string}` | undefined;
     /**
      * Private helper to quick check notification settings
      * @param {NotificationSetting} defaultNotif
@@ -474,6 +487,9 @@ declare namespace ServerAccountDataSyncedValidate {
  * @namespace
  */
 declare const ServerChatRoomSearchSettingsValidate: { [k in keyof Required<ChatRoomSearchSettings>]: (arg: ChatRoomSearchSettings[k], C: Character) => ChatRoomSearchSettings[k]; };
+declare namespace ServerChatRoomDataValidate {
+    let Custom: ((arg: Partial<ServerChatRoomCustomData>) => ServerChatRoomCustomData) & { [k in keyof Required<ServerChatRoomCustomData>]: (arg: ServerChatRoomCustomData[k]) => ServerChatRoomCustomData[k]; };
+}
 declare const ServerDefaultTimeout: 3000;
 declare class ServerError extends Error {
 }

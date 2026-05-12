@@ -88,7 +88,30 @@ declare function AudioVibratorSounds(data: ServerChatRoomMessage, metadata: ICha
  * @returns {[string, number]} - The name of the sound to play, followed by the noise modifier
  */
 declare function AudioShockSounds(data: ServerChatRoomMessage): [string, number];
+/**
+ * Sets the volume of the background music
+ * @param {number} volume
+ */
+declare function AudioBackgroundMusicSetVolume(volume: number): void;
+/**
+ * Stops the background music
+ */
+declare function AudioBackgroundMusicStop(): void;
+/**
+ * Plays the background music
+ * @param {string} Music - The URL of the music to play
+ * @param {number | undefined} Location - Where to start playing from in the file
+ * @returns {void} - Nothing
+ */
+declare function AudioBackgroundMusicPlay(Music: string, Location?: number | undefined): void;
 declare var AudioDialog: HTMLAudioElement;
+/** @type {HTMLAudioElement & { _playState?: { location?: number } }} */
+declare var AudioBackgroundMusic: HTMLAudioElement & {
+    _playState?: {
+        location?: number;
+    };
+};
+declare const AudioSupportedMusicFormats: string[];
 /** @type AudioEffect[] */
 declare var AudioList: AudioEffect[];
 /**
