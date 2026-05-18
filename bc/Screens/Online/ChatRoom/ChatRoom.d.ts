@@ -548,6 +548,7 @@ declare function ChatRoomUpdateCustomization(toggle?: boolean | undefined): void
  * @returns {void} - Nothing.
  */
 declare function ChatRoomCustomizationRun(): void;
+declare function ChatRoomDraw(): void;
 declare function ChatRoomRun(time: number): void;
 /**
  * Runs the arousal overlay.
