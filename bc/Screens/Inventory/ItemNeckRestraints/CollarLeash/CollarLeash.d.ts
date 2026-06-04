@@ -1,3 +1,3 @@
-declare function AssetsItemNeckRestraintsCollarLeashBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides;
-declare function AssetsItemNeckRestraintsChainLeashBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides;
-declare function AssetsItemNeckRestraintsChokeChainBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides;
+declare function AssetsItemNeckRestraintsCollarLeashBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides | undefined;
+declare function AssetsItemNeckRestraintsChainLeashBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides | undefined;
+declare function AssetsItemNeckRestraintsChokeChainBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides | undefined;

@@ -219,7 +219,11 @@
             "GardenDress": 99,
             "CasualDroppedSuit": 100,
             "LittleFormalShirt": 101,
-            "StarryOceanEveningGown": 102
+            "StarryOceanEveningGown": 102,
+            "LaceBraNightgown": 103,
+            "LongQipaoDress": 104,
+            "WhiteDress": 105,
+            "Xmas2025": 106
         }
     },
     "ClothAccessory": {
@@ -1713,7 +1717,8 @@
             "CompGag": 98,
             "RoseBallGag": 99,
             "BishopGag": 100,
-            "PumpkinHarnessGag": 101
+            "PumpkinHarnessGag": 101,
+            "BallGag2": 102
         }
     },
     "ItemMouth2": {
@@ -1819,7 +1824,8 @@
             "CompGag": 97,
             "RoseBallGag": 98,
             "BishopGag": 99,
-            "PumpkinHarnessGag": 100
+            "PumpkinHarnessGag": 100,
+            "BallGag2": 101
         }
     },
     "ItemMouth3": {
@@ -1922,7 +1928,8 @@
             "AsylumMuzzle": 94,
             "RoseBallGag": 95,
             "BishopGag": 96,
-            "PumpkinHarnessGag": 97
+            "PumpkinHarnessGag": 97,
+            "BallGag2": 98
         }
     },
     "ItemNeck": {
@@ -2083,7 +2090,8 @@
             "PigNose": 6,
             "PigNoseHook": 7,
             "GlueNose": 8,
-            "NoseClip": 9
+            "NoseClip": 9,
+            "NoseShackle": 10
         }
     },
     "ItemPelvis": {
@@ -2443,7 +2451,8 @@
             "UntrainersThin": 52,
             "SportPanties": 53,
             "PullDownPanties": 54,
-            "PearlStrapPanties": 55
+            "PearlStrapPanties": 55,
+            "RoyalDiaper": 56
         }
     },
     "Pronouns": {
@@ -2570,7 +2579,16 @@
             "YuletideVelvetWarmth": 24,
             "LongFishnets": 25,
             "RippedPantyhose": 26,
-            "NetSocks": 27
+            "NetSocks": 27,
+            "CuteKittenPrintedSocks": 28,
+            "FootstepSocks": 29,
+            "LegWarmers1": 30,
+            "Ruffledsocks1": 31,
+            "SilkStockings": 32,
+            "SilkStockings2": 33,
+            "SilkStockings3": 34,
+            "StirrupThighHighSocks": 35,
+            "StripedSocks": 36
         }
     },
     "SocksLeft": {
@@ -2644,7 +2662,8 @@
             "SleevelessSlimLatexLeotard": 11,
             "ShinyLeotard": 12,
             "BartenderVest": 13,
-            "BartenderVestM": 14
+            "BartenderVestM": 14,
+            "GlossyBodystocking": 15
         }
     },
     "SuitLower": {
@@ -2822,7 +2841,8 @@
             "BartenderVestM": 6,
             "JacketHoodie": 7,
             "Hoodie": 8,
-            "WoolCoat": 9
+            "WoolCoat": 9,
+            "LabCoat": 10
         }
     },
     "Decals": {
@@ -2863,7 +2883,8 @@
             "SkullDecal": 32,
             "FireBite": 33,
             "SpreaderBar": 34,
-            "MissMariasManor": 35
+            "MissMariasManor": 35,
+            "CRABS": 36
         }
     }
 }

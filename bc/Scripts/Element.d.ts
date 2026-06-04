@@ -32,6 +32,13 @@ declare function ElementCreate(options: HTMLOptionsUnion): HTMLElement;
  */
 declare function ElementParseChildren(children: HTMLOptions<any>["children"]): (string | Node)[];
 /**
+ * Create a reusable animated loader element.
+ * @param {"dots" | "circle"} [variant] - Visual style of loader
+ * @param {Omit<HTMLOptions<"span">, "tag">} [options] - Additional element options
+ * @returns {HTMLSpanElement}
+ */
+declare function ElementCreateLoader(variant?: "dots" | "circle", options?: Omit<HTMLOptions<"span">, "tag">): HTMLSpanElement;
+/**
  * Creates a new from element in the main document.
  *
  * @param {string | null} ID - The id of the form to create
@@ -98,6 +105,36 @@ declare function ElementCreateDropdown(id: string | null, optionsList: readonly 
     size?: number;
     name?: string;
 }, htmlOptions?: null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>): HTMLSelectElement;
+/**
+ * Construct a custom searchable dropdown menu.
+ *
+ * The element comprises a button trigger displaying the current selection,
+ * and a popup containing a search input and a scrollable list of options.
+ * Options can optionally be grouped via the `group` field, which inserts a
+ * interactive header before each group of options sharing the same value.
+ *
+ * @example
+ * <div id="..." class="searchable-dropdown">
+ *     <button class="searchable-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+ *         <span class="searchable-dropdown-trigger-label">Selected label</span>
+ *         <span class="searchable-dropdown-trigger-arrow">▾</span>
+ *     </button>
+ *     <div class="searchable-dropdown-popup" hidden>
+ *         <input type="search" class="searchable-dropdown-search">
+ *         <ul role="listbox" class="searchable-dropdown-list">
+ *             <li role="option" data-value="..." aria-selected="true">label</li>
+ *             ...
+ *         </ul>
+ *     </div>
+ * </div>
+ *
+ * @param {string | null} id - The id of the root container; sub-element ids are derived from it.
+ * @param {readonly ElementSearchableDropdown.OptionItem[]} optionsList - The available options.
+ * @param {(value: string) => void} onChange - Called when the selection changes.
+ * @param {ElementSearchableDropdown.CreateOptions | null} [options]
+ * @returns {ElementSearchableDropdown.SearchableDropdownElement}
+ */
+declare function ElementCreateSearchableDropdown(id: string | null, optionsList: readonly ElementSearchableDropdown.OptionItem[], onChange: (value: string) => void, options?: ElementSearchableDropdown.CreateOptions | null): ElementSearchableDropdown.SearchableDropdownElement;
 /**
  * Creates a new div element in the main document. Does not create a new element if there is already an existing one with the same ID
  * @param {string | null} ID - The id of the div tag to create.

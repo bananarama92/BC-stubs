@@ -10,11 +10,11 @@ declare function PlayerMistressRun(): void;
  */
 declare function PlayerMistressClick(): void;
 declare var PlayerMistressBackground: string;
-/** @type {null | NPCCharacter} */
-declare var PlayerMistressMistressLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PlayerMistressMistressRight: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PlayerMistressMaidLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PlayerMistressMaidRight: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerMistressMistressLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerMistressMistressRight: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerMistressMaidLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerMistressMaidRight: NPCCharacter;

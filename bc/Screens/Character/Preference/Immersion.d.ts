@@ -9,7 +9,7 @@ declare function PreferenceSubscreenImmersionRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenImmersionClick(): void;
-declare function PreferenceSubscreenImmersionResize(onLoad: any): void;
+declare function PreferenceSubscreenImmersionResize(load: boolean): void;
 /**
  * @param {boolean} disableButtons
  */

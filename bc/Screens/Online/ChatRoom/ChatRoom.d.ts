@@ -1,6 +1,10 @@
 /**
+ * Update the active view based on the room state
+ */
+declare function ChatRoomRefreshActiveView(): void;
+/**
  * Activates the chat room view with the passed name
- * @param {string} viewName - The name of the view to activate
+ * @param {keyof ChatRoomViews} viewName - The name of the view to activate
  * @returns {void}
  */
 declare function ChatRoomActivateView(viewName: string): void;
@@ -125,11 +129,6 @@ declare function ChatRoomCurrentCharacterIsAdmin(): boolean;
  */
 declare function ChatRoomCharacterIsWhitelisted(C: Character): boolean;
 /**
- * Checks if the player is in the chatroom whitelist.
- * @returns {boolean} - TRUE if the player is in the chatroom whitelist.
- */
-declare function ChatRoomPlayerIsWhitelisted(): boolean;
-/**
  * Checks if the current character is in the chatroom whitelist.
  * @returns {boolean} - TRUE if the current character is in the chatroom whitelist.
  */
@@ -207,6 +206,13 @@ declare function ChatRoomTryToTakeSuitcase(): void;
  */
 declare function ChatRoomReceiveSuitcaseMoney(): void;
 /**
+ *
+ * Handler for hidden suitcase message
+ * @param {Character} character
+ * @returns {void}
+ */
+declare function ChatRoomTakeSuitcase(character: Character): void;
+/**
  * Checks if the player can give the target character her high security keys.
  * @returns {boolean} - TRUE if the player can interact and is allowed to interact with the current character.
  */
@@ -271,12 +277,14 @@ declare function ChatRoomCanAssistKneel(): boolean;
 /**
  * Checks if the player character is kneeling and can stand up.
  * Will return true if there are any available transitions from {@link PoseAllKneeling} to {@link PoseAllStanding}.
+ * @deprecated
  * @returns {boolean} - Whether or not the player character can stand
  */
 declare function ChatRoomCanAttemptStand(): boolean;
 /**
  * Checks if the player character is standing and can kneel down.
  * Will return true if there are any available transitions from {@link PoseAllStanding} to {@link PoseAllKneeling}.
+ * @deprecated
  * @returns {boolean} - Whether or not the player character can stand
  */
 declare function ChatRoomCanAttemptKneel(): boolean;
@@ -435,10 +443,10 @@ declare function ChatRoomSetTarget(MemberNumber: number): void;
 declare function ChatRoomTarget(): void;
 /**
  * Updates the account to set the last chat room
- * @param {ChatRoom|null} room - room to set it to. null to reset.
+ * @param {ChatRoomData|null} room - room to set it to. null to reset.
  * @returns {void} - Nothing
  */
-declare function ChatRoomSetLastChatRoom(room: ChatRoom | null): void;
+declare function ChatRoomSetLastChatRoom(room: ChatRoomData | null): void;
 /**
  * Triggers a chat room message for stimulation events.
  *
@@ -665,37 +673,11 @@ declare function ChatRoomIsLocked(): boolean;
  */
 declare function ChatRoomCharacterHasAnyRole(C: Character, room: ServerChatRoomData, role: "visible" | "access"): boolean;
 /**
- * Checks if a given character can see the room (meets the visibility list requirements)
- * @param {Character} C - The character to check
- * @returns {boolean} - Returns TRUE if the player can see the room.
- */
-declare function ChatRoomCharacterCanSeeRoom(C: Character): boolean;
-/**
- * Checks if the player can see the room (meets the visibility list requirements)
- * @returns {boolean} - Returns TRUE if the player can see the room.
- */
-declare function ChatRoomPlayerCanSeeRoom(): boolean;
-/**
- * Checks if the current character can see the room (meets the visibility list requirements)
- * @returns {boolean} - Returns TRUE if the current character can see the room.
- */
-declare function ChatRoomCurrentCharacterCanSeeRoom(): boolean;
-/**
  * Checks if a given character has access to the room (can enter/leave) (meets the access list requirements)
  * @param {Character} C - The character to check
  * @returns {boolean} - Returns TRUE if the player has access to the room.
  */
 declare function ChatRoomCharacterCanAccessRoom(C: Character): boolean;
-/**
- * Checks if the player has access to the room (can enter/leave) (meets the access list requirements)
- * @returns {boolean} - Returns TRUE if the player has access to the room.
- */
-declare function ChatRoomPlayerCanAccessRoom(): boolean;
-/**
- * Checks if the current character has access to the room (can enter/leave) (meets the access list requirements)
- * @returns {boolean} - Returns TRUE if the current character has access to the room.
- */
-declare function ChatRoomCurrentCharacterCanAccessRoom(): boolean;
 /**
  * Checks if the player can leave the chatroom.
  * @returns {boolean} - Returns TRUE if the player can leave the current chat room.
@@ -876,6 +858,7 @@ declare function ChatRoomIsCharacterImpactedBySensoryDeprivation(character: Char
  * Adds a function to the list of message extractors.
  *
  * @see ChatRoomMessageExtractor for more info.
+ * @public
  *
  * @param {ChatRoomMessageExtractor} func - The extractor to register
  */
@@ -884,6 +867,7 @@ declare function ChatRoomRegisterMessageExtractor(func: ChatRoomMessageExtractor
  * Adds a function to the list of message handlers
  *
  * @see ChatRoomMessageHandler for more info.
+ * @public
  *
  * @param {ChatRoomMessageHandler} handler - The handler to register
  */
@@ -1054,9 +1038,9 @@ declare function ChatRoomAddCharacterToChatRoom(newCharacter: Character, newRawC
 /**
  * Handles the reception of the complete room data from the server.
  * @param {unknown} obj - Room object containing the updated chatroom data.
- * @returns {obj is ChatRoom} - Returns true if the passed properties are valid and false if they're invalid.
+ * @returns {obj is ChatRoomData} - Returns true if the passed properties are valid and false if they're invalid.
  */
-declare function ChatRoomValidateProperties(obj: unknown): obj is ChatRoom;
+declare function ChatRoomValidateProperties(obj: unknown): obj is ChatRoomData;
 /**
  * Handles the reception of the data for a room we've just entered.
  *
@@ -1417,6 +1401,7 @@ declare function ChatRoomConcatenateWhitelist(IncludesTypes?: ("Owner" | "Lovers
  * @param {("Owner" | "Lovers")[]} [IncludesTypes] - The types of lists to concatenate to the adminlist
  * @param {readonly number[]} [ExistingList] - The existing Admin list, if applicable
  * @returns {number[]} Complete array of admin members
+ * @deprecated
  */
 declare function ChatRoomConcatenateAdminList(IncludesTypes?: ("Owner" | "Lovers")[], ExistingList?: readonly number[]): number[];
 /**
@@ -1521,10 +1506,10 @@ declare function ChatRoomOwnerPresenceRule(RuleName: LogNameType["OwnerRule"], T
 declare function ChatRoomPronounSubstitutions(C: Character, key: string, hideIdentity: boolean): CommonSubtituteSubstitution[];
 /**
  * Gets only the settings/configurable properties of a chat room.
- * @param {ChatRoom} room
+ * @param {ChatRoomData} room
  * @return {ChatRoomSettings}
  */
-declare function ChatRoomGetSettings(room: ChatRoom): ChatRoomSettings;
+declare function ChatRoomGetSettings(room: ChatRoomData): ChatRoomSettings;
 /**
  * Gets a character by MemberNumber or name or nickname
  * @param {string|number} spec
@@ -1535,6 +1520,11 @@ declare function ChatRoomGetCharacter(spec: string | number): Character | null;
  * Returns the currently running game in the room
  */
 declare function ChatRoomGetGame(): ServerChatRoomGame | null;
+/**
+ * Returns the chatroom's current background
+ * @returns {string}
+ */
+declare function ChatRoomGetBackgroundURL(): string;
 declare namespace ChatRoomSpaceType {
     let MIXED: "X";
     let FEMALE_ONLY: "";
@@ -1545,6 +1535,11 @@ declare namespace ChatRoomSpaceType {
 declare const ChatRoomVisibilityMode: Record<ChatRoomVisibilityModeLabel, ServerChatRoomRole[]>;
 /** @type {Record<ChatRoomAccessModeLabel, ServerChatRoomRole[]>} */
 declare const ChatRoomAccessMode: Record<ChatRoomAccessModeLabel, ServerChatRoomRole[]>;
+/**
+ * The chat room screen background
+ *
+ * It shall never be set, as doing so will break the code actually checking for the room data's background.
+ */
 declare var ChatRoomBackground: string;
 /**
  * The data for the current chatroom, as recieved from the server.
@@ -1664,14 +1659,14 @@ declare const ChatRoomCustomization: Readonly<{
 }>;
 /**
  * The list of chat room views
- * @type {Record<"Character"|"Map", ChatRoomView>}
+ * @type {Record<string, ChatRoomView>}
  */
-declare var ChatRoomViews: Record<"Character" | "Map", ChatRoomView>;
+declare var ChatRoomViews: Record<string, ChatRoomView>;
 /**
  * The active chat room view
- * @type {ChatRoomView}
+ * @type {ChatRoomView | null}
  */
-declare var ChatRoomActiveView: ChatRoomView;
+declare var ChatRoomActiveView: ChatRoomView | null;
 /**
  * Chances of a chat message popping up reminding you of some stimulation.
  *
@@ -1805,12 +1800,6 @@ declare namespace ChatRoomSep {
 declare let ChatRoomStatusDeadKeys: string[];
 /** When slowed, we can't leave quicker than this */
 declare const ChatRoomSlowLeaveMinTime: 5000;
-/**
- * Regex used to split out a string at word boundaries
- *
- * Note that due to a bug in Safari, we can't use the one that handles chinese characters properly.
- */
-declare const mentionNameSplitter: RegExp;
 /** @type {ChatRoomMessageExtractor[]} */
 declare var ChatRoomMessageExtractors: ChatRoomMessageExtractor[];
 /**

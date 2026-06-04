@@ -1,13 +1,15 @@
 /**
  * Loads the item properties
+ * @param {Item} item
  * @returns {void} Nothing
  */
-declare function TightenLoosenItemLoad(): void;
+declare function TightenLoosenItemLoad(item: Item): void;
 /**
  * Draws the extended tighten / loosen menu
+ * @param {Item} item
  * @returns {void} Nothing
  */
-declare function TightenLoosenItemDraw(): void;
+declare function TightenLoosenItemDraw(item: Item): void;
 /**
  * Sets a facial expression for the character being tightneded/loosened
  * @param {Character} C - The character affected
@@ -19,9 +21,11 @@ declare function TightenLoosenItemDraw(): void;
 declare function TightenLoosenFacialExpression(C: Character, Blush: "" | ExpressionNameMap["Blush"], Eyes: "" | ExpressionNameMap["Eyes"], Eyebrows: "" | ExpressionNameMap["Eyebrows"]): void;
 /**
  * Handles clicks on the tighten / loosen menu
+ * @param {Character} C
+ * @param {Item} item
  * @returns {void} Nothing
  */
-declare function TightenLoosenItemClick(): void;
+declare function TightenLoosenItemClick(C: Character, item: Item): void;
 /**
  * Exit function for sub menu
  * @returns {void} - Nothing

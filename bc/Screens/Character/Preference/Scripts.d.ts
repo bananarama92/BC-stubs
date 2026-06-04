@@ -7,7 +7,7 @@ declare function PreferenceSubscreenScriptsRun(): void;
 declare function PreferenceSubscreenScriptsClick(): void;
 declare function PreferenceSubscreenScriptsExit(allowPanelClose?: boolean): boolean;
 declare function PreferenceSubscreenScriptsUnload(): void;
-declare function PreferenceSubscreenScriptsResize(): void;
+declare function PreferenceSubscreenScriptsResize(load: boolean): void;
 declare function PreferenceSubscreenScriptsUpdateCheckboxes(): void;
 declare function PreferenceSubscreenScriptsUpdateWarning(): void;
 declare function PreferenceSubscreenScriptsUpdateHelp(): void;

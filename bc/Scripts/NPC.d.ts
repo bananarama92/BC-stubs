@@ -15,16 +15,16 @@ declare function NPCTraitGenerate(C: NPCCharacter): void;
 /**
  * Get the opposite trait of a specified trait.
  * @param {NPCTraitType} Trait - Name of the trait to find the opposite of.
- * @returns {NPCTraitType | null} - Name of the opposite trait.
+ * @returns {NPCTraitType} - Name of the opposite trait.
  */
-declare function NPCTraitReverse(Trait: NPCTraitType): NPCTraitType | null;
+declare function NPCTraitReverse(Trait: NPCTraitType): NPCTraitType;
 /**
  * Returns the weight value of the specified option (The higher the value, the higher the chances the option will be picked, an opposite trait will always result as an option that's not picked)
- * @param {string} Dialog - Specified dialog line with the affecting traits.
+ * @param {string} TraitSpec - Specified dialog line with the affecting traits.
  * @param {readonly NPCTrait[]} Trait - List of traits of the NPC.
  * @returns {number} - Weight of the dialog option
  */
-declare function NPCTraitGetOptionValue(Dialog: string, Trait: readonly NPCTrait[]): number;
+declare function NPCTraitGetOptionValue(TraitSpec: string, Trait: readonly NPCTrait[]): number;
 /**
  * Finds and keeps the best possible option for a specified NPC dialog group. A group is a list of similar options where each option is influenced by a specified trait.
  * @param {NPCCharacter} C - NPC to get the dialog of
@@ -34,16 +34,16 @@ declare function NPCTraitGetOptionValue(Dialog: string, Trait: readonly NPCTrait
 declare function NPCTraitKeepBestOption(C: NPCCharacter, Group: string): void;
 /**
  * Picks the dialog group option that fits mosts with the NPC traits
- * @param {Character} C - NPC to get the dialog options of
+ * @param {NPCCharacter} C - NPC to get the dialog options of
  * @returns {void} - Nothing.
  */
-declare function NPCTraitDialog(C: Character): void;
+declare function NPCTraitDialog(C: NPCCharacter): void;
 /**
  * Sets the arousal settings for a NPC if it's not already done
- * @param {Character} C - NPC to set the arousal stats of
+ * @param {NPCCharacter} C - NPC to set the arousal stats of
  * @returns {void} - Nothing.
  */
-declare function NPCSetupArousal(C: Character): void;
+declare function NPCSetupArousal(C: NPCCharacter): void;
 /**
  * Returns the trait value of an NPC. If the opposite trait is found, it will return a negative value.
  * @param {NPCCharacter} C - NPC to get the trait of
@@ -94,10 +94,10 @@ declare function NPCLongLoverEventDelay(C: NPCCharacter): number;
 declare function NPCLoveChange(C: NPCCharacter, LoveFactor: number): void;
 /**
  * Raises the love factor progressively with interaction time
- * @param {Character} C
+ * @param {NPCCharacter} C
  * @returns {void} - Nothing
  */
-declare function NPCInteraction(C: Character): void;
+declare function NPCInteraction(C: NPCCharacter): void;
 /**
  * List for all possible pairs of NPC traits. A pair defines opposites.
  * @constant

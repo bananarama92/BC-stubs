@@ -113,6 +113,7 @@ declare function ServerPlayerSkillSync(): void;
 declare function ServerPlayerRelationsSync(): void;
 /**
  * Syncs {@link Player.ExtensionSettings} to the server.
+ * @public
  * @param {keyof ExtensionSettings} dataKeyName - The single key to sync
  * @param {boolean} [_force] - unused
  */
@@ -158,9 +159,9 @@ declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, it
  * @param {Asset} asset - The asset on which the color is set
  * @param {BCColor | readonly BCColor[]} color - The color value to parse
  * @param {readonly BCColor[]} schema - The color schema to validate against
- * @returns {BCColor | BCColor[]} - A parsed valid item color
+ * @returns {undefined | BCColor | BCColor[]} - A parsed valid item color
  */
-declare function ServerParseColor(asset: Asset, color: BCColor | readonly BCColor[], schema: readonly BCColor[]): BCColor | BCColor[];
+declare function ServerParseColor(asset: Asset, color: BCColor | readonly BCColor[], schema: readonly BCColor[]): undefined | BCColor | BCColor[];
 /**
  * Populates an appearance diff map with any required items, to ensure that all asset groups are present that need to
  * be.
@@ -169,14 +170,6 @@ declare function ServerParseColor(asset: Asset, color: BCColor | readonly BCColo
  * @returns {void} - Nothing
  */
 declare function ServerAddRequiredAppearance(assetFamily: IAssetFamily, diffMap: AppearanceDiffMap): void;
-/**
- * Validates and returns a color against a color schema
- * @param {BCColor} Color - The color to validate
- * @param {readonly BCColor[]} Schema - The color schema to validate against (a list of accepted Color values)
- * @returns {BCColor} - The color if it is a valid hex color string or part of the color schema, or the default color
- *     from the color schema otherwise
- */
-declare function ServerValidateColorAgainstSchema(Color: BCColor, Schema: readonly BCColor[]): BCColor;
 /**
  * Syncs the player appearance with the server database.
  *

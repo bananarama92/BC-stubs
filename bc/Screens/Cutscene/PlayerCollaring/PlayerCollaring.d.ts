@@ -10,13 +10,13 @@ declare function PlayerCollaringRun(): void;
  */
 declare function PlayerCollaringClick(): void;
 declare var PlayerCollaringBackground: string;
-/** @type {null | NPCCharacter} */
-declare var PlayerCollaringMistress: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PlayerCollaringMistressLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PlayerCollaringMistressRight: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PlayerCollaringGirlLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PlayerCollaringGirlRight: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringMistress: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringMistressLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringMistressRight: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringGirlLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringGirlRight: NPCCharacter;

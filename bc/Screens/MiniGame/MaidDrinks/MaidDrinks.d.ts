@@ -54,10 +54,10 @@ declare function MaidDrinksKeyDown(event: KeyboardEvent): boolean;
  */
 declare function MaidDrinksClick(): void;
 declare var MaidDrinksBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MaidDrinksCustomerLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var MaidDrinksCustomerRight: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MaidDrinksCustomerLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MaidDrinksCustomerRight: NPCCharacter;
 declare var MaidDrinksCustomerLeftTimer: number;
 declare var MaidDrinksCustomerRightTimer: number;
 declare var MaidDrinksCustomerLeftVisible: boolean;

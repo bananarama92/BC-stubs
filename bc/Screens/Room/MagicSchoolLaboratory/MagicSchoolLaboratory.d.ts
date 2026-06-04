@@ -54,6 +54,7 @@ declare function MagicSchoolLaboratoryFromHouse(House: MagicSchoolHouse): boolea
  * Check if a NPC is a member of the player's house
  * @param {MagicSchoolHouse} House - The house name
  * @returns {boolean} - TRUE if from same house, FALSE if not
+ * @deprecated
  */
 declare function MagicSchoolLaboratoryFromSameHouse(House: MagicSchoolHouse): boolean;
 /**

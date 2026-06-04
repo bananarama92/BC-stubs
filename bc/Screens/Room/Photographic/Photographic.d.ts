@@ -44,12 +44,14 @@ declare function PhotographicAppearanceAvailable(C: Character, Group: AssetGroup
 /**
  * @param {string} Asset
  * @param {AssetGroupName} Group
+ * @deprecated
  */
 declare function PhotographicPlayerAssetAvailable(Asset: string, Group: AssetGroupName): boolean;
 declare function PhotographicPlayerRelease(): void;
 /**
  * @param {string} Asset
  * @param {AssetGroupName} Group
+ * @deprecated
  */
 declare function PhotographicUseAsset(Asset: string, Group: AssetGroupName): void;
 declare function PhotographicPlayerDressBack(): void;

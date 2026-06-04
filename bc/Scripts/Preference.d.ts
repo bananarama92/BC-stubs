@@ -117,5 +117,6 @@ declare function PreferenceInitPlayer(C: PlayerCharacter, data: Partial<ServerAc
  * @param {NotificationAudioType} audio - The audio setting
  * @param {NotificationAlertType} [defaultAlertType] - The default AlertType to use
  * @returns {NotificationSetting} - The setting to use
+ * @deprecated
  */
 declare function PreferenceInitNotificationSetting(setting: boolean, audio: NotificationAudioType, defaultAlertType?: NotificationAlertType): NotificationSetting;

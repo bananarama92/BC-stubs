@@ -27,8 +27,8 @@ declare function TherapyClick(): void;
 declare function TherapyMouseDown(): void;
 declare function TherapyKeyDown(event: KeyboardEvent): boolean;
 declare var TherapyBackground: string;
-/** @type {null | NPCCharacter} */
-declare var TherapyCharacterLeft: null | NPCCharacter;
+/** @type {null | NPCCharacter | PlayerCharacter} */
+declare var TherapyCharacterLeft: null | NPCCharacter | PlayerCharacter;
 /** @type {null | NPCCharacter} */
 declare var TherapyCharacterRight: null | NPCCharacter;
 declare var TherapyMoves: number[];

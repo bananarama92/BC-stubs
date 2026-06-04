@@ -29,8 +29,8 @@ declare function TennisVerifyEnd(): void;
 declare function TennisClick(): void;
 declare function TennisKeyDown(event: KeyboardEvent): boolean;
 declare var TennisBackground: string;
-/** @type {null | NPCCharacter} */
-declare var TennisCharacterLeft: null | NPCCharacter;
+/** @type {null | PlayerCharacter | NPCCharacter} */
+declare var TennisCharacterLeft: null | PlayerCharacter | NPCCharacter;
 /** @type {null | NPCCharacter} */
 declare var TennisCharacterRight: null | NPCCharacter;
 declare var TennisCharacterLeftPoint: number;

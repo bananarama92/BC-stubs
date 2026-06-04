@@ -32,8 +32,8 @@ declare function MaidCleaningKeyDown(event: KeyboardEvent): boolean;
  */
 declare function MaidCleaningClick(): void;
 declare var MaidCleaningBackground: string;
-/** @type {null | { X: number, Y: number, T: number }[]} */
-declare var MaidCleaningSpots: null | {
+/** @type {{ X: number, Y: number, T: number }[]} */
+declare var MaidCleaningSpots: {
     X: number;
     Y: number;
     T: number;

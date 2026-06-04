@@ -9,7 +9,7 @@ declare function PreferenceSubscreenDifficultyRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenDifficultyClick(): void;
-declare function PreferenceSubscreenDifficultyResize(): void;
+declare function PreferenceSubscreenDifficultyResize(load: boolean): void;
 declare function PreferenceSubscreenDifficultyExit(): boolean;
 declare function PreferenceSubscreenDifficultyConfirm(): void;
 /**

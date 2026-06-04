@@ -214,22 +214,34 @@ declare namespace ItemColorMode {
     let DEFAULT: "Default";
     let COLOR_PICKER: "ColorPicker";
 }
-/** @type {null | Character} */
-declare let ItemColorCharacter: null | Character;
-/** @type {null | ItemColorItem} */
-declare let ItemColorItem: null | ItemColorItem;
+/**
+ * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
+ * @type {Character}
+ */
+declare let ItemColorCharacter: Character;
+/**
+ * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
+ * @type {Item}
+ */
+declare let ItemColorItem: Item;
 /** @type {null | ItemColorMode} */
 declare let ItemColorCurrentMode: null | ItemColorMode;
-/** @type {null | string} */
-declare let ItemColorStateKey: null | string;
-/** @type {null | ItemColorStateType} */
-declare let ItemColorState: null | ItemColorStateType;
+/**
+ * Initialized in {@link ItemColorStateBuild} and valid until {@link ItemColorReset} is called
+ * @type {string}
+ */
+declare let ItemColorStateKey: string;
+/**
+ * Initialized in {@link ItemColorStateBuild} and valid until {@link ItemColorReset} is called
+ * @type {ItemColorStateType}
+ */
+declare let ItemColorState: ItemColorStateType;
 /** @type {number} */
 declare let ItemColorPage: number;
 /** @type {Record<string, number>} */
 declare let ItemColorLayerPages: Record<string, number>;
-/** @type {null | string} */
-declare let ItemColorPickerBackup: null | string;
+/** @type {string | null} */
+declare let ItemColorPickerBackup: string | null;
 /**
  * The indices of to-be colored layers within a {@link Item.Color}/{@link ItemColorGetColorableLayers}-returned array.
  *
@@ -244,13 +256,19 @@ declare let ItemColorPickerIndices: number[];
 declare const ItemColorPickerLayers: Map<number, AssetLayer>;
 /** @type {ItemColorExitListener[]} */
 declare let ItemColorExitListeners: ItemColorExitListener[];
-/** @type {null | string} */
-declare let ItemColorBackup: null | string;
+/** @type {string} */
+declare let ItemColorBackup: string;
 declare let ItemColorText: TextCache;
-/** @type {null | TextCache} */
-declare let ItemColorLayerNames: null | TextCache;
-/** @type {null | TextCache} */
-declare let ItemColorGroupNames: null | TextCache;
+/**
+ * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
+ * @type {TextCache}
+ */
+declare let ItemColorLayerNames: TextCache;
+/**
+ * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
+ * @type {TextCache}
+ */
+declare let ItemColorGroupNames: TextCache;
 /**
  * All (hex code) colors used within the current lifetime of the ItemColor subscreen.
  * @type {Set<BCColor>}

@@ -1,49 +1,49 @@
 /**
  * Returns character based on argument
- * @param {Character | string} C - The character to get; can be `"Player"` to get player or empty to get current
+ * @param {Character | "Player" | "CurrentCharacter"} C - The character to get; can be `"Player"` to get player or empty to get current
  * @returns {Character} - The actual character
  */
-declare function DialogGetCharacter(C: Character | string): Character;
+declare function DialogGetCharacter(C: Character | "Player" | "CurrentCharacter"): Character;
 /**
  * Compares the player's reputation with a given value
  * @param {ReputationType} RepType - The name of the reputation to check
- * @param {string} Value - The value to compare
+ * @param {number} Value - The value to compare
  * @returns {boolean} - Returns TRUE if a specific reputation type is less or equal than a given value
  */
-declare function DialogReputationLess(RepType: ReputationType, Value: string): boolean;
+declare function DialogReputationLess(RepType: ReputationType, Value: number): boolean;
 /**
  * Compares the player's reputation with a given value
  * @param {ReputationType} RepType - The name of the reputation to check
- * @param {string} Value - The value to compare
+ * @param {number} Value - The value to compare
  * @returns {boolean} - Returns TRUE if a specific reputation type is greater or equal than a given value
  */
-declare function DialogReputationGreater(RepType: ReputationType, Value: string): boolean;
+declare function DialogReputationGreater(RepType: ReputationType, Value: number): boolean;
 /**
  * Compares the player's money with a given amount
- * @param {string} Amount - The amount of money that must be met
+ * @param {number} Amount - The amount of money that must be met
  * @returns {boolean} - Returns TRUE if the player has enough money
  */
-declare function DialogMoneyGreater(Amount: string): boolean;
+declare function DialogMoneyGreater(Amount: number): boolean;
 /**
  * Changes a given player's account by a given amount
- * @param {string} Amount - The amount that should be charged or added to the player's account
+ * @param {number} Amount - The amount that should be charged or added to the player's account
  * @returns {void} - Nothing
  */
-declare function DialogChangeMoney(Amount: string): void;
+declare function DialogChangeMoney(Amount: number): void;
 /**
  * Alters the current player's reputation by a given amount
  * @param {ReputationType} RepType - The name of the reputation to change
- * @param {number|string} Value - The value, the player's reputation should be altered by
+ * @param {number} Value - The value, the player's reputation should be altered by
  * @returns {void} - Nothing
  */
-declare function DialogSetReputation(RepType: ReputationType, Value: number | string): void;
+declare function DialogSetReputation(RepType: ReputationType, Value: number): void;
 /**
  * Change the player's reputation progressively through dialog options (a reputation is easier to break than to build)
  * @param {ReputationType} RepType - The name of the reputation to change
- * @param {number|string} Value - The value, the player's reputation should be altered by
+ * @param {number} Value - The value, the player's reputation should be altered by
  * @returns {void} - Nothing
  */
-declare function DialogChangeReputation(RepType: ReputationType, Value: number | string): void;
+declare function DialogChangeReputation(RepType: ReputationType, Value: number): void;
 /**
  * Equips a specific item on the player from dialog
  * @param {string} AssetName - The name of the asset that should be equipped
@@ -65,25 +65,25 @@ declare function DialogWearRandomItem(AssetGroup: AssetGroupName): void;
 declare function DialogRemoveItem(AssetGroup: AssetGroupName): void;
 /**
  * Releases a character from restraints
- * @param {string | Character} C - The character to be released.
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character to be released.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {void} - Nothing
  */
-declare function DialogRelease(C: string | Character): void;
+declare function DialogRelease(C: "Player" | "CurrentCharacter" | Character): void;
 /**
  * Strips a character naked and removes the restraints
- * @param {string | Character} C - The character to be stripped and released.
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character to be stripped and released.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {void} - Nothing
  */
-declare function DialogNaked(C: string | Character): void;
+declare function DialogNaked(C: "Player" | "CurrentCharacter" | Character): void;
 /**
  * Fully restrain a character with random items
- * @param {string | Character} C - The character to be restrained.
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character to be restrained.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {void} - Nothing
  */
-declare function DialogFullRandomRestrain(C: string | Character): void;
+declare function DialogFullRandomRestrain(C: "Player" | "CurrentCharacter" | Character): void;
 /**
  * Checks, if a specific log has been registered with the player
  * @template {LogGroupType} T
@@ -99,23 +99,24 @@ declare function DialogLogQuery<T extends LogGroupType>(LogType: LogNameType[T],
 declare function DialogSetAllowItem(Allow: string): void;
 /**
  * Returns the value of the AllowItem flag of a given character
- * @param {string | Character} C - The character whose flag should be returned.
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character whose flag should be returned.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {boolean} - The value of the given character's AllowItem flag
  */
-declare function DialogAllowsItem(C: string | Character): boolean;
+declare function DialogAllowsItem(C: "Player" | "CurrentCharacter" | Character): boolean;
 /**
  * Returns TRUE if no item can be used by the player on the current character because of the map distance
  * @returns {boolean} - TRUE if distance is too far (more than 1 tile)
+ * @deprecated
  */
 declare function DialogDontAllowItemDistance(): boolean;
 /**
  * Determines if the given character is kneeling
- * @param {string | Character} C - The character to check
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character to check
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {boolean} - Returns true, if the given character is kneeling
  */
-declare function DialogIsKneeling(C: string | Character): boolean;
+declare function DialogIsKneeling(C: "Player" | "CurrentCharacter" | Character): boolean;
 /**
  * Determines if the player is owned by the current character
  * @returns {boolean} - Returns true, if the player is owned by the current character, false otherwise
@@ -133,48 +134,48 @@ declare function DialogIsLover(): boolean;
 declare function DialogIsProperty(): boolean;
 /**
  * Checks, if a given character is currently restrained
- * @param {string | Character} C - The character to check.
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character to check.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {boolean} - Returns true, if the given character is wearing restraints, false otherwise
  */
-declare function DialogIsRestrained(C: string | Character): boolean;
+declare function DialogIsRestrained(C: "Player" | "CurrentCharacter" | Character): boolean;
 /**
  * Checks, if a given character is currently blinded
- * @param {string | Character} C - The character to check.
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character to check.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {boolean} - Returns true, if the given character is blinded, false otherwise
  */
-declare function DialogIsBlind(C: string | Character): boolean;
+declare function DialogIsBlind(C: "Player" | "CurrentCharacter" | Character): boolean;
 /**
  * Checks, if a given character is currently wearing a vibrating item
- * @param {string | Character} C - The character to check.
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character to check.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {boolean} - Returns true, if the given character is wearing a vibrating item, false otherwise
  */
-declare function DialogIsEgged(C: string | Character): boolean;
+declare function DialogIsEgged(C: "Player" | "CurrentCharacter" | Character): boolean;
 /**
  * Checks, if a given character is able to change her clothes
- * @param {string | Character} C - The character to check.
+ * @param {"Player" | "CurrentCharacter" | Character} C - The character to check.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @returns {boolean} - Returns true, if the given character is able to change clothes, false otherwise
  */
-declare function DialogCanInteract(C: string | Character): boolean;
+declare function DialogCanInteract(C: "Player" | "CurrentCharacter" | Character): boolean;
 /**
  * Sets a new pose for the given character
- * @param {string} C - The character whose pose should be altered.
+ * @param {"Player" | "CurrentCharacter"} C - The character whose pose should be altered.
  * Either the player (value: Player) or the current character (value: CurrentCharacter)
  * @param {null | AssetPoseName} [NewPose=null] - The new pose, the character should take.
  * Can be omitted to bring the character back to the standing position.
  * @returns {void} - Nothing
  */
-declare function DialogSetPose(C: string, NewPose?: null | AssetPoseName): void;
+declare function DialogSetPose(C: "Player" | "CurrentCharacter", NewPose?: null | AssetPoseName): void;
 /**
  * Checks, whether a given skill of the player is greater or equal a given value
  * @param {SkillType} SkillType - Name of the skill to check
- * @param {string} Value - The value, the given skill must be compared to
+ * @param {number} Value - The value, the given skill must be compared to
  * @returns {boolean} - Returns true if a specific skill is greater or equal than a given value
  */
-declare function DialogSkillGreater(SkillType: SkillType, Value: string): boolean;
+declare function DialogSkillGreater(SkillType: SkillType, Value: number): boolean;
 /**
  * Checks, if a given item is available in the player's inventory
  * @param {string} InventoryName
@@ -199,10 +200,10 @@ declare function DialogChatRoomCanSafeword(): boolean;
 declare function DialogCanViewRules(): boolean;
 /**
  * Checks if the has enough GGTS minutes to spend on different activities, for GGTS level 6 and up
- * @param {string} Minute - The number of minutes to compare
+ * @param {number} Minute - The number of minutes to compare
  * @returns {boolean} - TRUE if the player has enough minutes
  */
-declare function DialogGGTSMinuteGreater(Minute: string): boolean;
+declare function DialogGGTSMinuteGreater(Minute: number): boolean;
 /**
  * Checks if the player can spend GGTS minutes on herself, for GGTS level 6 and up
  * @returns {boolean} - TRUE if the player has enough minutes
@@ -234,6 +235,7 @@ declare function DialogCanStartGGTSInteractions(): boolean;
  * Nurses can ask GGTS for specific interactions with other players
  * @param {string} Interaction - The interaction to trigger
  * @returns {void}
+ * @deprecated
  */
 declare function DialogGGTSInteraction(Interaction: string): void;
 /**
@@ -341,6 +343,7 @@ declare function DialogRemoveGroup(GroupName: string): void;
 declare function DialogMenuBack(): void;
 /**
  * Returns whether the current mode shows items.
+ * @deprecated
  */
 declare function DialogModeShowsInventory(): boolean | null;
 /**
@@ -484,6 +487,7 @@ declare function DialogInventoryBuild(C: Character, resetOffset?: boolean, locks
  * Create a stringified list of the group and the assets currently in the dialog inventory
  * @param {Character} C - The character the dialog inventory has been built for
  * @returns {string} - The list of assets as a string
+ * @deprecated
  */
 declare function DialogInventoryStringified(C: Character): string;
 /**
@@ -819,6 +823,13 @@ declare var DialogTightenLoosenItem: Item | null;
  * @type {Item|null}
  */
 declare var DialogFocusSourceItem: Item | null;
+/**
+ * The group + name of the selected item.
+ * Only here so in case of emergency we can still unload the extended screen properly
+ *
+ * @type {string|null}
+ */
+declare var DialogFocusItemName: string | null;
 /** @type {ReturnType<typeof setTimeout>} */
 declare var DialogFocusItemColorizationRedrawTimer: ReturnType<typeof setTimeout>;
 /**

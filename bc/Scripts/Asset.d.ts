@@ -308,7 +308,7 @@ declare namespace AssetResolveCopyConfig {
         Value?: number;
         Name?: string;
     }>(config: T, assetName: string, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Record<string, T>>>, configType: string, configValidator?: null | AssetCopyConfigValidator<T>, setBuyGroup?: boolean): null | T;
-    function _ExtendedValidator(config: AssetArchetypeConfig, superConfig: AssetArchetypeConfig, key: string, superKey: string): boolean;
+    function _ExtendedValidator(config: TextItemConfig | TypedItemConfig | NoArchItemConfig | ModularItemConfig | VibratingItemConfig | VariableHeightConfig, superConfig: TextItemConfig | TypedItemConfig | NoArchItemConfig | ModularItemConfig | VibratingItemConfig | VariableHeightConfig, key: string, superKey: string): boolean;
     /**
      * Construct the items asset config, merging via {@link AssetDefinition.CopyConfig} if required.
      * @param {AssetDefinition} assetDef - The asset definition

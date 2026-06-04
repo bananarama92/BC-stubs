@@ -54,13 +54,18 @@ declare let TextScreenCache: TextCache | null;
 declare const TextAllScreenCache: Map<string, TextCache>;
 /** Prefix for the Text-generated warning message on a missing key */
 declare const TEXT_NOT_FOUND_PREFIX: "MISSING TEXT IN";
-declare var TextLogMissingStrings: boolean;
 declare const InterfaceStringsPath: "Screens/Interface.csv";
 /**
  * A class that can be used to cache a simple key/value CSV file for easy text lookups. Text lookups will be automatically translated to
  * the game's current language, if a translation is available.
  */
 declare class TextCache {
+    /**
+     * A cache with missing keys as diagnosed by {@link TextCache.get}. Used for ensuring that each unique cache/key pair only outputs to the console once.
+     * private
+     * @type {Set<string>}
+     */
+    static _textMissingCache: Set<string>;
     /**
      * Creates a new TextCache from the provided CSV file path asynchronously,
      * promising its return after the cache has been build.

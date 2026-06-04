@@ -21,8 +21,8 @@ declare function PlayerAuctionRun(): void;
  */
 declare function PlayerAuctionClick(): void;
 declare var PlayerAuctionBackground: string;
-/** @type {null | NPCCharacter[]} */
-declare var PlayerAuctionCustomer: null | NPCCharacter[];
+/** @type {NPCCharacter[]} */
+declare var PlayerAuctionCustomer: NPCCharacter[];
 declare var PlayerAuctionBidCurrent: number;
 declare var PlayerAuctionBidTime: number;
 declare var PlayerAuctionBidNextTime: number;

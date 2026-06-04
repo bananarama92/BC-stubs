@@ -20,10 +20,11 @@ declare function ShopLoad(): Promise<void>;
  */
 declare function ShopRun(): void;
 /**
- * Checks if an asset can be bought. An asset is considered missing if it is not owned and has a value greater than 0. (0 is a default
- * item, -1 is a non-purchasable item)
+ * Checks if an asset can be bought. An asset is considered missing if it is not owned and has a value greater than 0.
+ * (0 is a default item, -1 is a non-purchasable item)
  * @param {Asset} Asset - The asset to check for availability
  * @returns {boolean} - Returns TRUE if the item is purchasable and unowned.
+ * @deprecated
  */
 declare function ShopAssetMissing(Asset: Asset): boolean;
 /**

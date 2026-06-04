@@ -3,9 +3,11 @@ declare function InventoryItemNeckSlaveCollarDrawHook(data: NoArchItemData, orig
 declare function InventoryItemNeckSlaveCollarClickHook(data: NoArchItemData, originalFunction: () => void): void;
 /**
  * Sets the slave collar model
+ * @param {Character} C
+ * @param {Item} item
  * @param {number} NewType
  */
-declare function InventoryItemNeckSlaveCollarSetType(NewType: number): void;
+declare function InventoryItemNeckSlaveCollarSetType(C: Character, item: Item, NewType: number): void;
 declare var InventoryItemNeckSlaveCollarColorMode: boolean;
 declare var InventoryItemNeckSlaveCollarOffset: number;
 /** @type {{ Name: string, Property: ItemProperties & { TypeRecord: TypeRecord }, Image: string }[]} */

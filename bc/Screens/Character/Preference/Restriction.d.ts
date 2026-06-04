@@ -13,11 +13,7 @@ declare function PreferenceSubscreenRestrictionRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenRestrictionClick(): void;
-/**
- * Handles the click events in the preference screen, restriction sub-screen, propagated from CommonClick()
- * @returns {void} - Nothing
- */
-declare function PreferenceSubscreenRestrictionResize(): void;
+declare function PreferenceSubscreenRestrictionResize(load: boolean): void;
 declare const PreferenceSubscreenRestrictionIDs: Readonly<{
     grid: "restriction-checkbox-grid";
     hint: "restriction-label-hint";

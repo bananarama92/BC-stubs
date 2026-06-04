@@ -118,9 +118,9 @@ declare class KeybindManager {
      * Returns a category by ID.
      *
      * @param {string} id
-     * @returns {Keybindings.Category}
+     * @returns {Keybindings.Category | undefined}
      */
-    getCategory(id: string): Keybindings.Category;
+    getCategory(id: string): Keybindings.Category | undefined;
     /**
      * Returns the user-visible name of a category
      * @param {Keybindings.Category["id"]} id
@@ -145,9 +145,9 @@ declare class KeybindManager {
      * Returns a context by ID.
      *
      * @param {Keybindings.ContextId} id
-     * @returns {Keybindings.Context}
+     * @returns {Keybindings.Context | undefined}
      */
-    getContext(id: Keybindings.ContextId): Keybindings.Context;
+    getContext(id: Keybindings.ContextId): Keybindings.Context | undefined;
     /**
      * Returns the user-visible name of a context
      * @param {Keybindings.ContextId} id
@@ -177,9 +177,9 @@ declare class KeybindManager {
      * Returns a keybinding by its action ID.
      *
      * @param {string} actionId
-     * @returns {Keybindings.Keybinding}
+     * @returns {Keybindings.Keybinding | undefined}
      */
-    getKeybinding(actionId: string): Keybindings.Keybinding;
+    getKeybinding(actionId: string): Keybindings.Keybinding | undefined;
     /**
      * Returns the user-visible name of an action
      * @param {string} actionId
@@ -225,10 +225,10 @@ declare class KeybindManager {
     handleKeyPress(event: KeyboardEvent): boolean;
     /**
      * Returns true if the two keycombos are equal
-     * @param {Keybindings.KeyCombo} kb1
-     * @param {Keybindings.KeyCombo} kb2
+     * @param {Keybindings.KeyCombo | null} [kb1]
+     * @param {Keybindings.KeyCombo | null} [kb2]
      */
-    _isKeyComboEqual(kb1: Keybindings.KeyCombo, kb2: Keybindings.KeyCombo): boolean | "" | null;
+    _isKeyComboEqual(kb1?: Keybindings.KeyCombo | null, kb2?: Keybindings.KeyCombo | null): boolean | "" | null;
     /**
      * Extracts modifier keys from a `KeyboardEvent` into a Set.
      *
@@ -268,11 +268,11 @@ declare class KeybindManager {
      * Checks if two modifier sets match exactly.
      *
      * private
-     * @param {Set<Keybindings.ModifierKey>} modifiers1
-     * @param {Set<Keybindings.ModifierKey>} modifiers2
+     * @param {Set<Keybindings.ModifierKey>} [modifiers1]
+     * @param {Set<Keybindings.ModifierKey>} [modifiers2]
      * @returns {boolean}
      */
-    _areModifiersConflicting(modifiers1: Set<Keybindings.ModifierKey>, modifiers2: Set<Keybindings.ModifierKey>): boolean;
+    _areModifiersConflicting(modifiers1?: Set<Keybindings.ModifierKey>, modifiers2?: Set<Keybindings.ModifierKey>): boolean;
     /**
      * Checks if two context sets match exactly.
      *

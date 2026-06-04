@@ -4,11 +4,21 @@
  */
 declare function DailyJobPlayerFullRestrain(): void;
 /**
- * Loads a puppy girl and fully restrain her
- * @param {"0"|"1"|"2"|"3"|"4"} GirlNum - Number of the puppy to load
- * @returns {Character} - The generated puppy girl
+ * @typedef {{
+ *  "0": PlayerCharacter;
+ *  "1": NPCCharacter;
+ *  "2": NPCCharacter;
+ *  "3": NPCCharacter;
+ *  "4": NPCCharacter;
+ * }} DailyJobPuppyNums
  */
-declare function DailyJobPuppyLoad(GirlNum: "0" | "1" | "2" | "3" | "4"): Character;
+/**
+ * Loads a puppy girl and fully restrain her
+ * @template {keyof DailyJobPuppyNums} Num
+ * @param {Num} GirlNum - Number of the puppy to load
+ * @returns {DailyJobPuppyNums[Num]} - The generated puppy girl
+ */
+declare function DailyJobPuppyLoad<Num extends keyof DailyJobPuppyNums>(GirlNum: Num): DailyJobPuppyNums[Num];
 declare function DailyJobLoad(): Promise<void>;
 /**
  * Runs and draws the daily job room. Empty as daily jobs are ran from other rooms.
@@ -105,3 +115,10 @@ declare var DailyJobPuppy3: null | NPCCharacter;
 declare var DailyJobPuppy4: null | NPCCharacter;
 /** @type {null | NPCCharacter} */
 declare var DailyJobDojoTeacher: null | NPCCharacter;
+type DailyJobPuppyNums = {
+    "0": PlayerCharacter;
+    "1": NPCCharacter;
+    "2": NPCCharacter;
+    "3": NPCCharacter;
+    "4": NPCCharacter;
+};

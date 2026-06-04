@@ -13,7 +13,7 @@ declare function PreferenceSubscreenGraphicsRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenGraphicsClick(): void;
-declare function PreferenceSubscreenGraphicsResize(): void;
+declare function PreferenceSubscreenGraphicsResize(load: boolean): void;
 declare function PreferenceSubscreenGraphicsExit(): boolean;
 /**
  * Finalize graphics setting when the screen is unloaded

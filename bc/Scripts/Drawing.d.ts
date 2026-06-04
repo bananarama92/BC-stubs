@@ -422,7 +422,7 @@ declare function DrawGetDarkFactor(): number;
  */
 declare function DrawLoadingScreen(time: number): void;
 /**
- *
+ * Returns the background URL
  * @param {boolean} skipVFX
  * @returns {undefined | string}
  */

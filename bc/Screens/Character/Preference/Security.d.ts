@@ -19,7 +19,7 @@ declare function PreferenceSubscreenSecurityClick(): void;
  */
 declare function PreferenceSubscreenSecurityExit(): boolean;
 declare function PreferenceSubscreenSecurityUnload(): void;
-declare function PreferenceSubscreenSecurityResize(): void;
+declare function PreferenceSubscreenSecurityResize(load: boolean): void;
 /**
  * Updates the placeholder of the "New Email" input based on the result of an email update operation.
  * @param {ServerAccountQueryEmailStatus} data - Server response containing the result of the email update.

@@ -18,7 +18,7 @@ declare function PreferenceSubscreenCensoredWordsClick(): void;
  */
 declare function PreferenceSubscreenCensoredWordsExit(): boolean;
 declare function PreferenceSubscreenCensoredWordsUnload(): void;
-declare function PreferenceSubscreenCensoredWordsResize(): void;
+declare function PreferenceSubscreenCensoredWordsResize(load: boolean): void;
 declare function PreferenceSubscreenCensoredWordsBuildWords(): void;
 /** @type {string[]} */
 declare var PreferenceCensoredWordsList: string[];

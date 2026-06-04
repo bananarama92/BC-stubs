@@ -10,11 +10,7 @@ declare function InformationSheetRun(): void;
  * @returns {void} - Nothing
  */
 declare function InformationSheetSecondScreenRun(): void;
-/**
- * Handles the click events on the screen
- * @returns {void} - Nothing
- */
-declare function InformationSheetClick(): void;
+declare function InformationSheetClick(event: PointerEvent): void;
 declare function InformationSheetExit(): void;
 declare function InformationSheetUnload(): void;
 /**

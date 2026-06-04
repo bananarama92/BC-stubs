@@ -91,6 +91,7 @@ declare function TypedItemSetAllowLockType(asset: Mutable<Asset>, allowLockType:
 declare function TypedItemGetOptions(groupName: AssetGroupName, assetName: string): TypedItemOption[] | null;
 /**
  * Returns a list of typed item option names available for the given asset, or an empty array if the asset is not typed
+ * @public
  * @param {AssetGroupName} groupName - The name of the asset group
  * @param {string} assetName - The name of the asset
  * @returns {string[]} - The option names available for the asset, or an empty array if the asset is not typed or no
@@ -99,6 +100,7 @@ declare function TypedItemGetOptions(groupName: AssetGroupName, assetName: strin
 declare function TypedItemGetOptionNames(groupName: AssetGroupName, assetName: string): string[];
 /**
  * Returns the named option configuration object for a typed item
+ * @public
  * @param {AssetGroupName} groupName - The name of the asset group
  * @param {string} assetName - The name of the asset
  * @param {string} optionName - The name of the option

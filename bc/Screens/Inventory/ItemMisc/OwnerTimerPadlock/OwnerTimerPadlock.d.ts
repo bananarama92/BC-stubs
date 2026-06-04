@@ -19,20 +19,24 @@ declare function InventoryItemMiscOwnerTimerPadlockDrawHook({ asset }: NoArchIte
 declare function InventoryItemMiscOwnerTimerPadlockClickHook(data: NoArchItemData, originalFunction: null | (() => void), validator?: (C: Character) => boolean): void;
 declare function InventoryItemMiscOwnerTimerPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 /**
+ * @param {Character} C
+ * @param {Item} item
+ * @param {Item} lockItem
  * @param {number} TimeToAddSeconds
  * @param {{label: string, seconds: number}} DisplayTimeUnit
  * @param {boolean} PlayerMemberNumberToList
  * @param {boolean} LeaveDialog
  */
-declare function InventoryItemMiscTimerPadlockAdd(TimeToAddSeconds: number, DisplayTimeUnit: {
+declare function InventoryItemMiscTimerPadlockAdd(C: Character, item: Item, lockItem: Item, TimeToAddSeconds: number, DisplayTimeUnit: {
     label: string;
     seconds: number;
 }, PlayerMemberNumberToList?: boolean, LeaveDialog?: boolean): void;
 /**
- * Sends a global chat message of how much time was added or removed from a
- * Timer Padlock.
+ * Sends a global chat message of how much time was added or removed from a Timer Padlock.
+ * @param {Character} C
+ * @param {Item} item
  */
-declare function InventoryItemMiscSendTimerPadlockChangeMessage(): void;
+declare function InventoryItemMiscSendTimerPadlockChangeMessage(C: Character, item: Item): void;
 declare const OwnerTimerChooseOptions: {
     unit: {
         label: string;

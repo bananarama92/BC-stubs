@@ -10,7 +10,7 @@ declare function PreferenceSubscreenOnlineRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenOnlineClick(): void;
-declare function PreferenceSubscreenOnlineResize(): void;
+declare function PreferenceSubscreenOnlineResize(load: boolean): void;
 /** @type {string[]} */
 declare var PreferenceOnlineDefaultBackgroundList: string[];
 declare var PreferenceOnlineDefaultBackgroundIndex: number;

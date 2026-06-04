@@ -85,6 +85,7 @@ jobs:
           mkdir -p dist/NativeDeclarations
           find . -iname "*.d.ts" -not -path "./Scripts/lib/*" -not -path "./Tools/*" -not -path "./Screens/MiniGame/KinkyDungeon/*" -exec cp {} dist/NativeDeclarations/ \;
           cp ../../.github/lzstring.d.ts dist/NativeDeclarations/
+          cp Scripts/lib/bcmodsdk.d.ts dist/bcmodsdk.d.ts
           rm dist/NativeDeclarations/MessagesPatch.d.ts
           rm dist/NativeDeclarations/DeclarationsExpensive.d.ts
 

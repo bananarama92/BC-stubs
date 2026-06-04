@@ -25,8 +25,10 @@ declare function PreferenceSubscreenExtensionsClear(): Promise<void>;
  * Cleans up the current extension, and reset the current extension to null
  */
 declare function PreferenceSubscreenExtensionsUnload(): void;
-declare function PreferenceSubscreenExtensionsResize(onLoad: any): void;
+declare function PreferenceSubscreenExtensionsResize(load: boolean): void;
 /**
+ * Open a given subscreen
+ * @public
  * @param {string} screenIdentifier
  * @param {ScreenSpecifier} returnScreen
  */

@@ -18,10 +18,10 @@ declare function KidnapBuildCards(C: Character): void;
 declare function KidnapInventoryBuild(): void;
 /**
  * Sets the current battle status and its related timer
- * @param {string} NewMode - New mode for the battle
+ * @param {KidnapModeType} NewMode - New mode for the battle
  * @returns {void} - Nothing
  */
-declare function KidnapSetMode(NewMode: string): void;
+declare function KidnapSetMode(NewMode: KidnapModeType): void;
 /**
  * Generates a move value for the NPC based on the best possible options
  * @returns {number} - Returns the move type
@@ -82,9 +82,10 @@ declare function KidnapStart(Opponent: Character, Background: string, Difficulty
  * @param {Character} C - Character to draw the move for
  * @param {string} Header - Text to display
  * @param {number} X - Position of the text to draw on the X axis, normally the position of the character
+ * @param {"Left" | "Right"} Side
  * @returns {void} - Nothing
  */
-declare function KidnapDrawMove(C: Character, Header: string, X: number, Side: any): void;
+declare function KidnapDrawMove(C: Character, Header: string, X: number, Side: "Left" | "Right"): void;
 /**
  * Draws the upper hand moves
  * @returns {void} - Nothing
@@ -142,7 +143,8 @@ declare var KidnapOpponentClothAccessory: null | Item;
 /** @type {null | Item} */
 declare var KidnapOpponentClothLower: null | Item;
 declare var KidnapTimer: number;
-declare var KidnapMode: string;
+/** @type {KidnapModeType | null} */
+declare var KidnapMode: KidnapModeType | null;
 declare var KidnapDialog: string;
 declare var KidnapPlayerMove: number;
 declare var KidnapOpponentMove: number;
@@ -155,7 +157,7 @@ declare var KidnapResultUpperHand: string;
 declare var KidnapUpperHandVictim: null | Character;
 declare var KidnapUpperHandSelection: number;
 declare var KidnapMoveType: string[];
-declare var KidnapUpperHandMoveType: string[];
+declare var KidnapUpperHandMoveType: readonly ["Cloth", "ItemMouth", "ItemFeet", "UndoCloth", "UndoItemMouth", "UndoItemFeet", "Mercy"];
 /** @type { [number, number, number, number][] } */
 declare var KidnapMoveMap: [number, number, number, number][];
 declare var KidnapRPS: string[];

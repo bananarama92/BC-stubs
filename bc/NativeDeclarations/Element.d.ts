@@ -49,3 +49,32 @@ declare namespace ElementUnpackIDs {
 		filter?: (value: null | HTMLElement, index: number, array: (null | HTMLElement)[]) => value is T;
 	}
 }
+
+/** Options and instance type returned by {@link ElementCreateSearchableDropdown}. */
+declare namespace ElementSearchableDropdown {
+	interface OptionItem {
+		value: string;
+		label: string;
+		group?: string;
+		disabled?: boolean;
+	}
+
+	/** Imperative helpers attached to the root element returned from {@link ElementCreateSearchableDropdown}. */
+	interface SearchableDropdownInstance {
+		bcSetOptions(optionsList: readonly OptionItem[], newValue?: string): void;
+		bcSetValue(newValue: string): void;
+		bcSetDisabled(disabled: boolean): void;
+	}
+
+	/** Root `<div>` of a searchable dropdown. */
+	type SearchableDropdownElement = HTMLDivElement & SearchableDropdownInstance;
+
+	interface CreateOptions {
+		value?: string;
+		placeholder?: string;
+		searchPlaceholder?: string;
+		emptyText?: string;
+		disabled?: boolean;
+		parent?: Node;
+	}
+}

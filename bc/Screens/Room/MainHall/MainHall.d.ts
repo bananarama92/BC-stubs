@@ -117,6 +117,7 @@ declare function MainHallPunishFromChatroom(): void;
 declare function MainHallPunishFromChatroomStartPunishment(): void;
 /**
  * Triggered when the maid unlocks the player from a chat room
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function MainHallPunishFromListEnd(): void;

@@ -1,6 +1,6 @@
 type FriendListModes = FriendListMode[];
 type FriendListMode = "OnlineFriends" | "Beeps" | "AllFriends";
-type FriendListSortingMode = 'None' | 'MemberName' | 'MemberNickname' | 'MemberNumber' | 'ChatRoomName' | 'RelationType' | 'ChatRoomType';
+type FriendListSortingMode = 'None' | 'MemberName' | 'MemberNickname' | 'MemberNumber' | 'ChatRoomName' | 'RelationType' | 'ChatRoomType' | 'ChatRoomMemberCount';
 type FriendListSortingDirection = 'Asc' | 'Desc';
 
 type FriendListReturn<T extends ModuleType> = { Screen: ModuleScreens[T], Module: T, IsInChatRoom?: boolean, hasScrolledChat?: boolean };
@@ -26,6 +26,8 @@ type FriendRawRoom = {
   caption: string;
   canSearchRoom: boolean;
   types: (null | FriendListIcon)[];
+  ChatRoomLimit?: number;
+  ChatRoomMemberCount?: number;
 };
 
 type FriendRawBeep = {

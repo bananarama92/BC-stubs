@@ -152,10 +152,10 @@ declare function GamblingSimpleDiceController(SimpleDiceState: "new" | "win" | "
 declare function GamblingShowToothpickStack(): true;
 /**
  * Controller for the Toothpick game
- * @param {"new" | "give_up" | "win" | "lost" | "1" | "2" | "3"} ToothpickState - The current state of the game
+ * @param {"new" | "give_up" | "win" | "lost" | 1 | 2 | 3} ToothpickState - The current state of the game
  * @returns {void} - Nothing
  */
-declare function GamblingToothpickController(ToothpickState: "new" | "give_up" | "win" | "lost" | "1" | "2" | "3"): void;
+declare function GamblingToothpickController(ToothpickState: "new" | "give_up" | "win" | "lost" | 1 | 2 | 3): void;
 /**
  * Determines the random toothpick draw of the NPC
  * @returns {number} - The toothpicks the NPC draws
@@ -212,10 +212,10 @@ declare function GamblingAnnoyGamblingFirstSub(): void;
 /**
  * Uses an activity on the player or releases her
  * @param {"new"| "next" | "end"} ReleaseState - The current state of the release process
- * @param {string} [ReputationChange]
+ * @param {number} [ReputationChange]
  * @returns {void} - Nothing
  */
-declare function GamblingReleasePlayerGame(ReleaseState: "new" | "next" | "end", ReputationChange?: string): void;
+declare function GamblingReleasePlayerGame(ReleaseState: "new" | "next" | "end", ReputationChange?: number): void;
 /**
  * Release the player for money
  * @returns {void} - Nothing

@@ -33,9 +33,9 @@ declare function WardrobeClick(): void;
  * value.  The reordering mode cycles through the values:
  * "None" -> "Select" -> "Place"
  *
- * @param {WardrobeReorderType} newmode - The mode to set.  If null, advance to next mode.
+ * @param {WardrobeReorderType | null} newmode - The mode to set.  If null, advance to next mode.
  */
-declare function WardrobeReorderModeSet(newmode?: WardrobeReorderType): void;
+declare function WardrobeReorderModeSet(newmode?: WardrobeReorderType | null): void;
 declare function WardrobeExit(): void;
 /**
  * Set a wardrobe character name, sync it with server

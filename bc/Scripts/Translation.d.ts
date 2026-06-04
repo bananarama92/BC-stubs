@@ -33,6 +33,7 @@ declare function TranslationDialogArray(C: Character, T: readonly string[]): voi
  * @param {readonly { Tag: string, Value: string }[]} S - Array of current tag-value pairs
  * @param {readonly string[]} T - The active translation dictionary
  * @returns {void} - Nothing
+ * @deprecated
  */
 declare function TranslationTextArray(S: readonly {
     Tag: string;
@@ -54,6 +55,7 @@ declare function TranslationTranslateDialog(C: Character): void;
  * Translate an array of tags in the current selected language
  * @param {readonly {Tag: string, Value: string}[]} Text - Array of current tag-value pairs
  * @returns {void} - Nothing
+ * @deprecated
  */
 declare function TranslationText(Text: readonly {
     Tag: string;

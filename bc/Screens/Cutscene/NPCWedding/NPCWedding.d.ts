@@ -23,9 +23,9 @@ declare function NPCWeddingRun(): void;
  */
 declare function NPCWeddingClick(): void;
 declare var NPCWeddingBackground: string;
-/** @type {null | NPCCharacter} */
-declare var NPCWeddingWife: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCWeddingGirlLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCWeddingGirlRight: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCWeddingWife: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCWeddingGirlLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCWeddingGirlRight: NPCCharacter;

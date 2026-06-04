@@ -192,7 +192,7 @@ declare namespace ElementButton {
 		 */
 		icons?: readonly (null | undefined | InventoryIcon | CustomIcon)[];
 		/** The role of the button. All accepted values are currently special-cased in order to set role-specific event listeners and/or attributes. */
-		role?: "radio" | "combobox" | "checkbox" | "menuitemradio" | "menuitemcheckbox" | "spinbutton" | "menuitem" | "switch";
+		role?: "radio" | "combobox" | "checkbox" | "menuitemradio" | "menuitemcheckbox" | "spinbutton" | "menuitem" | "switch" | "none";
 		/** Whether to limit the default styling of the button's border and background */
 		noStyling?: boolean;
 		/** Whether the button should be disabled or not */
@@ -621,6 +621,7 @@ interface AssetPoseMap {
 
 type AssetPoseCategory = keyof AssetPoseMap;
 type AssetPoseName = AssetPoseMap[keyof AssetPoseMap];
+type NullPoseType = null | ""; // XXX: we're not always consistent there
 
 /**
  * A record mapping pose names to the actually to-be drawn poses.
@@ -648,15 +649,18 @@ type CraftingPropertyType =
 	"Flexible" | "Nimble" | "Arousing" | "Dull" | "Edging" | "Heavy" | "Light"
 	;
 
+type AssetGenericSize = "Small" | "Medium" | "Large";
 type AssetAttribute =
-	"Skirt" | "SuitLower" | "UpperLarge" | "Diaper" |
-	"ShortHair" | "SmallEars" | "NoEars" | "NoseRing" | "HoodieFix" |
-	"CanAttachMittens" |
-	"IsChestHarness" | "IsHipHarness" |
-	"PenisLayer" | "PussyLayer" | "GenitaliaCover" | "Pussy1" | "Pussy2" | "Pussy3" |
-	"CagePlastic2" | "CageTechno" | "CageFlat" |
-	"FuturisticRecolor" | "FuturisticRecolorDisplay" |
-	"PortalLinkLockable" | `PortalLinkChastity${string}` | `PortalLinkActivity${ActivityName}` | `PortalLinkTarget${AssetGroupItemName}`
+	| "Skirt" | "SuitLower" | "UpperLarge"
+	| "ShortHair" | "SmallEars" | "NoEars" | "NoseRing" | "HoodieFix"
+	| "CanAttachMittens"
+	| "IsChestHarness" | "IsHipHarness"
+	| "PenisLayer" | "PussyLayer" | "GenitaliaCover" | "Pussy1" | "Pussy2" | "Pussy3"
+	| "CagePlastic2" | "CageTechno" | "CageFlat"
+	| "FuturisticRecolor" | "FuturisticRecolorDisplay" | "FuturisticLock"
+	| "PortalLinkLockable" | `PortalLinkChastity${string}` | `PortalLinkActivity${ActivityName}` | `PortalLinkTarget${AssetGroupItemName}`
+	| "Diaper" | `Diaper${AssetGenericSize}` | "IsNurseryOutfit" | "Pacifier"
+	| "PetSuit"
 	;
 
 type PosePrerequisite = `Can${AssetPoseName}`;
@@ -835,7 +839,7 @@ type ChatRoomOwnershipEvent =
 	| "CanOfferEndTrial"
 	| "CanEndTrial";
 
-type ChatRoom = ServerChatRoomData;
+type ChatRoomData = ServerChatRoomData;
 // TODO: Review the partial nature of the `Custom` and `Space` fields
 type ChatRoomSettings = Prettify<
 	Omit<ServerChatRoomData, "Character" | "Custom" | "Space">
@@ -1117,6 +1121,7 @@ interface AssetGroup {
 	IsItem(): this is AssetItemGroup;
 	/** Return whether this group belongs to the `Script` {@link AssetGroup.Category} */
 	IsScript(): this is AssetScriptGroup;
+	HasExpression(): this is AssetExpressionGroup;
 }
 
 /** An AssetGroup subtype for the `Appearance` {@link AssetGroup.Category} */
@@ -1146,6 +1151,13 @@ interface AssetScriptGroup extends AssetGroup {
 	readonly Underwear: false;
 	readonly Clothing: false;
 	readonly IsDefault: false;
+}
+
+
+/** An AssetGroup subtype for groups that allows expressions */
+interface AssetExpressionGroup extends AssetAppearanceGroup {
+	readonly Name: ExpressionGroupName;
+	readonly AllowExpression: readonly ExpressionName[];
 }
 
 /** A type mapping all asset group names to their respective, {@link AssetGroup.Category}-specific group type */
@@ -1745,6 +1757,36 @@ interface PrivateCharacterData {
 	FromPandora?: boolean;
 }
 
+type PrivateActivityType =
+	| "Kiss"
+	| "FrenchKiss"
+	| "Caress"
+	| "Rub"
+	| `Masturbate${"Hand" | "Tongue" | "Player" | "Self"}`
+	| "Underwear"
+	| "Naked"
+	| "Bed"
+	| `Egg${"Insert" | "SpeedUp" | "SpeedDown"}`
+	| `Lover${"Lock" | "Unlock"}`
+	| `${"Lock" | "Unlock"}Belt`
+	| "Skip1" | "Skip2"
+	;
+
+type PrivatePunishmentType =
+	| "Cage"
+	| "Bound"
+	| "BoundPet"
+	| "ChastityBra"
+	| "ChastityBelt"
+	| "ForceNaked"
+	| `Confiscate${"Key" | "Crop" | "Whip"}`
+	| "SleepCage"
+	| "LockOut"
+	| "Cell"
+	| "OwnerLocks"
+	| "Asylum"
+	| ""
+;
 interface Character {
 	/**
 	 * The character's cache slot ID in the Character array
@@ -2180,9 +2222,14 @@ interface Character {
 	PrivateBedAppearance?: string;
 }
 
+type PrivatePunishment = (
+	"Cage" | "Bound" | "BoundPet" | "ChastityBra" | "ForceNaked" | "ConfiscateKey" | "ConfiscateCrop" | "ConfiscateWhip"
+	| "SleepCage" | "LockOut" | "Cell" | "OwnerLocks" | "Asylum" | "ChastityBelt"
+);
+
 interface KidnapCard {
 	Move: number;
-	Value?: number;
+	Value: number;
 }
 
 /** Kidnap minigame */
@@ -2190,8 +2237,10 @@ interface Character {
 	KidnapWillpower?: number;
 	KidnapMaxWillpower?: number;
 	KidnapCard?: KidnapCard[];
-	KidnapStat?: [number, number, number, number];
+	KidnapStat?: [Strength: number, Charisma: number, Initiative: number, number];
 }
+
+type KidnapModeType = "Intro" | "SelectItem" | "SelectMove" | "ShowMove" | "UpperHand" | "SuddenDeath" | "End";
 
 type PandoraPrisonActivity = "Beat" | "Water" | "Transfer" | "Quickie" | "Strip" | "Chastity" | "Tickle" | "ChangeBondage";
 
@@ -2464,6 +2513,11 @@ type ChatRoomCustomizationType = 0 | 1 | 2 | 3;
 interface PlayerOnlineSettings {
 	AutoBanBlackList: boolean;
 	AutoBanGhostList: boolean;
+	/** 
+	 * When true, respond to `/mods remote` hidden queries with your Mod SDK list and a declined reply otherwise
+	 * @default true
+	 */
+	RespondRemoteModListQueries: boolean;
 	DisableAnimations: boolean;
 	SearchFriendsFirst: boolean;
 	SendStatus: boolean;
@@ -2475,6 +2529,11 @@ interface PlayerOnlineSettings {
 }
 
 /** Pandora Player extension */
+type InfiltrationPerks = (
+	"Strength" | "Charisma" | "Agility" | "Resilience" | "Endurance" | "Investigation" | "Bribery" | "Negotiation"
+	| "Recruiter" | "Forgery" | "Recovery" | "Cartographer" | "Lockpicker" | "Detector"
+);
+
 interface PlayerCharacter {
 	Infiltration?: InfiltrationType;
 }
@@ -2487,7 +2546,7 @@ interface InfiltrationType {
 		Difficulty: number;
 		FightDone?: boolean;
 	}
-	Perks?: string;
+	Perks?: "" | `${number}`;
 }
 
 /** Kinky Dungeon Player extension */
@@ -2832,7 +2891,7 @@ declare namespace ExtendedItemCallbacks {
 	 */
 	type BeforeDraw<
 		PersistentData extends AnimationPersistentData = AnimationPersistentData
-	> = ExtendedItemCallback<[drawData: DynamicDrawingData<PersistentData>], DynamicBeforeDrawOverrides>;
+	> = ExtendedItemCallback<[drawData: DynamicDrawingData<PersistentData>], DynamicBeforeDrawOverrides | undefined>;
 	/**
 	 * Callback for extended item `ScriptDraw` functions.
 	 * Relevant for assets that define {@link Asset.DynamicScriptDraw}.
@@ -3039,16 +3098,6 @@ interface ExtendedItemData<OptionType extends ExtendedItemOption> {
 	 * for sub screens and the name of the archetype in case of the (outer-most) super screen.
 	 */
 	name: string;
-}
-
-/** A struct-type that maps archetypes to their respective extended item data.  */
-interface ExtendedDataLookupStruct {
-	[ExtendedArchetype.TYPED]: TypedItemData;
-	[ExtendedArchetype.MODULAR]: ModularItemData;
-	[ExtendedArchetype.VIBRATING]: VibratingItemData;
-	[ExtendedArchetype.VARIABLEHEIGHT]: VariableHeightData;
-	[ExtendedArchetype.TEXT]: TextItemData;
-	[ExtendedArchetype.NOARCH]: NoArchItemData;
 }
 
 interface AssetOverrideHeight {
@@ -3927,7 +3976,7 @@ interface GamePrisonParameters {
 interface GameMagicSchoolFindsAroundParameters {
     KitsuneQuestProgress?: number;
     TheresaQuestProgress?: number;
-    TheresaBadWords?: string[];
+    TheresaBadWords?: number[];
     TheresaTooRude?: boolean;
     TheresaHideUntil?: number;
 }
@@ -4161,7 +4210,7 @@ interface DynamicDrawingData<T extends AnimationPersistentData = AnimationPersis
 	G: string;
 	AG: AssetGroup;
 	L: string;
-	Pose: AssetPoseName;
+	Pose: AssetPoseName | NullPoseType;
 	LayerType: string;
 	BlinkExpression: string;
 	drawCanvas: DrawCanvasCallback;
@@ -4184,7 +4233,7 @@ interface DynamicBeforeDrawOverrides {
 	LayerType?: string;
 	L?: string;
 	AlphaMasks?: RectTuple[];
-	Pose?: AssetPoseName;
+	Pose?: AssetPoseName | NullPoseType;
 }
 
 type DynamicDrawTextEffect = "burn";
@@ -4359,9 +4408,9 @@ interface CraftingItem {
 	/** The crafted item effects mapped to their effect strength. */
 	Effects: Partial<Record<CraftingPropertyType, number>>;
 	/**
-	* The crafted item effect.
-	* @deprecated superseded by {@link CraftingItem.Effects}
-	*/
+	 * The crafted item effect.
+	 * @deprecated superseded by {@link CraftingItem.Effects}
+	 */
 	Property?: CraftingPropertyType;
 	/** The comma-separated color(s) of the item. */
 	Color: string;
@@ -4573,8 +4622,8 @@ interface ItemColorStateType {
 	pageCount: number;
 	/** Whether the opacity is user-configurable */
 	editOpacity: boolean;
-	drawImport: () => Promise<string>;
-	drawExport: (data: string) => Promise<void>;
+	drawImport?: () => Promise<string>;
+	drawExport?: (data: string) => Promise<void>;
 }
 
 /** A hexadecimal color code */
@@ -5012,7 +5061,7 @@ interface ChatRoomView extends Pick<ScreenFunctions, "Run" | "MouseDown" | "Mous
 	Deactivate?: () => void;
 	Draw: () => void;
 	DrawUi: () => void;
-	SyncRoomProperties?: (data: ServerChatRoomSyncMessage) => void;
+	RoomUpdated?: () => void;
 	CanStartWhisper?: (C: Character) => boolean;
 	CanLeave?: () => boolean;
 	Screenshot: () => void;

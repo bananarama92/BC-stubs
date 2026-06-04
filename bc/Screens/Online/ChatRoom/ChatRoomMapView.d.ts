@@ -32,6 +32,7 @@ declare function ChatRoomMapViewValidatePosition(position: unknown): ChatRoomMap
 declare function ChatRoomMapViewIsOutOfBounds(position: ChatRoomMapPos): boolean;
 /**
  * Performs cleanup when leaving the chat room map
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewLeave(): void;
@@ -69,10 +70,9 @@ declare function ChatRoomMapViewScreenshot(): void;
 declare function ChatRoomMapViewCanStartWhisper(C: Character): boolean;
 /**
  * Handles the reception of the room properties from the server.
- * @param {ServerChatRoomSyncMessage} data - Room object containing the updated chatroom properties.
  * @returns {void} - Nothing.
  */
-declare function ChatRoomMapViewSyncRoomProperties(data: ServerChatRoomSyncMessage): void;
+declare function ChatRoomMapViewRoomUpdated(): void;
 /**
  * Gets a index number for the tile and obejct lists and returns the corrosponting coordinates in X and Y
  * @param {number} index - Index number for the tile and object lists

@@ -123,6 +123,7 @@ declare function SpeechIndexInOocRange(index: number, oocRanges: {
  * Check if the gag garbling speech transform should apply
  * @param {Character} C
  * @returns {boolean}
+ * @deprecated
  */
 declare function SpeechTransformShouldGagGarble(C: Character): boolean;
 /**
@@ -151,6 +152,7 @@ declare function SpeechTransformGagGarble(text: string, intensity: number, ignor
  * Check if the stutter talk speech transform should apply
  * @param {Character} C
  * @returns {boolean}
+ * @deprecated
  */
 declare function SpeechTransformShouldStutter(C: Character): boolean;
 /**

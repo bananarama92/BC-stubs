@@ -44,10 +44,10 @@ declare function MagicSchoolFindsAroundGiveTails(): void;
 declare function MagicSchoolFindsAroundGiveWings(): void;
 /**
  * Triggered when the player lost and get untied by the Kitsune, can affect reputation
- * @param {string} RepChange
+ * @param {number} RepChange
  * @returns {void} - Nothing
  */
-declare function MagicSchoolFindsAroundReleasePlayer(RepChange: string): void;
+declare function MagicSchoolFindsAroundReleasePlayer(RepChange: number): void;
 /**
  * Returns the player in the main hall in her current bondage
  * @returns {void} - Nothing
@@ -81,10 +81,10 @@ declare function MagicSchoolFindsAroundKitsuneQuestCompleted(): boolean;
 declare function DialogKitsuneQuestInProgress(): boolean;
 /**
  * Give player essence from defeated student
- * @param {string} Amount - The amount of essence to give
+ * @param {number} Amount - The amount of essence to give
  * @returns {void} - Nothing
  */
-declare function DialogKitsuneGiveEssence(Amount: string): void;
+declare function DialogKitsuneGiveEssence(Amount: number): void;
 declare function MagicSchoolFindsAroundKitsuneDisappear(): void;
 /**
  * Update the Kitsune NPC's quest status as it progresses
@@ -123,21 +123,22 @@ declare function MagicSchoolFindsAroundRunAway(): void;
 declare function MagicSchoolFindsAroundRunAwayEnd(): void;
 /**
  * Triggered when the player lost and get ungagged by the Kitsune, can affect reputation
- * @param {string} RepChange
+ * @param {number} RepChange
  * @returns {void} - Nothing
  */
-declare function MagicSchoolFindsAroundUngagPlayer(RepChange: string): void;
+declare function MagicSchoolFindsAroundUngagPlayer(RepChange: number): void;
 /**
  * When the player lost a battle and the Kitsune tests a spell on her
- * @param {string} RepChange
+ * @param {number} RepChange
  * @returns {void} - Nothing
  */
-declare function MagicSchoolFindsAroundLoserSpell(RepChange: string): void;
+declare function MagicSchoolFindsAroundLoserSpell(RepChange: number): void;
 /**
  * Starts the quest to gather essences for Theresa
+ * @param {"bad"} [type] - Unused and no idea what it's supposed to do (a development leftover maybe)?
  * @returns {void} - Nothing
  */
-declare function MagicSchoolFindsAroundTheresaStartQuest(): void;
+declare function MagicSchoolFindsAroundTheresaStartQuest(type?: "bad"): void;
 /**
  * Return the current progress of the Theresa quest
  * @returns {number}
@@ -164,14 +165,14 @@ declare function MagicSchoolFindsAroundTheresaTimerUp(): boolean;
 declare function MagicSchoolFindsAroundTheresaQuestUpdate(): void;
 /**
  * Give player essence from rescued person
- * @param {string} Amount - The amount of essence to give
+ * @param {number} Amount - The amount of essence to give
  * @returns {void} - Nothing
  */
-declare function DialogTheresaGiveEssence(Amount: string): void;
+declare function DialogTheresaGiveEssence(Amount: number): void;
 /**
- * @param {string} stage
+ * @param {number} stage
  */
-declare function MagicSchoolFindsAroundTheresaGiveBadWordPoint(stage: string): void;
+declare function MagicSchoolFindsAroundTheresaGiveBadWordPoint(stage: number): void;
 declare function MagicSchoolFindsAroundTheresaGiveGift(): void;
 declare function MagicSchoolFindsAroundHideTheresa(): void;
 declare var MagicSchoolFindsAroundBackground: string;
@@ -184,9 +185,6 @@ declare var MagicSchoolFindsAroundTheresa: NPCCharacter;
 declare var MagicSchoolFindsAroundSpellCount: number;
 /** @type {MagicSchoolSpell | undefined} */
 declare var MagicSchoolFindsAroundLastSpell: MagicSchoolSpell | undefined;
-declare var AngelNunOutfit: string;
-declare var CurrentAngelNunName: string;
-declare var CurrentAngelNunStage: string;
 declare namespace MagicSchoolFindsAroundButtons {
     let exit: [number, number, number, number];
     let profile: [number, number, number, number];

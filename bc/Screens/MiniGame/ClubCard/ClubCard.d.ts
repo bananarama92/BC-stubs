@@ -299,6 +299,7 @@ declare function ClubCardGetMaxEffectFromCard(Card: ClubCard, fame: number): num
 declare function ClubCardAddToHand(CCPlayer: ClubCardPlayer, Card: ClubCard): void;
 /**
  * Removes several cards from player time events
+ * @deprecated
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {readonly String[]} ListOfCardNames - The names of the cards to remove
  */

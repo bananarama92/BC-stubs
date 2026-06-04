@@ -1,4 +1,4 @@
-declare function AssetsWingsSteampunkWingsBeforeDraw(drawData: DynamicDrawingData<SteampunkWingsPersistentData>): DynamicBeforeDrawOverrides;
+declare function AssetsWingsSteampunkWingsBeforeDraw(drawData: DynamicDrawingData<SteampunkWingsPersistentData>): DynamicBeforeDrawOverrides | undefined;
 declare function AssetsWingsSteampunkWingsScriptDraw(drawData: DynamicScriptCallbackData<SteampunkWingsPersistentData>): void;
 type SteampunkWingsPersistentData = {
     State?: number;

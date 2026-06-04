@@ -22,11 +22,11 @@ declare function CollegeCafeteriaRun(): void;
 declare function CollegeCafeteriaClick(): void;
 /**
  * When Sidney love towards the player changes
- * @param {string} LoveChange - The amount the love of Sidney changes
- * @param {string} MoneyChange - The amount of money, the plyer looses
+ * @param {number} LoveChange - The amount the love of Sidney changes
+ * @param {number} [MoneyChange] - The amount of money, the player looses
  * @returns {void} - Nothing
  */
-declare function CollegeCafeteriaSidneyLoveChange(LoveChange: string, MoneyChange: string): void;
+declare function CollegeCafeteriaSidneyLoveChange(LoveChange: number, MoneyChange?: number): void;
 /**
  * Starts the fight between Sidney and the player
  * @returns {void} - Nothing

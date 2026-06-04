@@ -23,7 +23,7 @@ declare function PreferenceSubscreenGeneralExit(): boolean;
  * If the selected color is invalid, the player cannot leave the screen.
  */
 declare function PreferenceSubscreenGeneralUnload(): void;
-declare function PreferenceSubscreenGeneralResize(): void;
+declare function PreferenceSubscreenGeneralResize(load: boolean): void;
 declare function PreferenceSubscreenGeneralColorPickerToggle(): void;
 /** @param {HTMLInputElement} input */
 declare function PreferenceSubscreenGeneralColorInput(input: HTMLInputElement): void;
