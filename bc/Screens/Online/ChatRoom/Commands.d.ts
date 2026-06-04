@@ -156,9 +156,10 @@ declare namespace CommandsHelp {
     /**
      *
      * @param {ICommand} command
+     * @param {string} [translationTag]
      * @returns {string}
      */
-    function _GetDescription(command: ICommand): string;
+    function _GetDescription(command: ICommand, translationTag?: string): string;
     /**
      * @param {string | Partial<Record<ServerChatRoomLanguage | "TW", string>>} arg
      * @returns {string}
@@ -280,4 +281,42 @@ declare namespace CommandsChangelog {
         startID?: string | null | undefined;
         stopID?: string | null | undefined;
     }): HTMLDivElement;
+}
+declare namespace CommandsModsList {
+    let _RemoteTimeoutMs: number;
+    let _ActiveRemoteRequest: null | CommandsModListRequest;
+    function ShowLocal(): void;
+    /**
+     * @param {ServerChatRoomMessage} data
+     * @param {Character} senderCharacter
+     */
+    function ProcessHiddenRemote(data: ServerChatRoomMessage, senderCharacter: Character): void;
+    /** @param {string} argsTrimmed */
+    function StartRemote(argsTrimmed: string): void;
+    function _CancelActiveRemote(): void;
+    function _GetLocalSorted(): ModSDKModInfo[];
+    /** @param {ModSDKModInfo[]} mods @param {Character} char */
+    function _FormatModListForCopy(mods: ModSDKModInfo[], char: Character): string;
+    /**
+     * @param {string} id
+     * @param {ModSDKModInfo[]} mods
+     * @param {Character} char
+     */
+    function _BuildCopyButton(id: string, mods: ModSDKModInfo[], char: Character): HTMLButtonElement;
+    /** @param {string} id */
+    function _BuildDeleteButton(id: string): HTMLButtonElement;
+    /** @param {ModSDKModInfo[]} mods */
+    function _BuildList(mods: ModSDKModInfo[]): HTMLUListElement;
+    function _UpdateRemoteProgress(): void;
+    /** @param {Map<number, CommandsModListResult>} results */
+    function _BuildDetailsBody(results: Map<number, CommandsModListResult>): HTMLDivElement;
+    function _FinalizeRemote(): void;
+    function _OnRemoteTimeout(): void;
+    /** @param {ServerChatRoomMessage} data */
+    function _HandleRemoteQuery(data: ServerChatRoomMessage): void;
+    /**
+     * @param {ServerChatRoomMessage} data
+     * @param {Character} senderCharacter
+     */
+    function _HandleRemoteReply(data: ServerChatRoomMessage, senderCharacter: Character): void;
 }

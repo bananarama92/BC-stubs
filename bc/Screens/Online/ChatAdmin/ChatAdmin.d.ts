@@ -4,9 +4,9 @@
 declare function ChatAdminShowCreate(): void;
 /**
  * Show the room editor screen in update mode
- * @param {ChatRoom} roomData
+ * @param {ChatRoomData} roomData
  */
-declare function ChatAdminShowEdit(roomData: ChatRoom): void;
+declare function ChatAdminShowEdit(roomData: ChatRoomData): void;
 /**
  * Sets up the chat room editor screen and switches to it
  *

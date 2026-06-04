@@ -294,10 +294,10 @@ declare function AsylumGGTSOrgasmResist(): void;
 declare function AsylumGGTSLock(LockTime: number, Msg: string): void;
 /**
  * Fully dress the character in a drone futuristic gear setup
- * @param {Character} C - The character to dress, if omitted, we use the player
+ * @param {Character} [C] - The character to dress, if omitted, we use the player
  * @return {void} - Nothing
  */
-declare function AsylumGGTSDroneDress(C: Character): void;
+declare function AsylumGGTSDroneDress(C?: Character): void;
 /**
  * GGTS will not allow the character to change if she's being punished or she reached level 6
  * @param {Character} C - The character to evaluate
@@ -315,16 +315,25 @@ declare function AsylumGGTSDialogAction(Action: string, Minute: number): void;
  * Called from Dialog.js, as nurse, trigger a specific interaction for the current character
  * @param {String} Interaction - The interaction to perform
  * @returns {void} - Nothing
+ * @deprecated Use {@link AsylumGGTSDialogNewTask}, {@link AsylumGGTSDialogSpeed}, {@link AsylumGGTSDialogPause}
  */
 declare function AsylumGGTSDialogInteraction(Interaction: string): void;
+declare function AsylumGGTSDialogNewTask(): void;
+/**
+ * @param {string} stringSpeed
+ */
+declare function AsylumGGTSDialogSpeed(stringSpeed: string): void;
+/**
+ * @param {string} pauseDuration
+ */
+declare function AsylumGGTSDialogPause(pauseDuration: string): void;
 /**
  * Called from chat room, processes hidden GGTS messages
  * @param {Character} SenderCharacter - The character sending the message
- * @param {String} Interaction - The message sent
  * @param {ServerChatRoomMessage} data - The full message recieved
  * @returns {Object} - Nothing to be used
  */
-declare function AsylumGGTSHiddenMessage(SenderCharacter: Character, Interaction: string, data: ServerChatRoomMessage): Object;
+declare function AsylumGGTSHiddenMessage(SenderCharacter: Character, data: ServerChatRoomMessage): Object;
 /**
  * GGTS Draws the level, the number of strikes and a progress bar, level 6 shows the time in a gold frame
  * @param {Character} C - Character to draw the info for

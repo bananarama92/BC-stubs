@@ -30,6 +30,11 @@ declare function IsFocusGroupDictionaryEntry(entry: ChatMessageDictionaryEntry):
 declare function IsTextDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is TextDictionaryEntry;
 /**
  * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is GGTSDictionaryEntry}
+ */
+declare function IsGGTSDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is GGTSDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
  * @returns {entry is TextLookupDictionaryEntry}
  */
 declare function IsTextLookupDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is TextLookupDictionaryEntry;
@@ -94,6 +99,16 @@ declare function IsMapViewTeleportEventDictionaryEntry(entry: ChatMessageDiction
  * @returns {entry is MapViewChangeKeyEventDictionaryEntry}
  */
 declare function IsMapViewChangeKeyEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MapViewChangeKeyEventDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ModSdkModsReplyPayloadDictionaryEntry}
+ */
+declare function IsModSdkModsReplyPayload(entry: ChatMessageDictionaryEntry): entry is ModSdkModsReplyPayloadDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ModSdkModsQueryPayloadDictionaryEntry}
+ */
+declare function IsModSdkModsQueryPayload(entry: ChatMessageDictionaryEntry): entry is ModSdkModsQueryPayloadDictionaryEntry;
 /**
  * Build class for chat message dictionaries
  */
@@ -225,6 +240,12 @@ declare class DictionaryBuilder {
      * @returns
      */
     mapViewChangeKey(keys: ("gold" | "silver" | "bronze")[], giveKey: boolean): this;
+    /**
+     * Adds a changeKey dictionary entry
+     * @param {GGTSDictionaryEntry["Action"]} action
+     * @returns
+     */
+    addGGTSData(action: GGTSDictionaryEntry["Action"]): this;
     /**
      * Adds a dictionary entry to the builder
      * @param {ChatMessageDictionaryEntry} entry - The dictionary entry to add

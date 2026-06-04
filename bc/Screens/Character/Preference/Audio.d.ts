@@ -15,7 +15,7 @@ declare function PreferenceSubscreenAudioClick(): void;
  */
 declare function PreferenceSubscreenAudioExit(): boolean;
 declare function PreferenceSubscreenAudioUnload(): void;
-declare function PreferenceSubscreenAudioResize(onLoad: any): void;
+declare function PreferenceSubscreenAudioResize(load: boolean): void;
 declare namespace PreferenceSubscreenAudioIDs {
     let grid: string;
 }

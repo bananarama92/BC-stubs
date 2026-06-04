@@ -92,17 +92,17 @@ declare function PandoraPrisonBribeStart(): void;
 declare function PandoraPrisonBribeAllowed(): boolean;
 /**
  * Checks if the perk specified is currently selected
- * @param {string} Type - The perk type
+ * @param {InfiltrationPerks} Type - The perk type
  * @returns {boolean} - Returns TRUE if it's selected
  */
-declare function PandoraPrisonHasPerk(Type: string): boolean;
+declare function PandoraPrisonHasPerk(Type: InfiltrationPerks): boolean;
 /**
  * When the player bribes the guard to lower her sentence
- * @param {string|number} Money - The amount of money spent
- * @param {string|number} Minutes - The number of minutes to remove from the sentence
+ * @param {number} Money - The amount of money spent
+ * @param {number} Minutes - The number of minutes to remove from the sentence
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonBribeProcess(Money: string | number, Minutes: string | number): void;
+declare function PandoraPrisonBribeProcess(Money: number, Minutes: number): void;
 /**
  * When the current NPC picks a random weapon to beat up the player
  * @returns {void} - Nothing

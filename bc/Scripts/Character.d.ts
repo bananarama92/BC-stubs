@@ -471,17 +471,20 @@ declare function CharacterSetOwnersNotes(C: Character, notes?: string): void;
 declare function CharacterRefreshLeash(C: Character): void;
 /**
  * Create and return a character's script item, if appropriate
+ * @public
  * @param {Character} C
  * @returns {Item}
  */
 declare function CharacterScriptGet(C: Character): Item;
 /**
  * Refresh the character's script
+ * @public
  * @param {Character} C
  */
 declare function CharacterScriptRefresh(C: Character): void;
 /**
  * Remove a character's script item
+ * @public
  * @param {Character} C
  */
 declare function CharacterScriptRemove(C: Character): void;

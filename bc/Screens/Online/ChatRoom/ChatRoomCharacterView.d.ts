@@ -18,6 +18,7 @@ declare function ChatRoomCharacterViewCanLeave(): boolean;
 declare function ChatRoomCharacterViewScreenshot(): void;
 /**
  * Returns TRUE if the map button can be used
+ * @deprecated
  * @returns {boolean} - TRUE if can be used
  */
 declare function ChatRoomCharacterViewShowMapButton(): boolean;

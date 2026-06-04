@@ -71,10 +71,10 @@ declare function InfiltrationRun(): void;
 declare function InfiltrationClick(): void;
 /**
  * Sets the infiltration mission challenge difficulty
- * @param {string} Difficulty
+ * @param {number} Difficulty
  * @returns {void} - Nothing
  */
-declare function InfiltrationSelectChallenge(Difficulty: string): void;
+declare function InfiltrationSelectChallenge(Difficulty: number): void;
 /**
  * Prepares the mission and presents it to the player
  * @returns {void} - Nothing
@@ -179,10 +179,10 @@ declare function InfiltrationRansomFriend(): void;
 declare function InfiltrationStartNPCRescue(): void;
 /**
  * Dresses the player as a maid for the reverse maid mission
- * @param {string} Rep - The reputation change to apply
+ * @param {number} Rep - The reputation change to apply
  * @returns {void} - Nothing
  */
-declare function InfiltrationDressMaid(Rep: string): void;
+declare function InfiltrationDressMaid(Rep: number): void;
 /**
  * Takes captured infiltrator for brainwashing.
  * @returns {void} - Nothing
@@ -211,26 +211,26 @@ declare function InfiltrationClubCardEnd(): void;
 declare function InfiltrationPenitentiaryRoleIs(Role: string): boolean;
 /**
  * Starts the Pandora's padlock special mission, cannot be given randomly
- * @param {string} Minutes - The number of minutes to lock the player
- * @param {string} Amount - The money amount and infiltration skill gained
- * @param {string} Role - The role to take (I for Inmate or G for Guard)
+ * @param {number} Minutes - The number of minutes to lock the player
+ * @param {number} Amount - The money amount and infiltration skill gained
+ * @param {"G" | "I"} Role - The role to take (I for Inmate or G for Guard)
  * @returns {void} - Nothing
  */
-declare function InfiltrationPreparePenitentiary(Minutes: string, Amount: string, Role: string): void;
+declare function InfiltrationPreparePenitentiary(Minutes: number, Amount: number, Role: "G" | "I"): void;
 /**
  * Starts the Pandora's padlock special mission, cannot be given randomly
- * @param {string} Param - An optional NEW param to create a new room
+ * @param {"New"} [Param] - An optional NEW param to create a new room
  * @returns {void} - Nothing
  */
-declare function InfiltrationStartPenitentiary(Param: string): void;
+declare function InfiltrationStartPenitentiary(Param?: "New"): void;
 /**
  * When the player asks to be costumed as a guard
  * @returns {void} - Nothing
  */
 declare function InfiltrationGuardDressUp(): void;
 declare var InfiltrationBackground: string;
-/** @type {NPCCharacter} */
-declare var InfiltrationSupervisor: NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationSupervisor: null | NPCCharacter;
 declare var InfiltrationDifficulty: number;
 /** @type {InfiltrationMissionType | ""} */
 declare var InfiltrationMission: InfiltrationMissionType | "";
@@ -241,12 +241,13 @@ declare var InfiltrationObjectType: InfiltrationTargetType[];
 /** @type {InfiltrationMissionTarget | null} */
 declare var InfiltrationTarget: InfiltrationMissionTarget | null;
 declare var InfiltrationCollectRansom: boolean;
-/** @type {NPCCharacter} */
-declare var InfiltrationKidnapper: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var InfiltrationPandoraPrisoner: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var InfiltrationPartyPrisoner: NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationKidnapper: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationPandoraPrisoner: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationPartyPrisoner: null | NPCCharacter;
 declare var InfiltrationPenitentiaryMinutes: number;
 declare var InfiltrationPenitentiaryAmount: number;
-declare var InfiltrationPenitentiaryRole: string;
+/** @type {"G" | "I"} */
+declare var InfiltrationPenitentiaryRole: "G" | "I";

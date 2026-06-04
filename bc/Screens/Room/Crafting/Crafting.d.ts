@@ -52,6 +52,7 @@ declare function CraftingUnload(): void;
 declare function CraftingUpdateFromItem(item: Item): void;
 /**
  * Return a list of all searchable asset names.
+ * @deprecated
  * @returns {string[]}
  */
 declare function CraftingGetAllAssetNames(): string[];
@@ -95,6 +96,7 @@ declare function CraftingLoadServer(Packet: string | (null | CraftingItem)[]): v
 declare function CraftingClick(event: PointerEvent): void;
 /**
  * Refreshes the preview model with a slight delay so the item color process is done
+ * @deprecated
  * @returns {void} - Nothing
  * */
 declare function CraftingRefreshPreview(): void;
@@ -120,6 +122,7 @@ declare function CraftingExitResetElements(): void;
 declare function CraftingExit(allowPanelClose?: boolean): void;
 /**
  * Applies the craft to all matching items
+ * @deprecated
  * @param {CraftingItem} Craft
  * @param {Asset} Item
  */

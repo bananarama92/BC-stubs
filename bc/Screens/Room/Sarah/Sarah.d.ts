@@ -80,31 +80,32 @@ declare function SarahSophieStartBuzz(C: Character, Intensity: string | number):
 declare function SarahSophiePunishEvent(EventType: string, DomRep: string | number): void;
 /**
  * When the player plays Sophie Orgasm Game
- * @param {string} Factor
+ * @param {number} Factor
  */
-declare function SarahSophieOrgasmGame(Factor: string): void;
+declare function SarahSophieOrgasmGame(Factor: number): void;
 declare function SarahSophieReleaseEveryoneButSarah(): void;
 declare function SarahPlayerPunishGirls(): void;
 /**
  * Returns TRUE if the current slave(s) are naked and without restrains
- * @param {NPCCharacter} C
+ * @param {NPCCharacter} [C]
  */
-declare function SarahSlaveNakedWithoutRestrains(C: NPCCharacter): any;
+declare function SarahSlaveNakedWithoutRestrains(C?: NPCCharacter): any;
 /**
  * Returns TRUE if the current slave(s) are wearing clamps, egg and butt plug
- * @param {NPCCharacter} C
+ * @param {NPCCharacter} [C]
  */
-declare function SarahSlaveWithClampEggPlug(C: NPCCharacter): any;
+declare function SarahSlaveWithClampEggPlug(C?: NPCCharacter): any;
 /**
  * Returns TRUE if the current slave(s) are wearing clamps, egg, butt plug, chastity belt & bra
- * @param {NPCCharacter} C
+ * @param {NPCCharacter} [C]
  */
-declare function SarahSlaveChaste(C: NPCCharacter): any;
+declare function SarahSlaveChaste(C?: NPCCharacter): any;
 /**
  * Returns TRUE if the current slave(s) are wearing clamps, egg, butt plug, chastity belt, bra & locked cuffs
- * @param {NPCCharacter} C
+ * @param {NPCCharacter} [C]
+ * @returns {boolean}
  */
-declare function SarahSlaveLockedCuffs(C: NPCCharacter): any;
+declare function SarahSlaveLockedCuffs(C?: NPCCharacter): boolean;
 /**
  * Returns TRUE if the current slave(s) had their orgasms
  * @returns {boolean}
@@ -112,24 +113,24 @@ declare function SarahSlaveLockedCuffs(C: NPCCharacter): any;
 declare function SarahSlaveOrgasm(): boolean;
 /**
  * Gives the restrains temporarily to Sarah and Amanda so they can be punished
- * @param {NPCCharacter} C
+ * @param {NPCCharacter} [C]
  */
-declare function SarahGiveFirstSlaveItem(C: NPCCharacter): void;
+declare function SarahGiveFirstSlaveItem(C?: NPCCharacter): void;
 /**
  * Gives the second set of restrains temporarily to Sarah and Amanda so they can be punished
- * @param {NPCCharacter} C
+ * @param {NPCCharacter} [C]
  */
-declare function SarahGiveSecondSlaveItem(C: NPCCharacter): void;
+declare function SarahGiveSecondSlaveItem(C?: NPCCharacter): void;
 /**
  * Gives the third set of restrains temporarily to Sarah and Amanda so they can be punished
- * @param {NPCCharacter} C
+ * @param {NPCCharacter} [C]
  */
-declare function SarahGiveThirdSlaveItem(C: NPCCharacter): void;
+declare function SarahGiveThirdSlaveItem(C?: NPCCharacter): void;
 /**
  * Gives the fourth set of restrains temporarily to Sarah and Amanda so they can be punished
- * @param {NPCCharacter} C
+ * @param {NPCCharacter} [C]
  */
-declare function SarahGiveFourthSlaveItem(C: NPCCharacter): void;
+declare function SarahGiveFourthSlaveItem(C?: NPCCharacter): void;
 /**
  * Build the orgasm meter for the slaves
  * @param {string|number} Pleasure

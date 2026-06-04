@@ -148,6 +148,7 @@ declare function PlatformDialogLoverAndSlaveFactor(SourceName: string, TargetNam
 declare function PlatformDialogRelationshipChange(): void;
 /**
  * Called manually to output the full dialog text to the console for text proofing
+ * @public
  * @returns {void} - Nothing
  */
 declare function PlatformDialogOutputAll(): void;

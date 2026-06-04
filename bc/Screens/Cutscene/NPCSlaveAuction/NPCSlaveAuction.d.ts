@@ -10,14 +10,14 @@ declare function NPCSlaveAuctionRun(): void;
  */
 declare function NPCSlaveAuctionClick(): void;
 declare var NPCSlaveAuctionBackground: string;
-/** @type {null | NPCCharacter} */
-declare var NPCSlaveAuctionVendor: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCSlaveAuctionSlave: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCSlaveAuctionMistress: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCSlaveAuctionGirlLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCSlaveAuctionGirlRight: null | NPCCharacter;
+/** @type {NPCCharacter | PlayerCharacter} */
+declare var NPCSlaveAuctionVendor: NPCCharacter | PlayerCharacter;
+/** @type {NPCCharacter} */
+declare var NPCSlaveAuctionSlave: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCSlaveAuctionMistress: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCSlaveAuctionGirlLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCSlaveAuctionGirlRight: NPCCharacter;
 declare var NPCSlaveAuctionAmount: number;

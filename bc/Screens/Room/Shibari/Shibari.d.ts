@@ -80,10 +80,10 @@ declare function ShibariClick(): void;
 declare function ShibariStartTeacherBondage(): void;
 /**
  * Triggered when the player gets restrained by the teacher, the teacher will not release the player for a minute after this.
- * @param {string} Level
+ * @param {number} Level
  * @returns {void} - Nothing
  */
-declare function ShibariRestrainPlayer(Level: string): void;
+declare function ShibariRestrainPlayer(Level: number): void;
 /**
  * Triggered on the first time the player says something submissive, it lowers the dominant score.
  * @returns {void} - Nothing

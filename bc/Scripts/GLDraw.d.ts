@@ -136,7 +136,6 @@ declare function GLDrawLoadMask(gl: WebGL2RenderingContext, texWidth: number, te
  * @returns {WebGLTexture} - A default mask texture
  */
 declare function GLDrawCreateEmptyTextureAlphaMask(gl: WebGL2RenderingContext, texWidth: any, texHeight: any): WebGLTexture;
-declare function canvasToNewWin(canvas: any): void;
 /**
  * Loads mask layers and combines them into a single texture mask
  * @param {WebGL2RenderingContext} gl

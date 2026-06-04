@@ -4,12 +4,6 @@
  */
 declare function CollegeDetentionCanInviteToPrivateRoom(): boolean;
 /**
- * Checks Yuki's current love level
- * @param {string} LoveLevel - The love level that should be checked
- * @returns {boolean} - Returns true, if Yuki's love is greater or equal the given level, false otherwise
- */
-declare function CollegeDetentionYukiLoveIs(LoveLevel: string): boolean;
-/**
  * Adds the sleeping pill to the player's invertory
  * @returns {void} - Nothing
  */
@@ -54,11 +48,10 @@ declare function CollegeDetentionClick(): void;
 /**
  * When Yuki's love towards the player changes, it can also trigger an event.
  * When a good or bad move is done, her expression will change quickly.
- * @param {string} LoveChange - The amount the love of Yuki towards the player is altered
- * @param {*} Event - This parameter is never used. Perhaps legacy code from the college?
+ * @param {number} LoveChange - The amount the love of Yuki towards the player is altered
  * @returns {void} - Nothing
  */
-declare function CollegeDetentionYukiLoveChange(LoveChange: string, Event: any): void;
+declare function CollegeDetentionYukiLoveChange(LoveChange: number): void;
 /**
  * Dress the player and Yuki back
  * @returns {void} - Nothing
@@ -71,10 +64,10 @@ declare function CollegeDetentionDressBack(): void;
 declare function CollegeDetentionBothNaked(): void;
 /**
  * When the player pleases Yuki, it's a race against the clock to make her orgasm
- * @param {string} Factor - The factor that alters Yuki's love towards the player
+ * @param {number} Factor - The factor that alters Yuki's love towards the player
  * @returns {void} - Nothing
  */
-declare function CollegeDetentionPleaseYuki(Factor: string): void;
+declare function CollegeDetentionPleaseYuki(Factor: number): void;
 /**
  * Yuki restraints the player
  * @param {"Arms" | "Legs" | "Mouth"} Type - The type of restraint to use

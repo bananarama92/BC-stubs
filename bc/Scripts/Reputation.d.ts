@@ -13,18 +13,28 @@ declare function ReputationChange(RepType: ReputationType, RepValue: number, Pus
  */
 declare function ReputationLoad(NewRep: readonly Reputation[] | undefined): void;
 /**
- * Returns a specific reputation value for the player
+ * Returns the reputation value of a given character
+ * @overload
+ * @param {Character} C - The character to get the reputation of
  * @param {ReputationType} RepType - Type/name of the reputation to get the value of.
- * @returns {number} - Returns the value of the reputation. It can range from 100 to -100, and it defaults to 0 if the player never earned this type of reputation before.
+ * @returns {number}
  */
-declare function ReputationGet(RepType: ReputationType): number;
+declare function ReputationGet(C: Character, RepType: ReputationType): number;
+/**
+ * Returns the reputation value of the player
+ * @overload
+ * @param {ReputationType} ReputationType - Gets the reputation value from the player
+ * @returns {number}
+ */
+declare function ReputationGet(ReputationType: ReputationType): number;
 /**
  * Returns a specific reputation value for a given character
- * @param {Character} C - Character to get the reputation for.
- * @param {ReputationType} RepType - Type/name of the reputation to get the value of.
+ * @param {Character} character - Character to get the reputation for.
+ * @param {ReputationType} repType - Type/name of the reputation to get the value of.
  * @returns {number} - Returns the value of the reputation. It can range from 100 to -100, and it defaults to 0 if the given character never earned this type of reputation before.
+ * @deprecated - Deprecated alias for {@link ReputationGet}
  */
-declare function ReputationCharacterGet(C: Character, RepType: ReputationType): number;
+declare function ReputationCharacterGet(character: Character, repType: ReputationType): number;
 /**
  * Alter the reputation progress by a factor. The higher the rep, the slower it gets, a reputation is easier to break than to build. Takes the cheater version factor into account.
  * @param {ReputationType} RepType - Type/name of the reputation

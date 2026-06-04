@@ -17,7 +17,8 @@ declare function AssetsItemPelvisFuturisticChastityBeltScriptUpdatePlayer(data: 
 declare function AssetsItemPelvisFuturisticChastityBeltScriptTrigger(C: Character, Item: Item, ShockType: string, ReplacementWord?: string, NoShock?: boolean): void;
 declare function AssetsItemPelvisFuturisticChastityBeltScriptDraw(drawData: DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>): void;
 declare var FuturisticChastityBeltShockCooldownOrgasm: number;
-declare var InventoryItemPelvisFuturisticChastityBeltTamperZones: string[];
+/** @type {AssetGroupItemName[]} */
+declare var InventoryItemPelvisFuturisticChastityBeltTamperZones: AssetGroupItemName[];
 type FuturisticChastityBeltPersistentData = {
     UpdateTime?: number;
     LastMessageLen?: number;

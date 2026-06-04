@@ -236,3 +236,12 @@ declare const FriendListIconMapping: {
         sortKey: string;
     };
 };
+/**
+ * Note that the `Caption` field is only initialized in {@link FriendListLoad}..
+ * @type {Record<FriendListRelationType, { Caption?: string, Icon: string, SortingPriority: number }>}
+ */
+declare const FriendListTypeData: Record<FriendListRelationType, {
+    Caption?: string;
+    Icon: string;
+    SortingPriority: number;
+}>;

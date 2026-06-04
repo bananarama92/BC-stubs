@@ -91,6 +91,7 @@ declare function InventoryIsItemInList(C: Character, ItemGroup: AssetGroupName, 
  * @param {AssetPrerequisite} Prerequisite - The name of the prerequisite to look for
  * @returns {boolean} - TRUE if the character has an item equipped in the named slot which has the named prerequisite,
  * FALSE otherwise
+ * @deprecated
  */
 declare function InventoryDoesItemHavePrerequisite(C: Character, ItemGroup: AssetGroupName, Prerequisite: AssetPrerequisite): boolean;
 /**
@@ -541,6 +542,7 @@ declare function InventoryShockExpression(C: Character): void;
  * @param {ItemProperties} property - The property object to extract from
  * @returns {ItemProperties} - A property object containing only the lock-related properties from the provided property
  * object
+ * @deprecated
  */
 declare function InventoryExtractLockProperties(property: ItemProperties): ItemProperties;
 declare namespace InventoryPrerequisiteConflicts {

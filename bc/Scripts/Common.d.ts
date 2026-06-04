@@ -8,6 +8,7 @@ declare function CommonIsNumeric(n: any): n is number;
 /**
  * Gets the current time as a string
  * @returns {string} - Returns the current date and time in a yyyy-mm-dd hh:mm:ss format
+ * @deprecated
  */
 declare function CommonGetFormatDate(): string;
 /**
@@ -149,22 +150,36 @@ declare function CommonSetScreen(...spec: ScreenSpecifier): Promise<void>;
  */
 declare function CommonTime(): number;
 /**
- * Checks if a given value is a valid HEX color code (optionally with alpha channel)
- * @param {string | undefined} Value - Potential HEX color code
- * @param {null | { allowAlpha?: boolean }} [options]
- * @returns {Value is HexColor} - Returns TRUE if the string is a valid HEX color
+ * @overload
+ * @param {string | undefined} Value
+ * @param {{ allowAlpha?: boolean, schema: readonly BCColor[] }} options
+ * @returns {Value is BCColor}
  */
-declare function CommonIsColor(Value: string | undefined, options?: null | {
+declare function CommonIsColor(Value: string | undefined, options: {
     allowAlpha?: boolean;
-}): Value is HexColor;
+    schema: readonly BCColor[];
+}): Value is BCColor;
+/**
+ * @overload
+ * @param {string | undefined} Value
+ * @param {null | { allowAlpha?: boolean, schema?: readonly BCColor[] }} [options]
+ * @returns {Value is HexColor}
+ */
+declare function CommonIsColor(Value: string | undefined, options?: {
+    allowAlpha?: boolean;
+    schema?: readonly BCColor[];
+} | null | undefined): Value is HexColor;
 /**
  * Checks whether an item's color has a valid value that can be interpreted by the drawing
- * functions. Valid values are null, undefined, strings, and an array containing any of the
+ * functions. Valid values are null, undefined, color strings, and an array containing any of the
  * aforementioned types.
- * @param {null | string | readonly (null | string)[]} [Color] - The Color value to check
- * @returns {boolean} - Returns TRUE if the color is a valid item color
+ * @param {null | ItemColor} [color] - The Color value to check
+ * @param {null | { schema?: readonly BCColor[] }} [options]
+ * @returns {color is (null | undefined | ItemColor)} - Returns TRUE if the color is a valid item color
  */
-declare function CommonColorIsValid(Color?: null | string | readonly (null | string)[]): boolean;
+declare function CommonColorIsValid(color?: null | ItemColor, options?: null | {
+    schema?: readonly BCColor[];
+}): color is (null | undefined | ItemColor);
 /**
  * Remove the (potential present) alpha component of the passed color hex code, turning the likes of `RRGGBB(AA)` into `RRGGBB`.
  * @param {HexColor} color The color hex code
@@ -202,6 +217,13 @@ declare function CommonRemoveRandomItemFromList<T>(list: T[]): undefined | T;
  * @returns {T} - The randomly selected item from the list
  */
 declare function CommonRandomItemFromList<T>(ItemPrevious: T, ItemList: readonly T[]): T;
+/**
+ * Get a random item from an array.
+ * @template T
+ * @param {readonly T[]} list - List for which to pick a random item from
+ * @returns {T} - The randomly selected item from the list
+ */
+declare function CommonGetRandomItemFromList<T>(list: readonly T[]): T;
 /**
  * Converts a string of numbers split by commas to an array, sanitizes the array by removing all NaN or undefined elements.
  * @param {string} s - String of numbers split by commas
@@ -645,12 +667,13 @@ declare function CommonScreenName(screen: RoomName): string | undefined;
 /**
  * Generates the path to a translation CSV file for a screen
  *
- * @param {string} [module] - The screen's module
- * @param {string} [screen] - The screen's name
- * @param {string} [group] - The text group
- * @returns {string | undefined}
+ * @overload
+ * @param {string} module - The screen's module
+ * @param {string} screen - The screen's name
+ * @param {string} group - The text group
+ * @returns {string}
  */
-declare function ScreenFileGetTranslation(module?: string, screen?: string, group?: string): string | undefined;
+declare function ScreenFileGetTranslation(module: string, screen: string, group: string): string;
 /**
  * Generates the path to a CSV Dialog file for a screen
  *
@@ -720,7 +743,7 @@ declare function CommonFormatDurationRange(end: number | Date, start: number | D
 /**
  * Formats a duration in ms to a human readable string of days, months, and years.
  * Defaults to showing days.
- * @deprecated Use CommonFormatDurationRange instead
+ * @deprecated Use {@link CommonFormatDurationRange} instead
  * @param {number} ms
  * @param {{
  *   includeYears?: boolean;
@@ -776,7 +799,7 @@ declare function CommonGetDatePartsRange(end: Date, start: Date, options?: {
  * Break duration into real-calendar components (y, m, d, h, min, s),
  * optionally rolling excluded components into the next smaller unit.
  *
- * @deprecated Use CommonGetDatePartsRange instead.
+ * @deprecated Use {@link CommonGetDatePartsRange} instead.
  * @param {number} ms
  * @param {{
  *   includeYears?: boolean,

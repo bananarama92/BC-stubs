@@ -30,12 +30,14 @@ declare function PreferenceLoadActivityFactor(): void;
 declare function PreferenceLoadFetishFactor(): void;
 /**
  * Increment the passed arousal factor.
+ * @deprecated
  * @param {ArousalFactor} factor
  * @returns {ArousalFactor}
  */
 declare function PreferenceIncrementArousalFactor(factor: ArousalFactor): ArousalFactor;
 /**
  * Decrement the passed arousal factor.
+ * @deprecated
  * @param {ArousalFactor} factor
  * @returns {ArousalFactor}
  */

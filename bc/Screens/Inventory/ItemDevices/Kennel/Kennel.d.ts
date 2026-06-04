@@ -1,4 +1,4 @@
-declare function AssetsItemDevicesKennelBeforeDraw(drawData: DynamicDrawingData<KennelPersistentData>): DynamicBeforeDrawOverrides;
+declare function AssetsItemDevicesKennelBeforeDraw(drawData: DynamicDrawingData<KennelPersistentData>): DynamicBeforeDrawOverrides | undefined;
 declare function AssetsItemDevicesKennelScriptDraw(drawData: DynamicScriptCallbackData<KennelPersistentData>): void;
 /**
  * @param {Character} C

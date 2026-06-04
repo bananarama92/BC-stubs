@@ -10,13 +10,13 @@ declare function NPCCollaringRun(): void;
  */
 declare function NPCCollaringClick(): void;
 declare var NPCCollaringBackground: string;
-/** @type {null | NPCCharacter} */
-declare var NPCCollaringSub: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCCollaringMistressLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCCollaringMistressRight: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCCollaringGirlLeft: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NPCCollaringGirlRight: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCCollaringSub: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCCollaringMistressLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCCollaringMistressRight: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCCollaringGirlLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NPCCollaringGirlRight: NPCCharacter;

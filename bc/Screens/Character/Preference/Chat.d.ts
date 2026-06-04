@@ -14,7 +14,7 @@ declare function PreferenceSubscreenChatClick(): void;
  * Exits the preference screen
  */
 declare function PreferenceSubscreenChatExit(): boolean;
-declare function PreferenceSubscreenChatResize(onLoad: any): void;
+declare function PreferenceSubscreenChatResize(load: boolean): void;
 /** @type {ChatColorThemeType[]} */
 declare var PreferenceChatColorThemeList: ChatColorThemeType[];
 /** @type {ChatEnterLeaveType[]} */

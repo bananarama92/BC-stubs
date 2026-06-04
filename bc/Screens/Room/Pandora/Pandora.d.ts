@@ -73,11 +73,11 @@ declare function PandoraMsgBox(Text: string): void;
 declare function PandoraGenerateNPC(Group: string, Archetype: NPCArchetype, Name: string, AllowItem: boolean): NPCCharacter;
 /**
  * Dress a character in the Rival Club fashion
- * @param {NPCCharacter} C
+ * @param {Character} C
  * @param {string} Type
  * @returns {void} - Nothing
  */
-declare function PandoraDress(C: NPCCharacter, Type: string): void;
+declare function PandoraDress(C: Character, Type: string): void;
 /**
  * When the players enters a new room, we keep the previous room
  * @param {PandoraBaseRoom} Room - The room to step into
@@ -189,23 +189,23 @@ declare function PandoraCanJoinPrivateRoom(): boolean;
 declare function PandoraCharacterJoinPrivateRoom(): void;
 /**
  * Checks if the mission is the one provided in the parameter
- * @param {string} Type - The mission type
+ * @param {InfiltrationMissionType} Type - The mission type
  * @returns {boolean} - Returns TRUE if it's the current mission
  */
-declare function PandoraMissionIs(Type: string): boolean;
+declare function PandoraMissionIs(Type: InfiltrationMissionType): boolean;
 /**
  * Checks if the perk specified is currently selected
- * @param {string} Type - The perk type
+ * @param {InfiltrationPerks} Type - The perk type
  * @returns {boolean} - Returns TRUE if it's selected
  */
-declare function PandoraHasPerk(Type: string): boolean;
+declare function PandoraHasPerk(Type: InfiltrationPerks): boolean;
 /**
  * Prepares an information text based on the bribe amount provided
- * @param {string} Amount - The bribe amount
- * @param {string} Type - The perk type
+ * @param {number} Amount - The bribe amount
+ * @param {"Little" | "Full"} Type - The perk type
  * @returns {void} - Nothing
  */
-declare function PandoraBribeInfo(Amount: string, Type: string): void;
+declare function PandoraBribeInfo(Amount: number, Type: "Little" | "Full"): void;
 /**
  * Some dialog activities can boost the recruitment odds
  * @returns {void} - Nothing
@@ -213,11 +213,11 @@ declare function PandoraBribeInfo(Amount: string, Type: string): void;
 declare function PandoraRecruitBoost(): void;
 /**
  * Starts the player punishment process and jumps to the punishment Dominatrix
- * @param {Boolean} FromKidnapper
+ * @param {Boolean} [FromKidnapper]
  * @param {string} [FixIntro]
  * @returns {void} - Nothing
  */
-declare function PandoraPunishmentIntro(FromKidnapper: boolean, FixIntro?: string): void;
+declare function PandoraPunishmentIntro(FromKidnapper?: boolean, FixIntro?: string): void;
 /**
  * Puts the player in lots of random restraints
  * @returns {void} - Nothing
@@ -246,10 +246,10 @@ declare function PandoraQuizStart(): void;
 declare function PandoraQuizNext(): void;
 /**
  * When the player gives an answer to the guard quiz, the guard will give a visual hint if the answer is incorrect
- * @param {string} Answer
+ * @param {number} Answer
  * @returns {void} - Nothing
  */
-declare function PandoraQuizAnswer(Answer: string): void;
+declare function PandoraQuizAnswer(Answer: number): void;
 /**
  * When the player gets ungagged by an NPC, we remove everything on the head
  * @returns {void} - Nothing
@@ -350,10 +350,10 @@ declare function PandoraPenitentiaryDoActivity(Activity: string): void;
 declare function PandoraPenitentiaryHiddenMessage(SenderCharacter: Character, Interaction: string): void;
 /**
  * When an NPC pays the player for a service
- * @param {string} Amount - The paid amount
+ * @param {number} Amount - The paid amount
  * @returns {void} - Nothing
  */
-declare function PandoraPlayerPay(Amount: string): void;
+declare function PandoraPlayerPay(Amount: number): void;
 /**
  * When the player pays an NPC to wear her clothes
  * @returns {void} - Nothing

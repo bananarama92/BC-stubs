@@ -118,14 +118,14 @@ declare function ValidationIsLockChangePermitted(lock: Item, { C, fromOwner, fro
 /**
  * Copies an item's lock-related properties from one Property object to another based on whether or not the source
  * character has permissions to modify the lock. Rolls back any invalid changes to their previous values.
- * @param {object} sourceProperty - The original Property object on the item
- * @param {object} targetProperty - The Property object on the modified item
+ * @param {ItemProperties} sourceProperty - The original Property object on the item
+ * @param {ItemProperties} targetProperty - The Property object on the modified item
  * @param {boolean} hasLockPermissions - Whether or not the source character of the appearance change has permission to
  * modify the lock (as determined by {@link ValidationIsLockChangePermitted})
  * @returns {boolean} - TRUE if the target Property object was modified as a result of copying (indicating that there
  * were invalid changes to the lock), FALSE otherwise
  */
-declare function ValidationRollbackInvalidLockProperties(sourceProperty: object, targetProperty: object, hasLockPermissions: boolean): boolean;
+declare function ValidationRollbackInvalidLockProperties(sourceProperty: ItemProperties, targetProperty: ItemProperties, hasLockPermissions: boolean): boolean;
 /**
  * Clones all lock properties from one Property object to another.
  * @param {ItemProperties} sourceProperty - The property object to clone properties from
@@ -271,9 +271,9 @@ declare function ValidationResolveCyclicBlocks(appearance: Item[], diffMap: Appe
  * Be advised that cyclic block checking is relatively expensive, so should only be run when needed - don't run it every
  * frame!
  * @param {Item[]} appearance - The appearance array to check
- * @returns {string[][]} - A list of block cycles, each cycle being represented as an array of group names.
+ * @returns {AssetGroupName[][]} - A list of block cycles, each cycle being represented as an array of group names.
  */
-declare function ValidationFindBlockCycles(appearance: Item[]): string[][];
+declare function ValidationFindBlockCycles(appearance: Item[]): AssetGroupName[][];
 /**
  * Finds the groups, from a provided list of groups, that are blocked by a given item.
  * @param {Item} item - The item to check

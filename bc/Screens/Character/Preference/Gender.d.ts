@@ -14,7 +14,7 @@ declare function PreferenceSubscreenGenderRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenGenderClick(): void;
-declare function PreferenceSubscreenGenderResize(): void;
+declare function PreferenceSubscreenGenderResize(load: boolean): void;
 declare const PreferenceSubscreenGenderIDs: Readonly<{
     grid: "preference-gender-grid";
 }>;

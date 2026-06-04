@@ -50,18 +50,18 @@ declare function HorseWalkClick(): void;
  */
 declare function HorseWalkMouseDown(): void;
 declare var HorseWalkBackground: string;
-/** @type { null | { X: number, Y: number }[] } */
-declare var HorseWalkCarrots: null | {
+/** @type {{ X: number, Y: number }[] } */
+declare var HorseWalkCarrots: {
     X: number;
     Y: number;
 }[];
-/** @type { null | { X: number, Y: number }[] } */
-declare var HorseWalkCrops: null | {
+/** @type {{ X: number, Y: number }[] } */
+declare var HorseWalkCrops: {
     X: number;
     Y: number;
 }[];
-/** @type { null | { X: number, Y: number, Stat: number }[] } */
-declare var HorseWalkHurdle: null | {
+/** @type {{ X: number, Y: number, Stat: number }[] } */
+declare var HorseWalkHurdle: {
     X: number;
     Y: number;
     Stat: number;

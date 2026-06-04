@@ -1,6 +1,6 @@
 declare function PreferenceSubscreenKeybindingsLoad(): void;
 declare function PreferenceSubscreenKeybindingsRun(): void;
-declare function PreferenceSubscreenKeybindingsResize(): void;
+declare function PreferenceSubscreenKeybindingsResize(load: boolean): void;
 declare function PreferenceSubscreenKeybindingsClick(): void;
 declare function PreferenceSubscreenKeybindingsExit(): boolean;
 /**

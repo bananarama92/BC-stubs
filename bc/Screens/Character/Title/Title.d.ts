@@ -17,6 +17,14 @@ declare function TitleSelect(title: TitleName): void;
  */
 declare function TitleGet(C: Character): TitleName;
 /**
+ * Returns the title as a localized string
+ *
+ * The title translation file must be prefetched with `TextPrefetch("Character", "Title")`
+ *
+ * @param {string} title
+ */
+declare function TitleGetName(title: string): string;
+/**
  * Checks, if the given title is forced a forced title like 'Club Slave' or 'Escaped Patient'
  * @param {TitleName} Title - The title to check
  * @returns {boolean} - Result of the check

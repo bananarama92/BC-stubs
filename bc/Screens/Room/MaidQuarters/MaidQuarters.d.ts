@@ -137,7 +137,6 @@ declare function MaidQuartersCanUngagAndMaidsDisabled(): boolean;
  * Checks, if the maids are unable to remove the gag (if there is one)
  * @returns {boolean} - Returns true, if the player cannot be ungagged by the maids, false otherwise
  */
-declare function MaidQuartersCannotUngag(): boolean;
 declare function MaidQuartersCannotUngagAndMaidsNotDisabled(): boolean;
 declare function MaidQuartersLoad(): Promise<void>;
 /**
@@ -169,10 +168,10 @@ declare function MaidQuartersRemoveMaidUniform(): void;
 /**
  * Starts a mini game or maid chore
  * @param {ModuleScreens["MiniGame"]} GameType - Name of the mini-game to launch
- * @param {number} Difficulty - Difficulty Ration for the mini-game
+ * @param {"Easy" | "Normal" | "Hard" | `mienaiinaniganiobieruyoru ${"ez" | "nm" | "hd"}`} Difficulty - Difficulty Ration for the mini-game
  * @returns {void} - Nothing
  */
-declare function MaidQuartersMiniGameStart(GameType: ModuleScreens["MiniGame"], Difficulty: number): void;
+declare function MaidQuartersMiniGameStart(GameType: ModuleScreens["MiniGame"], Difficulty: "Easy" | "Normal" | "Hard" | `mienaiinaniganiobieruyoru ${"ez" | "nm" | "hd"}`): void;
 /**
  * Is called when the mini game ends and sends the player back to the maid quarters.
  * Depending on the choosen game, the next dialog option is selected
@@ -207,10 +206,10 @@ declare function MaidQuartersMaidReleasePlayer(): void;
 /**
  * Collects the dominant reputation change of a player during the course of the various dialog options.
  * When the player becomes a maid, the change is applied
- * @param {string} Value - The value by which the reputation is changed
+ * @param {number} Value - The value by which the reputation is changed
  * @returns {void} - Nothing
  */
-declare function MaidQuartersDominantRepChange(Value: string): void;
+declare function MaidQuartersDominantRepChange(Value: number): void;
 /**
  * Switches from one maid to another in the initiation
  * @param {string} MaidType - Name of the current maid type

@@ -68,10 +68,10 @@ declare function AsylumTherapyOrgasmTherapyRestrain(): void;
 /**
  * Initiates the bondage therapy as a nurse
  * @param {number} RepChange - The amount, the player's reputation changes
- * @param {"FEW" | "LOT" | "ALL" } RestraintsLevel - The level of restraints to use
+ * @param {"FEW" | "LOT" | "ALL" } [RestraintsLevel] - The level of restraints to use
  * @returns {void} - Nothing
  */
-declare function AsylumTherapyPatientBondageIntro(RepChange: number, RestraintsLevel: "FEW" | "LOT" | "ALL"): void;
+declare function AsylumTherapyPatientBondageIntro(RepChange: number, RestraintsLevel?: "FEW" | "LOT" | "ALL"): void;
 /**
  * Initiates the pain therapy as a nurse
  * @param {number} RepChange - The amount, the player's reputation changes
@@ -92,10 +92,10 @@ declare function AsylumTherapyPatientTickleIntro(RepChange: number): void;
 declare function AsylumTherapyPatientOrgasmIntro(RepChange: number): void;
 /**
  * Starts the therapy mini-game as a nurse
- * @param {number} Difficulty - The difficulty of the mini game
+ * @param {"Easy" | "Normal" | "Hard"} Difficulty - The difficulty of the mini game
  * @returns {void} - Nothing
  */
-declare function AsylumTherapyTherapyStart(Difficulty: number): void;
+declare function AsylumTherapyTherapyStart(Difficulty: "Easy" | "Normal" | "Hard"): void;
 /**
  * Ends the therapy mini-game as a nurse, plays with reputation and money
  * @returns {void} - Nothing

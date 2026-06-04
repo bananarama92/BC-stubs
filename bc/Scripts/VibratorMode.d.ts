@@ -8,6 +8,7 @@
 declare function VibratorModeRegister(asset: Asset, config: VibratingItemConfig, parentOption?: null | ExtendedItemOption): VibratingItemData;
 /**
  * Sets an extended item's type and properties to the option provided.
+ * @public
  * @param {VibratingItemData} data - The extended item data
  * @param {Character} C - The character on whom the item is equipped
  * @param {Item} item - The item whose type to set
@@ -51,10 +52,10 @@ declare function VibratorModeGetOptions(data: VibratingItemData, modeSet: readon
  * @param {VibratingItemOption} previousOption - The previously applied option
  * @param {boolean} permitExisting - Determines whether the validation should allow the new option and previous option
  * to be identical. Defaults to `false`.
- * @returns {string|undefined} - undefined or an empty string if the validation passes. Otherwise, returns a string
+ * @returns {string} - undefined or an empty string if the validation passes. Otherwise, returns a string
  * message informing the player of the requirements that are not met.
  */
-declare function VibratorModeValidate(data: VibratingItemData, C: Character, item: Item, newOption: VibratingItemOption, previousOption: VibratingItemOption, permitExisting?: boolean): string | undefined;
+declare function VibratorModeValidate(data: VibratingItemData, C: Character, item: Item, newOption: VibratingItemOption, previousOption: VibratingItemOption, permitExisting?: boolean): string;
 /**
  * Publish a vibrator action and exit the dialog of applicable
  * @param {VibratingItemData} data

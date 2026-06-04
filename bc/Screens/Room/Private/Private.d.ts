@@ -345,9 +345,10 @@ declare function PrivateIsFromPandoraNeutral(): boolean;
 declare function PrivateIsFromPandoraPositive(): boolean;
 /**
  * Checks if the private character has a specific title
+ * @param {string} Title
  * @returns {boolean} - TRUE if the character has the title in the parameter
  */
-declare function PrivateTitleIs(Title: any): boolean;
+declare function PrivateTitleIs(Title: string): boolean;
 /**
  * Returns TRUE if it's the player birthday of at least 1 year (based on same month and day, different year)
  * @returns {boolean} - TRUE if it's the birthday
@@ -515,6 +516,7 @@ declare function PrivateAddCharacter<T extends ModuleType>(Template: NPCCharacte
 /**
  * Gets the index of a given private room character.
  * @returns {number} - Index of the NPC inside the private characters array.
+ * @deprecated
  */
 declare function PrivateGetCurrentID(): number;
 /**
@@ -708,9 +710,10 @@ declare function PrivateSubTurnTablesStart(): void;
 declare function PrivateSubTurnTablesDone(): void;
 /**
  * When the player triggers a cheat on a NPC
+ * @param {"TraitDominant" | "TraitSubmissive"} Type
  * @returns {void} - Nothing.
  */
-declare function PrivateNPCCheat(Type: any): void;
+declare function PrivateNPCCheat(Type: "TraitDominant" | "TraitSubmissive"): void;
 /**
  * Get a bed from the NPC vendor
  * @param {"White" | "Black" | "Pink"} Type - The bed type (White or Black for now)
@@ -781,18 +784,18 @@ declare function PrivateEndClubCardVictoryMode(): void;
 declare function PrivateClubCardDefeatActivity(): void;
 /**
  * The consequence activity to do
- * @param {string} Act - The activity to do
- * @param {string} LoveFactor - The love to change
+ * @param {"Cage" | "Bound" | "BoundPet" | "Shibari" | "ForceNaked" | "Chastity" | "Orgasm" | "Tickle" | "Spank"} Act - The activity to do
+ * @param {number} [LoveFactor] - The love to change
  * @returns {void} - Nothing.
  */
-declare function PrivateClubCardDoConsequence(Act: string, LoveFactor: string): void;
+declare function PrivateClubCardDoConsequence(Act: "Cage" | "Bound" | "BoundPet" | "Shibari" | "ForceNaked" | "Chastity" | "Orgasm" | "Tickle" | "Spank", LoveFactor?: number): void;
 /**
  * Do the spanking club card consequence on the player
  * @param {ExpressionName} Eyes - The eye experssion to apply
- * @param {string} Strip - Underwear, Naked or NULL to strip the player or not
+ * @param {"Underwear" | "Naked"} [Strip] - Underwear, Naked or NULL to strip the player or not
  * @returns {void} - Nothing.
  */
-declare function PrivateClubCardKinkyConsequence(Eyes: ExpressionName, Strip: string): void;
+declare function PrivateClubCardKinkyConsequence(Eyes: ExpressionName, Strip?: "Underwear" | "Naked"): void;
 /**
  * Checks if the player owns a private room, there's a spot left and they're not locked out of it.
  */
@@ -836,10 +839,10 @@ declare function PrivateStartOwnerHallActivity(): void;
 declare function PrivateOwnerHallReturnToPrivate(): void;
 /**
  * Owner in Main Hall - Restrains the player with a factor
- * @param {"FEW"|"LOT"|"ALL"} BondageType - The type of bondage to apply
+ * @param {"FEW"|"LOT"|"ALL"} [BondageType] - The type of bondage to apply
  * @returns {void} - Nothing.
  */
-declare function PrivateOwnerHallBondage(BondageType: "FEW" | "LOT" | "ALL"): void;
+declare function PrivateOwnerHallBondage(BondageType?: "FEW" | "LOT" | "ALL"): void;
 /**
  * Owner in Main Hall - Strips the player
  * @returns {void} - Nothing.
@@ -869,8 +872,8 @@ declare function PrivateOwnerHallParadeEnd(Action: string): void;
  */
 declare function PrivateCharacterIsInRoom(name: string): boolean;
 declare var PrivateBackground: string;
-/** @type {null | NPCCharacter} */
-declare var PrivateVendor: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PrivateVendor: NPCCharacter;
 /** @type {NPCCharacter[]} */
 declare var PrivateCharacter: NPCCharacter[];
 declare var PrivateCharacterOffset: number;
@@ -883,19 +886,24 @@ declare var PrivateActivityAffectLove: boolean;
 declare var PrivateActivityList: string[];
 /** @type {null | NPCCharacter} */
 declare var PrivateActivityTarget: null | NPCCharacter;
-declare var PrivatePunishment: string;
-declare var PrivatePunishmentList: string[];
-/** @type {null | NPCCharacter} */
-declare var PrivateCharacterNewClothes: null | NPCCharacter;
+/** @type {PrivatePunishmentType | null} */
+declare var PrivatePunishment: PrivatePunishmentType | null;
+/** @type {PrivatePunishmentType[]} */
+declare var PrivatePunishmentList: PrivatePunishmentType[];
 /** @type {NPCTraitType | null} */
 declare var PrivateSlaveImproveType: NPCTraitType | null;
 declare var PrivateNextLoveYou: number;
-declare var PrivateLoverActivity: string;
-declare var PrivateLoverActivityList: string[];
+/** @type {PrivateActivityType | null} */
+declare var PrivateLoverActivity: PrivateActivityType | null;
+/** @type {PrivateActivityType[]} */
+declare var PrivateLoverActivityList: PrivateActivityType[];
 declare var PrivateBeltList: string[];
 declare var PrivateEntryEvent: boolean;
 declare var PrivateClubCardVictoryMode: boolean;
 declare var PrivateClubCardDefeatConsequence: string[];
-declare var PrivateGiftRegular: null;
-declare var PrivateGiftRestraint: null;
+/** @type {Asset | null} */
+declare var PrivateGiftRegular: Asset | null;
+/** @type {Asset | null} */
+declare var PrivateGiftRestraint: Asset | null;
 declare var PrivateBaseDecay: number;
+declare const PrivateCollegeNPCNames: readonly ["Amanda", "Sarah", "Jennifer", "Sidney"];

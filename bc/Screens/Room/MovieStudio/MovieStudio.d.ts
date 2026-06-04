@@ -68,18 +68,19 @@ declare function MovieStudioClick(): void;
 declare function MovieStudioPlayerDressBack(): void;
 /**
  * When the player needs to change clothes for a role in the movie
- * @param {string} Cloth - The clothes to wear
+ * @param {"Journalist" | "Mistress" | "Maid" | "MaidSkimpy" | "Random" | "HouseVendor"} Cloth - The clothes to wear
+ * @param {Character} [C]
  * @returns {void} - Nothing
  */
-declare function MovieStudioChange(Cloth: string, C: any): void;
+declare function MovieStudioChange(Cloth: "Journalist" | "Mistress" | "Maid" | "MaidSkimpy" | "Random" | "HouseVendor", C?: Character): void;
 /**
  * When the movie scene progresses, we assign the new values
- * @param {string} Movie - The movie type
- * @param {string} Scene - The scene in the movie
- * @param {string} Role - Optional - The role the player is taking
+ * @param {"Interview" | "OpenHouse"} Movie - The movie type
+ * @param {1 | 2 | 3} Scene - The scene in the movie
+ * @param {"" | "Maid" | "Mistress" | "Wife" | "Journalist"} Role - Optional - The role the player is taking
  * @returns {void} - Nothing
  */
-declare function MovieStudioProgress(Movie: string, Scene: string, Role: string): void;
+declare function MovieStudioProgress(Movie: "Interview" | "OpenHouse", Scene: 1 | 2 | 3, Role: "" | "Maid" | "Mistress" | "Wife" | "Journalist"): void;
 /**
  * When an activity is done
  * @param {string} Activity - The activity name
@@ -88,29 +89,29 @@ declare function MovieStudioProgress(Movie: string, Scene: string, Role: string)
 declare function MovieStudioDoActivity(Activity: string): void;
 /**
  * Changes a parameter for an actor
- * @param {string} Name - The name of the actor
- * @param {string} Param - The parameter to change
- * @param {string} Value - The value to alter
+ * @param {"Actor1" | "Actor2"} Name - The name of the actor
+ * @param {"Friendship"} Param - The parameter to change
+ * @param {number} Value - The value to alter
  * @returns {void} - Nothing
  */
-declare function MovieStudioChangeParameter(Name: string, Param: string, Value: string): void;
+declare function MovieStudioChangeParameter(Name: "Actor1" | "Actor2", Param: "Friendship", Value: number): void;
 /**
  * Add a parameter for an actor
- * @param {string} Name - The name of the actor
- * @param {string} Param - The parameter to change
- * @param {string} Value - The value to alter
+ * @param {"Actor1" | "Actor2"} Name - The name of the actor
+ * @param {"Domination" | "Affection"} Param - The parameter to change
+ * @param {number} Value - The value to alter
  * @returns {void} - Nothing
  */
-declare function MovieStudioAlterParameter(Name: string, Param: string, Value: string): void;
+declare function MovieStudioAlterParameter(Name: "Actor1" | "Actor2", Param: "Domination" | "Affection", Value: number): void;
 /**
  * Returns TRUE if a parameter value for an actor is between a from and a to value
- * @param {string} Name - The name of the actor
- * @param {string} Param - The parameter to get
- * @param {string} FromValue - From that value
- * @param {string} ToValue - To that value
+ * @param {"Actor1" | "Actor2"} Name - The name of the actor
+ * @param {"Domination" | "Affection"} Param - The parameter to get
+ * @param {number} FromValue - From that value
+ * @param {number} ToValue - To that value
  * @returns {Boolean} - TRUE if between
  */
-declare function MovieStudioParameterValueBetween(Name: string, Param: string, FromValue: string, ToValue: string): boolean;
+declare function MovieStudioParameterValueBetween(Name: "Actor1" | "Actor2", Param: "Domination" | "Affection", FromValue: number, ToValue: number): boolean;
 /**
  * Tests if an activity can be done
  * @param {string} Activity - The activity to test
@@ -155,9 +156,11 @@ declare function MovieStudioClubCardEnd(): Promise<void>;
 declare var MovieStudioBackground: string;
 /** @type {null | NPCCharacter} */
 declare var MovieStudioDirector: null | NPCCharacter;
-declare var MovieStudioCurrentMovie: string;
-declare var MovieStudioCurrentScene: string;
-declare var MovieStudioCurrentRole: string;
+/** @type {"" | "OpenHouse" | "Interview"} */
+declare var MovieStudioCurrentMovie: "" | "OpenHouse" | "Interview";
+declare var MovieStudioCurrentScene: number;
+/** @type {"" | "Journalist" | "Maid" | "Mistress" | "Wife"} */
+declare var MovieStudioCurrentRole: "" | "Journalist" | "Maid" | "Mistress" | "Wife";
 /** @type {null | NPCCharacter} */
 declare var MovieStudioActor1: null | NPCCharacter;
 /** @type {null | NPCCharacter} */
@@ -171,4 +174,5 @@ declare var MovieStudioActivity: string[];
 declare var MovieStudioMoney: number;
 /** @type {null | Item[]} */
 declare var MovieStudioOriginalClothes: null | Item[];
-declare var MovieStudioDailyMovie: string;
+/** @type {"" | "Interview" | "OpenHouse"} */
+declare var MovieStudioDailyMovie: "" | "Interview" | "OpenHouse";

@@ -74,11 +74,11 @@ declare function AsylumEntranceIsWearingPatientClothes(): boolean;
 declare function AsylumEntranceIsWearingNurseClothes(): boolean;
 /**
  * Commits a player to the asylum for a given time and changes the players reputation
- * @param {string} Duration - The time (in micro seconds) the player gets committed for
- * @param {string} ReputationChange - The amount the player's reputation is going to change
+ * @param {number} Duration - The time (in micro seconds) the player gets committed for
+ * @param {number} ReputationChange - The amount the player's reputation is going to change
  * @returns {void} - Nothing
  */
-declare function AsylumEntranceCommitPatient(Duration: string, ReputationChange: string): void;
+declare function AsylumEntranceCommitPatient(Duration: number, ReputationChange: number): void;
 /**
  * The player starts working as a nurse for the Asylum. Dresses the player and sets her reputation to 1
  * @returns {void} - Nothing
@@ -140,11 +140,11 @@ declare function AsylumEntranceKidnapNurseFight(): void;
 declare function AsylumEntranceKidnapNurseFightOutro(Surrender: boolean): void;
 /**
  * Handles the bribe attempt of the kidnapping nurse
- * @param {string} BribeAmount - The offered bribe amount
- * @param {string} BribeOdds - The odds of a succesful bribe attempt
+ * @param {number} BribeAmount - The offered bribe amount
+ * @param {number} BribeOdds - The odds of a succesful bribe attempt
  * @returns {void} - Nothing
  */
-declare function AsylumEntranceKidnapNurseBribe(BribeAmount: string, BribeOdds: string): void;
+declare function AsylumEntranceKidnapNurseBribe(BribeAmount: number, BribeOdds: number): void;
 /**
  * When the player transfers the kidnap nurse to her room
  * @returns {void} - Nothing

@@ -50,8 +50,8 @@ declare function MagicSpellEffect(C: Character, Spell: number): void;
 declare function MagicBattleSpellEnd(): void;
 declare function MagicBattleKeyDown(event: KeyboardEvent): boolean;
 declare var MagicBattleBackground: string;
-/** @type {null | Character} */
-declare var MagicBattleOpponent: null | Character;
+/** @type {Character} */
+declare var MagicBattleOpponent: Character;
 declare var MagicBattleReturnFunction: string;
 declare var MagicBattleDifficulty: number;
 declare var MagicBattleVictory: boolean;

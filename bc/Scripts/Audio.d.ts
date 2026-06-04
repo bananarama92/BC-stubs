@@ -8,11 +8,13 @@ declare function AudioPlayInstantSound(src: string, volume?: number): void;
 /**
  * Begins to play a sound when applying/removing an item
  * @param {string} SourceFile - Source of the audio file to play
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function AudioDialogStart(SourceFile: string): void;
 /**
  * Stops playing the sound when done applying/removing an item
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function AudioDialogStop(): void;
@@ -104,6 +106,7 @@ declare function AudioBackgroundMusicStop(): void;
  * @returns {void} - Nothing
  */
 declare function AudioBackgroundMusicPlay(Music: string, Location?: number | undefined): void;
+/** @deprecated */
 declare var AudioDialog: HTMLAudioElement;
 /** @type {HTMLAudioElement & { _playState?: { location?: number } }} */
 declare var AudioBackgroundMusic: HTMLAudioElement & {

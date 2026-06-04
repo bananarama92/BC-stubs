@@ -57,10 +57,10 @@ declare function IntroductionRun(): void;
 declare function IntroductionClick(): void;
 /**
  * Change the opinion the maid has on the player, it will affect the global player Domme/sub reputation at the end of the first training
- * @param {string} Bonus - Number representing the bonus to the current opinion the maid has.
+ * @param {number} Bonus - Number representing the bonus to the current opinion the maid has.
  * @returns {void} - Nothing
  */
-declare function IntroductionChangeMaidOpinion(Bonus: string): void;
+declare function IntroductionChangeMaidOpinion(Bonus: number): void;
 /**
  * Gives focus on certain body parts with its zone
  * @param {AssetGroupItemName} NewZone - Zone to set as the new focus group
