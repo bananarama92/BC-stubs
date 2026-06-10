@@ -1,4 +1,4 @@
-declare function GameStart(): void;
+declare function GameStart(): Promise<void>;
 declare function GameHandleError(): void;
 /**
  * Periodically called in the background with low frequency, so the game doesn't freeze, even if the user switches to a different tab.
