@@ -2121,7 +2121,7 @@ interface Character {
 	MapData?: ChatRoomMapData;
 	RunScripts?: boolean;
 	HasScriptedAssets?: boolean;
-	Cage?: boolean;
+	Cage?: true;
 	Difficulty?: { Level: number }; // technically never as it is Online-only
 	ArousalZoom?: boolean;
 	FixedImage?: string;

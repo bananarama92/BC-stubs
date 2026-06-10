@@ -5,6 +5,16 @@
  */
 declare function TextGet(TextTag: string): string;
 /**
+ * Finds the text value linked to the tag in whichever first of the passed caches happens to contain it
+ * @param {string} key
+ * @param {readonly (undefined | TextCache)[]} caches
+ * @param {null | { logMissing?: boolean }} options
+ * @returns {string}
+ */
+declare function TextQueryMultiple(key: string, caches: readonly (undefined | TextCache)[], options?: null | {
+    logMissing?: boolean;
+}): string;
+/**
  * Finds the translated string for key in the specified text cache
  * @param {string} filePath
  * @param {string} key
@@ -62,10 +72,9 @@ declare const InterfaceStringsPath: "Screens/Interface.csv";
 declare class TextCache {
     /**
      * A cache with missing keys as diagnosed by {@link TextCache.get}. Used for ensuring that each unique cache/key pair only outputs to the console once.
-     * private
      * @type {Set<string>}
      */
-    static _textMissingCache: Set<string>;
+    static textMissingCache: Set<string>;
     /**
      * Creates a new TextCache from the provided CSV file path asynchronously,
      * promising its return after the cache has been build.
@@ -81,8 +90,8 @@ declare class TextCache {
     path: string;
     /** @type {ServerChatRoomLanguage | "TW"} */
     language: ServerChatRoomLanguage | "TW";
-    /** @type {Record<string, string>} */
-    cache: Record<string, string>;
+    /** @type {Partial<Record<string, string>>} */
+    cache: Partial<Record<string, string>>;
     /** @type {((cache?: TextCache) => void)[]} */
     rebuildListeners: ((cache?: TextCache) => void)[];
     /**
@@ -112,6 +121,12 @@ declare class TextCache {
      * @returns {string} - The text value corresponding to the provided key, translated into the current language, if available
      */
     get(key: string): string;
+    /**
+     * See {@link TextCache.get}. Looks up a key within this text cache, returning `undefined` if it cannot be found.
+     * @param {string} key - The text key to lookup
+     * @returns {string | undefined} - The text value corresponding to the provided key, translated into the current language, if available and `undefined` otherwise
+     */
+    getOptional(key: string): string | undefined;
     /**
      * Adds a callback function as a rebuild listener. Rebuild listeners will
      * be called whenever the cache has completed a rebuild (either after
