@@ -223,7 +223,13 @@
             "LaceBraNightgown": 103,
             "LongQipaoDress": 104,
             "WhiteDress": 105,
-            "Xmas2025": 106
+            "Xmas2025": 106,
+            "CropTopShirt": 107,
+            "FeatherLingerie": 108,
+            "GhostCloak": 109,
+            "MaidApron": 110,
+            "MilitaryFatigue": 111,
+            "Transparentraincoat": 112
         }
     },
     "ClothAccessory": {
@@ -346,7 +352,9 @@
             "SlitColumnSkirt": 64,
             "WoolenHighWaistSkirt": 65,
             "SuspenderPants": 66,
-            "SideCutoutYogaPants": 67
+            "SideCutoutYogaPants": 67,
+            "DenimShorts": 68,
+            "MilitaryPants": 69
         }
     },
     "Corset": {
@@ -783,7 +791,9 @@
             "HairBack81": 111,
             "HairBack82": 112,
             "HairBack83": 113,
-            "HairBack84": 114
+            "HairBack84": 114,
+            "HairBack61b": 115,
+            "HairBack85": 116
         }
     },
     "HairFront": {
@@ -898,7 +908,12 @@
             "HairFront71": 106,
             "HairFront72": 107,
             "HairFront73": 108,
-            "HairFront74": 109
+            "HairFront74": 109,
+            "HairFront56b": 110,
+            "HairFront64b": 111,
+            "HairFront75": 112,
+            "HairFront76a": 113,
+            "HairFront76b": 114
         }
     },
     "Hands": {
@@ -957,7 +972,9 @@
             "CheapHelmet": 44,
             "FlatCap": 45,
             "Gat": 46,
-            "JesterHat": 47
+            "JesterHat": 47,
+            "GIBeret": 48,
+            "NPCBalloon": 49
         }
     },
     "Head": {
@@ -1259,7 +1276,9 @@
             "Enema": 71,
             "Potty": 72,
             "GiftBox": 73,
-            "XFrame": 74
+            "XFrame": 74,
+            "InflatableRestraintBag": 75,
+            "LongBag": 76
         }
     },
     "ItemEars": {
@@ -1466,7 +1485,8 @@
             "RubberMask": 34,
             "Kigu2Hood": 35,
             "AsylumBlindfold": 36,
-            "HypnoticVisor": 37
+            "HypnoticVisor": 37,
+            "CybertechMask": 38
         }
     },
     "ItemHood": {
@@ -1531,7 +1551,8 @@
             "Kigu2Hood": 56,
             "CreepyIronMask": 57,
             "HalloIII": 58,
-            "TransparentLatexHood": 59
+            "TransparentLatexHood": 59,
+            "CybertechMask": 60
         }
     },
     "ItemLegs": {
@@ -1718,7 +1739,8 @@
             "RoseBallGag": 99,
             "BishopGag": 100,
             "PumpkinHarnessGag": 101,
-            "BallGag2": 102
+            "BallGag2": 102,
+            "ShapedMouthCage": 103
         }
     },
     "ItemMouth2": {
@@ -2075,7 +2097,8 @@
             "NippleChastityPiercing2": 8,
             "RoundPiercing": 9,
             "StraightPiercing": 10,
-            "VibeHeartPiercings": 11
+            "VibeHeartPiercings": 11,
+            "PiercingNameBadge": 12
         }
     },
     "ItemNose": {
@@ -2175,7 +2198,8 @@
             "ShinyLeotardLock": 31,
             "BarrelCorset": 32,
             "ExtremeCorset": 33,
-            "SteelBelt": 34
+            "SteelBelt": 34,
+            "FullBodyStraps": 35
         }
     },
     "ItemTorso2": {
@@ -2275,7 +2299,8 @@
             "UrethralSound": 10,
             "VibeEggGlans": 11,
             "VibeHeartClitPiercing": 12,
-            "CockRingLeash": 13
+            "CockRingLeash": 13,
+            "ModularVulvaPiercings": 14
         }
     },
     "Jewelry": {
@@ -2342,7 +2367,8 @@
             "NecromancerHelmet": 33,
             "Kigu2Hood": 34,
             "Splatters": 35,
-            "KirugumiMask": 36
+            "KirugumiMask": 36,
+            "CybertechMask": 37
         }
     },
     "Mouth": {
@@ -2382,7 +2408,8 @@
             "BeadNecklace": 23,
             "EldritchNecklace": 24,
             "PlantNecklace": 25,
-            "NecklaceRoseBallGag": 26
+            "NecklaceRoseBallGag": 26,
+            "PearlNecklace2": 27
         }
     },
     "Nipples": {
@@ -2663,7 +2690,9 @@
             "ShinyLeotard": 12,
             "BartenderVest": 13,
             "BartenderVestM": 14,
-            "GlossyBodystocking": 15
+            "GlossyBodystocking": 15,
+            "Plugsuit": 16,
+            "TransparentBunnyGirl": 17
         }
     },
     "SuitLower": {
@@ -2746,7 +2775,9 @@
             "SuccubusWings": 11,
             "DragonWings": 12,
             "SeraphWings": 13,
-            "Wing1": 14
+            "Wing1": 14,
+            "BotEnergyWings": 15,
+            "Spider": 16
         }
     },
     "AnkletLeft": {

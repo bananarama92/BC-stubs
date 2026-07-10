@@ -68,9 +68,8 @@ declare function ArcadeClick(): void;
 declare function ArcadeKinkyDungeonStart(PlayerLevel: number): void;
 /**
  * Ends the therapy mini-game as a nurse, plays with reputation and money
- * @returns {void} - Nothing
  */
-declare function ArcadeKinkyDungeonEnd(): void;
+declare function ArcadeKinkyDungeonEnd(): Promise<void>;
 declare function ArcadeKinkyDungeonStartLoad(): Promise<void>;
 /**
  * @returns {boolean} - False if the dungeon is not ready yet, true otherwise

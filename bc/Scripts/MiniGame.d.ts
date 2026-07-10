@@ -3,10 +3,10 @@ declare function MiniGameLoad(): Promise<void>;
  * Starts a given mini game at a set difficulty and keeps
  * @param {ModuleScreens["MiniGame"]} GameType - Name of the mini-game to launch
  * @param {number|string} Difficulty - Difficulty Ration for the mini-game
- * @param {string} ReturnFunction - Callback name to execute once the mini-game is over
+ * @param {(() => void)} ReturnFunction - Callback name to execute once the mini-game is over
  * @returns {Promise<void>} - Nothing
  */
-declare function MiniGameStart(GameType: ModuleScreens["MiniGame"], Difficulty: number | string, ReturnFunction: string): Promise<void>;
+declare function MiniGameStart(GameType: ModuleScreens["MiniGame"], Difficulty: number | string, ReturnFunction: (() => void)): Promise<void>;
 declare function MiniGameEnd(): void;
 /**
  * @returns {boolean} - TRUE if the game has started, but not yet ended.
@@ -27,7 +27,8 @@ declare var MiniGameDifficulty: number;
 declare var MiniGameDifficultyMode: string;
 declare var MiniGameDifficultyRatio: number;
 declare var MiniGameAdvancedPayment: number;
-declare var MiniGameReturnFunction: string;
+/** @type {string | (() => void) | null} */
+declare var MiniGameReturnFunction: string | (() => void) | null;
 declare var MiniGameProgress: number;
 declare var MiniGameTimer: number;
 declare var MiniGameStarted: boolean;

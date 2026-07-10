@@ -9,6 +9,14 @@ declare function ClubCardIsOnline(): boolean;
  */
 declare function ClubCardIsPlaying(): boolean;
 /**
+ * Start a ClubCard game against this opponent
+ * @param {Character} opponent
+ * @param {number[]} deck
+ * @param {() => void} completion
+ * @returns
+ */
+declare function ClubCardStart(opponent: Character, deck: number[], completion: () => void): Promise<void>;
+/**
  * In case one of the players disconnects from the server, the other player sends a message about it to the game chat.
  * @param {number} disconnectedMemberNumber
  */
@@ -422,6 +430,12 @@ declare function ClubCardAlvinCondition(CCPlayer: ClubCardPlayer): void;
  */
 declare function ClubCardTifaSelection(CCPlayer: ClubCardPlayer, Selection: string): void;
 /**
+ * Handles Clares active effect
+ * @param {ClubCardPlayer} CCPlayer
+ * @returns {void} - Nothing
+ */
+declare function ClubCardClareSelection(CCPlayer: ClubCardPlayer, Card: any): void;
+/**
  * Removes cards from a player hand
  * @param {ClubCardPlayer} CCPlayer - The club card player that discards
  * @param {number} Amount - The amount of cards to discard
@@ -433,9 +447,9 @@ declare function ClubCardPlayerDiscardCard(CCPlayer: ClubCardPlayer, Amount: num
  * @param {ClubCardPlayer} CCPlayer - The club card player that discards
  * @param {number} Pos - The location of the card to discard
  * @param {string} DiscardFrom - The pile to discard from
- * @returns {void} - Nothing
+ * @returns {boolean} - TRUE if the card was discarded
  */
-declare function ClubCardDiscardCard(CCPlayer: ClubCardPlayer, Pos: number, DiscardFrom?: string): void;
+declare function ClubCardDiscardCard(CCPlayer: ClubCardPlayer, Pos: number, DiscardFrom?: string): boolean;
 /**
  * Builds a deck array of object from a deck array of numbers
  * @param {readonly number[]} InDeck - The array of number deck
@@ -447,6 +461,7 @@ declare function ClubCardLoadDeck(InDeck: readonly number[]): ClubCard[];
  * @returns {number} - The array index position
  */
 declare function ClubCardGetPlayerIndex(): number;
+declare function ClubCardSelectDefaultDeck(): void;
 /**
  * Builds a deck array of object from a deck array of numbers
  * @param {number} DeckNum - The array of number deck
@@ -503,12 +518,6 @@ declare function ClubCardEndGameSyncAndMessage(CCPlayer: any): void;
  * @returns {Number} - The number of cards
  */
 declare function ClubCardTurnPlayableCardCount(CCPlayer: ClubCardPlayer): number;
-/**
- * Returns the number of cards that will be drawn when the player choses to draw instead of playing
- * @param {ClubCardPlayer} CCPlayer - The club card player
- * @returns {Number} - The number of cards to draw
- */
-declare function ClubCardDrawCardCount(CCPlayer: ClubCardPlayer): number;
 /**
  * Returns the extra time in turns for event over time
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -876,6 +885,8 @@ declare var ClubCardLiabilityLimit: number[];
 declare var ClubCardPlayer: ClubCardPlayer[];
 declare var ClubCardOnlinePlayerMemberNumber1: number;
 declare var ClubCardOnlinePlayerMemberNumber2: number;
+declare var ClubCardDefaultSelection: string;
+declare var ClubCardUsePrecon: boolean;
 /**
  * Counter to ensure unique ID incrementation.
  * It is used globally to prevent ID duplication.

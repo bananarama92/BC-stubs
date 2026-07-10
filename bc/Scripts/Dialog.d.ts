@@ -266,9 +266,8 @@ declare function DialogCanWatchKinkyDungeon(): boolean;
 declare function DialogStartKinkyDungeon(): void;
 /**
  * Return to previous room
- * @returns {void}
  */
-declare function DialogEndKinkyDungeon(): void;
+declare function DialogEndKinkyDungeon(): Promise<void>;
 /**
  * Checks whether the player has a key for the item
  * @param {Character} C - The character on whom the item is equipped
@@ -661,16 +660,16 @@ declare function DialogChangeItemColor(C: Character, Color: BCColor): void;
 declare function DialogGetMenuButtonImage(ButtonName: DialogMenuButtonType, FocusItem: Item | null): string;
 /**
  * Returns the background color of a dialog menu button based on the button name.
- * @param {DialogMenuButtonType} ButtonName - The menu button name
+ * @param {DialogMenuButtonType | AppearanceMenuButtonType} ButtonName - The menu button name
  * @returns {string} - The background color that the menu button should use
  */
-declare function DialogGetMenuButtonColor(ButtonName: DialogMenuButtonType): string;
+declare function DialogGetMenuButtonColor(ButtonName: DialogMenuButtonType | AppearanceMenuButtonType): string;
 /**
  * Determines whether or not a given dialog menu button should be disabled based on the button name.
- * @param {DialogMenuButtonType} ButtonName - The menu button name
+ * @param {DialogMenuButtonType | AppearanceMenuButtonType} ButtonName - The menu button name
  * @returns {boolean} - TRUE if the menu button should be disabled, FALSE otherwise
  */
-declare function DialogIsMenuButtonDisabled(ButtonName: DialogMenuButtonType): boolean;
+declare function DialogIsMenuButtonDisabled(ButtonName: DialogMenuButtonType | AppearanceMenuButtonType): boolean;
 /**
  * Searches in the dialog for a specific stage keyword and returns that dialog option if we find it, error otherwise
  * @param {string} KeyWord - The key word to search for

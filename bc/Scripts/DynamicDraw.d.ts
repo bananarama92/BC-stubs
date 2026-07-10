@@ -8,6 +8,20 @@
  */
 declare function DynamicDrawLoadFont(fontFamily: string): void;
 /**
+ * Returns the width "weight" of a single character in the given font, relative to the font's widest pre-measured (ASCII)
+ * character. Characters that weren't part of the pre-measured ASCII set - most importantly CJK and other non-Latin glyphs,
+ * which are typically wider than ASCII characters - are measured on demand and cached, so that arc text spaces them
+ * correctly instead of assuming a fixed width.
+ * @param {{ width: number, weights: Record<string, number> }} weightMap - The font's measurement map
+ * @param {string} fontFamily - The font family the text is being drawn in
+ * @param {string} char - The single character to measure
+ * @returns {number} - The character's width relative to the font's widest pre-measured character
+ */
+declare function DynamicDrawGetCharWeight(weightMap: {
+    width: number;
+    weights: Record<string, number>;
+}, fontFamily: string, char: string): number;
+/**
  * Draws the given text to the provided canvas rendering context at the given positions. Text is drawn horizontally, respecting the
  * configuration in the provided options (if any).
  * @param {string} text - The text to draw
@@ -127,21 +141,32 @@ declare function DynamicDrawApplyOptions(ctx: CanvasRenderingContext2D, { fontSi
  * @see {@link DynamicDrawTextArc} - for drawing text in a circular arc.
  */
 /**
- * A common regex that can be used to check whether a given string is permitted for dynamic drawing (the character limitations are primarily
- * to restrict the use of control characters and unicode characters that would cause odd behavior).
+ * A common regex that can be used to check whether a given string is permitted for dynamic drawing.
+ *
+ * This is an *allowlist* (not a blocklist): it accepts Unicode letters (`\p{L}`) and numbers (`\p{N}`) so that scripts such
+ * as Chinese, Japanese, Korean, Cyrillic, Greek and accented (precomposed) Latin can be drawn, plus the legacy ASCII
+ * punctuation set (`_ ~!$#%*+` and the space). Because it is an allowlist, every other Unicode category is rejected by
+ * construction - in particular control characters (`\p{Cc}`), format characters (`\p{Cf}`, which covers bidirectional
+ * overrides such as U+202E and zero-width/invisible characters), private-use and surrogate code points, separators other
+ * than the literal space, symbols/emoji, and combining marks (`\p{M}`, the source of "Zalgo" rendering overflow). Keeping
+ * these out is what prevents hostile or malformed text - which reaches us from other players via the server - from causing
+ * odd rendering or visual spoofing when drawn onto a canvas.
  * @type {RegExp}
  */
 declare const DynamicDrawTextRegex: RegExp;
 /**
- * A regex pattern that can be attached to HTML input elements to check for validity - matches the DynamicDrawTextRegex
+ * A regex pattern that can be attached to HTML input elements to check for validity - matches the {@link DynamicDrawTextRegex}.
+ * Note that this only drives the browser's native form-validity UI; the authoritative check is always {@link DynamicDrawTextRegex}.
  * @type {string}
  */
 declare const DynamicDrawTextInputPattern: string;
 /**
- * An array of valid printable characters that are permitted for dynamic drawing (used internally for text measurement purposes)
+ * An array of ASCII printable characters whose widths are pre-measured for each font (used internally for arc text
+ * measurement). Non-ASCII characters (e.g. CJK glyphs) are not listed here; their widths are measured on demand and cached
+ * by {@link DynamicDrawGetCharWeight}.
  * @type {string[]}
  */
-declare const DynamicDrawValidTextCharacters: string[];
+declare const DynamicDrawMeasuredCharacters: string[];
 /**
  * A padding multiplier for text when drawn in an arc. The extra padding helps ensure that the bottoms of characters don't collide
  * @type {number}
@@ -159,30 +184,19 @@ declare const DynamicDrawFontMeasurements: Record<string, {
     width: number;
     weights: Record<string, number>;
 }>;
-/**
- * An enum encapsulating the directions that circular text can be drawn in (clockwise and anticlockwise)
- */
-type DynamicDrawTextDirection = number;
+type DynamicDrawTextDirection = 1 | -1;
 declare namespace DynamicDrawTextDirection {
-    let CLOCKWISE: number;
-    let ANTICLOCKWISE: number;
+    let CLOCKWISE: 1;
+    let ANTICLOCKWISE: -1;
 }
-/**
- * An enum encapsulating the possible curve directions of circular text. Can be "SMILEY" (bottom of text on the outer arc) or "FROWNY"
- * (bottom of text on the inner arc).
- */
-type DynamicDrawTextCurve = number;
+type DynamicDrawTextCurve = 1 | -1;
 declare namespace DynamicDrawTextCurve {
-    let SMILEY: number;
-    let FROWNY: number;
+    let SMILEY: -1;
+    let FROWNY: 1;
 }
-/**
- * An enum encapsulating the available drawing effects that can be applied to dynamic text.
- * @type {{ BURN: "burn" }}
- */
-declare const DynamicDrawTextEffect: {
-    BURN: "burn";
-};
+declare namespace DynamicDrawTextEffect {
+    let BURN: "burn";
+}
 /**
  * The default options that are used for dynamic text drawing.
  * @type {DynamicDrawOptions}
@@ -271,7 +285,7 @@ type DynamicDrawOptions = {
      * - The direction the text should be drawn in along the circular arc. Only applicable to
      * the {@link DynamicDrawTextArc} function. Defaults to {@link DynamicDrawTextDirection.CLOCKWISE};
      */
-    direction?: number | undefined;
+    direction?: DynamicDrawTextDirection | undefined;
     /**
      * - The direction of the curve of the text. This determines whether the center of the text
      * curves upwards ({@link DynamicDrawTextCurve.SMILEY}) or downwards ({@link DynamicDrawTextCurve.FROWNY}). Only applicable to the
@@ -279,7 +293,7 @@ type DynamicDrawOptions = {
      *
      * A drawing callback, used to add drawing effects to dynamic text.
      */
-    textCurve?: number | undefined;
+    textCurve?: DynamicDrawTextCurve | undefined;
 };
 /**
  * DynamicDraw.js

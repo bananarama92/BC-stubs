@@ -4,13 +4,7 @@
  */
 declare function DailyJobPlayerFullRestrain(): void;
 /**
- * @typedef {{
- *  "0": PlayerCharacter;
- *  "1": NPCCharacter;
- *  "2": NPCCharacter;
- *  "3": NPCCharacter;
- *  "4": NPCCharacter;
- * }} DailyJobPuppyNums
+ * @typedef {{ "0": PlayerCharacter, "1": NPCCharacter, "2": NPCCharacter, "3": NPCCharacter, "4": NPCCharacter }} DailyJobPuppyNums
  */
 /**
  * Loads a puppy girl and fully restrain her
@@ -72,9 +66,8 @@ declare function DailyJobKidnapFail(): void;
 declare function DailyJobPuppyGameStart(): void;
 /**
  * Triggered at the end of the puppy walker job fight mini-game
- * @returns {void} - Nothing
  */
-declare function DailyJobPuppyGameEnd(): void;
+declare function DailyJobPuppyGameEnd(): Promise<void>;
 /**
  * Triggered when a daily job ends, sends the player back to the main hall
  * @returns {void} - Nothing
@@ -97,9 +90,8 @@ declare function DailyJobDojoRestrainPlayer(): void;
 declare function DailyJobDojoGameStart(): void;
 /**
  * Triggered at the end of the dojo struggle job minigame
- * @returns {void} - Nothing
  */
-declare function DailyJobDojoGameEnd(): void;
+declare function DailyJobDojoGameEnd(): Promise<void>;
 declare var DailyJobBackground: string;
 /** @type {null | NPCCharacter} */
 declare var DailyJobOpponent: null | NPCCharacter;

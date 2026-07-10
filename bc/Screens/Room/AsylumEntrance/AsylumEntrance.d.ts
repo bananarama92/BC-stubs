@@ -243,9 +243,8 @@ declare function AsylumEntrancePayTenMinutes(): void;
 declare function AsylumEntranceClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {void} - Nothing
  */
-declare function AsylumEntranceClubCardEnd(): void;
+declare function AsylumEntranceClubCardEnd(): Promise<void>;
 declare var AsylumEntranceBackground: string;
 /** @type {null | NPCCharacter} */
 declare var AsylumEntranceNurse: null | NPCCharacter;

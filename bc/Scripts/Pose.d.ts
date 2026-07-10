@@ -64,7 +64,7 @@ declare const PoseAllKneeling: readonly ("Kneel" | "KneelingSpread")[];
  * A list with all standing {@link AssetPoseMap["BodyLower"]} pose names.
  * @satisfies {readonly AssetPoseMap["BodyLower"][]}
  */
-declare const PoseAllStanding: readonly ("BaseLower" | "LegsClosed" | "LegsOpen" | "Spread")[];
+declare const PoseAllStanding: readonly ("BaseLower" | "LegsClosed" | "Spread")[];
 declare namespace PoseToMapping {
     /**
      * Unflatten a pose name array, converting it into a record mapping pose categories to aforementioned pose names

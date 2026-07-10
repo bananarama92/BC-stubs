@@ -16,6 +16,7 @@ declare function ActivityDictionaryLoad(): void;
 /**
  * Translates the activity dictionary.
  * @param {string} CachePath - Path to the language cache.
+ * @deprecated
  */
 declare function ActivityTranslate(CachePath: string): void;
 /**
@@ -263,7 +264,10 @@ declare function ActivityFetishItemFactor(C: Character, Type: FetishName): numbe
  * @return {number} - The negative/positive number will have negative/positive impact on arousal
  */
 declare function ActivityFetishFactor(C: Character): number;
-/** @type {string[][]} */
+/**
+ * @type {string[][]}
+ * @deprecated
+ */
 declare var ActivityDictionary: string[][];
 declare var ActivityOrgasmGameButtonX: number;
 declare var ActivityOrgasmGameButtonY: number;
@@ -273,6 +277,9 @@ declare var ActivityOrgasmGameResistCount: number;
 declare var ActivityOrgasmGameTimer: number;
 declare var ActivityOrgasmResistLabel: string;
 declare var ActivityOrgasmRuined: boolean;
-/** @type { (() => void) | undefined } */
+/**
+ * @type { (() => void) | undefined }
+ * @deprecated
+ */
 declare let ActivityTranslateResolve: (() => void) | undefined;
 declare let ActivityDebug: boolean;

@@ -351,7 +351,7 @@ type DialogMenuMode = (
 );
 
 type DialogMenuButtonType = "Activity" |
-	"ColorCancel" | "ColorChange" | "ColorChangeDisabled" | "ColorChangeMulti" | "ColorChangeMultiDisabled" | "ColorDefault" | "ColorPickDisabled" | "ColorSelect" |
+	"ColorCancel" | "ColorChange" | "ColorDefault" | "ColorPickDisabled" | "ColorSelect" |
 	"Crafting" |
 	"NormalMode" | "PermissionMode" |
 	"Dismount" | "Escape" | "Remove" |
@@ -360,12 +360,17 @@ type DialogMenuButtonType = "Activity" |
 	"InspectLock" | "InspectLockDisabled" |
 	"Layering" |
 	"Lock" | "LockDisabled" | "LockMenu" |
-	"Swap" | "Next" | "Prev" | `PickLock${PickLockAvailability}` |
-	"Remote" | "RemoteDisabled" | `RemoteDisabledFor${VibratorRemoteAvailability}` |
-	"Unlock" | "Use" | "UseDisabled" | "Struggle" | "TightenLoosen" |
-	// Wardrobe buttons
-	"Wardrobe" | "WardrobeDisabled" | "Reset" | "WearRandom" | "Random" | "Copy" | "Paste" | "Naked" | "Accept" | "Cancel" | "Character"
+	`PickLock${PickLockAvailability}` |
+	"Remote" | "RemoteDisabled" | `RemoteDisabledFor${Exclude<VibratorRemoteAvailability, "Available" | "InvalidItem">}` |
+	"Unlock" | "Use" | "UseDisabled" | "Struggle" | "TightenLoosen"
 	;
+
+type AppearanceMenuButtonType = (
+	"Wardrobe" | "WardrobeDisabled" | "Reset" | "WearRandom" | "Random" | "Copy"
+	| "Paste" | "Naked" | "Accept" | "Cancel" | "Character" | "Next" | "Prev" | "Swap"
+	| "Use" | "UseDisabled" | "PermissionMode" | "ColorChange" | "ColorChangeDisabled"
+	| "ColorChangeMulti" | "ColorChangeMultiDisabled"
+);
 
 declare namespace ElementDOMScreen {
 	/** Options for customizing the {@link ElementDOMScreen.GetTemplate} output */
@@ -381,7 +386,7 @@ declare namespace ElementDOMScreen {
 		/** Whether an extra `aside.screen-aside-r` section should be added to the right of `.screen-main` */
 		rightContent?: readonly (Node | string | HTMLOptionsUnion)[];
 		/** Text content for within the heading (see `.screen-hgroup h1`) */
-		header?: string;
+		header?: string | Node | readonly (Node | string)[];
 		/**
 		 * Which section should be marked as `<main>` (if any).
 		 * Defaults to `center` if unspecified.
@@ -488,6 +493,7 @@ type DialogStruggleActionType = "ActionUse" | "ActionSwap" | "ActionRemove" | "A
 type CharacterType = "player" | "online" | "npc" | "simple";
 
 type CharacterPronouns = "SheHer" | "HeHim" | "TheyThem" | "ItIt";
+type CharacterPronounType = "Possessive" | "Self" | "Subject" | "Object";
 
 type VibratorIntensity = -1 | 0 | 1 | 2 | 3;
 
@@ -614,7 +620,7 @@ type AssetGroupName = AssetGroupBodyName | AssetGroupItemName | AssetGroupScript
 interface AssetPoseMap {
 	BodyHands: 'TapedHands',
 	BodyUpper: 'BaseUpper' | 'BackBoxTie' | 'BackCuffs' | 'BackElbowTouch' | 'OverTheHead' | 'Yoked',
-	BodyLower: 'BaseLower' | 'Kneel' | 'KneelingSpread' | 'LegsClosed' | 'LegsOpen' | 'Spread',
+	BodyLower: 'BaseLower' | 'Kneel' | 'KneelingSpread' | 'LegsClosed' | 'Spread',
 	BodyFull: 'Hogtied' | 'AllFours',
 	BodyAddon: 'Suspension',
 }
@@ -1058,7 +1064,10 @@ type Prettify<T> = {
 /**
  * A type that can be a value or a function returning that value.
  */
-type Thunk<T> = T | (() => T);
+type Thunk<T, A extends readonly unknown[] = []> = T | ((...args: A) => T);
+
+declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
+declare function CommonUnwrapThunk<T, A extends readonly unknown[]>(thunk: Thunk<T, A>, ...args: A): T;
 
 //#region Assets
 
@@ -1549,6 +1558,10 @@ interface InventoryBundle {
 }
 interface InventoryItem extends InventoryBundle {
 	Asset: Asset;
+}
+
+declare namespace InventoryPrerequisiteConflicts {
+	type ErrMessage = "" | "CannotBeUsedOverGag" | "MustBeUsedOverGag";
 }
 
 type SkillType = "Bondage" | "SelfBondage" | "LockPicking" | "Evasion" | "Willpower" | "Infiltration" | "Dressage";
@@ -2513,7 +2526,7 @@ type ChatRoomCustomizationType = 0 | 1 | 2 | 3;
 interface PlayerOnlineSettings {
 	AutoBanBlackList: boolean;
 	AutoBanGhostList: boolean;
-	/** 
+	/**
 	 * When true, respond to `/mods remote` hidden queries with your Mod SDK list and a declined reply otherwise
 	 * @default true
 	 */
@@ -3229,12 +3242,6 @@ interface AssetDefinitionProperties {
 	 * @see {@link Asset.Opacity}
 	 */
 	Opacity?: number | number[];
-
-	/**
-	 * A custom background for this option that overrides the default
-	 * @see {@link Asset.CustomBlindBackground}
-	 */
-	CustomBlindBackground?: string;
 
 	/**
 	 * A list of fetishes affected by the item
@@ -4007,12 +4014,8 @@ interface GameLARPParameters {
 	}[];
 }
 
-type GameLARPOptionName = "Pass" | "Seduce" | "Struggle" | "Hide" | "Cover" |
-	"Strip" | "Tighten" | "RestrainArms" | "RestrainLegs" | "RestrainMouth" |
-	"Silence" | "Immobilize" | "Detain" | "Dress" | "Costume" | "";
-
 interface GameLARPOption {
-	Name: GameLARPOptionName;
+	Name: GameLARPActionName;
 	Odds: number;
 }
 
@@ -4876,6 +4879,7 @@ type ClubCardTag =
 	| "Kemonomimi"
 	| "Submissive / Slave"
 	| "Exhibitionist"
+	| "Latex"
 	| "Reward";
 
 interface ClubCard {
@@ -4894,7 +4898,6 @@ interface ClubCard {
 	RequiredLevel?: number;
 	Time?: number;
 	ExtraTime?: number;
-	ExtraDraw?: number;
 	ExtraPlay?: number;
 	Group?: string[];
 	Location?: string;
@@ -4935,6 +4938,8 @@ interface ClubCard {
 	 * @param C Player that owns the card
 	 */
 	onLeaveClub?: (C: ClubCardPlayer) => void;
+	onMemberLeaveClub?: (C: ClubCardPlayer, Card: ClubCard, DidntDiscard: boolean) => void;
+	onRender?: (C: ClubCardPlayer, X: number, Y: number, W: number) => void;
 	turnStart?: (C: ClubCardPlayer) => void;
 	onLevelUp?: (C: ClubCardPlayer) => void;
 	onOpponentLevelUp?: (C: ClubCardPlayer) => void;
@@ -4948,7 +4953,14 @@ interface ClubCard {
 	onCancelNegation?: (C: ClubCardPlayer) => void;
 	WhenDrawn?: (C: ClubCardPlayer) => void;
 	OnActive?: (C: ClubCardPlayer) => void;
+	OnGameStart?: (C: ClubCardPlayer) => void;
 }
+
+type ClubCardDefaultDecks =
+	| "Default"
+	| "Princess Treatment"
+	| "Permanent Stay"
+	| "Pound Town"
 
 interface ClubCardPlayer {
 	Character: Character;

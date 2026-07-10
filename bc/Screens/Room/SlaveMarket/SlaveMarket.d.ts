@@ -40,10 +40,10 @@ declare function SlaveMarketClick(): void;
  */
 declare function SlaveMarketAuctionStart(): void;
 /**
- * Triggered when the auction ends. If the player was the last bidder, she buys the slave and gets in a dialog with her, otherwise she returns to the main area of the slave market
- * @returns {void} - Nothing
+ * Triggered when the auction ends.
+ * If the player was the last bidder, she buys the slave and gets in a dialog with her, otherwise she returns to the main area of the slave market
  */
-declare function SlaveMarketAuctionEnd(): void;
+declare function SlaveMarketAuctionEnd(): Promise<void>;
 /**
  * Generates a new slave for the slave market
  * @returns {void} - Nothing
@@ -71,9 +71,8 @@ declare function SlaveMarketAuctionPlayerStrip(): void;
 declare function SlaveMarketAuctionPlayerStart(): void;
 /**
  * Triggered when the player auction ends, we create the buyer and activate her
- * @returns {void} - Nothing
  */
-declare function SlaveMarketPlayerAuctionEnd(): void;
+declare function SlaveMarketPlayerAuctionEnd(): Promise<void>;
 /**
  * Triggered when the player auction has ended and both characters are transferred to the player room
  * @returns {void} - Nothing

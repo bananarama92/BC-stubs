@@ -47,9 +47,8 @@ declare function GameMagicBattleRunProcess(): void;
 declare function GameMagicBattleClickProcess(): boolean;
 /**
  * When the magic puzzle ends, we go back to the chat room
- * @returns {void}
  */
-declare function GameMagicBattlePuzzleEnd(): void;
+declare function GameMagicBattlePuzzleEnd(): Promise<void>;
 /**
  * Starts a Magic Battle match.
  * @returns {void} - Nothing
@@ -89,11 +88,11 @@ declare function GameMagicBattleCharacterClick(C: Character): boolean;
  * @param {string} Msg - Message tag
  * @param {Character} Source - Source character of the message
  * @param {Character} Target - Character targetted by the message
- * @param {ServerChatRoomGameResponse["Data"]} Data - The data linked to the packet
+ * @param {ServerGameMagicBattleDataAction} Data - The data linked to the packet
  * @param {string} [Color] - Color of the message to add.
  * @returns {void} - Nothing
  */
-declare function GameMagicBattleAddChatLog(Msg: string, Source: Character, Target: Character, Data: ServerChatRoomGameResponse["Data"], Color?: string): void;
+declare function GameMagicBattleAddChatLog(Msg: string, Source: Character, Target: Character, Data: ServerGameMagicBattleDataAction, Color?: string): void;
 /**
  * Builds the game player list.
  * @returns {void} - Nothing
@@ -105,11 +104,36 @@ declare function GameMagicBattleBuildPlayerList(): void;
  */
 declare function GameMagicBattleCalculateTurnWinner(): OnlineGameStatus;
 /**
+ *
+ * @param {unknown} data
+ * @returns {data is ServerGameMagicBattleDataStart}
+ */
+declare function GameMagicBattleIsStartPacket(data: unknown): data is ServerGameMagicBattleDataStart;
+/**
+ *
+ * @param {unknown} data
+ * @returns {data is ServerGameMagicBattleDataStop}
+ */
+declare function GameMagicBattleIsStopPacket(data: unknown): data is ServerGameMagicBattleDataStop;
+/**
+ *
+ * @param {unknown} data
+ * @returns {data is ServerGameMagicBattleDataNext}
+ */
+declare function GameMagicBattleIsNextPacket(data: unknown): data is ServerGameMagicBattleDataNext;
+/**
+ *
+ * @param {unknown} data
+ * @returns {data is ServerGameMagicBattleDataAction}
+ */
+declare function GameMagicBattleIsActionPacket(data: unknown): data is ServerGameMagicBattleDataAction;
+/**
  * Processes the Magic Battle game messages for turns and actions.
- * @param {ServerChatRoomGameResponse} P - Data object containing the message data.
+ * @param {number} sender
+ * @param {unknown} data - Data object containing the message data.
  * @returns {void} - Nothing
  */
-declare function GameMagicBattleProcess(P: ServerChatRoomGameResponse): void;
+declare function GameMagicBattleProcess(sender: number, data: unknown): void;
 /**
  * Resets the Magic Battle game so a new game might be started
  * @returns {void} - Nothing
@@ -140,8 +164,11 @@ declare var GameMagicBattleTurnDone: boolean;
 declare var GameMagicBattleTurnTimer: null | number;
 /** @type {null | Character} */
 declare var GameMagicBattleFocusCharacter: null | Character;
-/** @type {Pick<ServerChatRoomGameResponse, "Sender" | "Data">[]} */
-declare var GameMagicBattleLog: Pick<ServerChatRoomGameResponse, "Sender" | "Data">[];
+/** @type {{ Sender: number; Data: ServerGameMagicBattleDataAction }[]} */
+declare var GameMagicBattleLog: {
+    Sender: number;
+    Data: ServerGameMagicBattleDataAction;
+}[];
 /** @type {{ X: number, Y: number, W: number, H: number}[]} */
 declare var GameMagicBattleButton: {
     X: number;

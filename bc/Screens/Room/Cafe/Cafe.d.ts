@@ -118,9 +118,8 @@ declare function CafeTurnDildoUp(): void;
 declare function CafeClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {void} - Nothing
  */
-declare function CafeClubCardEnd(): void;
+declare function CafeClubCardEnd(): Promise<void>;
 /**
  * Sends the bound player back to the main hall
  * @returns {void} - Nothing

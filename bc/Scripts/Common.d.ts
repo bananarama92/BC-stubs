@@ -63,6 +63,19 @@ declare function CommonSleep(ms: number): Promise<number>;
  */
 declare function CommonWaitFor(func: () => boolean, cancelFunc?: () => boolean): Promise<boolean>;
 /**
+ * @param {number} status
+ */
+declare function CommonRequestShouldRetry(status: number): boolean;
+/**
+ * @param {number} attempt
+ */
+declare function CommonRequestRetryDelay(attempt: number): number;
+/**
+ * @param {string | null} value
+ * @returns
+ */
+declare function CommonRequestParseRetryAfter(value: string | null): number | null;
+/**
  * Fetch a remote resource
  *
  * @param {RequestInfo | URL} request
@@ -71,21 +84,16 @@ declare function CommonWaitFor(func: () => boolean, cancelFunc?: () => boolean):
 declare function CommonFetch(request: RequestInfo | URL): Promise<Response>;
 /**
  * AJAX utility to get a file and return its content. By default will retry requests 10 times
- * @param {string} Path - Path of the resource to request
- * @param {(this: XMLHttpRequest, xhr: XMLHttpRequest) => void} Callback - Callback to execute once the resource is received
- * @param {number} [RetriesLeft] - How many more times to retry if the request fails - after this hits zero, an error will be logged
+ * @param {string} url - Path of the resource to request
+ * @param {(this: XMLHttpRequest, xhr: XMLHttpRequest) => void} callback - Callback to execute once the resource is received
+ * @param {number} [retries] - How many more times to retry if the request fails - after this hits zero, an error will be logged
  * @returns {void} - Nothing
  */
-declare function CommonGet(Path: string, Callback: (this: XMLHttpRequest, xhr: XMLHttpRequest) => void, RetriesLeft?: number): void;
+declare function CommonGet(url: string, callback: (this: XMLHttpRequest, xhr: XMLHttpRequest) => void, retries?: number): void;
 /**
- * Retry handler for CommonGet requests. Exponentially backs off retry attempts up to a limit of 1 minute. By default,
- * retries up to a maximum of 10 times.
- * @param {string} Path - The path of the resource to request
- * @param {(this: XMLHttpRequest, xhr: XMLHttpRequest) => void} Callback - Callback to execute once the resource is received
- * @param {number} [RetriesLeft] - How many more times to retry - after this hits zero, an error will be logged
- * @returns {void} - Nothing
+ * @deprecated
  */
-declare function CommonGetRetry(Path: string, Callback: (this: XMLHttpRequest, xhr: XMLHttpRequest) => void, RetriesLeft?: number): void;
+declare function CommonGetRetry(): void;
 declare function CommonMouseDown(event: PointerEvent): void;
 declare function CommonMouseUp(event: PointerEvent): void;
 declare function CommonMouseMove(event: PointerEvent): void;
@@ -860,17 +868,19 @@ declare function CommonStringSplice(string: string, index: number, value: string
 /**
  * Unwraps a thunk into a value
  *
- * @template T
- * @param {Thunk<T>} thunk
- * @returns {T}
+ * @param {Thunk<unknown, unknown[]>} thunk
+ * @param {...unknown} args
+ * @returns {unknown}
  */
+declare function CommonUnwrapThunk(thunk: Thunk<unknown, unknown[]>, ...args: unknown[]): unknown;
 declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
+declare function CommonUnwrapThunk<T, A extends readonly unknown[]>(thunk: Thunk<T, A>, ...args: A): T;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {ModuleType} */
 declare var CurrentModule: ModuleType;
-/** @type {ModuleScreens[CurrentModule]} */
-declare var CurrentScreen: ModuleScreens[keyof ModuleScreens];
+/** @type {RoomName} */
+declare var CurrentScreen: RoomName;
 /** @type {Required<ScreenFunctions>} */
 declare var CurrentScreenFunctions: Required<ScreenFunctions>;
 /** @type {Character|NPCCharacter|null} */
@@ -903,19 +913,19 @@ declare var CommonPhotoMode: boolean;
 declare const CommonChatTags: Record<"SOURCE_CHAR" | "DEST_CHAR" | "DEST_CHAR_NAME" | "TARGET_CHAR" | "TARGET_CHAR_NAME" | "ASSET_NAME" | "AUTOMATIC", CommonChatTags>;
 declare namespace TimeUnits {
     namespace MINUTES {
-        let label: string;
-        let seconds: number;
+        let label: "Minutes";
+        let seconds: 60;
     }
     namespace HOURS {
-        let label_1: string;
+        let label_1: "Hours";
         export { label_1 as label };
-        let seconds_1: number;
+        let seconds_1: 3600;
         export { seconds_1 as seconds };
     }
     namespace DAYS {
-        let label_2: string;
+        let label_2: "Days";
         export { label_2 as label };
-        let seconds_2: number;
+        let seconds_2: 86400;
         export { seconds_2 as seconds };
     }
 }
@@ -936,6 +946,8 @@ declare const FETCH_MAX_RETRIES: 10;
  * How much to wait max between each attempt.
  */
 declare const FETCH_MAX_RETRY_BACKOFF_TIME: 16;
+declare const FETCH_RETRY_JITTER_MIN: 0.25;
+declare const FETCH_RETRY_JITTER_MAX: 1.75;
 declare var ScreenIsLoading: boolean;
 /**
  * Memoized getter function. Returns a font string specifying the player's

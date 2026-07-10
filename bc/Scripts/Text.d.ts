@@ -54,10 +54,10 @@ declare function TextSubstitute<T>(textTag: string, replacers: Record<string, T>
     textCache?: TextCache | undefined;
 }): (string | T)[];
 /**
- * @param {string} msg
+ * @param {TextKeysInterface} msg
  * @returns {string}
  */
-declare function InterfaceTextGet(msg: string): string;
+declare function InterfaceTextGet(msg: TextKeysInterface): string;
 /** @type {TextCache | null} */
 declare let TextScreenCache: TextCache | null;
 /** @type {Map<string, TextCache>} */

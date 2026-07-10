@@ -4,16 +4,16 @@
 declare function ChatRoomRefreshActiveView(): void;
 /**
  * Activates the chat room view with the passed name
- * @param {keyof ChatRoomViews} viewName - The name of the view to activate
+ * @param {"Character" | "Map"} viewName - The name of the view to activate
  * @returns {void}
  */
-declare function ChatRoomActivateView(viewName: string): void;
+declare function ChatRoomActivateView(viewName: "Character" | "Map"): void;
 /**
  * Indicates if the chat room view with the passed name is active or not
- * @param {keyof typeof ChatRoomViews} viewName - The name of the view to check
+ * @param {"Character" | "Map"} viewName - The name of the view to check
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
-declare function ChatRoomIsViewActive(viewName: keyof typeof ChatRoomViews): boolean;
+declare function ChatRoomIsViewActive(viewName: "Character" | "Map"): boolean;
 /**
  * Checks if the player can add the current character to her whitelist.
  * @returns {boolean} - TRUE if the current character is not in the player's whitelist nor blacklist.
@@ -108,10 +108,10 @@ declare function ChatRoomCanServeDrink(): boolean;
 declare function ChatRoomCanGiveMoneyForOwner(): boolean;
 /**
  * Checks if a given character is a chatroom admin.
- * @param {Character} C - The character to check
+ * @param {Character | number} C - The character to check
  * @returns {boolean} - TRUE if the character is an admin of the current chatroom.
  */
-declare function ChatRoomCharacterIsAdmin(C: Character): boolean;
+declare function ChatRoomCharacterIsAdmin(C: Character | number): boolean;
 /**
  * Checks if the player is a chatroom admin.
  * @returns {boolean} - TRUE if the player is an admin of the current chatroom.
@@ -564,10 +564,14 @@ declare function ChatRoomRun(time: number): void;
  */
 declare function ChatRoomDrawArousalOverlay(): boolean;
 /**
- * Draws the chat room struggle progress bar and buttons
- * @returns {void} - Nothing
+ * @deprecated Use {@link ChatRoomStruggleSync} instead
  */
 declare function ChatRoomStruggleDraw(): void;
+/**
+ * Updates struggle progress and syncs the DOM struggle bar with {@link ChatRoomStruggleData}.
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomStruggleSync(): void;
 /**
  * Draws the chat room menu buttons
  * @deprecated Use {@link ChatRoomTopMenuSync} instead
@@ -584,14 +588,6 @@ declare function ChatRoomMenuButtonVisualState(menuId: ChatRoomMenuButton): {
     state: ChatRoom.TopBarButtonState;
     hoverText: string | Node | readonly (string | Node)[];
 };
-/**
- * @returns {void}
- */
-declare function ChatRoomTopMenuPosition(): void;
-/**
- * @returns {void}
- */
-declare function ChatRoomTopMenuEnsure(): void;
 /**
  * Syncs the DOM top menu with {@link ChatRoomMenuButtons} and per-button visuals.
  * @returns {void}
@@ -641,7 +637,7 @@ declare function ChatRoomMenuClick(event: PointerEvent): void;
  * @returns {void}
  */
 declare function ChatRoomMenuPerformAction(action: ChatRoomMenuButton, event: MouseEvent): void;
-declare function ChatRoomAttemptStandMinigameEnd(): void;
+declare function ChatRoomAttemptStandMinigameEnd(): Promise<void>;
 /**
  * Checks if the given chat room visibility property causes it to be "private" (has any form of visibility control)
  * @param {ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings | null | undefined} room - The visibility property to check
@@ -1353,17 +1349,33 @@ declare function ChatRoomGiveMoneyForOwner(): void;
 declare function ChatRoomPayQuest(questGiverNumber: number, paymentAmount: number): void;
 /**
  * Triggered when online game data comes in
- * @param {ServerChatRoomGameBountyUpdateRequest["OnlineBounty"]} data - Game data to process, sent to the current game handler.
+ * @param {ServerGameOnlineBountyData["OnlineBounty"]} data - Game data to process, sent to the current game handler.
  * @param {number} sender
  * @returns {void} - Nothing
  */
-declare function ChatRoomOnlineBountyHandleData(data: ServerChatRoomGameBountyUpdateRequest["OnlineBounty"], sender: number): void;
+declare function ChatRoomOnlineBountyHandleData(data: ServerGameOnlineBountyData["OnlineBounty"], sender: number): void;
+/**
+ *
+ * @param {unknown} packet
+ * @return {packet is ServerChatRoomGameResponseBase<unknown>}
+ */
+declare function ServerPacketIsChatRoomGameResponse(packet: unknown): packet is ServerChatRoomGameResponseBase<unknown>;
+/**
+ * @param {ServerChatRoomGameResponseBase<unknown>} packet
+ * @returns {packet is ServerChatRoomGameResponseBase<ServerGameKinkyDungeonData>}
+ */
+declare function ServerPacketIsChatRoomGameKinkyDungeon(packet: ServerChatRoomGameResponseBase<unknown>): packet is ServerChatRoomGameResponseBase<ServerGameKinkyDungeonData>;
+/**
+ * @param {ServerChatRoomGameResponseBase<unknown>} packet
+ * @returns {packet is ServerChatRoomGameResponseBase<ServerGameOnlineBountyData>}
+ */
+declare function ServerPacketIsChatRoomGameOnlineBounty(packet: ServerChatRoomGameResponseBase<unknown>): packet is ServerChatRoomGameResponseBase<ServerGameOnlineBountyData>;
 /**
  * Triggered when a game message comes in, we forward it to the current online game being played.
- * @param {ServerChatRoomGameResponse} data - Game data to process, sent to the current game handler.
+ * @param {unknown} data - Game data to process, sent to the current game handler.
  * @returns {void} - Nothing
  */
-declare function ChatRoomGameResponse(data: ServerChatRoomGameResponse): void;
+declare function ChatRoomGameResponse(data: unknown): void;
 /**
  * Triggered when the player uses the /safeword command, we revert the character if safewords are enabled, and display
  * a warning in chat if not.
@@ -1657,11 +1669,10 @@ declare const ChatRoomCustomization: Readonly<{
     EnabledByDefault: 2;
     Always: 3;
 }>;
-/**
- * The list of chat room views
- * @type {Record<string, ChatRoomView>}
- */
-declare var ChatRoomViews: Record<string, ChatRoomView>;
+declare namespace ChatRoomViews {
+    let Character: ChatRoomView;
+    let Map: ChatRoomView;
+}
 /**
  * The active chat room view
  * @type {ChatRoomView | null}

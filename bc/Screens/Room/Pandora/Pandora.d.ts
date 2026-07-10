@@ -41,10 +41,10 @@ declare function PandoraDrawData(Y: number): boolean;
 declare function PandoraRun(): void;
 /**
  * Enters a new mode for the Pandora screen, such as rest or search mode
- * @param {PandoraMode} NewMode
+ * @param {""|"Search"|"Rest"|"Paint"} NewMode
  * @returns {void} - Nothing
  */
-declare function PandoraSetMode(NewMode: "" | "Rest" | "Search" | "Paint"): void;
+declare function PandoraSetMode(NewMode: "" | "Search" | "Rest" | "Paint"): void;
 /**
  * Handles clicks in all Pandora's screen
  * @returns {void} - Nothing
@@ -366,9 +366,8 @@ declare function PandoraBuyRandomClothes(): void;
 declare function PandoraChestLockpickStart(): void;
 /**
  * When the picklock mini-game ends, adds 30 seconds to the timer
- * @returns {void} - Nothing
  */
-declare function PandoraChestLockEnd(): void;
+declare function PandoraChestLockEnd(): Promise<void>;
 /**
  * When the player loots the chest, we add some money and the chest disappear
  * @returns {void} - Nothing
@@ -386,9 +385,8 @@ declare function PandoraGetPaint(): void;
 declare function PandoraClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {void} - Nothing
  */
-declare function PandoraClubCardEnd(): void;
+declare function PandoraClubCardEnd(): Promise<void>;
 declare var PandoraBackground: string;
 /** @type {PandoraBaseRoom} */
 declare var PandoraCurrentRoom: PandoraBaseRoom;

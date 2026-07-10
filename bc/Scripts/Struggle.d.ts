@@ -1,8 +1,8 @@
 /**
  * Get the list of struggle minigames.
- * @returns {[StruggleKnownMinigames, StruggleMinigame][]}
+ * @returns {[Exclude<StruggleKnownMinigames, "LockPick" | "Loosen">, StruggleMinigame][]}
  */
-declare function StruggleGetMinigames(): [StruggleKnownMinigames, StruggleMinigame][];
+declare function StruggleGetMinigames(): [Exclude<StruggleKnownMinigames, "LockPick" | "Loosen">, StruggleMinigame][];
 /**
  * Main handler for drawing the struggle minigame screen
  *
@@ -13,6 +13,13 @@ declare function StruggleGetMinigames(): [StruggleKnownMinigames, StruggleMiniga
  * @returns {boolean} Whether the draw handler ran
  */
 declare function StruggleMinigameDraw(C: Character): boolean;
+/**
+ * Construct and return the struggle text associated with using x% of a character's skill
+ * @param {Character} C - The character who acts
+ * @param {SkillType} skillType - Name of the skill to get the value of
+ * @returns {string}
+ */
+declare function StruggleGetSkillRatioText(C: Character, skillType: SkillType): string;
 /**
  * Gets the correct label for the current operation (struggling, removing, swaping, adding, etc.)
  * @param {Character} C - The character who acts

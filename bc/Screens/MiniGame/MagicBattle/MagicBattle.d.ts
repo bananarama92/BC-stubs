@@ -45,9 +45,8 @@ declare function MagicBattleSpellStart(S: number): void;
 declare function MagicSpellEffect(C: Character, Spell: number): void;
 /**
  * When the spell ends, we apply the effect of the spell on the loser
- * @returns {void} - Nothing
  */
-declare function MagicBattleSpellEnd(): void;
+declare function MagicBattleSpellEnd(): Promise<void>;
 declare function MagicBattleKeyDown(event: KeyboardEvent): boolean;
 declare var MagicBattleBackground: string;
 /** @type {Character} */

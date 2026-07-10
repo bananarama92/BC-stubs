@@ -200,9 +200,8 @@ declare function InfiltrationSetPandoraPrisoner(): void;
 declare function InfiltrationClubCardStart(): void;
 /**
  * When the player ends a club card game against the supervisor
- * @returns {void} - Nothing
  */
-declare function InfiltrationClubCardEnd(): void;
+declare function InfiltrationClubCardEnd(): Promise<void>;
 /**
  * Checks if the role in parameter is the current player role
  * @param {string} Role - The role to evaluate (I for Inmate, G for Guard)

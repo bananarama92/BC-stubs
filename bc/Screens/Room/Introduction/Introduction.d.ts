@@ -160,9 +160,8 @@ declare function IntroductionJobDojoStart(): void;
 declare function IntroductionClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {void} - Nothing
  */
-declare function IntroductionClubCardEnd(): void;
+declare function IntroductionClubCardEnd(): Promise<void>;
 declare var IntroductionBackground: string;
 /** @type {null | NPCCharacter} */
 declare var IntroductionMaid: null | NPCCharacter;
