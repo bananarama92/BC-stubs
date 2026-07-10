@@ -28,9 +28,8 @@ declare function CollegeTennisClick(): void;
 declare function CollegeTennisGameStart(Difficulty: "Easy" | "Normal" | "Hard"): void;
 /**
  * Triggered when the tennis game ends. Winning opens a dialog option to allow the player to invite Jennifer to their room.
- * @returns {void} - Nothing
  */
-declare function CollegeTennisGameEnd(): void;
+declare function CollegeTennisGameEnd(): Promise<void>;
 /**
  * Triggered when Jennifer is invited to the player's private room. The player earns a tennis racket.
  * @returns {void} - Nothing

@@ -37,13 +37,25 @@ declare function InventoryItemMiscTimerPadlockAdd(C: Character, item: Item, lock
  * @param {Item} item
  */
 declare function InventoryItemMiscSendTimerPadlockChangeMessage(C: Character, item: Item): void;
-declare const OwnerTimerChooseOptions: {
+declare const OwnerTimerChooseOptions: ({
     unit: {
-        label: string;
-        seconds: number;
+        readonly label: "Minutes";
+        readonly seconds: 60;
     };
     values: number[];
-}[];
+} | {
+    unit: {
+        readonly label: "Hours";
+        readonly seconds: 3600;
+    };
+    values: number[];
+} | {
+    unit: {
+        readonly label: "Days";
+        readonly seconds: 86400;
+    };
+    values: number[];
+})[];
 declare let OwnerTimerChooseOptionsIndex: number;
 declare let OwnerTimerChooseIndexes: number[];
 declare let TimerPadlockAccumulatedSeconds: number;

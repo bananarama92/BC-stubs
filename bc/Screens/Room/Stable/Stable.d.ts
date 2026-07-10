@@ -29,7 +29,7 @@ declare function StableRun(): void;
 declare function StableClick(): void;
 declare function StableTrialPonyTraining(): void;
 declare function StableTrialTrainerTraining(): void;
-declare function StableTrialTrainerTrainingEnd(): void;
+declare function StableTrialTrainerTrainingEnd(): Promise<void>;
 /**
  * @param {"PonyExam" | "TrainPony" | "TrainerExam" | "BecomeTrainer" | "WhiskeyRounds"} Fee
  * @returns {number}
@@ -72,7 +72,7 @@ declare function StablePlayerTrainingDance(Behavior: string): void;
  * @returns {void}
  */
 declare function StablePlayerTrainingHurdles(Behavior: string): void;
-declare function StablePlayerTrainingHurdlesEnd(): void;
+declare function StablePlayerTrainingHurdlesEnd(): Promise<void>;
 /**
  * Start Traning Treadmill
  * @param {string} Behavior
@@ -115,7 +115,7 @@ declare function StablePlayerTrainingStrongRace(Behavior: string): void;
  * @returns {void}
  */
 declare function StablePlayerTrainingCarrots(Behavior: string): void;
-declare function StablePlayerTrainingCarrotsEnd(): void;
+declare function StablePlayerTrainingCarrotsEnd(): Promise<void>;
 /**
  * Reward for passed
  * @param {string} Behavior
@@ -140,7 +140,7 @@ declare function StablePlayerWearEquipment(Behavior: any): void;
 declare function StableWearPonyEquipment(C: any): void;
 declare function StablePlayerStartExam(): void;
 declare function StablePlayerExamHurdles(): void;
-declare function StablePlayerExamHurdlesEnd(): void;
+declare function StablePlayerExamHurdlesEnd(): Promise<void>;
 declare function StablePlayerExamRace(): void;
 declare function StablePlayerExamDressage(): void;
 declare function StablePlayerExamPass(): void;
@@ -152,9 +152,9 @@ declare function StableTrainerStart(): void;
 declare function StablePonyWearEquipment(): void;
 declare function StablePonyTraining(probability: any): void;
 declare function StablePonyTrainingHurdles(): void;
-declare function StablePonyTrainingHurdlesEnd(): void;
+declare function StablePonyTrainingHurdlesEnd(): Promise<void>;
 declare function StableTrainerWhip(): void;
-declare function StableTrainerWhipEnd(): void;
+declare function StableTrainerWhipEnd(): Promise<void>;
 /**
  * @param {null | Character} C
  * @returns {void}
@@ -163,9 +163,9 @@ declare function StablePonyStraightens(C: null | Character): void;
 declare function StablePlayerStartTExam(): void;
 declare function StablePlayerTExamKnow(): void;
 declare function StablePlayerTExamWhip(): void;
-declare function StablePlayerTExamWhipEnd(): void;
+declare function StablePlayerTExamWhipEnd(): Promise<void>;
 declare function StablePlayerTExamHurdles(): void;
-declare function StablePlayerTExamHurdlesEnd(): void;
+declare function StablePlayerTExamHurdlesEnd(): Promise<void>;
 declare function StablePlayerTExamPass(): void;
 declare function StablePlayerTExamEnd(): void;
 declare function StableGenericProgressStart(Timer: any, S: any, S2: any, Item: any, Background: any, Character: any, SecondCharacter: any, Stage: any, CurrentDialog: any, CancelStage: any, CancelCurrentDialog: any, Behavior: any, ProgressOperation: any): void;
@@ -193,9 +193,8 @@ declare function StableHideDice(): void;
 declare function StableClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {void} - Nothing
  */
-declare function StableClubCardEnd(): void;
+declare function StableClubCardEnd(): Promise<void>;
 /**
  * Runs the pony command from the online chat box
  * @param {string} Activity - The activity to validate

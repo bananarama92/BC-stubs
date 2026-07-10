@@ -9,7 +9,13 @@ type ChatRoomMapPos = {
 
 type ChatRoomMapData = {
 	Pos: ChatRoomMapPos
-	PrivateState: Record<string, Object>
+	PrivateState: {
+		HasKeyBronze?: boolean;
+		HasKeySilver?: boolean;
+		HasKeyGold?: boolean;
+
+		[key: string]: any;
+	}
 }
 
 interface ServerAccountImmutableData {
@@ -874,45 +880,6 @@ interface ServerChatRoomMessage extends ServerChatRoomMessageBase {
 	Timeout?: number;
 }
 
-interface ServerChatRoomGameStart {
-	GameProgress: "Start" | "Next" | "Stop" | "Skip";
-}
-
-interface ServerChatRoomGameMagicBattleUpdateRequest {
-	GameProgress: "Action";
-	Action:
-		/* MagicBattle */ "SpellSuccess" | "SpellFail" |
-		/* LARP */  "Pass" | "Seduce" | "Struggle" | "Hide" | "Cover" |
-					"Strip" | "Tighten" | "RestrainArms" | "RestrainLegs" | "RestrainMouth" |
-					"Silence" | "Immobilize" | "Detain" | "Dress" | "Costume"
-				;
-	Spell: number;
-	Time: number;
-	Target: number;
-}
-
-interface ServerChatRoomGameLARPUpdateRequest {
-	GameProgress: "Action";
-	Action: "Pass" | "Seduce" | "Struggle" | "Hide" | "Cover" |
-		"Strip" | "Tighten" | "RestrainArms" | "RestrainLegs" | "RestrainMouth" |
-		"Silence" | "Immobilize" | "Detain" | "Dress" | "Costume"
-
-		| "";
-	Item?: string;
-	Target: number;
-}
-
-interface ServerChatRoomGameBountyUpdateRequest {
-	OnlineBounty: {
-		finishTime: number,
-		target: number,
-	}
-}
-
-interface ServerChatRoomGameKDUpdateRequest {
-	KinkyDungeon: any;
-}
-
 interface ServerChatRoomGameCardGameData {
     MemberNumber: number;
     Playing: boolean;
@@ -932,53 +899,140 @@ interface ServerChatRoomGameCardGameData {
 	Sleeve: number;
 }
 
-interface ServerChatRoomGameCardGameQueryRequest {
-	GameProgress: "Query";
-	CCData?: ServerChatRoomGameCardGameData[];
-	Player1?: number;
-	Player2?: number;
+interface ServerGameLARPDataStart {
+	GameProgress: "Start";
 }
 
-interface ServerChatRoomGameCardGameStartRequest {
+interface ServerGameLARPDataStop {
+	GameProgress: "Stop";
+}
+
+interface ServerGameLARPDataNext {
+	GameProgress: "Next";
+}
+
+interface ServerGameLARPDataSkip {
+	GameProgress: "Skip";
+}
+
+type GameLARPActionName = "Pass" | "Seduce" | "Struggle" | "Hide" | "Cover"
+	| "Strip" | "Tighten" | "RestrainArms" | "RestrainLegs" | "RestrainMouth"
+	| "Silence" | "Immobilize" | "Detain" | "Dress" | "Costume" | "Charge" | "Support" | "Cheer"
+	| "Inspire" | "Control" | "Confuse"
+
+interface ServerGameLARPDataAction {
+	GameProgress: "Action";
+	Action: GameLARPActionName;
+	Target: number;
+	Item: string;
+}
+
+interface ServerGameLARPDataQuery {
+	GameProgress: "Query";
+}
+
+type ServerGameLARPData =
+	| ServerGameLARPDataStart
+	| ServerGameLARPDataStop
+	| ServerGameLARPDataNext
+	| ServerGameLARPDataSkip
+	| ServerGameLARPDataAction
+;
+
+interface ServerGameKinkyDungeonData {
+	KinkyDungeon: string;
+}
+
+interface ServerGameOnlineBountyData {
+	OnlineBounty: {
+		finishTime: number,
+		target: number,
+	}
+}
+
+interface ServerGameClubCardDataStart {
 	GameProgress: "Start";
 	Player1: number;
 	Player2: number;
 }
 
-type ServerChatRoomGameCardGameActionRequest = { GameProgress: "Action" } & ({ CCLog: any } | { CCData: any });
+interface ServerGameClubCardDataQueryRequest {
+	GameProgress: "Query";
+}
 
-type ServerChatRoomGameCardGameUpdateRequest = ServerChatRoomGameCardGameStartRequest | ServerChatRoomGameCardGameQueryRequest | ServerChatRoomGameCardGameActionRequest;
+interface ServerGameClubCardDataQueryResponse {
+	GameProgress: "Query";
+	CCData: ServerChatRoomGameCardGameData[];
+	Player1: number;
+	Player2: number;
+}
+
+interface ServerGameClubCardDataAction {
+	GameProgress: "Action";
+	CCData?: ServerChatRoomGameCardGameData[];
+	CCLog?: ClubCardMessage;
+}
+
+type ServerGameClubCardData =
+	| ServerGameClubCardDataStart
+	| ServerGameClubCardDataQueryRequest
+	| ServerGameClubCardDataQueryResponse
+	| ServerGameClubCardDataAction
+;
+
+type ServerGameClubCardResponse = ServerChatRoomGameResponseBase<ServerGameClubCardData>;
+
+interface ServerGameMagicBattleDataStart {
+	GameProgress: "Start";
+}
+
+interface ServerGameMagicBattleDataStop {
+	GameProgress: "Stop";
+}
+
+interface ServerGameMagicBattleDataNext {
+	GameProgress: "Next";
+}
+
+type GameMagicBattleActionName = "SpellSuccess" | "SpellFail";
+
+interface ServerGameMagicBattleDataAction {
+	GameProgress: "Action";
+	Action: GameMagicBattleActionName;
+	Target: number;
+	Spell: number;
+	Time: number;
+}
+
+type ServerGameMagicBattleData =
+	| ServerGameMagicBattleDataStart
+	| ServerGameMagicBattleDataStop
+	| ServerGameMagicBattleDataNext
+	| ServerGameMagicBattleDataAction
+;
+
+type ServerGameMagicBattleResponse = ServerChatRoomGameResponseBase<ServerGameMagicBattleData>
+
+interface ServerChatRoomGameResponseBase<T> extends ServerChatRoomMessageBase {
+	Data: T;
+	RNG: number;
+}
+
+type ServerChatRoomGameResponse = ServerChatRoomGameResponseBase<
+	| ServerGameClubCardData
+	| ServerGameLARPData
+	| ServerGameMagicBattleData
+	| ServerGameOnlineBountyData
+	| ServerGameKinkyDungeonData
+>;
 
 type ServerChatRoomGameUpdateRequest =
-	| ServerChatRoomGameStart
-	| ServerChatRoomGameMagicBattleUpdateRequest
-	| ServerChatRoomGameLARPUpdateRequest
-	| ServerChatRoomGameBountyUpdateRequest
-	| ServerChatRoomGameKDUpdateRequest
-	| ServerChatRoomGameCardGameUpdateRequest;
-
-interface ServerChatRoomGameResponse extends ServerChatRoomMessageBase {
-    Data: {
-		KinkyDungeon?: any;
-		OnlineBounty?: any;
-		/* LARP */
-		GameProgress?: "Start" | "Stop" | "Next" | "Skip" | "Action" | "Query";
-		Action?: undefined;
-		Target?: number;
-		Item?: string;
-
-		/* MagicBattle */
-		Spell?: string;
-		Time?: number; /* ms */
-
-		/* Club Card */
-		Player1?: number;
-		Player2?: number;
-		CCData: ServerChatRoomGameCardGameData[];
-		CCLog: ClubCardMessage;
-	};
-    RNG: number;
-}
+	| ServerGameClubCardData
+	| ServerGameLARPData
+	| ServerGameMagicBattleData
+	| ServerGameOnlineBountyData
+	| ServerGameKinkyDungeonData
+;
 
 interface ServerChatRoomSyncCharacterResponse {
 	SourceMemberNumber: number;

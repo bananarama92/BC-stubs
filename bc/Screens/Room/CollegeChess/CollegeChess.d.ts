@@ -42,9 +42,8 @@ declare function CollegeChessGameProgress(): void;
 declare function CollegeChessGameConcede(): void;
 /**
  * Triggered when the chess game ends.
- * @returns {void} - Nothing
  */
-declare function CollegeChessGameEnd(): void;
+declare function CollegeChessGameEnd(): Promise<void>;
 /**
  * When both the player and the opponent should dress back up, we restore the backup appearance
  * @returns {void} - Nothing

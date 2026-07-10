@@ -15,7 +15,6 @@ declare namespace Layering {
     let DisplayDefault: Readonly<LayeringDisplay>;
     let ID: Readonly<{
         root: "layering";
-        buttonGrid: "layering-button-grid";
         resetButton: "layering-reset-button";
         exitButton: "layering-exit-button";
         hideButton: "layering-hide-button";

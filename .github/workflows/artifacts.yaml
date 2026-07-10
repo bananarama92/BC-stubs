@@ -98,7 +98,7 @@ jobs:
           python ../../remove_private_protected.py .
 
           set +e
-          npx -p typescript tsc
+          npx -p ../../node_modules/typescript tsc
           set -e
 
           rm -rf ../../bc

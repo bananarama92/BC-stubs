@@ -31,9 +31,9 @@ declare function CharacterBuildDialog(C: Character, CSV: readonly string[][], fu
  * Loads the content of a CSV file to build the character dialog. Can override the current screen.
  * @param {Character} C - Character for which to build the dialog objects
  * @param {DialogInfo<any>} [info]
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo<any>): void;
+declare function CharacterLoadCSVDialog(C: Character, info?: DialogInfo<any>): Promise<void>;
 /**
  * Sets the clothes based on a character archetype
  * @param {Character} C - Character to set the clothes for
@@ -272,9 +272,9 @@ declare function CharacterResetFacialExpression(C: Character): void;
  * @param {Character} C
  * @param {Item} Item
  * @param {null | ExpressionName} Expression
- * @returns {null | string} - An exit status or `null` if the expression is otherwise allowed
+ * @returns {null | "InternalError" | "IllegalExpression" | ReturnType<typeof InventoryPrerequisiteMessage>}- An exit status or `null` if the expression is otherwise allowed
  */
-declare function CharacterIsExpressionDisallowed(C: Character, Item: Item, Expression: null | ExpressionName): null | string;
+declare function CharacterIsExpressionDisallowed(C: Character, Item: Item, Expression: null | ExpressionName): null | "InternalError" | "IllegalExpression" | ReturnType<typeof InventoryPrerequisiteMessage>;
 /**
  * Checks if a given expression is allowed on a character
  * @param {Character} C
@@ -420,11 +420,11 @@ declare function CharacterNickname(C: Character): string;
 /**
  * Returns dialog text for a character based on their chosen pronouns. Default to She/Her entries
  * @param {Character} C - The character to fetch dialog for
- * @param {string} DialogKey - The type of dialog entry to look for
+ * @param {CharacterPronounType} DialogKey - The type of dialog entry to look for
  * @param {boolean} HideIdentity - Whether to use generic they/them pronouns
  * @returns {string} - The text to use
  */
-declare function CharacterPronoun(C: Character, DialogKey: string, HideIdentity: boolean): string;
+declare function CharacterPronoun(C: Character, DialogKey: CharacterPronounType, HideIdentity: boolean): string;
 /**
  * Returns the description text for the character's chosen pronouns. Default to She/Her
  * @param {Character} C - The character to fetch text for

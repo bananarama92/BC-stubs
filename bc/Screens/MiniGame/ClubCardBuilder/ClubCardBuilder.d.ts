@@ -4,6 +4,7 @@
  * @returns {void} - Nothing
  */
 declare function ClubCardBuilderLoadDeck(Deck: number): void;
+declare function ClubCardBuilderLoadPrecon(): void;
 /**
  * Saves the modified deck as a string on the server
  * @returns {void} - Nothing
@@ -72,6 +73,10 @@ declare var ClubCardBuilderMinDeckSize: number;
 declare var ClubCardBuilderMaxDeckSize: number;
 /** @type {ClubCardTag} */
 declare var ClubCardBuilderSelectedTag: ClubCardTag;
+/**
+ * @type {Record<ClubCardDefaultDecks, number[]>}
+ */
+declare const ClubCardBuilderDefaultDecksList: Record<ClubCardDefaultDecks, number[]>;
 /**
  * @type {Record<ClubCardTag, (card: ClubCard) => boolean>}
  */

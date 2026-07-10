@@ -128,9 +128,8 @@ declare function ShibariPayForTraining(SkillType: SkillType): void;
 declare function ShibariClubCardStart(): void;
 /**
  * When the player ends a club card game against the shibari student
- * @returns {void} - Nothing
  */
-declare function ShibariClubCardEnd(): void;
+declare function ShibariClubCardEnd(): Promise<void>;
 declare var ShibariBackground: string;
 /** @type {null | NPCCharacter} */
 declare var ShibariTeacher: null | NPCCharacter;

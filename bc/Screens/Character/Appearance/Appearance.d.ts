@@ -432,8 +432,8 @@ declare var CharacterAppearanceMode: "" | "Wardrobe" | "Cloth" | "Color" | "Perm
 declare var CharacterAppearanceMenuMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
 /** @type {null | Item} */
 declare var CharacterAppearanceCloth: null | Item;
-/** @type {DialogMenuButtonType[]} */
-declare var AppearanceMenu: DialogMenuButtonType[];
+/** @type {AppearanceMenuButtonType[]} */
+declare var AppearanceMenu: AppearanceMenuButtonType[];
 /** @type {Character[]} */
 declare var AppearancePreviews: Character[];
 declare var AppearanceUseCharacterInPreviewsSetting: boolean;

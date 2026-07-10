@@ -5,6 +5,7 @@
 declare function OnlneGameDictionaryLoad(): void;
 /**
  * @param {string} CachePath
+ * @deprecated
  * @returns {void}
  */
 declare function OnlineGameTranslate(CachePath: string): void;
@@ -69,7 +70,13 @@ declare function OnlineGameDrawCharacter(C: Character, X: number, Y: number, Zoo
  * Returns whether the room's current game has a specific option screen
  */
 declare function OnlineGameHasOptions(): boolean;
-/** @type {null | string[][]} */
+/**
+ * @type {null | string[][]}
+ * @deprecated
+ */
 declare let OnlineGameDictionary: null | string[][];
-/** @type {((gameDict: string[][]) => void) | undefined} */
+/**
+ * @type {((gameDict: string[][]) => void) | undefined}
+ * @deprecated
+ */
 declare let OnlineGameTranslateResolve: ((gameDict: string[][]) => void) | undefined;

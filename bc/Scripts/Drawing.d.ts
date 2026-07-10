@@ -386,7 +386,7 @@ declare function DrawRoomBackground(URL: string, bounds: Rect, opts?: {
     blur?: number | undefined;
     darken?: number | undefined;
     tints?: readonly RGBAColor[] | undefined;
-    sizeMode?: number | undefined;
+    sizeMode?: DrawingResizeMode | undefined;
 }): void;
 /**
  * Perform a global screen flash effect when a blindfold gets removed
@@ -608,15 +608,13 @@ declare var DrawHoverElements: (() => void)[];
  * @type {RectTuple}
  */
 declare var DrawCanvasPosition: RectTuple;
-/**
- * An enum for the method for resizing custom backgrounds
- */
-type DrawingResizeMode = number;
+type DrawingResizeMode = 1 | 2 | 3;
 declare namespace DrawingResizeMode {
-    let Fill: number;
-    let FillOriginalRatio: number;
-    let ShowFullOriginalRatio: number;
+    let Fill: 1;
+    let FillOriginalRatio: 2;
+    let ShowFullOriginalRatio: 3;
 }
+/** @typedef {1 | 2 | 3} DrawingResizeMode */
 /**
  * A cache of the texture masks used to draw the character
  * @type {Map<string, HTMLCanvasElement>}
@@ -660,4 +658,4 @@ declare const DrawAssetPreviewDefaultHeight: 275;
  * @param {DrawingResizeMode} sizeMode - How to transform sourceRect - whether to keep original aspect ratio and allow/prevent overflow
  * @returns {[RectTuple, RectTuple]} The subsection of the sourceRect to take and the rectangle to map it to
  */
-declare const RectFitIntoRect: MemoizedFunction<(sourceRect: Rect, destRect: Rect, sizeMode: number) => [sourceRectTuple: RectTuple, destRectTuple: RectTuple]>;
+declare const RectFitIntoRect: MemoizedFunction<(sourceRect: Rect, destRect: Rect, sizeMode: DrawingResizeMode) => [sourceRectTuple: RectTuple, destRectTuple: RectTuple]>;

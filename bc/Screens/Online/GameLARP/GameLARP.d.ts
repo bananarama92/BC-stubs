@@ -43,10 +43,10 @@ declare function GameLARPRunProcess(): void;
 declare function GameLARPBuildInventory(FocusGroup: AssetGroupName): void;
 /**
  * Triggered when an option is selected for the current target character. The inventory for it is built and the action is published
- * @param {GameLARPOptionName} Name - Name of the selected option
+ * @param {GameLARPActionName} Name - Name of the selected option
  * @returns {void} - Nothing
  */
-declare function GameLARPClickOption(Name: GameLARPOptionName): void;
+declare function GameLARPClickOption(Name: GameLARPActionName): void;
 /**
  * Handles clicks during the LARP game.
  * @returns {boolean} - Returns TRUE if the click was handled by this LARP click handler
@@ -220,11 +220,29 @@ declare function GameLARPGetClassProgress(LARP: GameLARPParameters): number;
  */
 declare function GameLARPContinue(): boolean;
 /**
+ * @param {unknown} data
+ * @returns {data is ServerGameLARPDataStart}
+ */
+declare function GameLARPIsStartPacket(data: unknown): data is ServerGameLARPDataStart;
+/**
+ * @param {unknown} data
+ * @returns {data is ServerGameLARPDataSkip}
+ */
+declare function GameLARPIsSkipPacket(data: unknown): data is ServerGameLARPDataSkip;
+/**
+ *
+ * @param {unknown} data
+ * @returns {data is ServerGameLARPDataAction}
+ */
+declare function GameLARPIsActionPacket(data: unknown): data is ServerGameLARPDataAction;
+/**
  * Processes the LARP game messages for turns and actions.
- * @param {ServerChatRoomGameResponse} P - Data object containing the message data.
+ * @param {number} sender
+ * @param {number} rng
+ * @param {unknown} data - Data object containing the message data.
  * @returns {void} - Nothing
  */
-declare function GameLARPProcess(P: ServerChatRoomGameResponse): void;
+declare function GameLARPProcess(sender: number, rng: number, data: unknown): void;
 /**
  * Resets the LARP game so a new game might be started
  * @returns {void} - Nothing
@@ -253,20 +271,20 @@ declare var GameLARPTeamList: string[];
 declare var GameLARPTimerDelay: number[];
 declare var GameLARPEntryClass: string;
 declare var GameLARPEntryTeam: string;
-/** @type { { Sender: number, Time: number, RNG: number, Data: ServerChatRoomGameResponse["Data"], Success?: boolean }[] } */
+/** @type { { Sender: number, Time: number, RNG: number, Data: ServerChatRoomGameResponseBase<ServerGameLARPData>["Data"], Success?: boolean }[] } */
 declare var GameLARPProgress: {
     Sender: number;
     Time: number;
     RNG: number;
-    Data: ServerChatRoomGameResponse["Data"];
+    Data: ServerChatRoomGameResponseBase<ServerGameLARPData>["Data"];
     Success?: boolean;
 }[];
 /** @type {Character[]} */
 declare var GameLARPPlayer: Character[];
 /** @type {GameLARPOption[]} */
 declare var GameLARPOption: GameLARPOption[];
-/** @type {GameLARPOptionName | ""} */
-declare var GameLARPAction: GameLARPOptionName | "";
+/** @type {GameLARPActionName | null} */
+declare var GameLARPAction: GameLARPActionName | null;
 /** @type {Asset[]} */
 declare var GameLARPInventory: Asset[];
 declare var GameLARPInventoryOffset: number;

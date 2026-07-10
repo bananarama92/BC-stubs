@@ -249,6 +249,11 @@ declare function ServerAccountLovership(data: object): void;
  */
 declare function ServerChatRoomGetAllowItem(Source: Character, Target: Character): boolean;
 /**
+ * @param {unknown} arg
+ * @return {arg is ChatRoomMapData}
+ */
+declare function ServerIsMapData(arg: unknown): arg is ChatRoomMapData;
+/**
  * Run a promise along with a timeout
  *
  * @template T
@@ -471,7 +476,7 @@ declare namespace ServerAccountDataSyncedValidate {
     }[] | undefined>, C: Character): Reputation[];
     function WhiteList(arg: (number | undefined)[], C: Character): number[];
     function BlackList(arg: (number | undefined)[], C: Character): number[];
-    function MapData(arg: Partial<ChatRoomMapData | undefined>, C: Character): ChatRoomMapData;
+    let MapData: ((arg: ChatRoomMapData | undefined, C: Character) => ChatRoomMapData) & { [k in keyof ChatRoomMapData]: (arg: Partial<ChatRoomMapData[k]>, C: Character) => ChatRoomMapData[k]; };
     function ChatSearchSettings(arg: ServerAccountDataSynced["ChatSearchSettings"], C: Character): ChatRoomSearchSettings;
 }
 /**

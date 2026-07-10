@@ -14,11 +14,11 @@ declare function ChatRoomMapViewBlur(): void;
  */
 declare function ChatRoomMapViewInitialize(mode: ChatRoomMapType): ServerChatRoomMapData;
 /**
- * Initializes the player map data to its default blank state
+ * Initializes the character's map data to its default blank state
  * @param {Character} C - The character to be initialized
- * @returns {ChatRoomMapData}
+ * @returns {ChatRoomMapData | null}
  */
-declare function ChatRoomMapViewInitializeCharacter(C: Character): ChatRoomMapData;
+declare function ChatRoomMapViewInitializeCharacter(C: Character): ChatRoomMapData | null;
 /**
  * Validate the passed chat room map positions.
  * @param {unknown} position

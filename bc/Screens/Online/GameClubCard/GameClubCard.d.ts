@@ -102,23 +102,49 @@ declare function GameClubCardHandUndoBundle(Bundle: any, Location?: null): any[]
 declare function GameClubCardLoadBundle(CCPlayer: ClubCardPlayer, Bundle: any): void;
 /**
  * Assigns both club card players based on the players selection
- * @param {ServerChatRoomGameResponse} Packet - The data packet to process
+ * @param {ServerGameClubCardDataStart | ServerGameClubCardDataQueryResponse} data - The data packet to process
+ * @param {number} rng
  * @param {Character} Char - The character that's sending the packet
- * @returns {Promise<void>} - Nothing
+ * @returns {void} - Nothing
  */
-declare function GameClubCardAssignPlayers(Packet: ServerChatRoomGameResponse, Char: Character): Promise<void>;
+declare function GameClubCardAssignPlayers(data: ServerGameClubCardDataStart | ServerGameClubCardDataQueryResponse, rng: number, Char: Character): void;
 /**
  * Loads the club card game data
- * @param {ServerChatRoomGameResponse} Packet - The data packet to process
+ * @param {ServerGameClubCardDataQueryResponse | ServerGameClubCardDataAction} data - The data packet to process
  * @returns {void} - Nothing
  */
-declare function GameClubCardLoadData(Packet: ServerChatRoomGameResponse): void;
+declare function GameClubCardLoadData(data: ServerGameClubCardDataQueryResponse | ServerGameClubCardDataAction): void;
+/**
+ *
+ * @param {unknown} data
+ * @returns {data is ServerGameClubCardDataStart}
+ */
+declare function ClubCardIsStartPacket(data: unknown): data is ServerGameClubCardDataStart;
+/**
+ * @param {unknown} data
+ * @returns {data is ServerGameClubCardDataQueryRequest}
+ */
+declare function ClubCardIsQueryRequestPacket(data: unknown): data is ServerGameClubCardDataQueryRequest;
+/**
+ *
+ * @param {unknown} data
+ * @returns {data is ServerGameClubCardDataQueryResponse}
+ */
+declare function ClubCardIsQueryResponsePacket(data: unknown): data is ServerGameClubCardDataQueryResponse;
+/**
+ *
+ * @param {unknown} data
+ * @returns {data is ServerGameClubCardDataAction}
+ */
+declare function ClubCardIsActionPacket(data: unknown): data is ServerGameClubCardDataAction;
 /**
  * Processes the club card game data received from the server
- * @param {ServerChatRoomGameResponse} Packet - The data packet to process
- * @returns {void} - Nothing
+ * @param {number} senderNumber
+ * @param {number} rng
+ * @param {unknown} data - The data packet to process
+ * @returns {Promise<void>} - Nothing
  */
-declare function GameClubCardProcess(Packet: ServerChatRoomGameResponse): void;
+declare function GameClubCardProcess(senderNumber: number, rng: number, data: unknown): Promise<void>;
 /**
  * Syncs the online data with all players
  * @param {string} Progress - The progress status to push (default to action)

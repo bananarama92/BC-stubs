@@ -98,9 +98,8 @@ declare function AsylumTherapyPatientOrgasmIntro(RepChange: number): void;
 declare function AsylumTherapyTherapyStart(Difficulty: "Easy" | "Normal" | "Hard"): void;
 /**
  * Ends the therapy mini-game as a nurse, plays with reputation and money
- * @returns {void} - Nothing
  */
-declare function AsylumTherapyTherapyMiniGameEnd(): void;
+declare function AsylumTherapyTherapyMiniGameEnd(): Promise<void>;
 /**
  * When a new patient comes in
  * @returns {void} - Nothing

@@ -746,29 +746,32 @@ declare function PrivateGetClubCardDeck(C: Character): number[];
  * When the club card game against a friend NPC starts
  * @returns {void} - Nothing
  */
-declare function PrivateClubCardVsFriendStart(): void;
+declare function PrivateClubCardVsCharacterStart(): void;
 /**
  * When the club card game against a friend NPC ends
- * @returns {void} - Nothing
  */
-declare function PrivateClubCardVsFriendEnd(): void;
+declare function PrivateClubCardVsCharacterEnd(): Promise<void>;
 /**
  * When the club card game against an owner NPC starts
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function PrivateClubCardVsOwnerStart(): void;
 /**
  * When the club card game against an owner NPC ends
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function PrivateClubCardVsOwnerEnd(): void;
 /**
  * When the club card game against a submissive NPC starts
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function PrivateClubCardVsSubStart(): void;
 /**
  * When the club card game against a submissive NPC ends
+ * @deprecated
  * @returns {void} - Nothing
  */
 declare function PrivateClubCardVsSubEnd(): void;

@@ -50,14 +50,12 @@ declare function CommandHelp(low: string, timeout?: number): void;
 declare function CommandPrintHelpFor(commands: Optional<ICommand, "Action">[], timeout?: number, doShowEscapeHint?: boolean): void;
 /**
  * Prints out the help for commands
+ * @deprecated
  * @param {ICommand} cmd
- * @param {{ arguments?: ArgumentDef['suggestions'], subcommands?: Subcommand[] }} options - list of commands
+ * @param {Pick<CommandHelpOptions, "remaining" | "subcommand">} [options]
  * @param {number} [timeout] - total time to display the help message in ms
  */
-declare function CommandPrintHelpForSubcommandsArguments(cmd: ICommand, options: {
-    arguments?: ArgumentDef["suggestions"];
-    subcommands?: Subcommand[];
-}, timeout?: number): void;
+declare function CommandPrintHelpForSubcommandsArguments(cmd: ICommand, options?: Pick<CommandHelpOptions, "remaining" | "subcommand">, timeout?: number): void;
 /**
  * Finds command and executes it from the message
  * @param {string} msg - User input
@@ -87,33 +85,41 @@ declare function CommandHandleMultipleCandidates(candidates: ICommand[], key: st
  */
 declare function CommandHandleSingleCandidate(initialCmd: ICommand, forward: string[], parts: string[], low: string, msg: string): void | HTMLDivElement;
 /**
- *
- * @param {ICommand} cmd
- * @returns {ICommand | undefined}
+ * Returns the first defined value for a command property, following Reference aliases
+ * @template {CommandResolvableKey} K
+ * @param {CommandLike} cmd
+ * @param {K} property
+ * @returns {CommandResolvedValue<K> | undefined}
  */
-declare function CommandResolveReference(cmd: ICommand): ICommand | undefined;
+declare function CommandResolveProperty<K extends CommandResolvableKey>(cmd: CommandLike, property: K): CommandResolvedValue<K> | undefined;
+/**
+ * Returns the final command definition after following Reference aliases
+ * @param {CommandLike} cmd
+ * @returns {CommandLike}
+ */
+declare function CommandResolveReference(cmd: CommandLike): CommandLike;
 /**
  *
  * @param {ICommand} cmd
  * @param {string[]} remaining
  * @param {string[]} parts
- * @param {{setCommand?: string}} [options]
+ * @param {{setCommand?: string} & Pick<CommandHelpOptions, "command" | "subcommand" | "remaining">} [options]
  * @returns {boolean} if completion was handled
  */
 declare function CommandHandleSubcommandCompletion(cmd: ICommand, remaining: string[], parts: string[], options?: {
     setCommand?: string;
-}): boolean;
+} & Pick<CommandHelpOptions, "command" | "subcommand" | "remaining">): boolean;
 /**
  *
  * @param {ICommand | Subcommand} cmd
  * @param {string[]} remaining
  * @param {string[]} parts
- * @param {{setCommand?: string}} [options]
+ * @param {{setCommand?: string} & Pick<CommandHelpOptions, "command" | "subcommand">} [options]
  * @returns {boolean | 'complete'} if completion was handled
  */
 declare function CommandHandleArgumentCompletion(cmd: ICommand | Subcommand, remaining: string[], parts: string[], options?: {
     setCommand?: string;
-}): boolean | "complete";
+} & Pick<CommandHelpOptions, "command" | "subcommand">): boolean | "complete";
 /**
  *
  * @param {string} setCommand
@@ -133,6 +139,34 @@ declare function CommandChangeChatInputContent(msg: string): void;
  * @returns {number}
  */
 declare function CommandGetChatRoomCaretPosition(): number;
+/**
+ * @param {ArgumentDef} arg
+ * @returns {string}
+ */
+declare function CommandGetArgumentKey(arg: ArgumentDef): string;
+/**
+ * @param {string} msg
+ * @param {string} setCommand
+ * @returns {string[]}
+ */
+declare function CommandGetRemainingArguments(msg: string, setCommand: string): string[];
+/**
+ * @param {{
+ *   command: ICommand,
+ *   subcommand?: Subcommand,
+ *   active: ICommand | Subcommand,
+ *   remaining: string[],
+ *   argIndex: number,
+ * }} options
+ * @returns {CommandSuggestionsContext}
+ */
+declare function CommandBuildSuggestionsContext(options: {
+    command: ICommand;
+    subcommand?: Subcommand;
+    active: ICommand | Subcommand;
+    remaining: string[];
+    argIndex: number;
+}): CommandSuggestionsContext;
 /** @type {ICommand[]} */
 declare var Commands: ICommand[];
 /** @readonly */
@@ -161,35 +195,32 @@ declare namespace CommandsHelp {
      */
     function _GetDescription(command: ICommand, translationTag?: string): string;
     /**
-     * @param {string | Partial<Record<ServerChatRoomLanguage | "TW", string>>} arg
+     * @param {ArgumentDef} arg
+     * @param {string} translationTag
+     * @param {"name" | "desc"} type
      * @returns {string}
      */
-    function _GetArgumentTranslated(arg: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>): string;
+    function _GetArgumentTranslated(arg: ArgumentDef, translationTag?: string, type?: "name" | "desc"): string;
     /**
     * @param {ICommand} command
     * @param {string} setCommand
     * @param {boolean} singleCommand
+    * @param {Pick<CommandHelpOptions, "remaining" | "command" | "subcommand">} [options]
     * @returns {HTMLOptionsUnion}
     */
-    function _BuildCommand(command: ICommand, setCommand: string, singleCommand: boolean): HTMLOptionsUnion;
+    function _BuildCommand(command: ICommand, setCommand: string, singleCommand: boolean, options?: Pick<CommandHelpOptions, "remaining" | "command" | "subcommand">): HTMLOptionsUnion;
     /**
      * @param {ICommand[]} commands
-     * @param {{ setCommand?: string}} [options]
+     * @param {CommandHelpOptions} [options]
      * @returns
      */
-    function _BuildHelp(commands: ICommand[], { setCommand }?: {
-        setCommand?: string;
-    }): HTMLDivElement;
+    function _BuildHelp(commands: ICommand[], { setCommand, remaining, command, subcommand }?: CommandHelpOptions): HTMLDivElement;
     /**
      * Prints out the help for commands
      * @param {Optional<ICommand, 'Action'>[]} commands - list of commands
-     * @param {{ doShowEscapeHint?: boolean, setCommand?: string, publish?: boolean }} [options] - if message about message escaping should be shown
+     * @param {CommandHelpOptions} [options] - if message about message escaping should be shown
      */
-    function ShowFor(commands: Optional<ICommand, "Action">[], options?: {
-        doShowEscapeHint?: boolean;
-        setCommand?: string;
-        publish?: boolean;
-    }): HTMLDivElement;
+    function ShowFor(commands: Optional<ICommand, "Action">[], options?: CommandHelpOptions): HTMLDivElement;
     /**
      * Prints out the help for commands with tags that include `low`
      * @param {string} low - lower case search keyword for tags
