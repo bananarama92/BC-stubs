@@ -98,7 +98,8 @@
             "MaidBra": 56,
             "SatinCorset": 57,
             "SportBra": 58,
-            "SportSwimsuit": 59
+            "SportSwimsuit": 59,
+            "FeatherLingerie": 60
         }
     },
     "Bracelet": {
@@ -229,7 +230,8 @@
             "GhostCloak": 109,
             "MaidApron": 110,
             "MilitaryFatigue": 111,
-            "Transparentraincoat": 112
+            "Transparentraincoat": 112,
+            "Plugsuit": 113
         }
     },
     "ClothAccessory": {
@@ -2692,7 +2694,8 @@
             "BartenderVestM": 14,
             "GlossyBodystocking": 15,
             "Plugsuit": 16,
-            "TransparentBunnyGirl": 17
+            "TransparentBunnyGirl": 17,
+            "FeatherLingerie": 18
         }
     },
     "SuitLower": {
@@ -2873,7 +2876,9 @@
             "JacketHoodie": 7,
             "Hoodie": 8,
             "WoolCoat": 9,
-            "LabCoat": 10
+            "LabCoat": 10,
+            "GhostCloak": 11,
+            "Transparentraincoat": 12
         }
     },
     "Decals": {

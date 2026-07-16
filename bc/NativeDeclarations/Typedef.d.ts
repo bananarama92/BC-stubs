@@ -4025,8 +4025,10 @@ interface GameMagicBattleParameters {
 	TeamType: "FreeForAll" | "House";
 }
 
+type GameGGTSLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
 interface GameGGTSParameters {
-	Level: number;
+	Level: GameGGTSLevel;
 	Time: number;
 	Strike: number;
 	Rule: string[];
@@ -4859,10 +4861,10 @@ interface WheelFortuneOptionType {
 // #region ClubCard
 
 type ClubCardTag =
-	| "All"
+	| "All Cards"
 	| "Selected Cards"
-	| "Event"
-	| "NoGroup"
+	| "Event Cards"
+	| "Ungrouped"
 	| "Liability"
 	| "Staff"
 	| "Police"
@@ -4880,7 +4882,8 @@ type ClubCardTag =
 	| "Submissive / Slave"
 	| "Exhibitionist"
 	| "Latex"
-	| "Reward";
+	| "Online Player"
+	| "Reward Cards";
 
 interface ClubCard {
 	ID: number;

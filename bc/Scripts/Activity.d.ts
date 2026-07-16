@@ -10,9 +10,9 @@ declare function ActivityLog(...args: any[]): void;
 declare function ActivityAllowed(): boolean;
 /**
  * Loads the activity dictionary that will be used throughout the game to output messages. Loads from cache first if possible.
- * @return {void} - Nothing
+ * @return {TextCache} - The activity dictionary
  */
-declare function ActivityDictionaryLoad(): void;
+declare function ActivityDictionaryLoad(): TextCache;
 /**
  * Translates the activity dictionary.
  * @param {string} CachePath - Path to the language cache.

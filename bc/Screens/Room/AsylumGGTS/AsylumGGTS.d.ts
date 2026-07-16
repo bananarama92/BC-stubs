@@ -21,9 +21,9 @@ declare function AsylumGGTSLevelCompleted(): boolean;
 /**
  * Returns the character GGTS level
  * @param {Character} C - The character to evaluate
- * @returns {number} - Nothing
+ * @returns {GameGGTSLevel} - Nothing
  */
-declare function AsylumGGTSGetLevel(C: Character): number;
+declare function AsylumGGTSGetLevel(C: Character): GameGGTSLevel;
 /**
  * Returns the character's current level timer
  * @param {Character} C
@@ -72,10 +72,10 @@ declare function AsylumGGTSClick(): void;
 declare function AsylumGGTSSAddItems(): void;
 /**
  * Starts a new GGTS level for the player
- * @param {number} Level - The new level to set
+ * @param {GameGGTSLevel} Level - The new level to set
  * @returns {void} - Nothing
  */
-declare function AsylumGGTSStartLevel(Level: number): void;
+declare function AsylumGGTSStartLevel(Level: GameGGTSLevel): void;
 /**
  * Quits GGTS and deletes the player data for the game
  * @returns {void} - Nothing
