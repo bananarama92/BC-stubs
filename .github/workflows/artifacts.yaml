@@ -78,31 +78,9 @@ jobs:
 
       - name: Generate .d.ts
         run: |
-          cd Bondage-College/BondageClub
-          cp ../../.github/tsconfig.json tsconfig.json
-
-          # Extract all native .d.ts files and store them in a dedicated directory
-          mkdir -p dist/NativeDeclarations
-          find . -iname "*.d.ts" -not -path "./Scripts/lib/*" -not -path "./Tools/*" -not -path "./Screens/MiniGame/KinkyDungeon/*" -exec cp {} dist/NativeDeclarations/ \;
-          cp ../../.github/lzstring.d.ts dist/NativeDeclarations/
-          cp Scripts/lib/bcmodsdk.d.ts dist/bcmodsdk.d.ts
-          rm dist/NativeDeclarations/MessagesPatch.d.ts
-          rm dist/NativeDeclarations/DeclarationsExpensive.d.ts
-
-          # Convert namespace-embedded functions into proper methods so that TS actually picks up their docstrings
-          # (xref https://github.com/bananarama92/BC-stubs/issues/18)
-          python ../../namespace_function_sanitize.py .
-
-          # Get rid of JSDoc @private/@protected comments as TS lacks support for those in anonymous classes because... reasons?
-          # (xref https://github.com/microsoft/TypeScript/issues/30355)
-          python ../../remove_private_protected.py .
-
-          set +e
-          npx -p ../../node_modules/typescript tsc
-          set -e
-
-          rm -rf ../../bc
-          mv dist ../../bc
+          python ./build.py Bondage-College/BondageClub
+          rm -rf bc
+          mv Bondage-College/BondageClub/dist bc
 
       - name: Update BC-data
         run: |
