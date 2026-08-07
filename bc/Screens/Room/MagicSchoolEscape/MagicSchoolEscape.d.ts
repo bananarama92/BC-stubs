@@ -26,7 +26,7 @@ declare function MagicSchoolEscapeSetTime(Seconds: number): void;
  */
 declare function MagicSchoolEscapeStart(): void;
 declare var MagicSchoolEscapeBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MagicSchoolEscapeInstructor: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MagicSchoolEscapeInstructor: NPCCharacter;
 declare var MagicSchoolEscapeSeconds: number;
 declare var MagicSchoolEscapeTimer: number;

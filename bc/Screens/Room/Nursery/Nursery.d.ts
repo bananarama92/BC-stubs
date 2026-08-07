@@ -24,11 +24,13 @@ declare function NurseryIsPacified(character?: Character): boolean;
  * @returns {boolean}
  */
 declare function NurseryIsRestrainedPacifier(item: Asset): boolean;
+declare function NurseryPlayerIsPacified(): boolean;
 declare function NurseryPlayerIsHarnessPacified(): boolean;
 declare function NurseryPlayerLostBinky(): boolean;
 declare function NurseryPlayerLostBinkyAgain(): boolean | null;
 declare function NurseryPlayerWearingBabyDress(): boolean;
 declare function NurseryPlayerReadyToAppologise(): boolean;
+declare function NurseryPlayerDiapered(): boolean | undefined;
 declare function NurseryPlayerReadyDiapered(): boolean;
 declare function NurseryPlayerCanRegress(): boolean;
 declare function NurseryLoad(): Promise<void>;

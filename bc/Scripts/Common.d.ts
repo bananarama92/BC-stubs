@@ -253,6 +253,7 @@ declare function CommonGenerateUniqueID(): string;
  * Converts an array to a string separated by commas (equivalent of .join(","))
  * @param {readonly unknown[]} Arr - Array to convert to a joined string
  * @returns {string} - String of all the array items joined together
+ * @deprecated - use .join(",");
  */
 declare function CommonConvertArrayToString(Arr: readonly unknown[]): string;
 /**
@@ -398,9 +399,12 @@ declare function CommonStringTitlecase(str: string): string;
 /**
  * Censors a string or words in that string based on the player preferences
  * @param {string} S - The string to censor
+ * @param {Character & { ChatSettings: ChatSettingsType }} C
  * @returns {String} - The censored string
  */
-declare function CommonCensor(S: string): string;
+declare function CommonCensor(S: string, C?: Character & {
+    ChatSettings: ChatSettingsType;
+}): string;
 /**
  * Type guard which checks that a value is a simple object (i.e. a non-null object which is not an array)
  * @param {unknown} value - The value to test
@@ -854,6 +858,20 @@ declare function CommonRange(start: number, end?: number, step?: number): number
  */
 declare function CommonFindMap<Tinp, Tout>(array: readonly Tinp[], predicateMapper: (value: Tinp, index: number, obj: readonly Tinp[]) => undefined | null | Tout, thisArg?: any): undefined | Tout;
 /**
+ * Take an array and find all element that map to a user-specified value, returning the mapped value.
+ *
+ * Effectively combines {@link array.filter} and {@link array.map}.
+ * @template Tinp
+ * @template Tout
+ * @param {readonly Tinp[]} array - The array in question
+ * @param {(value: Tinp, index: number, obj: readonly Tinp[]) => undefined | null | Tout} predicateMapper - A mapping
+ * predicate. All non-nullish return value will be returned by the outer function.
+ * @param {any} [thisArg] - If provided, it will be used as the this value for each invocation of
+ * predicate. If it is not provided, undefined is used instead.
+ * @returns {Tout[]} - All successfully mapped value
+ */
+declare function CommonFilterMap<Tinp, Tout>(array: readonly Tinp[], predicateMapper: (value: Tinp, index: number, obj: readonly Tinp[]) => undefined | null | Tout, thisArg?: any): Tout[];
+/**
  * Splice a string into a string at a specific index.
  *
  * The string will be automatically extended using {@link defaultValue} if the index falls outside its bounds.
@@ -875,6 +893,19 @@ declare function CommonStringSplice(string: string, index: number, value: string
 declare function CommonUnwrapThunk(thunk: Thunk<unknown, unknown[]>, ...args: unknown[]): unknown;
 declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
 declare function CommonUnwrapThunk<T, A extends readonly unknown[]>(thunk: Thunk<T, A>, ...args: A): T;
+/**
+ * Read text data from the browser's clipboard.
+ *
+ * @param {(result: Result<string | null, ClipboardError>) => void} cb}
+ */
+declare function CommonClipboardRead(cb: (result: Result<string | null, ClipboardError>) => void): void;
+/**
+ * Write text data to the browser's clipboard.
+ *
+ * @param {string} data
+ * @param {undefined | ((result: Result<null, ClipboardError>) => void)} [cb]
+ */
+declare function CommonClipboardWrite(data: string, cb?: undefined | ((result: Result<null, ClipboardError>) => void)): void;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {ModuleType} */
@@ -1059,6 +1090,14 @@ declare class Result<T, E extends Error = Error> {
     /** @type {E | null} */
     error: E | null;
     /**
+     * Convert the {@link Result.Error} message into a list of DOM elements as usable by the likes of {@link ElementDOMScreen.setStatus}).
+     *
+     * Always returns an empty list for nullish errors
+     * @param {null | string | Element | readonly (string | Element)[]} customMessage A custom message to be used as prefix
+     * @returns {(string | Element)[]} The list of DOM elements
+     */
+    errorAsDOM(customMessage?: null | string | Element | readonly (string | Element)[]): (string | Element)[];
+    /**
      * Returns whether the operation was a success
      */
     get ok(): boolean;
@@ -1071,4 +1110,10 @@ declare class Result<T, E extends Error = Error> {
      * This either returns the successful return of the operation, or throws the error it reported
      */
     unwrap(): T;
+}
+declare class ClipboardError extends Error {
+    /**
+     * @param {string} message
+     */
+    constructor(message: string, options?: {});
 }

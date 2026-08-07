@@ -1,2 +1,0 @@
-declare function AssetsItemHeadInteractiveVRHeadsetScriptDraw(drawData: DynamicScriptCallbackData<AnimationPersistentData>): void;
-declare const AssetsItemHeadInteractiveVRHeadsetBackgrounds: string[];

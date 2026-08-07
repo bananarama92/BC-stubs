@@ -20,9 +20,10 @@ declare function SlaveMarketCannotStartAuctionRoom(): boolean;
 declare function SlaveMarketCanBeAuctioned(): boolean;
 /**
  * Checks if the character has a specific title
+ * @param {TitleName} Title - The title to check for
  * @returns {boolean} - TRUE if the character has the title in the parameter
  */
-declare function SlaveMarketSlaveTitleIs(Title: any): boolean;
+declare function SlaveMarketSlaveTitleIs(Title: TitleName): boolean;
 declare function SlaveMarketLoad(): Promise<void>;
 /**
  * Runs and draws the slave market, the screen can be used to search for a daily job.
@@ -79,12 +80,12 @@ declare function SlaveMarketPlayerAuctionEnd(): Promise<void>;
  */
 declare function SlaveMarketPlayerAuctionTransfer(): void;
 declare var SlaveMarketBackground: string;
-/** @type {null | NPCCharacter} */
-declare var SlaveMarketMistress: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var SlaveMarketSlave: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var SlaveMarketMistress: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var SlaveMarketSlave: NPCCharacter;
 /** @type {null | NPCCharacter} */
 declare var SlaveMarketSlaveToTrain: null | NPCCharacter;
 declare var SlaveMarketTrainingBackgroundList: string[];
-/** @type {null | NPCCharacter} */
-declare var SlaveMarketBuyer: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var SlaveMarketBuyer: NPCCharacter;

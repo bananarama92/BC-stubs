@@ -200,10 +200,10 @@ declare function CharacterUnderwear(C: Character, Appearance: readonly Item[]): 
 /**
  * Redresses a character based on a given appearance array
  * @param {Character} C - Character to redress
- * @param {Array.<*>} Appearance - Appearance array to redress the character with
+ * @param {readonly Item[]} Appearance - Appearance array to redress the character with
  * @returns {void} - Nothing
  */
-declare function CharacterDress(C: Character, Appearance: Array<any>): void;
+declare function CharacterDress(C: Character, Appearance: readonly Item[]): void;
 /**
  * Removes all binding items from a given character
  * @param {Character} C - Character to release
@@ -513,6 +513,11 @@ declare function CharacterCanChangeToPose(C: Character, poseName: AssetPoseName)
  * @param {"black" | "white" | "ghost" | "friend"} list
  */
 declare function CharacterIsOnList(listOwner: Character, listTarget: Character | number, list: "black" | "white" | "ghost" | "friend"): boolean;
+/**
+ * Get the character's height
+ * @param {Character} C
+ */
+declare function CharacterGetHeight(C: Character): number;
 /** @type {Character[]} */
 declare var Character: Character[];
 declare var CharacterNextId: number;

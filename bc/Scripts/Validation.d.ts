@@ -193,6 +193,13 @@ declare function ValidationCanAddOrRemoveItem(item: Item, { C, fromOwner, fromLo
  */
 declare function ValidationSanitizeProperties(C: Character, item: Item): boolean;
 /**
+ * Sanitize the `Color` array on the item, converting the old `undefined | string | string[]` format to `string[]` if so required
+ * @param {Item} item - The item whose `Color` should be sanitized
+ * @returns {boolean} - TRUE if the item's `Color` was modified as part of the sanitization process
+ * (indicating it was not a valid string array), FALSE otherwise
+ */
+declare function ValidationSanitizeColor(item: Item): boolean;
+/**
  * Sanitizes the `Effect` array on an item's Property object, if present. This ensures that it is a valid array of
  * strings, and that each item in the array is present in the asset's `AllowEffect` array.
  * @param {Character} C - The character on whom the item is equipped

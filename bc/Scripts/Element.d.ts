@@ -10,8 +10,14 @@ declare function ElementValue(ID: string | null, Value?: string): string;
  * @param {string | null} ID - The id of the element for which we want to get/set the value.
  * @param {string} [Content] - The content/inner HTML to give to the element (if applicable)
  * @returns {string} - The content of the element (When no Content parameter was passed to the function)
+ * @deprecated Use {@link ElementClearContents} or {@link ElementCreate} instead.
  */
 declare function ElementContent(ID: string | null, Content?: string): string;
+/**
+ * Clears the contents of an HTML element
+ * @param {string} ID
+ */
+declare function ElementClearContents(ID: string): void;
 /**
  * @template {keyof HTMLElementScalarTagNameMap} T
  * @overload
@@ -52,18 +58,14 @@ declare function ElementCreateForm(ID: string | null): HTMLFormElement;
  * @returns {HTMLTextAreaElement}
  */
 declare function ElementCreateTextArea(ID: string | null, form?: HTMLElement): HTMLTextAreaElement;
-/**
- * Blur event listener for `number`-based `<input>` elements that automatically sanitizes the input value the moment the element is deselected.
- * @this {HTMLInputElement}
- * @param {FocusEvent} event
- */
 declare function ElementNumberInputBlur(this: HTMLInputElement, event: FocusEvent): void;
-/**
- * Wheel event listener for `number`-based `<input>` elements. Allows one to increment/decrement the value
- * @this {HTMLInputElement}
- * @param {WheelEvent} event
- */
+declare class ElementNumberInputBlur {
+    value: string;
+}
 declare function ElementNumberInputWheel(this: HTMLInputElement, event: WheelEvent): void;
+declare class ElementNumberInputWheel {
+    valueAsNumber: number | undefined;
+}
 /**
  * Creates a new text input element in the main document.Does not create a new element if there is already an existing one with the same ID
  * @param {string | null} ID - The id of the input tag to create.
@@ -259,17 +261,15 @@ declare function ElementCreateSettingsLabel(label: string, forId: HTMLElement | 
  * Create a group of radio buttons
  * @param {string} id
  * @param {string} defaultValue
- * @param {(this: HTMLButtonElement, ev: PointerEvent, key: any) => any} onclick
+ * @param {(this: HTMLButtonElement, ev: PointerEvent) => void} onclick
  * @param {{
  * htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>,
  * options?: ElementButton.Options,
- * onClick?: (this: HTMLButtonElement, ev: PointerEvent, key: string) => any
  * }[]} options
  */
-declare function ElementCreateRadioButtonGroup(id: string, onclick: (this: HTMLButtonElement, ev: PointerEvent, key: any) => any, defaultValue: string, options: {
+declare function ElementCreateRadioButtonGroup(id: string, onclick: (this: HTMLButtonElement, ev: PointerEvent) => void, defaultValue: string, options: {
     htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>;
     options?: ElementButton.Options;
-    onClick?: (this: HTMLButtonElement, ev: PointerEvent, key: string) => any;
 }[]): HTMLFieldSetElement;
 /**
  * Construct a search-based `<input>` element that offers suggestions based on the passed callbacks output.
@@ -789,6 +789,35 @@ declare namespace ElementUnpackIDs {
      * @returns {T[]} The list of elements (may or may not be shorter than the ID list)
      */
     function fromAttribute<T extends HTMLElement = HTMLElement>(element: Element, attrName: string, options?: null | Exclude<ElementUnpackIDs.Options<T>, "root">): T[];
+}
+declare namespace ElementSearchQuery {
+    /**
+     * Highlight search query matches within the passed elements using `<em class="highlight">`, returning a list of all highlighted elements
+     * @template {Element} T
+     * @param {readonly T[] | NodeListOf<T>} elements The list of to-be elements whose textContent is to be matched
+     * @param {string} query The search query
+     * @param {null | ElementSearchQuery.Options} [options] Further options
+     * @returns {T[]} The matched elements
+     */
+    function highlight<T extends Element>(elements: readonly T[] | NodeListOf<T>, query: string, options?: null | ElementSearchQuery.Options): T[];
+    /**
+     * Clear all query matches from the passed elements. Equivalent to passing an empty string query to {@link highlight}.
+     * @template {Element} T The list of to-be elements whose textContent is to be matched
+     * @param {readonly T[] | NodeListOf<T>} elements
+     * @returns {T[]} The matched elements
+     */
+    function clear<T extends Element>(elements: readonly T[] | NodeListOf<T>): T[];
+    /**
+     * private
+     * @param {string} textContent
+     * @param {RegExp} pattern
+     * @param {ElementSearchQuery.Options} options
+     * @returns {{ match: boolean, innerHTML: string }}
+     */
+    function _getInnerHTML(textContent: string, pattern: RegExp, options: ElementSearchQuery.Options): {
+        match: boolean;
+        innerHTML: string;
+    };
 }
 /**
  * HTML element for color tint pickers, functioning as some kind of 2D `<input type='range'>` input for selecting the color's saturation and brightness.

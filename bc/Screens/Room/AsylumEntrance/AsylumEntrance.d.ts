@@ -28,6 +28,26 @@ declare function AsylumEntranceNurseHasGGTSCollar(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function AsylumEntranceCanPlayClubCard(): boolean;
+/**
+ * Whether the player has been isolated to the asylum
+ * @returns {boolean}
+ */
+declare function AsylumIsIsolated(): boolean;
+/**
+ * Whether the player is committed to the asylum
+ * @returns {boolean}
+ */
+declare function AsylumIsCommitted(): boolean;
+/**
+ * Whether the player is forced to do GGTS time
+ * @returns {boolean}
+ */
+declare function AsylumHasForcedGGTSTime(): boolean;
+/**
+ * Whether the player has escaped the asylum
+ * @returns {boolean}
+ */
+declare function AsylumHasEscaped(): boolean;
 declare function AsylumEntranceLoad(): Promise<void>;
 /**
  * // Runs the room (shows the nurse, player, icons and committed time).
@@ -246,11 +266,11 @@ declare function AsylumEntranceClubCardStart(): void;
  */
 declare function AsylumEntranceClubCardEnd(): Promise<void>;
 declare var AsylumEntranceBackground: string;
-/** @type {null | NPCCharacter} */
-declare var AsylumEntranceNurse: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var AsylumEntranceKidnapNurse: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var AsylumEntranceEscapedPatient: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceKidnapNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceEscapedPatient: NPCCharacter;
 declare var AsylumEntranceEscapedPatientWillBribe: boolean;
 declare var AsylumEntranceEscapedPatientWillJoin: boolean;

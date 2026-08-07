@@ -76,12 +76,10 @@ declare function ArcadeKinkyDungeonStartLoad(): Promise<void>;
  */
 declare function ArcadeKinkyDungeonLoad(): boolean;
 declare var ArcadeBackground: string;
-/** @type {null | NPCCharacter} */
-declare var ArcadeEmployee: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var ArcadePlayer: null | NPCCharacter;
-declare var ArcadeAskedFor: null;
-declare var ArcadePrice: number;
+/** @type {NPCCharacter} */
+declare var ArcadeEmployee: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var ArcadePlayer: NPCCharacter;
 declare var ArcadeDeviousChallenge: boolean;
 declare var ArcadeCannotDoDeviousChallenge: boolean;
 declare var KinkyDungeonFiles: string[];

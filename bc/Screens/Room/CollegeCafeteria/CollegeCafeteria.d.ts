@@ -43,11 +43,14 @@ declare function CollegeCafeteriaFightEnd(): void;
  */
 declare function CollegeCafeteriaInviteToPrivateRoom(): void;
 declare var CollegeCafeteriaBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeCafeteriaSidney: null | NPCCharacter;
+/**
+ * Loaded in CollegeCafeteriaLoad; replaced with a random student when Sidney is away or after inviting her to the private room.
+ * @type {NPCCharacter}
+ */
+declare var CollegeCafeteriaSidney: NPCCharacter;
 declare var CollegeCafeteriaSidneyStatus: string;
 declare var CollegeCafeteriaSidneyLove: number;
-/** @type {null | NPCCharacter} */
-declare var CollegeCafeteriaStudentRight: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var CollegeCafeteriaStudentFarRight: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeCafeteriaStudentRight: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeCafeteriaStudentFarRight: NPCCharacter;

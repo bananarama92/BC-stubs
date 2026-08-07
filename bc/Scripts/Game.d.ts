@@ -56,6 +56,10 @@ declare function GameClick(event: PointerEvent): void;
  * @param {HTMLCanvasElement} canvas
  */
 declare function GamePointerCancel(event: PointerEvent, canvas: HTMLCanvasElement): void;
+/**
+ * @param {PointerEvent} event
+ */
+declare function GamePointerOut(event: PointerEvent): void;
 /** BC's version */
 declare var GameVersion: string;
 declare const GameVersionFormat: RegExp;

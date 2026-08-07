@@ -34,12 +34,11 @@ declare function ClubCardSendRequestResetGame(): void;
  * Sends messages immediately if their type matches the ClubCardImmediateMessageTypes array.
  *
  * @param {string} TextGetKey - Localization key
- * @param {string} MessageType - Message type (constant)
+ * @param {ClubCardMessageType} MessageType - Message type (constant)
  * @param {Record<string, any>} placeholders - Dynamic data for text replacement
  * @param {ClubCardPlayer|null} TargetPlayer - The source player
- * @param {string} MessageText - if TextGetKey is not used
  */
-declare function ClubCardMessageAdd(MessageType: string, TextGetKey: string, placeholders?: Record<string, any>, TargetPlayer?: ClubCardPlayer | null, MessageText?: string): void;
+declare function ClubCardMessageAdd(MessageType: ClubCardMessageType, TextGetKey: string, placeholders?: Record<string, any>, TargetPlayer?: ClubCardPlayer | null): void;
 /**
  * Sends a message to the render log and synchronizes it with other players.
  * This method is used for immediate messages and for sending processed messages from storage.
@@ -82,10 +81,10 @@ declare function ClubCardMessagesMergeSteal(stealMoneyMessages: Array<{
 }>): void;
 /**
  * Generates a formatted message text by replacing placeholders with actual values.
- * @param {ClubCardMessage} ClubCardMessage - Message Item
- * @returns {string} MessageText
+ * @param {ClubCardMessage} message - Message Item
+ * @returns {(string | HTMLElement)[]} MessageText
  */
-declare function ClubCardMessageGetText(ClubCardMessage: ClubCardMessage): string;
+declare function ClubCardMessageGetHTML(message: ClubCardMessage): (string | HTMLElement)[];
 /**
    * Updated the text by mask, for InnerHTML
    * The function finds the necessary words from the arrays and adds color labels to them.
@@ -275,10 +274,10 @@ declare function ClubCardGroupInDiscardPileCount(CCPlayer: ClubCardPlayer, Group
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {ClubCard} Card - The card object to remove
  * @param {boolean|null} DontDiscard - If the card dont need to go to the discard pile
- * @param {string} [MessageType=ClubCardMessageType.PLAYERCARDSLEFT]
+ * @param {ClubCardMessageType} [MessageType=ClubCardMessageType.PLAYERCARDSLEFT]
  * @returns {void} - Nothing
  */
-declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard, DontDiscard?: boolean | null, MessageType?: string): void;
+declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard, DontDiscard?: boolean | null, MessageType?: ClubCardMessageType): void;
 /**
  * Gets the updated cost for a player to level up
  * @param {ClubCardPlayer} CCPlayer - The club card player
@@ -471,11 +470,11 @@ declare function ClubCardLoadDeckNumber(DeckNum: number): void;
 /**
  * Draw the club card player hand on screen, show only sleeves if not controlled by player
  * @param {Character} Char - The character to link to that club card player
- * @param {String} Cont - The control linked to that player
+ * @param {"Player" | "AI" | "Online"} Cont - The control linked to that player
  * @param {readonly number[]} Cards - The cards to build the deck with
  * @returns {void} - Nothing
  */
-declare function ClubCardAddPlayer(Char: Character, Cont: string, Cards: readonly number[]): void;
+declare function ClubCardAddPlayer(Char: Character, Cont: "Player" | "AI" | "Online", Cards: readonly number[]): void;
 /**
  * The player can get rewarded with a new card if she wins VS a specific opponent
  * @returns {void} - Nothing
@@ -969,13 +968,17 @@ declare const ClubCardStartTurnType: Readonly<{
 }>;
 /**
  * Keys for filling in the function parameters ClubCardMessageAdd
+ * @satisfies {Record<ClubCardPlaceholderKeysType, ClubCardPlaceholderKeysType>}
  */
 declare const ClubCardPlaceholderKeys: Readonly<{
+    MONEYLABEL: "MONEYLABEL";
+    FAMELABEL: "FAMELABEL";
     AMOUNT: "AMOUNT";
     CARDNAME: "CARDNAME";
-    FAMEMONEY: "FAMEMONEY";
     MONEYAMOUNT: "MONEYAMOUNT";
     FAMEAMOUNT: "FAMEAMOUNT";
+    TURNNUMBER: "TURNNUMBER";
+    PLAYERNAME: "PLAYERNAME";
 }>;
 /** @type {boolean} Variable to check if the start function of the turn has already been called or not. */
 declare let ClubCardIsStartTurn: boolean;

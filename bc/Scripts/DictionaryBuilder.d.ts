@@ -4,6 +4,13 @@
  */
 declare function IsTaggedDictionaryEntry(entry: ChatMessageDictionaryEntry | TaggedDictionaryEntry): entry is TaggedDictionaryEntry;
 /**
+ * @param {ChatMessageDictionaryEntry | TaggedDictionaryEntry} entry
+ * @template {string} T
+ * @param {T} tag
+ * @returns {entry is StringListDictionaryEntry<T>}
+ */
+declare function IsStringListDictionaryEntry<T extends string>(tag: T, entry: ChatMessageDictionaryEntry | TaggedDictionaryEntry): entry is StringListDictionaryEntry<T>;
+/**
  * @param {ChatMessageDictionaryEntry} entry
  * @returns {entry is CharacterReferenceDictionaryEntry}
  */
@@ -246,6 +253,12 @@ declare class DictionaryBuilder {
      * @returns
      */
     addGGTSData(action: GGTSDictionaryEntry["Action"]): this;
+    /**
+     * Add a tagged string list entry
+     * @param {`ForbiddenWords` | `BlockScreen` | `BlockAppearance` | `BlockItemGroup`} tag
+     * @param {string[]} words
+     */
+    stringList(tag: `ForbiddenWords` | `BlockScreen` | `BlockAppearance` | `BlockItemGroup`, words: string[]): this;
     /**
      * Adds a dictionary entry to the builder
      * @param {ChatMessageDictionaryEntry} entry - The dictionary entry to add

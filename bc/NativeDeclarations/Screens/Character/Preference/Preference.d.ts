@@ -208,3 +208,9 @@ type PreferenceExtensionsMenuButtonInfo = {
 };
 
 // #endregion
+
+//#region Advanced rules
+
+type AdvancedRuleScreen = keyof typeof MainHallAllowIDToScreenMap;
+
+//#endregion

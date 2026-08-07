@@ -110,11 +110,20 @@ declare function CharacterAppearanceSetHeightModifiers(C: Character): void;
  */
 declare function CharacterAppearanceBuildCanvas(C: Character): void;
 /**
+ * Get the current color of an item.
+ *
+ * @param {Character} C
+ * @param {Item | AssetGroupName} itemOrGroupName
+ * @returns {BCColor[] | undefined}
+ */
+declare function ItemGetColor(C: Character, itemOrGroupName: Item | AssetGroupName): BCColor[] | undefined;
+/**
  * Returns a value from the character current appearance
  * @template {keyof CharacterAppearanceValues} T
  * @param {Character} C - The character to get values from
  * @param {AssetGroupName} Group - The name of the group, whose values we want to get
  * @param {T} Type - The name of the value, we want to get
+ * @deprecated Use {@link InventoryGet}, {@link InventoryIsWorn}, {@link ItemGetColor}, etc.
  * @returns {CharacterAppearanceValues[T] | "None"} - The return value
  */
 declare function CharacterAppearanceGetCurrentValue<T extends keyof CharacterAppearanceValues>(C: Character, Group: AssetGroupName, Type: T): CharacterAppearanceValues[T] | "None";
@@ -145,10 +154,10 @@ declare function AppearanceMenuBuild(C: Character): void;
 /**
  * Checks if the appearance is locked for the current player
  * @param {Character} C - The character to validate
- * @param {String} GroupName - The group name to validate, can be "ALL" to check all groups
+ * @param {"ALL" | AssetGroupName} GroupName - The group name to validate, can be "ALL" to check all groups
  * @returns {boolean} - Return TRUE if the appearance group isn't blocked
  */
-declare function AppearanceGroupAllowed(C: Character, GroupName: string): boolean;
+declare function AppearanceGroupAllowed(C: Character, GroupName: "ALL" | AssetGroupName): boolean;
 /**
  * Run the character appearance selection screen. The function name is created dynamically.
  * @returns {void} - Nothing
@@ -402,6 +411,8 @@ declare var CharacterAppearanceGroups: AssetGroup[];
 declare var CharacterAppearanceAssets: Asset[];
 /** @type {AssetGroupName} */
 declare var CharacterAppearanceColorPickerGroupName: AssetGroupName;
+/** @type {ItemColor | undefined} */
+declare var CharacterAppearanceColorPickerBackup: ItemColor | undefined;
 declare var CharacterAppearanceColorPickerRefreshTimer: undefined;
 /**
  * The character we're editing the appearance of.

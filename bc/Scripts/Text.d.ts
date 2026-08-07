@@ -79,6 +79,7 @@ declare class TextCache {
      * Creates a new TextCache from the provided CSV file path asynchronously,
      * promising its return after the cache has been build.
      * @param {string} path - The path to the CSV lookup file for this TextCache instance
+     * @returns {Promise<TextCache>}
      */
     static buildAsync(path: string): Promise<TextCache>;
     /**

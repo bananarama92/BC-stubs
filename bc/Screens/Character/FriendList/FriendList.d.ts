@@ -122,13 +122,6 @@ declare function FriendListSort(sortingMode: FriendListSortingMode, sortingDirec
  */
 declare function FriendListSearchByProperties(text: string): void;
 /**
- * Highlights the searched text in the innerHTML
- * @param {Element} element
- * @param {string} text
- * @returns {string} - The innerHTML with the searched text highlighted
- */
-declare function FriendListHighlightProperty(element: Element, text: string): string;
-/**
  * Handles changes of the sorting mode
  * @param {FriendListSortingMode} sortingMode
  */

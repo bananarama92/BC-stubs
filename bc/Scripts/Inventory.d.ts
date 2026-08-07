@@ -322,10 +322,10 @@ declare function InventoryGetItemProperty<Name extends keyof ItemProperties | ke
 declare function InventoryExpressionTriggerApply(C: Character, expressions: readonly ExpressionTrigger[]): void;
 /**
 * Returns the padlock item that locks another item
-* @param {Item} Item - The item from appearance that must be scanned
+* @param {Item} item - The item from appearance that must be scanned
 * @returns {Item|null} - A padlock item or NULL if none
 */
-declare function InventoryGetLock(Item: Item): Item | null;
+declare function InventoryGetLock(item: Item): Item | null;
 /**
 * Returns TRUE if the item has an OwnerOnly flag, such as the owner padlock
 * @param {Item} Item - The item from appearance that must be scanned
@@ -408,10 +408,10 @@ declare function InventoryUnlock(C: Character, ItemOrGroupName: Item | AssetGrou
 /**
 * Applies a random lock on an item
 * @param {Character} C - The character on which the item must be locked
-* @param {Item} Item - The item from appearance to lock
+* @param {Item} item - The item from appearance to lock
 * @param {Character} AppliedBy - Set to TRUE if the source is the owner, to apply owner locks
 */
-declare function InventoryLockRandom(C: Character, Item: Item, AppliedBy: Character): false | undefined;
+declare function InventoryLockRandom(C: Character, item: Item, AppliedBy: Character): false | undefined;
 /**
  * Applies random locks on each character items that can be locked
  * @param {Character} C - The character on which the items must be locked

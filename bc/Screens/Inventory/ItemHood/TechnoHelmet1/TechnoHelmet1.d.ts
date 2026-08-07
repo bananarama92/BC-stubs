@@ -1,1 +1,0 @@
-declare function AssetsItemHoodTechnoHelmet1ScriptDraw(drawData: DynamicScriptCallbackData<AnimationPersistentData>): void;

@@ -106,7 +106,7 @@ declare function AsylumTherapyTherapyMiniGameEnd(): Promise<void>;
  */
 declare function AsylumTherapyPatientNew(): void;
 declare var AsylumTherapyBackground: string;
-/** @type {null | NPCCharacter} */
-declare var AsylumTherapyNurse: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var AsylumTherapyPatient: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumTherapyNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumTherapyPatient: NPCCharacter;
