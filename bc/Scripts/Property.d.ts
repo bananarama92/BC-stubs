@@ -1,10 +1,10 @@
 /**
  * Construct an item-specific ID for a properties input element (_e.g._ an opacity slider).
  * @param {string} Name - The name of the input element
- * @param {Item} Item - The item for whom the ID should be constructed; defaults to {@link DialogFocusItem}
+ * @param {Item | null} Item - The item for whom the ID should be constructed; defaults to {@link DialogFocusItem}
  * @returns {string} - The ID of the property
  */
-declare function PropertyGetID(Name: string, Item?: Item): string;
+declare function PropertyGetID(Name: string, Item?: Item | null): string;
 declare function PropertyOpacityInit(data: ExtendedItemData<any>, originalFunction: (C: Character, item: Item, push: boolean, refresh: boolean) => boolean, C: Character, item: Item, push: boolean, refresh: boolean): boolean;
 /**
  * Load function for items with opacity sliders. Constructs the opacity slider.
@@ -41,7 +41,7 @@ declare function PropertyOpacityExit({ asset }: ExtendedItemData<any>, OriginalF
  * @param {Item} Item - The shocking item; defaults to {@link DialogFocusItem}
  * @param {boolean} Automatic - Whether the shock was triggered automatically or otherwise manually
  */
-declare function PropertyShockPublishAction(C?: Character, Item?: Item, Automatic?: boolean): void;
+declare function PropertyShockPublishAction(C: Character, Item: Item, Automatic?: boolean): void;
 /**
  * Check if a given message warants automatic punishment given the provided sensitivety level
  * @param {0 | 1 | 2 | 3} Sensitivity - The auto-punishment sensitivety
@@ -64,6 +64,16 @@ declare function PropertyAutoPunishDetectSpeech(Item: Item, LastMessageLen?: num
  * @returns {boolean}
  */
 declare function PropertyPunishActivityCheck(name?: null | ActivityName | readonly ActivityName[], clearCache?: boolean): boolean;
+/**
+ * Assign a property on an {@link ItemProperties} record via dynamic key.
+ * Used by {@link PropertyUnion} and {@link PropertyDifference} where keys are only known at runtime.
+ * @template {ItemProperties} T
+ * @template {keyof T} K
+ * @param {T} output
+ * @param {K} key
+ * @param {T[K]} value
+ */
+declare function PropertyAssign<T extends ItemProperties, K extends keyof T>(output: T, key: K, value: T[K]): void;
 /**
  * Merge all passed item properties into the passed output, merging (and shallow copying) arrays if necessary.
  * @param {ItemProperties} output - The to be updated properties

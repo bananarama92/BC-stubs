@@ -155,13 +155,19 @@ declare function ServerBuildAppearanceDiff(assetFamily: IAssetFamily, appearance
  */
 declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, item: ItemBundle): null | Item;
 /**
+ * Convert an item into a (JSON-safe) item bundle
+ * @param {Item} item The to-be converted item
+ * @returns {ItemBundle} The matching item bundle
+ */
+declare function ServerBundledItemFromAppearanceItem(item: Item): ItemBundle;
+/**
  * Parses an item color, based on the allowed colorable layers on an asset, and the asset's color schema
  * @param {Asset} asset - The asset on which the color is set
  * @param {BCColor | readonly BCColor[]} color - The color value to parse
  * @param {readonly BCColor[]} schema - The color schema to validate against
- * @returns {undefined | BCColor | BCColor[]} - A parsed valid item color
+ * @returns {BCColor[]} - A parsed valid item color
  */
-declare function ServerParseColor(asset: Asset, color: BCColor | readonly BCColor[], schema: readonly BCColor[]): undefined | BCColor | BCColor[];
+declare function ServerParseColor(asset: Asset, color: BCColor | readonly BCColor[], schema: readonly BCColor[]): BCColor[];
 /**
  * Populates an appearance diff map with any required items, to ensure that all asset groups are present that need to
  * be.
@@ -492,8 +498,16 @@ declare const ServerDefaultTimeout: 3000;
 declare class ServerError extends Error {
 }
 declare class ServerTimeoutError extends ServerError {
+    /**
+     * @param {string} message
+     */
+    constructor(message?: string);
 }
 declare class ServerInProgressError extends ServerError {
+    /**
+     * @param {string} message
+     */
+    constructor(message?: string);
 }
 declare class ServerJoinError extends ServerError {
     /**

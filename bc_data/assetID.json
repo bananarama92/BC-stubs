@@ -22,7 +22,8 @@
             "FaceScars": 2,
             "FacePaints": 3,
             "Splatters": 4,
-            "FacePaint": 5
+            "FacePaint": 5,
+            "FaceCrests": 6
         }
     },
     "BodyUpper": {
@@ -99,7 +100,8 @@
             "SatinCorset": 57,
             "SportBra": 58,
             "SportSwimsuit": 59,
-            "FeatherLingerie": 60
+            "FeatherLingerie": 60,
+            "Pasties1": 61
         }
     },
     "Bracelet": {
@@ -112,7 +114,8 @@
             "LesBand": 4,
             "SpikeBands": 5,
             "Wristband": 6,
-            "WristWatch": 7
+            "WristWatch": 7,
+            "MaidBracelet": 8
         }
     },
     "Cloth": {
@@ -281,7 +284,10 @@
             "XmasLongShawl": 41,
             "XmasShortShawl": 42,
             "BowBelt": 43,
-            "BowAccessory": 44
+            "BowAccessory": 44,
+            "DollHandle": 45,
+            "Epaulet": 46,
+            "SchoolBag": 47
         }
     },
     "ClothLower": {
@@ -497,7 +503,10 @@
             "FemPelvisHarness": 8,
             "ButterflyGarter": 9,
             "BowBelt": 10,
-            "LaceLegRing": 11
+            "LaceLegRing": 11,
+            "LaceLegStrap": 12,
+            "SocksBow": 13,
+            "XLegStraps": 14
         }
     },
     "Glasses": {
@@ -524,7 +533,8 @@
             "HalfRimGlasses": 18,
             "Monocle": 19,
             "ShutterSunshades": 20,
-            "VintageSunglasses": 21
+            "VintageSunglasses": 21,
+            "FaceCrests": 22
         }
     },
     "Gloves": {
@@ -609,7 +619,9 @@
             "CustomizableFluffyEars3": 53,
             "Antenna": 54,
             "WingedHeadpiece": 55,
-            "BlackCatEarsMirror": 56
+            "BlackCatEarsMirror": 56,
+            "DaggerRibbon": 57,
+            "TongqianHairpin": 58
         }
     },
     "HairAccessory2": {
@@ -976,7 +988,9 @@
             "Gat": 46,
             "JesterHat": 47,
             "GIBeret": 48,
-            "NPCBalloon": 49
+            "NPCBalloon": 49,
+            "FeatheredHeadpiece": 50,
+            "WitchHat": 51
         }
     },
     "Head": {
@@ -1280,7 +1294,8 @@
             "GiftBox": 73,
             "XFrame": 74,
             "InflatableRestraintBag": 75,
-            "LongBag": 76
+            "LongBag": 76,
+            "Stroller": 77
         }
     },
     "ItemEars": {
@@ -1297,7 +1312,8 @@
             "CustomizableElfEars": 8,
             "CustomizableFluffyEars1": 9,
             "CustomizableFluffyEars2": 10,
-            "CustomizableFluffyEars3": 11
+            "CustomizableFluffyEars3": 11,
+            "CTHeadset": 12
         }
     },
     "ItemFeet": {
@@ -1742,7 +1758,8 @@
             "BishopGag": 100,
             "PumpkinHarnessGag": 101,
             "BallGag2": 102,
-            "ShapedMouthCage": 103
+            "ShapedMouthCage": 103,
+            "PacifierClip": 104
         }
     },
     "ItemMouth2": {
@@ -1849,7 +1866,8 @@
             "RoseBallGag": 98,
             "BishopGag": 99,
             "PumpkinHarnessGag": 100,
-            "BallGag2": 101
+            "BallGag2": 101,
+            "PacifierClip": 102
         }
     },
     "ItemMouth3": {
@@ -1953,7 +1971,8 @@
             "RoseBallGag": 95,
             "BishopGag": 96,
             "PumpkinHarnessGag": 97,
-            "BallGag2": 98
+            "BallGag2": 98,
+            "PacifierClip": 99
         }
     },
     "ItemNeck": {
@@ -2241,7 +2260,8 @@
             "ShinyLeotardLock": 31,
             "BarrelCorset": 32,
             "ExtremeCorset": 33,
-            "SteelBelt": 34
+            "SteelBelt": 34,
+            "FullBodyStraps": 35
         }
     },
     "ItemVulva": {
@@ -2308,7 +2328,9 @@
     "Jewelry": {
         "id": 58,
         "assets": {
-            "JewelrySet": 0
+            "JewelrySet": 0,
+            "AnkletA": 1,
+            "TriskelionNecklace": 2
         }
     },
     "LeftAnklet": {
@@ -2370,7 +2392,9 @@
             "Kigu2Hood": 34,
             "Splatters": 35,
             "KirugumiMask": 36,
-            "CybertechMask": 37
+            "CybertechMask": 37,
+            "FeatheredHeadpiece": 38,
+            "ForeheadJewelry": 39
         }
     },
     "Mouth": {
@@ -2695,7 +2719,9 @@
             "GlossyBodystocking": 15,
             "Plugsuit": 16,
             "TransparentBunnyGirl": 17,
-            "FeatherLingerie": 18
+            "FeatherLingerie": 18,
+            "DiaperSuit": 19,
+            "LatexBodysuit": 20
         }
     },
     "SuitLower": {
@@ -2720,7 +2746,8 @@
             "Stockings4": 16,
             "LongFishnets": 17,
             "RippedPantyhose": 18,
-            "YogaPants": 19
+            "YogaPants": 19,
+            "DiaperSuit": 20
         }
     },
     "TailStraps": {
@@ -2852,7 +2879,8 @@
             "FaceScars": 1,
             "FaceWritings": 2,
             "Splatters": 3,
-            "FacePaint": 4
+            "FacePaint": 4,
+            "FaceCrests": 5
         }
     },
     "BodyStyle": {
@@ -2921,7 +2949,8 @@
             "SpreaderBar": 34,
             "MissMariasManor": 35,
             "CRABS": 36,
-            "PirateRockRadio": 37
+            "PirateRockRadio": 37,
+            "MelodysBoutique": 38
         }
     }
 }

@@ -23,7 +23,7 @@ declare namespace Toasts {
 	/** Configuration options for displaying a toast notification. */
 	interface Options {
 		/** Text content of the toast. */
-		message: string;
+		message: string | Element | readonly (string | Element)[];
 		/** Title of the toast. */
 		title?: string;
 		/** Type and style of the toast. */

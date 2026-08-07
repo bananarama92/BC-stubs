@@ -271,10 +271,10 @@ declare function DialogEndKinkyDungeon(): Promise<void>;
 /**
  * Checks whether the player has a key for the item
  * @param {Character} C - The character on whom the item is equipped
- * @param {Item} Item - The item that should be unlocked
+ * @param {Item} item - The item that should be unlocked
  * @returns {boolean} - Returns true, if the player can unlock the given item with a key, false otherwise
  */
-declare function DialogHasKey(C: Character, Item: Item): boolean;
+declare function DialogHasKey(C: Character, item: Item): boolean;
 /**
  * Checks whether the player is able to unlock the provided item on the provided character
  * @param {Character} C - The character on whom the item is equipped

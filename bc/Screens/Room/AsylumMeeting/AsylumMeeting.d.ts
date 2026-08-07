@@ -18,8 +18,8 @@ declare function AsylumMeetingCanRestrainPlayer(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function AsylumMeetingCanKiss(): boolean;
-declare function AsylumMeetingWearingGGTS(): boolean;
-declare function AsylumMeetingGGTSCollar(): boolean;
+declare function AsylumMeetingWearingGGTS(): boolean | null;
+declare function AsylumMeetingGGTSCollar(): boolean | null;
 /**
  * Returns TRUE if the player and the current character can play Club Card
  * @returns {boolean} - Returns TRUE if both aren't restrained and gagged
@@ -100,8 +100,8 @@ declare function AsylumMeetingClubCardStart(): void;
  */
 declare function AsylumMeetingClubCardEnd(): void;
 declare var AsylumMeetingBackground: string;
-/** @type {null | NPCCharacter} */
-declare var AsylumMeetingPatientLeft: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumMeetingPatientLeft: NPCCharacter;
 declare var AsylumMeetingPatientFled: boolean;
-/** @type {null | NPCCharacter} */
-declare var AsylumMeetingPatientRight: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumMeetingPatientRight: NPCCharacter;

@@ -833,6 +833,19 @@ interface ModSdkModsReplyPayloadDictionaryEntry {
 }
 
 /**
+ * A tagged dictionary entry for a list of strings
+ */
+interface StringListDictionaryEntry<T> {
+	Tag: T;
+	Strings: string[];
+}
+
+type ForbiddenWordsDictionaryEntry = StringListDictionaryEntry<"ForbiddenWords">
+type BlockScreenDictionaryEntry = StringListDictionaryEntry<"BlockScreen">
+type BlockAppearanceDictionaryEntry = StringListDictionaryEntry<"BlockAppearance">
+type BlockItemGroupDictionaryEntry = StringListDictionaryEntry<"BlockItemGroup">
+
+/**
  * A dictionary entry with metadata about the chat message transmitted.
  *
  * Send with Chat and Whisper-type messages to inform the other side about the
@@ -866,7 +879,12 @@ type ChatMessageDictionaryEntry =
 	| MapViewChangeKeyEventDictionaryEntry
 	| GGTSDictionaryEntry
 	| ModSdkModsQueryPayloadDictionaryEntry
-	| ModSdkModsReplyPayloadDictionaryEntry;
+	| ModSdkModsReplyPayloadDictionaryEntry
+	| ForbiddenWordsDictionaryEntry
+	| BlockScreenDictionaryEntry
+	| BlockAppearanceDictionaryEntry
+	| BlockItemGroupDictionaryEntry
+;
 
 
 type ChatMessageDictionary = ChatMessageDictionaryEntry[];

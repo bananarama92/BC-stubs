@@ -31,5 +31,5 @@ declare function LARPClubCardStart(): void;
  */
 declare function LARPClubCardEnd(): Promise<void>;
 declare var LARPBackground: string;
-/** @type {null | NPCCharacter} */
-declare var LARPOrganiser: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var LARPOrganiser: NPCCharacter;

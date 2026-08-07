@@ -69,6 +69,11 @@ interface GamepadButton {
 	repeat: boolean;
 }
 
+// Workaround for https://github.com/microsoft/TypeScript/issues/283
+interface Node {
+	cloneNode(deep?: boolean): this;
+}
+
 interface RGBColor {
 	r: number;
 	g: number;
@@ -507,6 +512,10 @@ type PickLockAvailability = "" | "Disabled" | "PermissionsDisabled" | "Inaccessi
 
 type ItemVulvaFuturisticVibratorAccessMode = "" | "ProhibitSelf" | "LockMember";
 
+type ItemVulvaChastityCageExcitementLevel = "Excited" | "Aroused" | "Horny";
+
+type ItemVulvaChastityCageArousalPunishmentType = "Warning" | "Shrink" | "";
+
 type SpeechTransformName = "gagGarble" | "stutter" | "babyTalk" | "deafen";
 
 /** The {@link EffectName} values for all gag-related effects. */
@@ -666,7 +675,7 @@ type AssetAttribute =
 	| "FuturisticRecolor" | "FuturisticRecolorDisplay" | "FuturisticLock"
 	| "PortalLinkLockable" | `PortalLinkChastity${string}` | `PortalLinkActivity${ActivityName}` | `PortalLinkTarget${AssetGroupItemName}`
 	| "Diaper" | `Diaper${AssetGenericSize}` | "IsNurseryOutfit" | "Pacifier"
-	| "PetSuit"
+	| "PetSuit" | "ArcadeGaming"
 	;
 
 type PosePrerequisite = `Can${AssetPoseName}`;
@@ -1443,7 +1452,7 @@ interface ClipboardItemBundle {
 	/** The item's asset name */
 	A: string;
 	/** The item's color */
-	C?: ItemColor;
+	C: BCColor[];
 }
 
 type ClipboardAppearanceBundle = ClipboardItemBundle[];
@@ -1462,7 +1471,7 @@ type ActivityNameBasic = "Bite" | "Brush" | "Caress" | "Choke" | "Clean" | "Cudd
 	"GagKiss" | "GaggedKiss" | "Grope" | "HandGag" | "Kick" |
 	"Kiss" | "Lick" | "MassageFeet" | "MassageHands" | "MasturbateFist" |
 	"MasturbateFoot" |"MasturbateHand" | "MasturbateTongue" |
-	"MoanGag" | "MoanGagAngry" | "MoanGagGiggle" | "MoanGagGroan" | "MoanGagTalk" |
+	"ChewItem" | "MoanGag" | "MoanGagAngry" | "MoanGagGiggle" | "MoanGagGroan" | "MoanGagTalk" |
 	"MoanGagWhimper" | "Nibble" | "Nod" | "PenetrateFast" |
 	"PenetrateSlow" | "Pet" | "Pinch" | "PoliteKiss" | "Pull" |
 	"RestHead" | "Rub" | "Scratch" | "Sit" | "Slap" | "Spank" | "Step" | "StruggleArms" | "StruggleLegs" |
@@ -1470,7 +1479,7 @@ type ActivityNameBasic = "Bite" | "Brush" | "Caress" | "Choke" | "Clean" | "Cudd
 	"SistersHug" | "BrothersHandshake" | "SiblingsCheekKiss" | "CollarGrab"
 ;
 
-type ActivityNameItem = "Inject" | "MasturbateItem" | "PenetrateItem" | "PourItem" | "RollItem" | "RubItem" | "BrushItem" | "ShockItem" | "SipItem" | "SpankItem" | "SqueezeItem" | "TickleItem" | "EatItem" | "Scratch" | "ThrowItem";
+type ActivityNameItem = "Inject" | "MasturbateItem" | "PenetrateItem" | "ChewItem" | "PourItem" | "RollItem" | "RubItem" | "BrushItem" | "ShockItem" | "SipItem" | "SpankItem" | "SqueezeItem" | "TickleItem" | "EatItem" | "Scratch" | "ThrowItem";
 
 type ActivityName = ActivityNameBasic | ActivityNameItem;
 
@@ -1514,13 +1523,17 @@ interface ItemActivity {
 
 type ItemColor = BCColor | BCColor[];
 
-/** An item is a pair of asset and its dynamic properties that define a worn asset. */
+/**
+ * An item is a pair of asset and its dynamic properties that define a worn asset.
+ *
+ * See the {@link InventoryItem} namespace for item construction helpers.
+ */
 interface Item {
 	Asset: Asset;
-	Color?: ItemColor;
-	Difficulty?: number;
+	Color: BCColor[];
+	Difficulty: number;
 	Craft?: CraftingItem;
-	Property?: ItemProperties;
+	Property: ItemProperties;
 }
 
 /** An item properties subtype with a guaranteed opacity field. */
@@ -1556,9 +1569,8 @@ interface InventoryBundle {
 	Group: AssetGroupName;
 	Name: string
 }
-interface InventoryItem extends InventoryBundle {
-	Asset: Asset;
-}
+
+type InventoryItem = InventoryBundle & Item;
 
 declare namespace InventoryPrerequisiteConflicts {
 	type ErrMessage = "" | "CannotBeUsedOverGag" | "MustBeUsedOverGag";
@@ -1845,7 +1857,7 @@ interface Character {
 	InventoryData?: string;
 	Appearance: Item[];
 	/**
-	 * private
+	 * @private
 	 * @see {@link Character.Stage}
 	 */
 	_Stage: string;
@@ -1853,7 +1865,7 @@ interface Character {
 	get Stage(): string;
 	set Stage(value: string);
 	/**
-	 * private
+	 * @private
 	 * @see {@link Character.CurrentDialog}
 	 */
 	_CurrentDialog: string;
@@ -2019,7 +2031,7 @@ interface Character {
 	HasHiddenItems: boolean;
 	SavedColors: HSVColor[];
 	/**
-	 * private
+	 * @private
 	 * The cached blind level; use {@link Character.GetBlindLevel} instead.
 	 */
 	_BlindLevel?: number;
@@ -2358,6 +2370,7 @@ interface PlayerCharacter extends Character {
 	 * Do not manipulate directly. Use {@link ChatRoomListUpdate}
 	 */
 	GhostList: number[];
+	Log: LogRecord[];
 	Wardrobe: (ItemBundle[] | null)[];
 	WardrobeCharacterNames: string[];
 	SavedExpressions: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
@@ -3244,6 +3257,12 @@ interface AssetDefinitionProperties {
 	Opacity?: number | number[];
 
 	/**
+	 * A custom background for this option that overrides the default
+	 * @see {@link Asset.CustomBlindBackground}
+	 */
+	CustomBlindBackground?: string;
+
+	/**
 	 * A list of fetishes affected by the item
 	 * @see {@link Asset.Fetish}
 	 */
@@ -3268,6 +3287,12 @@ interface ExpressionQueueItem {
 	Group: ExpressionGroupName;
 	Expression: ExpressionName;
 }
+
+type VoiceTriggerType =
+	| "Increase" | "Decrease" | "Disable"
+	| "Inflate" | "Deflate" | "Empty"
+	| "Shock"
+;
 
 /**
  * Base properties for extended items
@@ -3490,6 +3515,21 @@ interface ItemPropertiesCustom {
 
 	/** Override the left-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually. */
 	DrawingLeft?: TopLeft.ItemData;
+
+	// #region Techno Chastity Cage settings */
+
+	/** Time when autoshrink will happen */
+	NextShrinkTime?: number;
+	/** Time when last shrink warning happened */
+	LastShrinkWarningTime?: number;
+	/** Time before next warning or shrinkage will happen again */
+	ShrinkCooldown?: number;
+	/** A boolean to whether show messages related to shrink or warning */
+	ShowShrinkText?: boolean;
+	/** A threshold passing which going to trigger auto shrink/warning */
+	ArousalLvl?: ItemVulvaChastityCageExcitementLevel;
+
+	// #endregion
 }
 
 interface ItemProperties extends ItemPropertiesBase, AssetDefinitionProperties, ItemPropertiesCustom { }
@@ -4698,18 +4738,17 @@ interface ColorPickerInitOptions {
 interface LogRecord {
 	Name: LogNameType[LogGroupType];
 	Group: LogGroupType;
-	Value: number | undefined;
+	Value: number | string[] | undefined;
 }
 
 /** The logging groups as supported by the {@link LogRecord.Group} */
 type LogGroupType = keyof LogNameType;
 
-type LogNameAdvanced = (
-	`BlockScreen${string}`
-	| `BlockAppearance${string}`
-	| `BlockItemGroup${string}`
-	| `ForbiddenWords${string}`
-);
+type LogNameAdvanced =
+	| `BlockScreen`
+	| `BlockAppearance`
+	| `BlockItemGroup`
+;
 
 /** An interface mapping {@link LogRecord.Group} types to valid {@link LogRecord.Name} types */
 interface LogNameType {
@@ -4720,6 +4759,7 @@ interface LogNameType {
 	College: "TeacherKey",
 	Import: "BondageCollege",
 	Introduction: "MaidOpinion" | "DailyJobDone",
+	JoinedStable: "Pony" | "PonyExam" | "Trainer" | "TrainerExam",
 	LockPick: "FailedLockPick",
 	LoverRule: "BlockLoverLockSelf" | "BlockLoverLockOwner",
 	MagicSchool: "Mastery",
@@ -4735,7 +4775,6 @@ interface LogNameType {
 	"NPC-Julia": "Dominant" | "Submissive",
 	"NPC-Yuki": "Dominant" | "Submissive",
 	"NPC-Mildred": "Dominant" | "Submissive",
-	// NOTE: A number of owner rules can have arbitrary suffices, and can thus not be fully expressed as string literals
 	OwnerRule: (
 		"BlockChange"
 		| "BlockTalk"
@@ -4751,15 +4790,9 @@ interface LogNameType {
 		| "BlockRemoteSelf"
 		| "BlockNickname"
 		| "ReleasedCollar"
-		| "BlockScreen"
-		| "BlockAppearance"
-		| "BlockItemGroup"
-		| "ForbiddenWords"
-		| "BlockTalkForbiddenWords"
 		| LogNameAdvanced
+		| "ForbiddenWords"
 	),
-	Pony: "JoinedStable",
-	PonyExam: "JoinedStable",
 	PrivateRoom: (
 		"RentRoom"
 		| "Expansion"
@@ -4778,8 +4811,6 @@ interface LogNameType {
 	Shibari: "Training",
 	SkillModifier: "ModifierDuration" | "ModifierLevel",
 	SlaveMarket: "Auctioned",
-	Trainer: "JoinedStable",
-	TrainerExam: "JoinedStable",
 	Disclaimer: "Accepted",
 }
 
@@ -4967,7 +4998,7 @@ type ClubCardDefaultDecks =
 
 interface ClubCardPlayer {
 	Character: Character;
-	Control: string;
+	Control: "AI" | "Player" | "Online";
 	Index: number;
 	Sleeve: number;
 	Deck: ClubCard[];
@@ -4986,18 +5017,46 @@ interface ClubCardPlayer {
 	CardsPlayedThisTurn: Record<number, ClubCard[]>
 }
 
+type ClubCardMessageType =
+  | "Prerequisite"
+  | "StartTurnInfo"
+  | "SystemMessage"
+  | "PlayersMessage"
+  | "PlayersDisconnected"
+  | "CardsEffect"
+  | "TurnEndEffect"
+  | "KnotEvent"
+  | "Actions"
+  | "ActionSeparator"
+  | "FameMoneyInfo"
+  | "StartTurnEvent"
+  | "VictoryInfo"
+;
+
+type ClubCardPlaceholderKeysType =
+	| "MONEYLABEL"
+	| "FAMELABEL"
+	| "AMOUNT"
+	| "CARDNAME"
+	| "MONEYAMOUNT"
+	| "FAMEAMOUNT"
+	| "TURNNUMBER"
+	| "PLAYERNAME"
+;
+
 interface ClubCardMessage {
-	TextGetKey: string;         // Localization key
-	MessageText?: string;		// Message Text
-		MessageType: string;        // Type of message (e.g., ACTION, SYSTEM, IMMEDIATE)
-		PlayerId: string;           // ID of the player who triggered the message
-		TurnCounter: number;        // Turn number when the message was created
-		Placeholders: {             // Dynamic data for text replacement
-				[key: string]: string | number;
+	/** Localization key */
+	TextGetKey: string;
+	/** Type of message (e.g., ACTION, SYSTEM, IMMEDIATE) */
+	MessageType: ClubCardMessageType;
+	/** ID of the player who triggered the message */
+	PlayerId: string;
+	/** Turn number when the message was created */
+	TurnCounter: number;
+	/** Dynamic data for text replacement */
+	Placeholders: {
+		[key in ClubCardPlaceholderKeysType]?: string;
 	};
-	PlayerName?: string;
-		SourcePlayer?: string;
-		OpponentPlayer?: string;
 }
 
 /**
@@ -5218,3 +5277,13 @@ interface LayeringDisplay extends Rect {
 }
 
 // #endregion
+
+declare namespace Item {
+	interface Options {
+		/** The color of the item */
+		color?: Readonly<ItemColor>;
+		difficulty?: number;
+		craft?: Readonly<CraftingItem>;
+		property?: Readonly<ItemProperties>;
+	}
+}

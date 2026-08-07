@@ -74,8 +74,8 @@ declare function PhotographicSubClothRemove(Group: AssetGroupName): void;
  */
 declare function PhotographicStartInventoryPlayer(ItemGroup: AssetGroupName): void;
 declare var PhotographicBackground: string;
-/** @type {null | NPCCharacter} */
-declare var PhotographicSub: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PhotographicSub: NPCCharacter;
 declare var PhotographicGroupStarted: boolean;
 declare var PhotographicCurrendGroup: null;
 /** @type {null | Item[]} */

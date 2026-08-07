@@ -1739,7 +1739,14 @@ declare namespace ChatRoomArousalMsg_ChanceGagMod {
     let Gag_4: number;
     export { Gag_4 as Gag };
 }
-declare var ChatRoomHideIconState: number;
+declare namespace ChatRoomHideIconStateType {
+    let SHOW_ALL: 0;
+    let NO_ICONS: 1;
+    let NO_AROUSAL_BAR: 2;
+    let NO_NAME: 3;
+}
+/** @type {0 | 1 | 2 | 3} */
+declare var ChatRoomHideIconState: 0 | 1 | 2 | 3;
 /**
  * The list of buttons in the top-right
  * @type {ChatRoomMenuButton[]}

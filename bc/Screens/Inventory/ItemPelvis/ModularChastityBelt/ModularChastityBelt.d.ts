@@ -69,45 +69,57 @@ declare function InventoryItemPelvisModularChastityBeltResetDeny(C: Character, i
 declare function InventoryItemPelvisModularChastityBeltClickShockModule(C: Character, item: Item, _offset: number): void;
 declare function InventoryItemPelvisModularChastityBeltScriptDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>): void;
 /**
- * @param {ModularItemData} data
- * @param {Character} C
- * @param {Item} Item
- * @param {number} LastTime
- * @param {TypeRecord} ItemType
+ * @param {ModularChastityBeltPersistentData} persistentData
+ * @param {Item} item
  */
-declare function InventoryItemPelvisModularChastityBeltHandleChat(data: ModularItemData, C: Character, Item: Item, LastTime: number, ItemType: TypeRecord): void;
+declare function InventoryItemPelvisModularChastityBeltPropertiesCheck(persistentData: ModularChastityBeltPersistentData, item: Item): void;
 /**
- * @param {string} msg
- * @param {readonly string[]} TriggerValues
- * @returns {number[]}
+ * @param {ModularChastityBeltPersistentData} persistentData
+ * @param {Item} item
  */
-declare function InventoryItemPelvisModularChastityBeltDetectMsg(msg: string, TriggerValues: readonly string[]): number[];
+declare function InventoryItemPelvisModularChastityBeltCooldownCheck(persistentData: ModularChastityBeltPersistentData, item: Item): void;
 /**
- * @param {Item} Item
+ * @param {ModularChastityBeltPersistentData} persistentData
  * @param {Character} C
- * @param {boolean} OrgasmDetected
- * @param {boolean} isPlayerInChatRoom
- * @param {number} ShockCooldown
+ * @param {Item} item
  */
-declare function InventoryItemPelvisModularChastityBeltCheckPunish(Item: Item, C: Character, OrgasmDetected: boolean, isPlayerInChatRoom: boolean, ShockCooldown: number): "Struggle" | "Orgasm" | "StandUp" | "StruggleOther" | null;
+declare function InventoryItemPelvisModularChastityBeltNeedSync(persistentData: ModularChastityBeltPersistentData, C: Character, item: Item): void;
 /**
- * @param {boolean} PunishStandup
+ * @param {ModularChastityBeltPersistentData} persistentData
  * @param {Character} C
- * @param {boolean} isPlayerInChatRoom
- * @param {number} ShockCooldown
- * @returns {boolean}
+ * @param {ItemProperties} property
  */
-declare function InventoryItemPelvisModularChastityBeltCheckStanding(PunishStandup: boolean, C: Character, isPlayerInChatRoom: boolean, ShockCooldown: number): boolean;
+declare function InventoryItemPelvisModularChastityBeltOrgasmCheck(persistentData: ModularChastityBeltPersistentData, C: Character, property: ItemProperties): void;
+/**
+ * @param {ModularChastityBeltPersistentData} persistentData
+ * @param {Character} C
+ * @param {Item} item
+ * @param {TypeRecord} itemType
+ * @param {VoiceTriggerType[]} voiceTriggers
+ */
+declare function InventoryItemPelvisModularChastityBeltVoiceControlCheck(persistentData: ModularChastityBeltPersistentData, C: Character, item: Item, itemType: TypeRecord, voiceTriggers: VoiceTriggerType[]): void;
+/**
+ * @param {Character} C
+ * @param {Item} item
+ * @param {TypeRecord} itemType
+ */
+declare function InventoryItemPelvisModularChastityBeltShockCheck(C: Character, item: Item, itemType: TypeRecord): void;
+/**
+ * @param {Character} C
+ * @param {Item} item
+ * @param {VoiceTriggerType[]} triggers
+ */
+declare function InventoryItemPelvisModularChastityBeltHandleChat(C: Character, item: Item, triggers: VoiceTriggerType[]): void;
 /**
  * @param {Character} C
  */
 declare function InventoryItemPelvisModularChastityBeltForceKneel(C: Character): void;
-declare var InventoryItemPelvisModularChastityBeltVoiceTriggers: string[];
+/** @type {VoiceTriggerType[]} */
+declare var InventoryItemPelvisModularChastityBeltVoiceTriggers: VoiceTriggerType[];
 /** @type {string[]} */
 declare var InventoryItemPelvisModularChastityBeltVoiceTriggerValues: string[];
 type ModularChastityBeltPersistentData = {
     Cooldown?: number;
-    ShockCooldown?: number;
     LastMessage?: number;
     DenyDetected?: boolean;
     OrgasmDetected?: boolean;

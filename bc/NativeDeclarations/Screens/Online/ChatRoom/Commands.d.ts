@@ -6,7 +6,7 @@ interface ICommand {
   /** Reference to another command, used for aliases */
   Reference?: string;
   /** The function that handles the command */
-  Action?: (this: ICommand[], argumentsString: string, message: string, arguments: string[]) => void;
+  Action?: (this: ICommand, argumentsString: string, message: string, arguments: string[]) => void;
   /** Function that returns whether the command can be executed */
   Prerequisite?: (this: ICommand) => boolean;
   /** Function to execute on autocomplete key (Tab default) press if chat input matches tag */

@@ -2,10 +2,10 @@ declare function InventoryItemMiscHighSecurityPadlockInitHook(data: NoArchItemDa
 declare function InventoryItemMiscHighSecurityPadlockLoadHook(data: NoArchItemData, originalFunction: () => void): void;
 /**
  * @param {Character} C
- * @param {Item} Item
+ * @param {Item} item
  * @returns {boolean}
  */
-declare function InventoryItemMiscHighSecurityPadlockPlayerHasKeys(C: Character, Item: Item): boolean;
+declare function InventoryItemMiscHighSecurityPadlockPlayerHasKeys(C: Character, item: Item): boolean;
 declare function InventoryItemMiscHighSecurityPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
 declare function InventoryItemMiscHighSecurityPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
 declare function InventoryItemMiscHighSecurityPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;

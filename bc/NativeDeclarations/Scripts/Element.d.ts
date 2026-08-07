@@ -78,3 +78,12 @@ declare namespace ElementSearchableDropdown {
 		parent?: Node;
 	}
 }
+
+declare namespace ElementSearchQuery {
+	interface Options {
+		/** Custom classes to-be applied to the hightlighted text. Defaults to `"highlight"`. */
+		classList?: readonly string[];
+		/** Custom tag to-be applied to the hightlighted text. Defaults to `<em>`. */
+		tag?: keyof HTMLElementTagNameMap;
+	}
+}
