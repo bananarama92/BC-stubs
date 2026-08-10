@@ -1,3 +1,6 @@
+declare var InfiltrationPerksBackground: string;
+/** @type {InfiltrationPerks[]} */
+declare var InfiltrationPerksList: InfiltrationPerks[];
 /**
  * Checks if a named perk is activated or not
  * @param {InfiltrationPerks} PerkName
@@ -20,10 +23,3 @@ declare function InfiltrationPerksTaken(): number;
  * @returns {number} - Number of perks available for the player
  */
 declare function InfiltrationPerksAvail(): number;
-declare function InfiltrationPerksLoad(): Promise<void>;
-declare function InfiltrationPerksRun(time: number): void;
-declare function InfiltrationPerksClick(event: PointerEvent): void;
-declare function InfiltrationPerksExit(): void;
-declare var InfiltrationPerksBackground: string;
-/** @type {InfiltrationPerks[]} */
-declare var InfiltrationPerksList: InfiltrationPerks[];

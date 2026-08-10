@@ -1,3 +1,22 @@
+/** @deprecated */
+declare var AudioDialog: HTMLAudioElement;
+/** @type {HTMLAudioElement & { _playState?: { location?: number } }} */
+declare var AudioBackgroundMusic: HTMLAudioElement & {
+    _playState?: {
+        location?: number;
+    };
+};
+declare const AudioSupportedMusicFormats: string[];
+/** @type AudioEffect[] */
+declare var AudioList: AudioEffect[];
+/**
+ * A list of chat message audio effect "detectors".
+ *
+ * They get checked in the order they're defined, so be careful where you insert new entries.
+ *
+ * @type AudioChatAction[]
+ */
+declare var AudioActions: AudioChatAction[];
 /**
  * Plays a sound at a given volume
  * @param {string} src - Source of the audio file to play
@@ -18,6 +37,10 @@ declare function AudioDialogStart(SourceFile: string): void;
  * @returns {void} - Nothing
  */
 declare function AudioDialogStop(): void;
+/** The "normal" volume for a game sound, a.k.a a sound with modifier 0 */
+declare let AudioVolumeNormalLevel: number;
+/** Number of available modifier steps */
+declare let AudioVolumeModifierSteps: number;
 /**
  * Returns the actual volume given a volume modifier.
  *
@@ -106,26 +129,3 @@ declare function AudioBackgroundMusicStop(): void;
  * @returns {void} - Nothing
  */
 declare function AudioBackgroundMusicPlay(Music: string, Location?: number | undefined): void;
-/** @deprecated */
-declare var AudioDialog: HTMLAudioElement;
-/** @type {HTMLAudioElement & { _playState?: { location?: number } }} */
-declare var AudioBackgroundMusic: HTMLAudioElement & {
-    _playState?: {
-        location?: number;
-    };
-};
-declare const AudioSupportedMusicFormats: string[];
-/** @type AudioEffect[] */
-declare var AudioList: AudioEffect[];
-/**
- * A list of chat message audio effect "detectors".
- *
- * They get checked in the order they're defined, so be careful where you insert new entries.
- *
- * @type AudioChatAction[]
- */
-declare var AudioActions: AudioChatAction[];
-/** The "normal" volume for a game sound, a.k.a a sound with modifier 0 */
-declare let AudioVolumeNormalLevel: number;
-/** Number of available modifier steps */
-declare let AudioVolumeModifierSteps: number;

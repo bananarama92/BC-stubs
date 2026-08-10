@@ -1,4 +1,10 @@
-declare function SarahIntroLoad(): Promise<void>;
+declare var SarahIntroBackground: string;
+declare var SarahIntroDone: boolean;
+declare var SarahIntroType: string;
+declare var AmandaIntroTime: number;
+declare var AmandaIntroDone: boolean;
+declare var SophieIntroTime: number;
+declare var SophieIntroDone: boolean;
 /**
  * Runs and draws the Sarah/Amanda/Sophie intro cutscene
  * @returns {void} - Nothing
@@ -9,10 +15,3 @@ declare function SarahIntroRun(): void;
  * @returns {void} - Nothing
  */
 declare function SarahIntroClick(): void;
-declare var SarahIntroBackground: string;
-declare var SarahIntroDone: boolean;
-declare var SarahIntroType: string;
-declare var AmandaIntroTime: number;
-declare var AmandaIntroDone: boolean;
-declare var SophieIntroTime: number;
-declare var SophieIntroDone: boolean;

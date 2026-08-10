@@ -1,3 +1,39 @@
+declare var MaidQuartersBackground: string;
+/** @type {null | NPCCharacter} */
+declare var MaidQuartersMaid: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var MaidQuartersMaidInitiation: null | NPCCharacter;
+/** @type {{ Cloth?: Item, Hat?: Item, ItemArms?: Item, ItemLegs?: Item, ItemFeet?: Item }} */
+declare var MaidQuartersItemClothPrev: {
+    Cloth?: Item;
+    Hat?: Item;
+    ItemArms?: Item;
+    ItemLegs?: Item;
+    ItemFeet?: Item;
+};
+declare var MaidQuartersMaidReleasedPlayer: boolean;
+declare var MaidQuartersCanBecomeMaid: boolean;
+declare var MaidQuartersCannotBecomeMaidYet: boolean;
+declare var MaidQuartersCanBecomeHeadMaid: boolean;
+declare var MaidQuartersCannotBecomeHeadMaidYet: boolean;
+declare var MaidQuartersIsMaid: boolean;
+declare var MaidQuartersIsHeadMaid: boolean;
+declare var MaidQuartersSelfBondageMaidDrinksAccepted: boolean;
+declare var MaidQuartersSelfBondageMaidCleaningAccepted: boolean;
+declare var MaidQuartersDominantRep: number;
+/** @type {"" | MaidQuartersMissionType} */
+declare var MaidQuartersCurrentRescue: "" | MaidQuartersMissionType;
+/** @type {MaidQuartersMissionType[]} */
+declare var MaidQuartersRescueList: MaidQuartersMissionType[];
+declare var MaidQuartersRescueStage: string[];
+declare var MaidQuartersCurrentRescueStarted: boolean;
+declare var MaidQuartersCurrentRescueCompleted: boolean;
+declare var MaidQuartersOnlineDrinkStarted: boolean;
+declare var MaidQuartersOnlineDrinkCount: number;
+declare var MaidQuartersOnlineDrinkValue: number;
+/** @type {number[]} */
+declare var MaidQuartersOnlineDrinkCustomer: number[];
+declare var MaidQuartersOnlineDrinkFromOwner: boolean;
 /**
  * Returns TRUE if the player is head maid and can receive the latex uniform
  * @returns {boolean} - TRUE if she can receive it
@@ -138,7 +174,6 @@ declare function MaidQuartersCanUngagAndMaidsDisabled(): boolean;
  * @returns {boolean} - Returns true, if the player cannot be ungagged by the maids, false otherwise
  */
 declare function MaidQuartersCannotUngagAndMaidsNotDisabled(): boolean;
-declare function MaidQuartersLoad(): Promise<void>;
 /**
  * Runs the maid quarters dialog
  * This function is called periodically so don't use it for extensive use or the call of other complex functions
@@ -274,39 +309,3 @@ declare function MaidQuartersOnlineDrinkPay(): void;
  */
 declare function MaidQuartersNotFromOwner(): void;
 declare function MaidQuartersSetMaidsDisabled(minutes: any): void;
-declare var MaidQuartersBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MaidQuartersMaid: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var MaidQuartersMaidInitiation: null | NPCCharacter;
-/** @type {{ Cloth?: Item, Hat?: Item, ItemArms?: Item, ItemLegs?: Item, ItemFeet?: Item }} */
-declare var MaidQuartersItemClothPrev: {
-    Cloth?: Item;
-    Hat?: Item;
-    ItemArms?: Item;
-    ItemLegs?: Item;
-    ItemFeet?: Item;
-};
-declare var MaidQuartersMaidReleasedPlayer: boolean;
-declare var MaidQuartersCanBecomeMaid: boolean;
-declare var MaidQuartersCannotBecomeMaidYet: boolean;
-declare var MaidQuartersCanBecomeHeadMaid: boolean;
-declare var MaidQuartersCannotBecomeHeadMaidYet: boolean;
-declare var MaidQuartersIsMaid: boolean;
-declare var MaidQuartersIsHeadMaid: boolean;
-declare var MaidQuartersSelfBondageMaidDrinksAccepted: boolean;
-declare var MaidQuartersSelfBondageMaidCleaningAccepted: boolean;
-declare var MaidQuartersDominantRep: number;
-/** @type {"" | MaidQuartersMissionType} */
-declare var MaidQuartersCurrentRescue: "" | MaidQuartersMissionType;
-/** @type {MaidQuartersMissionType[]} */
-declare var MaidQuartersRescueList: MaidQuartersMissionType[];
-declare var MaidQuartersRescueStage: string[];
-declare var MaidQuartersCurrentRescueStarted: boolean;
-declare var MaidQuartersCurrentRescueCompleted: boolean;
-declare var MaidQuartersOnlineDrinkStarted: boolean;
-declare var MaidQuartersOnlineDrinkCount: number;
-declare var MaidQuartersOnlineDrinkValue: number;
-/** @type {number[]} */
-declare var MaidQuartersOnlineDrinkCustomer: number[];
-declare var MaidQuartersOnlineDrinkFromOwner: boolean;

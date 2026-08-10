@@ -1,3 +1,124 @@
+/** @type {null | number[]} */
+declare var StruggleLockPickOrder: null | number[];
+/** @type {null | boolean[]} */
+declare var StruggleLockPickSet: null | boolean[];
+/** @type {null | boolean[]} */
+declare var StruggleLockPickSetFalse: null | boolean[];
+/** @type {null | number[]} */
+declare var StruggleLockPickOffset: null | number[];
+/** @type {null | number[]} */
+declare var StruggleLockPickOffsetTarget: null | number[];
+/** @type {null | number[]} */
+declare var StruggleLockPickImpossiblePins: null | number[];
+declare var StruggleLockPickProgressSkill: number;
+declare var StruggleLockPickProgressSkillLose: number;
+declare var StruggleLockPickProgressChallenge: number;
+declare var StruggleLockPickProgressMaxTries: number;
+declare var StruggleLockPickProgressCurrentTries: number;
+declare var StruggleLockPickSuccessTime: number;
+declare var StruggleLockPickFailTime: number;
+declare var StruggleLockPickArousalTick: number;
+declare var StruggleLockPickArousalTickTime: number;
+declare var StruggleLockPickArousalText: string;
+declare var StruggleLockPickFailTimeout: number;
+declare var StruggleLockPickTotalTries: number;
+declare var StruggleProgressStruggleCount: number;
+declare var StruggleProgressAuto: number;
+declare var StruggleProgressOperation: string;
+/**
+ * How much experience should be gained on success.
+ *
+ * FIXME: the value is calculated by the minigame, but the skill is selected by Dialog when the minigame stops.
+ */
+declare var StruggleProgressSkill: number;
+declare var StruggleProgressLastKeyPress: any;
+/**
+ * The difficulty of the struggle minigame.
+ */
+declare var StruggleProgressChallenge: number;
+/**
+ * Threshold at which actually succeeding the minigame becomes impossible.
+ */
+declare const STRUGGLE_THRESHOLD_IMPOSSIBLE = 6;
+/**
+ * Threshold at which the loosen option appears.
+ */
+declare const STRUGGLE_THRESHOLD_CAN_LOOSEN = 9;
+/**
+ * Number of struggle attempts to do before the challenge value is revealed
+ */
+declare const STRUGGLE_THRESHOLD_REVEAL = 50;
+declare var StruggleLoosenSpeed: number;
+declare var StruggleLoosenAngle: number;
+declare var StruggleLoosenHoleAngle: number;
+/**
+ * Character expression at the beginning of the minigame; player-only
+ * @type {Partial<Record<ExpressionGroupName, ExpressionName>> | undefined}
+ */
+declare var StruggleExpressionStore: Partial<Record<ExpressionGroupName, ExpressionName>> | undefined;
+/**
+ * The struggle minigame progress
+ *
+ * -1 means there's no game running. 0 and StruggleProgressCurrentMinigame
+ * indicates the player hasn't selected a game yet.
+ *
+ * @type {number}
+ */
+declare let StruggleProgress: number;
+/**
+ * The minigame currently running
+ * @type {StruggleKnownMinigames | ""}
+ */
+declare var StruggleProgressCurrentMinigame: StruggleKnownMinigames | "";
+/**
+ * The item worn at the beginning of the minigame.
+ *
+ * This is a (shallow) copy so that changes made outside of the minigame
+ * don't cause crashes if the data gets changed externally —
+ * which can happen if someone else removes the item we're currently
+ * struggling with. Changes made to it might be ignored!
+ *
+ * @type {Item | null}
+ */
+declare var StruggleProgressPrevItem: Item | null;
+/**
+ * The item that should be worn at the end of the minigame
+ *
+ * This is a (shallow) copy so that changes made outside of the minigame
+ * don't cause crashes if the data gets changed externally —
+ * which can happen if someone else removes the item we're currently
+ * struggling with. Changes made to it might be ignored!
+ *
+ * @type {Item | null}
+ */
+declare var StruggleProgressNextItem: Item | null;
+/**
+ * A function called when the struggle minigame completes
+ * @type {StruggleCompletionCallback}
+ */
+declare var StruggleExitFunction: StruggleCompletionCallback;
+/** @type {null | { X: number, Y: number, Size: number, Velocity: number }[]} */
+declare var StruggleProgressFlexCircles: null | {
+    X: number;
+    Y: number;
+    Size: number;
+    Velocity: number;
+}[];
+declare var StruggleProgressFlexTimer: number;
+declare var StruggleProgressFlexMaxX: number;
+declare var StruggleProgressFlexMaxY: number;
+declare var StruggleProgressFlexCirclesRate: number;
+declare var StruggleProgressDexTarget: number;
+declare var StruggleProgressDexCurrent: number;
+declare var StruggleProgressDexMax: number;
+declare var StruggleProgressDexDirectionRight: boolean;
+/** @type {Record<StruggleKnownMinigames, StruggleMinigame>} */
+declare const StruggleMinigames: Record<StruggleKnownMinigames, StruggleMinigame>;
+/**
+ * List of expressions to go through while struggling, keyed by duration
+ * @type {Record<number, Partial<Record<ExpressionGroupName, ExpressionName>>>}
+ */
+declare const StruggleFacesList: Record<number, Partial<Record<ExpressionGroupName, ExpressionName>>>;
 /**
  * Get the list of struggle minigames.
  * @returns {[Exclude<StruggleKnownMinigames, "LockPick" | "Loosen">, StruggleMinigame][]}
@@ -33,8 +154,6 @@ declare function StruggleProgressGetOperation(C: Character, PrevItem: Item, Next
  * @returns {boolean} - TRUE if it's allowed
  */
 declare function StruggleAllowLoosen(): boolean;
-declare function StruggleKeyDown(event: KeyboardEvent): boolean;
-declare function StruggleMouseDown(event: PointerEvent): void;
 /**
  * Handles the minigames' Click event, whether on the selection screen or in the minigame themselves.
  *
@@ -315,124 +434,3 @@ declare function StruggleChatRoomInterrupt(): void;
  * @returns {void} - Nothing
  */
 declare function StruggleChatRoomSuccess(): void;
-/** @type {null | number[]} */
-declare var StruggleLockPickOrder: null | number[];
-/** @type {null | boolean[]} */
-declare var StruggleLockPickSet: null | boolean[];
-/** @type {null | boolean[]} */
-declare var StruggleLockPickSetFalse: null | boolean[];
-/** @type {null | number[]} */
-declare var StruggleLockPickOffset: null | number[];
-/** @type {null | number[]} */
-declare var StruggleLockPickOffsetTarget: null | number[];
-/** @type {null | number[]} */
-declare var StruggleLockPickImpossiblePins: null | number[];
-declare var StruggleLockPickProgressSkill: number;
-declare var StruggleLockPickProgressSkillLose: number;
-declare var StruggleLockPickProgressChallenge: number;
-declare var StruggleLockPickProgressMaxTries: number;
-declare var StruggleLockPickProgressCurrentTries: number;
-declare var StruggleLockPickSuccessTime: number;
-declare var StruggleLockPickFailTime: number;
-declare var StruggleLockPickArousalTick: number;
-declare var StruggleLockPickArousalTickTime: number;
-declare var StruggleLockPickArousalText: string;
-declare var StruggleLockPickFailTimeout: number;
-declare var StruggleLockPickTotalTries: number;
-declare var StruggleProgressStruggleCount: number;
-declare var StruggleProgressAuto: number;
-declare var StruggleProgressOperation: string;
-/**
- * How much experience should be gained on success.
- *
- * FIXME: the value is calculated by the minigame, but the skill is selected by Dialog when the minigame stops.
- */
-declare var StruggleProgressSkill: number;
-declare var StruggleProgressLastKeyPress: null;
-/**
- * The difficulty of the struggle minigame.
- */
-declare var StruggleProgressChallenge: number;
-/**
- * Threshold at which actually succeeding the minigame becomes impossible.
- */
-declare const STRUGGLE_THRESHOLD_IMPOSSIBLE: 6;
-/**
- * Threshold at which the loosen option appears.
- */
-declare const STRUGGLE_THRESHOLD_CAN_LOOSEN: 9;
-/**
- * Number of struggle attempts to do before the challenge value is revealed
- */
-declare const STRUGGLE_THRESHOLD_REVEAL: 50;
-declare var StruggleLoosenSpeed: number;
-declare var StruggleLoosenAngle: number;
-declare var StruggleLoosenHoleAngle: number;
-/**
- * Character expression at the beginning of the minigame; player-only
- * @type {Partial<Record<ExpressionGroupName, ExpressionName>> | undefined}
- */
-declare var StruggleExpressionStore: Partial<Record<ExpressionGroupName, ExpressionName>> | undefined;
-/**
- * The struggle minigame progress
- *
- * -1 means there's no game running. 0 and StruggleProgressCurrentMinigame
- * indicates the player hasn't selected a game yet.
- *
- * @type {number}
- */
-declare let StruggleProgress: number;
-/**
- * The minigame currently running
- * @type {StruggleKnownMinigames | ""}
- */
-declare var StruggleProgressCurrentMinigame: StruggleKnownMinigames | "";
-/**
- * The item worn at the beginning of the minigame.
- *
- * This is a (shallow) copy so that changes made outside of the minigame
- * don't cause crashes if the data gets changed externally —
- * which can happen if someone else removes the item we're currently
- * struggling with. Changes made to it might be ignored!
- *
- * @type {Item | null}
- */
-declare var StruggleProgressPrevItem: Item | null;
-/**
- * The item that should be worn at the end of the minigame
- *
- * This is a (shallow) copy so that changes made outside of the minigame
- * don't cause crashes if the data gets changed externally —
- * which can happen if someone else removes the item we're currently
- * struggling with. Changes made to it might be ignored!
- *
- * @type {Item | null}
- */
-declare var StruggleProgressNextItem: Item | null;
-/**
- * A function called when the struggle minigame completes
- * @type {StruggleCompletionCallback}
- */
-declare var StruggleExitFunction: StruggleCompletionCallback;
-/** @type {null | { X: number, Y: number, Size: number, Velocity: number }[]} */
-declare var StruggleProgressFlexCircles: null | {
-    X: number;
-    Y: number;
-    Size: number;
-    Velocity: number;
-}[];
-declare var StruggleProgressFlexTimer: number;
-declare var StruggleProgressFlexMaxX: number;
-declare var StruggleProgressFlexMaxY: number;
-declare var StruggleProgressFlexCirclesRate: number;
-declare var StruggleProgressDexTarget: number;
-declare var StruggleProgressDexCurrent: number;
-declare var StruggleProgressDexMax: number;
-declare var StruggleProgressDexDirectionRight: boolean;
-/** @type {Record<StruggleKnownMinigames, StruggleMinigame>} */
-declare const StruggleMinigames: Record<StruggleKnownMinigames, StruggleMinigame>;
-/**
- * List of expressions to go through while struggling, keyed by duration
- * @type {Record<number, Partial<Record<ExpressionGroupName, ExpressionName>>>}
- */
-declare const StruggleFacesList: Record<number, Partial<Record<ExpressionGroupName, ExpressionName>>>;

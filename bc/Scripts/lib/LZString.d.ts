@@ -1,12 +1,15 @@
-export function compressToBase64(input: any): string;
-export function decompressFromBase64(input: any): string | null;
-export function compressToUTF16(input: any): string;
-export function decompressFromUTF16(compressed: any): string | null;
-export function compressToUint8Array(uncompressed: any): Uint8Array<ArrayBuffer>;
-export function decompressFromUint8Array(compressed: any): string | null;
-export function compressToEncodedURIComponent(input: any): string;
-export function decompressFromEncodedURIComponent(input: any): string | null;
-export function compress(uncompressed: any): string;
-export function _compress(uncompressed: any, bitsPerChar: any, getCharFromInt: any): string;
-export function decompress(compressed: any): string | null;
-export function _decompress(length: any, resetValue: any, getNextValue: any): string | null;
+declare const LZString_1: {
+    compressToBase64: (input: any) => string;
+    decompressFromBase64: (input: any) => string | null;
+    compressToUTF16: (input: any) => string;
+    decompressFromUTF16(compressed: any): string | null;
+    compressToUint8Array(uncompressed: any): Uint8Array<ArrayBuffer>;
+    decompressFromUint8Array(compressed: any): string | null;
+    compressToEncodedURIComponent(input: any): string;
+    decompressFromEncodedURIComponent(input: any): string | null;
+    compress(uncompressed: any): string;
+    _compress(uncompressed: any, bitsPerChar: any, getCharFromInt: any): string;
+    decompress(compressed: any): string | null;
+    _decompress(length: any, resetValue: any, getNextValue: any): string | null;
+};
+export = LZString_1;

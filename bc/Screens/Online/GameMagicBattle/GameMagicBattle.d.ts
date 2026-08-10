@@ -1,3 +1,27 @@
+declare var GameMagicBattleBackground: string;
+declare var GameMagicBattleTimerDelay: number;
+/** @type {Character[]} */
+declare var GameMagicBattlePlayer: Character[];
+declare var GameMagicBattleAction: string;
+/** @type {null | number} */
+declare var GameMagicBattleTurnAdmin: null | number;
+declare var GameMagicBattleTurnDone: boolean;
+/** @type {null | number} */
+declare var GameMagicBattleTurnTimer: null | number;
+/** @type {null | Character} */
+declare var GameMagicBattleFocusCharacter: null | Character;
+/** @type {{ Sender: number; Data: ServerGameMagicBattleDataAction }[]} */
+declare var GameMagicBattleLog: {
+    Sender: number;
+    Data: ServerGameMagicBattleDataAction;
+}[];
+/** @type {{ X: number, Y: number, W: number, H: number}[]} */
+declare var GameMagicBattleButton: {
+    X: number;
+    Y: number;
+    W: number;
+    H: number;
+}[];
 /**
  * Gets the current state of LARP.
  * @returns {OnlineGameStatus}
@@ -24,7 +48,6 @@ declare function GameMagicBattleIsAdmin(C: Character): boolean;
  * @returns {void} - Nothing
  */
 declare function GameMagicBattleDrawIcon(C: Character, X: number, Y: number, Zoom: number): void;
-declare function GameMagicBattleLoad(): Promise<void>;
 /**
  * Returns the team setup for the online magic battle.
  * @returns {"FreeForAll" | "House"} - "FreeForAll" or "House", depending on the team setup
@@ -59,7 +82,6 @@ declare function GameMagicBattleStartProcess(): void;
  * @returns {void} - Nothing
  */
 declare function GameMagicBattleClick(): void;
-declare function GameMagicBattleExit(): void;
 /**
  * Checks if a Magic Battle match can be launched. The player must be an admin and two different houses must be selected.
  * @returns {boolean} - Returns TRUE if the game can be launched
@@ -152,27 +174,3 @@ declare function GameMagicBattleLoadStatus(): void;
  * @returns {void} - Nothing
  */
 declare function GameMagicBattleDrawCharacter(C: Character, X: number, Y: number, Zoom: number): void;
-declare var GameMagicBattleBackground: string;
-declare var GameMagicBattleTimerDelay: number;
-/** @type {Character[]} */
-declare var GameMagicBattlePlayer: Character[];
-declare var GameMagicBattleAction: string;
-/** @type {null | number} */
-declare var GameMagicBattleTurnAdmin: null | number;
-declare var GameMagicBattleTurnDone: boolean;
-/** @type {null | number} */
-declare var GameMagicBattleTurnTimer: null | number;
-/** @type {null | Character} */
-declare var GameMagicBattleFocusCharacter: null | Character;
-/** @type {{ Sender: number; Data: ServerGameMagicBattleDataAction }[]} */
-declare var GameMagicBattleLog: {
-    Sender: number;
-    Data: ServerGameMagicBattleDataAction;
-}[];
-/** @type {{ X: number, Y: number, W: number, H: number}[]} */
-declare var GameMagicBattleButton: {
-    X: number;
-    Y: number;
-    W: number;
-    H: number;
-}[];

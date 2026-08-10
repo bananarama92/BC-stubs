@@ -1,3 +1,15 @@
+declare var PrivateBedBackground: string;
+/** @type {Character[]} */
+declare var PrivateBedCharacter: Character[];
+/** @type {ActivityName} */
+declare var PrivateBedActivity: ActivityName;
+/** @type {ActivityName[]} */
+declare var PrivateBedActivityList: ActivityName[];
+/** @type {string[]} */
+declare var PrivateBedLog: string[];
+declare var PrivateBedActivityDelay: number;
+declare var PrivateBedActivityMustRefresh: boolean;
+declare var PrivateBedLeaveTime: number;
 /**
  * Returns TRUE if the private bed is available.
  * @returns {boolean} - TRUE if available.
@@ -8,7 +20,6 @@ declare function PrivateBedActive(): boolean;
  * @returns {Number} - The number of girls.
  */
 declare function PrivateBedCount(): number;
-declare function PrivateBedLoad(): Promise<void>;
 /**
  * Draws a private bedroom character.
  * @param {Character} C - The character to draw.
@@ -49,22 +60,9 @@ declare function PrivateBedNPCActivity(Source: Character): void;
  * @returns {void|boolean} - Nothing.
  */
 declare function PrivateBedClick(): void | boolean;
-declare function PrivateBedExit(): void;
 /**
  * When a character gets an orgasm
  * @param {Character} C - The character getting the orgasm.
  * @returns {void} - Nothing.
  */
 declare function PrivateBedOrgasm(C: Character): void;
-declare var PrivateBedBackground: string;
-/** @type {Character[]} */
-declare var PrivateBedCharacter: Character[];
-/** @type {ActivityName} */
-declare var PrivateBedActivity: ActivityName;
-/** @type {ActivityName[]} */
-declare var PrivateBedActivityList: ActivityName[];
-/** @type {string[]} */
-declare var PrivateBedLog: string[];
-declare var PrivateBedActivityDelay: number;
-declare var PrivateBedActivityMustRefresh: boolean;
-declare var PrivateBedLeaveTime: number;

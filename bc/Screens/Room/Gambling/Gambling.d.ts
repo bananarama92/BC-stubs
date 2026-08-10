@@ -1,3 +1,36 @@
+declare var GamblingBackground: string;
+/** @type {NPCCharacter} */
+declare var GamblingFirstSub: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var GamblingSecondSub: NPCCharacter;
+/** @type {number[]} */
+declare var GamblingPlayerDiceStack: number[];
+/** @type {number[]} */
+declare var GamblingNpcDiceStack: number[];
+declare var GamblingPlayerSubState: number;
+/** Game-State of NPC */
+declare var GamblingNpcSubState: number;
+/** Player is Fox by Fox and Hunter */
+declare var GamblingPlayerIsFox: boolean;
+/** Money Bet in Current Game */
+declare var GamblingMoneyBet: number;
+/** Show Sum of Dice Dots in DiceStack */
+declare var GamblingShowDiceSum: boolean;
+/** Show Money in DiceStack */
+declare var GamblingShowMoney: boolean;
+/** @type {Item[]} */
+declare var GamblingAppearanceFirst: Item[];
+/** @type {Item[]} */
+declare var GamblingAppearanceSecond: Item[];
+/** @type {Item[]} */
+declare var GamblingAppearancePlayer: Item[];
+/** Sub Player lost Cloth although forbidden by Mistress */
+declare var GamblingIllegalChange: boolean;
+/** available Toothpicks */
+declare var GamblingToothpickCount: number;
+declare var GamblingNpcDiceShown: boolean;
+declare var GamblingPlayerDiceShown: boolean;
+declare var GamblingToothpickStackShown: boolean;
 /**
  * Checks if the player is helpless (maids disabled) or not.
  * @returns {boolean} - Returns true if the player still has time remaining after asking the maids to stop helping in the maid quarters
@@ -103,14 +136,12 @@ declare function GamblingCannotPayToRelease(): boolean;
  * @returns {boolean} - Returns true, if the player is able to steal the dice, false otherwise
  */
 declare function GamblingCanStealDice(): boolean;
-declare function GamblingLoad(): Promise<void>;
 /**
  * Run the Gambling Hall, draw all characters. This function is called dynamically at very short intervals.
  * Don't use expensive loops or call expensive functions from here
  * @returns {void} - Nothing
  */
 declare function GamblingRun(): void;
-declare function GamblingClick(event: PointerEvent): void;
 /**
  * Enable the rendering of the player dice info
  * @returns {true} - Always true
@@ -236,36 +267,3 @@ declare function GamblingCompleteRescue(): void;
  * @returns {void} - Nothing
  */
 declare function GamblingStealDice(): void;
-declare var GamblingBackground: string;
-/** @type {NPCCharacter} */
-declare var GamblingFirstSub: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var GamblingSecondSub: NPCCharacter;
-/** @type {number[]} */
-declare var GamblingPlayerDiceStack: number[];
-/** @type {number[]} */
-declare var GamblingNpcDiceStack: number[];
-declare var GamblingPlayerSubState: number;
-/** Game-State of NPC */
-declare var GamblingNpcSubState: number;
-/** Player is Fox by Fox and Hunter */
-declare var GamblingPlayerIsFox: boolean;
-/** Money Bet in Current Game */
-declare var GamblingMoneyBet: number;
-/** Show Sum of Dice Dots in DiceStack */
-declare var GamblingShowDiceSum: boolean;
-/** Show Money in DiceStack */
-declare var GamblingShowMoney: boolean;
-/** @type {Item[]} */
-declare var GamblingAppearanceFirst: Item[];
-/** @type {Item[]} */
-declare var GamblingAppearanceSecond: Item[];
-/** @type {Item[]} */
-declare var GamblingAppearancePlayer: Item[];
-/** Sub Player lost Cloth although forbidden by Mistress */
-declare var GamblingIllegalChange: boolean;
-/** available Toothpicks */
-declare var GamblingToothpickCount: number;
-declare var GamblingNpcDiceShown: boolean;
-declare var GamblingPlayerDiceShown: boolean;
-declare var GamblingToothpickStackShown: boolean;

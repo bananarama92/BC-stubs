@@ -1,30 +1,22 @@
-declare function PreferenceSubscreenKeybindingsLoad(): void;
-declare function PreferenceSubscreenKeybindingsRun(): void;
-declare function PreferenceSubscreenKeybindingsResize(load: boolean): void;
-declare function PreferenceSubscreenKeybindingsClick(): void;
-declare function PreferenceSubscreenKeybindingsExit(): boolean;
-/**
- * Handles keypresses in the keybindings subscreen, updates keybindings,
- * changes respecting element text and serializes changes.
- * @param {KeyboardEvent} e
- * @returns {boolean}
- */
-declare function PreferenceSubscreenKeybindingsKeyUp(e: KeyboardEvent): boolean;
-declare namespace KeyGUI {
-    let selectedAction: Keybindings.Keybinding["id"] | null;
-    let searchingModes: ReadonlySet<KeybindingScreen.FilteringMode>;
-    let currentSearchingMode: KeybindingScreen.FilteringMode;
-    let showConflictsOnly: boolean;
-    let selec: Readonly<{
-        keyId: (id: string) => string;
-        keybuttonId: (id: string) => string;
-        keyNameId: (id: string) => string;
-        keyContextsId: (id: string) => string;
-        keyConflictIndicatorId: (id: string) => string;
-        comboResetButtonId: (id: string) => string;
-        comboUnbindButtonId: (id: string) => string;
-        categoryId: (id: string) => string;
-        categoryContentId: (id: string) => string;
+declare var KeyGUI: {
+    /** @type {Keybindings.Keybinding['id'] | null} */
+    selectedAction: Keybindings.Keybinding['id'] | null;
+    /** @type {ReadonlySet<KeybindingScreen.FilteringMode>} */
+    searchingModes: ReadonlySet<KeybindingScreen.FilteringMode>;
+    /** @type {KeybindingScreen.FilteringMode} */
+    currentSearchingMode: KeybindingScreen.FilteringMode;
+    /** @type {boolean} */
+    showConflictsOnly: boolean;
+    selec: Readonly<{
+        keyId: (/** @type {string} */ id: string) => string;
+        keybuttonId: (/** @type {string} */ id: string) => string;
+        keyNameId: (/** @type {string} */ id: string) => string;
+        keyContextsId: (/** @type {string} */ id: string) => string;
+        keyConflictIndicatorId: (/** @type {string} */ id: string) => string;
+        comboResetButtonId: (/** @type {string} */ id: string) => string;
+        comboUnbindButtonId: (/** @type {string} */ id: string) => string;
+        categoryId: (/** @type {string} */ id: string) => string;
+        categoryContentId: (/** @type {string} */ id: string) => string;
         categoryClass: "category";
         categoryNameClass: "category-name";
         categoryContentClass: "category-content";
@@ -53,22 +45,33 @@ declare namespace KeyGUI {
     /**
      * @param {Keybindings.Keybinding} keybinding
      */
-    function buildKeybinding(keybinding: Keybindings.Keybinding): HTMLDivElement;
+    buildKeybinding(keybinding: Keybindings.Keybinding): HTMLDivElement;
     /** @param {Keybindings.Category} categoryObject */
-    function buildCategory(categoryObject: Keybindings.Category): HTMLFieldSetElement | undefined;
-    function buildSearchInput(): HTMLLabelElement;
-    function buildSearchModeDropdown(): HTMLLabelElement;
-    function buildFilteringMenu(): HTMLElement;
-    function buildHelpSheet(): HTMLElement;
+    buildCategory(categoryObject: Keybindings.Category): HTMLFieldSetElement | undefined;
+    buildSearchInput(): HTMLLabelElement;
+    buildSearchModeDropdown(): HTMLLabelElement;
+    buildFilteringMenu(): HTMLElement;
+    buildHelpSheet(): HTMLElement;
     /** @param {string} content */
-    function changeHelpSheet(content: string): void;
-    function buildSubscreen(): void;
-    function searchFilteredAll(): void;
+    changeHelpSheet(content: string): void;
+    buildSubscreen(): void;
+    searchFilteredAll(): void;
     /**
      * Updates a keybinding's combination and updates all conflicting keybindings if any
      * @param {string} targetActionId
      * @param {Keybindings.KeyCombo} keyCombo
      */
-    function updateKeybinding(targetActionId: string, keyCombo: Keybindings.KeyCombo): void;
-    function showModal(): void;
-}
+    updateKeybinding(targetActionId: string, keyCombo: Keybindings.KeyCombo): void;
+    showModal(): void;
+};
+declare function PreferenceSubscreenKeybindingsLoad(): void;
+declare function PreferenceSubscreenKeybindingsRun(): void;
+declare function PreferenceSubscreenKeybindingsClick(): void;
+declare function PreferenceSubscreenKeybindingsExit(): boolean;
+/**
+ * Handles keypresses in the keybindings subscreen, updates keybindings,
+ * changes respecting element text and serializes changes.
+ * @param {KeyboardEvent} e
+ * @returns {boolean}
+ */
+declare function PreferenceSubscreenKeybindingsKeyUp(e: KeyboardEvent): boolean;

@@ -1,3 +1,12 @@
+declare var CurrentTime: number;
+declare var TimerRunInterval: number;
+declare var TimerLastTime: number;
+declare var TimerLastCycleCall: number;
+declare var TimerLastArousalProgress: number;
+declare var TimerLastArousalProgressCount: number;
+declare var TimerLastArousalDecay: number;
+/** @type {Map<string, Timer.CustomTimer>} */
+declare var Timers: Map<string, Timer.CustomTimer>;
 /**
  * Returns the current time from the local computer clock
  * @returns {number} - Returns the number of milliseconds
@@ -67,13 +76,4 @@ declare function TimermsToTime(s: number): string;
  * @param {'background' | 'foreground' | 'universal'} [type] - The type of timer. Default is universal
  * @returns {() => void} - A function to remove the timer.
  */
-declare function TimerCreate(callback: () => void, timeMs: number, repeat?: boolean, type?: "background" | "foreground" | "universal"): () => void;
-declare var CurrentTime: number;
-declare var TimerRunInterval: number;
-declare var TimerLastTime: number;
-declare var TimerLastCycleCall: number;
-declare var TimerLastArousalProgress: number;
-declare var TimerLastArousalProgressCount: number;
-declare var TimerLastArousalDecay: number;
-/** @type {Map<string, Timer.CustomTimer>} */
-declare var Timers: Map<string, Timer.CustomTimer>;
+declare function TimerCreate(callback: () => void, timeMs: number, repeat?: boolean, type?: 'background' | 'foreground' | 'universal'): () => void;

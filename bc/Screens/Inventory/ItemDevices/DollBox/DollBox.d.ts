@@ -1,1 +1,0 @@
-declare function AssetsItemDevicesDollBoxAfterDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData<AnimationPersistentData>) => void) | null, drawData: DynamicDrawingData<AnimationPersistentData>): void;

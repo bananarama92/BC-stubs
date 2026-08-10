@@ -1,16 +1,3 @@
-declare function PreferenceSubscreenOnlineLoad(): void;
-/**
- * Sets the online preferences for the player. Redirected to from the main Run function if the player is in the online
- * settings subscreen.
- * @returns {void} - Nothing
- */
-declare function PreferenceSubscreenOnlineRun(): void;
-/**
- * Handles the click events for the online settings.  Redirected from the main Click function.
- * @returns {void} - Nothing
- */
-declare function PreferenceSubscreenOnlineClick(): void;
-declare function PreferenceSubscreenOnlineResize(load: boolean): void;
 /** @type {string[]} */
 declare var PreferenceOnlineDefaultBackgroundList: string[];
 declare var PreferenceOnlineDefaultBackgroundIndex: number;
@@ -27,3 +14,15 @@ declare const PreferenceSubscreenOnlineIDs: Readonly<{
     subtitle: "preference-online-subtitle";
     selection: "preference-online-selection-button";
 }>;
+declare function PreferenceSubscreenOnlineLoad(): void;
+/**
+ * Sets the online preferences for the player. Redirected to from the main Run function if the player is in the online
+ * settings subscreen.
+ * @returns {void} - Nothing
+ */
+declare function PreferenceSubscreenOnlineRun(): void;
+/**
+ * Handles the click events for the online settings.  Redirected from the main Click function.
+ * @returns {void} - Nothing
+ */
+declare function PreferenceSubscreenOnlineClick(): void;

@@ -1,3 +1,77 @@
+/** A configuration object containing constants used by the ItemColor UI scripts */
+declare const ItemColorConfig: {
+    readonly buttonSpacing: 20;
+    readonly buttonSize: 65;
+    readonly headerButtonSize: 90;
+    readonly colorPickerButtonWidth: 65;
+    readonly colorDisplayWidth: 160;
+    readonly colorInputHeight: 45;
+};
+/** An enum for the possible item color UI modes */
+declare const ItemColorMode: {
+    readonly DEFAULT: "Default";
+    readonly COLOR_PICKER: "ColorPicker";
+};
+/**
+ * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
+ * @type {Character}
+ */
+declare let ItemColorCharacter: Character;
+/**
+ * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
+ * @type {Item}
+ */
+declare let ItemColorItem: Item;
+/** @type {null | ItemColorMode} */
+declare let ItemColorCurrentMode: null | ItemColorMode;
+/**
+ * Initialized in {@link ItemColorStateBuild} and valid until {@link ItemColorReset} is called
+ * @type {string}
+ */
+declare let ItemColorStateKey: string;
+/**
+ * Initialized in {@link ItemColorStateBuild} and valid until {@link ItemColorReset} is called
+ * @type {ItemColorStateType}
+ */
+declare let ItemColorState: ItemColorStateType;
+/** @type {number} */
+declare let ItemColorPage: number;
+/** @type {Record<string, number>} */
+declare let ItemColorLayerPages: Record<string, number>;
+/** @type {string | null} */
+declare let ItemColorPickerBackup: string | null;
+/**
+ * The indices of to-be colored layers within a {@link Item.Color}/{@link ItemColorGetColorableLayers}-returned array.
+ *
+ * Note that these layers (and their indices) belong to a colorable _subset_ of {@link Asset.Layer}.
+ * @type {number[]}
+ */
+declare let ItemColorPickerIndices: number[];
+/**
+ * The {@link Asset.Layer} indices of to-be colored layers mapped to their respective layer.
+ * @type {Map<number, AssetLayer>}
+ */
+declare const ItemColorPickerLayers: Map<number, AssetLayer>;
+/** @type {ItemColorExitListener[]} */
+declare let ItemColorExitListeners: ItemColorExitListener[];
+/** @type {string} */
+declare let ItemColorBackup: string;
+declare let ItemColorText: TextCache;
+/**
+ * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
+ * @type {TextCache}
+ */
+declare let ItemColorLayerNames: TextCache;
+/**
+ * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
+ * @type {TextCache}
+ */
+declare let ItemColorGroupNames: TextCache;
+/**
+ * All (hex code) colors used within the current lifetime of the ItemColor subscreen.
+ * @type {Set<BCColor>}
+ */
+declare const ItemColorHistory: Set<BCColor>;
 /**
  * Sanitize the color of the passed item, returning an array of valid color strings and of length {@link Asset.ColorableLayerCount}.
  * @param {Item} item - The item whose colors are to be validated
@@ -41,6 +115,13 @@ declare function ItemColorDraw(c: Character, group: AssetGroupName, x: number, y
  * @returns {void} - Nothing
  */
 declare function ItemColorDrawDefault(x: number, y: number): void;
+/**
+ * A debounced callback for when the item color picker changes its value. This sets the color for the currently selected set of color
+ * indices
+ * @deprecated - Superseded by {@link ColorPicker.eventListeners.inputItemColor}
+ * @type {(color: BCColor) => void}
+ */
+declare const ItemColorOnPickerChange: (color: BCColor) => void;
 /**
  * Click handler for the item color UI according to its current state
  * @param {Character} c - The character being colored
@@ -202,82 +283,3 @@ declare function ItemColorReset(): void;
  * @returns {boolean} - Whether the item has default color(s)
  */
 declare function ItemColorIsDefault(Item: Item): boolean;
-declare namespace ItemColorConfig {
-    let buttonSpacing: 20;
-    let buttonSize: 65;
-    let headerButtonSize: 90;
-    let colorPickerButtonWidth: 65;
-    let colorDisplayWidth: 160;
-    let colorInputHeight: 45;
-}
-declare namespace ItemColorMode {
-    let DEFAULT: "Default";
-    let COLOR_PICKER: "ColorPicker";
-}
-/**
- * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
- * @type {Character}
- */
-declare let ItemColorCharacter: Character;
-/**
- * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
- * @type {Item}
- */
-declare let ItemColorItem: Item;
-/** @type {null | ItemColorMode} */
-declare let ItemColorCurrentMode: null | ItemColorMode;
-/**
- * Initialized in {@link ItemColorStateBuild} and valid until {@link ItemColorReset} is called
- * @type {string}
- */
-declare let ItemColorStateKey: string;
-/**
- * Initialized in {@link ItemColorStateBuild} and valid until {@link ItemColorReset} is called
- * @type {ItemColorStateType}
- */
-declare let ItemColorState: ItemColorStateType;
-/** @type {number} */
-declare let ItemColorPage: number;
-/** @type {Record<string, number>} */
-declare let ItemColorLayerPages: Record<string, number>;
-/** @type {string | null} */
-declare let ItemColorPickerBackup: string | null;
-/**
- * The indices of to-be colored layers within a {@link Item.Color}/{@link ItemColorGetColorableLayers}-returned array.
- *
- * Note that these layers (and their indices) belong to a colorable _subset_ of {@link Asset.Layer}.
- * @type {number[]}
- */
-declare let ItemColorPickerIndices: number[];
-/**
- * The {@link Asset.Layer} indices of to-be colored layers mapped to their respective layer.
- * @type {Map<number, AssetLayer>}
- */
-declare const ItemColorPickerLayers: Map<number, AssetLayer>;
-/** @type {ItemColorExitListener[]} */
-declare let ItemColorExitListeners: ItemColorExitListener[];
-/** @type {string} */
-declare let ItemColorBackup: string;
-declare let ItemColorText: TextCache;
-/**
- * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
- * @type {TextCache}
- */
-declare let ItemColorLayerNames: TextCache;
-/**
- * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
- * @type {TextCache}
- */
-declare let ItemColorGroupNames: TextCache;
-/**
- * All (hex code) colors used within the current lifetime of the ItemColor subscreen.
- * @type {Set<BCColor>}
- */
-declare const ItemColorHistory: Set<BCColor>;
-/**
- * A debounced callback for when the item color picker changes its value. This sets the color for the currently selected set of color
- * indices
- * @deprecated - Superseded by {@link ColorPicker.eventListeners.inputItemColor}
- * @type {(color: BCColor) => void}
- */
-declare const ItemColorOnPickerChange: (color: BCColor) => void;

@@ -1,4 +1,65 @@
 /**
+ * ModularItem.js
+ * --------------
+ * This file contains utilities related to modular extended items (for example the High Security Straitjacket). It is
+ * generally not necessary to call functions in this file directly - these are called from Asset.js when an item is
+ * first registered.
+ *
+ * A modular item is a typed item, but each type may be comprised of several independent "modules". For example, the
+ * High Security Straitjacket has 3 different modules: crotch panel (c), arms (a), and crotch straps (s), and each
+ * module can be configured independently. The resulting type then uses an abbreviated format which represents the
+ * module values comprising that type. Each module contains a number of options that may be chosen for that module.
+ *
+ * For example "c0a1s2" - represents the type where the crotch panel module uses option 0, the arms module uses option
+ * 1, and the crotch straps module uses option 2. The properties of the type will be derived from a combination of the
+ * properties of each of the type's module options. For example, difficulty will be calculated by summing up the
+ * difficulties for each of its module options.
+ *
+ * All dialogue for modular items should be added to `Dialog_Player.csv`. To implement a modular item, you need the
+ * following dialogue entries:
+ * * "<GroupName><AssetName>SelectBase" - This is the text that will be displayed on the module selection screen (e.g.
+ *   `ItemArmsHighSecurityStraitJacketSelectBase` - "Configure Straitjacket")
+ * * For each module:
+ *   * "<GroupName><AssetName>Select<ModuleName>" - This is the text that will be displayed on the module's subscreen
+ *     (e.g. `ItemArmsHighSecurityStraitJacketSelectCrotch` - "Configure crotch panel")
+ *   * "<GroupName><AssetName>Module<ModuleName>" - This is the text that will be used to describe the module (under
+ *     the module's button) in the module selection screen (e.g. `ItemArmsHighSecurityStraitJacketModuleCrotch` -
+ *     "Crotch Panel")
+ * * For each option:
+ *   * "<GroupName><AssetName>Option<ModuleKey><OptionNumber>" - This is the text that will be used to describe the
+ *     option (under the option's button) in the module subscreen for the module containing that option (e.g.
+ *     `ItemArmsHighSecurityStraitJacketOptionc0` - "No crotch panel")
+ * * If the item's chat setting is configured to `PER_MODULE`, you will need a chatroom message for each module,
+ *   which will be sent when that module changes. It should have the format "<GroupName><AssetName>Set<ModuleName>"
+ *   (e.g. `ItemArmsHighSecurityStraitJacketSetCrotch` - "SourceCharacter changed the crotch panel on
+ *   DestinationCharacter straitjacket")
+ * * If the item's chat setting is configured to `PER_OPTION`, you will need a chatroom message for each option, which
+ *   will be sent when that option is selected. It should have the format
+ *   "<GroupName><AssetName>Set<ModuleKey><OptionNumber>" (e.g. `ItemArmsHighSecurityStraitJacketSetc0` -
+ *   "SourceCharacter removes the crotch panel from DestinationCharacter straitjacket")
+ */
+/**
+ * The keyword used for the base menu on modular items
+ * @const {string}
+ */
+declare const ModularItemBase = "Base";
+/**
+ * A lookup for the modular item configurations for each registered modular item
+ * @const
+ * @type {Record<string, ModularItemData>}
+ * @see {@link ModularItemData}
+ */
+declare const ModularItemDataLookup: Record<string, ModularItemData>;
+/**
+ * An enum encapsulating the possible chatroom message settings for modular items
+ * - PER_MODULE - The item has one chatroom message per module (messages for individual options within a module are all
+ * the same)
+ * - PER_OPTION - The item has one chatroom message per option (for finer granularity - each individual option within a
+ * module can have its own chatroom message)
+ * @type {Record<"PER_MODULE"|"PER_OPTION", ModularItemChatSetting>}
+ */
+declare const ModularItemChatSetting: Record<"PER_MODULE" | "PER_OPTION", ModularItemChatSetting>;
+/**
  * Registers a modular extended item. This automatically creates the item's load, draw and click functions.
  * @param {Asset} asset - The asset being registered
  * @param {ModularItemConfig} config - The item's modular item configuration
@@ -79,7 +140,7 @@ declare function ModularItemDrawModule(module: ModularItemModule, data: ModularI
  * @param {ModularItemData} data - The modular item's data
  * @returns {function(): void} - A click handler for the modular item's module selection screen
  */
-declare function ModularItemCreateClickBaseFunction(data: ModularItemData): () => void;
+declare function ModularItemCreateClickBaseFunction(data: ModularItemData): Function;
 /**
  * A generic click handler for a module's screen
  * @param {ModularItemModule} module - The module whose screen we are currently in
@@ -98,7 +159,7 @@ declare function ModularItemClickModule(module: ModularItemModule, data: Modular
  * @param {number} pageNumber - The currently shown page
  * @returns {void} - Nothing
  */
-declare function ModularItemClickCommon(data: ModularItemData, { paginate, elementData, itemsPerPage }: ExtendedItemDrawData<ElementMetaData.Modular>, exitCallback: () => void, itemCallback: (arg0: number) => boolean, paginateCallback: (arg0: number) => void, pageNumber: number): void;
+declare function ModularItemClickCommon(data: ModularItemData, { paginate, elementData, itemsPerPage }: ExtendedItemDrawData<ElementMetaData.Modular>, exitCallback: Function, itemCallback: Function, paginateCallback: Function, pageNumber: number): void;
 /**
  * Handles page changing for modules
  * @param {string} moduleName - The name of the module whose page should be modified
@@ -193,64 +254,3 @@ declare function ModularItemGenerateValidationProperties(data: ModularItemData):
  * @returns {boolean} Whether the module is active or not
  */
 declare function ModularItemHideElement(Data: ModularItemData, ID: string, Module: string): boolean;
-/**
- * ModularItem.js
- * --------------
- * This file contains utilities related to modular extended items (for example the High Security Straitjacket). It is
- * generally not necessary to call functions in this file directly - these are called from Asset.js when an item is
- * first registered.
- *
- * A modular item is a typed item, but each type may be comprised of several independent "modules". For example, the
- * High Security Straitjacket has 3 different modules: crotch panel (c), arms (a), and crotch straps (s), and each
- * module can be configured independently. The resulting type then uses an abbreviated format which represents the
- * module values comprising that type. Each module contains a number of options that may be chosen for that module.
- *
- * For example "c0a1s2" - represents the type where the crotch panel module uses option 0, the arms module uses option
- * 1, and the crotch straps module uses option 2. The properties of the type will be derived from a combination of the
- * properties of each of the type's module options. For example, difficulty will be calculated by summing up the
- * difficulties for each of its module options.
- *
- * All dialogue for modular items should be added to `Dialog_Player.csv`. To implement a modular item, you need the
- * following dialogue entries:
- * * "<GroupName><AssetName>SelectBase" - This is the text that will be displayed on the module selection screen (e.g.
- *   `ItemArmsHighSecurityStraitJacketSelectBase` - "Configure Straitjacket")
- * * For each module:
- *   * "<GroupName><AssetName>Select<ModuleName>" - This is the text that will be displayed on the module's subscreen
- *     (e.g. `ItemArmsHighSecurityStraitJacketSelectCrotch` - "Configure crotch panel")
- *   * "<GroupName><AssetName>Module<ModuleName>" - This is the text that will be used to describe the module (under
- *     the module's button) in the module selection screen (e.g. `ItemArmsHighSecurityStraitJacketModuleCrotch` -
- *     "Crotch Panel")
- * * For each option:
- *   * "<GroupName><AssetName>Option<ModuleKey><OptionNumber>" - This is the text that will be used to describe the
- *     option (under the option's button) in the module subscreen for the module containing that option (e.g.
- *     `ItemArmsHighSecurityStraitJacketOptionc0` - "No crotch panel")
- * * If the item's chat setting is configured to `PER_MODULE`, you will need a chatroom message for each module,
- *   which will be sent when that module changes. It should have the format "<GroupName><AssetName>Set<ModuleName>"
- *   (e.g. `ItemArmsHighSecurityStraitJacketSetCrotch` - "SourceCharacter changed the crotch panel on
- *   DestinationCharacter straitjacket")
- * * If the item's chat setting is configured to `PER_OPTION`, you will need a chatroom message for each option, which
- *   will be sent when that option is selected. It should have the format
- *   "<GroupName><AssetName>Set<ModuleKey><OptionNumber>" (e.g. `ItemArmsHighSecurityStraitJacketSetc0` -
- *   "SourceCharacter removes the crotch panel from DestinationCharacter straitjacket")
- */
-/**
- * The keyword used for the base menu on modular items
- * @const {string}
- */
-declare const ModularItemBase: "Base";
-/**
- * A lookup for the modular item configurations for each registered modular item
- * @const
- * @type {Record<string, ModularItemData>}
- * @see {@link ModularItemData}
- */
-declare const ModularItemDataLookup: Record<string, ModularItemData>;
-/**
- * An enum encapsulating the possible chatroom message settings for modular items
- * - PER_MODULE - The item has one chatroom message per module (messages for individual options within a module are all
- * the same)
- * - PER_OPTION - The item has one chatroom message per option (for finer granularity - each individual option within a
- * module can have its own chatroom message)
- * @type {Record<"PER_MODULE"|"PER_OPTION", ModularItemChatSetting>}
- */
-declare const ModularItemChatSetting: Record<"PER_MODULE" | "PER_OPTION", ModularItemChatSetting>;

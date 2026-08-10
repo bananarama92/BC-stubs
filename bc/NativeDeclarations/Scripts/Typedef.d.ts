@@ -2721,7 +2721,7 @@ interface ExtendedItemDialog<
 	OptionType extends ExtendedItemOption,
 > {
 	/** The dialogue prefix for the player prompt that is displayed on each module's menu screen */
-	header: string | ExtendedItemHeaderCallback<DataType>;
+	header?: string | ExtendedItemHeaderCallback<DataType>;
 	/** The dialogue prefix for the name of each module */
 	module?: string;
 	/** The dialogue prefix for the name of each option */
@@ -2867,7 +2867,7 @@ declare namespace ExtendedItemCallbacks {
 	 */
 	type Validate<
 		OptionType extends ExtendedItemOption = ExtendedItemOption
-	> = ExtendedItemCallback<[C: Character, item: Item, newOption: OptionType, previousOption: OptionType, permitExisting?: boolean], string>;
+	> = ExtendedItemCallback<[C: Character, item: Item, newOption: OptionType, previousOption: OptionType, permitExisting?: boolean], string | null>;
 	/**
 	 * Callback for extended item `PublishAction` functions.
 	 * `PublishAction` functions are responsible for reporting any changes to an item's properties via a chat message.
@@ -2985,7 +2985,7 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	type Validate<
 		DataType extends ExtendedItemData<any>,
 		OptionType extends ExtendedItemOption
-	> = ExtendedItemScriptHookCallback<DataType, [C: Character, item: Item, newOption: OptionType, previousOption: OptionType, permitExisting?: boolean], string>;
+	> = ExtendedItemScriptHookCallback<DataType, [C: Character, item: Item, newOption: OptionType, previousOption: OptionType, permitExisting?: boolean], string | undefined>;
 	/**
 	 * Callback for extended item `PublishAction` script hooks.
 	 * `PublishAction` functions are responsible for reporting any changes to an item's properties via a chat message.
@@ -3900,7 +3900,7 @@ interface NoArchItemData extends ExtendedItemData<NoArchItemOption> {
 	drawData: ExtendedItemDrawData<ElementMetaData.NoArch>;
 	dialogPrefix: {
 		/** The dialog key for the item's load text (usually a prompt to select the type) */
-		header: string | ExtendedItemHeaderCallback<NoArchItemData>;
+		header?: string | ExtendedItemHeaderCallback<NoArchItemData>;
 		/** The prefix used for dialog keys representing the display names of the item's types */
 		option?: string;
 		/** The prefix used for dialog keys representing the item's chatroom messages when its type is changed */

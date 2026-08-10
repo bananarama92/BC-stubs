@@ -1,3 +1,24 @@
+declare var StableBackground: string;
+/** @type {null | NPCCharacter} */
+declare var StableTrainer: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var StablePony: null | NPCCharacter;
+declare var StablePonyPass: boolean;
+declare var StablePonyFail: boolean;
+/** @type {Item[]} */
+declare var StablePlayerAppearance: Item[];
+/** @type {"Pony" | "Trainer" | null} */
+declare var StablePlayerOutfitWorn: "Pony" | "Trainer" | null;
+declare var StablePlayerTrainingActiv: boolean;
+declare var StablePlayerTrainingLessons: number;
+declare var StablePlayerTrainingBehavior: number;
+declare var StableTrainerTrainingExercises: number;
+declare var StablePlayerInIsolation: boolean;
+/** @type {null | number} */
+declare var StablePlayerInIsolationStart: null | number;
+/** @type {null | number} */
+declare var StablePlayerInIsolationEnd: null | number;
+declare var StableExamPoint: number;
 declare function StablePlayerIsPony(): boolean;
 declare function StablePlayerIsExamPony(): boolean;
 declare function StablePlayerIsTrainer(): boolean;
@@ -24,7 +45,6 @@ declare function StableCanHideDice(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function StableCanPlayClubCard(): boolean;
-declare function StableLoad(): Promise<void>;
 declare function StableRun(): void;
 declare function StableClick(): void;
 declare function StableTrialPonyTraining(): void;
@@ -168,12 +188,28 @@ declare function StablePlayerTExamHurdles(): void;
 declare function StablePlayerTExamHurdlesEnd(): Promise<void>;
 declare function StablePlayerTExamPass(): void;
 declare function StablePlayerTExamEnd(): void;
+declare var StableProgress: number;
+declare var StableSecondProgress: number;
+declare var StableProgressAuto: number;
+declare var StableSecondProgressAuto: number;
+declare var StableProgressClick: number;
+declare var StableProgressLastKeyPress: any;
+declare var StableProgressItem: string;
+declare var StableProgressFinished: boolean;
+declare var StableProgressCharacter: any;
+declare var StableProgressSecondCharacter: any;
+declare var StableProgressEndStage: number;
+declare var StableProgressEndDialog: any;
+declare var StableProgressCancelStage: any;
+declare var StableProgressCancelDialog: any;
+declare var StableProgressBehavior: number;
+declare var StableProgressOperation: any;
+declare var StableProgressStruggleCount: any;
 declare function StableGenericProgressStart(Timer: any, S: any, S2: any, Item: any, Background: any, Character: any, SecondCharacter: any, Stage: any, CurrentDialog: any, CancelStage: any, CancelCurrentDialog: any, Behavior: any, ProgressOperation: any): void;
 declare function StableGenericDrawProgress(): void;
 declare function StableGenericFinished(): void;
 declare function StableGenericCancel(): void;
 declare function StableGenericProgressEnd(): void;
-declare function StableKeyDown(event: KeyboardEvent): boolean;
 /**
  * @param {boolean} Reverse
  */
@@ -195,48 +231,10 @@ declare function StableClubCardStart(): void;
  * When the player ends a club card game
  */
 declare function StableClubCardEnd(): Promise<void>;
+declare var StableActivityList: string[];
 /**
  * Runs the pony command from the online chat box
  * @param {string} Activity - The activity to validate
  * @returns {void} - Nothing
  */
 declare function StableDoActivity(Activity: string): void;
-declare var StableBackground: string;
-/** @type {null | NPCCharacter} */
-declare var StableTrainer: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var StablePony: null | NPCCharacter;
-declare var StablePonyPass: boolean;
-declare var StablePonyFail: boolean;
-/** @type {Item[]} */
-declare var StablePlayerAppearance: Item[];
-/** @type {"Pony" | "Trainer" | null} */
-declare var StablePlayerOutfitWorn: "Pony" | "Trainer" | null;
-declare var StablePlayerTrainingActiv: boolean;
-declare var StablePlayerTrainingLessons: number;
-declare var StablePlayerTrainingBehavior: number;
-declare var StableTrainerTrainingExercises: number;
-declare var StablePlayerInIsolation: boolean;
-/** @type {null | number} */
-declare var StablePlayerInIsolationStart: null | number;
-/** @type {null | number} */
-declare var StablePlayerInIsolationEnd: null | number;
-declare var StableExamPoint: number;
-declare var StableProgress: number;
-declare var StableSecondProgress: number;
-declare var StableProgressAuto: number;
-declare var StableSecondProgressAuto: number;
-declare var StableProgressClick: number;
-declare var StableProgressLastKeyPress: null;
-declare var StableProgressItem: string;
-declare var StableProgressFinished: boolean;
-declare var StableProgressCharacter: null;
-declare var StableProgressSecondCharacter: null;
-declare var StableProgressEndStage: number;
-declare var StableProgressEndDialog: null;
-declare var StableProgressCancelStage: null;
-declare var StableProgressCancelDialog: null;
-declare var StableProgressBehavior: number;
-declare var StableProgressOperation: null;
-declare var StableProgressStruggleCount: null;
-declare var StableActivityList: string[];

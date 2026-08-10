@@ -1,4 +1,50 @@
 /**
+ * A list with all kneeling {@link AssetPoseMap["BodyLower"]} pose names.
+ * @satisfies {readonly AssetPoseMap["BodyLower"][]}
+ */
+declare const PoseAllKneeling: readonly ("Kneel" | "KneelingSpread")[];
+/**
+ * A list with all standing {@link AssetPoseMap["BodyLower"]} pose names.
+ * @satisfies {readonly AssetPoseMap["BodyLower"][]}
+ */
+declare const PoseAllStanding: readonly ("BaseLower" | "LegsClosed" | "Spread")[];
+/**
+ * Namespace with functions for converting pose name arrays into records
+ * @namespace
+ */
+declare const PoseToMapping: {
+    /**
+     * Unflatten a pose name array, converting it into a record mapping pose categories to aforementioned pose names
+     * @param {readonly AssetPoseName[]} poses - The to-be unflattened pose array
+     * @param {null | string} warningPrefix - A prefix to-be prepended to any warning messages
+     * @returns {Partial<Record<AssetPoseCategory, AssetPoseName[]>>}
+     */
+    readonly Array: (poses: readonly AssetPoseName[], warningPrefix?: null | string) => Partial<Record<AssetPoseCategory, AssetPoseName[]>>;
+    /**
+     * Unflatten a pose name array, converting it into a record mapping pose categories to a single pose.
+     * A warning will be logged if multiple poses within the same category are present.
+     * @param {readonly AssetPoseName[]} poses - The to-be unflattened pose array
+     * @param {null | string} warningPrefix - A prefix to-be prepended to any warning messages
+     * @returns {Partial<Record<AssetPoseCategory, AssetPoseName>>}
+     */
+    readonly Scalar: (poses: readonly AssetPoseName[], warningPrefix?: null | string) => Partial<Record<AssetPoseCategory, AssetPoseName>>;
+};
+/**
+ * Status codes for representing whether a character can or cannot change to a pose unaided.
+ * @see {@link PoseCanChangeUnaided}
+ * @satisfies {Record<string, PoseChangeStatus>}
+ */
+declare const PoseChangeStatus: {
+    /** Never allow a particular change in pose  */
+    readonly NEVER: 0;
+    /** Allow a particular change in pose only with someone else's assistance */
+    readonly NEVER_WITHOUT_AID: 1;
+    /** Allow a particular change in pose only via some sort of struggle (_i.e._ the kneeling/standing minigame) */
+    readonly ALWAYS_WITH_STRUGGLE: 2;
+    /** Always allow a particular change in pose */
+    readonly ALWAYS: 3;
+};
+/**
  * Checks to what extent the given character can change to a given pose.
  *
  * @see {@link PoseCanChangeUnaided} Check whether one can change to a pose _unaided_
@@ -55,36 +101,3 @@ declare function PoseSetActive(C: Character, poseName: null | AssetPoseName, For
  * @returns {void} - Nothing
  */
 declare function PoseRefresh(C: Character): void;
-/**
- * A list with all kneeling {@link AssetPoseMap["BodyLower"]} pose names.
- * @satisfies {readonly AssetPoseMap["BodyLower"][]}
- */
-declare const PoseAllKneeling: readonly ("Kneel" | "KneelingSpread")[];
-/**
- * A list with all standing {@link AssetPoseMap["BodyLower"]} pose names.
- * @satisfies {readonly AssetPoseMap["BodyLower"][]}
- */
-declare const PoseAllStanding: readonly ("BaseLower" | "LegsClosed" | "Spread")[];
-declare namespace PoseToMapping {
-    /**
-     * Unflatten a pose name array, converting it into a record mapping pose categories to aforementioned pose names
-     * @param {readonly AssetPoseName[]} poses - The to-be unflattened pose array
-     * @param {null | string} warningPrefix - A prefix to-be prepended to any warning messages
-     * @returns {Partial<Record<AssetPoseCategory, AssetPoseName[]>>}
-     */
-    function Array(poses: readonly AssetPoseName[], warningPrefix?: null | string): Partial<Record<AssetPoseCategory, AssetPoseName[]>>;
-    /**
-     * Unflatten a pose name array, converting it into a record mapping pose categories to a single pose.
-     * A warning will be logged if multiple poses within the same category are present.
-     * @param {readonly AssetPoseName[]} poses - The to-be unflattened pose array
-     * @param {null | string} warningPrefix - A prefix to-be prepended to any warning messages
-     * @returns {Partial<Record<AssetPoseCategory, AssetPoseName>>}
-     */
-    function Scalar(poses: readonly AssetPoseName[], warningPrefix?: null | string): Partial<Record<AssetPoseCategory, AssetPoseName>>;
-}
-declare namespace PoseChangeStatus {
-    let NEVER: 0;
-    let NEVER_WITHOUT_AID: 1;
-    let ALWAYS_WITH_STRUGGLE: 2;
-    let ALWAYS: 3;
-}

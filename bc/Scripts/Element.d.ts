@@ -1,4 +1,10 @@
 /**
+ * Generate and return a unique {@link HTMLElement.id}.
+ *
+ * IDs consist of base36-encoded integers whose value is incremented each time this function is called.
+ */
+declare var ElementGenerateID: () => string;
+/**
  * Handles the value of a HTML element. It sets the value of the element when the Value parameter is provided or it returns the value when the parameter is omitted
  * @param {string | null} ID - The id of the element for which we want to get/set the value.
  * @param {string} [Value] - The value to give to the element (if applicable)
@@ -18,18 +24,9 @@ declare function ElementContent(ID: string | null, Content?: string): string;
  * @param {string} ID
  */
 declare function ElementClearContents(ID: string): void;
-/**
- * @template {keyof HTMLElementScalarTagNameMap} T
- * @overload
- * @param {HTMLOptions<T>} options
- * @returns {HTMLElementTagNameMap[T]}
- */
+/** @satisfies {ElementNoParent} */
+declare const ElementNoParent = 0;
 declare function ElementCreate<T extends keyof HTMLElementScalarTagNameMap>(options: HTMLOptions<T>): HTMLElementTagNameMap[T];
-/**
- * @overload
- * @param {HTMLOptionsUnion} options
- * @returns {HTMLElement}
- */
 declare function ElementCreate(options: HTMLOptionsUnion): HTMLElement;
 /**
  * Convert the list of passed HTML option children into a list of nodes and/or string
@@ -58,14 +55,16 @@ declare function ElementCreateForm(ID: string | null): HTMLFormElement;
  * @returns {HTMLTextAreaElement}
  */
 declare function ElementCreateTextArea(ID: string | null, form?: HTMLElement): HTMLTextAreaElement;
-declare function ElementNumberInputBlur(this: HTMLInputElement, event: FocusEvent): void;
-declare class ElementNumberInputBlur {
-    value: string;
-}
-declare function ElementNumberInputWheel(this: HTMLInputElement, event: WheelEvent): void;
-declare class ElementNumberInputWheel {
-    valueAsNumber: number | undefined;
-}
+/**
+ * Blur event listener for `number`-based `<input>` elements that automatically sanitizes the input value the moment the element is deselected.
+ * @type {(this: HTMLInputElement, event: FocusEvent) => void}
+ */
+declare function ElementNumberInputBlur(event: FocusEvent): void;
+/**
+ * Wheel event listener for `number`-based `<input>` elements. Allows one to increment/decrement the value
+ * @type {(this: HTMLInputElement, event: WheelEvent) => void}
+ */
+declare function ElementNumberInputWheel(event: WheelEvent): void;
 /**
  * Creates a new text input element in the main document.Does not create a new element if there is already an existing one with the same ID
  * @param {string | null} ID - The id of the input tag to create.
@@ -107,6 +106,45 @@ declare function ElementCreateDropdown(id: string | null, optionsList: readonly 
     size?: number;
     name?: string;
 }, htmlOptions?: null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>): HTMLSelectElement;
+/**
+ * Namespace for creating `<select>`-based dropdown menus.
+ * @namespace
+ */
+declare var ElementDropdown: {
+    /**
+     * Construct a `<select>`-based dropdown menu.
+     * @param {string | null} id - The name of the select item.
+     * @param {readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
+     * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
+     * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number, name?: string }} [options] - Additional `<select>`-specific properties
+     * @param {null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @returns {HTMLSelectElement} - The created element
+     */
+    Create(id: string | null, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[], onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
+        required?: boolean;
+        multiple?: boolean;
+        disabled?: boolean;
+        size?: number;
+        name?: string;
+    }, htmlOptions?: null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>): HTMLSelectElement;
+    /**
+     * Construct a `<select>`-based dropdown menu.
+     * @param {string | null} id - The name of the select item.
+     * @param {readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
+     * @param {string} label - The label of the dropdown menu.
+     * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
+     * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number, name?: string }} [options] - Additional `<select>`-specific properties
+     * @param {null | Partial<Record<"select" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @returns {HTMLLabelElement} - The created element
+     */
+    CreateLabelled(id: string | null, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[], label: string, onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
+        required?: boolean;
+        multiple?: boolean;
+        disabled?: boolean;
+        size?: number;
+        name?: string;
+    }, htmlOptions?: null | Partial<Record<"select" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>): HTMLLabelElement;
+};
 /**
  * Construct a custom searchable dropdown menu.
  *
@@ -255,7 +293,7 @@ declare function ElementToggleGeneratedElements(Screen: string, ShouldDisplay: b
  * @param {'left' | 'top'} [options.position='top']
  */
 declare function ElementCreateSettingsLabel(label: string, forId: HTMLElement | string, options?: {
-    position?: "left" | "top" | undefined;
+    position?: 'left' | 'top';
 }): HTMLLabelElement;
 /**
  * Create a group of radio buttons
@@ -271,6 +309,49 @@ declare function ElementCreateRadioButtonGroup(id: string, onclick: (this: HTMLB
     htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>;
     options?: ElementButton.Options;
 }[]): HTMLFieldSetElement;
+/**
+ * Namespace for creating (DOM-based) dropdown menus filled with checkboxes
+ * @namespace
+ */
+declare var ElementCheckboxDropdown: {
+    /**
+     * @param {string} idPrefix
+     * @param {string} idSuffix
+     * @param {string} spanText
+     * @param {(this: HTMLInputElement, event: Event) => void} listener
+     * @param {boolean} checked
+     * @returns {HTMLOptions<"label">}
+     */
+    _CreateCheckboxPair(idPrefix: string, idSuffix: string, spanText: string, listener: (this: HTMLInputElement, event: Event) => void, checked?: boolean): HTMLOptions<"label">;
+    /**
+     * Construct a dropdown menu with labeled checkboxes
+     * @param {string | null} id - The ID of the element
+     * @param {readonly string[]} checkboxList - The checkbox labels
+     * @param {(this: HTMLInputElement, event: Event) => void} eventListener - The event listener to-be attached to all checkboxes
+     * @param {Object} [options]
+     * @param {HTMLElement} [options.parent] - The parent element of the dropdown menu; defaults to {@link document.body}
+     * @param {boolean} [options.checked] - Whether all checkboxes should be initially checked
+     * @returns {HTMLDivElement} - The created dropdown menu
+     */
+    FromList(id: string | null, checkboxList: readonly string[], eventListener: (this: HTMLInputElement, event: Event) => void, options?: {
+        parent?: HTMLElement;
+        checked?: boolean;
+    }): HTMLDivElement;
+    /**
+     * Construct a dropdown menu with labeled checkboxes, each group of checkboxes having a header associated with them
+     * @param {string | null} id - The ID of the element
+     * @param {Record<string, readonly string[]>} checkboxRecord - The checkbox labels
+     * @param {(this: HTMLInputElement, event: Event) => void} eventListener - The event listener to-be attached to all checkboxes
+     * @param {Object} [options]
+     * @param {HTMLElement} [options.parent] - The parent element of the dropdown menu; defaults to {@link document.body}
+     * @param {boolean} [options.checked] - Whether all checkboxes should be initially checked
+     * @returns {HTMLDivElement} - The created dropdown menu
+     */
+    FromRecord(id: string | null, checkboxRecord: Record<string, readonly string[]>, eventListener: (this: HTMLInputElement, event: Event) => void, options?: {
+        parent?: HTMLElement;
+        checked?: boolean;
+    }): HTMLDivElement;
+};
 /**
  * Construct a search-based `<input>` element that offers suggestions based on the passed callbacks output.
  *
@@ -301,19 +382,283 @@ declare function ElementCreateRadioButtonGroup(id: string, onclick: (this: HTMLB
  * @returns {HTMLInputElement} - The newly created search input
  */
 declare function ElementCreateSearchInput(id: string | null, dataCallback: (searchInput: HTMLInputElement) => Iterable<string>, options?: {
-    value?: string | undefined;
-    parent?: Node | undefined;
-    maxLength?: number | undefined;
-    minLength?: number | undefined;
-    size?: number | undefined;
-    placeholder?: string | undefined;
-    name?: string | undefined;
-    disabled?: boolean | undefined;
-    spellcheck?: boolean | undefined;
-    pattern?: string | RegExp | undefined;
-    onInput?: ((this: HTMLInputElement, ev: Event) => void) | undefined;
-    onKeydown?: ((this: HTMLInputElement, ev: KeyboardEvent) => void) | undefined;
+    value?: string;
+    parent?: Node;
+    maxLength?: number;
+    minLength?: number;
+    size?: number;
+    placeholder?: string;
+    name?: string;
+    disabled?: boolean;
+    spellcheck?: boolean;
+    pattern?: string | RegExp;
+    onInput?: (this: HTMLInputElement, ev: Event) => void;
+    onKeydown?: (this: HTMLInputElement, ev: KeyboardEvent) => void;
 }, htmlOptions?: null | Partial<Record<"search", Omit<HTMLOptions<"input">, "tag">>>): HTMLInputElement;
+/**
+ * Namespace for creating HTML buttons
+ * @namespace
+ */
+declare var ElementButton: {
+    /**
+     * private
+     * @readonly
+     */
+    _TooltipPositions: Readonly<{
+        left: "button-tooltip-left";
+        right: "button-tooltip-right";
+        top: "button-tooltip-top";
+        bottom: "button-tooltip-bottom";
+    }>;
+    /**
+     * private
+     * @readonly
+     */
+    _LabelPositions: Readonly<{
+        top: "button-label-top";
+        center: "button-label-center";
+        bottom: "button-label-bottom";
+        left: "button-label-left";
+        right: "button-label-right";
+    }>;
+    /**
+     * private
+     * @type {(this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>}
+     */
+    _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
+    /**
+     * private
+     * @type {(this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>}
+     */
+    _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
+    _GetClickTouchListeners(): {
+        click: (this: HTMLButtonElement, ev: PointerEvent) => void;
+        touchend: (this: HTMLButtonElement, ev: TouchEvent) => void;
+        touchmove: (this: HTMLButtonElement, ev: TouchEvent) => void;
+        touchstart: (this: HTMLButtonElement, ev: TouchEvent) => void;
+        blur: (this: HTMLButtonElement, ev: FocusEvent) => void;
+        bcTouchHold: (this: HTMLButtonElement, ev: PointerEvent) => void;
+        touchcancel: (this: HTMLButtonElement, ev: TouchEvent) => void;
+    };
+    /**
+     * Navigate the passed elements children in a depth-first search manner,
+     * yielding all elements matching the `query` selector and whose parent does _not_ satisify the passed `filter`
+     * @param {Element} root
+     * @param {string} query
+     * @param {(el: Element) => boolean} filter
+     * @returns {Generator<Element, void>}
+     */
+    _QueryDFS: (root: Element, query: string, filter: (el: Element) => boolean) => Generator<Element, void>;
+    _ClickRadio(this: HTMLButtonElement, ev: Event): void;
+    _ClickSpin(this: HTMLButtonElement, ev: MouseEvent): void;
+    _KeyDownSpin(this: HTMLButtonElement, ev: KeyboardEvent): void;
+    /**
+     * @this {HTMLElement}
+     * @param {KeyboardEvent} ev
+     */
+    _KeyDownRadio(this: HTMLElement, ev: KeyboardEvent): void;
+    _ClickCheckbox(this: HTMLButtonElement, ev: Event): void;
+    /**
+     * private
+     * @param {string} id
+     * @param {string} [img]
+     * @param {null | string} [imgColor]
+     * @param {Omit<HTMLOptions<"img" | "div">, "tag">} [options]
+     * @returns {HTMLImageElement | HTMLDivElement | null}
+     */
+    _ParseImage(id: string, img?: string, imgColor?: null | string, options?: Omit<HTMLOptions<"img" | "div">, "tag">): HTMLImageElement | HTMLDivElement | null;
+    /**
+     * private
+     * @param {string} id
+     * @param {ElementButton.StaticNode} [label]
+     * @param {"top" | "center" | "bottom" | "left" | "right"} [position]
+     * @param {Omit<HTMLOptions<"span">, "tag">} [options]
+     * @returns {null | HTMLSpanElement}
+     */
+    _ParseLabel(id: string, label?: ElementButton.StaticNode, position?: "top" | "center" | "bottom" | "left" | "right", options?: Omit<HTMLOptions<"span">, "tag">): null | HTMLSpanElement;
+    /**
+     * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
+     * @param {string} id - The ID of the parent element
+     * @param {readonly (InventoryIcon | ElementButton.CustomIcon | null | undefined)[]} [icons] - The (optional) list of icons
+     * @returns {null | { iconGrid: HTMLDivElement, tooltip: [HTMLSpanElement, HTMLElement] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
+     */
+    _ParseIcons(id: string, icons?: readonly (InventoryIcon | ElementButton.CustomIcon | null | undefined)[]): null | {
+        iconGrid: HTMLDivElement;
+        tooltip: [HTMLSpanElement, HTMLElement];
+    };
+    /**
+     * private
+     * @param {string} id
+     * @param {"left" | "right" | "top" | "bottom"} [position]
+     * @param {readonly (null | undefined | string | Node | HTMLOptions<any>)[]} [children]
+     * @param {Omit<HTMLOptions<"div">, "tag">} [options]
+     * @returns {null | HTMLDivElement}
+     */
+    _ParseTooltip(id: string, position?: "left" | "right" | "top" | "bottom", children?: readonly (null | undefined | string | Node | HTMLOptions<any>)[], options?: Omit<HTMLOptions<"div">, "tag">): null | HTMLDivElement;
+    /**
+     * Set the `[role]` attribute of the passed button
+     * @param {HTMLButtonElement} button
+     * @param {null | ElementButton.Options["role"]} role
+     */
+    SetRole(button: HTMLButtonElement, role: null | ElementButton.Options["role"]): void;
+    /**
+     * Create a generic button.
+     * @param {null | string} id - The ID of the to-be created search button
+     * @param {null | ((this: HTMLButtonElement, ev: PointerEvent) => any)} onClick - The click event listener to-be attached to the tooltip
+     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
+     * @param {Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
+     * @returns {HTMLButtonElement} - The created button
+     */
+    Create(id: null | string, onClick: null | ((this: HTMLButtonElement, ev: PointerEvent) => any), options?: null | ElementButton.Options, htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    /**
+     * Create a button for an asset or item, including image, label and icons.
+     * @param {string | null} idPrefix - The ID of the to-be created search button
+     * @param {Asset | Item} asset - The asset (or item) for which to create a button
+     * @param {null | Character} C - The character wearing the asset/item (if any)
+     * @param {null | ((this: HTMLButtonElement, ev: PointerEvent) => any)} onClick - The click event listener to-be attached to the tooltip
+     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
+     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
+     * @returns {HTMLButtonElement} - The created button
+     */
+    CreateForAsset(idPrefix: string | null, asset: Asset | Item, C: null | Character, onClick: null | ((this: HTMLButtonElement, ev: PointerEvent) => any), options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    /**
+     * @param {CraftingItem} craft
+     * @returns {HTMLElement[]}
+     */
+    CreateCraftTooltipContent(craft: CraftingItem): HTMLElement[];
+    /**
+     * Create a button for an activity, including image, label and icons.
+     * @param {string | null} idPrefix - The ID of the to-be created search button
+     * @param {ItemActivity} activity - The activity for which to create a button
+     * @param {Character} C - The target character of the activity
+     * @param {(this: HTMLButtonElement, ev: PointerEvent) => any} onClick - The click event listener to-be attached to the tooltip
+     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
+     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
+     * @returns {HTMLButtonElement} - The created button
+     */
+    CreateForActivity(idPrefix: string | null, activity: ItemActivity, C: Character, onClick: (this: HTMLButtonElement, ev: PointerEvent) => any, options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
+    /**
+     * Reload the icons of the passed {@link ElementButton.CreateForAsset} button based on the items & characters current state.
+     * @param {HTMLButtonElement} button - The button in question
+     * @param {Asset | Item} asset - The asset (or item) for linked to the button
+     * @param {null | Character} C - The character wearing the asset/item (if any)
+     * @returns {boolean} - Whether the icons were updated or not
+     */
+    ReloadAssetIcons(button: HTMLButtonElement, asset: Asset | Item, C: null | Character): boolean;
+};
+/**
+ * Namespace for constructing menu bars
+ * @namespace
+ */
+declare var ElementMenu: {
+    /**
+     * private
+     * @type {WeakMap<Element, MutationObserver>}
+     */
+    _observers: WeakMap<Element, MutationObserver>;
+    /**
+     * private
+     * @satisfies {MutationCallback}
+     * @param {readonly { addedNodes: readonly Node[] | NodeList, target: Node }[]} mutationList
+     */
+    _osbserverCallback(mutationList: readonly {
+        addedNodes: readonly Node[] | NodeList;
+        target: Node;
+    }[]): void;
+    /**
+     * KeyDown event listener that implements menubar-style keyboard navigation
+     * @this {HTMLElement}
+     * @param {KeyboardEvent} ev
+     */
+    _KeyDown: (this: HTMLElement, ev: KeyboardEvent) => Promise<void>;
+    /**
+     * Construct a menubar of button elements
+     * @example
+     * <div id={id} role="menubar">
+     *     <button role="menuitem" />
+     *     <input role="menuitem" type="text" />
+     *     <button role="menuitem" aria-haspopup="menu">
+     *         <div style={ display: "none" }>
+     *             <button role="menuitem" />
+     *             <button role="menuitem" />
+     *             ...
+     *         </div>
+     *     </button>
+     *     ...
+     * </div>
+     * @param {string | null} id - The menu's ID
+     * @param {readonly (string | Node | HTMLOptionsUnion)[]} menuItems - The menu's content.
+     * Any `<button>` element without a role (regardless of nesting) will be assigned the `menuitem` role and thus be elligble for menu-style navigation.
+     * Buttons that open a sub-menu _must_ have the `aria-haspopup: "menu"` attribute set and must be able to do so via a click action.
+     * @param {Object} [options]
+     * @param {"ltr" | "rtl"} [options.direction] - The direction of the menu. Should match the value of the CSS `direction` property if provided
+     * @param {"menubar" | "menu"} [options.role] - The role of the menu/menubar
+     * @param {null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @returns {HTMLDivElement} - The menu
+     */
+    Create(id: string | null, menuItems: readonly (string | Node | HTMLOptionsUnion)[], options?: {
+        direction?: "ltr" | "rtl";
+        role?: "menubar" | "menu";
+    }, htmlOptions?: null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>): HTMLDivElement;
+    /**
+     * Append a menuitem to the passed menubar
+     * @param {HTMLElement} menu - The menubar
+     * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
+     * @deprecated - Fully equivalent to {@link HTMLElement.append}
+     */
+    AppendButton(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
+    /**
+     * Prepend a menuitem to the passed menubar
+     * @param {HTMLElement} menu - The menubar
+     * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
+     * @deprecated - Fully equivalent to {@link HTMLElement.prepend}
+     */
+    PrependItem(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
+};
+/**
+ * Namespace for creating DOM checkboxes.
+ */
+declare var ElementCheckbox: {
+    _change(this: HTMLInputElement, ev: Event): void;
+    /**
+     * Construct and return a DOM checkbox element (`<input type="checkbox">`)
+     * @param {null | string} [id] - The ID of the element, or `null` if one must be assigned automatically
+     * @param {null | ((this: HTMLInputElement, ev: Event) => any)} [onChange] - The change event listener to-be fired upon checkbox clicks
+     * @param {null | ElementCheckbox.Options} [options] - High level options for the to-be created checkbox
+     * @param {null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @returns {HTMLInputElement}
+     */
+    Create(id?: null | string, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.Options, htmlOptions?: null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>): HTMLInputElement;
+    /**
+     * Construct and return a DOM pair of checkbox and label elements
+     * @example
+     * <label class="checkbox-pair">
+     *   <input type="checkbox" id="checkbox" class="checkbox">
+     *   <span id="checkbox-label" for="checkbox">Label</label>
+     * </div>
+     * @param {null | string} id - The ID of the element, or `null` if one must be assigned automatically
+     * @param {string | Node | HTMLOptionsUnion} label - The label of the checkbox
+     * @param {null | ((this: HTMLInputElement, ev: Event) => any)} onChange - The change event listener to-be fired upon checkbox clicks
+     * @param {null | ElementCheckbox.LabelOptions} options - High level options for the to-be created checkbox
+     * @param {null | Partial<Record<"checkbox" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
+     * @returns {HTMLLabelElement}
+     */
+    CreateLabelled(id: null | string | undefined, label: string | Node | HTMLOptionsUnion, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.LabelOptions, htmlOptions?: null | Partial<Record<"checkbox" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>): HTMLLabelElement;
+};
+/**
+ * Namespace for creating text-based elements
+ */
+declare var ElementText: {
+    /**
+     * Creates a paragraph node, optionally describing another element
+     * @param {string} contents
+     * @param {{ describes?: string | HTMLElement } | undefined} opts
+     * @returns
+     */
+    CreateNote(contents: string, opts?: {
+        describes?: string | HTMLElement;
+    } | undefined): HTMLParagraphElement;
+};
 /**
  * Returns the element's document- or shadow-root.
  *
@@ -384,315 +729,20 @@ declare function ElementSetSize(elementOrId: ElementHelp.ElementOrId, width?: nu
  * @param {ElementHelp.ElementOrId} elementOrId
  * @param {number | 'auto'} targetFontSize
  */
-declare function ElementSetFontSize(elementOrId: ElementHelp.ElementOrId, targetFontSize?: number | "auto"): void;
-/**
- * Given an HTML element, reduce its font size until it fully fits into its visual width
- * @param {HTMLElement | Element} el
- */
-declare function ElementFitText(el: HTMLElement | Element): void;
-declare function ElementGenerateID(): string;
-/** @satisfies {ElementNoParent} */
-declare const ElementNoParent: 0;
-declare namespace ElementDropdown {
-    /**
-     * Construct a `<select>`-based dropdown menu.
-     * @param {string | null} id - The name of the select item.
-     * @param {readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
-     * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
-     * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number, name?: string }} [options] - Additional `<select>`-specific properties
-     * @param {null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
-     * @returns {HTMLSelectElement} - The created element
-     */
-    function Create(id: string | null, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[], onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
-        required?: boolean;
-        multiple?: boolean;
-        disabled?: boolean;
-        size?: number;
-        name?: string;
-    }, htmlOptions?: null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>): HTMLSelectElement;
-    /**
-     * Construct a `<select>`-based dropdown menu.
-     * @param {string | null} id - The name of the select item.
-     * @param {readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[]} optionsList - The list of options for the current select statement. Can be supplied as a simple string or a more extensive `<option>` config.
-     * @param {string} label - The label of the dropdown menu.
-     * @param {(this: HTMLSelectElement, event: Event) => any} onChange - An event listener to be called, when the value of the drop down box changes
-     * @param {null | { required?: boolean, multiple?: boolean, disabled?: boolean, size?: number, name?: string }} [options] - Additional `<select>`-specific properties
-     * @param {null | Partial<Record<"select" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
-     * @returns {HTMLLabelElement} - The created element
-     */
-    function CreateLabelled(id: string | null, optionsList: readonly (string | Omit<HTMLOptions<"option">, "tag"> | HTMLOptions<"hr">)[], label: string, onChange: (this: HTMLSelectElement, event: Event) => any, options?: null | {
-        required?: boolean;
-        multiple?: boolean;
-        disabled?: boolean;
-        size?: number;
-        name?: string;
-    }, htmlOptions?: null | Partial<Record<"select" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>): HTMLLabelElement;
-}
-declare namespace ElementCheckboxDropdown {
-    /**
-     * @param {string} idPrefix
-     * @param {string} idSuffix
-     * @param {string} spanText
-     * @param {(this: HTMLInputElement, event: Event) => void} listener
-     * @param {boolean} checked
-     * @returns {HTMLOptions<"label">}
-     */
-    function _CreateCheckboxPair(idPrefix: string, idSuffix: string, spanText: string, listener: (this: HTMLInputElement, event: Event) => void, checked?: boolean): HTMLOptions<"label">;
-    /**
-     * Construct a dropdown menu with labeled checkboxes
-     * @param {string | null} id - The ID of the element
-     * @param {readonly string[]} checkboxList - The checkbox labels
-     * @param {(this: HTMLInputElement, event: Event) => void} eventListener - The event listener to-be attached to all checkboxes
-     * @param {Object} [options]
-     * @param {HTMLElement} [options.parent] - The parent element of the dropdown menu; defaults to {@link document.body}
-     * @param {boolean} [options.checked] - Whether all checkboxes should be initially checked
-     * @returns {HTMLDivElement} - The created dropdown menu
-     */
-    function FromList(id: string | null, checkboxList: readonly string[], eventListener: (this: HTMLInputElement, event: Event) => void, options?: {
-        parent?: HTMLElement | undefined;
-        checked?: boolean | undefined;
-    }): HTMLDivElement;
-    /**
-     * Construct a dropdown menu with labeled checkboxes, each group of checkboxes having a header associated with them
-     * @param {string | null} id - The ID of the element
-     * @param {Record<string, readonly string[]>} checkboxRecord - The checkbox labels
-     * @param {(this: HTMLInputElement, event: Event) => void} eventListener - The event listener to-be attached to all checkboxes
-     * @param {Object} [options]
-     * @param {HTMLElement} [options.parent] - The parent element of the dropdown menu; defaults to {@link document.body}
-     * @param {boolean} [options.checked] - Whether all checkboxes should be initially checked
-     * @returns {HTMLDivElement} - The created dropdown menu
-     */
-    function FromRecord(id: string | null, checkboxRecord: Record<string, readonly string[]>, eventListener: (this: HTMLInputElement, event: Event) => void, options?: {
-        parent?: HTMLElement | undefined;
-        checked?: boolean | undefined;
-    }): HTMLDivElement;
-}
-declare namespace ElementButton {
-    let _TooltipPositions: Readonly<{
-        left: "button-tooltip-left";
-        right: "button-tooltip-right";
-        top: "button-tooltip-top";
-        bottom: "button-tooltip-bottom";
-    }>;
-    let _LabelPositions: Readonly<{
-        top: "button-label-top";
-        center: "button-label-center";
-        bottom: "button-label-bottom";
-        left: "button-label-left";
-        right: "button-label-right";
-    }>;
-    let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
-    let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
-    function _GetClickTouchListeners(): {
-        click: (this: HTMLButtonElement, ev: PointerEvent) => void;
-        touchend: (this: HTMLButtonElement, ev: TouchEvent) => void;
-        touchmove: (this: HTMLButtonElement, ev: TouchEvent) => void;
-        touchstart: (this: HTMLButtonElement, ev: TouchEvent) => void;
-        blur: (this: HTMLButtonElement, ev: FocusEvent) => void;
-        bcTouchHold: (this: HTMLButtonElement, ev: PointerEvent) => void;
-        touchcancel: (this: HTMLButtonElement, ev: TouchEvent) => void;
-    };
-    function _QueryDFS(root: Element, query: string, filter: (el: Element) => boolean): Generator<Element, void>;
-    function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
-    function _ClickSpin(this: HTMLButtonElement, ev: MouseEvent): void;
-    function _KeyDownSpin(this: HTMLButtonElement, ev: KeyboardEvent): void;
-    /**
-     * @this {HTMLElement}
-     * @param {KeyboardEvent} ev
-     */
-    function _KeyDownRadio(this: HTMLElement, ev: KeyboardEvent): void;
-    function _ClickCheckbox(this: HTMLButtonElement, ev: Event): void;
-    /**
-     * private
-     * @param {string} id
-     * @param {string} [img]
-     * @param {null | string} [imgColor]
-     * @param {Omit<HTMLOptions<"img" | "div">, "tag">} [options]
-     * @returns {HTMLImageElement | HTMLDivElement | null}
-     */
-    function _ParseImage(id: string, img?: string, imgColor?: null | string, options?: Omit<HTMLOptions<"img" | "div">, "tag">): HTMLImageElement | HTMLDivElement | null;
-    /**
-     * private
-     * @param {string} id
-     * @param {ElementButton.StaticNode} [label]
-     * @param {"top" | "center" | "bottom" | "left" | "right"} [position]
-     * @param {Omit<HTMLOptions<"span">, "tag">} [options]
-     * @returns {null | HTMLSpanElement}
-     */
-    function _ParseLabel(id: string, label?: ElementButton.StaticNode, position?: "top" | "center" | "bottom" | "left" | "right", options?: Omit<HTMLOptions<"span">, "tag">): null | HTMLSpanElement;
-    /**
-     * Parse the passed icon list, returning its corresponding `<img>` grid and tooltip if non-empty
-     * @param {string} id - The ID of the parent element
-     * @param {readonly (InventoryIcon | ElementButton.CustomIcon | null | undefined)[]} [icons] - The (optional) list of icons
-     * @returns {null | { iconGrid: HTMLDivElement, tooltip: [HTMLSpanElement, HTMLElement] }} - `null` if the provided icon list is empty and otherwise an object containing the icon grid and a icon-specific tooltip
-     */
-    function _ParseIcons(id: string, icons?: readonly (InventoryIcon | ElementButton.CustomIcon | null | undefined)[]): null | {
-        iconGrid: HTMLDivElement;
-        tooltip: [HTMLSpanElement, HTMLElement];
-    };
-    /**
-     * private
-     * @param {string} id
-     * @param {"left" | "right" | "top" | "bottom"} [position]
-     * @param {readonly (null | undefined | string | Node | HTMLOptions<any>)[]} [children]
-     * @param {Omit<HTMLOptions<"div">, "tag">} [options]
-     * @returns {null | HTMLDivElement}
-     */
-    function _ParseTooltip(id: string, position?: "left" | "right" | "top" | "bottom", children?: readonly (null | undefined | string | Node | HTMLOptions<any>)[], options?: Omit<HTMLOptions<"div">, "tag">): null | HTMLDivElement;
-    /**
-     * Set the `[role]` attribute of the passed button
-     * @param {HTMLButtonElement} button
-     * @param {null | ElementButton.Options["role"]} role
-     */
-    function SetRole(button: HTMLButtonElement, role: null | ElementButton.Options["role"]): void;
-    /**
-     * Create a generic button.
-     * @param {null | string} id - The ID of the to-be created search button
-     * @param {null | ((this: HTMLButtonElement, ev: PointerEvent) => any)} onClick - The click event listener to-be attached to the tooltip
-     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
-     * @param {Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
-     * @returns {HTMLButtonElement} - The created button
-     */
-    function Create(id: null | string, onClick: null | ((this: HTMLButtonElement, ev: PointerEvent) => any), options?: null | ElementButton.Options, htmlOptions?: Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
-    /**
-     * Create a button for an asset or item, including image, label and icons.
-     * @param {string | null} idPrefix - The ID of the to-be created search button
-     * @param {Asset | Item} asset - The asset (or item) for which to create a button
-     * @param {null | Character} C - The character wearing the asset/item (if any)
-     * @param {null | ((this: HTMLButtonElement, ev: PointerEvent) => any)} onClick - The click event listener to-be attached to the tooltip
-     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
-     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
-     * @returns {HTMLButtonElement} - The created button
-     */
-    function CreateForAsset(idPrefix: string | null, asset: Asset | Item, C: null | Character, onClick: null | ((this: HTMLButtonElement, ev: PointerEvent) => any), options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
-    /**
-     * @param {CraftingItem} craft
-     * @returns {HTMLElement[]}
-     */
-    function CreateCraftTooltipContent(craft: CraftingItem): HTMLElement[];
-    /**
-     * Create a button for an activity, including image, label and icons.
-     * @param {string | null} idPrefix - The ID of the to-be created search button
-     * @param {ItemActivity} activity - The activity for which to create a button
-     * @param {Character} C - The target character of the activity
-     * @param {(this: HTMLButtonElement, ev: PointerEvent) => any} onClick - The click event listener to-be attached to the tooltip
-     * @param {null | ElementButton.Options} [options] - High level options for the to-be created button
-     * @param {null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional low-level {@link ElementCreate} options to-be applied to the either the button or tooltip
-     * @returns {HTMLButtonElement} - The created button
-     */
-    function CreateForActivity(idPrefix: string | null, activity: ItemActivity, C: Character, onClick: (this: HTMLButtonElement, ev: PointerEvent) => any, options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
-    /**
-     * Reload the icons of the passed {@link ElementButton.CreateForAsset} button based on the items & characters current state.
-     * @param {HTMLButtonElement} button - The button in question
-     * @param {Asset | Item} asset - The asset (or item) for linked to the button
-     * @param {null | Character} C - The character wearing the asset/item (if any)
-     * @returns {boolean} - Whether the icons were updated or not
-     */
-    function ReloadAssetIcons(button: HTMLButtonElement, asset: Asset | Item, C: null | Character): boolean;
-}
-declare namespace ElementMenu {
-    export let _observers: WeakMap<Element, MutationObserver>;
-    /**
-     * private
-     * @satisfies {MutationCallback}
-     * @param {readonly { addedNodes: readonly Node[] | NodeList, target: Node }[]} mutationList
-     */
-    export function _osbserverCallback(mutationList: readonly {
-        addedNodes: readonly Node[] | NodeList;
-        target: Node;
-    }[]): void;
-    export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;
-    export { _KeyDown_1 as _KeyDown };
-    /**
-     * Construct a menubar of button elements
-     * @example
-     * <div id={id} role="menubar">
-     *     <button role="menuitem" />
-     *     <input role="menuitem" type="text" />
-     *     <button role="menuitem" aria-haspopup="menu">
-     *         <div style={ display: "none" }>
-     *             <button role="menuitem" />
-     *             <button role="menuitem" />
-     *             ...
-     *         </div>
-     *     </button>
-     *     ...
-     * </div>
-     * @param {string | null} id - The menu's ID
-     * @param {readonly (string | Node | HTMLOptionsUnion)[]} menuItems - The menu's content.
-     * Any `<button>` element without a role (regardless of nesting) will be assigned the `menuitem` role and thus be elligble for menu-style navigation.
-     * Buttons that open a sub-menu _must_ have the `aria-haspopup: "menu"` attribute set and must be able to do so via a click action.
-     * @param {Object} [options]
-     * @param {"ltr" | "rtl"} [options.direction] - The direction of the menu. Should match the value of the CSS `direction` property if provided
-     * @param {"menubar" | "menu"} [options.role] - The role of the menu/menubar
-     * @param {null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional {@link ElementCreate} options to-be applied to the respective (child) element
-     * @returns {HTMLDivElement} - The menu
-     */
-    export function Create(id: string | null, menuItems: readonly (string | Node | HTMLOptionsUnion)[], options?: {
-        direction?: "ltr" | "rtl" | undefined;
-        role?: "menu" | "menubar" | undefined;
-    }, htmlOptions?: null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>): HTMLDivElement;
-    /**
-     * Append a menuitem to the passed menubar
-     * @param {HTMLElement} menu - The menubar
-     * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
-     * @deprecated - Fully equivalent to {@link HTMLElement.append}
-     */
-    export function AppendButton(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
-    /**
-     * Prepend a menuitem to the passed menubar
-     * @param {HTMLElement} menu - The menubar
-     * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
-     * @deprecated - Fully equivalent to {@link HTMLElement.prepend}
-     */
-    export function PrependItem(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
-}
-declare namespace ElementCheckbox {
-    function _change(this: HTMLInputElement, ev: Event): void;
-    /**
-     * Construct and return a DOM checkbox element (`<input type="checkbox">`)
-     * @param {null | string} [id] - The ID of the element, or `null` if one must be assigned automatically
-     * @param {null | ((this: HTMLInputElement, ev: Event) => any)} [onChange] - The change event listener to-be fired upon checkbox clicks
-     * @param {null | ElementCheckbox.Options} [options] - High level options for the to-be created checkbox
-     * @param {null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional {@link ElementCreate} options to-be applied to the respective (child) element
-     * @returns {HTMLInputElement}
-     */
-    function Create(id?: null | string, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.Options, htmlOptions?: null | Partial<Record<"checkbox", Omit<HTMLOptions<any>, "tag">>>): HTMLInputElement;
-    /**
-     * Construct and return a DOM pair of checkbox and label elements
-     * @example
-     * <label class="checkbox-pair">
-     *   <input type="checkbox" id="checkbox" class="checkbox">
-     *   <span id="checkbox-label" for="checkbox">Label</label>
-     * </div>
-     * @param {null | string} id - The ID of the element, or `null` if one must be assigned automatically
-     * @param {string | Node | HTMLOptionsUnion} label - The label of the checkbox
-     * @param {null | ((this: HTMLInputElement, ev: Event) => any)} onChange - The change event listener to-be fired upon checkbox clicks
-     * @param {null | ElementCheckbox.LabelOptions} options - High level options for the to-be created checkbox
-     * @param {null | Partial<Record<"checkbox" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>} htmlOptions - Additional {@link ElementCreate} options to-be applied to the respective (child) element
-     * @returns {HTMLLabelElement}
-     */
-    function CreateLabelled(id: null | string | undefined, label: string | Node | HTMLOptionsUnion, onChange?: null | ((this: HTMLInputElement, ev: Event) => any), options?: null | ElementCheckbox.LabelOptions, htmlOptions?: null | Partial<Record<"checkbox" | "label" | "container", Omit<HTMLOptions<any>, "tag">>>): HTMLLabelElement;
-}
-declare namespace ElementText {
-    /**
-     * Creates a paragraph node, optionally describing another element
-     * @param {string} contents
-     * @param {{ describes?: string | HTMLElement } | undefined} opts
-     * @returns
-     */
-    function CreateNote(contents: string, opts?: {
-        describes?: string | HTMLElement;
-    } | undefined): HTMLParagraphElement;
-}
-declare namespace ElementSwipe {
+declare function ElementSetFontSize(elementOrId: ElementHelp.ElementOrId, targetFontSize?: number | 'auto'): void;
+/** A namespace for adding touch-based swiping behavior to elements */
+declare var ElementSwipe: {
     /**
      * @param {HTMLElement} elem
      * @param {null | ElementSwipe.Options} options
      */
-    function setListeners(elem: HTMLElement, options?: null | ElementSwipe.Options): void;
-}
-declare namespace ElementDOMScreen {
+    setListeners(elem: HTMLElement, options?: null | ElementSwipe.Options): void;
+};
+/**
+ * Namespace with helper functions for creating DOM-based screens
+ * @namespace
+ */
+declare var ElementDOMScreen: {
     /**
      * Construct and return a template for a basic DOM screen.
      *
@@ -734,8 +784,14 @@ declare namespace ElementDOMScreen {
      * @param {null | ElementDOMScreen.TemplateOptions} options - Further customization options
      * @returns {HTMLDivElement} - The newly created DOM screen
      */
-    function getTemplate(id: string, options?: null | ElementDOMScreen.TemplateOptions): HTMLDivElement;
-    let _statusIDMap: WeakMap<Element, number>;
+    getTemplate(id: string, options?: null | ElementDOMScreen.TemplateOptions): HTMLDivElement;
+    /**
+     * A weakmap mapping `[role='status']` elements to their respective {@link setTimeout} IDs.
+     * See {@link ElementDOMScreen.SetStatus}
+     * private
+     * @type {WeakMap<Element, number>}
+     */
+    _statusIDMap: WeakMap<Element, number>;
     /**
      * Timer handler for {@link ElementDOMScreen.SetStatus}
      * private
@@ -743,27 +799,37 @@ declare namespace ElementDOMScreen {
      * @param {Element} headingElem The screen's `h1` element
      * @param {Element} statusElem The screen's `[role='status']` element
      */
-    function _setStatusTimerHandler(headingElem: Element, statusElem: Element): void;
+    _setStatusTimerHandler(headingElem: Element, statusElem: Element): void;
     /**
      * Set a temporary status message for the screen.
      * @param {ElementHelp.ElementOrId} root The screen on which the status is the be set; it _must_ contain a single `h1` and `[role='status']` element
      * @param {string | Element | readonly (string | Element)[]} status The to-be displayed status message
      * @param {number} timeout How long the status message should be shown in ms; defaults to 5000 ms
      */
-    function setStatus(root: ElementHelp.ElementOrId, status: string | Element | readonly (string | Element)[], timeout?: number): void;
+    setStatus(root: ElementHelp.ElementOrId, status: string | Element | readonly (string | Element)[], timeout?: number): void;
     /**
      * Clear the temporary status message of the passed screen.
      * @param {ElementHelp.ElementOrId} root The screen on which the status is the be removed; it _must_ contain a single `h1` and `[role='status']` element
      */
-    function clearStatus(root: ElementHelp.ElementOrId): void;
+    clearStatus(root: ElementHelp.ElementOrId): void;
     /**
      * Set the persistent heading of a screen.
      * @param {ElementHelp.ElementOrId} root The screen on which the heading is the be set
      * @param {string | Element | readonly (string | Element)[]} heading The to-be displayed heading content. Note that headings may only ever contain [flow content](https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Content_categories#flow_content)
      */
-    function setHeading(root: ElementHelp.ElementOrId, heading: string | Element | readonly (string | Element)[]): void;
-}
-declare namespace ElementUnpackIDs {
+    setHeading(root: ElementHelp.ElementOrId, heading: string | Element | readonly (string | Element)[]): void;
+};
+/**
+ * Given an HTML element, reduce its font size until it fully fits into its visual width
+ * @param {HTMLElement | Element} el
+ */
+declare function ElementFitText(el: HTMLElement | Element): void;
+/**
+ * Namespace for unpacking ID lists into their corresponding elements.
+ *
+ * Used retrieving elements referenced in attributes such as `aria-controls` and `aria-owns`, which consist of space-separated element IDs.
+ */
+declare var ElementUnpackIDs: {
     /**
      * Convert a list of IDs into their corresponding elements.
      * @template {HTMLElement} [T=HTMLElement]
@@ -771,7 +837,7 @@ declare namespace ElementUnpackIDs {
      * @param {null | ElementUnpackIDs.Options<T>} [options] Further options
      * @returns {T[]} The list of elements (may or may not be shorter than the ID list)
      */
-    function fromList<T extends HTMLElement = HTMLElement>(list: readonly string[], options?: null | ElementUnpackIDs.Options<T>): T[];
+    fromList<T extends HTMLElement = HTMLElement>(list: readonly string[], options?: null | ElementUnpackIDs.Options<T>): T[];
     /**
      * Convert a space-separated stringified ID list into their corresponding elements.
      * @template {HTMLElement} [T=HTMLElement]
@@ -779,7 +845,7 @@ declare namespace ElementUnpackIDs {
      * @param {null | ElementUnpackIDs.Options<T>} [options] Further options
      * @returns {T[]} The list of elements (may or may not be shorter than the ID list)
      */
-    function fromString<T extends HTMLElement = HTMLElement>(string: string, options?: null | ElementUnpackIDs.Options<T>): T[];
+    fromString<T extends HTMLElement = HTMLElement>(string: string, options?: null | ElementUnpackIDs.Options<T>): T[];
     /**
      * Grab an attribute containing a space-separated stringified ID list and convert them into their corresponding elements.
      * @template {HTMLElement} [T=HTMLElement]
@@ -788,9 +854,10 @@ declare namespace ElementUnpackIDs {
      * @param {null | Exclude<ElementUnpackIDs.Options<T>, "root">} [options] Further options
      * @returns {T[]} The list of elements (may or may not be shorter than the ID list)
      */
-    function fromAttribute<T extends HTMLElement = HTMLElement>(element: Element, attrName: string, options?: null | Exclude<ElementUnpackIDs.Options<T>, "root">): T[];
-}
-declare namespace ElementSearchQuery {
+    fromAttribute<T extends HTMLElement = HTMLElement>(element: Element, attrName: string, options?: null | Exclude<ElementUnpackIDs.Options<T>, "root">): T[];
+};
+/** Namespace with helpers for highlighting elements based on search queries */
+declare var ElementSearchQuery: {
     /**
      * Highlight search query matches within the passed elements using `<em class="highlight">`, returning a list of all highlighted elements
      * @template {Element} T
@@ -799,14 +866,14 @@ declare namespace ElementSearchQuery {
      * @param {null | ElementSearchQuery.Options} [options] Further options
      * @returns {T[]} The matched elements
      */
-    function highlight<T extends Element>(elements: readonly T[] | NodeListOf<T>, query: string, options?: null | ElementSearchQuery.Options): T[];
+    highlight<T extends Element>(elements: readonly T[] | NodeListOf<T>, query: string, options?: null | ElementSearchQuery.Options): T[];
     /**
      * Clear all query matches from the passed elements. Equivalent to passing an empty string query to {@link highlight}.
      * @template {Element} T The list of to-be elements whose textContent is to be matched
      * @param {readonly T[] | NodeListOf<T>} elements
      * @returns {T[]} The matched elements
      */
-    function clear<T extends Element>(elements: readonly T[] | NodeListOf<T>): T[];
+    clear<T extends Element>(elements: readonly T[] | NodeListOf<T>): T[];
     /**
      * private
      * @param {string} textContent
@@ -814,11 +881,11 @@ declare namespace ElementSearchQuery {
      * @param {ElementSearchQuery.Options} options
      * @returns {{ match: boolean, innerHTML: string }}
      */
-    function _getInnerHTML(textContent: string, pattern: RegExp, options: ElementSearchQuery.Options): {
+    _getInnerHTML(textContent: string, pattern: RegExp, options: ElementSearchQuery.Options): {
         match: boolean;
         innerHTML: string;
     };
-}
+};
 /**
  * HTML element for color tint pickers, functioning as some kind of 2D `<input type='range'>` input for selecting the color's saturation and brightness.
  */
@@ -832,59 +899,38 @@ declare class HTMLColorTintElement extends HTMLElement {
      * @type {null | string}
      */
     _pressedOldValue: null | string;
+    constructor();
     connectedCallback(): void;
-    set value(value: HexColor);
-    /**
-     * Sets or retrieves the initial contents of the object.
-     *
-     * See {@link HTMLInputElement.value}
-     * @type {HexColor}
-     */
-    get value(): HexColor;
-    /**
-     * Sets or retrieves the initial contents of the object.
-     *
-     * See {@link HTMLInputElement.defaultValue}
-     * @type {string}
-     */
-    defaultValue: string;
     /**
      * @param {string} name
      * @param {null | string} oldValue
      * @param {null | string} newValue
      */
     attributeChangedCallback(name: string, oldValue: null | string, newValue: null | string): void;
-    set disabled(value: boolean);
     /**
      * See {@link HTMLInputElement.disabled}
      * @type {boolean}
      */
     get disabled(): boolean;
-    set hue(value: number);
+    set disabled(value: boolean);
     /**
      * Get or set the color hue on a scale of 0 to 360.
      * @type {number}
      */
     get hue(): number;
-    set valueAsHSV(value: HSVColor);
-    /**
-     * Get or set the color {@link value} via an object with [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV) color values.
-     * All HSV values are expected to be normalized to the `[0, 1]` range.
-     * @type {HSVColor}
-     */
-    get valueAsHSV(): HSVColor;
-    set saturation(value: number);
+    set hue(value: number);
     /**
      * Get or set the color saturation on a scale of 0 to 255.
      * @type {number}
      */
     get saturation(): number;
-    set brightness(value: number);
+    set saturation(value: number);
     /**
      * Get or set the color brightness on a scale of 0 to 255.
      * @type {number}
      */
     get brightness(): number;
+    set brightness(value: number);
     /**
      * Returns the error message that would be displayed if the user submits the form, or an empty string if no error message.
      * It also triggers the standard error message, such as "this is a required field".
@@ -907,11 +953,32 @@ declare class HTMLColorTintElement extends HTMLElement {
      */
     reportValidity(): boolean;
     /**
+     * Sets or retrieves the initial contents of the object.
+     *
+     * See {@link HTMLInputElement.defaultValue}
+     * @type {string}
+     */
+    defaultValue: string;
+    /**
      * private
      * @type {Readonly<HSVColor>}
      */
     _value: Readonly<HSVColor>;
-    set name(value: string);
+    /**
+     * Get or set the color {@link value} via an object with [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV) color values.
+     * All HSV values are expected to be normalized to the `[0, 1]` range.
+     * @type {HSVColor}
+     */
+    get valueAsHSV(): HSVColor;
+    set valueAsHSV(value: HSVColor);
+    /**
+     * Sets or retrieves the initial contents of the object.
+     *
+     * See {@link HTMLInputElement.value}
+     * @type {HexColor}
+     */
+    get value(): HexColor;
+    set value(value: HexColor);
     /**
      * Sets or retrieves the name of the object.
      *
@@ -919,6 +986,7 @@ declare class HTMLColorTintElement extends HTMLElement {
      * @type {string}
      */
     get name(): string;
+    set name(value: string);
     /**
      * Set the position the knob
      * private

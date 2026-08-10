@@ -1,3 +1,44 @@
+/** @type {{ Group: AssetGroup, Assets: { Asset: Asset, Hidden: boolean, Blocked: boolean, Limited: boolean }[]}[]} */
+declare var PreferenceVisibilityGroupList: {
+    Group: AssetGroup;
+    Assets: {
+        Asset: Asset;
+        Hidden: boolean;
+        Blocked: boolean;
+        Limited: boolean;
+    }[];
+}[];
+declare var PreferenceVisibilityGroupIndex: number;
+declare var PreferenceVisibilityAssetIndex: number;
+declare var PreferenceVisibilityHideChecked: boolean;
+declare var PreferenceVisibilityBlockChecked: boolean;
+declare var PreferenceVisibilityCanBlock: boolean;
+/**
+ * Bound to screen lifetime
+ * @type {Asset}
+ */
+declare var PreferenceVisibilityPreviewAsset: Asset;
+/** @deprecated See {@link PreferenceSubscreenVisibilityOnResetClick}. */
+declare var PreferenceVisibilityResetClicked: boolean;
+/** @type {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} */
+declare var PreferenceVisibilityRecord: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
+declare const PreferenceSubscreenVisibilityIDs: Readonly<{
+    grid: "preference-visibility-grid";
+    controls: "preference-visibility-controls";
+    groupRow: "preference-visibility-group-row";
+    assetRow: "preference-visibility-asset-row";
+    groupSelect: "preference-visibility-group";
+    assetSelect: "preference-visibility-asset";
+    hideCheckbox: "preference-visibility-hide";
+    blockCheckbox: "preference-visibility-block";
+    hideWarning: "preference-visibility-hide-warning";
+    resetButton: "preference-visibility-reset";
+    preview: "preference-visibility-preview";
+    locked: "preference-visibility-locked";
+    saveButton: "preference-visibility-save";
+    cancelButton: "preference-visibility-cancel";
+}>;
+declare const PreferenceVisibilityHiddenWarningIcon = "./Screens/Character/Player/HiddenItem.png";
 /**
  * Handles the loading of the visibility settings of a player
  * @returns {void} - Nothing
@@ -98,44 +139,3 @@ declare function PreferenceVisibilityBlockChange(): void;
  * @param {"Hidden" | "Block"} Type
  */
 declare function PreferenceVisibilityCheckboxChanged(permissionRecord: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>, CheckSetting: boolean, Type: "Hidden" | "Block"): void;
-/** @type {{ Group: AssetGroup, Assets: { Asset: Asset, Hidden: boolean, Blocked: boolean, Limited: boolean }[]}[]} */
-declare var PreferenceVisibilityGroupList: {
-    Group: AssetGroup;
-    Assets: {
-        Asset: Asset;
-        Hidden: boolean;
-        Blocked: boolean;
-        Limited: boolean;
-    }[];
-}[];
-declare var PreferenceVisibilityGroupIndex: number;
-declare var PreferenceVisibilityAssetIndex: number;
-declare var PreferenceVisibilityHideChecked: boolean;
-declare var PreferenceVisibilityBlockChecked: boolean;
-declare var PreferenceVisibilityCanBlock: boolean;
-/**
- * Bound to screen lifetime
- * @type {Asset}
- */
-declare var PreferenceVisibilityPreviewAsset: Asset;
-/** @deprecated See {@link PreferenceSubscreenVisibilityOnResetClick}. */
-declare var PreferenceVisibilityResetClicked: boolean;
-/** @type {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} */
-declare var PreferenceVisibilityRecord: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
-declare const PreferenceSubscreenVisibilityIDs: Readonly<{
-    grid: "preference-visibility-grid";
-    controls: "preference-visibility-controls";
-    groupRow: "preference-visibility-group-row";
-    assetRow: "preference-visibility-asset-row";
-    groupSelect: "preference-visibility-group";
-    assetSelect: "preference-visibility-asset";
-    hideCheckbox: "preference-visibility-hide";
-    blockCheckbox: "preference-visibility-block";
-    hideWarning: "preference-visibility-hide-warning";
-    resetButton: "preference-visibility-reset";
-    preview: "preference-visibility-preview";
-    locked: "preference-visibility-locked";
-    saveButton: "preference-visibility-save";
-    cancelButton: "preference-visibility-cancel";
-}>;
-declare const PreferenceVisibilityHiddenWarningIcon: "./Screens/Character/Player/HiddenItem.png";

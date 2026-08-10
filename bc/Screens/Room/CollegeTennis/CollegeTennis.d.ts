@@ -1,3 +1,8 @@
+declare var CollegeTennisBackground: string;
+/** @type {null | NPCCharacter} */
+declare var CollegeTennisJennifer: null | NPCCharacter;
+declare var CollegeTennisJenniferStatus: string;
+declare var CollegeTennisJenniferWillJoinRoom: boolean;
 /**
  * Checks if Jennifer is currently in the given status.
  * @param {string} QueryStatus - Status to query
@@ -9,7 +14,6 @@ declare function CollegeTennisJenniferStatusIs(QueryStatus: string): boolean;
  * @returns {boolean} - Returns TRUE if the player has a private room and an empty spot in it.
  */
 declare function CollegeTennisCanInviteToPrivateRoom(): boolean;
-declare function CollegeTennisLoad(): Promise<void>;
 /**
  * Runs and draws the tennis screen. Shows the player and Jennifer
  * @returns {void} - Nothing
@@ -35,8 +39,3 @@ declare function CollegeTennisGameEnd(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function CollegeTennisInviteToPrivateRoom(): void;
-declare var CollegeTennisBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeTennisJennifer: null | NPCCharacter;
-declare var CollegeTennisJenniferStatus: string;
-declare var CollegeTennisJenniferWillJoinRoom: boolean;

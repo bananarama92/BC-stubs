@@ -1,3 +1,26 @@
+declare var InfiltrationBackground: string;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationSupervisor: null | NPCCharacter;
+declare var InfiltrationDifficulty: number;
+/** @type {InfiltrationMissionType | ""} */
+declare var InfiltrationMission: InfiltrationMissionType | "";
+/** @type {InfiltrationMissionType[]} */
+declare var InfiltrationMissionType: InfiltrationMissionType[];
+/** @type {InfiltrationTargetType[]} */
+declare var InfiltrationObjectType: InfiltrationTargetType[];
+/** @type {InfiltrationMissionTarget | null} */
+declare var InfiltrationTarget: InfiltrationMissionTarget | null;
+declare var InfiltrationCollectRansom: boolean;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationKidnapper: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationPandoraPrisoner: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationPartyPrisoner: null | NPCCharacter;
+declare var InfiltrationPenitentiaryMinutes: number;
+declare var InfiltrationPenitentiaryAmount: number;
+/** @type {"G" | "I"} */
+declare var InfiltrationPenitentiaryRole: "G" | "I";
 /**
  * Returns TRUE if the mission can complete as a success
  * @returns {boolean} - TRUE if successful
@@ -58,7 +81,6 @@ declare function InfiltrationCanPlayClubCard(): boolean;
  * @returns {boolean} - * Returns TRUE if the player has free space and is skilled enough.
  */
 declare function InfiltrationCanBrainwashCaptive(): boolean;
-declare function InfiltrationLoad(): Promise<void>;
 /**
  * Runs and draws the infiltration screen.  Shows the player and the opponent.
  * @returns {void} - Nothing
@@ -227,26 +249,3 @@ declare function InfiltrationStartPenitentiary(Param?: "New"): void;
  * @returns {void} - Nothing
  */
 declare function InfiltrationGuardDressUp(): void;
-declare var InfiltrationBackground: string;
-/** @type {null | NPCCharacter} */
-declare var InfiltrationSupervisor: null | NPCCharacter;
-declare var InfiltrationDifficulty: number;
-/** @type {InfiltrationMissionType | ""} */
-declare var InfiltrationMission: InfiltrationMissionType | "";
-/** @type {InfiltrationMissionType[]} */
-declare var InfiltrationMissionType: InfiltrationMissionType[];
-/** @type {InfiltrationTargetType[]} */
-declare var InfiltrationObjectType: InfiltrationTargetType[];
-/** @type {InfiltrationMissionTarget | null} */
-declare var InfiltrationTarget: InfiltrationMissionTarget | null;
-declare var InfiltrationCollectRansom: boolean;
-/** @type {null | NPCCharacter} */
-declare var InfiltrationKidnapper: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var InfiltrationPandoraPrisoner: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var InfiltrationPartyPrisoner: null | NPCCharacter;
-declare var InfiltrationPenitentiaryMinutes: number;
-declare var InfiltrationPenitentiaryAmount: number;
-/** @type {"G" | "I"} */
-declare var InfiltrationPenitentiaryRole: "G" | "I";

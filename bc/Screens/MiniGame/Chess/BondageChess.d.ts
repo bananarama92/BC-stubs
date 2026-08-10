@@ -1,4 +1,13 @@
-declare function ChessLoad(): Promise<void>;
+declare var ChessBackground: string;
+/** @type {null | Character} */
+declare var ChessCharacterWhite: null | Character;
+/** @type {null | Character} */
+declare var ChessCharacterBlack: null | Character;
+declare var ChessEndStatus: string;
+declare var ChessMinorPieceWhite: number;
+declare var ChessMajorPieceWhite: number;
+declare var ChessMinorPieceBlack: number;
+declare var ChessMajorPieceBlack: number;
 /**
  * Runs the chess mini game and draws its components on screen
  * @returns {void} - Nothing
@@ -14,13 +23,3 @@ declare function ChessClick(): void;
  * @returns {"w" | "b"} - "w" for white or "b" for black
  */
 declare function ChessPlayerColor(): "w" | "b";
-declare var ChessBackground: string;
-/** @type {null | Character} */
-declare var ChessCharacterWhite: null | Character;
-/** @type {null | Character} */
-declare var ChessCharacterBlack: null | Character;
-declare var ChessEndStatus: string;
-declare var ChessMinorPieceWhite: number;
-declare var ChessMajorPieceWhite: number;
-declare var ChessMinorPieceBlack: number;
-declare var ChessMajorPieceBlack: number;

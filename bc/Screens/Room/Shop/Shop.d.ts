@@ -1,3 +1,17 @@
+declare var ShopBackground: string;
+/** @type {null | NPCCharacter} */
+declare var ShopVendor: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var ShopCustomer: null | NPCCharacter;
+declare var ShopVendorAllowItem: boolean;
+declare var ShopBoughtEverything: boolean;
+declare var ShopRescueScenario: string;
+declare var ShopRescueScenarioList: string[];
+declare var ShopDemoItemPayment: number;
+/** @type {"" | AssetGroupItemName} */
+declare var ShopDemoItemGroup: "" | AssetGroupItemName;
+/** @type {AssetGroupItemName[]} */
+declare var ShopDemoItemGroupList: AssetGroupItemName[];
 /**
  * Checks if the vendor is restrained
  * @returns {boolean} - Returns TRUE if the vendor is restrained or gagged
@@ -13,7 +27,6 @@ declare function ShopIsRescueScenario(ScenarioName: string): boolean;
  * Entry point for accessing the actual shop from the NPC dialog menu
  */
 declare function ShopEnter(): void;
-declare function ShopLoad(): Promise<void>;
 /**
  * Runs and draws the shop screen.
  * @returns {void} - Nothing
@@ -75,17 +88,3 @@ declare function ShopJobFilterAvailableGroups(): AssetGroupItemName[];
  * demo item groups are occupied/blocked)
  */
 declare function ShopJobCanGoAgain(): boolean;
-declare var ShopBackground: string;
-/** @type {null | NPCCharacter} */
-declare var ShopVendor: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var ShopCustomer: null | NPCCharacter;
-declare var ShopVendorAllowItem: boolean;
-declare var ShopBoughtEverything: boolean;
-declare var ShopRescueScenario: string;
-declare var ShopRescueScenarioList: string[];
-declare var ShopDemoItemPayment: number;
-/** @type {"" | AssetGroupItemName} */
-declare var ShopDemoItemGroup: "" | AssetGroupItemName;
-/** @type {AssetGroupItemName[]} */
-declare var ShopDemoItemGroupList: AssetGroupItemName[];

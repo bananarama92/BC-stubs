@@ -1,3 +1,28 @@
+declare var AsylumGGTSBackground: string;
+/** @type {null | NPCCharacter} */
+declare var AsylumGGTSComputer: null | NPCCharacter;
+declare var AsylumGGTSIntroDone: boolean;
+declare var AsylumGGTSTimer: number;
+/** @type {null | string} */
+declare var AsylumGGTSTask: null | string;
+/** @type {null | Character} */
+declare var AsylumGGTSTaskTarget: null | Character;
+declare var AsylumGGTSLastTask: string;
+declare var AsylumGGTSTaskStart: number;
+declare var AsylumGGTSTaskEnd: number;
+declare var AsylumGGTSChatToParse: string;
+/**
+ * The list of available tasks, partitioned by level.
+ */
+declare var AsylumGGTSTaskList: string[][];
+declare var AsylumGGTSLevelTime: number[];
+/**
+ * The last pose the character had. Used to enforce KeepPose rules.
+ * @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>}
+ */
+declare var AsylumGGTSPreviousPose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
+declare var AsylumGGTSWordCheck: number;
+declare var AsylumGGTSSpeed: number;
 /**
  * Returns TRUE if the player has three strikes on record
  * @returns {boolean} - TRUE if three strikes or more
@@ -54,7 +79,6 @@ declare function AsylumGGTSLoadMessages(): Promise<void>;
  * @param {string} key
  */
 declare function AsylumGGTSGetMessage(key: string): string;
-declare function AsylumGGTSLoad(): Promise<void>;
 /**
  * Runs the room
  * @returns {void} - Nothing
@@ -348,28 +372,3 @@ declare function AsylumGGTSDrawCharacter(C: Character, X: number, Y: number, Zoo
  * @returns {void} - Nothing
  */
 declare function AsylumGGTSReset(): void;
-declare var AsylumGGTSBackground: string;
-/** @type {null | NPCCharacter} */
-declare var AsylumGGTSComputer: null | NPCCharacter;
-declare var AsylumGGTSIntroDone: boolean;
-declare var AsylumGGTSTimer: number;
-/** @type {null | string} */
-declare var AsylumGGTSTask: null | string;
-/** @type {null | Character} */
-declare var AsylumGGTSTaskTarget: null | Character;
-declare var AsylumGGTSLastTask: string;
-declare var AsylumGGTSTaskStart: number;
-declare var AsylumGGTSTaskEnd: number;
-declare var AsylumGGTSChatToParse: string;
-/**
- * The list of available tasks, partitioned by level.
- */
-declare var AsylumGGTSTaskList: string[][];
-declare var AsylumGGTSLevelTime: number[];
-/**
- * The last pose the character had. Used to enforce KeepPose rules.
- * @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>}
- */
-declare var AsylumGGTSPreviousPose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
-declare var AsylumGGTSWordCheck: number;
-declare var AsylumGGTSSpeed: number;

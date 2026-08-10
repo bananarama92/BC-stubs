@@ -1,4 +1,9 @@
 /**
+ * @type {LogRecord[]}
+ * @deprecated Use {@link Player.Log}
+ */
+declare var Log: LogRecord[];
+/**
  * Get the log entry corresponding to the given name and group.
  *
  * @template {LogGroupType} T
@@ -7,6 +12,8 @@
  * @returns {LogRecord | undefined}
  */
 declare function LogGet<T extends LogGroupType>(Name: LogNameType[T], Group: T): LogRecord | undefined;
+declare const LogMaxStringArrayLength = 100;
+declare const LogMaxStringLength = 100;
 /**
  * Adds a new entry to the player's logs, renews the value if it already exists.
  * @template {LogGroupType} T
@@ -80,72 +87,43 @@ declare function LogGetString<T extends LogGroupType>(Name: LogNameType[T], Grou
  * @returns {string[] | null} - The log's string array value if it exists, or null.
  */
 declare function LogGetStringArray<T extends LogGroupType>(Name: LogNameType[T], Group: T): string[] | null;
+declare const MainHallAllowIDToScreenMap: {
+    readonly Shop: "A";
+    readonly Private: "B";
+    readonly Introduction: "C";
+    readonly MaidQuarters: "D";
+    readonly KidnapLeague: "E";
+    readonly ShibariDojo: "F";
+    readonly Sarah: "G";
+    readonly Trouble: "H";
+    readonly SlaveMarket: "I";
+    readonly Cell: "J";
+    readonly LARPBattle: "K";
+    readonly College: "L";
+    readonly Asylum: "M";
+    readonly Poker: "N";
+    readonly Infiltration: "O";
+    readonly MovieStudio: "P";
+    readonly MagicSchool: "Q";
+    readonly Platform: "R";
+    readonly Crafting: "S";
+    readonly ClubCard: "T";
+    readonly Gambling: "0";
+    readonly Prison: "1";
+    readonly Photographic: "2";
+    readonly Stable: "3";
+    readonly Magic: "4";
+    readonly Nursery: "5";
+    readonly Cafe: "6";
+    readonly Arcade: "7";
+};
 /**
- * Loads the account log.
- * @param {readonly LogRecord[]} NewLog - Existing logs received by the server
- * @returns {void} - Nothing
+ * A list of conversions to apply to rules, for backward-compatibility with
+ * how Advanced Rules were set.
  */
-declare function LogLoad(NewLog: readonly LogRecord[]): void;
-/**
- * Searches for an existing log entry on another character.
- * @template {LogGroupType} T
- * @param {Character} C - Character to search on
- * @param {LogNameType[T]} Name - The name of the log to search for
- * @param {T} Group - The name of the log's group
- * @returns {boolean} - Returns TRUE if there is an existing log matching the Name/Group with no value or a value above the current time in ms.
- */
-declare function LogQueryRemote<T extends LogGroupType>(C: Character, Name: LogNameType[T], Group: T): boolean;
-/**
- * Filters the Player's log and returns the rule entries that the player's owner is allowed to see.
- * @param {boolean} OwnerIsLover - Indicates that the requester is also the player's lover.
- * @returns {LogRecord[]} - A list of rules that the player's owner is permitted to see
- */
-declare function LogGetOwnerReadableRules(OwnerIsLover: boolean): LogRecord[];
-/**
- * Filters the Player's log and returns the rule entries that the player's lover is allowed to see.
- * @returns {LogRecord[]} - A list of rules that the player's lover is permitted to see
- */
-declare function LogGetLoverReadableRules(): LogRecord[];
-/**
- * @type {LogRecord[]}
- * @deprecated Use {@link Player.Log}
- */
-declare var Log: LogRecord[];
-declare const LogMaxStringArrayLength: 100;
-declare const LogMaxStringLength: 100;
-declare namespace MainHallAllowIDToScreenMap {
-    let Shop: "A";
-    let Private: "B";
-    let Introduction: "C";
-    let MaidQuarters: "D";
-    let KidnapLeague: "E";
-    let ShibariDojo: "F";
-    let Sarah: "G";
-    let Trouble: "H";
-    let SlaveMarket: "I";
-    let Cell: "J";
-    let LARPBattle: "K";
-    let College: "L";
-    let Asylum: "M";
-    let Poker: "N";
-    let Infiltration: "O";
-    let MovieStudio: "P";
-    let MagicSchool: "Q";
-    let Platform: "R";
-    let Crafting: "S";
-    let ClubCard: "T";
-    let Gambling: "0";
-    let Prison: "1";
-    let Photographic: "2";
-    let Stable: "3";
-    let Magic: "4";
-    let Nursery: "5";
-    let Cafe: "6";
-    let Arcade: "7";
-}
-declare namespace AdvancedRulesBackCompat {
-    let BlockScreen: Record<"Q" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "F" | "M" | "L" | "R" | "A" | "B" | "C" | "S" | "T" | "P" | "D" | "E" | "G" | "H" | "I" | "J" | "K" | "N" | "O", "ClubCard" | "Arcade" | "Cafe" | "Cell" | "Crafting" | "Gambling" | "Infiltration" | "Introduction" | "KidnapLeague" | "Magic" | "MaidQuarters" | "MovieStudio" | "Nursery" | "Photographic" | "Platform" | "Poker" | "Prison" | "Private" | "Sarah" | "Shop" | "SlaveMarket" | "Stable" | "Asylum" | "College" | "MagicSchool" | "ShibariDojo" | "Trouble" | "LARPBattle">;
-    let BlockAppearance: {
+declare var AdvancedRulesBackCompat: {
+    readonly BlockScreen: Record<"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T", "Arcade" | "Asylum" | "Cafe" | "Cell" | "ClubCard" | "College" | "Crafting" | "Gambling" | "Infiltration" | "Introduction" | "KidnapLeague" | "LARPBattle" | "Magic" | "MagicSchool" | "MaidQuarters" | "MovieStudio" | "Nursery" | "Photographic" | "Platform" | "Poker" | "Prison" | "Private" | "Sarah" | "ShibariDojo" | "Shop" | "SlaveMarket" | "Stable" | "Trouble">;
+    readonly BlockAppearance: {
         readonly A: "Cloth";
         readonly B: "ClothAccessory";
         readonly C: "Necklace";
@@ -191,7 +169,7 @@ declare namespace AdvancedRulesBackCompat {
         readonly "%": "Pronouns";
         readonly "^": "EyeShadow";
     };
-    let BlockItemGroup: {
+    readonly BlockItemGroup: {
         readonly A: "ItemBoots";
         readonly B: "ItemFeet";
         readonly C: "ItemLegs";
@@ -220,4 +198,30 @@ declare namespace AdvancedRulesBackCompat {
         readonly "1": "ItemDevices";
         readonly "2": "ItemAddon";
     };
-}
+};
+/**
+ * Loads the account log.
+ * @param {readonly LogRecord[]} NewLog - Existing logs received by the server
+ * @returns {void} - Nothing
+ */
+declare function LogLoad(NewLog: readonly LogRecord[]): void;
+/**
+ * Searches for an existing log entry on another character.
+ * @template {LogGroupType} T
+ * @param {Character} C - Character to search on
+ * @param {LogNameType[T]} Name - The name of the log to search for
+ * @param {T} Group - The name of the log's group
+ * @returns {boolean} - Returns TRUE if there is an existing log matching the Name/Group with no value or a value above the current time in ms.
+ */
+declare function LogQueryRemote<T extends LogGroupType>(C: Character, Name: LogNameType[T], Group: T): boolean;
+/**
+ * Filters the Player's log and returns the rule entries that the player's owner is allowed to see.
+ * @param {boolean} OwnerIsLover - Indicates that the requester is also the player's lover.
+ * @returns {LogRecord[]} - A list of rules that the player's owner is permitted to see
+ */
+declare function LogGetOwnerReadableRules(OwnerIsLover: boolean): LogRecord[];
+/**
+ * Filters the Player's log and returns the rule entries that the player's lover is allowed to see.
+ * @returns {LogRecord[]} - A list of rules that the player's lover is permitted to see
+ */
+declare function LogGetLoverReadableRules(): LogRecord[];

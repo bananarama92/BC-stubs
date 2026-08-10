@@ -1,3 +1,94 @@
+declare var AppearanceBackground: string;
+/** Offset for the group view */
+declare var CharacterAppearanceOffset: number;
+/** Number of entries per group page */
+declare var CharacterAppearanceNumGroupPerPage: number;
+/** Number of entries per cloth page */
+declare var CharacterAppearanceNumClothPerPage: number;
+/** Number of entries per wardrobe page */
+declare var CharacterAppearanceWardrobeNumPerPage: number;
+declare var CharacterAppearanceHeaderText: string;
+declare var CharacterAppearanceHeaderTextTime: number;
+/**
+ * The appearance the character we're editing had when entering the screen.
+ *
+ * Must stay valid for as long as the screen is up.
+ *
+ * @type {string} */
+declare var CharacterAppearanceBackup: string;
+/**
+ * Backup of the current appearance; used when canceling out of loading a wardrobe outfit.
+ *
+ * @type {undefined | string} */
+declare var CharacterAppearanceInProgressBackup: undefined | string;
+/**
+ * The list of all customizable groups
+ * @type {AssetGroup[]}
+ */
+declare var CharacterAppearanceGroups: AssetGroup[];
+/**
+ * The list of all assets (owned or available)
+ *
+ * @type {Asset[]}
+ */
+declare var CharacterAppearanceAssets: Asset[];
+/** @type {AssetGroupName} */
+declare var CharacterAppearanceColorPickerGroupName: AssetGroupName;
+/** @type {ItemColor | undefined} */
+declare var CharacterAppearanceColorPickerBackup: ItemColor | undefined;
+declare var CharacterAppearanceColorPickerRefreshTimer: any;
+/**
+ * The character we're editing the appearance of.
+ *
+ * Must stay valid for as long as the screen is up.
+ *
+ * @type {Character}
+ */
+declare var CharacterAppearanceSelection: Character;
+/**
+ * The callback to perform when closing the appearance screen.
+ * Must stay valid for as long as the screen is up.
+ *
+ * @type {((accept: boolean) => void)}
+ */
+declare var CharacterAppearanceResultCallback: ((accept: boolean) => void);
+/** @type {ScreenSpecifier} */
+declare var CharacterAppearanceReturnScreen: ScreenSpecifier;
+declare var CharacterAppearanceWardrobeOffset: number;
+declare var CharacterAppearanceWardrobeText: string;
+declare var CharacterAppearanceWardrobeName: string;
+declare var CharacterAppearanceForceUpCharacter: number;
+/** @type {"" | ExpressionNameMap["Emoticon"]} */
+declare var CharacterAppearancePreviousEmoticon: "" | ExpressionNameMap["Emoticon"];
+/** @type {"" | "Wardrobe" | "Cloth" | "Color" | "Permissions"} */
+declare var CharacterAppearanceMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
+/** @type {"" | "Wardrobe" | "Cloth" | "Color" | "Permissions"} */
+declare var CharacterAppearanceMenuMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
+/** @type {null | Item} */
+declare var CharacterAppearanceCloth: null | Item;
+/** @type {AppearanceMenuButtonType[]} */
+declare var AppearanceMenu: AppearanceMenuButtonType[];
+/** @type {Character[]} */
+declare var AppearancePreviews: Character[];
+declare var AppearanceUseCharacterInPreviewsSetting: boolean;
+/**
+ * List of item indices collected for swapping.
+ * @type {number[]}
+ */
+declare let AppearanceWardrobeReorderList: number[];
+/** @type {WardrobeReorderType} */
+declare let AppearanceWardrobeReorderMode: WardrobeReorderType;
+declare const CanvasUpperOverflow = 700;
+declare const CanvasLowerOverflow = 150;
+/** The draw width of the character canvas */
+declare const CanvasDrawWidth = 500;
+/** The draw height of the character canvas */
+declare const CanvasDrawHeight: number;
+declare const AppearancePermissionColors: {
+    red: string[];
+    amber: string[];
+    green: string[];
+};
 /**
  * Builds all the assets that can be used to dress up the character
  * @param {Character} C - The character whose appearance is modified
@@ -144,7 +235,6 @@ declare function CharacterAppearanceXOffset(C: Character, HeightRatio: number): 
  * @returns {number} - The amounnt to move the character along the Y co-ordinate
  */
 declare function CharacterAppearanceYOffset(C: Character, HeightRatio: number, IgnoreUpButton?: boolean): number;
-declare function AppearanceLoad(): Promise<void>;
 /**
  * Build the buttons in the top menu
  * @param {Character} C - The character the appearance is being set for
@@ -163,8 +253,6 @@ declare function AppearanceGroupAllowed(C: Character, GroupName: "ALL" | AssetGr
  * @returns {void} - Nothing
  */
 declare function AppearanceRun(): void;
-declare function AppearanceResize(load: boolean): void;
-declare function AppearanceKeyDown(event: KeyboardEvent): boolean;
 /**
  * Calculates the background color of the preview image for and item
  * @param {Character} C - The character whose appearance we are viewing
@@ -257,7 +345,6 @@ declare function AppearanceClick(): void;
  * @returns {void} - Nothing
  */
 declare function AppearanceMenuClick(C: Character): void;
-declare function AppearanceExit(): void;
 /**
  * Common cleanup that must happen when the appearance editor closes
  */
@@ -375,94 +462,3 @@ declare function CharacterAppearanceCopyToClipboard(C: Character): void;
  * @param {boolean} ChatRoomRefresh - TRUE if the character should be refreshed online
  */
 declare function CharacterAppearancePaste(C: Character, CompApp: string, ChatRoomRefresh: boolean): void;
-declare var AppearanceBackground: string;
-/** Offset for the group view */
-declare var CharacterAppearanceOffset: number;
-/** Number of entries per group page */
-declare var CharacterAppearanceNumGroupPerPage: number;
-/** Number of entries per cloth page */
-declare var CharacterAppearanceNumClothPerPage: number;
-/** Number of entries per wardrobe page */
-declare var CharacterAppearanceWardrobeNumPerPage: number;
-declare var CharacterAppearanceHeaderText: string;
-declare var CharacterAppearanceHeaderTextTime: number;
-/**
- * The appearance the character we're editing had when entering the screen.
- *
- * Must stay valid for as long as the screen is up.
- *
- * @type {string} */
-declare var CharacterAppearanceBackup: string;
-/**
- * Backup of the current appearance; used when canceling out of loading a wardrobe outfit.
- *
- * @type {undefined | string} */
-declare var CharacterAppearanceInProgressBackup: undefined | string;
-/**
- * The list of all customizable groups
- * @type {AssetGroup[]}
- */
-declare var CharacterAppearanceGroups: AssetGroup[];
-/**
- * The list of all assets (owned or available)
- *
- * @type {Asset[]}
- */
-declare var CharacterAppearanceAssets: Asset[];
-/** @type {AssetGroupName} */
-declare var CharacterAppearanceColorPickerGroupName: AssetGroupName;
-/** @type {ItemColor | undefined} */
-declare var CharacterAppearanceColorPickerBackup: ItemColor | undefined;
-declare var CharacterAppearanceColorPickerRefreshTimer: undefined;
-/**
- * The character we're editing the appearance of.
- *
- * Must stay valid for as long as the screen is up.
- *
- * @type {Character}
- */
-declare var CharacterAppearanceSelection: Character;
-/**
- * The callback to perform when closing the appearance screen.
- * Must stay valid for as long as the screen is up.
- *
- * @type {((accept: boolean) => void)}
- */
-declare var CharacterAppearanceResultCallback: ((accept: boolean) => void);
-/** @type {ScreenSpecifier} */
-declare var CharacterAppearanceReturnScreen: ScreenSpecifier;
-declare var CharacterAppearanceWardrobeOffset: number;
-declare var CharacterAppearanceWardrobeText: string;
-declare var CharacterAppearanceWardrobeName: string;
-declare var CharacterAppearanceForceUpCharacter: number;
-/** @type {"" | ExpressionNameMap["Emoticon"]} */
-declare var CharacterAppearancePreviousEmoticon: "" | ExpressionNameMap["Emoticon"];
-/** @type {"" | "Wardrobe" | "Cloth" | "Color" | "Permissions"} */
-declare var CharacterAppearanceMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
-/** @type {"" | "Wardrobe" | "Cloth" | "Color" | "Permissions"} */
-declare var CharacterAppearanceMenuMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
-/** @type {null | Item} */
-declare var CharacterAppearanceCloth: null | Item;
-/** @type {AppearanceMenuButtonType[]} */
-declare var AppearanceMenu: AppearanceMenuButtonType[];
-/** @type {Character[]} */
-declare var AppearancePreviews: Character[];
-declare var AppearanceUseCharacterInPreviewsSetting: boolean;
-/**
- * List of item indices collected for swapping.
- * @type {number[]}
- */
-declare let AppearanceWardrobeReorderList: number[];
-/** @type {WardrobeReorderType} */
-declare let AppearanceWardrobeReorderMode: WardrobeReorderType;
-declare const CanvasUpperOverflow: 700;
-declare const CanvasLowerOverflow: 150;
-/** The draw width of the character canvas */
-declare const CanvasDrawWidth: 500;
-/** The draw height of the character canvas */
-declare const CanvasDrawHeight: number;
-declare namespace AppearancePermissionColors {
-    let red: string[];
-    let amber: string[];
-    let green: string[];
-}

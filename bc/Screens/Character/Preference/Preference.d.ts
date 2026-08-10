@@ -1,10 +1,42 @@
 /**
+ * The background to use for the settings screen
+ */
+declare var PreferenceBackground: string;
+/**
+ * A message shown by some subscreen
+ * @type {string}
+ */
+declare var PreferenceMessage: string;
+/**
+ * The currently active subscreen
+ *
+ * @type {PreferenceSubscreen | null}
+ */
+declare var PreferenceSubscreen: PreferenceSubscreen | null;
+/**
+ * All the base settings screens
+ * @type {PreferenceSubscreen[]}
+ */
+declare const PreferenceSubscreens: PreferenceSubscreen[];
+/**
+ * The current page ID for multi-page screens.
+ *
+ * This is automatically reset to 1 when a screen loads
+ */
+declare var PreferencePageCurrent: number;
+/** @type {Record<string,PreferenceExtensionsSettingItem>} */
+declare let PreferenceExtensionsSettings: Record<string, PreferenceExtensionsSettingItem>;
+/**
  * Open a specific subscreen
  * @param {PreferenceSubscreenName} subscreen
  * @param {number} page
  */
 declare function PreferenceOpenSubscreen(subscreen: PreferenceSubscreenName, page?: number): Promise<void>;
-declare function PreferenceLoad(): Promise<void>;
+declare const PreferenceIDs: Readonly<{
+    subscreen: "preference-subscreen";
+    exit: "preference-exit";
+    title: "preference-subscreen-hgroup";
+}>;
 /**
  * Runs the preference screen. This function is called dynamically on a repeated basis.
  * So don't use complex loops or other function calls within this method
@@ -16,16 +48,11 @@ declare function PreferenceRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceClick(): void;
-declare function PreferenceExit(): void;
-declare function PreferenceUnload(): void;
-declare function PreferenceResize(load: boolean): void;
-declare function PreferenceKeyUp(event: KeyboardEvent): boolean;
 /**
  * @param {PreferenceSubscreenName} subscreenName
  * @returns
  */
 declare function PreferenceSubscreenCreateSubscreen(subscreenName: PreferenceSubscreenName): HTMLDivElement;
-declare function PreferenceSubscreenResize(load: boolean): void;
 /**
  * Exit from a specific subscreen by running its handler and checking its validity
  */
@@ -73,71 +100,39 @@ declare function PreferenceGetPreviousIndex(List: readonly unknown[], Index: num
  */
 declare function PreferenceGetNextIndex(List: readonly unknown[], Index: number): number;
 /**
- * Updates all of the validation "keys" based on the currently registered assets, groups, and activities
+ * Namespace with default values for {@link ActivityEnjoyment} properties.
+ * @satisfies {ActivityEnjoyment}
+ * @namespace
  */
-declare function PreferenceArousalUpdateValidation(): void;
+declare var PreferenceActivityEnjoymentDefault: {
+    Name: never;
+    /** @type {ArousalFactor} */
+    Self: ArousalFactor;
+    /** @type {ArousalFactor} */
+    Other: ArousalFactor;
+};
 /**
- * Registers a new extension setting to the preference screen
- * @public
- * @param {PreferenceExtensionsSettingItem} Setting - The extension setting to register
- * @returns {void} - Nothing
+ * Namespace with default values for {@link ArousalFetish} properties.
+ * @satisfies {ArousalFetish}
+ * @namespace
  */
-declare function PreferenceRegisterExtensionSetting(Setting: PreferenceExtensionsSettingItem): void;
+declare var PreferenceArousalFetishDefault: {
+    Name: never;
+    /** @type {ArousalFactor} */
+    Factor: ArousalFactor;
+};
 /**
- * Return a new object with default item permissions
- * @returns {ItemPermissions} - The item permissions
+ * Namespace with default values for {@link ArousalZone} properties.
+ * @satisfies {ArousalZone}
+ * @namespace
  */
-declare function PreferencePermissionGetDefault(): ItemPermissions;
-/**
- * The background to use for the settings screen
- */
-declare var PreferenceBackground: string;
-/**
- * A message shown by some subscreen
- * @type {string}
- */
-declare var PreferenceMessage: string;
-/**
- * The currently active subscreen
- *
- * @type {PreferenceSubscreen | null}
- */
-declare var PreferenceSubscreen: PreferenceSubscreen | null;
-/**
- * All the base settings screens
- * @type {PreferenceSubscreen[]}
- */
-declare const PreferenceSubscreens: PreferenceSubscreen[];
-/**
- * The current page ID for multi-page screens.
- *
- * This is automatically reset to 1 when a screen loads
- */
-declare var PreferencePageCurrent: number;
-/** @type {Record<string,PreferenceExtensionsSettingItem>} */
-declare let PreferenceExtensionsSettings: Record<string, PreferenceExtensionsSettingItem>;
-declare const PreferenceIDs: Readonly<{
-    subscreen: "preference-subscreen";
-    exit: "preference-exit";
-    title: "preference-subscreen-hgroup";
-}>;
-declare namespace PreferenceActivityEnjoymentDefault {
-    let Name: never;
-    let Self: ArousalFactor;
-    let Other: ArousalFactor;
-}
-declare namespace PreferenceArousalFetishDefault {
-    let Name_1: never;
-    export { Name_1 as Name };
-    export let Factor: ArousalFactor;
-}
-declare namespace PreferenceArousalZoneDefault {
-    let Name_2: never;
-    export { Name_2 as Name };
-    let Factor_1: ArousalFactor;
-    export { Factor_1 as Factor };
-    export let Orgasm: boolean;
-}
+declare var PreferenceArousalZoneDefault: {
+    Name: never;
+    /** @type {ArousalFactor} */
+    Factor: ArousalFactor;
+    /** @type {boolean} */
+    Orgasm: boolean;
+};
 /**
  * Which zones are considered erogenous by default
  * @type {AssetGroupName[]}
@@ -149,6 +144,10 @@ declare var PreferenceArousalZoneOrgasmDefault: AssetGroupName[];
  * @namespace
  */
 declare var PreferenceArousalSettingsDefault: Required<ArousalSettingsType>;
+/**
+ * Updates all of the validation "keys" based on the currently registered assets, groups, and activities
+ */
+declare function PreferenceArousalUpdateValidation(): void;
 /**
  * Namespace with functions for validating {@link ArousalSettingsType} properties
  * @type {{ [k in keyof Required<ArousalSettingsType>]: (arg: ArousalSettingsType[k], C: Character) => ArousalSettingsType[k] }}
@@ -286,7 +285,7 @@ declare var PreferenceGenderSettingsDefault: Required<GenderSettingsType>;
  * @param {T} shape
  * @returns {(arg: T) => T}
  */
-declare function hasSameShape<T extends object>(shape: T): (arg: T) => T;
+declare const hasSameShape: <T extends object>(shape: T) => (arg: T) => T;
 /**
  * Namespace with functions for validating {@link GenderSettingsType} properties
  * @type {{ [k in keyof Required<GenderSettingsType>]: (arg: GenderSettingsType[k], C: Character) => GenderSettingsType[k] }}
@@ -305,3 +304,15 @@ declare var PreferenceNotificationSettingsDefault: Required<NotificationSettings
  * @namespace
  */
 declare var PreferenceNotificationSettingsValidate: { [k in keyof Required<NotificationSettingsType>]: (arg: Partial<NotificationSettingsType[k]>, C: Character) => NotificationSettingsType[k]; };
+/**
+ * Registers a new extension setting to the preference screen
+ * @public
+ * @param {PreferenceExtensionsSettingItem} Setting - The extension setting to register
+ * @returns {void} - Nothing
+ */
+declare function PreferenceRegisterExtensionSetting(Setting: PreferenceExtensionsSettingItem): void;
+/**
+ * Return a new object with default item permissions
+ * @returns {ItemPermissions} - The item permissions
+ */
+declare function PreferencePermissionGetDefault(): ItemPermissions;

@@ -1,3 +1,32 @@
+/** @type {ArousalActiveName[]} */
+declare var PreferenceArousalActiveList: ArousalActiveName[];
+declare var PreferenceArousalActiveIndex: number;
+/** @type {ArousalVisibleName[]} */
+declare var PreferenceArousalVisibleList: ArousalVisibleName[];
+declare var PreferenceArousalVisibleIndex: number;
+/** @type {ArousalAffectStutterName[]} */
+declare var PreferenceArousalAffectStutterList: ArousalAffectStutterName[];
+declare var PreferenceArousalAffectStutterIndex: number;
+/**
+ * Initialized by {@link PreferenceSubscreenArousalLoad}
+ * @type {ActivityName[]}
+ */
+declare var PreferenceArousalActivityList: ActivityName[];
+declare var PreferenceArousalActivityIndex: number;
+/** @type {never} */
+declare var PreferenceArousalActivityFactorSelf: never;
+/** @type {never} */
+declare var PreferenceArousalActivityFactorOther: never;
+/** @type {never} */
+declare var PreferenceArousalZoneFactor: never;
+/**
+ * Initialized by {@link PreferenceSubscreenArousalLoad}
+ * @type {FetishName[]}
+ */
+declare var PreferenceArousalFetishList: FetishName[];
+declare var PreferenceArousalFetishIndex: number;
+/** @type {never} */
+declare var PreferenceArousalFetishFactor: never;
 declare function PreferenceSubscreenArousalLoad(): void;
 /**
  * Sets the arousal preferences for a player. Redirected to from the main Run function if the player is in the arousal
@@ -47,32 +76,3 @@ declare function PreferenceDecrementArousalFactor(factor: ArousalFactor): Arousa
  */
 declare function PreferenceSubscreenArousalExit(): boolean;
 declare function PreferenceSubscreenArousalUnload(): void;
-/** @type {ArousalActiveName[]} */
-declare var PreferenceArousalActiveList: ArousalActiveName[];
-declare var PreferenceArousalActiveIndex: number;
-/** @type {ArousalVisibleName[]} */
-declare var PreferenceArousalVisibleList: ArousalVisibleName[];
-declare var PreferenceArousalVisibleIndex: number;
-/** @type {ArousalAffectStutterName[]} */
-declare var PreferenceArousalAffectStutterList: ArousalAffectStutterName[];
-declare var PreferenceArousalAffectStutterIndex: number;
-/**
- * Initialized by {@link PreferenceSubscreenArousalLoad}
- * @type {ActivityName[]}
- */
-declare var PreferenceArousalActivityList: ActivityName[];
-declare var PreferenceArousalActivityIndex: number;
-/** @type {never} */
-declare var PreferenceArousalActivityFactorSelf: never;
-/** @type {never} */
-declare var PreferenceArousalActivityFactorOther: never;
-/** @type {never} */
-declare var PreferenceArousalZoneFactor: never;
-/**
- * Initialized by {@link PreferenceSubscreenArousalLoad}
- * @type {FetishName[]}
- */
-declare var PreferenceArousalFetishList: FetishName[];
-declare var PreferenceArousalFetishIndex: number;
-/** @type {never} */
-declare var PreferenceArousalFetishFactor: never;

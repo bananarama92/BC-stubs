@@ -1,17 +1,10 @@
-declare function Shop2Load(): Promise<void>;
-declare function Shop2Click(event: PointerEvent): void;
-declare function Shop2Draw(): void;
-declare function Shop2Run(time: number): void;
-declare function Shop2Resize(load: boolean): void;
-declare function Shop2Unload(): void;
-declare function Shop2MouseWheel(event: WheelEvent): void;
-declare function Shop2Exit(): void;
 declare var Shop2Background: string;
-declare namespace ShopDropdownState {
-    let NONE: "None";
-    let GROUP: "Group";
-    let POSE: "Pose";
-}
+/** @satisfies {Record<string, ShopDropdownState>} */
+declare const ShopDropdownState: {
+    readonly NONE: "None";
+    readonly GROUP: "Group";
+    readonly POSE: "Pose";
+};
 /**
  * Namespace with shop-specific variables that are expected to mutate over the course of the (sub-)screens lifetime
  * @namespace
@@ -123,45 +116,81 @@ declare const Shop2InitVars: VariableContainer<{
     /** The shop background */
     Background: string;
 }>;
-declare namespace Shop2Consts {
-    namespace Grid {
-        let x: number;
-        let y: number;
-        let width: number;
-        let height: number;
-        let itemWidth: number;
-        let itemHeight: number;
-    }
-    let ItemColorCoords: RectTuple;
-    let BuyModeCycleOrder: readonly ShopMode[];
-    let ClothesCycleOrder: readonly {
+/**
+ * Namespace with shop-specific constants.
+ * @namespace
+ */
+declare const Shop2Consts: {
+    /**
+     * Grid parameters for the to-be displayed shop items
+     */
+    Grid: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+        itemWidth: number;
+        itemHeight: number;
+    };
+    /**
+     * Coordinates for the `Color` mode
+     * @type {RectTuple}
+     */
+    ItemColorCoords: RectTuple;
+    /**
+     * A list denoting the rotation order between the respective shop modes.
+     * @type {readonly ShopMode[]}
+     */
+    BuyModeCycleOrder: readonly ShopMode[];
+    /**
+     * A list denoting the rotation order (and their callbacks) between the respective clothing modes.
+     * @type {readonly { Mode: ShopClothesMode, Callback: (C: Character, items: Item[]) => void }[]}
+     */
+    ClothesCycleOrder: readonly {
         Mode: ShopClothesMode;
         Callback: (C: Character, items: Item[]) => void;
     }[];
-    let BuyGroups: Record<string, {
+    /**
+     * A record mapping {@link Asset.BuyGroup} names to the asset's value and all members of the buygroup.
+     * Only includes buy groups with at least 2 members.
+     * @type {Record<string, { Value: number, Assets: readonly ItemBundle[] }>}
+     */
+    BuyGroups: Record<string, {
         Value: number;
         Assets: readonly ItemBundle[];
     }>;
-    let Keys: Set<string>;
-    let Remotes: Set<string>;
-}
-declare namespace Shop2 {
+    /**
+     * A set with the group + asset names of all asset keys.
+     * @type {Set<string>}
+     */
+    Keys: Set<string>;
+    /**
+     * A set with the group + asset names of all asset remotes.
+     * @type {Set<string>}
+     */
+    Remotes: Set<string>;
+};
+/**
+ * Namespace with shop-related functions.
+ * @namespace
+ */
+declare var Shop2: {
     /**
      * Populate {@link Shop2Consts.BuyGroups} with buy groups.
      * private
      */
-    function _PopulateBuyGroups(): void;
+    _PopulateBuyGroups(): void;
     /**
      * Populate {@link Shop2InitVars.GroupDescriptions} with group descriptions and all corresponding group names
      * @param {readonly ShopItem[]} assets
      * private
      */
-    function _PopulateGroupDescriptions(assets: readonly ShopItem[]): void;
+    _PopulateGroupDescriptions(assets: readonly ShopItem[]): void;
     /**
      * Populate {@link Shop2Consts.Keys} and {@link Shop2Consts.Remote} with the name of all asset keys and remotes.
      * private
      */
-    function _PopulateKeysAndRemotes(): void;
+    _PopulateKeysAndRemotes(): void;
     /**
      * Draw function for a single item in the shop
      * @param {number} x
@@ -172,7 +201,7 @@ declare namespace Shop2 {
      * @satisfies {ScreenDrawHandler}
      * private
      */
-    function _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
+    _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
     /**
      * Click function for a single item in the shop
      * @param {PointerEvent} event
@@ -180,41 +209,45 @@ declare namespace Shop2 {
      * @satisfies {MouseEventListener}
      * private
      */
-    function _AssetElementClick(event: PointerEvent, assetIndex: number): void;
+    _AssetElementClick(event: PointerEvent, assetIndex: number): void;
     /**
      * Construct screen functions for the <=12 items displayed in the shop.
      * @returns {Record<string, ShopScreenFunctions>}
      */
-    function _GenerateAssetElements(): Record<string, ShopScreenFunctions>;
+    _GenerateAssetElements(): Record<string, ShopScreenFunctions>;
     /**
      * Filter the buy, sell and preview items in {@link Shop2Vars} based on the {@link Shop2Vars.Filters} settings,
      * clipping the current {@link Shop2Vars.Page} if required.
      * @param {boolean} clearDatalist - Whether the search bars datalist should be cleared (and thus be recomputed on a focus event)
      */
-    function ApplyItemFilters(clearDatalist?: boolean): void;
+    ApplyItemFilters(clearDatalist?: boolean): void;
     /** Click handler for the group-selection checkboxes */
-    function _SetCheckboxFilters(): void;
+    _SetCheckboxFilters(): void;
     /**
      * Update the state of all pose-buttons, disabling or selecting them if so required.
      */
-    function _UpdatePoseButtons(): void;
+    _UpdatePoseButtons(): void;
     /**
      * @param {string} id
      */
-    function _ClickDropdown(id: string): void;
-    function DrawPriceRibbon(label: string, x: number, y: number, w: number, color?: string): void;
+    _ClickDropdown(id: string): void;
+    DrawPriceRibbon(label: string, x: number, y: number, w: number, color?: string): void;
     /**
      * Convert the passed asset list into a list consisting of shop items
      * @param {readonly Asset[]} assets - The assets in question
      * @returns {ShopItem[]} - The shop items constructed from the passed assets
      */
-    function ParseAssets(assets: readonly Asset[]): ShopItem[];
-    let Elements: Record<string, ShopScreenFunctions>;
+    ParseAssets(assets: readonly Asset[]): ShopItem[];
+    /**
+     * Namespace with the individual screen function components of the shop screen
+     * @type {Record<string, ShopScreenFunctions>}
+     */
+    Elements: Record<string, ShopScreenFunctions>;
     /**
      * Helper function for initializing the `Shop2` screen.
      * @param {null | string} background - The shops background image
      * @param {null | ScreenSpecifier} screen - A 2-tuple containing the module and name of the previous screen
      * @param {null | readonly Asset[]} assets - A list of all assets that should appear in the shop
      */
-    function Init(background?: null | string, screen?: null | ScreenSpecifier, assets?: null | readonly Asset[]): void;
-}
+    Init(background?: null | string, screen?: null | ScreenSpecifier, assets?: null | readonly Asset[]): void;
+};

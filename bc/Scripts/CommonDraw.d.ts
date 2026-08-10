@@ -15,6 +15,7 @@ declare function CommonDrawCanvasPrepare(C: Character): void;
  * @returns {string} baseURL - URL pointing to asset art to load
  */
 declare function AssetBaseURL(C: Character, group: AssetGroup, groupName: AssetGroupName, pose: AssetPoseName | PoseType | NullPoseType, layer: AssetLayer, layerType: string, asset: Asset): string;
+type MaskLayersMap = Map<AssetGroupName, TextureAlphaMask[]>;
 /**
  * @typedef { Map<AssetGroupName, TextureAlphaMask[]> } MaskLayersMap
  * @param {Character} C - The character to prepare
@@ -98,4 +99,3 @@ declare function CommonDrawFindPose(C: Character, AllowedPoses: Partial<Record<A
  * @returns {AssetPoseName | NullPoseType} - The pose to use when drawing the given asset (or layer)
  */
 declare function CommonDrawResolveAssetPose(C: Character, Layer: AssetLayer): AssetPoseName | NullPoseType;
-type MaskLayersMap = Map<AssetGroupName, TextureAlphaMask[]>;

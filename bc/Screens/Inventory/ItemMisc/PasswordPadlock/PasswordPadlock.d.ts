@@ -1,5 +1,4 @@
-declare function InventoryItemMiscPasswordPadlockLoadHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemMiscPasswordPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
+declare const InventoryItemMiscPasswordPadlockPasswordRegex: RegExp;
 /**
  *
  * @param {Character} C
@@ -7,7 +6,6 @@ declare function InventoryItemMiscPasswordPadlockDrawHook(data: NoArchItemData, 
  * @returns
  */
 declare function InventoryItemMiscPasswordPadlockDrawControls(C: Character, item: Item): void;
-declare function InventoryItemMiscPasswordPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
 /**
  *
  * @param {Character} C
@@ -26,7 +24,6 @@ declare function InventoryItemMiscPasswordPadlockHandleOpenClick(C: Character, i
  * @param {Item} item
  */
 declare function InventoryItemMiscPasswordPadlockHandleFirstSet(C: Character, item: Item): void;
-declare function InventoryItemMiscPasswordPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 /**
  *
  * @param {Item} item
@@ -39,4 +36,3 @@ declare function InventoryItemMiscPasswordPadlockIsSet(item: Item): boolean;
  * @param {Item} item
  */
 declare function InventoryItemMiscPasswordPadlockPublishPasswordChange(C: Character, item: Item): void;
-declare const InventoryItemMiscPasswordPadlockPasswordRegex: RegExp;

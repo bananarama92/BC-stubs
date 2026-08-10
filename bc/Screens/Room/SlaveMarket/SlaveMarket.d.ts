@@ -1,3 +1,13 @@
+declare var SlaveMarketBackground: string;
+/** @type {NPCCharacter} */
+declare var SlaveMarketMistress: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var SlaveMarketSlave: NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var SlaveMarketSlaveToTrain: null | NPCCharacter;
+declare var SlaveMarketTrainingBackgroundList: string[];
+/** @type {NPCCharacter} */
+declare var SlaveMarketBuyer: NPCCharacter;
 /**
  * Checks if an auction can be started.
  * @returns {boolean} - Returns TRUE if the player has room in her private room and is dominant enough to participate in an auction
@@ -24,7 +34,6 @@ declare function SlaveMarketCanBeAuctioned(): boolean;
  * @returns {boolean} - TRUE if the character has the title in the parameter
  */
 declare function SlaveMarketSlaveTitleIs(Title: TitleName): boolean;
-declare function SlaveMarketLoad(): Promise<void>;
 /**
  * Runs and draws the slave market, the screen can be used to search for a daily job.
  * @returns {void} - Nothing
@@ -79,13 +88,3 @@ declare function SlaveMarketPlayerAuctionEnd(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function SlaveMarketPlayerAuctionTransfer(): void;
-declare var SlaveMarketBackground: string;
-/** @type {NPCCharacter} */
-declare var SlaveMarketMistress: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var SlaveMarketSlave: NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var SlaveMarketSlaveToTrain: null | NPCCharacter;
-declare var SlaveMarketTrainingBackgroundList: string[];
-/** @type {NPCCharacter} */
-declare var SlaveMarketBuyer: NPCCharacter;

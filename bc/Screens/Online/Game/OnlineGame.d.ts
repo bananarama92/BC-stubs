@@ -1,4 +1,14 @@
 /**
+ * @type {null | string[][]}
+ * @deprecated
+ */
+declare let OnlineGameDictionary: null | string[][];
+/**
+ * @type {((gameDict: string[][]) => void) | undefined}
+ * @deprecated
+ */
+declare let OnlineGameTranslateResolve: ((gameDict: string[][]) => void) | undefined;
+/**
  * Loads the online game dictionary that will be used throughout the game to output messages
  * @returns {void} - Nothing
  */
@@ -70,13 +80,3 @@ declare function OnlineGameDrawCharacter(C: Character, X: number, Y: number, Zoo
  * Returns whether the room's current game has a specific option screen
  */
 declare function OnlineGameHasOptions(): boolean;
-/**
- * @type {null | string[][]}
- * @deprecated
- */
-declare let OnlineGameDictionary: null | string[][];
-/**
- * @type {((gameDict: string[][]) => void) | undefined}
- * @deprecated
- */
-declare let OnlineGameTranslateResolve: ((gameDict: string[][]) => void) | undefined;

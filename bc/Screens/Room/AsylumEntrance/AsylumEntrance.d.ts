@@ -1,3 +1,12 @@
+declare var AsylumEntranceBackground: string;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceKidnapNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceEscapedPatient: NPCCharacter;
+declare var AsylumEntranceEscapedPatientWillBribe: boolean;
+declare var AsylumEntranceEscapedPatientWillJoin: boolean;
 /**
  * Checks, if the player is able to leave the Asylum
  * @returns {boolean} - Returns true, if the player is able to leave, false otherwise
@@ -48,7 +57,6 @@ declare function AsylumHasForcedGGTSTime(): boolean;
  * @returns {boolean}
  */
 declare function AsylumHasEscaped(): boolean;
-declare function AsylumEntranceLoad(): Promise<void>;
 /**
  * // Runs the room (shows the nurse, player, icons and committed time).
  * Is called over and over again, so don't call expensive functions or loops from here.
@@ -170,7 +178,6 @@ declare function AsylumEntranceKidnapNurseBribe(BribeAmount: number, BribeOdds: 
  * @returns {void} - Nothing
  */
 declare function AsylumEntranceKidnapNurseTransferToRoom(): void;
-declare function AsylumEntranceKidnapNurseExit(): void;
 /**
  * When the escaped player walks back to the asylum
  * @returns {void} - Nothing
@@ -265,12 +272,3 @@ declare function AsylumEntranceClubCardStart(): void;
  * When the player ends a club card game
  */
 declare function AsylumEntranceClubCardEnd(): Promise<void>;
-declare var AsylumEntranceBackground: string;
-/** @type {NPCCharacter} */
-declare var AsylumEntranceNurse: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var AsylumEntranceKidnapNurse: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var AsylumEntranceEscapedPatient: NPCCharacter;
-declare var AsylumEntranceEscapedPatientWillBribe: boolean;
-declare var AsylumEntranceEscapedPatientWillJoin: boolean;

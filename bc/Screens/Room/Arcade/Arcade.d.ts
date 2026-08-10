@@ -1,3 +1,10 @@
+declare var ArcadeBackground: string;
+/** @type {NPCCharacter} */
+declare var ArcadeEmployee: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var ArcadePlayer: NPCCharacter;
+declare var ArcadeDeviousChallenge: boolean;
+declare var ArcadeCannotDoDeviousChallenge: boolean;
 /**
  * Determines whether or not the player is bound and can plead to have their own headset put on them
  * @returns {boolean} - Whether or not the player can ask to have a headset put on
@@ -48,7 +55,6 @@ declare function ArcadeDeviousChallengeAllowed(): boolean;
  * @returns {boolean} - ArcadeDeviousChallenge
  */
 declare function ArcadeDeviousChallengeEnabled(): boolean;
-declare function ArcadeLoad(): Promise<void>;
 /**
  * Run the Arcade room and draw characters. This function is called dynamically at short intervals.
  * Don't use expensive loops or functions from here
@@ -70,18 +76,11 @@ declare function ArcadeKinkyDungeonStart(PlayerLevel: number): void;
  * Ends the therapy mini-game as a nurse, plays with reputation and money
  */
 declare function ArcadeKinkyDungeonEnd(): Promise<void>;
+declare var KinkyDungeonFiles: string[];
+declare var KinkyDungeonIsLoading: boolean;
+declare var KinkyDungeonReady: boolean;
 declare function ArcadeKinkyDungeonStartLoad(): Promise<void>;
 /**
  * @returns {boolean} - False if the dungeon is not ready yet, true otherwise
  */
 declare function ArcadeKinkyDungeonLoad(): boolean;
-declare var ArcadeBackground: string;
-/** @type {NPCCharacter} */
-declare var ArcadeEmployee: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var ArcadePlayer: NPCCharacter;
-declare var ArcadeDeviousChallenge: boolean;
-declare var ArcadeCannotDoDeviousChallenge: boolean;
-declare var KinkyDungeonFiles: string[];
-declare var KinkyDungeonIsLoading: boolean;
-declare var KinkyDungeonReady: boolean;

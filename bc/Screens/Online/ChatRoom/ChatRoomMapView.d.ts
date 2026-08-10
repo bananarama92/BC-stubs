@@ -1,3 +1,75 @@
+declare const ChatRoomMapViewName = "Map";
+declare var ChatRoomMapViewWidth: number;
+declare var ChatRoomMapViewHeight: number;
+declare var ChatRoomMapViewPerceptionRange: number;
+declare var ChatRoomMapViewPerceptionRangeMin: number;
+declare var ChatRoomMapViewPerceptionRangeMax: number;
+declare var ChatRoomMapViewObjectStartID: number;
+declare var ChatRoomMapViewObjectEntryID: number;
+/** @type {"" |  "Tile" | "Object" | "TileType" | "ObjectType" | "Effect"} */
+declare var ChatRoomMapViewEditMode: "" | "Tile" | "Object" | "TileType" | "ObjectType" | "Effect";
+/** @type {"" | ChatRoomMapTileType | ChatRoomMapObjectType} */
+declare var ChatRoomMapViewEditSubMode: "" | ChatRoomMapTileType | ChatRoomMapObjectType;
+declare var ChatRoomMapViewEditStarted: boolean;
+/** @type {null | ChatRoomMapDoodad | ChatRoomMapEffect} */
+declare var ChatRoomMapViewEditObject: null | ChatRoomMapDoodad | ChatRoomMapEffect;
+/** @type {number[]} */
+declare var ChatRoomMapViewEditSelection: number[];
+declare var ChatRoomMapViewEditRange: number;
+/** @type {ServerChatRoomMapData[]} */
+declare var ChatRoomMapViewEditBackup: ServerChatRoomMapData[];
+/** @type {null | number} */
+declare var ChatRoomMapViewUpdateRoomNext: null | number;
+/** @type {null | number} */
+declare var ChatRoomMapViewUpdatePlayerNext: null | number;
+/** @type {null | number} */
+declare var ChatRoomMapViewUpdateLastMapDataNext: null | number;
+/** @type {null | Character} */
+declare var ChatRoomMapViewFocusedCharacter: null | Character;
+declare var ChatRoomMapViewFocusedCharacterX: number;
+declare var ChatRoomMapViewFocusedCharacterY: number;
+declare var ChatRoomMapViewSuperPowersActive: boolean;
+declare var ChatRoomMapViewBaseMovementSpeed: number;
+/** @type {null | ChatRoomMapMovement} */
+declare var ChatRoomMapViewMovement: null | ChatRoomMapMovement;
+/** @type {ChatRoomMapType[]} */
+declare var ChatRoomMapViewTypeList: ChatRoomMapType[];
+declare var ChatRoomMapViewUpdatePlayerTime: number;
+declare const ChatRoomMapViewPerceptionRaycastOffset = 0.4999;
+declare const ChatRoomMapViewWhisperRange = 1;
+declare const ChatRoomMapViewInteractionRange = 1;
+declare const ChatRoomMapViewRemoteRange: number;
+/** @type {boolean[]} */
+declare var ChatRoomMapViewVisibilityMask: boolean[];
+/** @type {boolean[]} */
+declare var ChatRoomMapViewAudibilityMask: boolean[];
+/** @type {Uint16Array | null} */
+declare var ChatRoomMapViewTileFog: Uint16Array | null;
+/** @type {Uint16Array | null} */
+declare var ChatRoomMapViewObjectFog: Uint16Array | null;
+declare var ChatRoomMapViewKeysPressed: {
+    u: boolean;
+    d: boolean;
+    l: boolean;
+    r: boolean;
+};
+declare var ChatRoomMapViewStartOfKeyPress: number;
+/** @type {Record<number, ChatRoomMapTile | undefined>} */
+declare var ChatRoomMapViewTileLookup: Record<number, ChatRoomMapTile | undefined>;
+/** @type {Record<number, ChatRoomMapObject | undefined>} */
+declare var ChatRoomMapViewObjectLookup: Record<number, ChatRoomMapObject | undefined>;
+/** @type {Map<number, Character>} */
+declare var ChatRoomMapViewCharacterMap: Map<number, Character>;
+declare const ChatRoomMapViewEffectStartID = 10;
+/**
+ * A list of predefined lighting effects. May be replaced with a color picker in the future.
+ * @type {ChatRoomMapEffect[]}
+ * */
+declare const ChatRoomMapViewEffectList: ChatRoomMapEffect[];
+/** @type {ChatRoomMapTile[]} */
+declare const ChatRoomMapViewTileList: ChatRoomMapTile[];
+/** @type {ChatRoomMapObject[]} */
+declare const ChatRoomMapViewObjectList: ChatRoomMapObject[];
 /**
  * Returns TRUE if the player is an admin and activated her super powers on the map
  * @returns {boolean} - TRUE if super powers are active
@@ -51,7 +123,6 @@ declare function ChatRoomMapViewDeactivate(): void;
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
 declare function ChatRoomMapViewIsActive(): boolean;
-declare function ChatRoomMapViewRun(time: number): void;
 /**
  * Returns TRUE if the player can leave from the map
  * @returns {boolean} - True if the player can leave
@@ -152,7 +223,7 @@ declare function ChatRoomMapViewIsWall(X: number, Y: number): boolean;
  * @param {function(number, number): boolean} Condition - Function that returns true if the position is connected
  * @returns {{ North: boolean, South: boolean, East: boolean, West: boolean }} - The connectivity status
  */
-declare function ChatRoomMapViewGetConnectivityDirections(X: number, Y: number, Condition: (arg0: number, arg1: number) => boolean): {
+declare function ChatRoomMapViewGetConnectivityDirections(X: number, Y: number, Condition: Function): {
     North: boolean;
     South: boolean;
     East: boolean;
@@ -329,8 +400,6 @@ declare function ChatRoomMapViewMove(D: "West" | "East" | "North" | "South"): vo
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewUndo(): void;
-declare function ChatRoomMapViewKeyDown(event: KeyboardEvent): boolean;
-declare function ChatRoomMapViewKeyUp(event: KeyboardEvent): boolean;
 /**
  * Handles clicks the chatroom screen view.
  * @returns {void} - Nothing.
@@ -346,8 +415,6 @@ declare function ChatRoomMapViewMouseDown(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewMouseMove(): void;
-declare function ChatRoomMapViewMouseUp(event: PointerEvent): void;
-declare function ChatRoomMapViewMouseWheel(event: WheelEvent): void;
 /**
  * Copies the current map in the clipboard.  Called from the chat field command "mapcopy"
  * @returns {void} - Nothing
@@ -366,80 +433,136 @@ declare function ChatRoomMapViewPaste(Param: string): void;
  * @returns {string}
  */
 declare function RgbaArrayToHTMLColor(rgba: [number, number, number, number]): string;
-declare const ChatRoomMapViewName: "Map";
-declare var ChatRoomMapViewWidth: number;
-declare var ChatRoomMapViewHeight: number;
-declare var ChatRoomMapViewPerceptionRange: number;
-declare var ChatRoomMapViewPerceptionRangeMin: number;
-declare var ChatRoomMapViewPerceptionRangeMax: number;
-declare var ChatRoomMapViewObjectStartID: number;
-declare var ChatRoomMapViewObjectEntryID: number;
-/** @type {"" |  "Tile" | "Object" | "TileType" | "ObjectType" | "Effect"} */
-declare var ChatRoomMapViewEditMode: "" | "Tile" | "Object" | "TileType" | "ObjectType" | "Effect";
-/** @type {"" | ChatRoomMapTileType | ChatRoomMapObjectType} */
-declare var ChatRoomMapViewEditSubMode: "" | ChatRoomMapTileType | ChatRoomMapObjectType;
-declare var ChatRoomMapViewEditStarted: boolean;
-/** @type {null | ChatRoomMapDoodad | ChatRoomMapEffect} */
-declare var ChatRoomMapViewEditObject: null | ChatRoomMapDoodad | ChatRoomMapEffect;
-/** @type {number[]} */
-declare var ChatRoomMapViewEditSelection: number[];
-declare var ChatRoomMapViewEditRange: number;
-/** @type {ServerChatRoomMapData[]} */
-declare var ChatRoomMapViewEditBackup: ServerChatRoomMapData[];
-/** @type {null | number} */
-declare var ChatRoomMapViewUpdateRoomNext: null | number;
-/** @type {null | number} */
-declare var ChatRoomMapViewUpdatePlayerNext: null | number;
-/** @type {null | number} */
-declare var ChatRoomMapViewUpdateLastMapDataNext: null | number;
-/** @type {null | Character} */
-declare var ChatRoomMapViewFocusedCharacter: null | Character;
-declare var ChatRoomMapViewFocusedCharacterX: number;
-declare var ChatRoomMapViewFocusedCharacterY: number;
-declare var ChatRoomMapViewSuperPowersActive: boolean;
-declare var ChatRoomMapViewBaseMovementSpeed: number;
-/** @type {null | ChatRoomMapMovement} */
-declare var ChatRoomMapViewMovement: null | ChatRoomMapMovement;
-/** @type {ChatRoomMapType[]} */
-declare var ChatRoomMapViewTypeList: ChatRoomMapType[];
-declare var ChatRoomMapViewUpdatePlayerTime: number;
-declare const ChatRoomMapViewPerceptionRaycastOffset: 0.4999;
-declare const ChatRoomMapViewWhisperRange: 1;
-declare const ChatRoomMapViewInteractionRange: 1;
-declare const ChatRoomMapViewRemoteRange: number;
-/** @type {boolean[]} */
-declare var ChatRoomMapViewVisibilityMask: boolean[];
-/** @type {boolean[]} */
-declare var ChatRoomMapViewAudibilityMask: boolean[];
-/** @type {Uint16Array | null} */
-declare var ChatRoomMapViewTileFog: Uint16Array | null;
-/** @type {Uint16Array | null} */
-declare var ChatRoomMapViewObjectFog: Uint16Array | null;
-declare namespace ChatRoomMapViewKeysPressed {
-    let u: boolean;
-    let d: boolean;
-    let l: boolean;
-    let r: boolean;
-}
-declare var ChatRoomMapViewStartOfKeyPress: number;
-/** @type {Record<number, ChatRoomMapTile | undefined>} */
-declare var ChatRoomMapViewTileLookup: Record<number, ChatRoomMapTile | undefined>;
-/** @type {Record<number, ChatRoomMapObject | undefined>} */
-declare var ChatRoomMapViewObjectLookup: Record<number, ChatRoomMapObject | undefined>;
-/** @type {Map<number, Character>} */
-declare var ChatRoomMapViewCharacterMap: Map<number, Character>;
-declare const ChatRoomMapViewEffectStartID: 10;
 /**
- * A list of predefined lighting effects. May be replaced with a color picker in the future.
- * @type {ChatRoomMapEffect[]}
- * */
-declare const ChatRoomMapViewEffectList: ChatRoomMapEffect[];
-/** @type {ChatRoomMapTile[]} */
-declare const ChatRoomMapViewTileList: ChatRoomMapTile[];
-/** @type {ChatRoomMapObject[]} */
-declare const ChatRoomMapViewObjectList: ChatRoomMapObject[];
-declare namespace ChatRoomMapManager {
-    let Map: {
+ * @namespace
+ * @description
+ * # Binary-encoded map data
+ * This module implements the new way of encoding the map data.
+ *
+ * At its core lies the concept of a BitString: a stream of tightly-packed
+ * numbers with arbitrary bit width. This allows us to store data way more efficiently
+ * than using plain JSONs, even if they are packed with LZString.
+ *
+ * # Compatibility
+ * Binary encoding, while efficient, requires a very careful architectural approach to ensure
+ * maximum compatibility. Notable, we must ensure that:
+ *
+ * - Exported map strings from any older game version *always* remain compatible
+ *   with the newer game versions. Players losing their old saved maps is an unacceptable
+ *   outcome; we must ensure that we recover as much data as possible from those old saves.
+ * - Map data synced between the players in a map-enabled room must be readable
+ *   by the clients one version older than the current one. This is to ensure
+ *   that during the beta period the main branch players could join and play
+ *   the rooms created by beta players. This is not as strict of a requirement
+ *   as the previous point, but is still important.
+ * - Exported map strings from the newer version must be usable by the players
+ *   using a game one version older. This ensures that the beta players can share
+ *   map strings with non-beta ones, and is the least concern among others, since
+ *   beta periods are quite short and *sharing* the map string doesn't happen too often.
+ *   Still, it is good to at least make some effort to allow it.
+ *
+ * Binary encoding makes achieving those requirements non-trivial, because
+ * to decode a given BitString the game must know exactly what were the bit widths
+ * of the integers encoded into it, and also their meaning. If we just change
+ * the code that encodes the map data, then we would no longer able to decode the old data.
+ *
+ * To solve this issue, we introduce the concept of codec versions. A version
+ * is a number that we write into the bit stream before the actual data, which
+ * would allow the game to understand which codec was used to encode the data,
+ * and call it to decode the data.
+ *
+ * Whenever we need to sufficiently change the encoding scheme, we copy
+ * the latest codec, increase its version and make the required changes.
+ * Copying and pasting the code, while usually not advised, would be a better approach
+ * in this specific case. This way, we ensure that the old codecs remain "frozen"
+ * in time, so no matter how old the map data is, we always have an appropriate codec
+ * for it.
+ *
+ * One issue which may arise in the future is the change in the schemas
+ * of the objects we encode. In this case, we would need an additional "migrations" layer
+ * which would take the old decoded data and convert it to the one we currently require.
+ *
+ * Solving the issue of letting the old clients to use the data from beta versions
+ * is not that straightforward, and on the most occasions we would require ad-hoc solutions.
+ * For example, during the beta period we may use two fields, `Data` and `DataOld`,
+ * with the former containing the data encoded with the most recent codec,
+ * and the latter having the data encoded with the previous codec.
+ * Of course, depending on the nature of the required changes, it may be possible
+ * to make a more space-efficient solution.
+ *
+ * # Future work
+ * Currently, we only binary-encode the map effects, to remain in the scope of the original MR.
+ * We do this by storing the encoded map effects in the {@link ChatRoomData.MapData.Effects}
+ * global value, while {@link ChatRoomData.MapData.Tiles} and {@link ChatRoomData.MapData.Objects}
+ * remain unchanged. Thus, we don't need to change much of the existing code, which
+ * continues to use those latter fields.
+ *
+ * In future MRs we hope to unify the encoding of tiles, objects and effects, writing them all
+ * into a single BitString. This would allow us to have much greater compression and save
+ * a lot of traffic.
+ *
+ * Later, all map data would be stored in {@link ChatRoomMapManager.Map} global value
+ * instead of {@link ChatRoomData.MapData}. This is because we're no longer storing
+ * the map data as simple strings which we can trivially serialize and send to the server.
+ * Ideally, the outside code would use {@link ChatRoomMapManager} methods to obtain
+ * the encoded map data when needed (e.g. sending it to the server, or saving the map data
+ * for room recreation, or exporting the room via a room code). Failing that,
+ * we can continue the approach used in the initial version of this system: having the decoded
+ * map data in {@link ChatRoomMapManager.Map} and maintain the encoded representation
+ * of this map in {@link ChatRoomData.MapData}.
+ *
+ * After that we would have an avenue for encoding additional arbitrary data within each tile
+ * while retaining the compact encoding. This, then, would allow us to have any sorts of "tile settings",
+ * which would be a great addition to the map rooms in the Club.
+ *
+ * # Mod compatibility
+ * This module is a work in progress and would change significantly in the future.
+ * As such, only the minimum amount of public APIs is exposed as of now. Mod authors
+ * are advised to not rely on its current behavior if at all possible.
+ * We expect to expose more public APIs in the future as the module matures.
+ *
+ * # General design choices
+ * While being public, {@link ChatRoomMapManager.Map} preferably should be only
+ * accessed inside this file as it is an implementation detail of this module.
+ * If the outside code requires to access something in this module, it's best
+ * to provide a separate function in the {@link ChatRoomMapManager} namespace,
+ * or a global one.
+ *
+ * # Codecs general overview
+ * ## Version 0
+ * The initial codecs version. Only encoding map effects. Only allows for a single
+ * map effect per tile (the groundwork for having multiple effects per tile is laid,
+ * but the rest of the code is not ready for it).
+ *
+ * Effects are encoded by their IDs, similar to the original Tiles and Objects encoding.
+ * A simple RLE compression is applied to the "flat" effects array, with a small twist:
+ * we use larger bit width for storing run-lengths of the blank effect sequences.
+ * This allows us to more efficiently encode the typical maps where the most of
+ * the tiles would have blank effects.
+ *
+ * Additionally, we modify the effect IDs in the following way:
+ * 1. First, we subtract the lowest used effect ID
+ *    ({@link ChatRoomMapViewEffectStartID} in the most cases) from them, getting
+ *    what we call "shifted" IDs which begin from zero.
+ * 2. Next, we create the list of all used "shifted" IDs and write them in the stream.
+ *    The usage of "shifted" IDs ensures this array is very compact no matter what
+ *    our {@link ChatRoomMapViewEffectStartID} is.
+ * 3. Finally, when writing the effect IDs, we instead use the indexes in the list
+ *    from the previous step, and call them the "remapped" IDs.
+ *
+ * This allows us to write the least possible amount of data per effect ID: for example,
+ * if only one effect - besides the blank - is used in a map, then each mention of that ID
+ * would only require a single bit of data, no matter what the actual value of this effect is.
+ *
+ * This scheme results in a sufficiently efficient compression rate in practice.
+ * - For maps without effects we will be sending 24 additional bytes (after base64 encoding).
+ * - Maps with a few patches of effects require around 0.5-1 bits per tile (after base64 encoding).
+ * - Moderately sophisticated maps with a lot of different effects require somewhere around 1.5-3 bits per tile.
+ * - In the worst case scenario (a map fully filled with all possible effects without repetitions),
+ *   we would require slightly above 5.3 bits per tile after base64 encoding.
+ */
+declare const ChatRoomMapManager: {
+    Map: {
         /**
          * @type {MapData}
          * private
@@ -647,11 +770,11 @@ declare namespace ChatRoomMapManager {
      * the data stored in ${@link ChatRoomMapManager.Map} with the decoded map.
      * @returns {void}
      */
-    function OnMapDataUpdated(): void;
+    OnMapDataUpdated(): void;
     /**
      * Initializes the map with the current global data if needed.
      * Must be called in {@link ChatRoomMapViewActivate}.
      * @returns {void}
      */
-    function OnViewActivate(): void;
-}
+    OnViewActivate(): void;
+};

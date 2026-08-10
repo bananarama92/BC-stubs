@@ -1,3 +1,66 @@
+/** @type {PlayerCharacter} */
+declare var Player: PlayerCharacter;
+/** @type {ModuleType} */
+declare var CurrentModule: ModuleType;
+/** @type {RoomName} */
+declare var CurrentScreen: RoomName;
+/** @type {Required<ScreenFunctions>} */
+declare var CurrentScreenFunctions: Required<ScreenFunctions>;
+/** @type {Character|NPCCharacter|null} */
+declare var CurrentCharacter: Character | NPCCharacter | null;
+declare var CurrentOnlinePlayers: number;
+/**
+ * A per-screen ratio of how darkened the background must be
+ *
+ * 1 is bright, 0 is pitch black
+ */
+declare var CurrentDarkFactor: number;
+declare var CommonIsMobile: boolean;
+/** @type {Record<string, string[][]>} */
+declare var CommonCSVCache: Record<string, string[][]>;
+declare var CutsceneStage: number;
+declare var CommonPhotoMode: boolean;
+/**
+ * An enum encapsulating possible chatroom message substitution tags. Character name substitution tags are interpreted
+ * in chatrooms as follows (assuming the character name is Ben987):
+ * SOURCE_CHAR: "Ben987"
+ * DEST_CHAR: "Ben987's" (if character is not self), "her" (if character is self)
+ * DEST_CHAR_NAME: "Ben987's"
+ * TARGET_CHAR: "Ben987" (if character is not self), "herself" (if character is self)
+ * TARGET_CHAR_NAME: "Ben987"
+ * Additionally, sending the following tags will ensure that asset names in messages are correctly translated by
+ * recipients:
+ * ASSET_NAME: (substituted with the localized name of the asset, if available)
+ * @type {Record<"SOURCE_CHAR"|"DEST_CHAR"|"DEST_CHAR_NAME"|"TARGET_CHAR"|"TARGET_CHAR_NAME"|"ASSET_NAME"|"AUTOMATIC", CommonChatTags>}
+ */
+declare const CommonChatTags: Record<"SOURCE_CHAR" | "DEST_CHAR" | "DEST_CHAR_NAME" | "TARGET_CHAR" | "TARGET_CHAR_NAME" | "ASSET_NAME" | "AUTOMATIC", CommonChatTags>;
+/**
+ * An enum holding values of time units that might be used with their respective label of Interface.csv and seconds
+ * contained in said time unit.
+ */
+declare const TimeUnits: {
+    readonly MINUTES: {
+        readonly label: "Minutes";
+        readonly seconds: 60;
+    };
+    readonly HOURS: {
+        readonly label: "Hours";
+        readonly seconds: 3600;
+    };
+    readonly DAYS: {
+        readonly label: "Days";
+        readonly seconds: 86400;
+    };
+};
+/**
+ * A map of keys to common font stack definitions. Each stack definition is a
+ * two-item array whose first item is an ordered list of fonts, and whose
+ * second item is the generic fallback font family (e.g. sans-serif, serif,
+ * etc.)
+ * @constant
+ * @type {Record<String, [String[], String]>}
+ */
+declare const CommonFontStacks: Record<string, [string[], string]>;
 declare function CommonPrefersReducedMotion(): boolean;
 /**
  * Checks if a variable is a number
@@ -63,6 +126,16 @@ declare function CommonSleep(ms: number): Promise<number>;
  */
 declare function CommonWaitFor(func: () => boolean, cancelFunc?: () => boolean): Promise<boolean>;
 /**
+ * How many times do we retry a resource fetch.
+ */
+declare const FETCH_MAX_RETRIES = 10;
+/**
+ * How much to wait max between each attempt.
+ */
+declare const FETCH_MAX_RETRY_BACKOFF_TIME = 16;
+declare const FETCH_RETRY_JITTER_MIN = 0.25;
+declare const FETCH_RETRY_JITTER_MAX = 1.75;
+/**
  * @param {number} status
  */
 declare function CommonRequestShouldRetry(status: number): boolean;
@@ -94,12 +167,6 @@ declare function CommonGet(url: string, callback: (this: XMLHttpRequest, xhr: XM
  * @deprecated
  */
 declare function CommonGetRetry(): void;
-declare function CommonMouseDown(event: PointerEvent): void;
-declare function CommonMouseUp(event: PointerEvent): void;
-declare function CommonMouseMove(event: PointerEvent): void;
-declare function CommonMouseWheel(event: WheelEvent): void;
-declare function CommonResize(load: boolean): void;
-declare function CommonClick(event: PointerEvent): void;
 /**
  * Returns TRUE if a section of the screen is currently touched on a mobile device
  * @param {number} X - The X position
@@ -146,6 +213,7 @@ declare function CommonCallFunctionByNameWarn<T extends keyof WindowFunctions>(F
  * @returns {ScreenSpecifier}
  */
 declare function CommonGetScreen(): ScreenSpecifier;
+declare var ScreenIsLoading: boolean;
 /**
  * Sets the current screen and calls the loading script if needed
  * @param {ScreenSpecifier} spec
@@ -157,26 +225,14 @@ declare function CommonSetScreen(...spec: ScreenSpecifier): Promise<void>;
  * @returns {number} - Date in ms
  */
 declare function CommonTime(): number;
-/**
- * @overload
- * @param {string | undefined} Value
- * @param {{ allowAlpha?: boolean, schema: readonly BCColor[] }} options
- * @returns {Value is BCColor}
- */
 declare function CommonIsColor(Value: string | undefined, options: {
     allowAlpha?: boolean;
     schema: readonly BCColor[];
 }): Value is BCColor;
-/**
- * @overload
- * @param {string | undefined} Value
- * @param {null | { allowAlpha?: boolean, schema?: readonly BCColor[] }} [options]
- * @returns {Value is HexColor}
- */
-declare function CommonIsColor(Value: string | undefined, options?: {
+declare function CommonIsColor(Value: string | undefined, options?: null | {
     allowAlpha?: boolean;
     schema?: readonly BCColor[];
-} | null | undefined): Value is HexColor;
+}): Value is HexColor;
 /**
  * Checks whether an item's color has a valid value that can be interpreted by the drawing
  * functions. Valid values are null, undefined, color strings, and an array containing any of the
@@ -313,6 +369,26 @@ declare function CommonLimitFunction<argsT extends any[], retT>(func: (...args: 
  * @returns {MemoizedFunction<T>} - The result of the memoized function
  */
 declare function CommonMemoize<T extends (...args: any) => any>(func: T, argConvertors?: null | ((arg: any) => string)[]): MemoizedFunction<T>;
+/**
+ * Memoized getter function. Returns a font string specifying the player's
+ * preferred font and the provided size. This is memoized as it is called on
+ * every frame in many cases.
+ * @param {number} size - The font size that should be specified in the
+ * returned font string
+ * @returns {string} - A font string specifying the requested font size and
+ * the player's preferred font stack. For example:
+ * 12px "Courier New", "Courier", monospace
+ */
+declare const CommonGetFont: MemoizedFunction<(size: any) => string>;
+/**
+ * Memoized getter function. Returns a font string specifying the player's
+ * preferred font stack. This is memoized as it is called on every frame in
+ * many cases.
+ * @returns {string} - A font string specifying the player's preferred font
+ * stack. For example:
+ * "Courier New", "Courier", monospace
+ */
+declare const CommonGetFontName: MemoizedFunction<() => string>;
 /**
  * Take a screenshot of specified area in "photo mode" and open the image in a new tab
  * @param {number} Left - Position of the area to capture from the left of the canvas
@@ -664,6 +740,65 @@ declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: 
     reviver?: (this: any, key: string, value: any) => any;
 }): VariableContainer<T1, T2>;
 /**
+ * Namespace with helper functions for validating key presses.
+ * @namespace
+ */
+declare var CommonKey: {
+    /** Bitmask component for the {@link KeyboardEvent.altKey} modifier */
+    readonly ALT: 1;
+    /** Bitmask component for the {@link KeyboardEvent.ctrlKey} modifier */
+    readonly CTRL: 2;
+    /** Bitmask component for the {@link KeyboardEvent.metaKey} modifier */
+    readonly META: 4;
+    /** Bitmask component for the {@link KeyboardEvent.shiftKey} modifier */
+    readonly SHIFT: 8;
+    /**
+     * Check whether the expected key and all its modifiers were pressed
+     * @example
+     * // `Enter` without modifiers
+     * CommonKey(event, "Enter");
+     * // `Enter` with the `Ctrl` and `Shift` modifiers
+     * CommonKey(event, "Enter", CommonKey.SHIFT | CommonKey.CTRL);
+     * @param {KeyboardEvent} event - The keyboard event in question
+     * @param {string} key - The expected key (see {@link KeyboardEvent.prototype.key})
+     * @param {null | number} modifiers - An optional bit mask of all expected modifiers (see examples)
+     * @returns {boolean} - Whether the expected key and all its modifiers were pressed
+     */
+    readonly IsPressed: (event: KeyboardEvent, key: string, modifiers?: null | number) => boolean;
+    /**
+     * Return a bit mask with all modifiers in the passed keyboard event
+     * @param {KeyboardEvent} event - The keyboard event in question
+     * @returns {number} - The bitmask of keyboard modifiers
+     */
+    readonly GetModifiers: (event: KeyboardEvent) => number;
+    /**
+     * A {@link ScreenFunctions.KeyDown} helper function for implementing the navigation key handling of scrollable elements.
+     * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
+     * @param {Element} scrollableElem - The scrollable element
+     * @param {KeyboardEvent} event - The `keydown` event
+     * @param {(scrollableElem: Element) => number} getArrowScrollDistance - A callback for computing the (absolute) scroll distance for up/down arrow key presses
+     * @returns {boolean} - Whether a navigation key was (successfuly pressed)
+     */
+    readonly NavigationKeyDown: (scrollableElem: Element, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: Element) => number) => boolean;
+    /**
+     * A {@link ScreenFunctions.KeyDown} helper function for automatically forwarding key presses to the passed input element.
+     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - The input or textarea element in question
+     * @param {KeyboardEvent} ev - The keydown event
+     * @param {null | { allowCtrlA?: boolean }} options
+     * @returns {boolean} - Whether the keypress was processed
+     */
+    readonly InputKeyDown: (inputElem: HTMLInputElement | HTMLTextAreaElement, ev: KeyboardEvent, options?: null | {
+        allowCtrlA?: boolean;
+    }) => boolean;
+    /**
+     * A {@link ScreenFunctions.Paste} helper function for automatically forwarding paste actions to the passed input element.
+     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - helper function for automatically forwarding paste actions to the passed input element.
+     * @param {ClipboardEvent} ev - The `paste` event
+     * @returns {void}
+     */
+    readonly InputPaste: (inputElem: HTMLInputElement | HTMLTextAreaElement, ev: ClipboardEvent) => void;
+};
+/**
  * Partition the string into separate parts using the given replacer keys, replacing them with replacer values
  * @template T
  * @param {string} string
@@ -672,19 +807,19 @@ declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: 
  */
 declare function CommonStringPartitionReplace<T>(string: string, replacers: Record<string, T>): (string | T)[];
 /**
+ * Escapes any potential regex syntax characters in a string, and returns a new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
+ * @license MIT - Copyright (c) 2014-2025 Denis Pushkarev, core-js 3.40.0 - 2025.01.08
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/escape
+ * @see https://github.com/zloirock/core-js/blob/v3.40.0/packages/core-js/modules/esnext.regexp.escape.js
+ * @param S The string to escape.
+ * @returns A new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
+ */
+declare var CommonRegEscape: Function;
+/**
  *
  * @param {RoomName} screen
  */
 declare function CommonScreenName(screen: RoomName): string | undefined;
-/**
- * Generates the path to a translation CSV file for a screen
- *
- * @overload
- * @param {string} module - The screen's module
- * @param {string} screen - The screen's name
- * @param {string} group - The text group
- * @returns {string}
- */
 declare function ScreenFileGetTranslation(module: string, screen: string, group: string): string;
 /**
  * Generates the path to a CSV Dialog file for a screen
@@ -884,211 +1019,21 @@ declare function CommonFilterMap<Tinp, Tout>(array: readonly Tinp[], predicateMa
  */
 declare function CommonStringSplice(string: string, index: number, value: string, defaultValue: string): string;
 /**
- * Unwraps a thunk into a value
- *
- * @param {Thunk<unknown, unknown[]>} thunk
- * @param {...unknown} args
- * @returns {unknown}
- */
-declare function CommonUnwrapThunk(thunk: Thunk<unknown, unknown[]>, ...args: unknown[]): unknown;
-declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
-declare function CommonUnwrapThunk<T, A extends readonly unknown[]>(thunk: Thunk<T, A>, ...args: A): T;
-/**
- * Read text data from the browser's clipboard.
- *
- * @param {(result: Result<string | null, ClipboardError>) => void} cb}
- */
-declare function CommonClipboardRead(cb: (result: Result<string | null, ClipboardError>) => void): void;
-/**
- * Write text data to the browser's clipboard.
- *
- * @param {string} data
- * @param {undefined | ((result: Result<null, ClipboardError>) => void)} [cb]
- */
-declare function CommonClipboardWrite(data: string, cb?: undefined | ((result: Result<null, ClipboardError>) => void)): void;
-/** @type {PlayerCharacter} */
-declare var Player: PlayerCharacter;
-/** @type {ModuleType} */
-declare var CurrentModule: ModuleType;
-/** @type {RoomName} */
-declare var CurrentScreen: RoomName;
-/** @type {Required<ScreenFunctions>} */
-declare var CurrentScreenFunctions: Required<ScreenFunctions>;
-/** @type {Character|NPCCharacter|null} */
-declare var CurrentCharacter: Character | NPCCharacter | null;
-declare var CurrentOnlinePlayers: number;
-/**
- * A per-screen ratio of how darkened the background must be
- *
- * 1 is bright, 0 is pitch black
- */
-declare var CurrentDarkFactor: number;
-declare var CommonIsMobile: boolean;
-/** @type {Record<string, string[][]>} */
-declare var CommonCSVCache: Record<string, string[][]>;
-declare var CutsceneStage: number;
-declare var CommonPhotoMode: boolean;
-/**
- * An enum encapsulating possible chatroom message substitution tags. Character name substitution tags are interpreted
- * in chatrooms as follows (assuming the character name is Ben987):
- * SOURCE_CHAR: "Ben987"
- * DEST_CHAR: "Ben987's" (if character is not self), "her" (if character is self)
- * DEST_CHAR_NAME: "Ben987's"
- * TARGET_CHAR: "Ben987" (if character is not self), "herself" (if character is self)
- * TARGET_CHAR_NAME: "Ben987"
- * Additionally, sending the following tags will ensure that asset names in messages are correctly translated by
- * recipients:
- * ASSET_NAME: (substituted with the localized name of the asset, if available)
- * @type {Record<"SOURCE_CHAR"|"DEST_CHAR"|"DEST_CHAR_NAME"|"TARGET_CHAR"|"TARGET_CHAR_NAME"|"ASSET_NAME"|"AUTOMATIC", CommonChatTags>}
- */
-declare const CommonChatTags: Record<"SOURCE_CHAR" | "DEST_CHAR" | "DEST_CHAR_NAME" | "TARGET_CHAR" | "TARGET_CHAR_NAME" | "ASSET_NAME" | "AUTOMATIC", CommonChatTags>;
-declare namespace TimeUnits {
-    namespace MINUTES {
-        let label: "Minutes";
-        let seconds: 60;
-    }
-    namespace HOURS {
-        let label_1: "Hours";
-        export { label_1 as label };
-        let seconds_1: 3600;
-        export { seconds_1 as seconds };
-    }
-    namespace DAYS {
-        let label_2: "Days";
-        export { label_2 as label };
-        let seconds_2: 86400;
-        export { seconds_2 as seconds };
-    }
-}
-/**
- * A map of keys to common font stack definitions. Each stack definition is a
- * two-item array whose first item is an ordered list of fonts, and whose
- * second item is the generic fallback font family (e.g. sans-serif, serif,
- * etc.)
- * @constant
- * @type {Record<String, [String[], String]>}
- */
-declare const CommonFontStacks: Record<string, [string[], string]>;
-/**
- * How many times do we retry a resource fetch.
- */
-declare const FETCH_MAX_RETRIES: 10;
-/**
- * How much to wait max between each attempt.
- */
-declare const FETCH_MAX_RETRY_BACKOFF_TIME: 16;
-declare const FETCH_RETRY_JITTER_MIN: 0.25;
-declare const FETCH_RETRY_JITTER_MAX: 1.75;
-declare var ScreenIsLoading: boolean;
-/**
- * Memoized getter function. Returns a font string specifying the player's
- * preferred font and the provided size. This is memoized as it is called on
- * every frame in many cases.
- * @param {number} size - The font size that should be specified in the
- * returned font string
- * @returns {string} - A font string specifying the requested font size and
- * the player's preferred font stack. For example:
- * 12px "Courier New", "Courier", monospace
- */
-declare const CommonGetFont: MemoizedFunction<(size: any) => string>;
-/**
- * Memoized getter function. Returns a font string specifying the player's
- * preferred font stack. This is memoized as it is called on every frame in
- * many cases.
- * @returns {string} - A font string specifying the player's preferred font
- * stack. For example:
- * "Courier New", "Courier", monospace
- */
-declare const CommonGetFontName: MemoizedFunction<() => string>;
-declare namespace CommonKey {
-    let ALT: 1;
-    let CTRL: 2;
-    let META: 4;
-    let SHIFT: 8;
-    /**
-     * Check whether the expected key and all its modifiers were pressed
-     * @example
-     * // `Enter` without modifiers
-     * CommonKey(event, "Enter");
-     * // `Enter` with the `Ctrl` and `Shift` modifiers
-     * CommonKey(event, "Enter", CommonKey.SHIFT | CommonKey.CTRL);
-     * @param {KeyboardEvent} event - The keyboard event in question
-     * @param {string} key - The expected key (see {@link KeyboardEvent.prototype.key})
-     * @param {null | number} modifiers - An optional bit mask of all expected modifiers (see examples)
-     * @returns {boolean} - Whether the expected key and all its modifiers were pressed
-     */
-    function IsPressed(event: KeyboardEvent, key: string, modifiers?: null | number): boolean;
-    /**
-     * Return a bit mask with all modifiers in the passed keyboard event
-     * @param {KeyboardEvent} event - The keyboard event in question
-     * @returns {number} - The bitmask of keyboard modifiers
-     */
-    function GetModifiers(event: KeyboardEvent): number;
-    /**
-     * A {@link ScreenFunctions.KeyDown} helper function for implementing the navigation key handling of scrollable elements.
-     * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
-     * @param {Element} scrollableElem - The scrollable element
-     * @param {KeyboardEvent} event - The `keydown` event
-     * @param {(scrollableElem: Element) => number} getArrowScrollDistance - A callback for computing the (absolute) scroll distance for up/down arrow key presses
-     * @returns {boolean} - Whether a navigation key was (successfuly pressed)
-     */
-    function NavigationKeyDown(scrollableElem: Element, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: Element) => number): boolean;
-    /**
-     * A {@link ScreenFunctions.KeyDown} helper function for automatically forwarding key presses to the passed input element.
-     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - The input or textarea element in question
-     * @param {KeyboardEvent} ev - The keydown event
-     * @param {null | { allowCtrlA?: boolean }} options
-     * @returns {boolean} - Whether the keypress was processed
-     */
-    function InputKeyDown(inputElem: HTMLInputElement | HTMLTextAreaElement, ev: KeyboardEvent, options?: null | {
-        allowCtrlA?: boolean;
-    }): boolean;
-    /**
-     * A {@link ScreenFunctions.Paste} helper function for automatically forwarding paste actions to the passed input element.
-     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - helper function for automatically forwarding paste actions to the passed input element.
-     * @param {ClipboardEvent} ev - The `paste` event
-     * @returns {void}
-     */
-    function InputPaste(inputElem: HTMLInputElement | HTMLTextAreaElement, ev: ClipboardEvent): void;
-}
-/**
- * Escapes any potential regex syntax characters in a string, and returns a new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
- * @license MIT - Copyright (c) 2014-2025 Denis Pushkarev, core-js 3.40.0 - 2025.01.08
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/escape
- * @see https://github.com/zloirock/core-js/blob/v3.40.0/packages/core-js/modules/esnext.regexp.escape.js
- * @param S The string to escape.
- * @returns A new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
- */
-declare var CommonRegEscape: Function;
-/**
  * A class representing the result of a failable operation
  * @template T
  * @template {Error} [E=Error]
  */
 declare class Result<T, E extends Error = Error> {
-    /**
-     * Build a Result for a successful operation
-     * @template T
-     * @param {T} value
-     * @returns
-     */
-    static success<T_1>(value: T_1): Result<T_1, Error>;
-    /**
-     * Build a Result for a failed operation
-     * @param {Error} error
-     * @returns
-     */
-    static failure(error: Error): Result<null, Error>;
+    /** @type {T} */
+    value: T;
+    /** @type {E | null} */
+    error: E | null;
     /**
      * Create a new Result representing the status of a failable operation
      * @param {T} value
      * @param {E | null} [error]
      */
     constructor(value: T, error?: E | null);
-    /** @type {T} */
-    value: T;
-    /** @type {E | null} */
-    error: E | null;
     /**
      * Convert the {@link Result.Error} message into a list of DOM elements as usable by the likes of {@link ElementDOMScreen.setStatus}).
      *
@@ -1097,6 +1042,19 @@ declare class Result<T, E extends Error = Error> {
      * @returns {(string | Element)[]} The list of DOM elements
      */
     errorAsDOM(customMessage?: null | string | Element | readonly (string | Element)[]): (string | Element)[];
+    /**
+     * Build a Result for a successful operation
+     * @template T
+     * @param {T} value
+     * @returns
+     */
+    static success<T>(value: T): Result<T, Error>;
+    /**
+     * Build a Result for a failed operation
+     * @param {Error} error
+     * @returns
+     */
+    static failure(error: Error): Result<null, Error>;
     /**
      * Returns whether the operation was a success
      */
@@ -1117,3 +1075,16 @@ declare class ClipboardError extends Error {
      */
     constructor(message: string, options?: {});
 }
+/**
+ * Read text data from the browser's clipboard.
+ *
+ * @param {(result: Result<string | null, ClipboardError>) => void} cb}
+ */
+declare function CommonClipboardRead(cb: (result: Result<string | null, ClipboardError>) => void): void;
+/**
+ * Write text data to the browser's clipboard.
+ *
+ * @param {string} data
+ * @param {undefined | ((result: Result<null, ClipboardError>) => void)} [cb]
+ */
+declare function CommonClipboardWrite(data: string, cb?: undefined | ((result: Result<null, ClipboardError>) => void)): void;

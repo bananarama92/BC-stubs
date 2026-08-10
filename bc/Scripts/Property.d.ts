@@ -1,11 +1,30 @@
 /**
+ * Property.js
+ * -----------
+ * A module with common helper functions for the handling of specific {@link ItemProperties} properties.
+ * Note that more generic extended item functions should be confined to `ExtendedItem.js`.
+ */
+/**
+ * A Map that maps input element IDs to their original value is defined in, _.e.g_, {@link PropertyOpacityLoad}.
+ * Used as fallback in case an invalid opacity value is encountered when exiting.
+ * @type {Map<string, any>}
+ */
+declare const PropertyOriginalValue: Map<string, any>;
+/**
  * Construct an item-specific ID for a properties input element (_e.g._ an opacity slider).
  * @param {string} Name - The name of the input element
  * @param {Item | null} Item - The item for whom the ID should be constructed; defaults to {@link DialogFocusItem}
  * @returns {string} - The ID of the property
  */
 declare function PropertyGetID(Name: string, Item?: Item | null): string;
-declare function PropertyOpacityInit(data: ExtendedItemData<any>, originalFunction: (C: Character, item: Item, push: boolean, refresh: boolean) => boolean, C: Character, item: Item, push: boolean, refresh: boolean): boolean;
+/**
+ * Throttled callback for opacity slider changes
+ * @param {Character} C - The character being modified
+ * @param {Item} item - The item being modified
+ * @param {number} Opacity - The new opacity to set on the item
+ * @returns {void} - Nothing
+ */
+declare const PropertyOpacityChange: (C: any, Item: any, Opacity: any) => void;
 /**
  * Load function for items with opacity sliders. Constructs the opacity slider.
  * @param {ExtendedItemData<any>} Data - The items extended item data
@@ -42,6 +61,24 @@ declare function PropertyOpacityExit({ asset }: ExtendedItemData<any>, OriginalF
  * @param {boolean} Automatic - Whether the shock was triggered automatically or otherwise manually
  */
 declare function PropertyShockPublishAction(C: Character, Item: Item, Automatic?: boolean): void;
+/**
+ * A set of group names whose auto-punishment has successfully been handled by {@link PropertyAutoPunishDetectSpeech}.
+ * If a group name is absent from the set then it's eligible for action-based punishment triggers.
+ * The initial set is populated by {@link AssetLoadAll} after all asset groups are defined.
+ * @type {Set<AssetGroupName>}
+ */
+declare let PropertyAutoPunishHandled: Set<AssetGroupName>;
+/**
+ * A set with the names of all activities as performed by the player.
+ * Functions as a cache for {@link PropertyPunishActivityCheck} and can be automatically emptied out by the latter.
+ * @type {Set<ActivityName>}
+ */
+declare let PropertyPunishActivityCache: Set<ActivityName>;
+/**
+ * A list of keywords that can trigger automatic punishment when included in `/me`- or `*`-based messages
+ * @type {readonly string[]}
+ */
+declare const PropertyAutoPunishKeywords: readonly string[];
 /**
  * Check if a given message warants automatic punishment given the provided sensitivety level
  * @param {0 | 1 | 2 | 3} Sensitivity - The auto-punishment sensitivety
@@ -95,51 +132,17 @@ declare function PropertyDifference(output: ItemProperties, ...args: readonly It
  */
 declare function PropertyTypeRecordToStrings(typeRecord: TypeRecord): string[];
 /**
- * Property.js
- * -----------
- * A module with common helper functions for the handling of specific {@link ItemProperties} properties.
- * Note that more generic extended item functions should be confined to `ExtendedItem.js`.
+ * @namespace
+ * Namespace with helper functions for managing {@link ItemProperties["DrawingLeft"]}/{@link ItemProperties["DrawignTop"]} data.
  */
-/**
- * A Map that maps input element IDs to their original value is defined in, _.e.g_, {@link PropertyOpacityLoad}.
- * Used as fallback in case an invalid opacity value is encountered when exiting.
- * @type {Map<string, any>}
- */
-declare const PropertyOriginalValue: Map<string, any>;
-/**
- * Throttled callback for opacity slider changes
- * @param {Character} C - The character being modified
- * @param {Item} item - The item being modified
- * @param {number} Opacity - The new opacity to set on the item
- * @returns {void} - Nothing
- */
-declare const PropertyOpacityChange: (C: any, Item: any, Opacity: any) => void;
-/**
- * A set of group names whose auto-punishment has successfully been handled by {@link PropertyAutoPunishDetectSpeech}.
- * If a group name is absent from the set then it's eligible for action-based punishment triggers.
- * The initial set is populated by {@link AssetLoadAll} after all asset groups are defined.
- * @type {Set<AssetGroupName>}
- */
-declare let PropertyAutoPunishHandled: Set<AssetGroupName>;
-/**
- * A set with the names of all activities as performed by the player.
- * Functions as a cache for {@link PropertyPunishActivityCheck} and can be automatically emptied out by the latter.
- * @type {Set<ActivityName>}
- */
-declare let PropertyPunishActivityCache: Set<ActivityName>;
-/**
- * A list of keywords that can trigger automatic punishment when included in `/me`- or `*`-based messages
- * @type {readonly string[]}
- */
-declare const PropertyAutoPunishKeywords: readonly string[];
-declare namespace PropertyLayerOrigin {
+declare var PropertyLayerOrigin: {
     /**
      * Resolve the `Left/Top` data for the specified item, including any {@link ItemProperties}-based corrections.
      * @param {Item} item
      * @param {"DrawingTop" | "DrawingLeft"} fieldName
      * @returns {Partial<Record<LayerName, Mutable<TopLeft.Data>>>}
      */
-    function resolveItem(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
+    resolveItem(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
     /**
      * Resolve the `Left/Top` data for the specified layer, including any {@link ItemProperties}-based corrections.
      * @param {AssetLayer} layer
@@ -147,12 +150,12 @@ declare namespace PropertyLayerOrigin {
      * @param {null | ItemProperties} properties
      * @returns {Mutable<TopLeft.Data>}
      */
-    function resolveLayer(layer: AssetLayer, fieldName: "DrawingTop" | "DrawingLeft", properties?: null | ItemProperties): Mutable<TopLeft.Data>;
+    resolveLayer(layer: AssetLayer, fieldName: "DrawingTop" | "DrawingLeft", properties?: null | ItemProperties): Mutable<TopLeft.Data>;
     /**
      * Get the item's original `Left/Top` data as determined by its layer- and extended item data; any user-made alterations are removed.
      * @param {Item} item
      * @param {"DrawingTop" | "DrawingLeft"} fieldName
      * @returns {Partial<Record<LayerName, Mutable<TopLeft.Data>>>}
      */
-    function getOriginal(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
-}
+    getOriginal(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
+};

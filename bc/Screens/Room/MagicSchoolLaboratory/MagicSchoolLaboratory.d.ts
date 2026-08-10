@@ -1,3 +1,12 @@
+declare var MagicSchoolLaboratoryBackground: string;
+/** @type {null | NPCCharacter} */
+declare var MagicSchoolLaboratoryTeacher: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var MagicSchoolLaboratoryStudent: null | NPCCharacter;
+declare var MagicSchoolLaboratoryBattleWage: string;
+/** @type {MagicSchoolSpell | undefined} */
+declare var MagicSchoolLaboratoryLastSpell: MagicSchoolSpell | undefined;
+declare var MagicSchoolLaboratorySpellCount: number;
 /**
  * Dresses a character C as a witch, the colors and clothes can changes based on the house
  * @param {Character} C - The character that will wear the clothes
@@ -5,7 +14,6 @@
  * @returns {void} - Nothing
  */
 declare function MagicSchoolLaboratoryPrepareNPC(C: Character, House: "" | "Maiestas" | "Vincula" | "Amplector" | "Corporis"): void;
-declare function MagicSchoolLaboratoryLoad(): Promise<void>;
 /**
  * Runs the room
  * @returns {void} - Nothing
@@ -135,7 +143,7 @@ declare function MagicSchoolLaboratoryGetAllSpellsForNpc(npc: NPCCharacter): Mag
  * @param {NPCCharacter} npc
  * @param {MagicSchoolSpell | undefined} lastSpell
  */
-declare function MagicSchoolLaboratoryApplyRandomSpellEffects(npc: NPCCharacter, lastSpell: MagicSchoolSpell | undefined): "Tickle" | "Tight" | "Hogtie" | "Arousal" | "Fail" | "ReleaseHogtie" | "FlyingHogtie" | "Pain" | "SwitchRope" | "SwitchChain";
+declare function MagicSchoolLaboratoryApplyRandomSpellEffects(npc: NPCCharacter, lastSpell: MagicSchoolSpell | undefined): "Arousal" | "Fail" | "FlyingHogtie" | "Hogtie" | "Pain" | "ReleaseHogtie" | "SwitchChain" | "SwitchRope" | "Tickle" | "Tight";
 /**
  * When the player lost a battle and the student tests a spell on her
  * @returns {void} - Nothing
@@ -166,12 +174,3 @@ declare function MagicSchoolLaboratoryLearnMastery(): void;
  * @returns {boolean} - TRUE if it can be waged
  */
 declare function MagicSchoolLaboratoryCanWageWand(): boolean;
-declare var MagicSchoolLaboratoryBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MagicSchoolLaboratoryTeacher: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var MagicSchoolLaboratoryStudent: null | NPCCharacter;
-declare var MagicSchoolLaboratoryBattleWage: string;
-/** @type {MagicSchoolSpell | undefined} */
-declare var MagicSchoolLaboratoryLastSpell: MagicSchoolSpell | undefined;
-declare var MagicSchoolLaboratorySpellCount: number;

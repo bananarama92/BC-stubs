@@ -1,4 +1,12 @@
-declare function PlayerMistressLoad(): Promise<void>;
+declare var PlayerMistressBackground: string;
+/** @type {NPCCharacter} */
+declare var PlayerMistressMistressLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerMistressMistressRight: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerMistressMaidLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerMistressMaidRight: NPCCharacter;
 /**
  * Runs and draws the mistress promotion cutscene
  * @returns {void} - Nothing
@@ -9,12 +17,3 @@ declare function PlayerMistressRun(): void;
  * @returns {void} - Nothing
  */
 declare function PlayerMistressClick(): void;
-declare var PlayerMistressBackground: string;
-/** @type {NPCCharacter} */
-declare var PlayerMistressMistressLeft: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var PlayerMistressMistressRight: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var PlayerMistressMaidLeft: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var PlayerMistressMaidRight: NPCCharacter;

@@ -1,3 +1,9 @@
+declare var AsylumMeetingBackground: string;
+/** @type {NPCCharacter} */
+declare var AsylumMeetingPatientLeft: NPCCharacter;
+declare var AsylumMeetingPatientFled: boolean;
+/** @type {NPCCharacter} */
+declare var AsylumMeetingPatientRight: NPCCharacter;
 /**
  * Checks if the player can be released
  * @returns {boolean} - Returns true, if the player can be released, false otherwise
@@ -25,7 +31,6 @@ declare function AsylumMeetingGGTSCollar(): boolean | null;
  * @returns {boolean} - Returns TRUE if both aren't restrained and gagged
  */
 declare function AsylumMeetingCanPlayClubCard(): boolean;
-declare function AsylumMeetingLoad(): Promise<void>;
 /**
  * Runs the room. Is called at short intervals so don't use expensive loops or function calls from here
  * @returns {void} - Nothing
@@ -99,9 +104,3 @@ declare function AsylumMeetingClubCardStart(): void;
  * @returns {void} - Nothing
  */
 declare function AsylumMeetingClubCardEnd(): void;
-declare var AsylumMeetingBackground: string;
-/** @type {NPCCharacter} */
-declare var AsylumMeetingPatientLeft: NPCCharacter;
-declare var AsylumMeetingPatientFled: boolean;
-/** @type {NPCCharacter} */
-declare var AsylumMeetingPatientRight: NPCCharacter;

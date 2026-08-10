@@ -1,3 +1,17 @@
+declare var MagicBattleBackground: string;
+/** @type {Character} */
+declare var MagicBattleOpponent: Character;
+declare var MagicBattleReturnFunction: string;
+declare var MagicBattleDifficulty: number;
+declare var MagicBattleVictory: boolean;
+/** @type {number[]} */
+declare var MagicBattleAvailSpell: number[];
+declare var MagicBattleOpponentSpell: number;
+/** @type {null | string} */
+declare var MagicBattlePlayerAppearance: null | string;
+/** @type {null | string} */
+declare var MagicBattleOpponentAppearance: null | string;
+declare var MagicBattleSpellDifficulty: number[];
 /**
  * Start a magic battle against an opponent
  * @param {Character} Opponent
@@ -7,7 +21,6 @@
  * @returns {void} - Nothing
  */
 declare function MagicBattleStart(Opponent: Character, Difficulty: number, Background: string, FunctionName: string): void;
-declare function MagicBattleLoad(): Promise<void>;
 /**
  * Returns a difficulty factor based on the character nakedness and predicament
  * @param {Character} C
@@ -47,18 +60,3 @@ declare function MagicSpellEffect(C: Character, Spell: number): void;
  * When the spell ends, we apply the effect of the spell on the loser
  */
 declare function MagicBattleSpellEnd(): Promise<void>;
-declare function MagicBattleKeyDown(event: KeyboardEvent): boolean;
-declare var MagicBattleBackground: string;
-/** @type {Character} */
-declare var MagicBattleOpponent: Character;
-declare var MagicBattleReturnFunction: string;
-declare var MagicBattleDifficulty: number;
-declare var MagicBattleVictory: boolean;
-/** @type {number[]} */
-declare var MagicBattleAvailSpell: number[];
-declare var MagicBattleOpponentSpell: number;
-/** @type {null | string} */
-declare var MagicBattlePlayerAppearance: null | string;
-/** @type {null | string} */
-declare var MagicBattleOpponentAppearance: null | string;
-declare var MagicBattleSpellDifficulty: number[];

@@ -1,3 +1,15 @@
+declare var CafeBackground: string;
+/** @type {null | NPCCharacter} */
+declare var CafeMaid: null | NPCCharacter;
+declare var CafeIsMaid: boolean;
+declare var CafeIsHeadMaid: boolean;
+declare var CafeVibeIncreased: boolean;
+declare var CafeEnergyDrinkPrice: number;
+declare var CafeGlassMilkPrice: number;
+declare var CafeCupcakePrice: number;
+/** @type {null | string} */
+declare var CafeAskedFor: null | string;
+declare var CafePrice: number;
 /**
  * CHecks, if the player can be served
  * @returns {boolean} - Returns true, if the player can be served, false otherwise
@@ -59,7 +71,6 @@ declare function CafeEquired(Type: string): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function CafeCanPlayClubCard(): boolean;
-declare function CafeLoad(): Promise<void>;
 /**
  * Run the Cafe room and draw characters. This function is called dynamically at short intervals.
  * Don't use expensive loops or functions from here
@@ -125,15 +136,3 @@ declare function CafeClubCardEnd(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function CafeClubCardMainHall(): void;
-declare var CafeBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CafeMaid: null | NPCCharacter;
-declare var CafeIsMaid: boolean;
-declare var CafeIsHeadMaid: boolean;
-declare var CafeVibeIncreased: boolean;
-declare var CafeEnergyDrinkPrice: number;
-declare var CafeGlassMilkPrice: number;
-declare var CafeCupcakePrice: number;
-/** @type {null | string} */
-declare var CafeAskedFor: null | string;
-declare var CafePrice: number;

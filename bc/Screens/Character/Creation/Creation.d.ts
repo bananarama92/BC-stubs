@@ -1,10 +1,27 @@
+declare var CreationBackground: string;
+declare var CreationMessage: string;
+declare const CreationIDs: Readonly<{
+    screen: "creation-screen";
+    form: "creation-form";
+    fields: "creation-fields";
+    importRow: "creation-import-row";
+    actions: "creation-actions";
+    loginRow: "creation-login-row";
+    inputCharacter: "InputCharacter";
+    inputName: "InputName";
+    inputPassword1: "InputPassword1";
+    inputPassword2: "InputPassword2";
+    inputEmail: "InputEmail";
+    importCheckbox: "creation-import-checkbox";
+    createButton: "creation-create-button";
+    loginButton: "creation-login-button";
+}>;
 /**
  * Enter on a creation field: move focus to the next input, or submit on the last field.
  * @param {string | null} nextFieldId Next input id, or null to run {@link CreationSubmit}.
  * @returns {(this: HTMLInputElement, ev: KeyboardEvent) => void}
  */
 declare function CreationKeyDownEnter(nextFieldId: string | null): (this: HTMLInputElement, ev: KeyboardEvent) => void;
-declare function CreationLoad(): Promise<void>;
 /**
  * Runs the character creation screen. Draws all needed input fields and buttons.
  * If the import of Bondage College data is possible, an appropriate check box is drawn.
@@ -25,8 +42,6 @@ declare function CreationResponse(data: ServerAccountCreateResponse): void;
  * @returns {void} - Nothing
  */
 declare function CreationClick(): void;
-declare function CreationExit(): void;
-declare function CreationUnload(): void;
 declare function CreationResize(): void;
 /**
  * Update the current creation message in the DOM.
@@ -89,21 +104,3 @@ declare function CreationValidateInputs(): {
  * @returns {void} - Nothing
  */
 declare function CreationSubmit(): void;
-declare var CreationBackground: string;
-declare var CreationMessage: string;
-declare const CreationIDs: Readonly<{
-    screen: "creation-screen";
-    form: "creation-form";
-    fields: "creation-fields";
-    importRow: "creation-import-row";
-    actions: "creation-actions";
-    loginRow: "creation-login-row";
-    inputCharacter: "InputCharacter";
-    inputName: "InputName";
-    inputPassword1: "InputPassword1";
-    inputPassword2: "InputPassword2";
-    inputEmail: "InputEmail";
-    importCheckbox: "creation-import-checkbox";
-    createButton: "creation-create-button";
-    loginButton: "creation-login-button";
-}>;

@@ -1,4 +1,63 @@
 /**
+ * The main game canvas where everything will be drawn
+ * @type {CanvasRenderingContext2D}
+ */
+declare let MainCanvas: CanvasRenderingContext2D;
+declare const MainCanvasWidth = 2000;
+declare const MainCanvasHeight = 1000;
+/**
+ * Temporary GPU-based canvas
+ * @type {CanvasRenderingContext2D}
+ */
+declare let TempCanvas: CanvasRenderingContext2D;
+/**
+ * Temporary CPU-based canvas (for colorization)
+ * @type {CanvasRenderingContext2D}
+ */
+declare let ColorCanvas: CanvasRenderingContext2D;
+declare var BlindFlash: boolean;
+/**
+ * Whether a blindfold removal screen flash should _potentially_ be performed the next time the player character is refreshed.
+ * Generally assigned by {@link InventoryRemove}.
+ */
+declare var BlindFlashQueue: boolean;
+declare var DrawingBlindFlashTimer: number;
+/** @type {Map<string, HTMLImageElement>} */
+declare const DrawCacheImage: Map<string, HTMLImageElement>;
+declare var DrawLastDarkFactor: number;
+/**
+ * A list of the characters that are drawn every frame
+ * @type {Character[]}
+ */
+declare var DrawLastCharacters: Character[];
+/**
+ * A list of elements to draw at the end of the drawing process.
+ * Mostly used for hovering button labels.
+ * @type {(() => void)[]}
+ */
+declare var DrawHoverElements: (() => void)[];
+/**
+ * The last canvas position in format `[left, top, width, height]`
+ * @type {RectTuple}
+ */
+declare var DrawCanvasPosition: RectTuple;
+/**
+ * An enum for the method for resizing custom backgrounds
+ * @satisfies {Record<string, DrawingResizeMode>}
+ */
+declare var DrawingResizeMode: {
+    readonly Fill: 1;
+    readonly FillOriginalRatio: 2;
+    readonly ShowFullOriginalRatio: 3;
+};
+type DrawingResizeMode = 1 | 2 | 3;
+/** @typedef {1 | 2 | 3} DrawingResizeMode */
+/**
+ * A cache of the texture masks used to draw the character
+ * @type {Map<string, HTMLCanvasElement>}
+ */
+declare let DrawCacheTextureAlphaMasks: Map<string, HTMLCanvasElement>;
+/**
  * Converts a hex color string to a RGB color
  * @param {string} color - Hex color to conver
  * @returns {RGBColor} - RGB color
@@ -240,6 +299,14 @@ declare function DrawTextWrap(Text: string, X: number, Y: number, Width: number,
  */
 declare function DrawTextFit(Text: string, X: number, Y: number, Width: number, Color: string, BackColor?: string): void;
 /**
+ * Gets the text size needed to fit inside a given width according to the current font.
+ * This function is memoized because <code>MainCanvas.measureText(Text)</code> is a major resource hog.
+ * @param {string} Text - Text to draw
+ * @param {number} Width - Width in which the text has to fit
+ * @returns {[string, number]} - Text to draw and its font size
+ */
+declare const DrawingGetTextSize: MemoizedFunction<(Text: string, width: number) => [text: string, size: number]>;
+/**
  * Draws a text element on the canvas
  * @param {string} Text - Text to draw
  * @param {number} X - Position of the text on the X axis
@@ -382,11 +449,11 @@ declare function DrawGetCustomBackground(C: Character): string | undefined;
  * @param {DrawingResizeMode} [opts.sizeMode] The method of resizing the background
  */
 declare function DrawRoomBackground(URL: string, bounds: Rect, opts?: {
-    inverted?: boolean | undefined;
-    blur?: number | undefined;
-    darken?: number | undefined;
-    tints?: readonly RGBAColor[] | undefined;
-    sizeMode?: DrawingResizeMode | undefined;
+    inverted?: boolean;
+    blur?: number;
+    darken?: number;
+    tints?: readonly RGBAColor[];
+    sizeMode?: DrawingResizeMode;
 }): void;
 /**
  * Perform a global screen flash effect when a blindfold gets removed
@@ -394,6 +461,10 @@ declare function DrawRoomBackground(URL: string, bounds: Rect, opts?: {
  * TODO: that should be merged with DrawScreenFlash somehow
  */
 declare function DrawBlindFlash(intensity: number): void;
+declare var DrawScreenFlashTime: number;
+/** @type {null | string} */
+declare var DrawScreenFlashColor: null | string;
+declare var DrawScreenFlashStrength: number;
 /**
  * Perform a global screen flash effect
  * @param {string} Color - The color to use
@@ -427,6 +498,28 @@ declare function DrawLoadingScreen(time: number): void;
  * @returns {undefined | string}
  */
 declare function DrawGetBackgroundURL(skipVFX: boolean): undefined | string;
+/** Namespace for managing the skipping of VFX drawing */
+declare var DrawSkipVFX: {
+    /**
+     * The list of registered callbacks; see {@link DrawSkipVFX.evaluate}.
+     * @readonly
+     * private
+     * @type {((module: ModuleType, screen: ScreenName) => boolean)[]}
+     */
+    _list: ((module: ModuleType, screen: ScreenName) => boolean)[];
+    /**
+     * Register either a function or a module and/or screen name for which VFX drawing must be skipped
+     * @param  {...(PartialScreenSpecifier | ((module: ModuleType, screen: ScreenName) => boolean))} args The to-be registered functions/screen-/module names
+     */
+    register(...args: (PartialScreenSpecifier | ((module: ModuleType, screen: ScreenName) => boolean))[]): void;
+    /**
+     * Evaluate whether VFX drawing must be skipped for the passed module and screen
+     * @param {ModuleType} module The module
+     * @param {ScreenName} screen The screen within the module
+     * @returns {boolean} Whether VFX drawing must be skipped
+     */
+    evaluate(module: ModuleType, screen: ScreenName): boolean;
+};
 /**
  * Constantly looping draw process. Draws beeps, handles the screen size, handles the current blindfold state and draws the current screen.
  * @param {number} time - The current time for frame
@@ -466,6 +559,10 @@ declare function DrawItemPreview(itemOrDialogItem: Item | DialogInventoryItem, c
  * @returns {void} - Nothing
  */
 declare function DrawAssetPreview(X: number, Y: number, A: Asset, Options?: PreviewDrawOptions): void;
+/** The default width of item previews */
+declare const DrawAssetPreviewDefaultWidth = 225;
+/** The default height of item previews */
+declare const DrawAssetPreviewDefaultHeight = 275;
 /**
  * Draws an item preview box for the provided image path
  * @param {number} X - Position of the preview box on the X axis
@@ -565,92 +662,6 @@ declare function RectOffset(rect: Rect, dX: number, dY: number): Rect;
  * @returns {Rect}
  */
 declare function RectScale(rect: Rect, wScale: number, hScale: number): Rect;
-/**
- * The main game canvas where everything will be drawn
- * @type {CanvasRenderingContext2D}
- */
-declare let MainCanvas: CanvasRenderingContext2D;
-declare const MainCanvasWidth: 2000;
-declare const MainCanvasHeight: 1000;
-/**
- * Temporary GPU-based canvas
- * @type {CanvasRenderingContext2D}
- */
-declare let TempCanvas: CanvasRenderingContext2D;
-/**
- * Temporary CPU-based canvas (for colorization)
- * @type {CanvasRenderingContext2D}
- */
-declare let ColorCanvas: CanvasRenderingContext2D;
-declare var BlindFlash: boolean;
-/**
- * Whether a blindfold removal screen flash should _potentially_ be performed the next time the player character is refreshed.
- * Generally assigned by {@link InventoryRemove}.
- */
-declare var BlindFlashQueue: boolean;
-declare var DrawingBlindFlashTimer: number;
-/** @type {Map<string, HTMLImageElement>} */
-declare const DrawCacheImage: Map<string, HTMLImageElement>;
-declare var DrawLastDarkFactor: number;
-/**
- * A list of the characters that are drawn every frame
- * @type {Character[]}
- */
-declare var DrawLastCharacters: Character[];
-/**
- * A list of elements to draw at the end of the drawing process.
- * Mostly used for hovering button labels.
- * @type {(() => void)[]}
- */
-declare var DrawHoverElements: (() => void)[];
-/**
- * The last canvas position in format `[left, top, width, height]`
- * @type {RectTuple}
- */
-declare var DrawCanvasPosition: RectTuple;
-type DrawingResizeMode = 1 | 2 | 3;
-declare namespace DrawingResizeMode {
-    let Fill: 1;
-    let FillOriginalRatio: 2;
-    let ShowFullOriginalRatio: 3;
-}
-/** @typedef {1 | 2 | 3} DrawingResizeMode */
-/**
- * A cache of the texture masks used to draw the character
- * @type {Map<string, HTMLCanvasElement>}
- */
-declare let DrawCacheTextureAlphaMasks: Map<string, HTMLCanvasElement>;
-/**
- * Gets the text size needed to fit inside a given width according to the current font.
- * This function is memoized because <code>MainCanvas.measureText(Text)</code> is a major resource hog.
- * @param {string} Text - Text to draw
- * @param {number} Width - Width in which the text has to fit
- * @returns {[string, number]} - Text to draw and its font size
- */
-declare const DrawingGetTextSize: MemoizedFunction<(Text: string, Width: number) => [text: string, size: number]>;
-declare var DrawScreenFlashTime: number;
-/** @type {null | string} */
-declare var DrawScreenFlashColor: null | string;
-declare var DrawScreenFlashStrength: number;
-declare namespace DrawSkipVFX {
-    let _list: ((module: ModuleType, screen: ScreenName) => boolean)[];
-    /**
-     * Register either a function or a module and/or screen name for which VFX drawing must be skipped
-     * @param  {...(PartialScreenSpecifier | ((module: ModuleType, screen: ScreenName) => boolean))} args The to-be registered functions/screen-/module names
-     */
-    function register(...args: (PartialScreenSpecifier | ((module: ModuleType, screen: ScreenName) => boolean))[]): void;
-    /**
-     * Evaluate whether VFX drawing must be skipped for the passed module and screen
-     * @param {ModuleType} module The module
-     * @param {ScreenName} screen The screen within the module
-     * @returns {boolean} Whether VFX drawing must be skipped
-     */
-    function evaluate(module: ModuleType, screen: ScreenName): boolean;
-}
-/** The default width of item previews */
-declare const DrawAssetPreviewDefaultWidth: 225;
-/** The default height of item previews */
-declare const DrawAssetPreviewDefaultHeight: 275;
 /**
  * Transform a rectangle to fit partially or wholly inside another. E.g. an image onto a background canvas
  * @param {Rect} sourceRect Source rectangle, to be resized and/or trimmed

@@ -1,3 +1,13 @@
+declare var WardrobeBackground: string;
+/** @type {Character[]} */
+declare var WardrobeCharacter: Character[];
+declare var WardrobeSelection: number;
+declare var WardrobeOffset: number;
+declare var WardrobeSize: number;
+/** @type {WardrobeReorderType} */
+declare var WardrobeReorderMode: WardrobeReorderType;
+/** @type {number[]} */
+declare var WardrobeReorderList: number[];
 /**
  * Loads the player's wardrobe safe spots. If a spot is not named yet, initializes it with the player's name
  * @returns {void} - Nothing
@@ -16,7 +26,6 @@ declare function WardrobeFixLength(): void;
  * @returns {void} - Nothing
  */
 declare function WardrobeLoadCharacters(Fast: boolean): void;
-declare function WardrobeLoad(): Promise<void>;
 /**
  * Shows the wardrobe screen. This function is called dynamically on a repeated basis. So don't call complex functions
  * or use extended loops in this function.
@@ -36,7 +45,6 @@ declare function WardrobeClick(): void;
  * @param {WardrobeReorderType | null} newmode - The mode to set.  If null, advance to next mode.
  */
 declare function WardrobeReorderModeSet(newmode?: WardrobeReorderType | null): void;
-declare function WardrobeExit(): void;
 /**
  * Set a wardrobe character name, sync it with server
  * @param {number} W - The number of the wardrobe slot to save
@@ -99,13 +107,3 @@ declare function WardrobeGetExpression(C: Character): Partial<Record<ExpressionG
 declare function WardrobeGroupAccessible(C: Character, Group: AssetGroup, Options?: {
     ExcludeNonCloth: boolean;
 }): boolean;
-declare var WardrobeBackground: string;
-/** @type {Character[]} */
-declare var WardrobeCharacter: Character[];
-declare var WardrobeSelection: number;
-declare var WardrobeOffset: number;
-declare var WardrobeSize: number;
-/** @type {WardrobeReorderType} */
-declare var WardrobeReorderMode: WardrobeReorderType;
-/** @type {number[]} */
-declare var WardrobeReorderList: number[];

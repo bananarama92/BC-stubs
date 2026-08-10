@@ -1,3 +1,40 @@
+declare var LoginBackground: string;
+/**
+ * Contents of the GameCredits.csv file
+ * Initialized once on screen load
+ * @type {string[][]}
+ */
+declare var LoginCredits: string[][];
+declare var LoginCreditsPosition: number;
+declare var LoginThankYou: string;
+declare var LoginThankYouList: string[];
+declare var LoginThankYouNext: number;
+declare var LoginSubmitted: boolean;
+declare var LoginQueuePosition: number;
+/** The server login status */
+declare var LoginErrorMessage: string;
+/**
+ * The dummy on the login screen.
+ *
+ * Lifetime bound to the screen.
+ * @type {NPCCharacter | null} */
+declare var LoginCharacter: NPCCharacter | null;
+declare const LoginIDs: Readonly<{
+    name: "InputName";
+    password: "InputPassword";
+    language: "LanguageDropdown";
+    nameLabel: "login-name-label";
+    passwordLabel: "login-password-label";
+    newCharacter: "login-new-character-label";
+    register: "login-register-button";
+    login: "login-login-button";
+    welcome: "login-welcome-message";
+    status: "login-status";
+    passwordReset: "login-password-reset-button";
+    forgotPassword: "login-password-reset-hint";
+    cheats: "login-cheats-button";
+    footer: "login-footer";
+}>;
 /**
  * Loads the next thank you bubble
  * @returns {void} Nothing
@@ -8,7 +45,10 @@ declare function LoginDoNextThankYou(): void;
  * @returns {void} Nothing
  */
 declare function LoginDrawCredits(): void;
-declare function LoginLoad(): Promise<void>;
+declare var LoginEventListeners: {
+    _KeyDownInputName(this: HTMLInputElement, ev: KeyboardEvent): void;
+    _KeyDownInputPassword(this: HTMLInputElement, ev: KeyboardEvent): void;
+};
 /**
  * Runs the character login screen
  * @returns {void} Nothing
@@ -19,13 +59,37 @@ declare function LoginRun(): void;
  * @returns {void} Nothing
  */
 declare function LoginClick(): void;
-declare function LoginKeyDown(event: KeyboardEvent): boolean;
 /**
  * Unload function - called when the login page unloads
  */
 declare function LoginUnload(): void;
-declare function LoginResize(load: boolean): void;
 declare function LoginReloadLanguageText(): void;
+/**
+ * The list of item fixups to apply on login.
+ *
+ * Those are applied by the login code, after the player's item lists are set up
+ * but before the inventory and appearance are loaded from the server's data,
+ * and applies the specified asset fixups by swapping Old with New in the list
+ * of owned items, in the various player item lists, and in the appearance.
+ *
+ * If you're only moving items around, it should work just fine as long as
+ * the `Old` and `New` asset definitions are compatible.
+ * If it's an asset merge (say 3 into one typed asset), it will either set
+ * the fixed up item to the specified `Option` or the first one if unspecified.
+ *
+ * @type {{ Old: { Group: string, Name: string | '*' }, New: { Group: AssetGroupName, Name?: string, Option?: string } }[]}
+ */
+declare let LoginInventoryFixups: {
+    Old: {
+        Group: string;
+        Name: string | '*';
+    };
+    New: {
+        Group: AssetGroupName;
+        Name?: string;
+        Option?: string;
+    };
+}[];
 /**
  * Perform the inventory fixups needed.
  * @param {InventoryBundle[]} Inventory - The server-provided inventory object
@@ -157,70 +221,3 @@ declare function LoginSetStatus(ErrorMessage?: string, reset?: boolean): void;
  * @returns {string | null} The current login status, or null if we're not currently attempting to log in
  */
 declare function LoginGetStatus(): string | null;
-declare var LoginBackground: string;
-/**
- * Contents of the GameCredits.csv file
- * Initialized once on screen load
- * @type {string[][]}
- */
-declare var LoginCredits: string[][];
-declare var LoginCreditsPosition: number;
-declare var LoginThankYou: string;
-declare var LoginThankYouList: string[];
-declare var LoginThankYouNext: number;
-declare var LoginSubmitted: boolean;
-declare var LoginQueuePosition: number;
-/** The server login status */
-declare var LoginErrorMessage: string;
-/**
- * The dummy on the login screen.
- *
- * Lifetime bound to the screen.
- * @type {NPCCharacter | null} */
-declare var LoginCharacter: NPCCharacter | null;
-declare const LoginIDs: Readonly<{
-    name: "InputName";
-    password: "InputPassword";
-    language: "LanguageDropdown";
-    nameLabel: "login-name-label";
-    passwordLabel: "login-password-label";
-    newCharacter: "login-new-character-label";
-    register: "login-register-button";
-    login: "login-login-button";
-    welcome: "login-welcome-message";
-    status: "login-status";
-    passwordReset: "login-password-reset-button";
-    forgotPassword: "login-password-reset-hint";
-    cheats: "login-cheats-button";
-    footer: "login-footer";
-}>;
-declare namespace LoginEventListeners {
-    function _KeyDownInputName(this: HTMLInputElement, ev: KeyboardEvent): void;
-    function _KeyDownInputPassword(this: HTMLInputElement, ev: KeyboardEvent): void;
-}
-/**
- * The list of item fixups to apply on login.
- *
- * Those are applied by the login code, after the player's item lists are set up
- * but before the inventory and appearance are loaded from the server's data,
- * and applies the specified asset fixups by swapping Old with New in the list
- * of owned items, in the various player item lists, and in the appearance.
- *
- * If you're only moving items around, it should work just fine as long as
- * the `Old` and `New` asset definitions are compatible.
- * If it's an asset merge (say 3 into one typed asset), it will either set
- * the fixed up item to the specified `Option` or the first one if unspecified.
- *
- * @type {{ Old: { Group: string, Name: string | '*' }, New: { Group: AssetGroupName, Name?: string, Option?: string } }[]}
- */
-declare let LoginInventoryFixups: {
-    Old: {
-        Group: string;
-        Name: string | "*";
-    };
-    New: {
-        Group: AssetGroupName;
-        Name?: string;
-        Option?: string;
-    };
-}[];

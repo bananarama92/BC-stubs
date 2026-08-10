@@ -1,3 +1,29 @@
+declare var IntroductionBackground: string;
+/** @type {null | NPCCharacter} */
+declare var IntroductionMaid: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var IntroductionSub: null | NPCCharacter;
+declare var IntroductionMaidOpinion: number;
+declare var IntroductionHasBasicItems: boolean;
+declare var IntroductionSubRestrained: boolean;
+declare var IntroductionIsMaid: boolean;
+declare var IntroductionIsHeadMaid: boolean;
+declare var IntroductionRescueScenario: string;
+declare var IntroductionRescueScenarioList: string[];
+declare var IntroductionJobList: string[];
+declare var IntroductionJobCurrent: string;
+declare var IntroductionJobCount: number;
+/** @type {null | string} */
+declare var IntroductionJobParam: null | string;
+declare var IntroductionJobPosition: {
+    Active: boolean;
+    X: number;
+    Y: number;
+};
+declare var IntroductionJobLockList: string[];
+declare var IntroductionJobSearchList: string[];
+/** @type {number[]} */
+declare var IntroductionJobMember: number[];
 /**
  * Checks if the introduction room is currently the scenario for maid rescue mission.
  * @param {string} ScenarioName - Name of the rescue scenario to check for.
@@ -44,7 +70,6 @@ declare function IntroductionCannotTakeJobRestrained(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function IntroductionCanPlayClubCard(): boolean;
-declare function IntroductionLoad(): Promise<void>;
 /**
  * Runs and draws the main introduction room with its 3 characters.
  * @returns {void} - Nothing
@@ -162,29 +187,3 @@ declare function IntroductionClubCardStart(): void;
  * When the player ends a club card game
  */
 declare function IntroductionClubCardEnd(): Promise<void>;
-declare var IntroductionBackground: string;
-/** @type {null | NPCCharacter} */
-declare var IntroductionMaid: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var IntroductionSub: null | NPCCharacter;
-declare var IntroductionMaidOpinion: number;
-declare var IntroductionHasBasicItems: boolean;
-declare var IntroductionSubRestrained: boolean;
-declare var IntroductionIsMaid: boolean;
-declare var IntroductionIsHeadMaid: boolean;
-declare var IntroductionRescueScenario: string;
-declare var IntroductionRescueScenarioList: string[];
-declare var IntroductionJobList: string[];
-declare var IntroductionJobCurrent: string;
-declare var IntroductionJobCount: number;
-/** @type {null | string} */
-declare var IntroductionJobParam: null | string;
-declare namespace IntroductionJobPosition {
-    let Active: boolean;
-    let X: number;
-    let Y: number;
-}
-declare var IntroductionJobLockList: string[];
-declare var IntroductionJobSearchList: string[];
-/** @type {number[]} */
-declare var IntroductionJobMember: number[];

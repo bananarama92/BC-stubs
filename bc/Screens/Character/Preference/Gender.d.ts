@@ -1,3 +1,11 @@
+declare const PreferenceSubscreenGenderIDs: Readonly<{
+    grid: "preference-gender-grid";
+}>;
+declare const PreferenceSubscreenGenderSettings: {
+    id: string;
+    label: string;
+    setting: () => GenderSetting;
+}[];
 /**
  * Loads the gender preference subscreen.
  * @returns {void} - Nothing
@@ -14,12 +22,3 @@ declare function PreferenceSubscreenGenderRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenGenderClick(): void;
-declare function PreferenceSubscreenGenderResize(load: boolean): void;
-declare const PreferenceSubscreenGenderIDs: Readonly<{
-    grid: "preference-gender-grid";
-}>;
-declare const PreferenceSubscreenGenderSettings: {
-    id: string;
-    label: string;
-    setting: () => GenderSetting;
-}[];

@@ -1,5 +1,10 @@
-declare namespace KeybindingManager {
-    let ASCIIKeyboardMap: Readonly<{
+declare var KeybindingManager: {
+    /**
+     * A map from `KeyboardEvent.code` values to their ASCII key label.
+     *
+     * Used to convert browser key codes into human-readable names.
+     */
+    ASCIIKeyboardMap: Readonly<{
         KeyA: "A";
         KeyB: "B";
         KeyC: "C";
@@ -81,17 +86,23 @@ declare namespace KeybindingManager {
         Semicolon: ";";
         BracketRight: "]";
     }>;
-    let ModifierSymbols: Readonly<{
+    /**
+     * Maps logical modifier keys to their symbol representation.
+     */
+    ModifierSymbols: Readonly<{
         Ctrl: "⌃";
         Shift: "⇧";
         Alt: "⌥";
     }>;
-    let ReverseModifierSymbols: Readonly<{
+    /**
+     * Reverse map of modifier symbols to their logical modifier keys.
+     */
+    ReverseModifierSymbols: Readonly<{
         '\u2303': "Ctrl";
         '\u21E7': "Shift";
         '\u2325': "Alt";
     }>;
-}
+};
 /**
  * Class for managing categories, contexts, and keybindings.
  * Handles registration, updates, serialization, and event handling.
@@ -105,6 +116,10 @@ declare class KeybindManager {
     contexts: Map<string, Keybindings.Context>;
     /** private @type {Map<string, Keybindings.UninitializedKeybinding>} */
     uninitializedKeybindings: Map<string, Keybindings.UninitializedKeybinding>;
+    /**
+     * Initializes with default categories, contexts, and keybindings.
+     */
+    constructor();
     /**
      * Registers a new keybinding category.
      * Categories are sorted alphabetically by name after insertion.
@@ -228,7 +243,7 @@ declare class KeybindManager {
      * @param {Keybindings.KeyCombo | null} [kb1]
      * @param {Keybindings.KeyCombo | null} [kb2]
      */
-    _isKeyComboEqual(kb1?: Keybindings.KeyCombo | null, kb2?: Keybindings.KeyCombo | null): boolean | "" | null;
+    _isKeyComboEqual(kb1?: Keybindings.KeyCombo | null, kb2?: Keybindings.KeyCombo | null): "" | boolean | null;
     /**
      * Extracts modifier keys from a `KeyboardEvent` into a Set.
      *
@@ -254,7 +269,7 @@ declare class KeybindManager {
      */
     deserialize(): void;
     /** @param {Keybindings.Keybinding} keybinding */
-    isDefaultCombo(keybinding: Keybindings.Keybinding): boolean | "" | null;
+    isDefaultCombo(keybinding: Keybindings.Keybinding): "" | boolean | null;
     /**
      * Completes the registration of an uninitialized keybinding.
      * Used when a binding exists in storage but not in defaults at load time.

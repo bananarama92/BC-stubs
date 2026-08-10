@@ -7,10 +7,6 @@ declare function InventoryItemBreastFuturisticBraUpdate(C: Character): {
     breathing: "Low" | "Med" | "High" | "Action";
     temp: number;
 };
-declare function InventoryItemBreastFuturisticBraDrawHook(data: TypedItemData, originalFunction: () => void): void;
-declare function AssetsItemBreastFuturisticBraBeforeDraw(drawData: DynamicDrawingData<FuturisticBraPersistentData>): DynamicBeforeDrawOverrides | undefined;
-declare function AssetsItemBreastFuturisticBraAfterDraw(drawData: DynamicDrawingData<FuturisticBraPersistentData>): void;
-declare function AssetsItemBreastFuturisticBraScriptDraw(drawData: DynamicScriptCallbackData<FuturisticBraPersistentData>): void;
 type FuturisticBraPersistentData = {
     UpdateTime?: number;
     ShowHeart?: boolean;

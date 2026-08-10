@@ -20,28 +20,28 @@ declare var ToastManager: {
      * @param {string | Element | readonly (string | Element)[]} msg - Text content of the toast.
      * @param {Omit<Toasts.Options, 'message' | 'type'>} [opts={}] - Other toast options.
      */
-    info(msg: string | Element | readonly (string | Element)[], opts?: Omit<Toasts.Options, "message" | "type">): void;
+    info(msg: string | Element | readonly (string | Element)[], opts?: Omit<Toasts.Options, 'message' | 'type'>): void;
     /**
      * Show a success toast. It's time to celebrate! 🎉
      *
      * @param {string | Element | readonly (string | Element)[]} msg - Text content of the toast.
      * @param {Omit<Toasts.Options, 'message' | 'type'>} [opts={}] - Other toast options.
      */
-    success(msg: string | Element | readonly (string | Element)[], opts?: Omit<Toasts.Options, "message" | "type">): void;
+    success(msg: string | Element | readonly (string | Element)[], opts?: Omit<Toasts.Options, 'message' | 'type'>): void;
     /**
      * Show a warning toast. Watch out, things might explode!
      *
      * @param {string | Element | readonly (string | Element)[]} msg - Text content of the toast.
      * @param {Omit<Toasts.Options, 'message' | 'type'>} [opts={}] - Other toast options.
      */
-    warning(msg: string | Element | readonly (string | Element)[], opts?: Omit<Toasts.Options, "message" | "type">): void;
+    warning(msg: string | Element | readonly (string | Element)[], opts?: Omit<Toasts.Options, 'message' | 'type'>): void;
     /**
      * Show an error toast. Oh noes, something broke.
      *
      * @param {string | Element | readonly (string | Element)[]} msg - Text content of the toast.
      * @param {Omit<Toasts.Options, 'message' | 'type'>} [opts={}] - Other toast options.
      */
-    error(msg: string | Element | readonly (string | Element)[], opts?: Omit<Toasts.Options, "message" | "type">): void;
+    error(msg: string | Element | readonly (string | Element)[], opts?: Omit<Toasts.Options, 'message' | 'type'>): void;
     /**
      * Show a custom toast, because you're special.
      *
@@ -49,7 +49,7 @@ declare var ToastManager: {
      * @param {Toasts.Type} type - Custom type string or one of the predefined types.
      * @param {Omit<Toasts.Options, 'message' | 'type'>} [opts={}] - Other toast options.
      */
-    custom(msg: string | Element | readonly (string | Element)[], type: Toasts.Type, opts?: Omit<Toasts.Options, "message" | "type">): void;
+    custom(msg: string | Element | readonly (string | Element)[], type: Toasts.Type, opts?: Omit<Toasts.Options, 'message' | 'type'>): void;
     /**
      * Kick out every single visible toast regardless of type.
      *

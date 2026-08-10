@@ -1,10 +1,46 @@
-declare function FriendListLoad(): Promise<void>;
-declare function FriendListResize(load: boolean): void;
-declare function FriendListRun(time: number): void;
-declare function FriendListDraw(): void;
-declare function FriendListClick(event: PointerEvent): void;
-declare function FriendListKeyDown(event: KeyboardEvent): boolean;
-declare function FriendListUnload(): void;
+declare var FriendListBackground: string;
+/** @deprecated @type {number[]} */
+declare var FriendListConfirmDelete: number[];
+/** @type {FriendListReturn<any> | null} */
+declare var FriendListReturn: FriendListReturn<any> | null;
+/** @type {FriendListModes} */
+declare var FriendListMode: FriendListModes;
+declare var FriendListModeIndex: number;
+/** @type {IFriendListBeepLogMessage[]} */
+declare var FriendListBeepLog: IFriendListBeepLogMessage[];
+/** @type {number} MemberNumber of the player to send beep to */
+declare let FriendListBeepTarget: number;
+declare var FriendListBeepShowRoom: boolean;
+/** @type {FriendListSortingMode} */
+declare let FriendListSortingMode: FriendListSortingMode;
+/** @type {FriendListSortingDirection} */
+declare let FriendListSortingDirection: FriendListSortingDirection;
+/** @type {Record<string, FriendListActionDefinition>} */
+declare var FriendListActionDefinitions: Record<string, FriendListActionDefinition>;
+declare const FriendListAutoRefresh: {
+    interval: number;
+    nextRefresh: number;
+};
+declare const FriendListIDs: Readonly<{
+    root: "friend-list-subscreen";
+    navBar: "friend-list-nav-bar";
+    header: "friend-list-header";
+    friendList: "friend-list";
+    friendListTable: "friend-list-table";
+    navButtons: "friend-list-buttons";
+    modeTitle: "friend-list-mode-title";
+    searchInput: "friend-list-search-input";
+    btnAutoRefresh: "friend-list-button-auto-refresh";
+    btnAddFriend: "friend-list-button-add-friend";
+    btnRefresh: "friend-list-button-refresh";
+    btnPrev: "friend-list-button-prev";
+    btnNext: "friend-list-button-next";
+    btnExit: "friend-list-button-exit";
+    btnResetSorting: "friend-list-reset-sorting";
+    beepList: "friend-list-beep-dialog";
+    beepTextArea: "friend-list-beep-textarea";
+    beepFooter: "friend-list-beep-footer";
+}>;
 /** @t ype {ScreenExitHandler} */
 declare function FriendListExit(): Promise<void>;
 /**
@@ -31,6 +67,43 @@ declare function FriendListShowBeep(i: number): Promise<void>;
  * @param {string | undefined} room The room to search for
  */
 declare function FriendListChatSearch(room: string | undefined): Promise<void>;
+/** @satisfies {{ [key in (ServerChatRoomSpace | "Private")]: FriendListIcon }} */
+declare const FriendListIconMapping: {
+    "": {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    M: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    X: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    Asylum: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    Private: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+};
+/**
+ * Note that the `Caption` field is only initialized in {@link FriendListLoad}..
+ * @type {Record<FriendListRelationType, { Caption?: string, Icon: string, SortingPriority: number }>}
+ */
+declare const FriendListTypeData: Record<FriendListRelationType, {
+    Caption?: string;
+    Icon: string;
+    SortingPriority: number;
+}>;
 /**
  * Loads the friend list data into the HTML div element.
  * @param {ServerFriendInfo[]} data - An array of data, we receive from the server
@@ -158,83 +231,3 @@ declare function FriendListCanAdd(memberNumber: number): boolean;
  * Opens the friendlist from any screen
  */
 declare function FriendListShow(): Promise<void>;
-declare var FriendListBackground: string;
-/** @deprecated @type {number[]} */
-declare var FriendListConfirmDelete: number[];
-/** @type {FriendListReturn<any> | null} */
-declare var FriendListReturn: FriendListReturn<any> | null;
-/** @type {FriendListModes} */
-declare var FriendListMode: FriendListModes;
-declare var FriendListModeIndex: number;
-/** @type {IFriendListBeepLogMessage[]} */
-declare var FriendListBeepLog: IFriendListBeepLogMessage[];
-/** @type {number} MemberNumber of the player to send beep to */
-declare let FriendListBeepTarget: number;
-declare var FriendListBeepShowRoom: boolean;
-/** @type {FriendListSortingMode} */
-declare let FriendListSortingMode: FriendListSortingMode;
-/** @type {FriendListSortingDirection} */
-declare let FriendListSortingDirection: FriendListSortingDirection;
-/** @type {Record<string, FriendListActionDefinition>} */
-declare var FriendListActionDefinitions: Record<string, FriendListActionDefinition>;
-declare namespace FriendListAutoRefresh {
-    let interval: number;
-    let nextRefresh: number;
-}
-declare const FriendListIDs: Readonly<{
-    root: "friend-list-subscreen";
-    navBar: "friend-list-nav-bar";
-    header: "friend-list-header";
-    friendList: "friend-list";
-    friendListTable: "friend-list-table";
-    navButtons: "friend-list-buttons";
-    modeTitle: "friend-list-mode-title";
-    searchInput: "friend-list-search-input";
-    btnAutoRefresh: "friend-list-button-auto-refresh";
-    btnAddFriend: "friend-list-button-add-friend";
-    btnRefresh: "friend-list-button-refresh";
-    btnPrev: "friend-list-button-prev";
-    btnNext: "friend-list-button-next";
-    btnExit: "friend-list-button-exit";
-    btnResetSorting: "friend-list-reset-sorting";
-    beepList: "friend-list-beep-dialog";
-    beepTextArea: "friend-list-beep-textarea";
-    beepFooter: "friend-list-beep-footer";
-}>;
-/** @satisfies {{ [key in (ServerChatRoomSpace | "Private")]: FriendListIcon }} */
-declare const FriendListIconMapping: {
-    "": {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-    M: {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-    X: {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-    Asylum: {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-    Private: {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-};
-/**
- * Note that the `Caption` field is only initialized in {@link FriendListLoad}..
- * @type {Record<FriendListRelationType, { Caption?: string, Icon: string, SortingPriority: number }>}
- */
-declare const FriendListTypeData: Record<FriendListRelationType, {
-    Caption?: string;
-    Icon: string;
-    SortingPriority: number;
-}>;

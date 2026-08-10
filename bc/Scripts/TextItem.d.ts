@@ -1,4 +1,11 @@
 /**
+ * A lookup for the text item configurations for each registered text item
+ * @const
+ * @type {Record<string, TextItemData>}
+ * @see {@link TextItemData}
+ */
+declare const TextItemDataLookup: Record<string, TextItemData>;
+/**
  * Registers a typed extended item. This automatically creates the item's load, draw and click functions.
  * @param {Asset} asset - The asset being registered
  * @param {TextItemConfig} config - The item's typed item configuration
@@ -22,29 +29,7 @@ declare function TextItemGetDrawData(fieldNames: readonly TextItemNames[], drawD
  * @returns {TextItemData} - The generated typed item data for the asset
  */
 declare function TextItemCreateTextItemData(asset: Asset, { MaxLength, Font, DialogPrefix, ChatTags, Dictionary, ScriptHooks, BaselineProperty, EventListeners, DrawData, PushOnPublish, AllowEffect, Name, }: TextItemConfig, parentOption?: null | ExtendedItemOption): TextItemData;
-/**
- * @param {TextItemData} data - The extended item data
- * @param {Item} item - The item in question
- * @returns {{ newOption: TextItemOption, previousOption: TextItemOption }}
- */
-declare function TextItemConstructOptions(data: TextItemData, item: Item): {
-    newOption: TextItemOption;
-    previousOption: TextItemOption;
-};
-/**
- * Revert all text item properties back to their previous state prior to opening the extended item menu
- * @param {TextItemData} data - The extended item data
- * @param {Item} item - The item in question
- */
-declare function TextItemPropertyRevert({ textNames }: TextItemData, item: Item): void;
-/**
- * A lookup for the text item configurations for each registered text item
- * @const
- * @type {Record<string, TextItemData>}
- * @see {@link TextItemData}
- */
-declare const TextItemDataLookup: Record<string, TextItemData>;
-declare namespace TextItem {
+declare const TextItem: {
     /**
      * Init function for items with text input fields.
      * @param {TextItemData} data
@@ -54,23 +39,23 @@ declare namespace TextItem {
      * @param {boolean} refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
      * @returns {boolean} Whether properties were updated or not
      */
-    function Init({ asset, font, baselineProperty, maxLength }: TextItemData, C: Character, item: Item, push?: boolean, refresh?: boolean): boolean;
+    Init({ asset, font, baselineProperty, maxLength }: TextItemData, C: Character, item: Item, push?: boolean, refresh?: boolean): boolean;
     /**
      * Load function for items with text input fields.
      * @param {TextItemData} data
      */
-    function Load(data: TextItemData): void;
+    Load(data: TextItemData): void;
     /**
      * Draw handler for extended item screens with text input fields.
      * @param {TextItemData} data - The items extended item data
      */
-    function Draw(data: TextItemData): void;
+    Draw(data: TextItemData): void;
     /**
      * Exit function for items with text input fields.
      * @param {TextItemData} data - The items extended item data
      * @param {boolean} publishAction - Whether
      */
-    function Exit(data: TextItemData, publishAction?: boolean): void;
+    Exit(data: TextItemData, publishAction?: boolean): void;
     /**
      * PublishAction function for items with text input fields.
      * @param {TextItemData} data - The items extended item data
@@ -79,7 +64,7 @@ declare namespace TextItem {
      * @param {TextItemOption} newOption
      * @param {TextItemOption} previousOption
      */
-    function PublishAction(data: TextItemData, C: Character, item: Item, newOption: TextItemOption, previousOption: TextItemOption): void;
+    PublishAction(data: TextItemData, C: Character, item: Item, newOption: TextItemOption, previousOption: TextItemOption): void;
     /**
      * Usage AfterDraw: (...args) => TextItem.GenericTextDrawHook(...args, {Width: 128, Height: 128, XOffset: 0, YOffset: 10, drawOptions: { fontSize: 12 }})
      * @param {TextItemData} data
@@ -87,7 +72,7 @@ declare namespace TextItem {
      * @param {{C: Character; A: Asset; CA: Item; X: number; Y: number; Property: ItemProperties; drawCanvas: DrawCanvasCallback; drawCanvasBlink: DrawCanvasCallback; AlphaMasks: RectTuple[]; L: string; Color: string}} drawArgs
      * @param {{Width?: number; Height?: number; XOffset?: number; YOffset?: number; LayerName?: string; drawOptions?: DynamicDrawOptions;}} options
      */
-    function GenericTextDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData) => void) | null, { C, A, CA, X, Y, Property, drawCanvas, drawCanvasBlink, AlphaMasks, L, Color, }: {
+    GenericTextDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData) => void) | null, { C, A, CA, X, Y, Property, drawCanvas, drawCanvasBlink, AlphaMasks, L, Color, }: {
         C: Character;
         A: Asset;
         CA: Item;
@@ -114,7 +99,7 @@ declare namespace TextItem {
      * @param {{C: Character; A: Asset; CA: Item; X: number; Y: number; Property: ItemProperties; drawCanvas: DrawCanvasCallback; drawCanvasBlink: DrawCanvasCallback; AlphaMasks: RectTuple[]; L: string; Color: string}} drawArgs
      * @param {{Width?: number; Height?: number; XOffset?: number; YOffset?: number; LayerName?: string; drawOptions?: DynamicDrawOptions;}} options
      */
-    function GenericTextArcDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData) => void) | null, { C, A, CA, X, Y, Property, drawCanvas, drawCanvasBlink, AlphaMasks, L, Color, }: {
+    GenericTextArcDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData) => void) | null, { C, A, CA, X, Y, Property, drawCanvas, drawCanvasBlink, AlphaMasks, L, Color, }: {
         C: Character;
         A: Asset;
         CA: Item;
@@ -134,7 +119,7 @@ declare namespace TextItem {
         LayerName?: string;
         drawOptions?: DynamicDrawOptions;
     }): void;
-}
+};
 /**
  * Throttled callback for handling text changes.
  * @type {TextItemEventListener}
@@ -145,3 +130,18 @@ declare const TextItemChange: TextItemEventListener;
  * @type {TextItemEventListener}
  */
 declare const TextItemChangeNoCanvas: TextItemEventListener;
+/**
+ * @param {TextItemData} data - The extended item data
+ * @param {Item} item - The item in question
+ * @returns {{ newOption: TextItemOption, previousOption: TextItemOption }}
+ */
+declare function TextItemConstructOptions(data: TextItemData, item: Item): {
+    newOption: TextItemOption;
+    previousOption: TextItemOption;
+};
+/**
+ * Revert all text item properties back to their previous state prior to opening the extended item menu
+ * @param {TextItemData} data - The extended item data
+ * @param {Item} item - The item in question
+ */
+declare function TextItemPropertyRevert({ textNames }: TextItemData, item: Item): void;

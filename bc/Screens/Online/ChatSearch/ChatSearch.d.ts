@@ -1,4 +1,97 @@
 /**
+ * @file This file handles the chat lobby search & filter screen
+ */
+/** Background image */
+declare var ChatSearchBackground: string;
+/**
+ * The list of tags allowed as backgrounds for the room edit screens
+ * @type {BackgroundTag[]}
+ */
+declare var ChatSearchBackgroundTagList: BackgroundTag[];
+/** @type {ChatRoomSearchResult[]} */
+declare var ChatSearchResult: ChatRoomSearchResult[];
+/** @type {ChatRoomSearchResult[]} */
+declare var ChatSearchHiddenResult: ChatRoomSearchResult[];
+/**
+ * @type {never}
+ * @deprecated Use {@link ServerRoomSearch()}
+ */
+declare var ChatSearchLastSearchDataJSON: never;
+declare var ChatSearchLastQuerySearchTime: number;
+declare var ChatSearchLastQueryJoin: string;
+declare var ChatSearchLastQueryJoinTime: number;
+declare var ChatSearchResultOffset: number;
+/** The room grid's left offset */
+declare var ChatSearchPageX: number;
+/** The room grid's top offset */
+declare var ChatSearchPageY: number;
+declare var ChatSearchRoomsPerRow: number;
+declare var ChatSearchRoomsPerColumn: number;
+/**
+ * Layout parameters for the room grid
+ * @type {CommonGenerateGridParameters}
+ */
+declare var ChatSearchListParams: CommonGenerateGridParameters;
+/** Pre-calculated. Must be updated if you change the grid parameters */
+declare var ChatSearchRoomsPerPage: number;
+/** @type {ScreenSpecifier} */
+declare var ChatSearchReturnScreen: ScreenSpecifier;
+/** @type {null | Item[]} */
+declare var ChatSearchSafewordAppearance: null | Item[];
+/** @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>} */
+declare var ChatSearchSafewordPose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
+/** @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>} */
+declare var ChatSearchPreviousActivePose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
+/** @type {number[]} */
+declare var ChatSearchTempHiddenRooms: number[];
+/** @type {"" | "Filter"} */
+declare var ChatSearchMode: "" | "Filter";
+declare var ChatSearchGhostPlayerOnClickActive: boolean;
+declare var ChatSearchShowHiddenRoomsActive: boolean;
+/** @type {null | { Index: number, RoomLabel: string, MemberLabel: string, WordsLabel: string }} */
+declare var ChatSearchFilterUnhideConfirm: null | {
+    Index: number;
+    RoomLabel: string;
+    MemberLabel: string;
+    WordsLabel: string;
+};
+declare var ChatSearchRejoinIncrement: number;
+/**
+ * @deprecated
+ * @type {never}
+ */
+declare var ChatSearchReturnToScreen: never;
+/** @type {string} */
+declare var ChatSearchQueryString: string;
+/** @type {"" | ServerChatRoomLanguage} */
+declare var ChatSearchLanguage: "" | ServerChatRoomLanguage;
+/** @type {never} */
+declare var ChatSearchLanguageTemp: never;
+/** @type {ServerChatRoomGame} */
+declare var ChatSearchGame: ServerChatRoomGame;
+/** @type {ServerChatRoomSpace | null} */
+declare var ChatSearchSpace: ServerChatRoomSpace | null;
+declare var ChatSearchFilterTermsTemp: string;
+declare var ChatSearchCurrentRoomSpaceIndex: number;
+/** @type {HTMLDivElement | null} */
+declare var ChatSearchRoomHeader: HTMLDivElement | null;
+/** @type {HTMLDivElement | null} */
+declare var ChatSearchRoomGrid: HTMLDivElement | null;
+/** @type {HTMLFieldSetElement | null} */
+declare var ChatSearchSearchMenu: HTMLFieldSetElement | null;
+/** @type {HTMLDivElement | null} */
+declare var ChatSearchPageCountElement: HTMLDivElement | null;
+/** @type {HTMLDialogElement | null} */
+declare var ChatSearchDialogElement: HTMLDialogElement | null;
+/** @type {HTMLButtonElement | null} */
+declare var ChatSearchSearchMenuButton: HTMLButtonElement | null;
+/** @type {HTMLDivElement | null} */
+declare var ChatSearchSearchBodyElement: HTMLDivElement | null;
+/** @type {HTMLDialogElement | null} */
+declare var ChatSearchFilterUnhideConfirmElement: HTMLDialogElement | null;
+/** @type {HTMLDialogElement | null} */
+declare var ChatSearchFilterHelpScreenElement: HTMLDialogElement | null;
+/**
  * Starts the chatroom selection screen.
  * @param {ServerChatRoomSpace} space - Name of the chatroom space
  * @param {ScreenSpecifier | undefined} returnScreen - Screen to go back to when exiting leaving the lobby.
@@ -6,11 +99,6 @@
  * @returns {Promise<void>} - Nothing.
  */
 declare function ChatSearchStart(space: ServerChatRoomSpace, returnScreen: ScreenSpecifier | undefined, options?: ChatSearchLobbyOptions): Promise<void>;
-declare function ChatSearchLoad(): Promise<void>;
-declare function ChatSearchResize(load: boolean): void;
-declare function ChatSearchUnload(): void;
-declare function ChatSearchRun(time: number): void;
-declare function ChatSearchClick(event: PointerEvent): void;
 /**
  * Returns the rooms to be displayed
  * @returns {ChatRoomSearchResult[]}
@@ -41,9 +129,12 @@ declare function ChatSearchSetPageRelative(offset: number): void;
  * @returns {void} - Nothing
  */
 declare function ChatSearchSaveFilterTerms(): void;
-declare function ChatSearchKeyDown(event: KeyboardEvent): boolean;
-declare function ChatSearchPaste(event: ClipboardEvent): void;
-declare function ChatSearchKeyDownListener(this: HTMLInputElement, ev: KeyboardEvent): void;
+/**
+ * Handles the key presses while in the chat search screen.
+ * When the user presses enter, we launch the search query or save the temp options.
+ * @type {(this: HTMLInputElement, ev: KeyboardEvent) => void}
+ */
+declare function ChatSearchKeyDownListener(event: KeyboardEvent): void;
 /**
  * Handles exiting from the chat search screen, removes the input.
  * @type {ScreenExitHandler & { closeSubElements?: boolean }}
@@ -90,7 +181,7 @@ declare function ChatSearchGridUpdate(rooms: ChatRoomSearchResult[]): void;
  * @param {ChatRoomSearchResult} room
  * @returns
  */
-declare function ChatSearchClickRoom(room: ChatRoomSearchResult): false | void;
+declare function ChatSearchClickRoom(room: ChatRoomSearchResult): void | false;
 /**
  * Creates a grid button for the given room
  * @param {ChatRoomSearchResult} room
@@ -199,6 +290,7 @@ declare function ChatSearchResultResponse(data: ServerChatRoomSearchResultRespon
  * @returns {void} - Nothing
  */
 declare function ChatSearchAutoJoinRoom(): void;
+declare const ChatSearchUpdateSearchSettings: () => void;
 /**
  * Sends the search query data to the server. The response will be handled by ChatSearchResponse once it is received
  * @param {string} Query - The search term to look for
@@ -249,97 +341,3 @@ declare function ChatSearchCalculateIgnoredRoomsOffset(shownRooms: number): numb
  * @returns {ServerChatRoomSpace}
  */
 declare function ChatSearchGetSpace(): ServerChatRoomSpace;
-/**
- * @file This file handles the chat lobby search & filter screen
- */
-/** Background image */
-declare var ChatSearchBackground: string;
-/**
- * The list of tags allowed as backgrounds for the room edit screens
- * @type {BackgroundTag[]}
- */
-declare var ChatSearchBackgroundTagList: BackgroundTag[];
-/** @type {ChatRoomSearchResult[]} */
-declare var ChatSearchResult: ChatRoomSearchResult[];
-/** @type {ChatRoomSearchResult[]} */
-declare var ChatSearchHiddenResult: ChatRoomSearchResult[];
-/**
- * @type {never}
- * @deprecated Use {@link ServerRoomSearch()}
- */
-declare var ChatSearchLastSearchDataJSON: never;
-declare var ChatSearchLastQuerySearchTime: number;
-declare var ChatSearchLastQueryJoin: string;
-declare var ChatSearchLastQueryJoinTime: number;
-declare var ChatSearchResultOffset: number;
-/** The room grid's left offset */
-declare var ChatSearchPageX: number;
-/** The room grid's top offset */
-declare var ChatSearchPageY: number;
-declare var ChatSearchRoomsPerRow: number;
-declare var ChatSearchRoomsPerColumn: number;
-/**
- * Layout parameters for the room grid
- * @type {CommonGenerateGridParameters}
- */
-declare var ChatSearchListParams: CommonGenerateGridParameters;
-/** Pre-calculated. Must be updated if you change the grid parameters */
-declare var ChatSearchRoomsPerPage: number;
-/** @type {ScreenSpecifier} */
-declare var ChatSearchReturnScreen: ScreenSpecifier;
-/** @type {null | Item[]} */
-declare var ChatSearchSafewordAppearance: null | Item[];
-/** @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>} */
-declare var ChatSearchSafewordPose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
-/** @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>} */
-declare var ChatSearchPreviousActivePose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
-/** @type {number[]} */
-declare var ChatSearchTempHiddenRooms: number[];
-/** @type {"" | "Filter"} */
-declare var ChatSearchMode: "" | "Filter";
-declare var ChatSearchGhostPlayerOnClickActive: boolean;
-declare var ChatSearchShowHiddenRoomsActive: boolean;
-/** @type {null | { Index: number, RoomLabel: string, MemberLabel: string, WordsLabel: string }} */
-declare var ChatSearchFilterUnhideConfirm: null | {
-    Index: number;
-    RoomLabel: string;
-    MemberLabel: string;
-    WordsLabel: string;
-};
-declare var ChatSearchRejoinIncrement: number;
-/**
- * @deprecated
- * @type {never}
- */
-declare var ChatSearchReturnToScreen: never;
-/** @type {string} */
-declare var ChatSearchQueryString: string;
-/** @type {"" | ServerChatRoomLanguage} */
-declare var ChatSearchLanguage: "" | ServerChatRoomLanguage;
-/** @type {never} */
-declare var ChatSearchLanguageTemp: never;
-/** @type {ServerChatRoomGame} */
-declare var ChatSearchGame: ServerChatRoomGame;
-/** @type {ServerChatRoomSpace | null} */
-declare var ChatSearchSpace: ServerChatRoomSpace | null;
-declare var ChatSearchFilterTermsTemp: string;
-declare var ChatSearchCurrentRoomSpaceIndex: number;
-/** @type {HTMLDivElement | null} */
-declare var ChatSearchRoomHeader: HTMLDivElement | null;
-/** @type {HTMLDivElement | null} */
-declare var ChatSearchRoomGrid: HTMLDivElement | null;
-/** @type {HTMLFieldSetElement | null} */
-declare var ChatSearchSearchMenu: HTMLFieldSetElement | null;
-/** @type {HTMLDivElement | null} */
-declare var ChatSearchPageCountElement: HTMLDivElement | null;
-/** @type {HTMLDialogElement | null} */
-declare var ChatSearchDialogElement: HTMLDialogElement | null;
-/** @type {HTMLButtonElement | null} */
-declare var ChatSearchSearchMenuButton: HTMLButtonElement | null;
-/** @type {HTMLDivElement | null} */
-declare var ChatSearchSearchBodyElement: HTMLDivElement | null;
-/** @type {HTMLDialogElement | null} */
-declare var ChatSearchFilterUnhideConfirmElement: HTMLDialogElement | null;
-/** @type {HTMLDialogElement | null} */
-declare var ChatSearchFilterHelpScreenElement: HTMLDialogElement | null;
-declare const ChatSearchUpdateSearchSettings: () => void;

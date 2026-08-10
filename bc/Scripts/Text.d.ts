@@ -1,3 +1,9 @@
+/** @type {TextCache | null} */
+declare let TextScreenCache: TextCache | null;
+/** @type {Map<string, TextCache>} */
+declare const TextAllScreenCache: Map<string, TextCache>;
+/** Prefix for the Text-generated warning message on a missing key */
+declare const TEXT_NOT_FOUND_PREFIX = "MISSING TEXT IN";
 /**
  * Finds the text value linked to the tag in the buffer
  * @param {string} TextTag - Tag for the text to find
@@ -51,42 +57,19 @@ declare function TextPrefetchFile(file: string): TextCache;
  * @returns {(string | T)[]} The text associated to the tag, split into a list according to the passed replacers. Missing tag texts will be interpreted as empty strings.
  */
 declare function TextSubstitute<T>(textTag: string, replacers: Record<string, T>, options?: {
-    textCache?: TextCache | undefined;
+    textCache?: TextCache;
 }): (string | T)[];
+declare const InterfaceStringsPath = "Screens/Interface.csv";
 /**
  * @param {TextKeysInterface} msg
  * @returns {string}
  */
 declare function InterfaceTextGet(msg: TextKeysInterface): string;
-/** @type {TextCache | null} */
-declare let TextScreenCache: TextCache | null;
-/** @type {Map<string, TextCache>} */
-declare const TextAllScreenCache: Map<string, TextCache>;
-/** Prefix for the Text-generated warning message on a missing key */
-declare const TEXT_NOT_FOUND_PREFIX: "MISSING TEXT IN";
-declare const InterfaceStringsPath: "Screens/Interface.csv";
 /**
  * A class that can be used to cache a simple key/value CSV file for easy text lookups. Text lookups will be automatically translated to
  * the game's current language, if a translation is available.
  */
 declare class TextCache {
-    /**
-     * A cache with missing keys as diagnosed by {@link TextCache.get}. Used for ensuring that each unique cache/key pair only outputs to the console once.
-     * @type {Set<string>}
-     */
-    static textMissingCache: Set<string>;
-    /**
-     * Creates a new TextCache from the provided CSV file path asynchronously,
-     * promising its return after the cache has been build.
-     * @param {string} path - The path to the CSV lookup file for this TextCache instance
-     * @returns {Promise<TextCache>}
-     */
-    static buildAsync(path: string): Promise<TextCache>;
-    /**
-     * Creates a new TextCache from the provided CSV file path.
-     * @param {string} path - The path to the CSV lookup file for this TextCache instance
-     */
-    constructor(path: string);
     /** @type {string} */
     path: string;
     /** @type {ServerChatRoomLanguage | "TW"} */
@@ -105,6 +88,23 @@ declare class TextCache {
      * @type {Promise<TextCache>}
      */
     loadedPromise: Promise<TextCache>;
+    /**
+     * A cache with missing keys as diagnosed by {@link TextCache.get}. Used for ensuring that each unique cache/key pair only outputs to the console once.
+     * @type {Set<string>}
+     */
+    static textMissingCache: Set<string>;
+    /**
+     * Creates a new TextCache from the provided CSV file path.
+     * @param {string} path - The path to the CSV lookup file for this TextCache instance
+     */
+    constructor(path: string);
+    /**
+     * Creates a new TextCache from the provided CSV file path asynchronously,
+     * promising its return after the cache has been build.
+     * @param {string} path - The path to the CSV lookup file for this TextCache instance
+     * @returns {Promise<TextCache>}
+     */
+    static buildAsync(path: string): Promise<TextCache>;
     /**
      * @param {string} msg
      */

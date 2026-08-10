@@ -1,7 +1,5 @@
-declare function InventoryItemNeckFuturisticCollarLoadHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemNeckFuturisticCollarDrawHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemNeckFuturisticCollarExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
-declare function InventoryItemNeckFuturisticCollarClickHook(data: NoArchItemData, originalFunction: () => void): void;
+declare var FuturisticCollarPage: number;
+declare var FuturisticCollarMaxPage: number;
 /**
  * @param {Character} C
  * @param {AssetLockType} LockType
@@ -47,5 +45,3 @@ declare function InventoryItemNeckFuturisticCollarTogglePermission(C: Character,
  * @param {Item} Item
  */
 declare function InventoryItemNeckFuturisticCollarToggleRemotes(C: Character, Item: Item): void;
-declare var FuturisticCollarPage: number;
-declare var FuturisticCollarMaxPage: number;

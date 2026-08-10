@@ -1,3 +1,40 @@
+/** @type {Character[]} */
+declare var Character: Character[];
+declare var CharacterNextId: number;
+/** @type {Map<BlindEffectName, number>} */
+declare const CharacterBlindLevels: Map<BlindEffectName, number>;
+/** @type {Map<DeafEffectName, number>} */
+declare const CharacterDeafLevels: Map<DeafEffectName, number>;
+/** @type {Map<BlurEffectName, number>} */
+declare const CharacterBlurLevels: Map<BlurEffectName, number>;
+declare const Difficulty: {
+    ROLEPLAY: number;
+    REGULAR: number;
+    HARDCORE: number;
+    EXTREME: number;
+};
+/** @satisfies {Record<string, AllowedInteractions>} */
+declare const AllowedInteractions: {
+    readonly Everyone: 0;
+    readonly EveryoneExceptBlacklist: 1;
+    readonly OwnerLoversWhitelistAndDomsOnly: 2;
+    readonly OwnerLoversWhitelistOnly: 3;
+    readonly OwnerLoversOnly: 4;
+    readonly OwnerOnly: 5;
+};
+/**
+ * An enum representing the various character archetypes
+ * ONLINE: The player, or a character representing another online player
+ * NPC: Any NPC
+ * SIMPLE: Any simple character, generally used internally and not to represent an actual in-game character
+ * @type {Record<"ONLINE"|"NPC"|"SIMPLE"|"PLAYER", CharacterType>}
+ */
+declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE" | "PLAYER", CharacterType>;
+/**
+ * A record mapping screen names to functions for returning {@link CharacterGetCurrent} characters.
+ * @type {Record<string, () => null | Character>}
+ */
+declare var CharacterGetCurrentHandlers: Record<string, () => null | Character>;
 declare function CharacterCreatePlayer(): void;
 /**
  * Loads a character into the buffer, creates it if it does not exist
@@ -518,39 +555,3 @@ declare function CharacterIsOnList(listOwner: Character, listTarget: Character |
  * @param {Character} C
  */
 declare function CharacterGetHeight(C: Character): number;
-/** @type {Character[]} */
-declare var Character: Character[];
-declare var CharacterNextId: number;
-/** @type {Map<BlindEffectName, number>} */
-declare const CharacterBlindLevels: Map<BlindEffectName, number>;
-/** @type {Map<DeafEffectName, number>} */
-declare const CharacterDeafLevels: Map<DeafEffectName, number>;
-/** @type {Map<BlurEffectName, number>} */
-declare const CharacterBlurLevels: Map<BlurEffectName, number>;
-declare namespace Difficulty {
-    let ROLEPLAY: number;
-    let REGULAR: number;
-    let HARDCORE: number;
-    let EXTREME: number;
-}
-declare namespace AllowedInteractions {
-    let Everyone: 0;
-    let EveryoneExceptBlacklist: 1;
-    let OwnerLoversWhitelistAndDomsOnly: 2;
-    let OwnerLoversWhitelistOnly: 3;
-    let OwnerLoversOnly: 4;
-    let OwnerOnly: 5;
-}
-/**
- * An enum representing the various character archetypes
- * ONLINE: The player, or a character representing another online player
- * NPC: Any NPC
- * SIMPLE: Any simple character, generally used internally and not to represent an actual in-game character
- * @type {Record<"ONLINE"|"NPC"|"SIMPLE"|"PLAYER", CharacterType>}
- */
-declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE" | "PLAYER", CharacterType>;
-/**
- * A record mapping screen names to functions for returning {@link CharacterGetCurrent} characters.
- * @type {Record<string, () => null | Character>}
- */
-declare var CharacterGetCurrentHandlers: Record<string, () => null | Character>;

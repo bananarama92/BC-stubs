@@ -1,4 +1,20 @@
-declare function MagicPuzzleLoad(): Promise<void>;
+declare var MagicPuzzleBackground: string;
+declare var MagicPuzzleStart: number;
+declare var MagicPuzzleFinish: number;
+declare var MagicPuzzleSize: number;
+declare var MagicPuzzleSpell: number;
+declare var MagicPuzzleAutoExit: boolean;
+declare var MagicPuzzleCanStart: boolean;
+declare var MagicPuzzleTimer: number;
+declare var MagicPuzzleLastMouseX: number;
+declare var MagicPuzzleLastMouseY: number;
+/** @type { { X: number, Y: number }[] } */
+declare var MagicPuzzleTrail: {
+    X: number;
+    Y: number;
+}[];
+declare var MagicPuzzleTrailLimit: number;
+declare var MagicPuzzleTrailRainbow: boolean;
 /**
  * Returns the time in seconds with 3 digits milliseconds
  * @param {number} Time
@@ -50,26 +66,8 @@ declare function MagicPuzzleClick(): void;
  * @returns {void} - Nothing
  */
 declare function MagicPuzzleMouseDown(): void;
-declare function MagicPuzzleKeyDown(event: KeyboardEvent): boolean;
 /**
  * When the magic puzzle must end
  * @returns {void} - Nothing
  */
 declare function MagicPuzzleEnd(): void;
-declare var MagicPuzzleBackground: string;
-declare var MagicPuzzleStart: number;
-declare var MagicPuzzleFinish: number;
-declare var MagicPuzzleSize: number;
-declare var MagicPuzzleSpell: number;
-declare var MagicPuzzleAutoExit: boolean;
-declare var MagicPuzzleCanStart: boolean;
-declare var MagicPuzzleTimer: number;
-declare var MagicPuzzleLastMouseX: number;
-declare var MagicPuzzleLastMouseY: number;
-/** @type { { X: number, Y: number }[] } */
-declare var MagicPuzzleTrail: {
-    X: number;
-    Y: number;
-}[];
-declare var MagicPuzzleTrailLimit: number;
-declare var MagicPuzzleTrailRainbow: boolean;

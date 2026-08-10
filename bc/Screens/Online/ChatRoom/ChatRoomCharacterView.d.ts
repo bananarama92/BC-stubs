@@ -1,11 +1,29 @@
+declare var ChatRoomCharacterViewInitialize: boolean;
+declare var ChatRoomCharacterViewSlideWeight: number;
+declare var ChatRoomCharacterViewX_Upper: number;
+declare var ChatRoomCharacterViewX_Lower: number;
+declare var ChatRoomCharacterViewZoom: number;
+/** @type {number} */
+declare var ChatRoomCharacterViewCharacterCount: number;
+/** @type {number} */
+declare var ChatRoomCharacterViewCharacterCountTotal: number;
+/** @type {null | number} */
+declare var ChatRoomCharacterViewMoveTarget: null | number;
+/** @type {number} */
+declare var ChatRoomCharacterViewOffset: number;
+declare const ChatRoomCharacterViewWidth: number;
+declare const ChatRoomCharacterViewHeight = 1000;
+declare const ChatRoomCharacterViewCharactersPerRow = 5;
+/**
+ * The name of the chat room character view.
+ * @type {"Character"}
+ */
+declare const ChatRoomCharacterViewName: "Character";
 /**
  * Indicates if the chat room character view is active or not
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
 declare function ChatRoomCharacterViewIsActive(): boolean;
-declare function ChatRoomCharacterViewRun(time: number): void;
-declare function ChatRoomCharacterViewClick(event: PointerEvent): void;
-declare function ChatRoomCharacterViewKeyDown(event: KeyboardEvent): boolean;
 /**
  * Returns TRUE if the player can leave
  * @returns {boolean} - True if the player can leave
@@ -58,24 +76,3 @@ declare function ChatRoomCharacterViewLoopCharacters(callback: (charIdx: number,
  * @param {number} Zoom Room zoom
  */
 declare function ChatRoomCharacterViewDrawOverlay(C: Character, CharX: number, CharY: number, Zoom: number): void;
-declare var ChatRoomCharacterViewInitialize: boolean;
-declare var ChatRoomCharacterViewSlideWeight: number;
-declare var ChatRoomCharacterViewX_Upper: number;
-declare var ChatRoomCharacterViewX_Lower: number;
-declare var ChatRoomCharacterViewZoom: number;
-/** @type {number} */
-declare var ChatRoomCharacterViewCharacterCount: number;
-/** @type {number} */
-declare var ChatRoomCharacterViewCharacterCountTotal: number;
-/** @type {null | number} */
-declare var ChatRoomCharacterViewMoveTarget: null | number;
-/** @type {number} */
-declare var ChatRoomCharacterViewOffset: number;
-declare const ChatRoomCharacterViewWidth: number;
-declare const ChatRoomCharacterViewHeight: 1000;
-declare const ChatRoomCharacterViewCharactersPerRow: 5;
-/**
- * The name of the chat room character view.
- * @type {"Character"}
- */
-declare const ChatRoomCharacterViewName: "Character";

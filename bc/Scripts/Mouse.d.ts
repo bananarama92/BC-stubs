@@ -1,3 +1,5 @@
+declare var MouseX: number;
+declare var MouseY: number;
 /**
  * Check if the mouse position is within the boundaries of a given zone (Useful for UI components)
  * @param {number} Left - Starting position on the X axis
@@ -30,5 +32,3 @@ declare function MouseYIn(Top: number, Height: number): boolean;
  * @returns {boolean} - Returns TRUE if the mouse is currently hovering over the specified zone
  */
 declare function MouseHovering(Left: number, Top: number, Width: number, Height: number): boolean;
-declare var MouseX: number;
-declare var MouseY: number;

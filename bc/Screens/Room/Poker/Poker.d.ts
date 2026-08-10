@@ -1,4 +1,23 @@
-declare function PokerLoad(): Promise<void>;
+declare var PokerBackground: string;
+/** @type {PokerPlayer[]} */
+declare var PokerPlayer: PokerPlayer[];
+/** @type {PokerMode} */
+declare var PokerMode: PokerMode;
+/** @type {PokerGameType} */
+declare var PokerGame: PokerGameType;
+declare var PokerShowPlayer: boolean;
+/** @type {PokerAsset[]} */
+declare var PokerAsset: PokerAsset[];
+declare var PokerPlayerCount: number;
+/** @type {number[]} */
+declare var PokerTableCards: number[];
+declare var PokerMessage: string;
+declare var PokerResultMessage: string;
+declare var PokerAnte: number;
+declare var PokerAnteCount: number;
+declare var PokerPot: number;
+declare var PokerChallenge: string[];
+declare var PokerOpponentList: string[];
 /**
  * Draws a poker player behind the table
  * @param {PokerPlayer} P
@@ -67,7 +86,6 @@ declare function PokerNextChallenge(): PokerPlayer;
  * @returns {void} - Nothing
  */
 declare function PokerClick(): void;
-declare function PokerKeyDown(event: KeyboardEvent): boolean;
 /**
  * When the player exits from Bondage Poker
  * @returns {void} - Nothing
@@ -111,23 +129,3 @@ declare function PokerProcess(Action: string): string;
  * @returns {void} - Nothing
  */
 declare function PokerDealHands(): void;
-declare var PokerBackground: string;
-/** @type {PokerPlayer[]} */
-declare var PokerPlayer: PokerPlayer[];
-/** @type {PokerMode} */
-declare var PokerMode: PokerMode;
-/** @type {PokerGameType} */
-declare var PokerGame: PokerGameType;
-declare var PokerShowPlayer: boolean;
-/** @type {PokerAsset[]} */
-declare var PokerAsset: PokerAsset[];
-declare var PokerPlayerCount: number;
-/** @type {number[]} */
-declare var PokerTableCards: number[];
-declare var PokerMessage: string;
-declare var PokerResultMessage: string;
-declare var PokerAnte: number;
-declare var PokerAnteCount: number;
-declare var PokerPot: number;
-declare var PokerChallenge: string[];
-declare var PokerOpponentList: string[];

@@ -1,9 +1,27 @@
+declare var MaidDrinksBackground: string;
+/** @type {NPCCharacter} */
+declare var MaidDrinksCustomerLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MaidDrinksCustomerRight: NPCCharacter;
+declare var MaidDrinksCustomerLeftTimer: number;
+declare var MaidDrinksCustomerRightTimer: number;
+declare var MaidDrinksCustomerLeftVisible: boolean;
+declare var MaidDrinksCustomerRightVisible: boolean;
+declare var MaidDrinksMaxSequence: number;
+/** @type {{ Type: number, Time: number, FadeAt: number? }[]} */
+declare var MaidDrinksMove: {
+    Type: number;
+    Time: number;
+    FadeAt: number | null;
+}[];
+declare var MaidDrinksLastMoveType: number;
+declare var MaidDrinksLastMoveTypeTimer: number;
+declare var MaidDrinksKeys: string[];
 /**
  * Generates a full sequence
  * @param {number} StartTime - Start time of the sequence
  */
 declare function MaidDrinksGenerateMove(StartTime: number): void;
-declare function MaidDrinksLoad(): Promise<void>;
 /**
  * Draws the icons for the mini game
  * @returns {void} - Nothing
@@ -47,28 +65,8 @@ declare function MaidDrinksMiss(): void;
  * @returns {void} - Nothing
  */
 declare function MaidDrinksDoMove(MoveType: number): void;
-declare function MaidDrinksKeyDown(event: KeyboardEvent): boolean;
 /**
  * Handles clicks during the maid drinks mini game (only on mobile, to replace the keyboard)
  * @returns {void} - Nothing
  */
 declare function MaidDrinksClick(): void;
-declare var MaidDrinksBackground: string;
-/** @type {NPCCharacter} */
-declare var MaidDrinksCustomerLeft: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var MaidDrinksCustomerRight: NPCCharacter;
-declare var MaidDrinksCustomerLeftTimer: number;
-declare var MaidDrinksCustomerRightTimer: number;
-declare var MaidDrinksCustomerLeftVisible: boolean;
-declare var MaidDrinksCustomerRightVisible: boolean;
-declare var MaidDrinksMaxSequence: number;
-/** @type {{ Type: number, Time: number, FadeAt: number? }[]} */
-declare var MaidDrinksMove: {
-    Type: number;
-    Time: number;
-    FadeAt: number | null;
-}[];
-declare var MaidDrinksLastMoveType: number;
-declare var MaidDrinksLastMoveTypeTimer: number;
-declare var MaidDrinksKeys: string[];

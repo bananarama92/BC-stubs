@@ -1,21 +1,3 @@
-declare function RelogLoad(): Promise<void>;
-/**
- * Unload the relog screen
- */
-declare function RelogUnload(): void;
-/**
- * Runs the relog screen
- * @returns {void} Nothing
- */
-declare function RelogRun(): void;
-/**
- * Handles player click events on the relog screen
- * @returns {void} Nothing
- */
-declare function RelogClick(): void;
-declare function RelogKeyDown(event: KeyboardEvent): boolean;
-declare function RelogExit(): void;
-declare function RelogResize(): void;
 /** @type {null | RelogData} */
 declare var RelogData: null | RelogData;
 declare const RelogIDs: Readonly<{
@@ -31,3 +13,18 @@ declare const RelogIDs: Readonly<{
     buttons: "relog-buttons";
     passwordAndButtons: "relog-password-and-buttons";
 }>;
+/**
+ * Unload the relog screen
+ */
+declare function RelogUnload(): void;
+/**
+ * Runs the relog screen
+ * @returns {void} Nothing
+ */
+declare function RelogRun(): void;
+/**
+ * Handles player click events on the relog screen
+ * @returns {void} Nothing
+ */
+declare function RelogClick(): void;
+declare function RelogResize(): void;

@@ -1,3 +1,27 @@
+/** @type {Map<string, HTMLImageElement>} */
+declare var GLDrawImageCache: Map<string, HTMLImageElement>;
+/** @type {"webgl2"|"webgl"|"No WebGL"} */
+declare var GLVersion: "webgl2" | "webgl" | "No WebGL";
+/** @type {null | HTMLCanvasElement} */
+declare var GLDrawCanvas: null | HTMLCanvasElement;
+/**
+ * How many seconds to wait before forcefully resetting the canvas after a
+ * context loss
+ */
+declare const GLDrawContextResetSeconds = 10;
+/**
+ * The cooldown in seconds after resetting the canvas. If another context loss
+ * happens in this cooldown, we'll revert to canvas2d rendering
+ */
+declare const GLDrawRevertToDraw2DSeconds = 50;
+/** @type {ReturnType<typeof setTimeout>} */
+declare let GLDrawContextLostTimeout: ReturnType<typeof setTimeout>;
+declare let GLDrawRecoveryMode: boolean;
+/** @type {ReturnType<typeof setTimeout>} */
+declare let GLDrawCrashTimeout: ReturnType<typeof setTimeout>;
+declare var GLDrawAlphaThreshold: number;
+declare var GLDrawHalfAlphaLow: number;
+declare var GLDrawHalfAlphaHigh: number;
 /**
  * Setup WebGL rendering
  *
@@ -57,6 +81,42 @@ declare function GLDrawRebuildCharacters(): void;
  * @returns {void} - Nothing
  */
 declare function GLDrawMakeGLProgram(gl: WebGL2RenderingContext): void;
+/**
+ * Source used for the Vertex Shader
+ * @constant
+ * @type {string}
+ */
+declare var GLDrawVertexShaderSource: string;
+/**
+ * Source used for the Fragment Shader
+ * @constant
+ * @type {string}
+ */
+declare var GLDrawFragmentShaderSource: string;
+/**
+ * Source used for the Texture Mask Fragment Shader
+ * @constant
+ * @type {string}
+ */
+declare var GLDrawFragmentShaderSourceTexMask: string;
+/**
+ * Source used for the Pre-Multiply Alpha Shader
+ * @constant
+ * @type {string}
+ */
+declare var GLDrawFragmentShaderSourcePreMultiplyAlpha: string;
+/**
+ * Source used for the Full Alpha Shader
+ * @constant
+ * @type {string}
+ */
+declare var GLDrawFragmentShaderSourceFullAlpha: string;
+/**
+ * Source used for the Half Alpha Shader
+ * @constant
+ * @type {string}
+ */
+declare var GLDrawFragmentShaderSourceHalfAlpha: string;
 /**
  * Creates a shader for the current WebGL context from a given source
  * @param {WebGL2RenderingContext} gl - WebGL context
@@ -171,63 +231,3 @@ declare function GLDrawHexToRGBA(color: string, alpha?: number): number[];
  * @returns {void} - Nothing
  */
 declare function GLDrawAppearanceBuild(C: Character): void;
-/** @type {Map<string, HTMLImageElement>} */
-declare var GLDrawImageCache: Map<string, HTMLImageElement>;
-/** @type {"webgl2"|"webgl"|"No WebGL"} */
-declare var GLVersion: "webgl2" | "webgl" | "No WebGL";
-/** @type {null | HTMLCanvasElement} */
-declare var GLDrawCanvas: null | HTMLCanvasElement;
-/**
- * How many seconds to wait before forcefully resetting the canvas after a
- * context loss
- */
-declare const GLDrawContextResetSeconds: 10;
-/**
- * The cooldown in seconds after resetting the canvas. If another context loss
- * happens in this cooldown, we'll revert to canvas2d rendering
- */
-declare const GLDrawRevertToDraw2DSeconds: 50;
-/** @type {ReturnType<typeof setTimeout>} */
-declare let GLDrawContextLostTimeout: ReturnType<typeof setTimeout>;
-declare let GLDrawRecoveryMode: boolean;
-/** @type {ReturnType<typeof setTimeout>} */
-declare let GLDrawCrashTimeout: ReturnType<typeof setTimeout>;
-declare var GLDrawAlphaThreshold: number;
-declare var GLDrawHalfAlphaLow: number;
-declare var GLDrawHalfAlphaHigh: number;
-/**
- * Source used for the Vertex Shader
- * @constant
- * @type {string}
- */
-declare var GLDrawVertexShaderSource: string;
-/**
- * Source used for the Fragment Shader
- * @constant
- * @type {string}
- */
-declare var GLDrawFragmentShaderSource: string;
-/**
- * Source used for the Texture Mask Fragment Shader
- * @constant
- * @type {string}
- */
-declare var GLDrawFragmentShaderSourceTexMask: string;
-/**
- * Source used for the Pre-Multiply Alpha Shader
- * @constant
- * @type {string}
- */
-declare var GLDrawFragmentShaderSourcePreMultiplyAlpha: string;
-/**
- * Source used for the Full Alpha Shader
- * @constant
- * @type {string}
- */
-declare var GLDrawFragmentShaderSourceFullAlpha: string;
-/**
- * Source used for the Half Alpha Shader
- * @constant
- * @type {string}
- */
-declare var GLDrawFragmentShaderSourceHalfAlpha: string;

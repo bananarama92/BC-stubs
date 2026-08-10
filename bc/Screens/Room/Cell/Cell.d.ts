@@ -1,4 +1,8 @@
-declare function CellLoad(): Promise<void>;
+declare var CellBackground: string;
+declare var CellMinutes: number;
+declare var CellOpenTimer: number;
+/** @type {null | NPCCharacter} */
+declare var CellKeyDepositStaff: null | NPCCharacter;
 /**
  * Runs and draws the cell screen
  * @returns {void} - Nothing
@@ -21,8 +25,3 @@ declare function CellLock(LockTime: number): void;
  * @returns {void} - Nothing
  */
 declare function CellDepositKeys(DepositTime: number): void;
-declare var CellBackground: string;
-declare var CellMinutes: number;
-declare var CellOpenTimer: number;
-/** @type {null | NPCCharacter} */
-declare var CellKeyDepositStaff: null | NPCCharacter;

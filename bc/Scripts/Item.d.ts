@@ -29,15 +29,18 @@ declare function ItemModuleVoiceCommandHandle(C: Character, item: Item, LastTime
  * @param {number} shockCooldown
  * @param {AssetGroupItemName[]} tamperZones
  */
-declare function ItemModulePunishCheck(C: Character, item: Item, shockCooldown: number, tamperZones: AssetGroupItemName[]): "Struggle" | "Orgasm" | "StandUp" | "StruggleOther" | null;
-declare namespace Item {
+declare function ItemModulePunishCheck(C: Character, item: Item, shockCooldown: number, tamperZones: AssetGroupItemName[]): "Orgasm" | "StandUp" | "Struggle" | "StruggleOther" | null;
+/**
+ * Namespace for constructing {@link Item} objects.
+*/
+declare var Item: {
     /**
      * Construct an item from the passed asset
      * @param {Asset} asset The asset in question
      * @param {null | Item.Options} options Further options
      * @returns {Item} The new item
      */
-    function fromAsset(asset: Asset, options?: null | Item.Options): Item;
+    fromAsset(asset: Asset, options?: null | Item.Options): Item;
     /**
      * Construct an item from the passed group- and asset names
      * @param {AssetGroupName} groupName The asset's group name
@@ -45,5 +48,5 @@ declare namespace Item {
      * @param {null | Item.Options} options Further options
      * @returns {null | Item} The new item or `null` if no matching asset can be found
      */
-    function fromName(groupName: AssetGroupName, assetName: string, options?: null | Item.Options): null | Item;
-}
+    fromName(groupName: AssetGroupName, assetName: string, options?: null | Item.Options): null | Item;
+};

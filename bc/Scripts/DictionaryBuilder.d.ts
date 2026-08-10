@@ -1,122 +1,4 @@
 /**
- * @param {ChatMessageDictionaryEntry | TaggedDictionaryEntry} entry
- * @returns {entry is TaggedDictionaryEntry}
- */
-declare function IsTaggedDictionaryEntry(entry: ChatMessageDictionaryEntry | TaggedDictionaryEntry): entry is TaggedDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry | TaggedDictionaryEntry} entry
- * @template {string} T
- * @param {T} tag
- * @returns {entry is StringListDictionaryEntry<T>}
- */
-declare function IsStringListDictionaryEntry<T extends string>(tag: T, entry: ChatMessageDictionaryEntry | TaggedDictionaryEntry): entry is StringListDictionaryEntry<T>;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is CharacterReferenceDictionaryEntry}
- */
-declare function IsCharacterReferenceDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is CharacterReferenceDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is SourceCharacterDictionaryEntry}
- */
-declare function IsSourceCharacterDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is SourceCharacterDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is TargetCharacterDictionaryEntry}
- */
-declare function IsTargetCharacterDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is TargetCharacterDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is FocusGroupDictionaryEntry}
- */
-declare function IsFocusGroupDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is FocusGroupDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is TextDictionaryEntry}
- */
-declare function IsTextDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is TextDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is GGTSDictionaryEntry}
- */
-declare function IsGGTSDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is GGTSDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is TextLookupDictionaryEntry}
- */
-declare function IsTextLookupDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is TextLookupDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is GroupReferenceDictionaryEntry}
- */
-declare function IsGroupReferenceDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is GroupReferenceDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is AssetReferenceDictionaryEntry}
- */
-declare function IsAssetReferenceDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is AssetReferenceDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is ShockEventDictionaryEntry}
- */
-declare function IsShockEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ShockEventDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is AutomaticEventDictionaryEntry}
- */
-declare function IsAutomaticEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is AutomaticEventDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is ActivityCounterDictionaryEntry}
- */
-declare function IsActivityCounterDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ActivityCounterDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is AssetGroupNameDictionaryEntry}
- * @deprecated
- */
-declare function IsAssetGroupNameDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is AssetGroupNameDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is ActivityNameDictionaryEntry}
- */
-declare function IsActivityNameDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ActivityNameDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is MessageEffectEntry}
- */
-declare function IsMessageEffectDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MessageEffectEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is ReplyIdDictionaryEntry}
- */
-declare function IsReplyIdDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ReplyIdDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is MsgIdDictionaryEntry}
- */
-declare function IsMsgIdDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MsgIdDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is MapViewTeleportEventDictionaryEntry}
- */
-declare function IsMapViewTeleportEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MapViewTeleportEventDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is MapViewChangeKeyEventDictionaryEntry}
- */
-declare function IsMapViewChangeKeyEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MapViewChangeKeyEventDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is ModSdkModsReplyPayloadDictionaryEntry}
- */
-declare function IsModSdkModsReplyPayload(entry: ChatMessageDictionaryEntry): entry is ModSdkModsReplyPayloadDictionaryEntry;
-/**
- * @param {ChatMessageDictionaryEntry} entry
- * @returns {entry is ModSdkModsQueryPayloadDictionaryEntry}
- */
-declare function IsModSdkModsQueryPayload(entry: ChatMessageDictionaryEntry): entry is ModSdkModsQueryPayloadDictionaryEntry;
-/**
  * Build class for chat message dictionaries
  */
 declare class DictionaryBuilder {
@@ -127,6 +9,10 @@ declare class DictionaryBuilder {
     _targetIndex: number;
     /** @type {boolean} */
     _condition: boolean;
+    /**
+     * Constructs a new DictionaryBuilder instance
+     */
+    constructor();
     /**
      * Creates and enters a child {@link ConditionalDictionaryBuilder}, whose entries are only added if the provided
      * condition is truthy.
@@ -281,17 +167,135 @@ declare class DictionaryBuilder {
  * evaluates to falsy, then it will always build an empty array.
  */
 declare class ConditionalDictionaryBuilder extends DictionaryBuilder {
+    /** @type {DictionaryBuilder} */
+    _parent: DictionaryBuilder;
     /**
      * Constructs a new ConditionalDictionaryBuilder instance with the given parent and condition.
      * @param {DictionaryBuilder} parent - The parent {@link DictionaryBuilder} instance
      * @param {boolean} condition - The condition that should determine whether or not this builder adds entries.
      */
     constructor(parent: DictionaryBuilder, condition: boolean);
-    /** @type {DictionaryBuilder} */
-    _parent: DictionaryBuilder;
     /**
      * Returns the parent {@link DictionaryBuilder instance}. Used to effectively end input to this builder.
      * @returns {DictionaryBuilder} - The parent builder
      */
     endif(): DictionaryBuilder;
 }
+/**
+ * @param {ChatMessageDictionaryEntry | TaggedDictionaryEntry} entry
+ * @returns {entry is TaggedDictionaryEntry}
+ */
+declare function IsTaggedDictionaryEntry(entry: ChatMessageDictionaryEntry | TaggedDictionaryEntry): entry is TaggedDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry | TaggedDictionaryEntry} entry
+ * @template {string} T
+ * @param {T} tag
+ * @returns {entry is StringListDictionaryEntry<T>}
+ */
+declare function IsStringListDictionaryEntry<T extends string>(tag: T, entry: ChatMessageDictionaryEntry | TaggedDictionaryEntry): entry is StringListDictionaryEntry<T>;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is CharacterReferenceDictionaryEntry}
+ */
+declare function IsCharacterReferenceDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is CharacterReferenceDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is SourceCharacterDictionaryEntry}
+ */
+declare function IsSourceCharacterDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is SourceCharacterDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is TargetCharacterDictionaryEntry}
+ */
+declare function IsTargetCharacterDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is TargetCharacterDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is FocusGroupDictionaryEntry}
+ */
+declare function IsFocusGroupDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is FocusGroupDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is TextDictionaryEntry}
+ */
+declare function IsTextDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is TextDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is GGTSDictionaryEntry}
+ */
+declare function IsGGTSDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is GGTSDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is TextLookupDictionaryEntry}
+ */
+declare function IsTextLookupDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is TextLookupDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is GroupReferenceDictionaryEntry}
+ */
+declare function IsGroupReferenceDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is GroupReferenceDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is AssetReferenceDictionaryEntry}
+ */
+declare function IsAssetReferenceDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is AssetReferenceDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ShockEventDictionaryEntry}
+ */
+declare function IsShockEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ShockEventDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is AutomaticEventDictionaryEntry}
+ */
+declare function IsAutomaticEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is AutomaticEventDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ActivityCounterDictionaryEntry}
+ */
+declare function IsActivityCounterDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ActivityCounterDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is AssetGroupNameDictionaryEntry}
+ * @deprecated
+ */
+declare function IsAssetGroupNameDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is AssetGroupNameDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ActivityNameDictionaryEntry}
+ */
+declare function IsActivityNameDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ActivityNameDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is MessageEffectEntry}
+ */
+declare function IsMessageEffectDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MessageEffectEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ReplyIdDictionaryEntry}
+ */
+declare function IsReplyIdDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is ReplyIdDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is MsgIdDictionaryEntry}
+ */
+declare function IsMsgIdDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MsgIdDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is MapViewTeleportEventDictionaryEntry}
+ */
+declare function IsMapViewTeleportEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MapViewTeleportEventDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is MapViewChangeKeyEventDictionaryEntry}
+ */
+declare function IsMapViewChangeKeyEventDictionaryEntry(entry: ChatMessageDictionaryEntry): entry is MapViewChangeKeyEventDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ModSdkModsReplyPayloadDictionaryEntry}
+ */
+declare function IsModSdkModsReplyPayload(entry: ChatMessageDictionaryEntry): entry is ModSdkModsReplyPayloadDictionaryEntry;
+/**
+ * @param {ChatMessageDictionaryEntry} entry
+ * @returns {entry is ModSdkModsQueryPayloadDictionaryEntry}
+ */
+declare function IsModSdkModsQueryPayload(entry: ChatMessageDictionaryEntry): entry is ModSdkModsQueryPayloadDictionaryEntry;

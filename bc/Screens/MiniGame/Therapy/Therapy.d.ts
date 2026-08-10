@@ -1,4 +1,11 @@
-declare function TherapyLoad(): Promise<void>;
+declare var TherapyBackground: string;
+/** @type {null | NPCCharacter | PlayerCharacter} */
+declare var TherapyCharacterLeft: null | NPCCharacter | PlayerCharacter;
+/** @type {null | NPCCharacter} */
+declare var TherapyCharacterRight: null | NPCCharacter;
+declare var TherapyMoves: number[];
+declare var TherapyGenerateMoveTimer: number;
+declare var TherapyStress: number;
 /**
  * Runs the therapy mini game.
  * @returns {void} - Nothing
@@ -25,12 +32,3 @@ declare function TherapyClick(): void;
  * @returns {void} - Nothing
  */
 declare function TherapyMouseDown(): void;
-declare function TherapyKeyDown(event: KeyboardEvent): boolean;
-declare var TherapyBackground: string;
-/** @type {null | NPCCharacter | PlayerCharacter} */
-declare var TherapyCharacterLeft: null | NPCCharacter | PlayerCharacter;
-/** @type {null | NPCCharacter} */
-declare var TherapyCharacterRight: null | NPCCharacter;
-declare var TherapyMoves: number[];
-declare var TherapyGenerateMoveTimer: number;
-declare var TherapyStress: number;

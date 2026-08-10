@@ -1,4 +1,249 @@
 /**
+ * An enum for the options for chat room spaces
+ * @satisfies {Record<ChatRoomSpaceLabel, ServerChatRoomSpace>}
+ */
+declare const ChatRoomSpaceType: {
+    readonly MIXED: "X";
+    readonly FEMALE_ONLY: "";
+    readonly MALE_ONLY: "M";
+    readonly ASYLUM: "Asylum";
+};
+/** @type {Record<ChatRoomVisibilityModeLabel, ServerChatRoomRole[]>} */
+declare const ChatRoomVisibilityMode: Record<ChatRoomVisibilityModeLabel, ServerChatRoomRole[]>;
+/** @type {Record<ChatRoomAccessModeLabel, ServerChatRoomRole[]>} */
+declare const ChatRoomAccessMode: Record<ChatRoomAccessModeLabel, ServerChatRoomRole[]>;
+/**
+ * The chat room screen background
+ *
+ * It shall never be set, as doing so will break the code actually checking for the room data's background.
+ */
+declare var ChatRoomBackground: string;
+/**
+ * The data for the current chatroom, as recieved from the server.
+ * @type {null | ServerChatRoomData}
+ */
+declare let ChatRoomData: null | ServerChatRoomData;
+/**
+ * The list of chatroom characters.
+ * This is unpacked characters from the data recieved from the server in {@link ChatRoomData.Character}.
+ * @type {Character[]}
+ */
+declare var ChatRoomCharacter: Character[];
+declare var ChatRoomJustEntered: boolean;
+/** @type {ChatRoomChatLogEntry[]} */
+declare var ChatRoomChatLog: ChatRoomChatLogEntry[];
+declare var ChatRoomLastMessage: string[];
+declare var ChatRoomLastMessageIndex: number;
+/** @type {number} */
+declare var ChatRoomTargetMemberNumber: number;
+/** @type {ChatRoomOwnershipEvent | null} */
+declare var ChatRoomOwnershipOption: ChatRoomOwnershipEvent | null;
+/** @type {ChatRoomLovershipEvent | null} */
+declare var ChatRoomLovershipOption: ChatRoomLovershipEvent | null;
+declare var ChatRoomMoneyForOwner: number;
+/** @type {number[]} */
+declare var ChatRoomQuestGiven: number[];
+/**
+ * @deprecated Use {@link ChatSearchGetSpace()}
+ * @todo Remove after R121
+ * @type {ServerChatRoomSpace}
+ */
+declare var ChatRoomSpace: ServerChatRoomSpace;
+/**
+ * @deprecated Use {@link ChatRoomGetGame()}
+ * @todo Remove after R121
+ * @type {ServerChatRoomGame}
+ */
+declare var ChatRoomGame: ServerChatRoomGame;
+declare var ChatRoomHelpSeen: boolean;
+declare var ChatRoomAllowCharacterUpdate: boolean;
+declare var ChatRoomStruggleAssistBonus: number;
+declare var ChatRoomStruggleAssistTimer: number;
+/** @type {StruggleOnlineData} */
+declare var ChatRoomStruggleData: StruggleOnlineData;
+/**
+ * The timer started when a slowed player attempts to leave
+ * @type {number}
+ */
+declare var ChatRoomSlowtimer: number;
+/**
+ * Whether someone attempted to stop the player in the middle of a slow-leave
+ * @type {boolean}
+ */
+declare var ChatRoomSlowStop: boolean;
+/**
+ * Default position of the entire chat panel
+ * @type {RectTuple}
+ */
+declare var ChatRoomDivRect: RectTuple;
+/**
+ * The last approximate height (_i.e._ {@link HTMLElement.clientHeight} as opposed to {@link DOMRect.height}) of the `InputChat` element.
+ * @type {number}
+ */
+declare let ChatRoomDivInputPrevHeight: number;
+declare var ChatRoomChatHidden: boolean;
+/**
+ * The chatroom characters that were drawn in the last frame.
+ * Used for limiting the "fov". Characters come from {@link ChatRoomCharacter}
+ * @type {Character[]}
+ */
+declare var ChatRoomCharacterDrawlist: Character[];
+/**
+ * If non-empty, ChatRoomCharacterDrawlist will be filtered (after immersion removals) to only include the player and these character(s).
+ * Used for the /focus command. List will be automatically removed if characters are removed from the room.
+ * @type {Character[]}
+ */
+declare var ChatRoomDrawFocusList: Character[];
+/**
+ * The list of characters currently impacted (not drawn) by sensory deprivation in the chat room
+ * Used as a check for whether to apply further sense dep effects to a given character (i.e. name removal, message, hiding, etc). Characters from {@link ChatRoomCharacter}
+ * @type {Character[]}
+ */
+declare var ChatRoomImpactedBySenseDep: Character[];
+declare var ChatRoomSenseDepBypass: boolean;
+declare var ChatRoomGetUpTimer: number;
+/**
+ * The complete data to update a recreated room with once the creation is successful
+ * @type {ChatRoomSettings}
+ * */
+declare var ChatRoomNewRoomToUpdate: ChatRoomSettings;
+declare var ChatRoomNewRoomToUpdateTimer: number;
+/**
+ * The list of MemberNumbers whose characters we're holding the leash of
+ * @type {number[]}
+ */
+declare var ChatRoomLeashList: number[];
+/**
+ * The MemberNumber of the character holding our leash
+ * @type {number|null}
+ */
+declare var ChatRoomLeashPlayer: number | null;
+/**
+ * The room name to join when being leashed
+ * @type {string}
+ */
+declare var ChatRoomJoinLeash: string;
+/**
+ * Whether the chat room customization settings are user-enabled or not
+ */
+declare var ChatRoomCustomized: boolean;
+/** @satisfies {Record<"Never" | "DisabledByDefault" | "EnabledByDefault" | "Always", ChatRoomCustomizationType>} */
+declare const ChatRoomCustomization: Readonly<{
+    Never: 0;
+    DisabledByDefault: 1;
+    EnabledByDefault: 2;
+    Always: 3;
+}>;
+/**
+ * The list of chat room views
+ * @satisfies {Record<string, ChatRoomView>}
+ */
+declare var ChatRoomViews: {
+    /** @type {ChatRoomView} */
+    Character: ChatRoomView;
+    /** @type {ChatRoomView} */
+    Map: ChatRoomView;
+};
+/**
+ * The active chat room view
+ * @type {ChatRoomView | null}
+ */
+declare var ChatRoomActiveView: ChatRoomView | null;
+/**
+ * Chances of a chat message popping up reminding you of some stimulation.
+ *
+ * @type {Record<StimulationAction, StimulationEvent>}
+ */
+declare const ChatRoomStimulationEvents: Record<StimulationAction, StimulationEvent>;
+declare const ChatRoomArousalMsg_Chance: {
+    Kneel: number;
+    Walk: number;
+    StruggleFail: number;
+    StruggleAction: number;
+    Gag: number;
+};
+declare const ChatRoomArousalMsg_ChanceScaling: {
+    Kneel: number;
+    Walk: number;
+    StruggleFail: number;
+    StruggleAction: number;
+    Gag: number;
+};
+declare const ChatRoomArousalMsg_ChanceVibeMod: {
+    Kneel: number;
+    Walk: number;
+    StruggleFail: number;
+    StruggleAction: number;
+    Gag: number;
+};
+declare const ChatRoomArousalMsg_ChanceInflationMod: {
+    Kneel: number;
+    Walk: number;
+    StruggleFail: number;
+    StruggleAction: number;
+    Gag: number;
+};
+declare const ChatRoomArousalMsg_ChanceGagMod: {
+    Kneel: number;
+    Walk: number;
+    StruggleFail: number;
+    StruggleAction: number;
+    Gag: number;
+};
+/**
+ * An enum for the icon visibility state
+ * @satisfies {Record<"SHOW_ALL" | "NO_ICONS" | "NO_AROUSAL_BAR" | "NO_NAME", number>}
+ */
+declare const ChatRoomHideIconStateType: {
+    readonly SHOW_ALL: 0;
+    readonly NO_ICONS: 1;
+    readonly NO_AROUSAL_BAR: 2;
+    readonly NO_NAME: 3;
+};
+/** @type {0 | 1 | 2 | 3} */
+declare var ChatRoomHideIconState: 0 | 1 | 2 | 3;
+/**
+ * The list of buttons in the top-right
+ * @type {ChatRoomMenuButton[]}
+ * */
+declare var ChatRoomMenuButtons: ChatRoomMenuButton[];
+/**
+ * A stringified, `\0`-joined list of menu button names. Used for determining whether the top menubar needs to be refreshed.
+ * @type {string}
+ */
+declare let ChatRoomTopMenuBuiltSig: string;
+declare let ChatRoomFontSize: number;
+declare const ChatRoomFontSizes: {
+    Small: number;
+    Medium: number;
+    Large: number;
+};
+/** Sets whether an add/remove for one list automatically triggers an add/remove for another list */
+declare const ChatRoomListOperationTriggers: () => {
+    list: number[];
+    adding: boolean;
+    triggers: {
+        list: number[];
+        add: boolean;
+    }[];
+}[];
+/**
+ * Chat room resize manager object: Handles resize events for the chat log.
+ * @constant
+ * The chat room resize manager object. Contains the functions and properties required to handle
+ *     resize events.
+ */
+declare let ChatRoomResizeManager: {
+    atStart: boolean;
+    /** @type {null | number} */
+    timer: null | number;
+    timeOut: number;
+    ChatRoomScrollPercentage: number;
+    ChatLogScrolledToEnd: boolean;
+    ChatRoomResizeEvent: () => void;
+    ChatRoomResizeEventsEnd: () => void;
+};
+/**
  * Update the active view based on the room state
  */
 declare function ChatRoomRefreshActiveView(): void;
@@ -337,6 +582,72 @@ declare function DialogCanCallMaidsPunishmentOn(): boolean;
  */
 declare function DialogCanCallMaidsPunishmentOff(): boolean;
 /**
+ * Namespace with functions for creating chat room separators.
+ * @namespace
+ */
+declare var ChatRoomSep: {
+    /**
+     * The most recently created chat room separator
+     * @type {null | HTMLDivElement}
+     */
+    ActiveElem: null | HTMLDivElement;
+    /**
+     * Click event listener for collapsing one or more chat room separators
+     * private
+     * @type {(this: HTMLButtonElement, event: PointerEvent) => Promise<void>}
+     */
+    _ClickCollapse: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
+    /**
+     * Click event listener for scrolling towards chat room seperator
+     * private
+     * @type {(this: HTMLButtonElement, event: PointerEvent) => Promise<void>}
+     */
+    _ClickScrollUp: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
+    /**
+     * Return a {@link HTMLElement.InnerHTML} representation of the passed button's room name
+     * private
+     * @param {HTMLButtonElement} button
+     * @returns {(string | HTMLElement)[]}
+     */
+    _GetDisplayName(button: HTMLButtonElement): (string | HTMLElement)[];
+    /**
+     * Create a dividing element serving as seperator for different chat rooms
+     * @param {boolean} appendChat - Whether to assign {@link ChatRoomSep.ActiveElem} and append the returned `<div>` to the chat log
+     * @returns {HTMLDivElement} - The created `<div>` element
+     */
+    Create(appendChat?: boolean): HTMLDivElement;
+    /**
+     * Return a {@link HTMLElement.innerHTML} representation of the separators room name
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     * @returns {(string | HTMLElement)[]}
+     */
+    GetDisplayName(roomSep: HTMLDivElement): (string | HTMLElement)[];
+    /**
+     * Return whether the passed room separator is collapsed OR NOT
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     * @returns {boolean}
+     */
+    IsCollapsed(roomSep: HTMLDivElement): boolean;
+    /**
+     * Uncollapse the passed room separator
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     */
+    Uncollapse: (roomSep: HTMLDivElement) => Promise<void>;
+    /**
+     * Collapse the passed room separator
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     */
+    Collapse: (roomSep: HTMLDivElement) => Promise<void>;
+    /**
+     * Set the room-specific of the currently active chat room separator
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     * @param {Pick<ServerChatRoomData, "Name" | "Visibility" | "Space">} data - The data of the room
+     */
+    SetRoomData: (roomSep: HTMLDivElement, data: Pick<ServerChatRoomData, "Name" | "Visibility" | "Space">) => Promise<void>;
+    /** Update all the displayed room names based on the player's degree of sensory deprivation. */
+    UpdateDisplayNames: () => Promise<void>;
+};
+/**
  * Creates the chat room input elements.
  * @returns {HTMLDivElement}
  */
@@ -357,7 +668,6 @@ declare function ChatRoomGetMetadataElem(time: string, sender?: null | number | 
  * @param {HTMLElement} div
  */
 declare function ChatRoomAppendChat(div: HTMLElement): void;
-declare function ChatRoomLoad(): Promise<void>;
 /**
  * Removes all elements that can be open in the chat room
 */
@@ -458,8 +768,6 @@ declare function ChatRoomSetLastChatRoom(room: ChatRoomData | null): void;
  * @returns {void} - Nothing.
  */
 declare function ChatRoomStimulationMessage(Action: StimulationAction): void;
-declare function ChatRoomResize(load: boolean): void;
-declare function ChatRoomUnload(): void;
 /**
  * Draws arousal screen filter
  * @param {number} y1 - Y to draw filter at.
@@ -506,6 +814,7 @@ declare function ChatRoomStatusUpdateLocalCharacter(C: Character, Status: string
  * @returns {void} - Nothing.
  */
 declare function ChatRoomStatusUpdate(Status: string | null): void;
+declare let ChatRoomStatusDeadKeys: string[];
 /**
  * Stops the reply when the escape key is pressed
  * @param {KeyboardEvent} key
@@ -556,8 +865,6 @@ declare function ChatRoomUpdateCustomization(toggle?: boolean | undefined): void
  * @returns {void} - Nothing.
  */
 declare function ChatRoomCustomizationRun(): void;
-declare function ChatRoomDraw(): void;
-declare function ChatRoomRun(time: number): void;
 /**
  * Runs the arousal overlay.
  * @returns {boolean} - Returns true if the orgasm overlay is active and false otherwise.
@@ -611,8 +918,6 @@ declare function ChatRoomMouseUp(event: PointerEvent): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMouseMove(event: PointerEvent): void;
-declare function ChatRoomMouseWheel(event: WheelEvent): void;
-declare function ChatRoomClick(event: PointerEvent): void;
 /**
  * The handler for the "Kneel" top menu button
  */
@@ -629,7 +934,6 @@ declare function ChatRoomOpenInformationScreen(): void;
  * The handler for the "Admin" button
  */
 declare function ChatRoomOpenAdminScreen(): void;
-declare function ChatRoomMenuClick(event: PointerEvent): void;
 /**
  * Runs the action for one top-menu button (formerly canvas hit-test + switch).
  * @param {ChatRoomMenuButton} action
@@ -679,6 +983,8 @@ declare function ChatRoomCharacterCanAccessRoom(C: Character): boolean;
  * @returns {boolean} - Returns TRUE if the player can leave the current chat room.
  */
 declare function ChatRoomCanLeave(): boolean;
+/** When slowed, we can't leave quicker than this */
+declare const ChatRoomSlowLeaveMinTime = 5000;
 /**
  * Calculates the slow leave duration
  *
@@ -706,10 +1012,6 @@ declare function ChatRoomProcessSlowLeave(): void;
  * @param {boolean} clearCharacters - Whether the online character cache should be cleared
  */
 declare function ChatRoomLeave(clearCharacters?: boolean): void;
-declare function ChatRoomCommonKeyDown(event: KeyboardEvent): boolean;
-declare function ChatRoomKeyDown(event: KeyboardEvent): boolean;
-declare function ChatRoomPaste(event: ClipboardEvent): void;
-declare function ChatRoomKeyUp(event: KeyboardEvent): boolean;
 /**
  * Scroll through the chat history
  *
@@ -745,7 +1047,7 @@ declare function ChatRoomSendChatMessage(msg: string): boolean;
  * @param {number} targetNumber
  * @param {string} msg
  */
-declare function ChatRoomSendWhisper(targetNumber: number, msg: string): boolean | "target-gone" | "target-out-of-range";
+declare function ChatRoomSendWhisper(targetNumber: number, msg: string): "target-gone" | "target-out-of-range" | boolean;
 /**
  * Sends message to user with HTML tags
  * @param {string} Content - InnerHTML for the message
@@ -850,6 +1152,13 @@ declare function ChatRoomMessageInvolvesPlayer(data: ServerChatRoomMessage): boo
  * @returns true if the player is sensory-deprived from character, false otherwise.
  */
 declare function ChatRoomIsCharacterImpactedBySensoryDeprivation(character: Character): boolean;
+/** @type {ChatRoomMessageExtractor[]} */
+declare var ChatRoomMessageExtractors: ChatRoomMessageExtractor[];
+/**
+ * Global list of handlers for incoming messages.
+ * @type {ChatRoomMessageHandler[]}
+ * */
+declare var ChatRoomMessageHandlers: ChatRoomMessageHandler[];
 /**
  * Adds a function to the list of message extractors.
  *
@@ -1220,6 +1529,8 @@ declare function ChatRoomListManage(Operation: "Add" | "Remove", ListType: "Whit
  * @returns {void} - Nothing
  */
 declare function ChatRoomListManipulation(List: number[], Adding: boolean, Argument: string, notification?: "FriendRequest"): void;
+/** @type {Map<string, number>} */
+declare const ChatRoomLastFriendRequest: Map<string, number>;
 /**
  * Sends a notification message when a friend request is received.
  * @param {Character} SenderCharacter - The character who sent the request.
@@ -1289,8 +1600,11 @@ declare function ChatRoomSendLovershipRequest(RequestType: "Propose" | "Accept" 
  * @returns {void} - Nothing
  */
 declare function ChatRoomDrinkPick(DrinkType: string, Money: number): void;
-declare function ChatRoomSendLoverRule(RuleType: LogNameType[keyof LogNameType], Option: "Quest" | "Leave"): void;
-declare function ChatRoomSendOwnerRule(RuleType: LogNameType[keyof LogNameType], Option: "Quest" | "Leave"): void;
+/** @type {(RuleType: LogNameType[keyof LogNameType], Option: "Quest" | "Leave") => void} */
+declare function ChatRoomSendLoverRule(RuleType: "Accepted" | "AmandaCollared" | "AmandaCollaredWithCurfew" | "AmandaLover" | "AmandaMistress" | "AmandaSarahLovers" | "Auctioned" | "BedBlack" | "BedPink" | "BedWhite" | "BlockAccessOther" | "BlockAccessSelf" | "BlockCage" | "BlockChange" | "BlockChangePose" | "BlockEmote" | "BlockFamilyKey" | "BlockKey" | "BlockLoverLockOwner" | "BlockLoverLockSelf" | "BlockNickname" | "BlockOwnerLockSelf" | "BlockRemote" | "BlockRemoteSelf" | "BlockTalk" | "BlockWhisper" | "BondageCollege" | "Cage" | "Caught" | "ClubMistress" | "ClubSlave" | "Committed" | "DailyJobDone" | "DeviousChallenge" | "Dominant" | "Escaped" | "Expansion" | "FailedLockPick" | "ForbiddenWords" | "ForceGGTS" | "Hide" | "IntroductionDone" | "Isolated" | "JenniferCollared" | "JenniferCollaredWithCurfew" | "JenniferLover" | "JenniferMistress" | "Joined" | "JoinedSorority" | "KeyDeposit" | "KidnapSophie" | "LeadSorority" | "LockOutOfPrivateRoom" | "Locked" | "MaidOpinion" | "MaidsDisabled" | "Mastery" | "MistressWasPaid" | "ModifierDuration" | "ModifierLevel" | "OwnerBeepActive" | "OwnerBeepTimer" | "Pony" | "PonyExam" | "ReleasedCollar" | "ReleasedFromOwner" | "RentRoom" | "ReputationMaxed" | "SarahCameWithPlayer" | "SarahCollared" | "SarahCollaredWithCurfew" | "SarahLover" | "SarahWillBePunished" | "SecondExpansion" | "Security" | "SidneyCollared" | "SidneyCollaredWithCurfew" | "SidneyLover" | "SidneyMistress" | "SleepCage" | "Stolen" | "Submissive" | "TeacherKey" | "Trainer" | "TrainerExam" | "Training" | "Wardrobe" | LogNameAdvanced, Option: "Leave" | "Quest"): void;
+/** @type {(RuleType: LogNameType[keyof LogNameType], Option: "Quest" | "Leave") => void} */
+declare function ChatRoomSendOwnerRule(RuleType: "Accepted" | "AmandaCollared" | "AmandaCollaredWithCurfew" | "AmandaLover" | "AmandaMistress" | "AmandaSarahLovers" | "Auctioned" | "BedBlack" | "BedPink" | "BedWhite" | "BlockAccessOther" | "BlockAccessSelf" | "BlockCage" | "BlockChange" | "BlockChangePose" | "BlockEmote" | "BlockFamilyKey" | "BlockKey" | "BlockLoverLockOwner" | "BlockLoverLockSelf" | "BlockNickname" | "BlockOwnerLockSelf" | "BlockRemote" | "BlockRemoteSelf" | "BlockTalk" | "BlockWhisper" | "BondageCollege" | "Cage" | "Caught" | "ClubMistress" | "ClubSlave" | "Committed" | "DailyJobDone" | "DeviousChallenge" | "Dominant" | "Escaped" | "Expansion" | "FailedLockPick" | "ForbiddenWords" | "ForceGGTS" | "Hide" | "IntroductionDone" | "Isolated" | "JenniferCollared" | "JenniferCollaredWithCurfew" | "JenniferLover" | "JenniferMistress" | "Joined" | "JoinedSorority" | "KeyDeposit" | "KidnapSophie" | "LeadSorority" | "LockOutOfPrivateRoom" | "Locked" | "MaidOpinion" | "MaidsDisabled" | "Mastery" | "MistressWasPaid" | "ModifierDuration" | "ModifierLevel" | "OwnerBeepActive" | "OwnerBeepTimer" | "Pony" | "PonyExam" | "ReleasedCollar" | "ReleasedFromOwner" | "RentRoom" | "ReputationMaxed" | "SarahCameWithPlayer" | "SarahCollared" | "SarahCollaredWithCurfew" | "SarahLover" | "SarahWillBePunished" | "SecondExpansion" | "Security" | "SidneyCollared" | "SidneyCollaredWithCurfew" | "SidneyLover" | "SidneyMistress" | "SleepCage" | "Stolen" | "Submissive" | "TeacherKey" | "Trainer" | "TrainerExam" | "Training" | "Wardrobe" | LogNameAdvanced, Option: "Leave" | "Quest"): void;
+/** @type {(RuleType: LogNameAdvanced) => void} */
 declare function ChatRoomAdvancedRule(RuleType: LogNameAdvanced): void;
 declare function ChatRoomForbiddenWords(): void;
 /**
@@ -1537,293 +1851,3 @@ declare function ChatRoomGetGame(): ServerChatRoomGame | null;
  * @returns {string}
  */
 declare function ChatRoomGetBackgroundURL(): string;
-declare namespace ChatRoomSpaceType {
-    let MIXED: "X";
-    let FEMALE_ONLY: "";
-    let MALE_ONLY: "M";
-    let ASYLUM: "Asylum";
-}
-/** @type {Record<ChatRoomVisibilityModeLabel, ServerChatRoomRole[]>} */
-declare const ChatRoomVisibilityMode: Record<ChatRoomVisibilityModeLabel, ServerChatRoomRole[]>;
-/** @type {Record<ChatRoomAccessModeLabel, ServerChatRoomRole[]>} */
-declare const ChatRoomAccessMode: Record<ChatRoomAccessModeLabel, ServerChatRoomRole[]>;
-/**
- * The chat room screen background
- *
- * It shall never be set, as doing so will break the code actually checking for the room data's background.
- */
-declare var ChatRoomBackground: string;
-/**
- * The data for the current chatroom, as recieved from the server.
- * @type {null | ServerChatRoomData}
- */
-declare let ChatRoomData: null | ServerChatRoomData;
-/**
- * The list of chatroom characters.
- * This is unpacked characters from the data recieved from the server in {@link ChatRoomData.Character}.
- * @type {Character[]}
- */
-declare var ChatRoomCharacter: Character[];
-declare var ChatRoomJustEntered: boolean;
-/** @type {ChatRoomChatLogEntry[]} */
-declare var ChatRoomChatLog: ChatRoomChatLogEntry[];
-declare var ChatRoomLastMessage: string[];
-declare var ChatRoomLastMessageIndex: number;
-/** @type {number} */
-declare var ChatRoomTargetMemberNumber: number;
-/** @type {ChatRoomOwnershipEvent | null} */
-declare var ChatRoomOwnershipOption: ChatRoomOwnershipEvent | null;
-/** @type {ChatRoomLovershipEvent | null} */
-declare var ChatRoomLovershipOption: ChatRoomLovershipEvent | null;
-declare var ChatRoomMoneyForOwner: number;
-/** @type {number[]} */
-declare var ChatRoomQuestGiven: number[];
-/**
- * @deprecated Use {@link ChatSearchGetSpace()}
- * @todo Remove after R121
- * @type {ServerChatRoomSpace}
- */
-declare var ChatRoomSpace: ServerChatRoomSpace;
-/**
- * @deprecated Use {@link ChatRoomGetGame()}
- * @todo Remove after R121
- * @type {ServerChatRoomGame}
- */
-declare var ChatRoomGame: ServerChatRoomGame;
-declare var ChatRoomHelpSeen: boolean;
-declare var ChatRoomAllowCharacterUpdate: boolean;
-declare var ChatRoomStruggleAssistBonus: number;
-declare var ChatRoomStruggleAssistTimer: number;
-/** @type {StruggleOnlineData} */
-declare var ChatRoomStruggleData: StruggleOnlineData;
-/**
- * The timer started when a slowed player attempts to leave
- * @type {number}
- */
-declare var ChatRoomSlowtimer: number;
-/**
- * Whether someone attempted to stop the player in the middle of a slow-leave
- * @type {boolean}
- */
-declare var ChatRoomSlowStop: boolean;
-/**
- * Default position of the entire chat panel
- * @type {RectTuple}
- */
-declare var ChatRoomDivRect: RectTuple;
-/**
- * The last approximate height (_i.e._ {@link HTMLElement.clientHeight} as opposed to {@link DOMRect.height}) of the `InputChat` element.
- * @type {number}
- */
-declare let ChatRoomDivInputPrevHeight: number;
-declare var ChatRoomChatHidden: boolean;
-/**
- * The chatroom characters that were drawn in the last frame.
- * Used for limiting the "fov". Characters come from {@link ChatRoomCharacter}
- * @type {Character[]}
- */
-declare var ChatRoomCharacterDrawlist: Character[];
-/**
- * If non-empty, ChatRoomCharacterDrawlist will be filtered (after immersion removals) to only include the player and these character(s).
- * Used for the /focus command. List will be automatically removed if characters are removed from the room.
- * @type {Character[]}
- */
-declare var ChatRoomDrawFocusList: Character[];
-/**
- * The list of characters currently impacted (not drawn) by sensory deprivation in the chat room
- * Used as a check for whether to apply further sense dep effects to a given character (i.e. name removal, message, hiding, etc). Characters from {@link ChatRoomCharacter}
- * @type {Character[]}
- */
-declare var ChatRoomImpactedBySenseDep: Character[];
-declare var ChatRoomSenseDepBypass: boolean;
-declare var ChatRoomGetUpTimer: number;
-/**
- * The complete data to update a recreated room with once the creation is successful
- * @type {ChatRoomSettings}
- * */
-declare var ChatRoomNewRoomToUpdate: ChatRoomSettings;
-declare var ChatRoomNewRoomToUpdateTimer: number;
-/**
- * The list of MemberNumbers whose characters we're holding the leash of
- * @type {number[]}
- */
-declare var ChatRoomLeashList: number[];
-/**
- * The MemberNumber of the character holding our leash
- * @type {number|null}
- */
-declare var ChatRoomLeashPlayer: number | null;
-/**
- * The room name to join when being leashed
- * @type {string}
- */
-declare var ChatRoomJoinLeash: string;
-/**
- * Whether the chat room customization settings are user-enabled or not
- */
-declare var ChatRoomCustomized: boolean;
-/** @satisfies {Record<"Never" | "DisabledByDefault" | "EnabledByDefault" | "Always", ChatRoomCustomizationType>} */
-declare const ChatRoomCustomization: Readonly<{
-    Never: 0;
-    DisabledByDefault: 1;
-    EnabledByDefault: 2;
-    Always: 3;
-}>;
-declare namespace ChatRoomViews {
-    let Character: ChatRoomView;
-    let Map: ChatRoomView;
-}
-/**
- * The active chat room view
- * @type {ChatRoomView | null}
- */
-declare var ChatRoomActiveView: ChatRoomView | null;
-/**
- * Chances of a chat message popping up reminding you of some stimulation.
- *
- * @type {Record<StimulationAction, StimulationEvent>}
- */
-declare const ChatRoomStimulationEvents: Record<StimulationAction, StimulationEvent>;
-declare namespace ChatRoomArousalMsg_Chance {
-    let Kneel: number;
-    let Walk: number;
-    let StruggleFail: number;
-    let StruggleAction: number;
-    let Gag: number;
-}
-declare namespace ChatRoomArousalMsg_ChanceScaling {
-    let Kneel_1: number;
-    export { Kneel_1 as Kneel };
-    let Walk_1: number;
-    export { Walk_1 as Walk };
-    let StruggleFail_1: number;
-    export { StruggleFail_1 as StruggleFail };
-    let StruggleAction_1: number;
-    export { StruggleAction_1 as StruggleAction };
-    let Gag_1: number;
-    export { Gag_1 as Gag };
-}
-declare namespace ChatRoomArousalMsg_ChanceVibeMod {
-    let Kneel_2: number;
-    export { Kneel_2 as Kneel };
-    let Walk_2: number;
-    export { Walk_2 as Walk };
-    let StruggleFail_2: number;
-    export { StruggleFail_2 as StruggleFail };
-    let StruggleAction_2: number;
-    export { StruggleAction_2 as StruggleAction };
-    let Gag_2: number;
-    export { Gag_2 as Gag };
-}
-declare namespace ChatRoomArousalMsg_ChanceInflationMod {
-    let Kneel_3: number;
-    export { Kneel_3 as Kneel };
-    let Walk_3: number;
-    export { Walk_3 as Walk };
-    let StruggleFail_3: number;
-    export { StruggleFail_3 as StruggleFail };
-    let StruggleAction_3: number;
-    export { StruggleAction_3 as StruggleAction };
-    let Gag_3: number;
-    export { Gag_3 as Gag };
-}
-declare namespace ChatRoomArousalMsg_ChanceGagMod {
-    let Kneel_4: number;
-    export { Kneel_4 as Kneel };
-    let Walk_4: number;
-    export { Walk_4 as Walk };
-    let StruggleFail_4: number;
-    export { StruggleFail_4 as StruggleFail };
-    let StruggleAction_4: number;
-    export { StruggleAction_4 as StruggleAction };
-    let Gag_4: number;
-    export { Gag_4 as Gag };
-}
-declare namespace ChatRoomHideIconStateType {
-    let SHOW_ALL: 0;
-    let NO_ICONS: 1;
-    let NO_AROUSAL_BAR: 2;
-    let NO_NAME: 3;
-}
-/** @type {0 | 1 | 2 | 3} */
-declare var ChatRoomHideIconState: 0 | 1 | 2 | 3;
-/**
- * The list of buttons in the top-right
- * @type {ChatRoomMenuButton[]}
- * */
-declare var ChatRoomMenuButtons: ChatRoomMenuButton[];
-/**
- * A stringified, `\0`-joined list of menu button names. Used for determining whether the top menubar needs to be refreshed.
- * @type {string}
- */
-declare let ChatRoomTopMenuBuiltSig: string;
-declare let ChatRoomFontSize: number;
-declare namespace ChatRoomFontSizes {
-    let Small: number;
-    let Medium: number;
-    let Large: number;
-}
-/** Sets whether an add/remove for one list automatically triggers an add/remove for another list */
-declare function ChatRoomListOperationTriggers(): {
-    list: number[];
-    adding: boolean;
-    triggers: {
-        list: number[];
-        add: boolean;
-    }[];
-}[];
-declare namespace ChatRoomResizeManager {
-    let atStart: boolean;
-    let timer: null | number;
-    let timeOut: number;
-    let ChatRoomScrollPercentage: number;
-    let ChatLogScrolledToEnd: boolean;
-    function ChatRoomResizeEvent(): void;
-    function ChatRoomResizeEventsEnd(): void;
-}
-declare namespace ChatRoomSep {
-    let ActiveElem: null | HTMLDivElement;
-    let _ClickCollapse: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
-    let _ClickScrollUp: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
-    /**
-     * Return a {@link HTMLElement.InnerHTML} representation of the passed button's room name
-     * private
-     * @param {HTMLButtonElement} button
-     * @returns {(string | HTMLElement)[]}
-     */
-    function _GetDisplayName(button: HTMLButtonElement): (string | HTMLElement)[];
-    /**
-     * Create a dividing element serving as seperator for different chat rooms
-     * @param {boolean} appendChat - Whether to assign {@link ChatRoomSep.ActiveElem} and append the returned `<div>` to the chat log
-     * @returns {HTMLDivElement} - The created `<div>` element
-     */
-    function Create(appendChat?: boolean): HTMLDivElement;
-    /**
-     * Return a {@link HTMLElement.innerHTML} representation of the separators room name
-     * @param {HTMLDivElement} roomSep - The chat room separator
-     * @returns {(string | HTMLElement)[]}
-     */
-    function GetDisplayName(roomSep: HTMLDivElement): (string | HTMLElement)[];
-    /**
-     * Return whether the passed room separator is collapsed OR NOT
-     * @param {HTMLDivElement} roomSep - The chat room separator
-     * @returns {boolean}
-     */
-    function IsCollapsed(roomSep: HTMLDivElement): boolean;
-    function Uncollapse(roomSep: HTMLDivElement): Promise<void>;
-    function Collapse(roomSep: HTMLDivElement): Promise<void>;
-    function SetRoomData(roomSep: HTMLDivElement, data: Pick<ServerChatRoomData, "Name" | "Visibility" | "Space">): Promise<void>;
-    function UpdateDisplayNames(): Promise<void>;
-}
-declare let ChatRoomStatusDeadKeys: string[];
-/** When slowed, we can't leave quicker than this */
-declare const ChatRoomSlowLeaveMinTime: 5000;
-/** @type {ChatRoomMessageExtractor[]} */
-declare var ChatRoomMessageExtractors: ChatRoomMessageExtractor[];
-/**
- * Global list of handlers for incoming messages.
- * @type {ChatRoomMessageHandler[]}
- * */
-declare var ChatRoomMessageHandlers: ChatRoomMessageHandler[];
-/** @type {Map<string, number>} */
-declare const ChatRoomLastFriendRequest: Map<string, number>;

@@ -1,3 +1,8 @@
+declare var GameClubCardBackground: string;
+declare var GameClubCardEntryPlayerSlot: number;
+declare var GameClubCardExpectQuery: boolean;
+declare var GameClubCardQueryAdmin: boolean;
+declare var GameClubCardChangedRunningSettings: boolean;
 /**
  * Gets the current state of online Club Card.
  * @returns {OnlineGameStatus}
@@ -33,7 +38,6 @@ declare function GameClubCardDrawIcon(C: Character, X: number, Y: number, Zoom: 
  * @returns {void} - Nothing
  */
 declare function GameClubCardDrawCharacter(C: Character, X: number, Y: number, Zoom: number): void;
-declare function GameClubCardLoad(): Promise<void>;
 /**
  * Runs the online Club Card configuration screen
  * @returns {void} - Nothing
@@ -44,7 +48,6 @@ declare function GameClubCardRun(): void;
  * @returns {void} - Nothing
  */
 declare function GameClubCardClick(): void;
-declare function GameClubCardExit(): void;
 /**
  *  Checks there's 1 player in slot 1 and slot 2 so we can start the game.
  * @returns {boolean} - Returns TRUE if the game can be launched
@@ -157,8 +160,3 @@ declare function GameClubCardSyncOnlineData(Progress?: string, LocalPlayerOnly?:
  * @returns {void} - Nothing
  */
 declare function GameClubCardEnd(): void;
-declare var GameClubCardBackground: string;
-declare var GameClubCardEntryPlayerSlot: number;
-declare var GameClubCardExpectQuery: boolean;
-declare var GameClubCardQueryAdmin: boolean;
-declare var GameClubCardChangedRunningSettings: boolean;

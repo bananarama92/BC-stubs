@@ -1,3 +1,64 @@
+declare var PlatformRunStandaloneMode: boolean;
+/** @type {Platform.Character[]} */
+declare var PlatformChar: Platform.Character[];
+/** @type {Platform.DialogCharacter | null} */
+declare var PlatformFocusCharacter: Platform.DialogCharacter | null;
+declare var PlatformPlayer: any;
+/** @type {number | null} */
+declare var PlatformLastTime: number | null;
+/** @type {Platform.KeyCode[]} */
+declare var PlatformKeys: Platform.KeyCode[];
+declare var PlatformFloor: number;
+declare var PlatformViewX: number;
+declare var PlatformViewY: number;
+/** @type {Platform.Room | null} */
+declare var PlatformRoom: Platform.Room | null;
+declare var PlatformMusic: any;
+declare var PlatformAllowAudio: boolean;
+declare var PlatformGravitySpeed: number;
+declare var PlatformLastKeyCode: string;
+declare var PlatformLastKeyTime: number;
+declare var PlatformExperienceForLevel: number[];
+declare var PlatformShowHitBox: boolean;
+declare var PlatformMessage: any;
+declare var PlatformHeal: any;
+/** @type {Platform.Event[]} */
+declare var PlatformEvent: Platform.Event[];
+declare var PlatformTempEvent: any[];
+declare var PlatformPlayerIdleTimer: any;
+declare var PlatformPlayerIdleLast: string;
+declare var PlatformDrawUpArrow: null[];
+/** @type {readonly GamepadButton[]} */
+declare var PlatformButtons: readonly GamepadButton[];
+declare var PlatformRunDirection: string;
+declare var PlatformRunTime: number;
+/** @type {null | TouchList} */
+declare var PlatformLastTouch: null | TouchList;
+declare var PlatformImmunityTime: number;
+declare var PlatformSaveMode: boolean;
+declare var PlatformGiftMode: boolean;
+declare var PlatformJumpPhase: string;
+/** @type {Platform.PartyMember[]} */
+declare var PlatformParty: Platform.PartyMember[];
+declare var PlatformRegen: number;
+/** @type {Platform.Cooldown[]} */
+declare var PlatformCooldown: Platform.Cooldown[];
+declare var PlatformHeartEffect: boolean;
+declare var PlatformTimedScreenFilter: {
+    End: number;
+    Filter: string;
+};
+declare var PlatformRightButtons: any[];
+declare var PlatformInventory: any[];
+/** @type {Platform.Item[]} */
+declare var PlatformInventoryList: Platform.Item[];
+/** @type {(Platform.CharacterTemplate | Platform.DummyTemplate)[]} */
+declare var PlatformTemplate: (Platform.CharacterTemplate | Platform.DummyTemplate)[];
+/**
+ * All available rooms
+ * @type {Platform.Room[]}
+ */
+declare var PlatformRoomList: Platform.Room[];
 /**
  * Loads a room and it's parameters
  * @param {string} CharacterName - The character name to load
@@ -67,7 +128,6 @@ declare function PlatformPartyActivate(CharacterName: string): void;
  * @returns {void} - Nothing
  */
 declare function PlatformPartyBuild(): void;
-declare function PlatformLoad(): Promise<void>;
 /**
  * Get the proper animation from the cycle to draw
  * @param {Platform.Character} C - The character to evaluate
@@ -345,8 +405,6 @@ declare function PlatformCastHeal(C: Platform.Character): void;
  * @returns {void} - Nothing
  */
 declare function PlatformEventKeyDown(Code: Platform.KeyCode): void;
-declare function PlatformKeyDown(event: KeyboardEvent): boolean;
-declare function PlatformKeyUp(event: KeyboardEvent): boolean;
 /**
  * Handles the controller inputs
  * @param {readonly GamepadButton[]} buttons - The buttons pressed on the controller
@@ -376,64 +434,3 @@ declare function PlatformCooldownActive(Name: Platform.EffectType | Platform.Ani
  * @returns {void} - Nothing
  */
 declare function PlatformRunStandalone(): void;
-declare var PlatformRunStandaloneMode: boolean;
-/** @type {Platform.Character[]} */
-declare var PlatformChar: Platform.Character[];
-/** @type {Platform.DialogCharacter | null} */
-declare var PlatformFocusCharacter: Platform.DialogCharacter | null;
-declare var PlatformPlayer: null;
-/** @type {number | null} */
-declare var PlatformLastTime: number | null;
-/** @type {Platform.KeyCode[]} */
-declare var PlatformKeys: Platform.KeyCode[];
-declare var PlatformFloor: number;
-declare var PlatformViewX: number;
-declare var PlatformViewY: number;
-/** @type {Platform.Room | null} */
-declare var PlatformRoom: Platform.Room | null;
-declare var PlatformMusic: null;
-declare var PlatformAllowAudio: boolean;
-declare var PlatformGravitySpeed: number;
-declare var PlatformLastKeyCode: string;
-declare var PlatformLastKeyTime: number;
-declare var PlatformExperienceForLevel: number[];
-declare var PlatformShowHitBox: boolean;
-declare var PlatformMessage: null;
-declare var PlatformHeal: null;
-/** @type {Platform.Event[]} */
-declare var PlatformEvent: Platform.Event[];
-declare var PlatformTempEvent: any[];
-declare var PlatformPlayerIdleTimer: null;
-declare var PlatformPlayerIdleLast: string;
-declare var PlatformDrawUpArrow: null[];
-/** @type {readonly GamepadButton[]} */
-declare var PlatformButtons: readonly GamepadButton[];
-declare var PlatformRunDirection: string;
-declare var PlatformRunTime: number;
-/** @type {null | TouchList} */
-declare var PlatformLastTouch: null | TouchList;
-declare var PlatformImmunityTime: number;
-declare var PlatformSaveMode: boolean;
-declare var PlatformGiftMode: boolean;
-declare var PlatformJumpPhase: string;
-/** @type {Platform.PartyMember[]} */
-declare var PlatformParty: Platform.PartyMember[];
-declare var PlatformRegen: number;
-/** @type {Platform.Cooldown[]} */
-declare var PlatformCooldown: Platform.Cooldown[];
-declare var PlatformHeartEffect: boolean;
-declare namespace PlatformTimedScreenFilter {
-    let End: number;
-    let Filter: string;
-}
-declare var PlatformRightButtons: any[];
-declare var PlatformInventory: any[];
-/** @type {Platform.Item[]} */
-declare var PlatformInventoryList: Platform.Item[];
-/** @type {(Platform.CharacterTemplate | Platform.DummyTemplate)[]} */
-declare var PlatformTemplate: (Platform.CharacterTemplate | Platform.DummyTemplate)[];
-/**
- * All available rooms
- * @type {Platform.Room[]}
- */
-declare var PlatformRoomList: Platform.Room[];

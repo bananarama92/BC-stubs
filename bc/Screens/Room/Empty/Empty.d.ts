@@ -1,3 +1,7 @@
+declare var EmptyBackground: string;
+/** @type {Character[]} */
+declare var EmptyCharacter: Character[];
+declare var EmptyCharacterOffset: number;
 /**
  * Checks if the player struggled successfully within the allowed time
  * @returns {boolean} - Returns TRUE if the player managed to struggle out in time
@@ -18,9 +22,6 @@ declare function EmptyStruggleProgress(): boolean;
  * @returns {boolean} - Whether the player is ready to do a bondage training or not.
  */
 declare function EmptySlaveMarketReadyForBondageTraining(): boolean;
-declare function EmptyLoad(): Promise<void>;
-declare function EmptyRun(time: number): void;
-declare function EmptyClick(event: PointerEvent): void;
 /**
  * Used to return the player to the main hall from the empty room when in the management room
  * @returns {void} - Nothing
@@ -66,7 +67,3 @@ declare function EmptySlaveMarketTrainingProgress(Intensity: number): void;
  * @returns {void} - Nothing
  */
 declare function EmptySlaveMarketTrainingEnd(Status: string): void;
-declare var EmptyBackground: string;
-/** @type {Character[]} */
-declare var EmptyCharacter: Character[];
-declare var EmptyCharacterOffset: number;

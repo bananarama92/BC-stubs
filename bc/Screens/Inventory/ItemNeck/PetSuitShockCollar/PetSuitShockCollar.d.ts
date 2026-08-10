@@ -1,18 +1,4 @@
-declare function InventoryItemNeckPetSuitShockCollars1DrawHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemNeckPetSuitShockCollars1ClickHook(data: NoArchItemData, originalFunction: () => void): void;
 declare function InventoryItemNeckPetSuitShockCollarResetCount(): void;
-declare function AssetsItemNeckPetSuitShockCollarBeforeDraw(drawData: DynamicDrawingData<PetSuitShockCollarPersistentData>): DynamicBeforeDrawOverrides | undefined;
-/**
- * @param {Item} Item
- * @param {Character} C
- */
-declare function InventoryPetSuitShockCollarCheckPunish(Item: Item, C: Character): "" | "Struggle" | "Activity" | "StandUp";
-/**
- * @param {DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>} data
- * @param {number} LastTime
- */
-declare function AssetsItemNeckPetSuitShockCollarUpdate(data: DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>, LastTime: number): void;
-declare function AssetsItemNeckPetSuitShockCollarScriptDraw(drawData: DynamicScriptCallbackData<PetSuitShockCollarPersistentData>): void;
 type PetSuitShockCollarPersistentData = {
     UpdateTime?: number;
     CheckTime?: number;
@@ -20,3 +6,13 @@ type PetSuitShockCollarPersistentData = {
     LastTriggerCount?: number;
     DisplayCount?: number;
 } & AnimationPersistentData;
+/**
+ * @param {Item} Item
+ * @param {Character} C
+ */
+declare function InventoryPetSuitShockCollarCheckPunish(Item: Item, C: Character): "" | "Activity" | "StandUp" | "Struggle";
+/**
+ * @param {DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>} data
+ * @param {number} LastTime
+ */
+declare function AssetsItemNeckPetSuitShockCollarUpdate(data: DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>, LastTime: number): void;

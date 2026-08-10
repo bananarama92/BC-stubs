@@ -1,3 +1,15 @@
+declare var CollegeCafeteriaBackground: string;
+/**
+ * Loaded in CollegeCafeteriaLoad; replaced with a random student when Sidney is away or after inviting her to the private room.
+ * @type {NPCCharacter}
+ */
+declare var CollegeCafeteriaSidney: NPCCharacter;
+declare var CollegeCafeteriaSidneyStatus: string;
+declare var CollegeCafeteriaSidneyLove: number;
+/** @type {NPCCharacter} */
+declare var CollegeCafeteriaStudentRight: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeCafeteriaStudentFarRight: NPCCharacter;
 /**
  * Checks, if the query matches the current state of Sidney
  * @param {string} QueryStatus - The query to compare
@@ -9,7 +21,6 @@ declare function CollegeCafeteriaSidneyStatusIs(QueryStatus: string): boolean;
  * @returns {boolean} - Returns true, if the player can invite Sidney, false otherwise
  */
 declare function CollegeCafeteriaCanInviteToPrivateRoom(): boolean;
-declare function CollegeCafeteriaLoad(): Promise<void>;
 /**
  * Runs the room (shows the player and Sidney)
  * @returns {void} - Nothing
@@ -42,15 +53,3 @@ declare function CollegeCafeteriaFightEnd(): void;
  * @returns {void} - Nothing
  */
 declare function CollegeCafeteriaInviteToPrivateRoom(): void;
-declare var CollegeCafeteriaBackground: string;
-/**
- * Loaded in CollegeCafeteriaLoad; replaced with a random student when Sidney is away or after inviting her to the private room.
- * @type {NPCCharacter}
- */
-declare var CollegeCafeteriaSidney: NPCCharacter;
-declare var CollegeCafeteriaSidneyStatus: string;
-declare var CollegeCafeteriaSidneyLove: number;
-/** @type {NPCCharacter} */
-declare var CollegeCafeteriaStudentRight: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var CollegeCafeteriaStudentFarRight: NPCCharacter;

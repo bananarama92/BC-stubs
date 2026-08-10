@@ -1,4 +1,70 @@
 /**
+ * An enum for the events in the game that notifications can be raised for
+ * @type {{ CHATMESSAGE: "ChatMessage", CHATJOIN: "ChatJoin", BEEP: "Beep", DISCONNECT: "Disconnect", TEST: "Test", LARP: "Larp" }}
+ */
+declare const NotificationEventType: {
+    CHATMESSAGE: "ChatMessage";
+    CHATJOIN: "ChatJoin";
+    BEEP: "Beep";
+    DISCONNECT: "Disconnect";
+    TEST: "Test";
+    LARP: "Larp";
+};
+/**
+ * An enum for the types of notifications that can be raised
+ * @type {Record<"NONE"|"TITLEPREFIX"|"FAVICON"|"POPUP",NotificationAlertType>}
+ */
+declare const NotificationAlertType: Record<"NONE" | "TITLEPREFIX" | "FAVICON" | "POPUP", NotificationAlertType>;
+/**
+ * An enum for the audio settings for notifications
+ * @type {Record<"NONE"|"FIRST"|"REPEAT", NotificationAudioType>}
+ */
+declare const NotificationAudioType: Record<"NONE" | "FIRST" | "REPEAT", NotificationAudioType>;
+/**
+ * A class to track the state of each notification event type and handle actions based on the player's settings
+ */
+declare class NotificationEventHandler {
+    eventType: NotificationEventType;
+    settings: NotificationSetting;
+    raisedCount: number;
+    popup: Notification | null;
+    /**
+     * Creates a new NotificationEventHandler for the specified event type
+     * @param {NotificationEventType} eventType - The
+     * @param {NotificationSetting} settings - The player settings corresponding to the event type
+     */
+    constructor(eventType: NotificationEventType, settings: NotificationSetting);
+    /**
+     * Raise a notification
+     * @param {NotificationData} data - Data relating to the event that can be passed into a popup
+     * @returns {void} - Nothing
+     */
+    raise(data: NotificationData): void;
+    /**
+     * Raise a popup notification
+     * @param {NotificationData} data - Data relating to the event passed into the popup
+     * @returns {void} - Nothing
+     */
+    raisePopup(data: NotificationData): void;
+    /**
+     * Determines whether an audio alert shoud be played
+     * @returns {boolean} - Whether audio should be played
+     */
+    playAudio(): boolean;
+    /**
+     * Resets all raised notifications for this event
+     * @param {boolean} resetingAll - Indicates if all notifications are being reset, to avoid unnecessarily repeating steps for each event type
+     * @returns {void} - Nothing
+     */
+    reset(resetingAll: boolean): void;
+}
+/** @type {Record<NotificationEventType, NotificationEventHandler>} */
+declare let NotificationEventHandlers: Record<NotificationEventType, NotificationEventHandler>;
+/** @type {NotificationAlertType[]} */
+declare var NotificationAlertTypeList: NotificationAlertType[];
+/** @type {NotificationAudioType[]} */
+declare var NotificationAudioTypeList: NotificationAudioType[];
+/**
  * Initialise notification variables on startup
  * @returns {void} - Nothing
  */
@@ -51,69 +117,3 @@ declare function NotificationTitleUpdate(): void;
  * @returns {void} - Nothing
  */
 declare function NotificationDrawFavicon(resetingAll: boolean): void;
-/**
- * An enum for the events in the game that notifications can be raised for
- * @type {{ CHATMESSAGE: "ChatMessage", CHATJOIN: "ChatJoin", BEEP: "Beep", DISCONNECT: "Disconnect", TEST: "Test", LARP: "Larp" }}
- */
-declare const NotificationEventType: {
-    CHATMESSAGE: "ChatMessage";
-    CHATJOIN: "ChatJoin";
-    BEEP: "Beep";
-    DISCONNECT: "Disconnect";
-    TEST: "Test";
-    LARP: "Larp";
-};
-/**
- * An enum for the types of notifications that can be raised
- * @type {Record<"NONE"|"TITLEPREFIX"|"FAVICON"|"POPUP",NotificationAlertType>}
- */
-declare const NotificationAlertType: Record<"NONE" | "TITLEPREFIX" | "FAVICON" | "POPUP", NotificationAlertType>;
-/**
- * An enum for the audio settings for notifications
- * @type {Record<"NONE"|"FIRST"|"REPEAT", NotificationAudioType>}
- */
-declare const NotificationAudioType: Record<"NONE" | "FIRST" | "REPEAT", NotificationAudioType>;
-/**
- * A class to track the state of each notification event type and handle actions based on the player's settings
- */
-declare class NotificationEventHandler {
-    /**
-     * Creates a new NotificationEventHandler for the specified event type
-     * @param {NotificationEventType} eventType - The
-     * @param {NotificationSetting} settings - The player settings corresponding to the event type
-     */
-    constructor(eventType: NotificationEventType, settings: NotificationSetting);
-    eventType: NotificationEventType;
-    settings: NotificationSetting;
-    raisedCount: number;
-    popup: Notification | null;
-    /**
-     * Raise a notification
-     * @param {NotificationData} data - Data relating to the event that can be passed into a popup
-     * @returns {void} - Nothing
-     */
-    raise(data: NotificationData): void;
-    /**
-     * Raise a popup notification
-     * @param {NotificationData} data - Data relating to the event passed into the popup
-     * @returns {void} - Nothing
-     */
-    raisePopup(data: NotificationData): void;
-    /**
-     * Determines whether an audio alert shoud be played
-     * @returns {boolean} - Whether audio should be played
-     */
-    playAudio(): boolean;
-    /**
-     * Resets all raised notifications for this event
-     * @param {boolean} resetingAll - Indicates if all notifications are being reset, to avoid unnecessarily repeating steps for each event type
-     * @returns {void} - Nothing
-     */
-    reset(resetingAll: boolean): void;
-}
-/** @type {Record<NotificationEventType, NotificationEventHandler>} */
-declare let NotificationEventHandlers: Record<NotificationEventType, NotificationEventHandler>;
-/** @type {NotificationAlertType[]} */
-declare var NotificationAlertTypeList: NotificationAlertType[];
-/** @type {NotificationAudioType[]} */
-declare var NotificationAudioTypeList: NotificationAudioType[];

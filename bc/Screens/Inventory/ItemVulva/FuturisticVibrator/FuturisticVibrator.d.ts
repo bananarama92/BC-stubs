@@ -1,5 +1,13 @@
-declare function InventoryItemVulvaFuturisticVibratorLoadHook(data: VibratingItemData, originalFunction: () => void): void;
-declare function InventoryItemVulvaFuturisticVibratorDrawHook(data: VibratingItemData, originalFunction: () => void): void;
+declare var ItemVulvaFuturisticVibratorTriggers: string[];
+/** @type {string[]} */
+declare var ItemVulvaFuturisticVibratorTriggerValues: string[];
+/** @type {{EVERYONE: "", PROHIBIT_SELF: "ProhibitSelf", LOCK_MEMBER_ONLY: "LockMember"}} */
+declare const ItemVulvaFuturisticVibratorAccessMode: {
+    EVERYONE: "";
+    PROHIBIT_SELF: "ProhibitSelf";
+    LOCK_MEMBER_ONLY: "LockMember";
+};
+declare const ItemVulvaFuturisticVibratorAccessModes: ("" | "LockMember" | "ProhibitSelf")[];
 /**
  * @param {ItemVulvaFuturisticVibratorAccessMode} current
  * @returns {ItemVulvaFuturisticVibratorAccessMode}
@@ -10,9 +18,7 @@ declare function InventoryItemVulvaFuturisticVibratorPreviousAccessMode(current:
  * @returns {ItemVulvaFuturisticVibratorAccessMode}
  */
 declare function InventoryItemVulvaFuturisticVibratorNextAccessMode(current: ItemVulvaFuturisticVibratorAccessMode): ItemVulvaFuturisticVibratorAccessMode;
-declare function InventoryItemVulvaFuturisticVibratorClickHook(data: VibratingItemData, originalFunction: () => void): void;
 declare function InventoryItemVulvaFuturisticVibratorClickSet(): void;
-declare function InventoryItemVulvaFuturisticVibratorExitHook(data: VibratingItemData, originalFunction: (() => void) | null): void;
 /**
  * @param {string} msg
  * @param {readonly string[]} TriggerValues
@@ -46,17 +52,6 @@ declare function InventoryItemVulvaFuturisticVibratorSetMode(data: VibratingItem
  * @param {number} LastTime
  */
 declare function InventoryItemVulvaFuturisticVibratorHandleChat(data: VibratingItemData, C: Character, Item: Item, LastTime: number): void;
-declare function AssetsItemVulvaFuturisticVibratorScriptDrawHook(data: VibratingItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticVibratorPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticVibratorPersistentData>): void;
-declare var ItemVulvaFuturisticVibratorTriggers: string[];
-/** @type {string[]} */
-declare var ItemVulvaFuturisticVibratorTriggerValues: string[];
-/** @type {{EVERYONE: "", PROHIBIT_SELF: "ProhibitSelf", LOCK_MEMBER_ONLY: "LockMember"}} */
-declare const ItemVulvaFuturisticVibratorAccessMode: {
-    EVERYONE: "";
-    PROHIBIT_SELF: "ProhibitSelf";
-    LOCK_MEMBER_ONLY: "LockMember";
-};
-declare const ItemVulvaFuturisticVibratorAccessModes: ("" | "ProhibitSelf" | "LockMember")[];
 type FuturisticVibratorPersistentData = {
     CheckTime?: number;
     Mode?: VibratorMode;

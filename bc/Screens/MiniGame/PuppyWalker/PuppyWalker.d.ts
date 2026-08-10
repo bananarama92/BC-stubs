@@ -1,4 +1,8 @@
-declare function PuppyWalkerLoad(): Promise<void>;
+declare var PuppyWalkerBackground: string;
+declare var PuppyWalkerMoves: number[];
+declare var PuppyWalkerMovesTimer: number[];
+declare var PuppyWalkerEscape: number[];
+declare var PuppyWalkerGenerateMoveTimer: number;
 /**
  * Draws the puppy girl if she hasn't escaped
  * @param {Character} Puppy - The puppy character to draw
@@ -33,8 +37,3 @@ declare function PuppyWalkerClick(): void;
  * @returns {void} - Nothing
  */
 declare function PuppyWalkerMouseDown(): void;
-declare var PuppyWalkerBackground: string;
-declare var PuppyWalkerMoves: number[];
-declare var PuppyWalkerMovesTimer: number[];
-declare var PuppyWalkerEscape: number[];
-declare var PuppyWalkerGenerateMoveTimer: number;

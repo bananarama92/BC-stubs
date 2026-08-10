@@ -1,8 +1,30 @@
+declare var DailyJobBackground: string;
+/** @type {null | NPCCharacter} */
+declare var DailyJobOpponent: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppyMistress: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppy1: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppy2: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppy3: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppy4: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobDojoTeacher: null | NPCCharacter;
 /**
  * Triggered when a player is fully restrained from a daily job dialog
  * @returns {void} - Nothing
  */
 declare function DailyJobPlayerFullRestrain(): void;
+type DailyJobPuppyNums = {
+    "0": PlayerCharacter;
+    "1": NPCCharacter;
+    "2": NPCCharacter;
+    "3": NPCCharacter;
+    "4": NPCCharacter;
+};
 /**
  * @typedef {{ "0": PlayerCharacter, "1": NPCCharacter, "2": NPCCharacter, "3": NPCCharacter, "4": NPCCharacter }} DailyJobPuppyNums
  */
@@ -13,7 +35,6 @@ declare function DailyJobPlayerFullRestrain(): void;
  * @returns {DailyJobPuppyNums[Num]} - The generated puppy girl
  */
 declare function DailyJobPuppyLoad<Num extends keyof DailyJobPuppyNums>(GirlNum: Num): DailyJobPuppyNums[Num];
-declare function DailyJobLoad(): Promise<void>;
 /**
  * Runs and draws the daily job room. Empty as daily jobs are ran from other rooms.
  * @returns {void} - Nothing
@@ -92,25 +113,3 @@ declare function DailyJobDojoGameStart(): void;
  * Triggered at the end of the dojo struggle job minigame
  */
 declare function DailyJobDojoGameEnd(): Promise<void>;
-declare var DailyJobBackground: string;
-/** @type {null | NPCCharacter} */
-declare var DailyJobOpponent: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppyMistress: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppy1: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppy2: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppy3: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppy4: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobDojoTeacher: null | NPCCharacter;
-type DailyJobPuppyNums = {
-    "0": PlayerCharacter;
-    "1": NPCCharacter;
-    "2": NPCCharacter;
-    "3": NPCCharacter;
-    "4": NPCCharacter;
-};

@@ -1,3 +1,9 @@
+declare var CollegeTheaterBackground: string;
+/** @type {null | NPCCharacter} */
+declare var CollegeTheaterJulia: null | NPCCharacter;
+declare var CollegeTheaterJuliaLove: number;
+/** @type {BCColor[]} */
+declare var CollegeTheaterRandomColors: BCColor[];
 /**
  * Checks if the player can invite an extra player to their private room. (Used for Julia.)
  * @returns {boolean} - Returns TRUE if the player has a private room and at least one empty place in it.
@@ -35,7 +41,6 @@ declare function CollegeTheaterIsJuliaDamsel(): boolean;
  * @returns {void} - Nothing
  */
 declare function CollegeTheaterJuliaClothes(C: Character): void;
-declare function CollegeTheaterLoad(): Promise<void>;
 /**
  * Runs and draws the College Theater screen, show the player and Julia
  * @returns {void} - Nothing
@@ -89,9 +94,3 @@ declare function CollegeTheaterDressBack(): void;
  * @returns {void} - Nothing
  */
 declare function CollegeTheaterInviteToPrivateRoom(Role: string): void;
-declare var CollegeTheaterBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeTheaterJulia: null | NPCCharacter;
-declare var CollegeTheaterJuliaLove: number;
-/** @type {BCColor[]} */
-declare var CollegeTheaterRandomColors: BCColor[];

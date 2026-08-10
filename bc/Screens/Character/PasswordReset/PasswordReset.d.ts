@@ -1,4 +1,5 @@
-declare function PasswordResetLoad(): Promise<void>;
+declare var PasswordResetBackground: string;
+declare var PasswordResetMessage: string;
 /**
  * Runs the password reset screen
  * @returns {void} Nothing
@@ -15,6 +16,3 @@ declare function PasswordResetResponse(msg: ServerPasswordResetResponse): void;
  * @returns {void} Nothing
  */
 declare function PasswordResetClick(): void;
-declare function PasswordResetExit(): void;
-declare var PasswordResetBackground: string;
-declare var PasswordResetMessage: string;

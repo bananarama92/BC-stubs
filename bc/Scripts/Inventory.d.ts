@@ -72,7 +72,7 @@ declare function InventoryAvailable(C: Character, Name: string, Group: AssetGrou
  * @param {null | Asset} asset - The asset (if any) for whom the prerequisite is checked
  * @returns - The error tag, can be converted to an error message
  */
-declare function InventoryPrerequisiteMessage(C: Character, Prerequisite: AssetPrerequisite, asset?: null | Asset): "CannotBeSuited" | "CannotHaveWand" | "NeedsChestHarness" | "NeedsHipHarness" | "NeedsNippleRings" | "CannotBaseUpper" | "CannotBackBoxTie" | "CannotBackCuffs" | "CannotBackElbowTouch" | "CannotOverTheHead" | "CannotYoked" | "CannotTapedHands" | "CannotBaseLower" | "CannotKneel" | "CannotKneelingSpread" | "CannotLegsClosed" | "CannotSpread" | "CannotHogtied" | "CannotAllFours" | "CannotSuspension" | "MustFreeFeetFirst" | "MustFreeArmsFirst" | "MustFreeLegsFirst" | "MustFreeHandsFirst" | "MustStandUpFirst" | "CannotBeUsedWhenMounted" | "RemoveSuspensionForItem" | "RemoveChastityFirst" | "RemoveChainForItem" | "MustCollaredFirst" | "MustBeOnBed" | "MustBeArmCuffedFirst" | "MustBeFeetCuffedFirst" | "RemoveClothesForItem" | "CannotBeUsedWhileServingDrinks" | "AddItemsToUse" | "MustHaveBreasts" | "MustHaveFlatChest" | "MustHaveVagina" | "MustHavePenis" | "CantHaveErection" | "CantBeLimp" | "MustRemoveChastityCage" | "MustNotHaveForcedErection" | "MustHaveFullPenisAccess" | "UnZipSuitForItem" | "CantCloseOnShaft" | InventoryPrerequisiteConflicts.ErrMessage | "CannotBeUsedOverMask" | "CannotBeUsedOverHood" | "MustFreeVulvaFirst" | "MustFreeClitFirst" | "MustFreeButtFirst" | "RemoveRestraintsFirst" | "RemoveFaceMaskFirst" | "OwnerBlockedRemotes" | "CantAttachMittens";
+declare function InventoryPrerequisiteMessage(C: Character, Prerequisite: AssetPrerequisite, asset?: null | Asset): "AddItemsToUse" | "CannotAllFours" | "CannotBackBoxTie" | "CannotBackCuffs" | "CannotBackElbowTouch" | "CannotBaseLower" | "CannotBaseUpper" | "CannotBeSuited" | "CannotBeUsedOverHood" | "CannotBeUsedOverMask" | "CannotBeUsedWhenMounted" | "CannotBeUsedWhileServingDrinks" | "CannotHaveWand" | "CannotHogtied" | "CannotKneel" | "CannotKneelingSpread" | "CannotLegsClosed" | "CannotOverTheHead" | "CannotSpread" | "CannotSuspension" | "CannotTapedHands" | "CannotYoked" | "CantAttachMittens" | "CantBeLimp" | "CantCloseOnShaft" | "CantHaveErection" | "MustBeArmCuffedFirst" | "MustBeFeetCuffedFirst" | "MustBeOnBed" | "MustCollaredFirst" | "MustFreeArmsFirst" | "MustFreeButtFirst" | "MustFreeClitFirst" | "MustFreeFeetFirst" | "MustFreeHandsFirst" | "MustFreeLegsFirst" | "MustFreeVulvaFirst" | "MustHaveBreasts" | "MustHaveFlatChest" | "MustHaveFullPenisAccess" | "MustHavePenis" | "MustHaveVagina" | "MustNotHaveForcedErection" | "MustRemoveChastityCage" | "MustStandUpFirst" | "NeedsChestHarness" | "NeedsHipHarness" | "NeedsNippleRings" | "OwnerBlockedRemotes" | "RemoveChainForItem" | "RemoveChastityFirst" | "RemoveClothesForItem" | "RemoveFaceMaskFirst" | "RemoveRestraintsFirst" | "RemoveSuspensionForItem" | "UnZipSuitForItem" | InventoryPrerequisiteConflicts.ErrMessage;
 /**
  * Prerequisite utility function that returns TRUE if the given character has an item equipped in the provided group
  * whose name matches one of the names in the provided list.
@@ -122,6 +122,62 @@ declare function InventoryDoItemsExposeGroup(C: Character, TargetGroup: AssetGro
  * @returns {boolean} - TRUE if the character has any item equipped in any of the named groups, FALSE otherwise.
  */
 declare function InventoryHasItemInAnyGroup(C: Character, GroupList: readonly AssetGroupName[]): boolean;
+/**
+ * Namespace with functions for identifying asset prerequisite conflicts.
+ * @namespace
+ */
+declare var InventoryPrerequisiteConflicts: {
+    /**
+     * The effective "layering" priorities of gags and (potentially) gag-like objects.
+     * Used for prerequisite checks that only apply to lower gags.
+     * @type {Partial<Record<AssetGroupName, number>>}
+     */
+    GagPriorities: Partial<Record<AssetGroupName, number>>;
+    /**
+     * private
+     * @template {keyof PropertiesArray} T
+     * @param {T} fieldName
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {PropertiesArray[T]} blockingPrereqs - The prerequisites we check for on lower gags
+     * @param {Asset|null} asset - The new gag
+     * @param {object} [options]
+     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
+     */
+    _GagCheck<T extends keyof PropertiesArray>(fieldName: T, C: Character, blockingPrereqs: PropertiesArray[T], asset?: Asset | null, options?: {
+        errMessage?: InventoryPrerequisiteConflicts.ErrMessage;
+        invert?: boolean;
+    }): InventoryPrerequisiteConflicts.ErrMessage;
+    /**
+     * Check if there are any lower gags with prerequisites that block the new gag from being applied
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {readonly AssetPrerequisite[]} blockingPrereqs - The prerequisites we check for on lower gags
+     * @param {Asset|null} asset - The new gag
+     * @param {Object} [options]
+     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
+     */
+    GagPrerequisite(C: Character, blockingPrereqs: readonly AssetPrerequisite[], asset?: Asset | null, options?: {
+        errMessage?: InventoryPrerequisiteConflicts.ErrMessage;
+        invert?: boolean;
+    }): InventoryPrerequisiteConflicts.ErrMessage;
+    /**
+     * Check if there are any lower gags with effects that block the new gag from being applied
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {readonly EffectName[]} blockingEffects - The prerequisites we check for on lower gags
+     * @param {Asset|null} [asset] - The new gag
+     * @param {object} [options]
+     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
+     */
+    GagEffect(C: Character, blockingEffects: readonly EffectName[], asset?: Asset | null, options?: {
+        errMessage?: InventoryPrerequisiteConflicts.ErrMessage;
+        invert?: boolean;
+    }): InventoryPrerequisiteConflicts.ErrMessage;
+};
 /**
  * Returns an error message if we cannot add the item, no other items must block that prerequisite; `null` is returned otherwise
  * @param {Character} C - The character on which we check for prerequisites
@@ -303,6 +359,10 @@ declare function InventoryItemHasEffect(Item: Item, Effect?: EffectName, CheckPr
 * @returns {boolean} - TRUE if PickDifficulty is on the item
 */
 declare function InventoryItemIsPickable(Item: Item): boolean;
+/** @satisfies {Set<keyof PropertiesArray>} */
+declare const PropertiesArrayLike: Set<"AllowActivePose" | "AllowActivity" | "AllowActivityOn" | "AllowBlock" | "AllowEffect" | "AllowExpression" | "AllowHide" | "AllowHideItem" | "Attribute" | "AvailableLocations" | "Block" | "Category" | "DefaultColor" | "Effect" | "Expose" | "ExpressionPrerequisite" | "ExpressionTrigger" | "Fetish" | "Hide" | "HideItem" | "HideItemExclude" | "MemberNumberList" | "Prerequisite" | "Require" | "SetPose" | "Texts" | "Tint" | "UnHide">;
+/** @satisfies {Set<keyof PropertiesRecord>} */
+declare const PropertiesObjectLike: Set<"ActivityExpression" | "AllowLockType" | "PoseMapping" | "RemoveItemOnRemove" | "TypeRecord">;
 /**
  * Returns the value of a given property of an appearance item, prioritizes the Property object.
  * @template {keyof ItemProperties | keyof Asset | keyof AssetGroup} Name
@@ -551,54 +611,3 @@ declare function InventoryExtractLockProperties(property: ItemProperties): ItemP
  * @returns {icon is AssetLockType}
  */
 declare function InventoryIconIsPadlock(icon: InventoryIcon): icon is AssetLockType;
-declare namespace InventoryPrerequisiteConflicts {
-    let GagPriorities: Partial<Record<AssetGroupName, number>>;
-    /**
-     * private
-     * @template {keyof PropertiesArray} T
-     * @param {T} fieldName
-     * @param {Character} C - The character on which we check for prerequisites
-     * @param {PropertiesArray[T]} blockingPrereqs - The prerequisites we check for on lower gags
-     * @param {Asset|null} asset - The new gag
-     * @param {object} [options]
-     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
-     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
-     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
-     */
-    function _GagCheck<T extends keyof PropertiesArray>(fieldName: T, C: Character, blockingPrereqs: PropertiesArray[T], asset?: Asset | null, options?: {
-        errMessage?: InventoryPrerequisiteConflicts.ErrMessage | undefined;
-        invert?: boolean | undefined;
-    }): InventoryPrerequisiteConflicts.ErrMessage;
-    /**
-     * Check if there are any lower gags with prerequisites that block the new gag from being applied
-     * @param {Character} C - The character on which we check for prerequisites
-     * @param {readonly AssetPrerequisite[]} blockingPrereqs - The prerequisites we check for on lower gags
-     * @param {Asset|null} asset - The new gag
-     * @param {Object} [options]
-     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
-     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
-     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
-     */
-    function GagPrerequisite(C: Character, blockingPrereqs: readonly AssetPrerequisite[], asset?: Asset | null, options?: {
-        errMessage?: InventoryPrerequisiteConflicts.ErrMessage | undefined;
-        invert?: boolean | undefined;
-    }): InventoryPrerequisiteConflicts.ErrMessage;
-    /**
-     * Check if there are any lower gags with effects that block the new gag from being applied
-     * @param {Character} C - The character on which we check for prerequisites
-     * @param {readonly EffectName[]} blockingEffects - The prerequisites we check for on lower gags
-     * @param {Asset|null} [asset] - The new gag
-     * @param {object} [options]
-     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
-     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
-     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
-     */
-    function GagEffect(C: Character, blockingEffects: readonly EffectName[], asset?: Asset | null, options?: {
-        errMessage?: InventoryPrerequisiteConflicts.ErrMessage | undefined;
-        invert?: boolean | undefined;
-    }): InventoryPrerequisiteConflicts.ErrMessage;
-}
-/** @satisfies {Set<keyof PropertiesArray>} */
-declare const PropertiesArrayLike: Set<"Block" | "Hide" | "Prerequisite" | "AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "ExpressionTrigger" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "AllowExpression" | "MemberNumberList" | "UnHide" | "Texts">;
-/** @satisfies {Set<keyof PropertiesRecord>} */
-declare const PropertiesObjectLike: Set<"AllowLockType" | "ActivityExpression" | "RemoveItemOnRemove" | "PoseMapping" | "TypeRecord">;

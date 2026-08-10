@@ -1,3 +1,5 @@
+/** @type {ReputationType[]} */
+declare var ReputationValidReputations: ReputationType[];
 /**
  * Alters a given reputation value for the player
  * @param {ReputationType} RepType - The name/type of the reputation to alter
@@ -12,20 +14,7 @@ declare function ReputationChange(RepType: ReputationType, RepValue: number, Pus
  * @returns {void} - Nothing
  */
 declare function ReputationLoad(NewRep: readonly Reputation[] | undefined): void;
-/**
- * Returns the reputation value of a given character
- * @overload
- * @param {Character} C - The character to get the reputation of
- * @param {ReputationType} RepType - Type/name of the reputation to get the value of.
- * @returns {number}
- */
 declare function ReputationGet(C: Character, RepType: ReputationType): number;
-/**
- * Returns the reputation value of the player
- * @overload
- * @param {ReputationType} ReputationType - Gets the reputation value from the player
- * @returns {number}
- */
 declare function ReputationGet(ReputationType: ReputationType): number;
 /**
  * Returns a specific reputation value for a given character
@@ -42,5 +31,3 @@ declare function ReputationCharacterGet(character: Character, repType: Reputatio
  * @return {void} - Nothing
  */
 declare function ReputationProgress(RepType: ReputationType, Value: number | string): void;
-/** @type {ReputationType[]} */
-declare var ReputationValidReputations: ReputationType[];

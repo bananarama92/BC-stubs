@@ -1,4 +1,10 @@
-declare function ChestLockpickLoad(): Promise<void>;
+/** @type {undefined | string} */
+declare var ChestLockpickBackground: undefined | string;
+declare var ChestLockpickChestImage: string;
+declare var ChestLockpickSpeed: number;
+declare var ChestLockpickAngle: number;
+declare var ChestLockpickHoleAngle: number;
+declare var ChestLockpickCount: number;
 /**
  * Runs the chest lock pick mini game and draws its components on screen
  * @returns {void} - Nothing
@@ -14,11 +20,3 @@ declare function ChestLockpickMouseDown(): void;
  * @returns {void} - Nothing
  */
 declare function ChestLockpickClick(): void;
-declare function ChestLockpickKeyDown(event: KeyboardEvent): boolean;
-/** @type {undefined | string} */
-declare var ChestLockpickBackground: undefined | string;
-declare var ChestLockpickChestImage: string;
-declare var ChestLockpickSpeed: number;
-declare var ChestLockpickAngle: number;
-declare var ChestLockpickHoleAngle: number;
-declare var ChestLockpickCount: number;

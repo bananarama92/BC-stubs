@@ -1,4 +1,41 @@
 /**
+ * TypedItem.js
+ * ------------
+ * This file contains utilities related to typed extended items (items that allow switching between a selection of
+ * different states). It is generally not necessary to call functions in this file directly - these are called from
+ * Asset.js when an item is first registered.
+ *
+ * All dialogue for typed items should be added to `Dialog_Player.csv`. To implement a typed item, you need the
+ * following dialogue entries (these dialogue keys can also be configured through the item's configuration if custom
+ * dialogue keys are needed):
+ *  * "<GroupName><AssetName>Select" - This is the text that will be displayed at the top of the extended item screen
+ *    (usually a prompt for the player to select a type)
+ *  * For each type:
+ *    * "<GroupName><AssetName><TypeName>" - This is the display name for the given type
+ *  * If the item's chat setting is configured to `TO_ONLY`, you will need a chatroom message for each type, which will
+ *    be sent when that type is selected. It should have the format "<GroupName><AssetName>Set<TypeName>" (e.g.
+ *    "ItemArmsLatexBoxtieLeotardSetPolished" - "SourceCharacter polishes the latex of DestinationCharacter leotard
+ *    until it's shiny")
+ *  * If the item's chat setting is configured to `FROM_TO`, you will need a chatroom message for each possible type
+ *    pairing, which will be sent when the item's type changes from the first type to the second type. It should have
+ *    the format "<GroupName><AssetName>Set<Type1>To<Type2>".
+ */
+/**
+ * A lookup for the typed item configurations for each registered typed item
+ * @const
+ * @type {Record<string, TypedItemData>}
+ * @see {@link TypedItemData}
+ */
+declare const TypedItemDataLookup: Record<string, TypedItemData>;
+/**
+ * An enum encapsulating the possible chatroom message settings for typed items
+ * - TO_ONLY - The item has one chatroom message per type (indicating that the type has been selected)
+ * - FROM_TO - The item has a chatroom message for from/to type pairing
+ * - SILENT - The item doesn't publish an action when a type is selected.
+ * @type {Record<"TO_ONLY"|"FROM_TO"|"SILENT", TypedItemChatSetting>}
+ */
+declare const TypedItemChatSetting: Record<"TO_ONLY" | "FROM_TO" | "SILENT", TypedItemChatSetting>;
+/**
  * Registers a typed extended item.
  * This automatically creates the item's archetype-specific functions (load, draw, etc.) and asset properties.
  * @param {Asset} asset - The asset being registered
@@ -119,10 +156,9 @@ declare function TypedItemGetOption(groupName: AssetGroupName, assetName: string
  * @param {T} previousOption - The previously applied option
  * @param {boolean} [permitExisting] - Determines whether the validation should allow the new option and previous option
  * to be identical. Defaults to false.
- * @returns {string|undefined} - undefined or an empty string if the validation passes. Otherwise, returns a string
- * message informing the player of the requirements that are not met.
+ * @returns {string|null} - Returns a string message informing the player of the requirements that are not met, null otherwise.
  */
-declare function TypedItemValidateOption<T extends ExtendedItemOption>(data: null | ExtendedItemData<T>, C: Character, item: Item, option: T, previousOption: T, permitExisting?: boolean): string | undefined;
+declare function TypedItemValidateOption<T extends ExtendedItemOption>(data: null | ExtendedItemData<T>, C: Character, item: Item, option: T, previousOption: T, permitExisting?: boolean): string | null;
 /**
  * Sets a typed item's type and properties to the option whose name matches the provided option name parameter.
  * @param {Character} C - The character on whom the item is equipped
@@ -204,40 +240,3 @@ declare function TypedItemHandleOptionClick<T extends TypedItemOption | Vibratin
 declare function TypedItemSetType<T extends TypedItemOption | VibratingItemOption>(data: ExtendedItemData<T> & {
     options: T[];
 }, C: Character, newOption: T): void;
-/**
- * TypedItem.js
- * ------------
- * This file contains utilities related to typed extended items (items that allow switching between a selection of
- * different states). It is generally not necessary to call functions in this file directly - these are called from
- * Asset.js when an item is first registered.
- *
- * All dialogue for typed items should be added to `Dialog_Player.csv`. To implement a typed item, you need the
- * following dialogue entries (these dialogue keys can also be configured through the item's configuration if custom
- * dialogue keys are needed):
- *  * "<GroupName><AssetName>Select" - This is the text that will be displayed at the top of the extended item screen
- *    (usually a prompt for the player to select a type)
- *  * For each type:
- *    * "<GroupName><AssetName><TypeName>" - This is the display name for the given type
- *  * If the item's chat setting is configured to `TO_ONLY`, you will need a chatroom message for each type, which will
- *    be sent when that type is selected. It should have the format "<GroupName><AssetName>Set<TypeName>" (e.g.
- *    "ItemArmsLatexBoxtieLeotardSetPolished" - "SourceCharacter polishes the latex of DestinationCharacter leotard
- *    until it's shiny")
- *  * If the item's chat setting is configured to `FROM_TO`, you will need a chatroom message for each possible type
- *    pairing, which will be sent when the item's type changes from the first type to the second type. It should have
- *    the format "<GroupName><AssetName>Set<Type1>To<Type2>".
- */
-/**
- * A lookup for the typed item configurations for each registered typed item
- * @const
- * @type {Record<string, TypedItemData>}
- * @see {@link TypedItemData}
- */
-declare const TypedItemDataLookup: Record<string, TypedItemData>;
-/**
- * An enum encapsulating the possible chatroom message settings for typed items
- * - TO_ONLY - The item has one chatroom message per type (indicating that the type has been selected)
- * - FROM_TO - The item has a chatroom message for from/to type pairing
- * - SILENT - The item doesn't publish an action when a type is selected.
- * @type {Record<"TO_ONLY"|"FROM_TO"|"SILENT", TypedItemChatSetting>}
- */
-declare const TypedItemChatSetting: Record<"TO_ONLY" | "FROM_TO" | "SILENT", TypedItemChatSetting>;

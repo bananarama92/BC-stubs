@@ -1,11 +1,61 @@
+/** @type {SocketIO.Socket} */
+declare var ServerSocket: SocketIO.Socket;
+declare var ServerURL: string;
+/** @type {NotificationBeep[] } */
+declare var ServerBeepQueue: NotificationBeep[];
+declare var ServerIsConnected: boolean;
+declare var ServerReconnectCount: number;
+declare var ServerAccountEmailRegex: RegExp;
+declare var ServerAccountNameRegex: RegExp;
+declare var ServerAccountPasswordRegex: RegExp;
+declare var ServerAccountResetNumberRegex: RegExp;
+declare var ServerCharacterNameRegex: RegExp;
+declare var ServerCharacterNicknameRegex: RegExp;
+declare var ServerChatMessageMaxLength: number;
+declare var ServerChatRoomDescriptionMaxLength: number;
+/** @type {ServerChatRoomLanguage[]} */
+declare const ServerChatRoomSupportedLanguages: ServerChatRoomLanguage[];
+declare const ServerScriptMessage: string;
+declare const ServerScriptWarningStyle: string;
 /** Loads the server by attaching the socket events and their respective callbacks */
 declare function ServerInit(): void;
+/** @readonly */
+declare var ServerAccountUpdate: {
+    /**
+     * private
+     * @type {Map<keyof ServerAccountUpdateRequest, any>}
+     */
+    Queue: Map<keyof ServerAccountUpdateRequest, any>;
+    /**
+     * private
+     * @type {null | ReturnType<typeof setTimeout>}
+     */
+    Timeout: null | ReturnType<typeof setTimeout>;
+    /**
+     * private
+     * @type {number}
+     */
+    Start: number;
+    /** Clears queue and sync with server  */
+    SyncToServer(): void;
+    /**
+     * Queues a data to be synced at a later time
+     * @param {ServerAccountUpdateRequest} Data
+     * @param {boolean} [Force] - force immediate sync to server
+     */
+    QueueData(Data: ServerAccountUpdateRequest, Force?: boolean): void;
+};
 /**
  * Sets the connection status of the server and updates the login page message
  * @param {boolean} connected - whether or not the websocket connection to the server has been established successfully
  * @param {string} [errorMessage] - the error message to display if not connected
  */
 declare function ServerSetConnected(connected: boolean, errorMessage?: string): void;
+/**
+ * private Use the {@link ServerIsLoggedIn} function instead.
+ * @type {boolean}
+ */
+declare let ServerIsLoggedIn_: boolean;
 /**
  * Returns whether the player has successfully logged into the game.
  *
@@ -50,12 +100,53 @@ declare function ServerDisconnect(data?: ServerForceDisconnectMessage, close?: b
  * @param {ServerAccountData} C
  */
 declare function ServerHandleRelog(C: ServerAccountData): boolean;
+type ServerChatRoomChecksOptions = {
+    screen?: ScreenName;
+    module?: ModuleType;
+    callback?: () => boolean;
+};
+/** @typedef {{ screen?: ScreenName, module?: ModuleType, callback?: () => boolean }} ServerChatRoomChecksOptions */
+/**
+ * Namespace with callbacks for determining whether the player is in a chatroom
+ * @namespace
+ * @see {@link ServerPlayerIsInChatRoom}
+ */
+declare var ServerPlayerChatRoom: {
+    /**
+     * All registered callbacks representing distinct screens that must be checked in order to determine chatroom presence
+     * @type {((module: ModuleType, screen: ScreenName) => boolean)[]}
+     */
+    callbacks: ((module: ModuleType, screen: ScreenName) => boolean)[];
+    /**
+     * Register one or more screenname and/or callback for determining whether the player is in a chat room.
+     * @param {ServerChatRoomChecksOptions[]} options
+     */
+    register(...options: ServerChatRoomChecksOptions[]): void;
+};
 /**
  * Returns whether the player is currently in a chatroom or viewing a subscreen while in a chatroom
  * @returns {boolean} - True if in a chatroom
  */
 declare function ServerPlayerIsInChatRoom(): boolean;
-declare function ServerSend<Ev extends import("@socket.io/component-emitter").EventNames<ClientToServerEvents>>(ev: Ev, ...args: import("@socket.io/component-emitter").EventParams<ClientToServerEvents, Ev>): void;
+/** Ratelimit: Max number of messages per interval */
+declare var ServerSendRateLimit: number;
+/** Ratelimit: Length of the rate-limit window, in msec */
+declare var ServerSendRateLimitInterval: number;
+/**
+ * Queued messages waiting to be sent
+ *
+ * @type {SendRateLimitQueueItem[]}
+ */
+declare const ServerSendRateLimitQueue: SendRateLimitQueueItem[];
+/** @type {number[]} */
+declare let ServerSendRateLimitTimes: number[];
+/**
+ * Sends a message with the given data to the server via socket.emit
+ * @type {<Ev extends import("@socket.io/component-emitter").EventNames<ClientToServerEvents>>(
+ *     ev: Ev, ...args: import("@socket.io/component-emitter").EventParams<ClientToServerEvents, Ev>
+ * ) => void}
+ */
+declare function ServerSend<Ev extends import("@socket.io/component-emitter").EventNames<ClientToServerEvents>>(Message: Ev, ...args: Parameters<ClientToServerEvents[Ev]>): void;
 /**
  * Process the outgoing server messages queue
  */
@@ -212,7 +303,7 @@ declare function ServerAccountBeep(data: ServerAccountBeepResponse): void;
  * @param {boolean} [options.includeRoom] - If set, we'll include the current room data we're in
  */
 declare function ServerSendBeepMessage(target: number, msg?: string, options?: {
-    includeRoom?: boolean | undefined;
+    includeRoom?: boolean;
 }): void;
 /**
  * Show a message as a beep
@@ -227,11 +318,11 @@ declare function ServerSendBeepMessage(target: number, msg?: string, options?: {
  * @param {string} [title]
  */
 declare function ServerShowBeep(message: string, duration: number, options?: {
-    onClick?: ((this: HTMLDivElement, event: MouseEvent) => void) | undefined;
-    memberNumber?: number | undefined;
-    memberName?: string | undefined;
-    chatRoomName?: string | undefined;
-    silent?: boolean | undefined;
+    onClick?: (this: HTMLDivElement, event: MouseEvent) => void;
+    memberNumber?: number;
+    memberName?: string;
+    chatRoomName?: string;
+    silent?: boolean;
 }, title?: string): void;
 /**
  * Callback used to parse received information related to the player ownership data
@@ -254,110 +345,13 @@ declare function ServerAccountLovership(data: object): void;
  * @returns {boolean}
  */
 declare function ServerChatRoomGetAllowItem(Source: Character, Target: Character): boolean;
-/**
- * @param {unknown} arg
- * @return {arg is ChatRoomMapData}
- */
-declare function ServerIsMapData(arg: unknown): arg is ChatRoomMapData;
-/**
- * Run a promise along with a timeout
- *
- * @template T
- * @param {number} timeout
- * @param {((resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void)} executor
- * @return {Promise<T>}
- */
-declare function ServerPromiseWithTimeout<T>(timeout: number, executor: ((resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void)): Promise<T>;
-/**
- * Perform a search query against the server
- * @param {string} queryString
- * @param {Omit<ServerChatRoomSearchRequest, "Query">} options
- * @return {Promise<Result<ServerChatRoomSearchResultResponse, ServerError>>}
- */
-declare function ServerRoomSearch(queryString: string, options: Omit<ServerChatRoomSearchRequest, "Query">): Promise<Result<ServerChatRoomSearchResultResponse, ServerError>>;
-/**
- * Perform a join query against the server
- * @param {string} roomName
- * @return {Promise<Result<string, ServerError>>}
- */
-declare function ServerRoomJoin(roomName: string): Promise<Result<string, ServerError>>;
-/** @type {SocketIO.Socket} */
-declare var ServerSocket: SocketIO.Socket;
-declare var ServerURL: string;
-/** @type {NotificationBeep[] } */
-declare var ServerBeepQueue: NotificationBeep[];
-declare var ServerIsConnected: boolean;
-declare var ServerReconnectCount: number;
-declare var ServerAccountEmailRegex: RegExp;
-declare var ServerAccountNameRegex: RegExp;
-declare var ServerAccountPasswordRegex: RegExp;
-declare var ServerAccountResetNumberRegex: RegExp;
-declare var ServerCharacterNameRegex: RegExp;
-declare var ServerCharacterNicknameRegex: RegExp;
-declare var ServerChatMessageMaxLength: number;
-declare var ServerChatRoomDescriptionMaxLength: number;
-/** @type {ServerChatRoomLanguage[]} */
-declare const ServerChatRoomSupportedLanguages: ServerChatRoomLanguage[];
-declare const ServerScriptMessage: string;
-declare const ServerScriptWarningStyle: string;
-/** @readonly */
-declare var ServerAccountUpdate: {
-    /**
-     * private
-     * @type {Map<keyof ServerAccountUpdateRequest, any>}
-     */
-    Queue: Map<keyof ServerAccountUpdateRequest, any>;
-    /**
-     * private
-     * @type {null | ReturnType<typeof setTimeout>}
-     */
-    Timeout: null | ReturnType<typeof setTimeout>;
-    /**
-     * private
-     * @type {number}
-     */
-    Start: number;
-    /** Clears queue and sync with server  */
-    SyncToServer(): void;
-    /**
-     * Queues a data to be synced at a later time
-     * @param {ServerAccountUpdateRequest} Data
-     * @param {boolean} [Force] - force immediate sync to server
-     */
-    QueueData(Data: ServerAccountUpdateRequest, Force?: boolean): void;
-};
-/**
- * private Use the {@link ServerIsLoggedIn} function instead.
- * @type {boolean}
- */
-declare let ServerIsLoggedIn_: boolean;
-declare namespace ServerPlayerChatRoom {
-    let callbacks: ((module: ModuleType, screen: ScreenName) => boolean)[];
-    /**
-     * Register one or more screenname and/or callback for determining whether the player is in a chat room.
-     * @param {ServerChatRoomChecksOptions[]} options
-     */
-    function register(...options: ServerChatRoomChecksOptions[]): void;
-}
-/** Ratelimit: Max number of messages per interval */
-declare var ServerSendRateLimit: number;
-/** Ratelimit: Length of the rate-limit window, in msec */
-declare var ServerSendRateLimitInterval: number;
-/**
- * Queued messages waiting to be sent
- *
- * @type {SendRateLimitQueueItem[]}
- */
-declare const ServerSendRateLimitQueue: SendRateLimitQueueItem[];
-/** @type {number[]} */
-declare let ServerSendRateLimitTimes: number[];
-declare namespace ServerValidation {
+declare var ServerValidation: {
     /**
      * Private helper to quickly check boolean settings
      * @param {boolean} defaultValue
      * @returns {(arg: boolean | undefined) => boolean}
      */
-    function isBool(defaultValue: boolean): (arg: boolean | undefined) => boolean;
+    isBool(defaultValue: boolean): (arg: boolean | undefined) => boolean;
     /**
      * Private helper to quickly check items in lists
      * @template T
@@ -365,14 +359,14 @@ declare namespace ServerValidation {
      * @param {T} defaultValue
      * @returns {(arg: unknown) => T}
      */
-    function isItem<T>(list: T[], defaultValue: T): (arg: unknown) => T;
+    isItem<T>(list: T[], defaultValue: T): (arg: unknown) => T;
     /**
      * Private helper to quickly check numbers
      * @template {number} T
      * @param {T} defaultValue
      * @returns {(arg: T) => T}
      */
-    function isNumber<T extends number>(defaultValue: T): (arg: T) => T;
+    isNumber<T extends number>(defaultValue: T): (arg: T) => T;
     /**
      * Private helper to quickly check integers
      * @template {number} T
@@ -381,47 +375,52 @@ declare namespace ServerValidation {
      * @param {T} defaultValue
      * @returns {(arg: T) => T}
      */
-    function isInt<T extends number>(min: number, max: number, defaultValue: T): (arg: T) => T;
+    isInt<T extends number>(min: number, max: number, defaultValue: T): (arg: T) => T;
     /**
      * Private helper to quickly check strings
      * @param {number} maxLength
      * @param {string} defaultValue
      * @returns {(arg: any) => string}
      */
-    function isString(maxLength: number, defaultValue: string): (arg: any) => string;
+    isString(maxLength: number, defaultValue: string): (arg: any) => string;
     /**
      * Private helper to quickly check strings
      * @param {number} maxLength
      * @param {string|undefined} defaultValue
      * @returns {(arg: any) => string | undefined}
      */
-    function isStringOrUndefined(maxLength: number, defaultValue: string | undefined): (arg: any) => string | undefined;
+    isStringOrUndefined(maxLength: number, defaultValue: string | undefined): (arg: any) => string | undefined;
     /**
      * Private helper to quickly check color codes
      * @param {boolean} allowAlpha
      * @param {HexColor | undefined} defaultValue
      */
-    function isColorCode(allowAlpha: boolean | undefined, defaultValue: HexColor | undefined): (arg: any) => `#${string}` | undefined;
+    isColorCode(allowAlpha: boolean | undefined, defaultValue: HexColor | undefined): (arg: any) => `#${string}` | undefined;
     /**
      * Private helper to quick check notification settings
      * @param {NotificationSetting} defaultNotif
      * @returns {(arg: Partial<NotificationSetting>) => NotificationSetting}
      */
-    function isValidNotification(defaultNotif: NotificationSetting): (arg: Partial<NotificationSetting>) => NotificationSetting;
-}
-declare namespace ServerAccountDataSyncedValidate {
-    function Title(arg: Partial<TitleName | undefined>, C: Character): Partial<TitleName | undefined>;
-    function Nickname(arg: Partial<string | undefined>, C: Character): string | undefined;
-    function Money(arg: number, C: Character): number;
-    function AllowedInteractions(arg: Partial<AllowedInteractions>, C: Character): AllowedInteractions;
-    function Difficulty(arg: Partial<{
+    isValidNotification(defaultNotif: NotificationSetting): (arg: Partial<NotificationSetting>) => NotificationSetting;
+};
+/**
+ * Namespace with functions for validating {@link ServerAccountDataSynced} properties, converting them into their valid {@link Character} counterpart
+ * @satisfies {{ [k in keyof (ServerAccountData | PlayerCharacter)]?: (arg: Partial<ServerAccountData[k]>, C: Character) => PlayerCharacter[k] }}
+ * @namespace
+ */
+declare var ServerAccountDataSyncedValidate: {
+    Title: (arg: Partial<TitleName | undefined>, C: Character) => Partial<TitleName | undefined>;
+    Nickname: (arg: Partial<string | undefined>, C: Character) => string | undefined;
+    Money: (arg: number, C: Character) => number;
+    AllowedInteractions: (arg: Partial<AllowedInteractions>, C: Character) => AllowedInteractions;
+    Difficulty: (arg: Partial<{
         Level: DifficultyLevel;
         LastChange: number;
-    } | undefined>, C: Character): {
+    } | undefined>, C: Character) => {
         Level: DifficultyLevel;
         LastChange: number | undefined;
     };
-    function ArousalSettings(arg: Partial<ArousalSettingsType | undefined>, C: Character): {
+    ArousalSettings: (arg: Partial<ArousalSettingsType | undefined>, C: Character) => {
         Active: ArousalActiveName;
         Visible: ArousalVisibleName;
         ShowOtherMeter: boolean;
@@ -442,7 +441,7 @@ declare namespace ServerAccountDataSyncedValidate {
         OrgasmCount: number;
         DisableAdvancedVibes: boolean;
     };
-    function OnlineSharedSettings(arg: Partial<CharacterOnlineSharedSettings | undefined>, C: Character): {
+    OnlineSharedSettings: (arg: Partial<CharacterOnlineSharedSettings | undefined>, C: Character) => {
         AllowFullWardrobeAccess: boolean;
         BlockBodyCosplay: boolean;
         AllowPlayerLeashing: boolean;
@@ -453,8 +452,8 @@ declare namespace ServerAccountDataSyncedValidate {
         ScriptPermissions: ScriptPermissions;
         WheelFortune: string;
     };
-    function Crafting(arg: Partial<string | undefined>, C: Character): (CraftingItem | null)[];
-    function Game(arg: Partial<CharacterGameParameters | undefined>, C: Character): {
+    Crafting: (arg: Partial<string | undefined>, C: Character) => (CraftingItem | null)[];
+    Game: (arg: Partial<CharacterGameParameters | undefined>, C: Character) => {
         LARP: GameLARPParameters | undefined;
         MagicBattle: GameMagicBattleParameters | undefined;
         GGTS: GameGGTSParameters | undefined;
@@ -463,38 +462,62 @@ declare namespace ServerAccountDataSyncedValidate {
         Prison: GamePrisonParameters | undefined;
         MagicSchoolFindsAround: GameMagicSchoolFindsAroundParameters | undefined;
     };
-    function LabelColor(arg: Partial<"" | `#${string}` | undefined>, C: Character): `#${string}`;
-    function Creation(arg: number, C: Character): number | undefined;
-    function Description(arg: Partial<string | undefined>, C: Character): string;
-    function Lover(arg: Partial<string | undefined>, C: Character): string | undefined;
-    function Owner(arg: Partial<string | undefined>, C: Character): string;
-    function Ownership(arg: Partial<ServerOwnership | undefined>, C: Character): {
+    LabelColor: (arg: Partial<"" | `#${string}` | undefined>, C: Character) => `#${string}`;
+    Creation: (arg: number, C: Character) => number | undefined;
+    Description: (arg: Partial<string | undefined>, C: Character) => string;
+    Lover: (arg: Partial<string | undefined>, C: Character) => string | undefined;
+    Owner: (arg: Partial<string | undefined>, C: Character) => string;
+    Ownership: (arg: Partial<ServerOwnership | undefined>, C: Character) => {
         Name: string;
         MemberNumber: number;
         Notes: string | undefined;
         Stage: 0 | 1;
         Start: number;
     } | null;
-    function Lovership(arg: Partial<ServerLovership[] | undefined>, C: Character): Lovership[];
-    function Reputation(arg: Partial<{
+    Lovership: (arg: Partial<ServerLovership[] | undefined>, C: Character) => Lovership[];
+    Reputation: (arg: Partial<{
         Type: ReputationType;
         Value: number;
-    }[] | undefined>, C: Character): Reputation[];
-    function WhiteList(arg: (number | undefined)[], C: Character): number[];
-    function BlackList(arg: (number | undefined)[], C: Character): number[];
-    let MapData: ((arg: ChatRoomMapData | undefined, C: Character) => ChatRoomMapData) & { [k in keyof ChatRoomMapData]: (arg: Partial<ChatRoomMapData[k]>, C: Character) => ChatRoomMapData[k]; };
-    function ChatSearchSettings(arg: ServerAccountDataSynced["ChatSearchSettings"], C: Character): ChatRoomSearchSettings;
-}
+    }[] | undefined>, C: Character) => Reputation[];
+    WhiteList: (arg: (number | undefined)[], C: Character) => number[];
+    BlackList: (arg: (number | undefined)[], C: Character) => number[];
+    /**
+     * Validate a ChatRoomMapData object
+     *
+     * Note that because the position needs the actual room data (for the entry flag position),
+     * you might get slightly incorrect results from this if run from outside a chat room.
+     *
+     * @type {((arg: ChatRoomMapData | undefined, C: Character) => ChatRoomMapData) & { [k in keyof ChatRoomMapData]: (arg: Partial<ChatRoomMapData[k]>, C: Character) => ChatRoomMapData[k] }}
+     */
+    MapData: ((arg: ChatRoomMapData | undefined, C: Character) => ChatRoomMapData) & { [k in keyof ChatRoomMapData]: (arg: Partial<ChatRoomMapData[k]>, C: Character) => ChatRoomMapData[k]; };
+    /**
+     * @param {ServerAccountDataSynced["ChatSearchSettings"]} arg
+     * @param {Character} C
+     * @returns {ChatRoomSearchSettings}
+     */
+    ChatSearchSettings: (arg: ServerAccountDataSynced["ChatSearchSettings"], C: Character) => ChatRoomSearchSettings;
+};
+/**
+ * @param {unknown} arg
+ * @return {arg is ChatRoomMapData}
+ */
+declare function ServerIsMapData(arg: unknown): arg is ChatRoomMapData;
 /**
  * Namespace with default values for {@link ChatRoomSearchSettings} properties.
  * @type {{ [k in keyof Required<ChatRoomSearchSettings>]: (arg: ChatRoomSearchSettings[k], C: Character) => ChatRoomSearchSettings[k] }}
  * @namespace
  */
 declare const ServerChatRoomSearchSettingsValidate: { [k in keyof Required<ChatRoomSearchSettings>]: (arg: ChatRoomSearchSettings[k], C: Character) => ChatRoomSearchSettings[k]; };
-declare namespace ServerChatRoomDataValidate {
-    let Custom: ((arg: Partial<ServerChatRoomCustomData>) => ServerChatRoomCustomData) & { [k in keyof Required<ServerChatRoomCustomData>]: (arg: ServerChatRoomCustomData[k]) => ServerChatRoomCustomData[k]; };
-}
-declare const ServerDefaultTimeout: 3000;
+/**
+ * Namespace with functions for validating {@link ServerAccountDataSynced} properties, converting them into their valid {@link Character} counterpart
+ * @satisfies {{ [k in keyof (ServerChatRoomData)]?: (arg: Partial<ServerChatRoomData[k]>) => ServerChatRoomData[k] }}
+ * @namespace
+ */
+declare const ServerChatRoomDataValidate: {
+    /** @type {((arg: Partial<ServerChatRoomCustomData>) => ServerChatRoomCustomData) & { [k in keyof (Required<ServerChatRoomCustomData>)]: (arg: ServerChatRoomCustomData[k]) => ServerChatRoomCustomData[k] }} */
+    Custom: ((arg: Partial<ServerChatRoomCustomData>) => ServerChatRoomCustomData) & { [k in keyof (Required<ServerChatRoomCustomData>)]: (arg: ServerChatRoomCustomData[k]) => ServerChatRoomCustomData[k]; };
+};
+declare const ServerDefaultTimeout = 3000;
 declare class ServerError extends Error {
 }
 declare class ServerTimeoutError extends ServerError {
@@ -511,22 +534,39 @@ declare class ServerInProgressError extends ServerError {
 }
 declare class ServerJoinError extends ServerError {
     /**
+     * @type {ServerChatRoomJoinFailedResponse} name
+     */
+    name: ServerChatRoomJoinFailedResponse;
+    /**
      * @param {ServerChatRoomJoinFailedResponse} type
      * @param {string} [message]
      */
     constructor(type: ServerChatRoomJoinFailedResponse, message?: string);
-    /**
-     * @type {ServerChatRoomJoinFailedResponse} name
-     */
-    name: ServerChatRoomJoinFailedResponse;
 }
+/**
+ * Run a promise along with a timeout
+ *
+ * @template T
+ * @param {number} timeout
+ * @param {((resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void)} executor
+ * @return {Promise<T>}
+ */
+declare function ServerPromiseWithTimeout<T>(timeout: number, executor: ((resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void)): Promise<T>;
 declare let ServerRoomSearchLastQueryTime: number;
 /** @type {ServerChatRoomSearchRequest | null} */
 declare let ServerRoomSearchLastQuery: ServerChatRoomSearchRequest | null;
+/**
+ * Perform a search query against the server
+ * @param {string} queryString
+ * @param {Omit<ServerChatRoomSearchRequest, "Query">} options
+ * @return {Promise<Result<ServerChatRoomSearchResultResponse, ServerError>>}
+ */
+declare function ServerRoomSearch(queryString: string, options: Omit<ServerChatRoomSearchRequest, "Query">): Promise<Result<ServerChatRoomSearchResultResponse, ServerError>>;
 declare let ServerRoomJoinLastQuery: string;
 declare let ServerRoomJoinLastQueryTime: number;
-type ServerChatRoomChecksOptions = {
-    screen?: ScreenName;
-    module?: ModuleType;
-    callback?: () => boolean;
-};
+/**
+ * Perform a join query against the server
+ * @param {string} roomName
+ * @return {Promise<Result<string, ServerError>>}
+ */
+declare function ServerRoomJoin(roomName: string): Promise<Result<string, ServerError>>;

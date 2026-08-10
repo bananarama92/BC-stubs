@@ -1,3 +1,28 @@
+declare var ChatAdminBackground: string;
+declare var ChatAdminMessage: string;
+declare var ChatAdminBackgroundIndex: number;
+declare var ChatAdminPreviewBackgroundMode: boolean;
+/** @type {ServerChatRoomGame[]} */
+declare var ChatAdminGameList: ServerChatRoomGame[];
+/**
+ * @deprecated
+ * @type {ServerChatRoomLanguage[]}
+ */
+declare var ChatAdminLanguageList: ServerChatRoomLanguage[];
+/** @type {null | string[]} */
+declare var ChatAdminBackgroundList: null | string[];
+/** @type {ServerChatRoomLanguage} */
+declare var ChatAdminDefaultLanguage: ServerChatRoomLanguage;
+declare var ChatAdminVisibilityModeLabels: ChatRoomVisibilityModeLabel[];
+declare var ChatAdminVisibilityModeValues: ServerChatRoomRole[][];
+declare var ChatAdminVisibilityModeIndex: number;
+declare var ChatAdminAccessModeLabels: ChatRoomAccessModeLabel[];
+declare var ChatAdminAccessModeValues: ServerChatRoomRole[][];
+declare var ChatAdminAccessModeIndex: number;
+/** @type {ChatRoomAdminSettings | null} */
+declare var ChatAdminData: ChatRoomAdminSettings | null;
+/** @type {"create" | "update" | null} */
+declare var ChatAdminMode: "create" | "update" | null;
 /**
  * Show the room editor screen in creation mode
  */
@@ -21,8 +46,6 @@ declare function ChatAdminStart(mode: "create" | "update", roomData?: ChatRoomSe
  * @returns {boolean}
  */
 declare function ChatAdminCanEdit(): boolean;
-declare function ChatAdminLoad(): Promise<void>;
-declare function ChatAdminUnload(): void;
 /**
  * Handles drawing the editor screen
  */
@@ -36,8 +59,6 @@ declare function ChatAdminClick(): void;
  * Handles accepting the room editor
  */
 declare function ChatAdminCommit(): void;
-declare function ChatAdminKeyDown(event: KeyboardEvent): boolean;
-declare function ChatAdminExit(): void;
 /**
  * Validates whether the given settings is in the correct format for a ChatRoomAdminSettings object
  * @param {unknown} settings - The settings to validate
@@ -76,28 +97,3 @@ declare function ChatEditorCreateRoom(): void;
  * @returns {void} - Nothing
  */
 declare function ChatCreateResponse(data: ServerChatRoomCreateResponse): void;
-declare var ChatAdminBackground: string;
-declare var ChatAdminMessage: string;
-declare var ChatAdminBackgroundIndex: number;
-declare var ChatAdminPreviewBackgroundMode: boolean;
-/** @type {ServerChatRoomGame[]} */
-declare var ChatAdminGameList: ServerChatRoomGame[];
-/**
- * @deprecated
- * @type {ServerChatRoomLanguage[]}
- */
-declare var ChatAdminLanguageList: ServerChatRoomLanguage[];
-/** @type {null | string[]} */
-declare var ChatAdminBackgroundList: null | string[];
-/** @type {ServerChatRoomLanguage} */
-declare var ChatAdminDefaultLanguage: ServerChatRoomLanguage;
-declare var ChatAdminVisibilityModeLabels: ChatRoomVisibilityModeLabel[];
-declare var ChatAdminVisibilityModeValues: ServerChatRoomRole[][];
-declare var ChatAdminVisibilityModeIndex: number;
-declare var ChatAdminAccessModeLabels: ChatRoomAccessModeLabel[];
-declare var ChatAdminAccessModeValues: ServerChatRoomRole[][];
-declare var ChatAdminAccessModeIndex: number;
-/** @type {ChatRoomAdminSettings | null} */
-declare var ChatAdminData: ChatRoomAdminSettings | null;
-/** @type {"create" | "update" | null} */
-declare var ChatAdminMode: "create" | "update" | null;

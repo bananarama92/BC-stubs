@@ -1,5 +1,11 @@
-declare function ForbiddenWordsLoad(): Promise<void>;
-declare function ForbiddenWordsUnload(): void;
+declare var ForbiddenWordsBackground: string;
+/** @type {null | Character } */
+declare var ForbiddenWordsTarget: null | Character;
+/** @type {string[]} */
+declare var ForbiddenWordsList: string[];
+declare var ForbiddenWordsOffset: number;
+declare var ForbiddenWordsConsequence: string;
+declare var ForbiddenWordsConsequenceList: string[];
 /**
  * Starts the forbidden words screen and loads it
  * @returns {void} - Nothing
@@ -15,12 +21,3 @@ declare function ForbiddenWordsRun(): void;
  * @returns {void} - Nothing
  */
 declare function ForbiddenWordsClick(): void;
-declare function ForbiddenWordsExit(): void;
-declare var ForbiddenWordsBackground: string;
-/** @type {null | Character } */
-declare var ForbiddenWordsTarget: null | Character;
-/** @type {string[]} */
-declare var ForbiddenWordsList: string[];
-declare var ForbiddenWordsOffset: number;
-declare var ForbiddenWordsConsequence: string;
-declare var ForbiddenWordsConsequenceList: string[];

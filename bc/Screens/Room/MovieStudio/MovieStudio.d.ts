@@ -1,3 +1,26 @@
+declare var MovieStudioBackground: string;
+/** @type {null | NPCCharacter} */
+declare var MovieStudioDirector: null | NPCCharacter;
+/** @type {"" | "OpenHouse" | "Interview"} */
+declare var MovieStudioCurrentMovie: "" | "OpenHouse" | "Interview";
+declare var MovieStudioCurrentScene: number;
+/** @type {"" | "Journalist" | "Maid" | "Mistress" | "Wife"} */
+declare var MovieStudioCurrentRole: "" | "Journalist" | "Maid" | "Mistress" | "Wife";
+/** @type {null | NPCCharacter} */
+declare var MovieStudioActor1: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var MovieStudioActor2: null | NPCCharacter;
+/** @type {null | number} */
+declare var MovieStudioTimer: null | number;
+declare var MovieStudioMeter: number;
+declare var MovieStudioDecay: number;
+/** @type {string[]} */
+declare var MovieStudioActivity: string[];
+declare var MovieStudioMoney: number;
+/** @type {null | Item[]} */
+declare var MovieStudioOriginalClothes: null | Item[];
+/** @type {"" | "Interview" | "OpenHouse"} */
+declare var MovieStudioDailyMovie: "" | "Interview" | "OpenHouse";
 /**
  * The player can play in a movie if she doesn't have any locked restraints
  * @returns {boolean} - TRUE if the player can play in a movie
@@ -50,7 +73,6 @@ declare function MovieStudioChangeMeter(Factor: number): void;
  * @returns {void} - Nothing
  */
 declare function MovieStudioProcessDecay(): void;
-declare function MovieStudioLoad(): Promise<void>;
 /**
  * Runs and draws the Movie Studio screen
  * @returns {void} - Nothing
@@ -153,26 +175,3 @@ declare function MovieStudioClubCardStart(): void;
  * @returns {Promise<void>} - Nothing
  */
 declare function MovieStudioClubCardEnd(): Promise<void>;
-declare var MovieStudioBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MovieStudioDirector: null | NPCCharacter;
-/** @type {"" | "OpenHouse" | "Interview"} */
-declare var MovieStudioCurrentMovie: "" | "OpenHouse" | "Interview";
-declare var MovieStudioCurrentScene: number;
-/** @type {"" | "Journalist" | "Maid" | "Mistress" | "Wife"} */
-declare var MovieStudioCurrentRole: "" | "Journalist" | "Maid" | "Mistress" | "Wife";
-/** @type {null | NPCCharacter} */
-declare var MovieStudioActor1: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var MovieStudioActor2: null | NPCCharacter;
-/** @type {null | number} */
-declare var MovieStudioTimer: null | number;
-declare var MovieStudioMeter: number;
-declare var MovieStudioDecay: number;
-/** @type {string[]} */
-declare var MovieStudioActivity: string[];
-declare var MovieStudioMoney: number;
-/** @type {null | Item[]} */
-declare var MovieStudioOriginalClothes: null | Item[];
-/** @type {"" | "Interview" | "OpenHouse"} */
-declare var MovieStudioDailyMovie: "" | "Interview" | "OpenHouse";

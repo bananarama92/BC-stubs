@@ -1,4 +1,4 @@
-declare function InventoryItemTorsoFuturisticHarnessDrawHook(data: TypedItemData, originalFunction: () => void): void;
-declare function InventoryItemTorsoFuturisticHarnessClickHook(data: TypedItemData, originalFunction: () => void): void;
+/** @type {() => boolean} */
 declare function InventoryItemTorsoFuturisticHarnessIsColorable(): boolean;
+/** @type {() => void} */
 declare function InventoryItemTorsoFuturisticHarnessColor(): void;

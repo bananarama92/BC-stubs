@@ -1,3 +1,17 @@
+declare var ChatAdminRoomCustomizationBackground: string;
+/** @type {null | ServerChatRoomCustomData} */
+declare var ChatAdminRoomCustomizationCurrent: null | ServerChatRoomCustomData;
+declare var ChatAdminRoomCustomizationIsPreviewing: boolean;
+/** @type {null | "MusicLibrary"} */
+declare var ChatAdminRoomCustomizationMode: null | "MusicLibrary";
+/** @type {null | HTMLAudioElement} */
+declare var ChatAdminRoomCustomizationAudio: null | HTMLAudioElement;
+declare const ChatAdminRoomCustomizationImageFormats: string[];
+declare var ChatAdminRoomCustomizationMusicLibrary: {
+    Name: string;
+    URL: string;
+    Source: string;
+}[];
 /**
  * Checks whether the player is allowed to change customization settings
  * @returns {boolean} - true if the player is allowed to change customization settings, false otherwise
@@ -9,7 +23,22 @@ declare function ChatAdminRoomCustomizationCanEdit(): boolean;
  * @returns {void} - Nothing
  */
 declare function ChatAdminRoomCustomizationCommand(args: string[]): void;
-declare function ChatAdminRoomCustomizationLoad(): Promise<void>;
+declare const ChatAdminRoomCustomizationIDs: {
+    subscreen: string;
+    title: string;
+    main: string;
+    grid: string;
+    cancelButton: string;
+    previewButton: string;
+    clearButton: string;
+    saveButton: string;
+    imageURLInput: string;
+    imageFilterInput: string;
+    imageFillModeSelect: string;
+    musicURLInput: string;
+    musicSyncCheckbox: string;
+    openLibraryButton: string;
+};
 declare function ChatAdminRoomCustomizationResize(): void;
 declare function ChatAdminRoomCustomizationUnload(): void;
 declare function ChatAdminRoomCustomizationPreviewMusic(): void;
@@ -32,34 +61,3 @@ declare function ChatAdminRoomCustomizationRun(): void;
  * @returns {void} - Nothing
  */
 declare function ChatAdminRoomCustomizationClick(): void;
-declare function ChatAdminRoomCustomizationExit(): void;
-declare var ChatAdminRoomCustomizationBackground: string;
-/** @type {null | ServerChatRoomCustomData} */
-declare var ChatAdminRoomCustomizationCurrent: null | ServerChatRoomCustomData;
-declare var ChatAdminRoomCustomizationIsPreviewing: boolean;
-/** @type {null | "MusicLibrary"} */
-declare var ChatAdminRoomCustomizationMode: null | "MusicLibrary";
-/** @type {null | HTMLAudioElement} */
-declare var ChatAdminRoomCustomizationAudio: null | HTMLAudioElement;
-declare const ChatAdminRoomCustomizationImageFormats: string[];
-declare var ChatAdminRoomCustomizationMusicLibrary: {
-    Name: string;
-    URL: string;
-    Source: string;
-}[];
-declare namespace ChatAdminRoomCustomizationIDs {
-    let subscreen: string;
-    let title: string;
-    let main: string;
-    let grid: string;
-    let cancelButton: string;
-    let previewButton: string;
-    let clearButton: string;
-    let saveButton: string;
-    let imageURLInput: string;
-    let imageFilterInput: string;
-    let imageFillModeSelect: string;
-    let musicURLInput: string;
-    let musicSyncCheckbox: string;
-    let openLibraryButton: string;
-}

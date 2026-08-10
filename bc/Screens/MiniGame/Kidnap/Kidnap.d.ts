@@ -1,3 +1,40 @@
+declare var KidnapVictory: boolean;
+declare var KidnapDifficulty: number;
+declare var KidnapBackground: string;
+declare var KidnapReturnFunction: string;
+/** @type {null | Character} */
+declare var KidnapOpponent: null | Character;
+/** @type {null | Item} */
+declare var KidnapPlayerCloth: null | Item;
+/** @type {null | Item} */
+declare var KidnapPlayerClothAccessory: null | Item;
+/** @type {null | Item} */
+declare var KidnapPlayerClothLower: null | Item;
+/** @type {null | Item} */
+declare var KidnapOpponentCloth: null | Item;
+/** @type {null | Item} */
+declare var KidnapOpponentClothAccessory: null | Item;
+/** @type {null | Item} */
+declare var KidnapOpponentClothLower: null | Item;
+declare var KidnapTimer: number;
+/** @type {KidnapModeType | null} */
+declare var KidnapMode: KidnapModeType | null;
+declare var KidnapDialog: string;
+declare var KidnapPlayerMove: number;
+declare var KidnapOpponentMove: number;
+declare var KidnapPlayerDamage: number;
+declare var KidnapOpponentDamage: number;
+declare var KidnapResultPlayer: string;
+declare var KidnapResultOpponent: string;
+declare var KidnapResultUpperHand: string;
+/** @type {null | Character} */
+declare var KidnapUpperHandVictim: null | Character;
+declare var KidnapUpperHandSelection: number;
+declare var KidnapMoveType: string[];
+declare var KidnapUpperHandMoveType: readonly ["Cloth", "ItemMouth", "ItemFeet", "UndoCloth", "UndoItemMouth", "UndoItemFeet", "Mercy"];
+/** @type { [number, number, number, number][] } */
+declare var KidnapMoveMap: [number, number, number, number][];
+declare var KidnapRPS: string[];
 /**
  * Generates the kidnap stats for the given character, factoring in any bonus it might have.
  * @param {Character} C - The character for which to generate the stats for.
@@ -123,41 +160,3 @@ declare function KidnapClick(): void;
  * @returns
  */
 declare function KidnapSuccessWillpowerProgress(opponent: Character): number;
-declare function KidnapKeyDown(event: KeyboardEvent): boolean;
-declare var KidnapVictory: boolean;
-declare var KidnapDifficulty: number;
-declare var KidnapBackground: string;
-declare var KidnapReturnFunction: string;
-/** @type {null | Character} */
-declare var KidnapOpponent: null | Character;
-/** @type {null | Item} */
-declare var KidnapPlayerCloth: null | Item;
-/** @type {null | Item} */
-declare var KidnapPlayerClothAccessory: null | Item;
-/** @type {null | Item} */
-declare var KidnapPlayerClothLower: null | Item;
-/** @type {null | Item} */
-declare var KidnapOpponentCloth: null | Item;
-/** @type {null | Item} */
-declare var KidnapOpponentClothAccessory: null | Item;
-/** @type {null | Item} */
-declare var KidnapOpponentClothLower: null | Item;
-declare var KidnapTimer: number;
-/** @type {KidnapModeType | null} */
-declare var KidnapMode: KidnapModeType | null;
-declare var KidnapDialog: string;
-declare var KidnapPlayerMove: number;
-declare var KidnapOpponentMove: number;
-declare var KidnapPlayerDamage: number;
-declare var KidnapOpponentDamage: number;
-declare var KidnapResultPlayer: string;
-declare var KidnapResultOpponent: string;
-declare var KidnapResultUpperHand: string;
-/** @type {null | Character} */
-declare var KidnapUpperHandVictim: null | Character;
-declare var KidnapUpperHandSelection: number;
-declare var KidnapMoveType: string[];
-declare var KidnapUpperHandMoveType: readonly ["Cloth", "ItemMouth", "ItemFeet", "UndoCloth", "UndoItemMouth", "UndoItemFeet", "Mercy"];
-/** @type { [number, number, number, number][] } */
-declare var KidnapMoveMap: [number, number, number, number][];
-declare var KidnapRPS: string[];

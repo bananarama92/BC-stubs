@@ -1,3 +1,26 @@
+declare var WheelFortuneBackground: string;
+/** @type {ScreenSpecifier | null} */
+declare var WheelFortuneReturnScreen: ScreenSpecifier | null;
+/** @type {null | Character} */
+declare var WheelFortuneCharacter: null | Character;
+declare var WheelFortuneRoleplay: boolean;
+declare var WheelFortuneForced: boolean;
+declare var WheelFortunePos: number;
+declare var WheelFortunePosMax: number;
+declare var WheelFortuneVelocity: number;
+declare var WheelFortuneVelocityTime: number;
+/** @type {null | number} */
+declare var WheelFortunePosY: null | number;
+declare var WheelFortuneInitY: number;
+declare var WheelFortuneInitTime: number;
+declare var WheelFortuneValue: string;
+declare var WheelFortuneList: string;
+declare var WheelFortuneEncaseList: string[];
+declare var WheelFortuneEncaseClosedList: string[];
+declare var WheelFortunePasswordChar: string[];
+declare var WheelFortuneDefault: string;
+/** @type {WheelFortuneOptionType[]} */
+declare var WheelFortuneOption: WheelFortuneOptionType[];
 /**
  * Returns TRUE if the wheel of fortune can add an item on the specified asset slot
  * @param {String} AssetName - The asset name
@@ -39,7 +62,6 @@ declare function WheelFortuneBlockWardrobe(Minutes: number): void;
  * @returns {void} - Nothing
  */
 declare function WheelFortuneInventoryWear(Group: AssetGroupName, Minutes: number): void;
-declare function WheelFortuneLoad(): Promise<void>;
 /**
  * Draws the full lucky wheel
  * @param {string} FullWheel
@@ -51,36 +73,8 @@ declare function WheelFortuneLoad(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function WheelFortuneDrawWheel(FullWheel: string, Pos: number, MaxPos: number, X: number, Y: number, Zoom: number): void;
-declare function WheelFortuneRun(time: number): void;
-declare function WheelFortuneClick(event: PointerEvent): void;
-declare function WheelFortuneMouseDown(event: PointerEvent): void;
-declare function WheelFortuneMouseUp(event: PointerEvent): void;
 /**
  * When the wheel result is set, we publish it and return to the chat room
  * @returns {void} - Nothing
  */
 declare function WheelFortuneResult(): void;
-declare function WheelFortuneExit(): void;
-declare var WheelFortuneBackground: string;
-/** @type {ScreenSpecifier | null} */
-declare var WheelFortuneReturnScreen: ScreenSpecifier | null;
-/** @type {null | Character} */
-declare var WheelFortuneCharacter: null | Character;
-declare var WheelFortuneRoleplay: boolean;
-declare var WheelFortuneForced: boolean;
-declare var WheelFortunePos: number;
-declare var WheelFortunePosMax: number;
-declare var WheelFortuneVelocity: number;
-declare var WheelFortuneVelocityTime: number;
-/** @type {null | number} */
-declare var WheelFortunePosY: null | number;
-declare var WheelFortuneInitY: number;
-declare var WheelFortuneInitTime: number;
-declare var WheelFortuneValue: string;
-declare var WheelFortuneList: string;
-declare var WheelFortuneEncaseList: string[];
-declare var WheelFortuneEncaseClosedList: string[];
-declare var WheelFortunePasswordChar: string[];
-declare var WheelFortuneDefault: string;
-/** @type {WheelFortuneOptionType[]} */
-declare var WheelFortuneOption: WheelFortuneOptionType[];

@@ -1,3 +1,22 @@
+/** @type {null | DifficultyLevel} */
+declare var PreferenceDifficultyLevel: null | DifficultyLevel;
+declare var PreferenceDifficultyAccept: boolean;
+declare var PreferenceDifficultyStatusTimerActive: boolean;
+declare var PreferenceDifficultyStatusTimerLastChange: number;
+declare const PreferenceSubscreenDifficultyIDs: Readonly<{
+    list: "preference-difficulty-list";
+    listTitle: "preference-difficulty-list-title";
+    detail: "preference-difficulty-detail";
+    detailTitle: "preference-difficulty-detail-title";
+    detailText: "preference-difficulty-detail-text";
+    accept: "preference-difficulty-accept";
+    changeButton: "preference-difficulty-change";
+    status: "preference-difficulty-status";
+    /** @param {number | ""} id */
+    listLabel: (id: number | "") => string;
+    /** @param {number | ""} id */
+    listButton: (id: number | "") => string;
+}>;
 declare function PreferenceSubscreenDifficultyLoad(): void;
 /**
  * Runs and draw the preference screen, difficulty subscreen
@@ -9,7 +28,6 @@ declare function PreferenceSubscreenDifficultyRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenDifficultyClick(): void;
-declare function PreferenceSubscreenDifficultyResize(load: boolean): void;
 declare function PreferenceSubscreenDifficultyExit(): boolean;
 declare function PreferenceSubscreenDifficultyConfirm(): void;
 /**
@@ -30,22 +48,3 @@ declare function PreferenceSubscreenDifficultyUpdateStatusTimer(): void;
  * @param {DifficultyLevel} level
  */
 declare function PreferenceSubscreenDifficultySelect(level: DifficultyLevel): void;
-/** @type {null | DifficultyLevel} */
-declare var PreferenceDifficultyLevel: null | DifficultyLevel;
-declare var PreferenceDifficultyAccept: boolean;
-declare var PreferenceDifficultyStatusTimerActive: boolean;
-declare var PreferenceDifficultyStatusTimerLastChange: number;
-declare const PreferenceSubscreenDifficultyIDs: Readonly<{
-    list: "preference-difficulty-list";
-    listTitle: "preference-difficulty-list-title";
-    detail: "preference-difficulty-detail";
-    detailTitle: "preference-difficulty-detail-title";
-    detailText: "preference-difficulty-detail-text";
-    accept: "preference-difficulty-accept";
-    changeButton: "preference-difficulty-change";
-    status: "preference-difficulty-status";
-    /** @param {number | ""} id */
-    listLabel: (id: number | "") => string;
-    /** @param {number | ""} id */
-    listButton: (id: number | "") => string;
-}>;

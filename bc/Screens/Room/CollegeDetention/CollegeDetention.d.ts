@@ -1,3 +1,8 @@
+declare var CollegeDetentionBackground: string;
+/** @type {null | NPCCharacter} */
+declare var CollegeDetentionYuki: null | NPCCharacter;
+declare var CollegeDetentionYukiLove: number;
+declare var CollegeDetentionYukiWillReleaseAt: number;
 /**
  * Checks, if Yuki can be invited to the private room
  * @returns {boolean} - Returns true, if Yuki can be invited, false otherwise
@@ -34,7 +39,6 @@ declare function CollegeDetentionIsYukiSubmissive(): boolean;
  * @returns {void} - Nothing
  */
 declare function CollegeDetentionYukiClothes(C: Character): void;
-declare function CollegeDetentionLoad(): Promise<void>;
 /**
  * Runs the room (shows the player and Yuki)
  * @returns {void} - Nothing
@@ -80,8 +84,3 @@ declare function CollegeDetentionRestrainPlayer(Type: "Arms" | "Legs" | "Mouth")
  * @returns {void} - Nothing
  */
 declare function CollegeDetentionInviteToPrivateRoom(Role?: string): void;
-declare var CollegeDetentionBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeDetentionYuki: null | NPCCharacter;
-declare var CollegeDetentionYukiLove: number;
-declare var CollegeDetentionYukiWillReleaseAt: number;

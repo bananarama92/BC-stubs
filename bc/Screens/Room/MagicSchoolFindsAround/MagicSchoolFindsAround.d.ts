@@ -1,3 +1,23 @@
+declare var MagicSchoolFindsAroundBackground: string;
+/** @type {"" | "Garden" | "Forest"} */
+declare var MagicSchoolFindsAroundArea: "" | "Garden" | "Forest";
+/** @type {NPCCharacter} */
+declare var MagicSchoolFindsAroundKitsune: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MagicSchoolFindsAroundTheresa: NPCCharacter;
+declare var MagicSchoolFindsAroundSpellCount: number;
+/** @type {MagicSchoolSpell | undefined} */
+declare var MagicSchoolFindsAroundLastSpell: MagicSchoolSpell | undefined;
+/** @satisfies {Record<string, RectTuple>} */
+declare var MagicSchoolFindsAroundButtons: {
+    exit: [number, number, number, number];
+    profile: [number, number, number, number];
+    goToGarden: [number, number, number, number];
+    goToForest: [number, number, number, number];
+    soloCharacter: [number, number, number, number];
+    dualCharacterFirst: [number, number, number, number];
+    dualCharacterSecond: [number, number, number, number];
+};
 /**
  * Uncompress a string containing an appearance, then applies that appearance data to the NPC
  * @param {NPCCharacter} C - The NPC character that loads its new appearance
@@ -11,7 +31,6 @@ declare function MagicSchoolFindsAroundDressUpKitsune(C: NPCCharacter): void;
  * @returns {void} - Nothing
  */
 declare function MagicSchoolFindsAroundDressUpTheresa(C: NPCCharacter, outfit: "Angel" | "Nun"): void;
-declare function MagicSchoolFindsAroundLoad(): Promise<void>;
 /**
  * Runs the room
  * @returns {void} - Nothing
@@ -174,22 +193,3 @@ declare function DialogTheresaGiveEssence(Amount: number): void;
 declare function MagicSchoolFindsAroundTheresaGiveBadWordPoint(stage: number): void;
 declare function MagicSchoolFindsAroundTheresaGiveGift(): void;
 declare function MagicSchoolFindsAroundHideTheresa(): void;
-declare var MagicSchoolFindsAroundBackground: string;
-/** @type {"" | "Garden" | "Forest"} */
-declare var MagicSchoolFindsAroundArea: "" | "Garden" | "Forest";
-/** @type {NPCCharacter} */
-declare var MagicSchoolFindsAroundKitsune: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var MagicSchoolFindsAroundTheresa: NPCCharacter;
-declare var MagicSchoolFindsAroundSpellCount: number;
-/** @type {MagicSchoolSpell | undefined} */
-declare var MagicSchoolFindsAroundLastSpell: MagicSchoolSpell | undefined;
-declare namespace MagicSchoolFindsAroundButtons {
-    let exit: [number, number, number, number];
-    let profile: [number, number, number, number];
-    let goToGarden: [number, number, number, number];
-    let goToForest: [number, number, number, number];
-    let soloCharacter: [number, number, number, number];
-    let dualCharacterFirst: [number, number, number, number];
-    let dualCharacterSecond: [number, number, number, number];
-}

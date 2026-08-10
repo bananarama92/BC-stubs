@@ -1,3 +1,13 @@
+declare var MaidCleaningBackground: string;
+/** @type {{ X: number, Y: number, T: number }[]} */
+declare var MaidCleaningSpots: {
+    X: number;
+    Y: number;
+    T: number;
+}[];
+declare var MaidCleaningPlayerX: number;
+declare var MaidCleaningPlayerY: number;
+declare var MaidCleaningSpotSize: number;
 /**
  * Generates all the spots to clean for the main cleaning minigame
  * @param {number} MaxSpot - Maximum amount of spots to generate
@@ -9,7 +19,6 @@ declare function MaidCleaningGenerateSpots(MaxSpot: number): void;
  * @returns {void} - Nothing
  */
 declare function MaidCleaningDrawSpots(): void;
-declare function MaidCleaningLoad(): Promise<void>;
 /**
  * Runs the maid cleaning mini game
  * @returns {void} - Nothing
@@ -26,18 +35,7 @@ declare function MaidCleaningEnd(Victory: boolean): void;
  * @returns {void} - Nothing
  */
 declare function MaidCleaningDoMove(): void;
-declare function MaidCleaningKeyDown(event: KeyboardEvent): boolean;
 /**
  * Handles clicks during the maid cleaning minigame. On mobile, we need to move the player on a click.
  */
 declare function MaidCleaningClick(): void;
-declare var MaidCleaningBackground: string;
-/** @type {{ X: number, Y: number, T: number }[]} */
-declare var MaidCleaningSpots: {
-    X: number;
-    Y: number;
-    T: number;
-}[];
-declare var MaidCleaningPlayerX: number;
-declare var MaidCleaningPlayerY: number;
-declare var MaidCleaningSpotSize: number;

@@ -1,4 +1,53 @@
 /**
+ * Utility file for handling extended items
+ */
+/**
+ * A lookup for the current pagination offset for all extended item options. Offsets are only recorded if the extended
+ * item requires pagination. Example format:
+ * ```json
+ * {
+ *     "ItemArms/HempRope": 4,
+ *     "ItemArms/Web": 0
+ * }
+ * ```
+ * @type {Record<string, number>}
+ * @constant
+ */
+declare var ExtendedItemOffsets: Record<string, number>;
+/**
+ * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
+ * @type {[number, number][][]}
+ */
+declare const ExtendedXY: [number, number][][];
+/**
+ * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
+ * @type {[number, number][][]}
+ */
+declare const ExtendedXYWithoutImages: [number, number][][];
+/**
+ * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
+ * @type {[number, number][][]}
+ */
+declare const ExtendedXYClothes: [number, number][][];
+/**
+ * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
+ * @type {[number, number][][]}
+ */
+declare const ExtendedXYClothesWithoutImages: [number, number][][];
+/** Memoization of the requirements check */
+declare const ExtendedItemRequirementCheckMessageMemo: MemoizedFunction<typeof ExtendedItemRequirementCheckMessage>;
+/**
+ * The current display mode
+ * @type {boolean}
+ */
+declare var ExtendedItemPermissionMode: boolean;
+/**
+ * Tracks whether a selected option's subscreen is active - if active, the value is the name of the current subscreen's
+ * corresponding option
+ * @type {string|null}
+ */
+declare var ExtendedItemSubscreen: string | null;
+/**
  * @template {any[]} T
  * @template RT
  * @param {ExtendedItemData<any>} data
@@ -119,24 +168,23 @@ declare function ExtendedItemRequirementCheckMessage<T extends ExtendedItemOptio
  * wearer may select the option)
  * @param {Character} C - The character on whom the bondage is applied
  * @param {ExtendedItemOption} Option - The option whose requirements should be checked against
- * @returns {string | undefined} - undefined if the
+ * @returns {string | null} - undefined if the
  */
-declare function ExtendedItemCheckSelfSelect(C: Character, Option: ExtendedItemOption): string | undefined;
+declare function ExtendedItemCheckSelfSelect(C: Character, Option: ExtendedItemOption): string | null;
 /**
  * Checks whether the player meets an option's self-bondage/bondage skill level requirements
  * @param {Character} C - The character on whom the bondage is applied
  * @param {Item} Item - The item whose options are being checked
  * @param {ExtendedItemOption} Option - The option whose requirements should be checked against
- * @returns {string|undefined} - undefined if the player meets the option's skill level requirements. Otherwise returns
- * a string message informing them of the requirements they do not meet.
+ * @returns {string|null} - Returns a string message informing them of the requirements they do not meet, otherwise null.
  */
-declare function ExtendedItemCheckSkillRequirements(C: Character, Item: Item, Option: ExtendedItemOption): string | undefined;
+declare function ExtendedItemCheckSkillRequirements(C: Character, Item: Item, Option: ExtendedItemOption): string | null;
 /**
  * Checks whether the character meets an option's required bought items
  * @param {ExtendedItemOption} Option - The option being checked
- * @returns {string|undefined} undefined if the requirement is met, otherwise the error message
+ * @returns {string|null} undefined if the requirement is met, otherwise the error message
  */
-declare function ExtendedItemCheckBuyGroups(Option: ExtendedItemOption): string | undefined;
+declare function ExtendedItemCheckBuyGroups(Option: ExtendedItemOption): string | null;
 /**
  * Checks whether a change from the given current option to the newly selected option is valid.
  * @template {ExtendedItemOption} T
@@ -147,9 +195,9 @@ declare function ExtendedItemCheckBuyGroups(Option: ExtendedItemOption): string 
  * @param {T} previousOption - The currently applied option on the item
  * @param {boolean} [permitExisting] - Determines whether the validation should allow the new option and previous option
  * to be identical. Defaults to false.
- * @returns {string} - Returns a non-empty message string if the item failed validation, or an empty string otherwise
+ * @returns {string | null} - Returns a reason if the item failed validation, or null otherwise
  */
-declare function ExtendedItemValidate<T extends ExtendedItemOption>(data: null | ExtendedItemData<T>, C: Character, Item: Item, newOption: T, previousOption: T, permitExisting?: boolean): string;
+declare function ExtendedItemValidate<T extends ExtendedItemOption>(data: null | ExtendedItemData<T>, C: Character, Item: Item, newOption: T, previousOption: T, permitExisting?: boolean): string | null;
 /**
  * Simple getter for the function prefix used for the passed extended item - used for calling standard
  * extended item functions (e.g. if the currently focused it is the hemp rope arm restraint, this will return
@@ -225,11 +273,11 @@ declare function ExtendedItemCustomDraw(Name: string, X: number, Y: number, imag
  * @param {string} [options.textColor]
  */
 declare function ExtendedItemDrawCheckbox(name: string, x: number, y: number, isChecked: boolean, options?: {
-    text?: string | undefined;
-    width?: number | undefined;
-    height?: number | undefined;
-    changeWhenLocked?: boolean | undefined;
-    textColor?: string | undefined;
+    text?: string;
+    width?: number;
+    height?: number;
+    changeWhenLocked?: boolean;
+    textColor?: string;
 }): void;
 /**
  * Helper click function for creating custom buttons, including extended item permission support.
@@ -328,6 +376,12 @@ declare function ExtendedItemManualRegister(): void;
  */
 declare function ExtendedItemGetDrawData<MetaData extends ElementMetaData>(drawData: ExtendedItemConfigDrawData<Partial<MetaData>> | undefined, defaults: Pick<ExtendedItemDrawData<MetaData>, "elementData" | "itemsPerPage">): ExtendedItemDrawData<MetaData>;
 /**
+ * Return a list with all active extended item options (be it via a subscreen or otherwise) for the passed item
+ * @param item - The item in question
+ * @returns The list of active extended item options
+ */
+declare const ExtendedItemGatherOptions: (item: Item) => ExtendedItemOptionUnion[];
+/**
  * @param {Asset} asset
  * @param {ItemPropertiesConfig} properties
  * @returns {ItemProperties}
@@ -354,10 +408,10 @@ declare function ExtendedItemParseOptions<T extends Pick<ExtendedItemOption, "Pr
  * @returns {void}
  */
 declare function ExtendedItemSetOptionByRecord(C: Character, itemOrGroupName: AssetGroupName | Item, typeRecord?: null | TypeRecord, options?: {
-    push?: boolean | undefined;
-    C_Source?: Character | undefined;
-    refresh?: boolean | undefined;
-    properties?: ItemProperties | undefined;
+    push?: boolean;
+    C_Source?: Character;
+    refresh?: boolean;
+    properties?: ItemProperties;
 }): void;
 /**
  * Take an old {@link ItemProperties.Type} and convert it into a {@link ItemProperties.TypeRecord}.
@@ -373,63 +427,17 @@ declare function ExtendedItemTypeToRecord(asset: Asset, type: null | string): Ty
  */
 declare function ExtendedItemGetDrawingOptions(item: Item): ExtendedItemOptionConfig["DrawOptions"];
 /**
- * Utility file for handling extended items
+ * Namespace with extended item functions for accessing the tighten/loosen menu.
+ * @namespace
  */
-/**
- * A lookup for the current pagination offset for all extended item options. Offsets are only recorded if the extended
- * item requires pagination. Example format:
- * ```json
- * {
- *     "ItemArms/HempRope": 4,
- *     "ItemArms/Web": 0
- * }
- * ```
- * @type {Record<string, number>}
- * @constant
- */
-declare var ExtendedItemOffsets: Record<string, number>;
-/**
- * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
- * @type {[number, number][][]}
- */
-declare const ExtendedXY: [number, number][][];
-/**
- * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
- * @type {[number, number][][]}
- */
-declare const ExtendedXYWithoutImages: [number, number][][];
-/**
- * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
- * @type {[number, number][][]}
- */
-declare const ExtendedXYClothes: [number, number][][];
-/**
- * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
- * @type {[number, number][][]}
- */
-declare const ExtendedXYClothesWithoutImages: [number, number][][];
-/** Memoization of the requirements check */
-declare const ExtendedItemRequirementCheckMessageMemo: MemoizedFunction<typeof ExtendedItemRequirementCheckMessage>;
-/**
- * The current display mode
- * @type {boolean}
- */
-declare var ExtendedItemPermissionMode: boolean;
-/**
- * Tracks whether a selected option's subscreen is active - if active, the value is the name of the current subscreen's
- * corresponding option
- * @type {string|null}
- */
-declare var ExtendedItemSubscreen: string | null;
-declare function ExtendedItemGatherOptions(item: Item): ExtendedItemOptionUnion[];
-declare namespace ExtendedItemTighten {
+declare const ExtendedItemTighten: {
     /**
      * Draw function for tightening/loosening.
      * @param {ExtendedItemData<any>} data The extended item data
      * @param {Item} item The item in question
      * @param {RectTuple} buttonCoords A 4-tuple with the buttons coordinates
      */
-    function Draw({ asset }: ExtendedItemData<any>, item: Item, buttonCoords: RectTuple): void;
+    Draw({ asset }: ExtendedItemData<any>, item: Item, buttonCoords: RectTuple): void;
     /**
      * Click function for tightening/loosening.
      * @param {ExtendedItemData<any>} data The extended item data
@@ -437,5 +445,5 @@ declare namespace ExtendedItemTighten {
      * @param {RectTuple} buttonCoords A 4-tuple with the buttons coordinates
      * @returns {boolean} Whether the button was clicked or not
      */
-    function Click({ asset }: ExtendedItemData<any>, item: Item, buttonCoords: RectTuple): boolean;
-}
+    Click({ asset }: ExtendedItemData<any>, item: Item, buttonCoords: RectTuple): boolean;
+};

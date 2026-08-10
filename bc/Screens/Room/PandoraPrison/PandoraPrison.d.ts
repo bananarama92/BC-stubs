@@ -1,4 +1,16 @@
-declare function PandoraPrisonLoad(): Promise<void>;
+declare var PandoraPrisonBackground: string;
+declare var PandoraWillpowerTimer: number;
+/** @type {null | NPCCharacter} */
+declare var PandoraPrisonMaid: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var PandoraPrisonGuard: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var PandoraPrisonCharacter: null | NPCCharacter;
+declare var PandoraPrisonCharacterTimer: number;
+declare var PandoraPrisonEscaped: boolean;
+declare var PandoraPrisonBribeEnabled: boolean;
+declare var PandoraQuickieCount: number;
+declare var PandoraQuickiePleasure: number;
 /**
  * Runs and draws the prison screen
  * @returns {void} - Nothing
@@ -161,16 +173,3 @@ declare function PandoraPrisonQuickieEnd(Message: any): void;
  * @returns {void} - Nothing
  */
 declare function PandoraPrisonDrinkWater(): void;
-declare var PandoraPrisonBackground: string;
-declare var PandoraWillpowerTimer: number;
-/** @type {null | NPCCharacter} */
-declare var PandoraPrisonMaid: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PandoraPrisonGuard: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PandoraPrisonCharacter: null | NPCCharacter;
-declare var PandoraPrisonCharacterTimer: number;
-declare var PandoraPrisonEscaped: boolean;
-declare var PandoraPrisonBribeEnabled: boolean;
-declare var PandoraQuickieCount: number;
-declare var PandoraQuickiePleasure: number;

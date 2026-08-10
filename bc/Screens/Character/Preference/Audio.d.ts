@@ -1,3 +1,6 @@
+declare const PreferenceSubscreenAudioIDs: {
+    grid: string;
+};
 declare function PreferenceSubscreenAudioLoad(): void;
 /**
  * Sets the audio preferences for the player. Redirected to from the main Run function if the player is in the audio
@@ -15,7 +18,3 @@ declare function PreferenceSubscreenAudioClick(): void;
  */
 declare function PreferenceSubscreenAudioExit(): boolean;
 declare function PreferenceSubscreenAudioUnload(): void;
-declare function PreferenceSubscreenAudioResize(load: boolean): void;
-declare namespace PreferenceSubscreenAudioIDs {
-    let grid: string;
-}

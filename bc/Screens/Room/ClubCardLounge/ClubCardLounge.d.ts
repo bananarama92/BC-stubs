@@ -1,4 +1,6 @@
-declare function ClubCardLoungeLoad(): Promise<void>;
+declare var ClubCardLoungeBackground: string;
+/** @type {null | NPCCharacter} */
+declare var ClubCardLoungeTutor: null | NPCCharacter;
 /**
  * Runs and draws the club card  room with the player and tutor
  * @returns {void} - Nothing
@@ -18,6 +20,3 @@ declare function ClubCardLoungePraticeGameStart(): void;
  * When the practice game ends
  */
 declare function ClubCardLoungePraticeGameEnd(): Promise<void>;
-declare var ClubCardLoungeBackground: string;
-/** @type {null | NPCCharacter} */
-declare var ClubCardLoungeTutor: null | NPCCharacter;

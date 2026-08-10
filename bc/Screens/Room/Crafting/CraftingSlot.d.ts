@@ -1,29 +1,52 @@
-declare namespace CraftingSlots {
-    let _observers: Map<"scroll", IntersectionObserver>;
-    namespace eventListeners {
-        function clickExit(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickUpload(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickDownload(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickSlot(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickModeAcceptSlotDelete(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickModeAcceptSlotReorder(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickSectionCollapse(this: HTMLButtonElement, ev: PointerEvent): void;
-        function inputSearch(this: HTMLInputElement, ev: Event): void;
-        function keydownSearch(this: HTMLInputElement, ev: KeyboardEvent): void;
-        function changeModeSelect(this: HTMLSelectElement, ev: Event): void;
-        function dragover(this: HTMLFieldSetElement, ev: DragEvent): void;
-        function drop(this: HTMLFieldSetElement, ev: DragEvent): void;
-        function dragend(this: HTMLElement, ev: DragEvent): void;
-        function dragstart(this: HTMLDivElement, ev: DragEvent): void;
-        function dragenter(this: HTMLLIElement, ev: DragEvent): void;
-        function dragleave(this: HTMLLIElement, ev: DragEvent): void;
-    }
-    namespace ids {
-        let root: "crafting-slot-screen";
-        let dragImage: "crafting-slot-drag-image";
-    }
-    let modeData: CraftingSlotModeData;
-    const modeKeys: ReadonlySet<CraftingSlotModes>;
+/** Namespace for managing the various crafting `Slots`-related modes */
+declare var CraftingSlots: {
+    /**
+     * private
+     * @readonly
+     * @type {Map<"scroll", IntersectionObserver>}
+     */
+    _observers: Map<"scroll", IntersectionObserver>;
+    /**
+     * @readonly
+     * @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>}
+     */
+    eventListeners: {
+        clickExit(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickUpload(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickDownload(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickSlot(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickModeAcceptSlotDelete(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickModeAcceptSlotReorder(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickSectionCollapse(this: HTMLButtonElement, ev: PointerEvent): void;
+        inputSearch(this: HTMLInputElement, ev: Event): void;
+        keydownSearch(this: HTMLInputElement, ev: KeyboardEvent): void;
+        changeModeSelect(this: HTMLSelectElement, ev: Event): void;
+        dragover(this: HTMLFieldSetElement, ev: DragEvent): void;
+        drop(this: HTMLFieldSetElement, ev: DragEvent): void;
+        dragend(this: HTMLElement, ev: DragEvent): void;
+        dragstart(this: HTMLDivElement, ev: DragEvent): void;
+        dragenter(this: HTMLLIElement, ev: DragEvent): void;
+        dragleave(this: HTMLLIElement, ev: DragEvent): void;
+    };
+    /**
+     * @readonly
+     * @satisfies {Record<string, string>}
+     */
+    ids: {
+        readonly root: "crafting-slot-screen";
+        readonly dragImage: "crafting-slot-drag-image";
+    };
+    /**
+     * An object for registering all crafting slot modes
+     * @readonly
+     * @type {CraftingSlotModeData}
+     */
+    modeData: CraftingSlotModeData;
+    /**
+     * Get a set of all registered crafting slot modes.
+     * @type {ReadonlySet<CraftingSlotModes>}
+     */
+    readonly modeKeys: ReadonlySet<CraftingSlotModes>;
     /**
      * Construct click listeners for the crafting slot buttons in the `Delete` & `Reorder` modes.
      *
@@ -31,7 +54,7 @@ declare namespace CraftingSlots {
      * private
      * @param {CraftingSlotModes} mode
      */
-    function _getMultiSelectListeners(mode: CraftingSlotModes): {
+    _getMultiSelectListeners(mode: CraftingSlotModes): {
         click: (this: HTMLButtonElement, ev: PointerEvent) => void;
         focus: (this: HTMLButtonElement, ev: FocusEvent) => void;
     };
@@ -42,7 +65,7 @@ declare namespace CraftingSlots {
      * @param {Element} parent
      * @returns {boolean}
      */
-    function _isElementVisible(el: Element, parent: Element): boolean;
+    _isElementVisible(el: Element, parent: Element): boolean;
     /**
      * Construct a single crafting slot `<section>` header or, if it already exists, clear if of existing slot buttons
      * private
@@ -50,7 +73,7 @@ declare namespace CraftingSlots {
      * @param {{ craftsPerPage: number, nCrafts: number }} options
      * @returns {{ section: HTMLElement, list: HTMLUListElement }} The section and the button list embedded therein
      */
-    function _createButtonSection(pageIndex: number, options: {
+    _createButtonSection(pageIndex: number, options: {
         craftsPerPage: number;
         nCrafts: number;
     }): {
@@ -64,7 +87,7 @@ declare namespace CraftingSlots {
      * @param {null | { craftsPerPage?: number }} options
      * @returns {{ sections: HTMLElement[], modeArgs: CraftingSlotsMode.Args[] }}
      */
-    function _createButtonAllSections(mode: CraftingSlotModes, options?: null | {
+    _createButtonAllSections(mode: CraftingSlotModes, options?: null | {
         craftsPerPage?: number;
     }): {
         sections: HTMLElement[];
@@ -75,19 +98,19 @@ declare namespace CraftingSlots {
      * @param {CraftingSlotModes} mode
      * @param {readonly CraftingSlotsMode.Args[]} modeArgs
      */
-    function _applyModeData(mode: CraftingSlotModes, modeArgs: readonly CraftingSlotsMode.Args[]): void;
+    _applyModeData(mode: CraftingSlotModes, modeArgs: readonly CraftingSlotsMode.Args[]): void;
     /**
      * Use {@link CraftingModeSet} instead.
      * private
      * @param {CraftingSlotModes} mode
      */
-    function _changeMode(mode: CraftingSlotModes): void;
+    _changeMode(mode: CraftingSlotModes): void;
     /**
      * Construct a crafting Slots-esque screen
      * @param {null | { id?: string, mode?: CraftingSlotModes, craftsPerPage?: number }} options Various options
      * @returns {{ screen: HTMLElement, observer: IntersectionObserver }} The screen and its intersection observer as used for the nav bar
      */
-    function createScreen(options?: null | {
+    createScreen(options?: null | {
         id?: string;
         mode?: CraftingSlotModes;
         craftsPerPage?: number;
@@ -95,15 +118,16 @@ declare namespace CraftingSlots {
         screen: HTMLElement;
         observer: IntersectionObserver;
     };
-    let Load: ScreenLoadHandler;
-    function Resize(load: boolean): void;
+    /** @type {ScreenLoadHandler} */
+    Load: ScreenLoadHandler;
+    Resize(load: boolean): void;
     /**
      * @satisfies {ScreenExitHandler}
      * @param {boolean} [allowDeselect] - Whether exit calls are allowed to clear the current selection in `Delete` and `Reorder`, rather than always exiting the screen
      * @returns {boolean} Whether a deselect-esque action was actually performed
      */
-    function Exit(allowDeselect?: boolean): boolean;
-    function Unload(): void;
-    function KeyDown(event: KeyboardEvent): boolean;
-    function Paste(event: ClipboardEvent): void;
-}
+    Exit(allowDeselect?: boolean): boolean;
+    Unload(): void;
+    KeyDown(event: KeyboardEvent): boolean;
+    Paste(event: ClipboardEvent): void;
+};

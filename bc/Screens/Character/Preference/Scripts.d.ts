@@ -1,22 +1,3 @@
-/**
- * @returns {ScriptPermissionLevel[]}
- */
-declare function PreferenceSubscreenScriptsGetPermissionLevels(): ScriptPermissionLevel[];
-declare function PreferenceSubscreenScriptsLoad(): void;
-declare function PreferenceSubscreenScriptsRun(): void;
-declare function PreferenceSubscreenScriptsClick(): void;
-declare function PreferenceSubscreenScriptsExit(allowPanelClose?: boolean): boolean;
-declare function PreferenceSubscreenScriptsUnload(): void;
-declare function PreferenceSubscreenScriptsResize(load: boolean): void;
-declare function PreferenceSubscreenScriptsUpdateCheckboxes(): void;
-declare function PreferenceSubscreenScriptsUpdateWarning(): void;
-declare function PreferenceSubscreenScriptsUpdateHelp(): void;
-declare function PreferenceSubscreenScriptsUpdateHelpButtons(): void;
-/**
- * @param {string} buttonId
- * @param {string} icon
- */
-declare function PreferenceSubscreenScriptsSetHelpIcon(buttonId: string, icon: string): void;
 /** @type {ScriptPermissionProperty[]} */
 declare const PreferenceScriptPermissionProperties: ScriptPermissionProperty[];
 /** @type {null | "global" | "Hide" | "Block"} */
@@ -66,3 +47,21 @@ declare const ScriptPermissionBits: Readonly<{
     Public: 32;
 }>;
 declare const maxScriptPermission: number;
+/**
+ * @returns {ScriptPermissionLevel[]}
+ */
+declare function PreferenceSubscreenScriptsGetPermissionLevels(): ScriptPermissionLevel[];
+declare function PreferenceSubscreenScriptsLoad(): void;
+declare function PreferenceSubscreenScriptsRun(): void;
+declare function PreferenceSubscreenScriptsClick(): void;
+declare function PreferenceSubscreenScriptsExit(allowPanelClose?: boolean): boolean;
+declare function PreferenceSubscreenScriptsUnload(): void;
+declare function PreferenceSubscreenScriptsUpdateCheckboxes(): void;
+declare function PreferenceSubscreenScriptsUpdateWarning(): void;
+declare function PreferenceSubscreenScriptsUpdateHelp(): void;
+declare function PreferenceSubscreenScriptsUpdateHelpButtons(): void;
+/**
+ * @param {string} buttonId
+ * @param {string} icon
+ */
+declare function PreferenceSubscreenScriptsSetHelpIcon(buttonId: string, icon: string): void;

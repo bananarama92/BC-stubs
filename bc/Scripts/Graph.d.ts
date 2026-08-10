@@ -1,3 +1,9 @@
+type DirectedGraphVertex<T extends string> = {
+    vertex: T;
+    index?: number;
+    lowLink?: number;
+    onStack?: boolean;
+};
 /**
  * @template {string} T
  * @typedef DirectedGraphVertex
@@ -12,15 +18,15 @@
  * @template {string} T
  */
 declare class DirectedGraph<T extends string> {
+    vertices: T[];
+    size: number;
+    edges: [T, T][];
+    adjacencyList: Record<string, string[]>;
     /**
      * @param {T[]} vertices
      * @param {[T, T][]} edges
      */
     constructor(vertices: T[], edges: [T, T][]);
-    vertices: T[];
-    size: number;
-    edges: [T, T][];
-    adjacencyList: Record<string, string[]>;
     /**
      * Constructs and sets the adjacency list for this graph based on its edge definitions
      * @returns {Record<string, string[]>} - The adjacency list for the graph
@@ -53,9 +59,3 @@ declare class DirectedGraph<T extends string> {
      */
     findCycles(): T[][];
 }
-type DirectedGraphVertex<T extends string> = {
-    vertex: T;
-    index?: number | undefined;
-    lowLink?: number | undefined;
-    onStack?: boolean | undefined;
-};

@@ -1,3 +1,11 @@
+declare var PhotographicBackground: string;
+/** @type {NPCCharacter} */
+declare var PhotographicSub: NPCCharacter;
+declare var PhotographicGroupStarted: boolean;
+declare var PhotographicCurrendGroup: any;
+/** @type {null | Item[]} */
+declare var PhotographicSubAppearance: null | Item[];
+declare var PhotographicSelectText: string;
 /**
  * Checks if the player is helpless (maids disabled) or not.
  * @returns {boolean} - Returns true if the player still has time remaining after asking the maids to stop helping
@@ -28,7 +36,6 @@ declare function PhotographicIsRestrainedWithoutLock(): boolean;
 declare function PhotographicIsRestrainedWithLockAndMaidsNotDisabled(): boolean;
 declare function PhotographicIsRestrainedWithoutLockAndMaidsNotDisabled(): boolean;
 declare function PhotographicIsMaidsDisabledAndRestrained(): boolean;
-declare function PhotographicLoad(): Promise<void>;
 declare function PhotographicRun(): void;
 declare function PhotographicClick(): void;
 declare function PhotographicShotThePlayerPhoto(): void;
@@ -73,11 +80,3 @@ declare function PhotographicSubClothRemove(Group: AssetGroupName): void;
  * @param {AssetGroupName} ItemGroup
  */
 declare function PhotographicStartInventoryPlayer(ItemGroup: AssetGroupName): void;
-declare var PhotographicBackground: string;
-/** @type {NPCCharacter} */
-declare var PhotographicSub: NPCCharacter;
-declare var PhotographicGroupStarted: boolean;
-declare var PhotographicCurrendGroup: null;
-/** @type {null | Item[]} */
-declare var PhotographicSubAppearance: null | Item[];
-declare var PhotographicSelectText: string;

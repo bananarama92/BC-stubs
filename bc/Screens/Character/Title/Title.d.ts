@@ -1,3 +1,36 @@
+declare var TitleBackground: string;
+/**
+ * Bound to screen lifetime
+ * @type {TitleName}
+ */
+declare var TitleSelectedTitle: TitleName;
+/** @type {null | NicknameStatus} */
+declare var TitleNicknameStatus: null | NicknameStatus;
+/** @deprecated */
+declare let TitleOffset: number;
+/** @type {{ Name: TitleName; Requirement: () => boolean; Earned?: boolean, Force?: boolean }[]} */
+declare let TitleListFiltered: {
+    Name: TitleName;
+    Requirement: () => boolean;
+    Earned?: boolean;
+    Force?: boolean;
+}[];
+/** @deprecated */
+declare const TitlePerPage = 28;
+declare const TitleSelec: Readonly<{
+    subscreen: "title-subscreen";
+    nicknameInputGroup: "input-nickname-group";
+    nicknameInput: "InputNickname";
+    searchInput: "input-search";
+    exit: "title-exit";
+    titleGroup: "title-subscreen-hgroup";
+    titleStatus: "title-subscreen-status";
+    titleMain: "title-subscreen-main";
+    titleButtonContainer: "title-subscreen-titlebuttons";
+    /** @param {TitleName} title */
+    titleButtonId(title: TitleName): string;
+    titleButtonClass: "title-button";
+}>;
 /**
  * Sets the new title of the player, if the title has changed
  * @param {TitleName} NewTitle - The new title for the player
@@ -36,8 +69,6 @@ declare function TitleIsForced(Title: TitleName): boolean;
  * @returns {boolean} - Result of the check
  */
 declare function TitleIsEarned(Title: TitleName): boolean;
-declare function TitleLoad(): Promise<void>;
-declare function TitleUnload(): void;
 /**
  * Runs the title selection screen. This function is called dynamically on a repeated basis,
  * so don't use complex loops or call extended functions from here.
@@ -49,39 +80,5 @@ declare function TitleRun(): void;
  * @returns {void} - Nothing
  */
 declare function TitleClick(): void;
-declare function TitleExit(): void;
 declare function TitleResize(): void;
 declare function TitleSearch(): void;
-declare var TitleBackground: string;
-/**
- * Bound to screen lifetime
- * @type {TitleName}
- */
-declare var TitleSelectedTitle: TitleName;
-/** @type {null | NicknameStatus} */
-declare var TitleNicknameStatus: null | NicknameStatus;
-/** @deprecated */
-declare let TitleOffset: number;
-/** @type {{ Name: TitleName; Requirement: () => boolean; Earned?: boolean, Force?: boolean }[]} */
-declare let TitleListFiltered: {
-    Name: TitleName;
-    Requirement: () => boolean;
-    Earned?: boolean;
-    Force?: boolean;
-}[];
-/** @deprecated */
-declare const TitlePerPage: 28;
-declare const TitleSelec: Readonly<{
-    subscreen: "title-subscreen";
-    nicknameInputGroup: "input-nickname-group";
-    nicknameInput: "InputNickname";
-    searchInput: "input-search";
-    exit: "title-exit";
-    titleGroup: "title-subscreen-hgroup";
-    titleStatus: "title-subscreen-status";
-    titleMain: "title-subscreen-main";
-    titleButtonContainer: "title-subscreen-titlebuttons";
-    /** @param {TitleName} title */
-    titleButtonId(title: TitleName): string;
-    titleButtonClass: "title-button";
-}>;

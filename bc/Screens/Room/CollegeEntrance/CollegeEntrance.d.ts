@@ -1,3 +1,6 @@
+declare var CollegeEntranceBackground: string;
+/** @type {null | NPCCharacter} */
+declare var CollegeEntranceStudent: null | NPCCharacter;
 /**
  * Checks if the player can go to the tennis court
  * @returns {boolean} - Returns true if the player can go to the tennis court
@@ -18,7 +21,6 @@ declare function CollegeEntranceCanGoDetention(): boolean;
  * @returns {boolean} - Returns true if the player can go to the teacher room
  */
 declare function CollegeEntranceCanGoTeacher(): boolean;
-declare function CollegeEntranceLoad(): Promise<void>;
 /**
  * Runs and draws the college entrance room with the player and the student
  * @returns {void} - Nothing
@@ -45,6 +47,3 @@ declare function CollegeEntranceIsWearingTennisClothes(): boolean;
  * @returns {boolean} - Returns TRUE if the player is wearing college clothes
  */
 declare function CollegeEntranceIsWearingCollegeClothes(): boolean;
-declare var CollegeEntranceBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeEntranceStudent: null | NPCCharacter;

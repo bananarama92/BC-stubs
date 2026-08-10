@@ -1,4 +1,8 @@
-declare function MagicSchoolEscapeLoad(): Promise<void>;
+declare var MagicSchoolEscapeBackground: string;
+/** @type {NPCCharacter} */
+declare var MagicSchoolEscapeInstructor: NPCCharacter;
+declare var MagicSchoolEscapeSeconds: number;
+declare var MagicSchoolEscapeTimer: number;
 /**
  * Runs the room
  * @returns {void} - Nothing
@@ -25,8 +29,3 @@ declare function MagicSchoolEscapeSetTime(Seconds: number): void;
  * @returns {void} - Nothing
  */
 declare function MagicSchoolEscapeStart(): void;
-declare var MagicSchoolEscapeBackground: string;
-/** @type {NPCCharacter} */
-declare var MagicSchoolEscapeInstructor: NPCCharacter;
-declare var MagicSchoolEscapeSeconds: number;
-declare var MagicSchoolEscapeTimer: number;

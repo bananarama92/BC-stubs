@@ -1,3 +1,16 @@
+declare const ValidationCombinationNumberRegex: RegExp;
+declare const ValidationPasswordRegex: RegExp;
+declare const ValidationDefaultCombinationNumber = "0000";
+declare const ValidationDefaultPassword = "UNLOCK";
+declare const ValidationRemoveTimerToleranceMs = 5000;
+declare const ValidationNonModifiableLockProperties: string[];
+declare const ValidationRestrictedLockProperties: string[];
+declare const ValidationTimerLockProperties: string[];
+declare const ValidationAllLockProperties: string[];
+declare const ValidationModifiableProperties: string[];
+declare const ValidationScriptableProperties: string[];
+/** @type {Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>} */
+declare const ValidationPropertyPermissions: Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>;
 /**
  * Creates the appearance update parameters used to validate an appearance diff, based on the provided target character
  * and the source character's member number.
@@ -328,16 +341,3 @@ declare function ValidationHasSomeScriptPermission(character: Character, propert
 declare function ValidationApplyRecord<T extends {
     [key: string]: (arg: any, C: Character) => any;
 }>(arg: unknown, C: Character, validators: T, allowExtraKeys?: boolean): { [k in keyof T]: ReturnType<T[k]>; };
-declare const ValidationCombinationNumberRegex: RegExp;
-declare const ValidationPasswordRegex: RegExp;
-declare const ValidationDefaultCombinationNumber: "0000";
-declare const ValidationDefaultPassword: "UNLOCK";
-declare const ValidationRemoveTimerToleranceMs: 5000;
-declare const ValidationNonModifiableLockProperties: string[];
-declare const ValidationRestrictedLockProperties: string[];
-declare const ValidationTimerLockProperties: string[];
-declare const ValidationAllLockProperties: string[];
-declare const ValidationModifiableProperties: string[];
-declare const ValidationScriptableProperties: string[];
-/** @type {Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>} */
-declare const ValidationPropertyPermissions: Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>;

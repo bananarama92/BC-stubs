@@ -1,3 +1,8 @@
+declare var FuturisticAccessDeniedMessage: string;
+declare var FuturisticAccessCollarGroups: string[];
+declare var FuturisticAccessArmGroups: string[];
+declare var FuturisticAccessLegGroups: string[];
+declare var FuturisticAccessChastityGroups: string[];
 /**
  * Helper function for the futuristic hook scripts.
  * @param {ExtendedItemData<any>} data
@@ -32,7 +37,6 @@ declare function FuturisticAccessDraw(Data: ExtendedItemData<any>, OriginalFunct
  * @returns {void} - Nothing
  */
 declare function FuturisticAccessExit(): void;
-declare function FuturisticAccessValidate(data: ExtendedItemData<any>, originalFunction: ((C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean | undefined) => string) | null, C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean | undefined): string;
 declare function InventoryItemFuturisticLoadAccessDenied(): void;
 /**
  * Draw the futuristic item ACCESS DENIED screen
@@ -49,17 +53,12 @@ declare function InventoryItemFuturisticClickAccessDenied(data: ExtendedItemData
  * @param {Character} C - The character to validate the option
  * @param {Item | null} Item - The equipped item
  * @param {boolean} [changeWhenLocked] - See {@link ExtendedItemOption.ChangeWhenLocked}
- * @returns {string} - Returns false and sets DialogExtendedMessage, if the chosen option is not possible.
+ * @returns {string | null} - Returns an explanation for the failed validation if the chosen option is not possible, or null.
  */
-declare function InventoryItemFuturisticValidate(C: Character, Item?: Item | null, changeWhenLocked?: boolean): string;
+declare function InventoryItemFuturisticValidate(C: Character, Item?: Item | null, changeWhenLocked?: boolean): string | null;
 /**
  * Publish a chat message for denied access.
  *
  * @param {Character} C - The character that got denied access.
  */
 declare function InventoryItemFuturisticPublishAccessDenied(C: Character): void;
-declare var FuturisticAccessDeniedMessage: string;
-declare var FuturisticAccessCollarGroups: string[];
-declare var FuturisticAccessArmGroups: string[];
-declare var FuturisticAccessLegGroups: string[];
-declare var FuturisticAccessChastityGroups: string[];

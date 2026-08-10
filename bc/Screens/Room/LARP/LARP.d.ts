@@ -1,9 +1,11 @@
+declare var LARPBackground: string;
+/** @type {NPCCharacter} */
+declare var LARPOrganiser: NPCCharacter;
 /**
  * Returns TRUE if the player and the current character can play Club Card
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function LARPCanPlayClubCard(): boolean;
-declare function LARPLoad(): Promise<void>;
 /**
  * Runs and draws the LARP introduction screen. The screen can be used to search for daily jobs.
  * @returns {void} - Nothing
@@ -30,6 +32,3 @@ declare function LARPClubCardStart(): void;
  * @returns {Promise<void>} - Nothing
  */
 declare function LARPClubCardEnd(): Promise<void>;
-declare var LARPBackground: string;
-/** @type {NPCCharacter} */
-declare var LARPOrganiser: NPCCharacter;

@@ -1,3 +1,40 @@
+declare var ClubCardBuilderBackground: string;
+declare var ClubCardBuilderDeckIndex: number;
+/** @type {null | ClubCard} */
+declare var ClubCardBuilderFocus: null | ClubCard;
+/** @type {ClubCard[]} */
+declare var ClubCardBuilderList: ClubCard[];
+declare var ClubCardBuilderOffset: number;
+/** @type {number[]} */
+declare var ClubCardBuilderDeckCurrent: number[];
+declare var ClubCardBuilderMinDeckSize: number;
+declare var ClubCardBuilderMaxDeckSize: number;
+/** @type {ClubCardTag} */
+declare var ClubCardBuilderSelectedTag: ClubCardTag;
+/**
+ * @type {Record<ClubCardDefaultDecks, number[]>}
+ */
+declare const ClubCardBuilderDefaultDecksList: Record<ClubCardDefaultDecks, number[]>;
+/**
+ * @type {Record<ClubCardTag, (card: ClubCard) => boolean>}
+ */
+declare const ClubCardBuilderFilterGroupFilters: Record<ClubCardTag, (card: ClubCard) => boolean>;
+declare var ClubCardBuilderRenameIndex: number;
+declare var ClubCardBuilderCustomizationIndex: string;
+declare var ClubCardBuilderSelectedCardBack: number;
+declare var ClubCardBuilderCardBackFocus: any;
+declare var ClubCardBuilderCardBackCount: number;
+declare var ClubCardBuilderView: ClubCard[];
+declare var ClubCardBuilderDefaultDeck: number[];
+declare var ClubCardBuilderMaidDeck: number[];
+declare var ClubCardBuilderDominantDeck: number[];
+declare var ClubCardBuilderPornDeck: number[];
+declare var ClubCardBuilderAsylumDeck: number[];
+declare var ClubCardBuilderABDLDeck: number[];
+declare var ClubCardBuilderCollegeDeck: number[];
+declare var ClubCardBuilderLiabilityDeck: number[];
+/** Whether exiting the builder should return you to the chatroom or, otherwise, the club card lounge. */
+declare let ClubCardBuilderReturnToChatroom: boolean;
 /**
  * Loads the deck # in memory so it can be edited
  * @param {number} Deck
@@ -44,7 +81,6 @@ declare function ClubCardBuilderInputChanged(): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardBuilderFilterLoad(): void;
-declare function ClubCardBuilderLoad(): Promise<void>;
 /**
  * Returns the deck name on slot "Deck"
  * @param {number} Deck - The deck #
@@ -57,43 +93,3 @@ declare function ClubCardBuilderGetDeckName(Deck: number): string;
  * @returns {void} - Nothing
  */
 declare function ClubCardBuilderRenameMode(Deck: number): void;
-declare function ClubCardBuilderRun(time: number): void;
-declare function ClubCardBuilderClick(event: PointerEvent): void;
-declare function ClubCardBuilderUnload(): void;
-declare var ClubCardBuilderBackground: string;
-declare var ClubCardBuilderDeckIndex: number;
-/** @type {null | ClubCard} */
-declare var ClubCardBuilderFocus: null | ClubCard;
-/** @type {ClubCard[]} */
-declare var ClubCardBuilderList: ClubCard[];
-declare var ClubCardBuilderOffset: number;
-/** @type {number[]} */
-declare var ClubCardBuilderDeckCurrent: number[];
-declare var ClubCardBuilderMinDeckSize: number;
-declare var ClubCardBuilderMaxDeckSize: number;
-/** @type {ClubCardTag} */
-declare var ClubCardBuilderSelectedTag: ClubCardTag;
-/**
- * @type {Record<ClubCardDefaultDecks, number[]>}
- */
-declare const ClubCardBuilderDefaultDecksList: Record<ClubCardDefaultDecks, number[]>;
-/**
- * @type {Record<ClubCardTag, (card: ClubCard) => boolean>}
- */
-declare const ClubCardBuilderFilterGroupFilters: Record<ClubCardTag, (card: ClubCard) => boolean>;
-declare var ClubCardBuilderRenameIndex: number;
-declare var ClubCardBuilderCustomizationIndex: string;
-declare var ClubCardBuilderSelectedCardBack: number;
-declare var ClubCardBuilderCardBackFocus: null;
-declare var ClubCardBuilderCardBackCount: number;
-declare var ClubCardBuilderView: ClubCard[];
-declare var ClubCardBuilderDefaultDeck: number[];
-declare var ClubCardBuilderMaidDeck: number[];
-declare var ClubCardBuilderDominantDeck: number[];
-declare var ClubCardBuilderPornDeck: number[];
-declare var ClubCardBuilderAsylumDeck: number[];
-declare var ClubCardBuilderABDLDeck: number[];
-declare var ClubCardBuilderCollegeDeck: number[];
-declare var ClubCardBuilderLiabilityDeck: number[];
-/** Whether exiting the builder should return you to the chatroom or, otherwise, the club card lounge. */
-declare let ClubCardBuilderReturnToChatroom: boolean;

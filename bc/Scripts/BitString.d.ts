@@ -247,6 +247,10 @@ declare class BitStringWriter {
      */
     _freeBitsLastChar: number;
     /**
+     * Creates a new and empty `BitStringWriter`.
+     */
+    constructor();
+    /**
      * Resets the current writer, discarding any data written so far.
      * @returns {this}
      */
@@ -366,21 +370,6 @@ declare class BitStringWriter {
  */
 declare class BitStringReader {
     /**
-     * Create a new {@link BitStringReader} instance from a base64-encoded string obtained
-     * from a call to {@link BitStringWriter.toBase64}.
-     *
-     * @param {string} b64String
-     * @returns {BitStringReader | undefined}
-     */
-    static fromBase64(b64String: string): BitStringReader | undefined;
-    /**
-     * Initialize the reader with a string obtained from calling
-     * {@link BitStringWriter.toBitString} or similar methods.
-     *
-     * @param {string} bitString the input BitString.
-     */
-    constructor(bitString: string);
-    /**
      * The current buffer, representing the input bit stream.
      * @type {string}
      * private
@@ -402,6 +391,21 @@ declare class BitStringReader {
      * private
      */
     _bitPosLastChar: number;
+    /**
+     * Initialize the reader with a string obtained from calling
+     * {@link BitStringWriter.toBitString} or similar methods.
+     *
+     * @param {string} bitString the input BitString.
+     */
+    constructor(bitString: string);
+    /**
+     * Create a new {@link BitStringReader} instance from a base64-encoded string obtained
+     * from a call to {@link BitStringWriter.toBase64}.
+     *
+     * @param {string} b64String
+     * @returns {BitStringReader | undefined}
+     */
+    static fromBase64(b64String: string): BitStringReader | undefined;
     /**
      * Reads an unsigned integer from the reader. Throws an *Invalid argument* error if
      * there is not enough data left to read full {@link bits} bits.

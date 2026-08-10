@@ -1,6 +1,3 @@
-declare function InventoryItemMiscMistressTimerPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemMiscMistressTimerPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemMiscMistressTimerPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 declare const MistressTimerChooseOptions: ({
     unit: {
         readonly label: "Minutes";

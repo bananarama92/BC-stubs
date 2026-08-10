@@ -1,1 +1,0 @@
-declare function AssetsItemArmsHempRopeBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides | undefined;

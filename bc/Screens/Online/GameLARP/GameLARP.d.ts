@@ -1,3 +1,40 @@
+declare var GameLARPBackground: string;
+declare var GameLARPClass: {
+    Name: string;
+    Bonus: number[];
+    Ability: string[];
+}[];
+declare var GameLARPTeamList: string[];
+declare var GameLARPTimerDelay: number[];
+declare var GameLARPEntryClass: string;
+declare var GameLARPEntryTeam: string;
+/** @type { { Sender: number, Time: number, RNG: number, Data: ServerChatRoomGameResponseBase<ServerGameLARPData>["Data"], Success?: boolean }[] } */
+declare var GameLARPProgress: {
+    Sender: number;
+    Time: number;
+    RNG: number;
+    Data: ServerChatRoomGameResponseBase<ServerGameLARPData>["Data"];
+    Success?: boolean;
+}[];
+/** @type {Character[]} */
+declare var GameLARPPlayer: Character[];
+/** @type {GameLARPOption[]} */
+declare var GameLARPOption: GameLARPOption[];
+/** @type {GameLARPActionName | null} */
+declare var GameLARPAction: GameLARPActionName | null;
+/** @type {Asset[]} */
+declare var GameLARPInventory: Asset[];
+declare var GameLARPInventoryOffset: number;
+declare var GameLARPTurnAdmin: number;
+declare var GameLARPTurnPosition: number;
+declare var GameLARPTurnAscending: boolean;
+/** @type {null | number} */
+declare var GameLARPTurnTimer: null | number;
+declare var GameLARPTurnTimerDelay: number;
+/** @type {null | Character} */
+declare var GameLARPTurnFocusCharacter: null | Character;
+/** @type {null | AssetGroupName} */
+declare var GameLARPTurnFocusGroup: null | AssetGroupName;
 /**
  * Gets the current state of LARP.
  * @returns {OnlineGameStatus}
@@ -24,7 +61,6 @@ declare function GameLARPIsAdmin(C: Character): boolean;
  * @returns {void} - Nothing
  */
 declare function GameLARPDrawIcon(C: Character, X: number, Y: number, Zoom: number): void;
-declare function GameLARPLoad(): Promise<void>;
 /**
  * Runs and draws the LARP game.
  * @returns {void} - Nothing
@@ -62,7 +98,6 @@ declare function GameLARPStartProcess(): void;
  * @returns {void} - Nothing
  */
 declare function GameLARPClick(): void;
-declare function GameLARPExit(): void;
 /**
  * Checks if a LARP match can be launched. The player must be an admin and two different teams must be selected.
  * @returns {boolean} - Returns TRUE if the game can be launched
@@ -261,40 +296,3 @@ declare function GameLARPLoadStatus(): void;
  * @returns {void} - Nothing
  */
 declare function GameLARPDrawCharacter(C: Character, X: number, Y: number, Zoom: number): void;
-declare var GameLARPBackground: string;
-declare var GameLARPClass: {
-    Name: string;
-    Bonus: number[];
-    Ability: string[];
-}[];
-declare var GameLARPTeamList: string[];
-declare var GameLARPTimerDelay: number[];
-declare var GameLARPEntryClass: string;
-declare var GameLARPEntryTeam: string;
-/** @type { { Sender: number, Time: number, RNG: number, Data: ServerChatRoomGameResponseBase<ServerGameLARPData>["Data"], Success?: boolean }[] } */
-declare var GameLARPProgress: {
-    Sender: number;
-    Time: number;
-    RNG: number;
-    Data: ServerChatRoomGameResponseBase<ServerGameLARPData>["Data"];
-    Success?: boolean;
-}[];
-/** @type {Character[]} */
-declare var GameLARPPlayer: Character[];
-/** @type {GameLARPOption[]} */
-declare var GameLARPOption: GameLARPOption[];
-/** @type {GameLARPActionName | null} */
-declare var GameLARPAction: GameLARPActionName | null;
-/** @type {Asset[]} */
-declare var GameLARPInventory: Asset[];
-declare var GameLARPInventoryOffset: number;
-declare var GameLARPTurnAdmin: number;
-declare var GameLARPTurnPosition: number;
-declare var GameLARPTurnAscending: boolean;
-/** @type {null | number} */
-declare var GameLARPTurnTimer: null | number;
-declare var GameLARPTurnTimerDelay: number;
-/** @type {null | Character} */
-declare var GameLARPTurnFocusCharacter: null | Character;
-/** @type {null | AssetGroupName} */
-declare var GameLARPTurnFocusGroup: null | AssetGroupName;

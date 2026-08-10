@@ -1,4 +1,23 @@
 /**
+ * @type {string[][]}
+ * @deprecated
+ */
+declare var ActivityDictionary: string[][];
+declare var ActivityOrgasmGameButtonX: number;
+declare var ActivityOrgasmGameButtonY: number;
+declare var ActivityOrgasmGameProgress: number;
+declare var ActivityOrgasmGameDifficulty: number;
+declare var ActivityOrgasmGameResistCount: number;
+declare var ActivityOrgasmGameTimer: number;
+declare var ActivityOrgasmResistLabel: string;
+declare var ActivityOrgasmRuined: boolean;
+/**
+ * @type { (() => void) | undefined }
+ * @deprecated
+ */
+declare let ActivityTranslateResolve: (() => void) | undefined;
+declare let ActivityDebug: boolean;
+/**
  * Debug logging function for activities
  * @param {any[]} args
  */
@@ -264,22 +283,3 @@ declare function ActivityFetishItemFactor(C: Character, Type: FetishName): numbe
  * @return {number} - The negative/positive number will have negative/positive impact on arousal
  */
 declare function ActivityFetishFactor(C: Character): number;
-/**
- * @type {string[][]}
- * @deprecated
- */
-declare var ActivityDictionary: string[][];
-declare var ActivityOrgasmGameButtonX: number;
-declare var ActivityOrgasmGameButtonY: number;
-declare var ActivityOrgasmGameProgress: number;
-declare var ActivityOrgasmGameDifficulty: number;
-declare var ActivityOrgasmGameResistCount: number;
-declare var ActivityOrgasmGameTimer: number;
-declare var ActivityOrgasmResistLabel: string;
-declare var ActivityOrgasmRuined: boolean;
-/**
- * @type { (() => void) | undefined }
- * @deprecated
- */
-declare let ActivityTranslateResolve: (() => void) | undefined;
-declare let ActivityDebug: boolean;

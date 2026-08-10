@@ -1,3 +1,39 @@
+declare var PrivateBackground: string;
+/** @type {NPCCharacter} */
+declare var PrivateVendor: NPCCharacter;
+/** @type {NPCCharacter[]} */
+declare var PrivateCharacter: NPCCharacter[];
+declare var PrivateCharacterOffset: number;
+declare var PrivateCharacterShouldSync: boolean;
+declare var PrivateCharacterMax: number;
+declare var PrivateReleaseTimer: number;
+declare var PrivateActivity: string;
+declare var PrivateActivityCount: number;
+declare var PrivateActivityAffectLove: boolean;
+declare var PrivateActivityList: string[];
+/** @type {null | NPCCharacter} */
+declare var PrivateActivityTarget: null | NPCCharacter;
+/** @type {PrivatePunishmentType | null} */
+declare var PrivatePunishment: PrivatePunishmentType | null;
+/** @type {PrivatePunishmentType[]} */
+declare var PrivatePunishmentList: PrivatePunishmentType[];
+/** @type {NPCTraitType | null} */
+declare var PrivateSlaveImproveType: NPCTraitType | null;
+declare var PrivateNextLoveYou: number;
+/** @type {PrivateActivityType | null} */
+declare var PrivateLoverActivity: PrivateActivityType | null;
+/** @type {PrivateActivityType[]} */
+declare var PrivateLoverActivityList: PrivateActivityType[];
+declare var PrivateBeltList: string[];
+declare var PrivateEntryEvent: boolean;
+declare var PrivateClubCardVictoryMode: boolean;
+declare var PrivateClubCardDefeatConsequence: string[];
+/** @type {Asset | null} */
+declare var PrivateGiftRegular: Asset | null;
+/** @type {Asset | null} */
+declare var PrivateGiftRestraint: Asset | null;
+declare var PrivateBaseDecay: number;
+declare const PrivateCollegeNPCNames: readonly ["Amanda", "Sarah", "Jennifer", "Sidney"];
 /**
  * Checks if the player is caged.
  * @returns {boolean} - TRUE if the player is in the cage.
@@ -425,7 +461,6 @@ declare function PrivateIsSuccubus(): boolean;
  * @returns {Asset|null} - The item asset that can be given
  */
 declare function PrivateGetPossibleGift(Restraint: boolean): Asset | null;
-declare function PrivateLoad(): Promise<void>;
 /**
  * NPCs can change clothes randomly everyday
  * @param {Character} C - The NPC to change
@@ -720,7 +755,6 @@ declare function PrivateNPCCheat(Type: "TraitDominant" | "TraitSubmissive"): voi
  * @returns {void} - Nothing.
  */
 declare function PrivateGetBed(Type: "White" | "Black" | "Pink"): void;
-declare function PrivateExit(): void;
 /**
  * When the player joins the NPC in bed
  * @returns {void} - Nothing.
@@ -874,39 +908,3 @@ declare function PrivateOwnerHallParadeEnd(Action: string): void;
  * @param {string} name
  */
 declare function PrivateCharacterIsInRoom(name: string): boolean;
-declare var PrivateBackground: string;
-/** @type {NPCCharacter} */
-declare var PrivateVendor: NPCCharacter;
-/** @type {NPCCharacter[]} */
-declare var PrivateCharacter: NPCCharacter[];
-declare var PrivateCharacterOffset: number;
-declare var PrivateCharacterShouldSync: boolean;
-declare var PrivateCharacterMax: number;
-declare var PrivateReleaseTimer: number;
-declare var PrivateActivity: string;
-declare var PrivateActivityCount: number;
-declare var PrivateActivityAffectLove: boolean;
-declare var PrivateActivityList: string[];
-/** @type {null | NPCCharacter} */
-declare var PrivateActivityTarget: null | NPCCharacter;
-/** @type {PrivatePunishmentType | null} */
-declare var PrivatePunishment: PrivatePunishmentType | null;
-/** @type {PrivatePunishmentType[]} */
-declare var PrivatePunishmentList: PrivatePunishmentType[];
-/** @type {NPCTraitType | null} */
-declare var PrivateSlaveImproveType: NPCTraitType | null;
-declare var PrivateNextLoveYou: number;
-/** @type {PrivateActivityType | null} */
-declare var PrivateLoverActivity: PrivateActivityType | null;
-/** @type {PrivateActivityType[]} */
-declare var PrivateLoverActivityList: PrivateActivityType[];
-declare var PrivateBeltList: string[];
-declare var PrivateEntryEvent: boolean;
-declare var PrivateClubCardVictoryMode: boolean;
-declare var PrivateClubCardDefeatConsequence: string[];
-/** @type {Asset | null} */
-declare var PrivateGiftRegular: Asset | null;
-/** @type {Asset | null} */
-declare var PrivateGiftRestraint: Asset | null;
-declare var PrivateBaseDecay: number;
-declare const PrivateCollegeNPCNames: readonly ["Amanda", "Sarah", "Jennifer", "Sidney"];

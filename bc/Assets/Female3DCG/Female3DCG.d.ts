@@ -2,545 +2,495 @@
 declare const AssetUpperOverflowAlpha: [number, number, number, number];
 /** @type {[number, number, number, number]} */
 declare const AssetLowerOverflowAlpha: [number, number, number, number];
-declare namespace E {
-    let Freeze: "Freeze";
-    let BlockWardrobe: "BlockWardrobe";
-    let Block: "Block";
-    let Mounted: "Mounted";
-    let CuffedFeet: "CuffedFeet";
-    let CuffedLegs: "CuffedLegs";
-    let CuffedArms: "CuffedArms";
-    let IsChained: "IsChained";
-    let FixedHead: "FixedHead";
-    let MergedFingers: "MergedFingers";
-    let Shackled: "Shackled";
-    let Tethered: "Tethered";
-    let Enclose: "Enclose";
-    let MapImmobile: "MapImmobile";
-    let MapSwim: "MapSwim";
-    let OneWayEnclose: "OneWayEnclose";
-    let OnBed: "OnBed";
-    let Lifted: "Lifted";
-    let Suspended: "Suspended";
-    let Slow: "Slow";
-    let FillVulva: "FillVulva";
-    let VulvaShaft: "VulvaShaft";
-    let IsPlugged: "IsPlugged";
-    let ForcedErection: "ForcedErection";
-    let Egged: "Egged";
-    let Vibrating: "Vibrating";
-    let Edged: "Edged";
-    let DenialMode: "DenialMode";
-    let RuinOrgasms: "RuinOrgasms";
-    let Remote: "Remote";
-    let UseRemote: "UseRemote";
-    let BlockRemotes: "BlockRemotes";
-    let Chaste: "Chaste";
-    let BreastChaste: "BreastChaste";
-    let ButtChaste: "ButtChaste";
-    let Leash: "Leash";
-    let IsLeashed: "IsLeashed";
-    let CrotchRope: "CrotchRope";
-    let Wiggling: "Wiggling";
-    let ReceiveShock: "ReceiveShock";
-    let TriggerShock: "TriggerShock";
-    let OpenPermission: "OpenPermission";
-    let OpenPermissionArm: "OpenPermissionArm";
-    let OpenPermissionLeg: "OpenPermissionLeg";
-    let OpenPermissionChastity: "OpenPermissionChastity";
-    let VR: "VR";
-    let VRAvatars: "VRAvatars";
-    let KinkyDungeonParty: "KinkyDungeonParty";
-    let HideRestraints: "HideRestraints";
-    let Lock: "Lock";
-    let NotSelfPickable: "NotSelfPickable";
-    let UnlockMetalPadlock: "UnlockMetalPadlock";
-    let UnlockOwnerPadlock: "UnlockOwnerPadlock";
-    let UnlockOwnerTimerPadlock: "UnlockOwnerTimerPadlock";
-    let UnlockLoversPadlock: "UnlockLoversPadlock";
-    let UnlockLoversTimerPadlock: "UnlockLoversTimerPadlock";
-    let UnlockFamilyPadlock: "UnlockFamilyPadlock";
-    let UnlockMistressPadlock: "UnlockMistressPadlock";
-    let UnlockMistressTimerPadlock: "UnlockMistressTimerPadlock";
-    let UnlockPandoraPadlock: "UnlockPandoraPadlock";
-    let UnlockMetalCuffs: "UnlockMetalCuffs";
-    let UnlockEscortAnkleCuffs: "UnlockEscortAnkleCuffs";
-    let UnlockPortalPanties: "UnlockPortalPanties";
-    let BlockMouth: "BlockMouth";
-    let OpenMouth: "OpenMouth";
-    let ProtrudingMouth: "ProtrudingMouth";
-    let GagVeryLight: "GagVeryLight";
-    let GagEasy: "GagEasy";
-    let GagLight: "GagLight";
-    let GagNormal: "GagNormal";
-    let GagMedium: "GagMedium";
-    let GagHeavy: "GagHeavy";
-    let GagVeryHeavy: "GagVeryHeavy";
-    let GagTotal: "GagTotal";
-    let GagTotal2: "GagTotal2";
-    let GagTotal3: "GagTotal3";
-    let GagTotal4: "GagTotal4";
-    let RegressedTalk: "RegressedTalk";
-    let BlindLight: "BlindLight";
-    let BlindNormal: "BlindNormal";
-    let BlindHeavy: "BlindHeavy";
-    let BlindTotal: "BlindTotal";
-    let BlurLight: "BlurLight";
-    let BlurNormal: "BlurNormal";
-    let BlurHeavy: "BlurHeavy";
-    let BlurTotal: "BlurTotal";
-    let DeafLight: "DeafLight";
-    let DeafNormal: "DeafNormal";
-    let DeafHeavy: "DeafHeavy";
-    let DeafTotal: "DeafTotal";
-    let CanEdge: "CanEdge";
-}
-declare namespace AssetPoseMapping {
-    namespace BodyLower {
-        let AllFours: "Hide";
-        let Hogtied: "Hide";
-        let Kneel: "Kneel";
-        let KneelingSpread: "KneelingSpread";
-        let LegsClosed: "LegsClosed";
-        let Spread: "Spread";
-    }
-    namespace BodyUpper {
-        let AllFours_1: "AllFours";
-        export { AllFours_1 as AllFours };
-        export let BackBoxTie: "BackBoxTie";
-        export let BackCuffs: "BackCuffs";
-        export let BackElbowTouch: "BackElbowTouch";
-        let Hogtied_1: "Hogtied";
-        export { Hogtied_1 as Hogtied };
-        export let OverTheHead: "OverTheHead";
-        export let TapedHands: "";
-        export let Yoked: "Yoked";
-    }
-    namespace Bra {
-        let AllFours_2: "Hide";
-        export { AllFours_2 as AllFours };
-        let Hogtied_2: "Hogtied";
-        export { Hogtied_2 as Hogtied };
-        let Yoked_1: "Yoked";
-        export { Yoked_1 as Yoked };
-    }
-    namespace Bracelet {
-        let AllFours_3: "Hide";
-        export { AllFours_3 as AllFours };
-        let BackBoxTie_1: "BackBoxTie";
-        export { BackBoxTie_1 as BackBoxTie };
-        let BackCuffs_1: "BackCuffs";
-        export { BackCuffs_1 as BackCuffs };
-        let BackElbowTouch_1: "Hide";
-        export { BackElbowTouch_1 as BackElbowTouch };
-        let Hogtied_3: "Hide";
-        export { Hogtied_3 as Hogtied };
-        let OverTheHead_1: "OverTheHead";
-        export { OverTheHead_1 as OverTheHead };
-        let Yoked_2: "Yoked";
-        export { Yoked_2 as Yoked };
-    }
-    namespace Cloth {
-        let AllFours_4: "AllFours";
-        export { AllFours_4 as AllFours };
-        let BackBoxTie_2: "BackBoxTie";
-        export { BackBoxTie_2 as BackBoxTie };
-        let BackCuffs_2: "BackCuffs";
-        export { BackCuffs_2 as BackCuffs };
-        let BackElbowTouch_2: "BackElbowTouch";
-        export { BackElbowTouch_2 as BackElbowTouch };
-        let Hogtied_4: "Hogtied";
-        export { Hogtied_4 as Hogtied };
-        let OverTheHead_2: "OverTheHead";
-        export { OverTheHead_2 as OverTheHead };
-        let TapedHands_1: "TapedHands";
-        export { TapedHands_1 as TapedHands };
-        let Yoked_3: "Yoked";
-        export { Yoked_3 as Yoked };
-    }
-    namespace ClothLower {
-        let AllFours_5: "Hide";
-        export { AllFours_5 as AllFours };
-        let Hogtied_5: "Hide";
-        export { Hogtied_5 as Hogtied };
-        let Kneel_1: "Kneel";
-        export { Kneel_1 as Kneel };
-        let KneelingSpread_1: "KneelingSpread";
-        export { KneelingSpread_1 as KneelingSpread };
-        let LegsClosed_1: "LegsClosed";
-        export { LegsClosed_1 as LegsClosed };
-        let Spread_1: "Spread";
-        export { Spread_1 as Spread };
-    }
-    namespace Corset {
-        let Hogtied_6: "Hogtied";
-        export { Hogtied_6 as Hogtied };
-    }
-    namespace Garters {
-        let Hogtied_7: "Hide";
-        export { Hogtied_7 as Hogtied };
-        let Kneel_2: "Kneel";
-        export { Kneel_2 as Kneel };
-        let KneelingSpread_2: "KneelingSpread";
-        export { KneelingSpread_2 as KneelingSpread };
-        let LegsClosed_2: "LegsClosed";
-        export { LegsClosed_2 as LegsClosed };
-        let Spread_2: "Spread";
-        export { Spread_2 as Spread };
-        let AllFours_6: "Hide";
-        export { AllFours_6 as AllFours };
-    }
-    let Glasses: {};
-    namespace Gloves {
-        let AllFours_7: "AllFours";
-        export { AllFours_7 as AllFours };
-        let BackBoxTie_3: "BackBoxTie";
-        export { BackBoxTie_3 as BackBoxTie };
-        let BackCuffs_3: "BackCuffs";
-        export { BackCuffs_3 as BackCuffs };
-        let BackElbowTouch_3: "BackElbowTouch";
-        export { BackElbowTouch_3 as BackElbowTouch };
-        let Hogtied_8: "Hide";
-        export { Hogtied_8 as Hogtied };
-        let OverTheHead_3: "OverTheHead";
-        export { OverTheHead_3 as OverTheHead };
-        let TapedHands_2: "TapedHands";
-        export { TapedHands_2 as TapedHands };
-        let Yoked_4: "Yoked";
-        export { Yoked_4 as Yoked };
-    }
-    namespace HandsLeft {
-        let AllFours_8: "AllFours";
-        export { AllFours_8 as AllFours };
-        let BackBoxTie_4: "Hide";
-        export { BackBoxTie_4 as BackBoxTie };
-        let BackCuffs_4: "BackCuffs";
-        export { BackCuffs_4 as BackCuffs };
-        let BackElbowTouch_4: "Hide";
-        export { BackElbowTouch_4 as BackElbowTouch };
-        let Hogtied_9: "Hide";
-        export { Hogtied_9 as Hogtied };
-        let OverTheHead_4: "OverTheHead";
-        export { OverTheHead_4 as OverTheHead };
-        let TapedHands_3: "TapedHands";
-        export { TapedHands_3 as TapedHands };
-        let Yoked_5: "Yoked";
-        export { Yoked_5 as Yoked };
-    }
-    namespace HandsRight {
-        let AllFours_9: "AllFours";
-        export { AllFours_9 as AllFours };
-        let BackBoxTie_5: "Hide";
-        export { BackBoxTie_5 as BackBoxTie };
-        let BackCuffs_5: "BackCuffs";
-        export { BackCuffs_5 as BackCuffs };
-        let BackElbowTouch_5: "Hide";
-        export { BackElbowTouch_5 as BackElbowTouch };
-        let Hogtied_10: "Hide";
-        export { Hogtied_10 as Hogtied };
-        let OverTheHead_5: "OverTheHead";
-        export { OverTheHead_5 as OverTheHead };
-        let TapedHands_4: "TapedHands";
-        export { TapedHands_4 as TapedHands };
-        let Yoked_6: "Yoked";
-        export { Yoked_6 as Yoked };
-    }
-    namespace ItemBoots {
-        let AllFours_10: "Hide";
-        export { AllFours_10 as AllFours };
-        let Hogtied_11: "Hogtied";
-        export { Hogtied_11 as Hogtied };
-        let Kneel_3: "Kneel";
-        export { Kneel_3 as Kneel };
-        let KneelingSpread_3: "KneelingSpread";
-        export { KneelingSpread_3 as KneelingSpread };
-        let LegsClosed_3: "LegsClosed";
-        export { LegsClosed_3 as LegsClosed };
-    }
-    namespace ItemBreast {
-        let AllFours_11: "AllFours";
-        export { AllFours_11 as AllFours };
-    }
-    namespace ItemFeet {
-        let AllFours_12: "Hide";
-        export { AllFours_12 as AllFours };
-        let Hogtied_12: "Hide";
-        export { Hogtied_12 as Hogtied };
-        let Kneel_4: "Hide";
-        export { Kneel_4 as Kneel };
-        let KneelingSpread_4: "Hide";
-        export { KneelingSpread_4 as KneelingSpread };
-    }
-    namespace ItemHandheld {
-        let AllFours_13: "Hide";
-        export { AllFours_13 as AllFours };
-        let BackBoxTie_6: "Hide";
-        export { BackBoxTie_6 as BackBoxTie };
-        let BackCuffs_6: "Hide";
-        export { BackCuffs_6 as BackCuffs };
-        let BackElbowTouch_6: "Hide";
-        export { BackElbowTouch_6 as BackElbowTouch };
-        let Hogtied_13: "Hide";
-        export { Hogtied_13 as Hogtied };
-        let OverTheHead_6: "Hide";
-        export { OverTheHead_6 as OverTheHead };
-        let Yoked_7: "Hide";
-        export { Yoked_7 as Yoked };
-    }
-    namespace ItemHands {
-        let AllFours_14: "AllFours";
-        export { AllFours_14 as AllFours };
-        let Hogtied_14: "Hide";
-        export { Hogtied_14 as Hogtied };
-        let BackBoxTie_7: "Hide";
-        export { BackBoxTie_7 as BackBoxTie };
-        let BackElbowTouch_7: "Hide";
-        export { BackElbowTouch_7 as BackElbowTouch };
-        let BackCuffs_7: "BackCuffs";
-        export { BackCuffs_7 as BackCuffs };
-        let OverTheHead_7: "OverTheHead";
-        export { OverTheHead_7 as OverTheHead };
-        let Yoked_8: "Yoked";
-        export { Yoked_8 as Yoked };
-    }
-    let ItemHead: {};
-    namespace ItemLegs {
-        let AllFours_15: "Hide";
-        export { AllFours_15 as AllFours };
-        let Hogtied_15: "Hide";
-        export { Hogtied_15 as Hogtied };
-        let Kneel_5: "Kneel";
-        export { Kneel_5 as Kneel };
-    }
-    namespace ItemNipples {
-        let AllFours_16: "AllFours";
-        export { AllFours_16 as AllFours };
-    }
-    namespace ItemNipplesPiercings {
-        let AllFours_17: "AllFours";
-        export { AllFours_17 as AllFours };
-    }
-    namespace ItemPelvis {
-        let AllFours_18: "Hide";
-        export { AllFours_18 as AllFours };
-        let Hogtied_16: "Hide";
-        export { Hogtied_16 as Hogtied };
-    }
-    namespace ItemTorso2 {
-        let AllFours_19: "AllFours";
-        export { AllFours_19 as AllFours };
-        let Hogtied_17: "Hogtied";
-        export { Hogtied_17 as Hogtied };
-    }
-    namespace ItemTorso {
-        let AllFours_20: "AllFours";
-        export { AllFours_20 as AllFours };
-        let Hogtied_18: "Hogtied";
-        export { Hogtied_18 as Hogtied };
-    }
-    namespace ItemVulva {
-        let AllFours_21: "Hide";
-        export { AllFours_21 as AllFours };
-        let Hogtied_19: "Hide";
-        export { Hogtied_19 as Hogtied };
-        let Kneel_6: "Kneel";
-        export { Kneel_6 as Kneel };
-    }
-    namespace ItemVulvaPiercings {
-        let AllFours_22: "Hide";
-        export { AllFours_22 as AllFours };
-        let Hogtied_20: "Hide";
-        export { Hogtied_20 as Hogtied };
-    }
-    namespace Jewelry {
-        let AllFours_23: "Hide";
-        export { AllFours_23 as AllFours };
-        let Hogtied_21: "Hide";
-        export { Hogtied_21 as Hogtied };
-        let Kneel_7: "Kneel";
-        export { Kneel_7 as Kneel };
-        let KneelingSpread_5: "KneelingSpread";
-        export { KneelingSpread_5 as KneelingSpread };
-        let LegsClosed_4: "LegsClosed";
-        export { LegsClosed_4 as LegsClosed };
-        let Spread_3: "Spread";
-        export { Spread_3 as Spread };
-    }
-    namespace AnkletLeft {
-        let AllFours_24: "Hide";
-        export { AllFours_24 as AllFours };
-        let Hogtied_22: "Hide";
-        export { Hogtied_22 as Hogtied };
-        let Kneel_8: "Hide";
-        export { Kneel_8 as Kneel };
-        let KneelingSpread_6: "Hide";
-        export { KneelingSpread_6 as KneelingSpread };
-        let LegsClosed_5: "LegsClosed";
-        export { LegsClosed_5 as LegsClosed };
-        let Spread_4: "Spread";
-        export { Spread_4 as Spread };
-    }
-    namespace HandAccessoryLeft {
-        let AllFours_25: "AllFours";
-        export { AllFours_25 as AllFours };
-        let BackBoxTie_8: "BackBoxTie";
-        export { BackBoxTie_8 as BackBoxTie };
-        let BackCuffs_8: "BackCuffs";
-        export { BackCuffs_8 as BackCuffs };
-        let BackElbowTouch_8: "BackElbowTouch";
-        export { BackElbowTouch_8 as BackElbowTouch };
-        let Hogtied_23: "Hide";
-        export { Hogtied_23 as Hogtied };
-        let OverTheHead_8: "OverTheHead";
-        export { OverTheHead_8 as OverTheHead };
-        let TapedHands_5: "TapedHands";
-        export { TapedHands_5 as TapedHands };
-        let Yoked_9: "Yoked";
-        export { Yoked_9 as Yoked };
-    }
-    namespace Nipples {
-        let AllFours_26: "Hide";
-        export { AllFours_26 as AllFours };
-    }
-    namespace Panties {
-        let AllFours_27: "Hide";
-        export { AllFours_27 as AllFours };
-        let Hogtied_24: "Hide";
-        export { Hogtied_24 as Hogtied };
-    }
-    namespace Pussy {
-        let AllFours_28: "Hide";
-        export { AllFours_28 as AllFours };
-        let Hogtied_25: "Hide";
-        export { Hogtied_25 as Hogtied };
-    }
-    namespace AnkletRight {
-        let AllFours_29: "Hide";
-        export { AllFours_29 as AllFours };
-        let Hogtied_26: "Hide";
-        export { Hogtied_26 as Hogtied };
-        let Kneel_9: "Hide";
-        export { Kneel_9 as Kneel };
-        let KneelingSpread_7: "Hide";
-        export { KneelingSpread_7 as KneelingSpread };
-        let LegsClosed_6: "LegsClosed";
-        export { LegsClosed_6 as LegsClosed };
-        let Spread_5: "Spread";
-        export { Spread_5 as Spread };
-    }
-    namespace HandAccessoryRight {
-        let AllFours_30: "AllFours";
-        export { AllFours_30 as AllFours };
-        let BackBoxTie_9: "BackBoxTie";
-        export { BackBoxTie_9 as BackBoxTie };
-        let BackCuffs_9: "BackCuffs";
-        export { BackCuffs_9 as BackCuffs };
-        let BackElbowTouch_9: "BackElbowTouch";
-        export { BackElbowTouch_9 as BackElbowTouch };
-        let Hogtied_27: "Hide";
-        export { Hogtied_27 as Hogtied };
-        let OverTheHead_9: "OverTheHead";
-        export { OverTheHead_9 as OverTheHead };
-        let TapedHands_6: "TapedHands";
-        export { TapedHands_6 as TapedHands };
-        let Yoked_10: "Yoked";
-        export { Yoked_10 as Yoked };
-    }
-    namespace Shoes {
-        let AllFours_31: "Hide";
-        export { AllFours_31 as AllFours };
-        let Hogtied_28: "Hogtied";
-        export { Hogtied_28 as Hogtied };
-        let Kneel_10: "Kneel";
-        export { Kneel_10 as Kneel };
-        let KneelingSpread_8: "KneelingSpread";
-        export { KneelingSpread_8 as KneelingSpread };
-        let LegsClosed_7: "LegsClosed";
-        export { LegsClosed_7 as LegsClosed };
-        let Spread_6: "Spread";
-        export { Spread_6 as Spread };
-    }
-    namespace Socks {
-        let AllFours_32: "Hide";
-        export { AllFours_32 as AllFours };
-        let Hogtied_29: "Hogtied";
-        export { Hogtied_29 as Hogtied };
-        let Kneel_11: "Kneel";
-        export { Kneel_11 as Kneel };
-        let KneelingSpread_9: "KneelingSpread";
-        export { KneelingSpread_9 as KneelingSpread };
-        let LegsClosed_8: "LegsClosed";
-        export { LegsClosed_8 as LegsClosed };
-        let Spread_7: "Spread";
-        export { Spread_7 as Spread };
-    }
-    namespace SocksLeft {
-        let AllFours_33: "Hide";
-        export { AllFours_33 as AllFours };
-        let Hogtied_30: "Hogtied";
-        export { Hogtied_30 as Hogtied };
-        let Kneel_12: "Kneel";
-        export { Kneel_12 as Kneel };
-        let KneelingSpread_10: "KneelingSpread";
-        export { KneelingSpread_10 as KneelingSpread };
-        let LegsClosed_9: "LegsClosed";
-        export { LegsClosed_9 as LegsClosed };
-        let Spread_8: "Spread";
-        export { Spread_8 as Spread };
-    }
-    namespace SocksRight {
-        let AllFours_34: "Hide";
-        export { AllFours_34 as AllFours };
-        let Hogtied_31: "Hogtied";
-        export { Hogtied_31 as Hogtied };
-        let Kneel_13: "Kneel";
-        export { Kneel_13 as Kneel };
-        let KneelingSpread_11: "KneelingSpread";
-        export { KneelingSpread_11 as KneelingSpread };
-        let LegsClosed_10: "LegsClosed";
-        export { LegsClosed_10 as LegsClosed };
-        let Spread_9: "Spread";
-        export { Spread_9 as Spread };
-    }
-    namespace Suit {
-        let AllFours_35: "Hide";
-        export { AllFours_35 as AllFours };
-        let BackBoxTie_10: "BackBoxTie";
-        export { BackBoxTie_10 as BackBoxTie };
-        let BackCuffs_10: "BackCuffs";
-        export { BackCuffs_10 as BackCuffs };
-        let BackElbowTouch_10: "BackElbowTouch";
-        export { BackElbowTouch_10 as BackElbowTouch };
-        let Hogtied_32: "Hogtied";
-        export { Hogtied_32 as Hogtied };
-        let OverTheHead_10: "OverTheHead";
-        export { OverTheHead_10 as OverTheHead };
-        let TapedHands_7: "TapedHands";
-        export { TapedHands_7 as TapedHands };
-        let Yoked_11: "Yoked";
-        export { Yoked_11 as Yoked };
-    }
-    namespace SuitLower {
-        let AllFours_36: "Hide";
-        export { AllFours_36 as AllFours };
-        let Hogtied_33: "Hogtied";
-        export { Hogtied_33 as Hogtied };
-        let Kneel_14: "Kneel";
-        export { Kneel_14 as Kneel };
-        let KneelingSpread_12: "KneelingSpread";
-        export { KneelingSpread_12 as KneelingSpread };
-        let LegsClosed_11: "LegsClosed";
-        export { LegsClosed_11 as LegsClosed };
-        let Spread_10: "Spread";
-        export { Spread_10 as Spread };
-    }
-    namespace Wings {
-        let AllFours_37: "Hide";
-        export { AllFours_37 as AllFours };
-        let Hogtied_34: "Hide";
-        export { Hogtied_34 as Hogtied };
-    }
-}
+/**
+ * The list of available effects.
+ *
+ * @satisfies {Partial<Record<EffectName, EffectName>>}
+ */
+declare const E: {
+    /** Prevents walking and kneeling without the kneel/stand minigame. */
+    readonly Freeze: "Freeze";
+    /** Prevents accessing the wardrobe. */
+    readonly BlockWardrobe: "BlockWardrobe";
+    /** Indicates that the character is "blocked". Acts as a restraint. */
+    readonly Block: "Block";
+    /** Indicates that the character is mounted onto something. Acts as a restraint and blocks moving around. */
+    readonly Mounted: "Mounted";
+    /** Enable items that have the CuffedFeet prerequisite to be applied. */
+    readonly CuffedFeet: "CuffedFeet";
+    /** Enable items that have the CuffedLegs prerequisite to be applied. */
+    readonly CuffedLegs: "CuffedLegs";
+    /** Enable items that have the CuffedArms prerequisite to be applied. */
+    readonly CuffedArms: "CuffedArms";
+    /** Prevents items that have the NotChained prerequisite from being applied. */
+    readonly IsChained: "IsChained";
+    /** Locks the character's head in-place. Prevents nodding and shaking activities on it. */
+    readonly FixedHead: "FixedHead";
+    /** Indicates the character can't use their fingers normally. Limits activities. */
+    readonly MergedFingers: "MergedFingers";
+    /** Prevents items that have the NotShackled prerequisite from being applied. */
+    readonly Shackled: "Shackled";
+    /** Prevents leashing items from working. */
+    readonly Tethered: "Tethered";
+    /** Indicates the character cannot be interacted with and can't interact back. */
+    readonly Enclose: "Enclose";
+    /** If set, this effect will make a player immobile on the map. */
+    readonly MapImmobile: "MapImmobile";
+    /** If set, this effect will make a player move at full speed through water tiles. */
+    readonly MapSwim: "MapSwim";
+    /** Indicates the character can be interacted with but can't interact back. */
+    readonly OneWayEnclose: "OneWayEnclose";
+    /** Enable items that have the OnBed prerequisite to be applied. */
+    readonly OnBed: "OnBed";
+    /** Prevents items that have the NotLifted prerequisite to be applied. */
+    readonly Lifted: "Lifted";
+    readonly Suspended: "Suspended";
+    /** Indicates the character is slowed. Used when exiting chatrooms. */
+    readonly Slow: "Slow";
+    /**
+     * Marks the item as filling the character's vulva.
+     *
+     * Used when checking activities' prerequisites and the stimulation events
+     */
+    readonly FillVulva: "FillVulva";
+    /**
+     * Marks the item as being some sort of shaft extending out of the vulva.
+     *
+     * Used to block things like chastity from closing.
+     */
+    readonly VulvaShaft: "VulvaShaft";
+    /**
+     * Marks the item as filling the character's butt.
+     *
+     * Used when checking activities' prerequisites and the auto-stimulation events.
+     */
+    readonly IsPlugged: "IsPlugged";
+    /**
+     * Marks the item as a urethral insert.
+     *
+     * Used when checking if the item should allow the penis to be limp.
+     */
+    readonly ForcedErection: "ForcedErection";
+    /**
+     * Marks the item as being a "vibrator" kind-of item.
+     *
+     * Make the item's Vibrator-related properties be taken into account for arousal,
+     * as well as the stuttering effect.
+     */
+    readonly Egged: "Egged";
+    /**
+     * Indicates an Effect.Egged item as being vibrating.
+     *
+     * Normally handled automatically by VibrationMode. Makes the item preview wobble
+     * in the inventory, as well as cause auto-stimulation events.
+     */
+    readonly Vibrating: "Vibrating";
+    /**
+     * Marks the item as causing the character to be edged.
+     *
+     * Normally handled automatically by VibrationMode. Causes the character's arousal
+     * to be capped, and ruins its orgasms.
+     */
+    readonly Edged: "Edged";
+    /**
+     * Marks the item as causing the character to be denied.
+     *
+     * Causes the character's arousal to be capped (higher that Edged).
+     */
+    readonly DenialMode: "DenialMode";
+    /**
+     * Marks the item as ruining orgasms.
+     *
+     * Requires DenialMode. Makes the character unable to fully orgasm.
+     */
+    readonly RuinOrgasms: "RuinOrgasms";
+    /** Marks the item as a remote. Looks non-functional. */
+    readonly Remote: "Remote";
+    /** Marks the item as needing a remote to be changed. */
+    readonly UseRemote: "UseRemote";
+    /** Marks the item as preventing remotes from being used on the character. */
+    readonly BlockRemotes: "BlockRemotes";
+    /**
+     * Marks the item as applying chastity.
+     *
+     * Prevents items that have the NotChaste prerequisite from being applied.
+     * Allows the item to be taken off at the club management.
+     */
+    readonly Chaste: "Chaste";
+    /**
+     * Marks the item as applying breast chastity.
+     *
+     * Allows the item to be taken off at the club management.
+     */
+    readonly BreastChaste: "BreastChaste";
+    readonly ButtChaste: "ButtChaste";
+    /** Marks the item as being usable as a leash. */
+    readonly Leash: "Leash";
+    /** Marks a leash item as being held. */
+    readonly IsLeashed: "IsLeashed";
+    /**
+     * Marks the item as being a crotchrope-style item.
+     *
+     * Used for the auto-stimulation events.
+     */
+    readonly CrotchRope: "CrotchRope";
+    /**
+     * Indicates that the item hangs from the character and can wiggle from it.
+     *
+     * Used as part of the stimulation event system.
+     */
+    readonly Wiggling: "Wiggling";
+    /** Marks the item as being a shock-dispensing item. */
+    readonly ReceiveShock: "ReceiveShock";
+    /** Marks the item as being a trigger for shock-dispensing items. */
+    readonly TriggerShock: "TriggerShock";
+    /** Marks the item as requiring collar-permissions (Futuristic). */
+    readonly OpenPermission: "OpenPermission";
+    /** Marks the item as requiring arm-permissions (Futuristic). */
+    readonly OpenPermissionArm: "OpenPermissionArm";
+    /** Marks the item as requiring arm-permissions (Futuristic). */
+    readonly OpenPermissionLeg: "OpenPermissionLeg";
+    /** Marks the item as requiring chastity-permissions (Futuristic). */
+    readonly OpenPermissionChastity: "OpenPermissionChastity";
+    readonly VR: "VR";
+    readonly VRAvatars: "VRAvatars";
+    readonly KinkyDungeonParty: "KinkyDungeonParty";
+    readonly HideRestraints: "HideRestraints";
+    /** Marks the item as being some kind of lock. @todo not renamed because layers usually have that name */
+    readonly Lock: "Lock";
+    /** Disables the item from being lock-picked by its wearer. */
+    readonly NotSelfPickable: "NotSelfPickable";
+    readonly UnlockMetalPadlock: "UnlockMetalPadlock";
+    readonly UnlockOwnerPadlock: "UnlockOwnerPadlock";
+    readonly UnlockOwnerTimerPadlock: "UnlockOwnerTimerPadlock";
+    readonly UnlockLoversPadlock: "UnlockLoversPadlock";
+    readonly UnlockLoversTimerPadlock: "UnlockLoversTimerPadlock";
+    readonly UnlockFamilyPadlock: "UnlockFamilyPadlock";
+    readonly UnlockMistressPadlock: "UnlockMistressPadlock";
+    readonly UnlockMistressTimerPadlock: "UnlockMistressTimerPadlock";
+    readonly UnlockPandoraPadlock: "UnlockPandoraPadlock";
+    readonly UnlockMetalCuffs: "UnlockMetalCuffs";
+    readonly UnlockEscortAnkleCuffs: "UnlockEscortAnkleCuffs";
+    readonly UnlockPortalPanties: "UnlockPortalPanties";
+    /**
+     * Marks the item as blocking the character's mouth.
+     *
+     * Prevents items that have the NotLifted prerequisite to be applied.
+     * Also used when checking activities' prerequisites.
+     */
+    readonly BlockMouth: "BlockMouth";
+    /**
+     * Marks the item as opening the character's mouth.
+     *
+     * Used when checking activities' prerequisites.
+     */
+    readonly OpenMouth: "OpenMouth";
+    /**
+     * Indicates that the item bulges out from the character's mouth.
+     *
+     * Prevents items that wrap the head to be applied.
+     */
+    readonly ProtrudingMouth: "ProtrudingMouth";
+    readonly GagVeryLight: "GagVeryLight";
+    readonly GagEasy: "GagEasy";
+    readonly GagLight: "GagLight";
+    readonly GagNormal: "GagNormal";
+    readonly GagMedium: "GagMedium";
+    readonly GagHeavy: "GagHeavy";
+    readonly GagVeryHeavy: "GagVeryHeavy";
+    readonly GagTotal: "GagTotal";
+    readonly GagTotal2: "GagTotal2";
+    readonly GagTotal3: "GagTotal3";
+    readonly GagTotal4: "GagTotal4";
+    readonly RegressedTalk: "RegressedTalk";
+    readonly BlindLight: "BlindLight";
+    readonly BlindNormal: "BlindNormal";
+    readonly BlindHeavy: "BlindHeavy";
+    readonly BlindTotal: "BlindTotal";
+    readonly BlurLight: "BlurLight";
+    readonly BlurNormal: "BlurNormal";
+    readonly BlurHeavy: "BlurHeavy";
+    readonly BlurTotal: "BlurTotal";
+    readonly DeafLight: "DeafLight";
+    readonly DeafNormal: "DeafNormal";
+    readonly DeafHeavy: "DeafHeavy";
+    readonly DeafTotal: "DeafTotal";
+    readonly CanEdge: "CanEdge";
+};
+/**
+ * All the default {@link AssetGroupDefinition.PoseMapping} values for the various groups.
+ * @satisfies {Partial<Record<AssetGroupName, AssetPoseMapping>>}
+ */
+declare const AssetPoseMapping: {
+    readonly BodyLower: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly BodyUpper: {
+        readonly AllFours: "AllFours";
+        readonly BackBoxTie: "BackBoxTie";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "BackElbowTouch";
+        readonly Hogtied: "Hogtied";
+        readonly OverTheHead: "OverTheHead";
+        readonly TapedHands: "";
+        readonly Yoked: "Yoked";
+    };
+    readonly Bra: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hogtied";
+        readonly Yoked: "Yoked";
+    };
+    readonly Bracelet: {
+        readonly AllFours: "Hide";
+        readonly BackBoxTie: "BackBoxTie";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "Hide";
+        readonly Hogtied: "Hide";
+        readonly OverTheHead: "OverTheHead";
+        readonly Yoked: "Yoked";
+    };
+    readonly Cloth: {
+        readonly AllFours: "AllFours";
+        readonly BackBoxTie: "BackBoxTie";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "BackElbowTouch";
+        readonly Hogtied: "Hogtied";
+        readonly OverTheHead: "OverTheHead";
+        readonly TapedHands: "TapedHands";
+        readonly Yoked: "Yoked";
+    };
+    readonly ClothLower: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly Corset: {
+        readonly Hogtied: "Hogtied";
+    };
+    readonly Garters: {
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+        readonly AllFours: "Hide";
+    };
+    readonly Glasses: {};
+    readonly Gloves: {
+        readonly AllFours: "AllFours";
+        readonly BackBoxTie: "BackBoxTie";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "BackElbowTouch";
+        readonly Hogtied: "Hide";
+        readonly OverTheHead: "OverTheHead";
+        readonly TapedHands: "TapedHands";
+        readonly Yoked: "Yoked";
+    };
+    readonly HandsLeft: {
+        readonly AllFours: "AllFours";
+        readonly BackBoxTie: "Hide";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "Hide";
+        readonly Hogtied: "Hide";
+        readonly OverTheHead: "OverTheHead";
+        readonly TapedHands: "TapedHands";
+        readonly Yoked: "Yoked";
+    };
+    readonly HandsRight: {
+        readonly AllFours: "AllFours";
+        readonly BackBoxTie: "Hide";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "Hide";
+        readonly Hogtied: "Hide";
+        readonly OverTheHead: "OverTheHead";
+        readonly TapedHands: "TapedHands";
+        readonly Yoked: "Yoked";
+    };
+    readonly ItemBoots: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hogtied";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+    };
+    readonly ItemBreast: {
+        readonly AllFours: "AllFours";
+    };
+    readonly ItemFeet: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Hide";
+        readonly KneelingSpread: "Hide";
+    };
+    readonly ItemHandheld: {
+        readonly AllFours: "Hide";
+        readonly BackBoxTie: "Hide";
+        readonly BackCuffs: "Hide";
+        readonly BackElbowTouch: "Hide";
+        readonly Hogtied: "Hide";
+        readonly OverTheHead: "Hide";
+        readonly Yoked: "Hide";
+    };
+    readonly ItemHands: {
+        readonly AllFours: "AllFours";
+        readonly Hogtied: "Hide";
+        readonly BackBoxTie: "Hide";
+        readonly BackElbowTouch: "Hide";
+        readonly BackCuffs: "BackCuffs";
+        readonly OverTheHead: "OverTheHead";
+        readonly Yoked: "Yoked";
+    };
+    readonly ItemHead: {};
+    readonly ItemLegs: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Kneel";
+    };
+    readonly ItemNipples: {
+        readonly AllFours: "AllFours";
+    };
+    readonly ItemNipplesPiercings: {
+        readonly AllFours: "AllFours";
+    };
+    readonly ItemPelvis: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+    };
+    readonly ItemTorso2: {
+        readonly AllFours: "AllFours";
+        readonly Hogtied: "Hogtied";
+    };
+    readonly ItemTorso: {
+        readonly AllFours: "AllFours";
+        readonly Hogtied: "Hogtied";
+    };
+    readonly ItemVulva: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Kneel";
+    };
+    readonly ItemVulvaPiercings: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+    };
+    readonly Jewelry: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly AnkletLeft: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Hide";
+        readonly KneelingSpread: "Hide";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly HandAccessoryLeft: {
+        readonly AllFours: "AllFours";
+        readonly BackBoxTie: "BackBoxTie";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "BackElbowTouch";
+        readonly Hogtied: "Hide";
+        readonly OverTheHead: "OverTheHead";
+        readonly TapedHands: "TapedHands";
+        readonly Yoked: "Yoked";
+    };
+    readonly Nipples: {
+        readonly AllFours: "Hide";
+    };
+    readonly Panties: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+    };
+    readonly Pussy: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+    };
+    readonly AnkletRight: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+        readonly Kneel: "Hide";
+        readonly KneelingSpread: "Hide";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly HandAccessoryRight: {
+        readonly AllFours: "AllFours";
+        readonly BackBoxTie: "BackBoxTie";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "BackElbowTouch";
+        readonly Hogtied: "Hide";
+        readonly OverTheHead: "OverTheHead";
+        readonly TapedHands: "TapedHands";
+        readonly Yoked: "Yoked";
+    };
+    readonly Shoes: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hogtied";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly Socks: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hogtied";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly SocksLeft: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hogtied";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly SocksRight: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hogtied";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly Suit: {
+        readonly AllFours: "Hide";
+        readonly BackBoxTie: "BackBoxTie";
+        readonly BackCuffs: "BackCuffs";
+        readonly BackElbowTouch: "BackElbowTouch";
+        readonly Hogtied: "Hogtied";
+        readonly OverTheHead: "OverTheHead";
+        readonly TapedHands: "TapedHands";
+        readonly Yoked: "Yoked";
+    };
+    readonly SuitLower: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hogtied";
+        readonly Kneel: "Kneel";
+        readonly KneelingSpread: "KneelingSpread";
+        readonly LegsClosed: "LegsClosed";
+        readonly Spread: "Spread";
+    };
+    readonly Wings: {
+        readonly AllFours: "Hide";
+        readonly Hogtied: "Hide";
+    };
+};
 /** @type {string[]} */
 declare const AssetMalePantiesList: string[];
 /** @type {string[]} */

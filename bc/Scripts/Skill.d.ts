@@ -1,3 +1,11 @@
+declare var SkillModifier: number;
+declare var SkillModifierMax: number;
+declare var SkillModifierMin: number;
+declare var SkillLevelMaximum: number;
+declare var SkillLevelMinimum: number;
+declare var SkillProgressMax: number;
+/** @type {SkillType[]} */
+declare var SkillValidSkills: SkillType[];
 /**
  * Returns the data for a given skill from a character
  *
@@ -97,11 +105,3 @@ declare function SkillGetRatio(C: Character, SkillType: SkillType): number;
  * @returns {number} - The skill level with the ratio % applied
  */
 declare function SkillGetWithRatio(C: Character, SkillType: SkillType): number;
-declare var SkillModifier: number;
-declare var SkillModifierMax: number;
-declare var SkillModifierMin: number;
-declare var SkillLevelMaximum: number;
-declare var SkillLevelMinimum: number;
-declare var SkillProgressMax: number;
-/** @type {SkillType[]} */
-declare var SkillValidSkills: SkillType[];

@@ -1,3 +1,45 @@
+declare var PandoraBackground: string;
+/** @type {PandoraBaseRoom} */
+declare var PandoraCurrentRoom: PandoraBaseRoom;
+/** @type {PandoraBaseRoom} */
+declare var PandoraPreviousRoom: PandoraBaseRoom;
+/** @type {PandoraBaseRoom[]} */
+declare var PandoraRoom: PandoraBaseRoom[];
+/** @type {PandoraFloorDirection[]} */
+declare var PandoraDirectionList: PandoraFloorDirection[];
+/** @type {PandoraFloorDirection[]} */
+declare var PandoraDirectionListFrom: PandoraFloorDirection[];
+/** @type {""|"Search"|"Rest"|"Paint"} */
+declare var PandoraMode: "" | "Search" | "Rest" | "Paint";
+declare var PandoraModeTimer: number;
+declare var PandoraModeAppearance: any;
+declare var PandoraMessage: any;
+/** @type {NPCCharacter[]} */
+declare var PandoraParty: NPCCharacter[];
+/** @type {null | NPCCharacter} */
+declare var PandoraFightCharacter: null | NPCCharacter;
+declare var PandoraRandomNPCList: string[];
+declare var PandoraMoveDirectionTimer: {
+    Direction: string;
+    Timer: number;
+};
+/** @type {null | PandoraBaseRoom} */
+declare var PandoraTargetRoom: null | PandoraBaseRoom;
+declare var PandoraClothes: string;
+declare var PandoraWillpower: number;
+declare var PandoraMaxWillpower: number;
+declare var PandoraMoney: number;
+declare var PandoraTimer: number;
+declare var PandoraChestCount: number;
+declare var PandoraPaint: boolean;
+declare var PandoraReverseMaidDone: number;
+declare var PandoraReverseMaidTotal: number;
+declare var PandoraPenitentiaryCreateTimer: number;
+declare var PandoraPenitentiaryActivityList: string[];
+declare var PandoraPenitentiaryActivityTimer: number;
+declare var PandoraPenitentiarySafewordRooms: any[];
+declare var PandoraPenitentiaryCageList: string[];
+declare var PandoraPenitentiaryStartNewRoom: boolean;
 /**
  * NPC Dialog functions
  * @returns {boolean} - TRUE if the dialog option will be available to the player
@@ -14,7 +56,6 @@ declare function PandoraCostumeIs(Costume: string): boolean;
 /** @param {number} Number */
 declare function PandoraQuizIs(Number: number): boolean;
 declare function PandoraCanAskForPaint(): boolean;
-declare function PandoraLoad(): Promise<void>;
 /**
  * Returns the color of the direction buttons, it can change if the direction was recently navigated to
  * The Cartographer perk can show the returning path in yellow
@@ -387,45 +428,3 @@ declare function PandoraClubCardStart(): void;
  * When the player ends a club card game
  */
 declare function PandoraClubCardEnd(): Promise<void>;
-declare var PandoraBackground: string;
-/** @type {PandoraBaseRoom} */
-declare var PandoraCurrentRoom: PandoraBaseRoom;
-/** @type {PandoraBaseRoom} */
-declare var PandoraPreviousRoom: PandoraBaseRoom;
-/** @type {PandoraBaseRoom[]} */
-declare var PandoraRoom: PandoraBaseRoom[];
-/** @type {PandoraFloorDirection[]} */
-declare var PandoraDirectionList: PandoraFloorDirection[];
-/** @type {PandoraFloorDirection[]} */
-declare var PandoraDirectionListFrom: PandoraFloorDirection[];
-/** @type {""|"Search"|"Rest"|"Paint"} */
-declare var PandoraMode: "" | "Search" | "Rest" | "Paint";
-declare var PandoraModeTimer: number;
-declare var PandoraModeAppearance: null;
-declare var PandoraMessage: null;
-/** @type {NPCCharacter[]} */
-declare var PandoraParty: NPCCharacter[];
-/** @type {null | NPCCharacter} */
-declare var PandoraFightCharacter: null | NPCCharacter;
-declare var PandoraRandomNPCList: string[];
-declare namespace PandoraMoveDirectionTimer {
-    let Direction: string;
-    let Timer: number;
-}
-/** @type {null | PandoraBaseRoom} */
-declare var PandoraTargetRoom: null | PandoraBaseRoom;
-declare var PandoraClothes: string;
-declare var PandoraWillpower: number;
-declare var PandoraMaxWillpower: number;
-declare var PandoraMoney: number;
-declare var PandoraTimer: number;
-declare var PandoraChestCount: number;
-declare var PandoraPaint: boolean;
-declare var PandoraReverseMaidDone: number;
-declare var PandoraReverseMaidTotal: number;
-declare var PandoraPenitentiaryCreateTimer: number;
-declare var PandoraPenitentiaryActivityList: string[];
-declare var PandoraPenitentiaryActivityTimer: number;
-declare var PandoraPenitentiarySafewordRooms: any[];
-declare var PandoraPenitentiaryCageList: string[];
-declare var PandoraPenitentiaryStartNewRoom: boolean;

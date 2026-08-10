@@ -1,6 +1,3 @@
-declare function InventoryItemMouthFuturisticPanelGagDrawHook(data: ModularItemData, originalFunction: () => void): void;
-declare function InventoryItemMouthFuturisticPanelGagClickHook(data: ModularItemData, originalFunction: () => void): void;
-declare function InventoryItemMouthFuturisticPanelGagSetOptionHook(data: ModularItemData, originalFunction: ((C: Character, item: Item, newOption: ModularItemOption, previousOption: ModularItemOption, push: boolean, refresh: boolean) => void) | null, C: Character, item: Item, newOption: ModularItemOption, previousOption: ModularItemOption, push: boolean, refresh: boolean): void;
 /**
  * Send message for an automatic gag inflation.
  * @param {Character} C - The selected character
@@ -30,6 +27,11 @@ declare function InventoryItemMouthFuturisticPanelGagTriggerGetOptions(data: Mod
  * @return {void}
  */
 declare function InventoryItemMouthFuturisticPanelGagTrigger(data: ModularItemData, C: Character, Item: Item, Deflate: boolean): void;
+type FuturisticPanelGagPersistentData = {
+    LastMessageLen?: number;
+    UpdateTime?: number;
+    ChangeTime?: number;
+} & AnimationPersistentData;
 /**
  * @typedef {{ LastMessageLen?: number, UpdateTime?: number, ChangeTime?: number } & AnimationPersistentData} FuturisticPanelGagPersistentData
  */
@@ -38,10 +40,3 @@ declare function InventoryItemMouthFuturisticPanelGagTrigger(data: ModularItemDa
  * @param {DynamicScriptCallbackData<FuturisticPanelGagPersistentData>} drawData
  */
 declare function AssetsItemMouthFuturisticPanelGagScriptUpdatePlayer(data: ModularItemData, drawData: DynamicScriptCallbackData<FuturisticPanelGagPersistentData>): void;
-declare function AssetsItemMouthFuturisticPanelGagScriptDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticPanelGagPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticPanelGagPersistentData>): void;
-declare function AssetsItemMouthFuturisticPanelGagBeforeDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicDrawingData<FuturisticPanelGagPersistentData>) => DynamicBeforeDrawOverrides) | null, drawData: DynamicDrawingData<FuturisticPanelGagPersistentData>): DynamicBeforeDrawOverrides;
-type FuturisticPanelGagPersistentData = {
-    LastMessageLen?: number;
-    UpdateTime?: number;
-    ChangeTime?: number;
-} & AnimationPersistentData;

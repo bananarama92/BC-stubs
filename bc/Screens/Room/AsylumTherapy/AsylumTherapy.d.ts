@@ -1,9 +1,13 @@
+declare var AsylumTherapyBackground: string;
+/** @type {NPCCharacter} */
+declare var AsylumTherapyNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumTherapyPatient: NPCCharacter;
 /**
  * Checks if the therapy for the player can start
  * @returns {boolean} - Returns true, if the player is ready for therapy, false otherwise
  */
 declare function AsylumTherapyPatientReadyForTherapy(): boolean;
-declare function AsylumTherapyLoad(): Promise<void>;
 /**
  * Runs the room. This function is called over and over again at short intervals. So better don't use expensive loops or functions from here.
  * @returns {void} - Nothing
@@ -105,8 +109,3 @@ declare function AsylumTherapyTherapyMiniGameEnd(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function AsylumTherapyPatientNew(): void;
-declare var AsylumTherapyBackground: string;
-/** @type {NPCCharacter} */
-declare var AsylumTherapyNurse: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var AsylumTherapyPatient: NPCCharacter;

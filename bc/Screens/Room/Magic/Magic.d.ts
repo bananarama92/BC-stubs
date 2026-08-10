@@ -1,3 +1,22 @@
+declare var MagicBackground: string;
+/** @type {null | NPCCharacter} */
+declare var MagicPerformer: null | NPCCharacter;
+/** @type {null | Item[]} */
+declare var MagicPerformerAppearance: null | Item[];
+/** @type {null | NPCCharacter} */
+declare var MagicAssistant: null | NPCCharacter;
+/** @type {null | Item[]} */
+declare var MagicAssistantAppearance: null | Item[];
+/** @type {null | Item[]} */
+declare var MagicPlayerAppearance: null | Item[];
+/** @type {null | string} */
+declare var MagicTrick: null | string;
+declare var MagicTrickList: string[];
+/** @type {AssetGroupName[]} */
+declare var MagicRestraintList: AssetGroupName[];
+declare var MagicTrickCounter: number;
+declare var MagicShowIncome: number;
+declare var MagicShowState: number;
 /**
  * Checks, if the magic show currently has the given state
  * 1 - No Show
@@ -46,8 +65,6 @@ declare function MagicAssistantIsntDressRestrain(): boolean;
  * @returns {boolean} - - Returns true, if the required number of items is reached or exceeded, false otherwise
  */
 declare function MagicRestrainMinItem(C: Character, MinItem: number): boolean;
-declare function MagicLoad(): Promise<void>;
-declare function MagicRun(time: number): void;
 /**
  * Handles the click events in the magic screen
  * @returns {void} - Nothing
@@ -170,22 +187,3 @@ declare function MagicRestrainRemove(C: Character): void;
  * @returns {void} - Nothing
  */
 declare function MagicRestrainCopyTransfer(FromC: Character, ToC: Character): void;
-declare var MagicBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MagicPerformer: null | NPCCharacter;
-/** @type {null | Item[]} */
-declare var MagicPerformerAppearance: null | Item[];
-/** @type {null | NPCCharacter} */
-declare var MagicAssistant: null | NPCCharacter;
-/** @type {null | Item[]} */
-declare var MagicAssistantAppearance: null | Item[];
-/** @type {null | Item[]} */
-declare var MagicPlayerAppearance: null | Item[];
-/** @type {null | string} */
-declare var MagicTrick: null | string;
-declare var MagicTrickList: string[];
-/** @type {AssetGroupName[]} */
-declare var MagicRestraintList: AssetGroupName[];
-declare var MagicTrickCounter: number;
-declare var MagicShowIncome: number;
-declare var MagicShowState: number;

@@ -1,3 +1,13 @@
+declare var PlayerAuctionBackground: string;
+/** @type {NPCCharacter[]} */
+declare var PlayerAuctionCustomer: NPCCharacter[];
+declare var PlayerAuctionBidCurrent: number;
+declare var PlayerAuctionBidTime: number;
+declare var PlayerAuctionBidNextTime: number;
+declare var PlayerAuctionBidAmount: number;
+declare var PlayerAuctionPlead: number;
+declare var PlayerAuctionSilenceMode: boolean;
+declare var PlayerAuctionEnd: boolean;
 /**
  * Sets when the next bid will occur. It varies from 5 to 15 seconds, the auction gets slower and there are less bids the higher the price is.
  * @returns {void} - Nothing
@@ -9,7 +19,6 @@ declare function PlayerAuctionSetNextBidTime(): void;
  * @returns {void} - Nothing
  */
 declare function PlayerAuctionAddCustomer(Index: number): void;
-declare function PlayerAuctionLoad(): Promise<void>;
 /**
  * Runs the player auction mini game by drawing the characters and related text on screen.
  * @returns {void} - Nothing
@@ -20,13 +29,3 @@ declare function PlayerAuctionRun(): void;
  * @returns {void} - Nothing
  */
 declare function PlayerAuctionClick(): void;
-declare var PlayerAuctionBackground: string;
-/** @type {NPCCharacter[]} */
-declare var PlayerAuctionCustomer: NPCCharacter[];
-declare var PlayerAuctionBidCurrent: number;
-declare var PlayerAuctionBidTime: number;
-declare var PlayerAuctionBidNextTime: number;
-declare var PlayerAuctionBidAmount: number;
-declare var PlayerAuctionPlead: number;
-declare var PlayerAuctionSilenceMode: boolean;
-declare var PlayerAuctionEnd: boolean;

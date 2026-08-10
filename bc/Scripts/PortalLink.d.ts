@@ -1,68 +1,3 @@
-declare function PortalLinkRecieverLoadHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
-declare function PortalLinkRecieverDrawHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
-declare function PortalLinkRecieverClickHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
-declare function PortalLinkRecieverExitHook(data: ExtendedItemData<any>, originalFunction: (() => void) | null): void;
-declare function PortalLinkTransmitterLoadHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
-declare function PortalLinkTransmitterDrawHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
-declare function PortalLinkTransmitterClickHook(data: ExtendedItemData<any>, originalFunction: () => void): void;
-declare function PortalLinkTransmitterExitHook(data: ExtendedItemData<any>, originalFunction: (() => void) | null): void;
-/**
- * Draw the sync code UI depending on the mode.
- * Reciever has Random and Copy to clipboard buttons, transmitter has
- * Copy from clipboard and link status label.
- *
- * @param {boolean} reciever - Whether it's in reciever or transmitter mode
- */
-declare function PortalLinkSyncCodeInputDraw(reciever: boolean): void;
-declare function PortalLinkSyncCodeInputClick(reciever: any): void;
-/**
- * Input listener for changes to the sync code field
- * @param {Character} C - The character wearing the item
- * @param {Item} Item - The item being changed
- * @param {boolean} reciever - Whether the called is a reciever or not
- */
-declare function PortalLinkCodeChanged(C: Character, Item: Item, reciever: boolean): void;
-/**
- * Get the transmitter sync code from a character
- * @param {Character} C
- */
-declare function PortalLinkGetTransmitterCode(C: Character): string | undefined;
-/**
- * Get the list of all items that match a given sync code in the chatroom.
- * @param {string} linkCode
- * @returns {[Character, Item][]}
- */
-declare function PortalLinkGetItemsWithCode(linkCode: string): [Character, Item][];
-/**
- * Checks the transmitter's link status with its reciever.
- * @param {Character} C - The character wearing the transmitter
- * @param {boolean} newLink - Whether it's a new link being setup
- */
-declare function PortalLinkTransmitterCheckLinkStatus(C: Character, newLink?: boolean): void;
-/**
- * Gathers the list of available functions for a given asset.
- * @param {Item} item
- */
-declare function PortalLinkGetFunctions(item: Item): PortalLinkFunction[];
-/**
- * Broadcast an hidden ProcessLink message to the chatroom
- * @param {Character} target
- * @param {Item} item
- * @param {PortalLinkFunction} func
- */
-declare function PortalLinkPublishMessage(target: Character, item: Item, func: PortalLinkFunction): void;
-/**
- *
- * @param {Character} sender
- * @param {Item} item
- */
-declare function PortalLinkCycleChastityModule(sender: Character, item: Item): void;
-/**
- * The handler for processing the hidden PortalLink messages
- * @param {Character} sender
- * @param {ServerChatRoomMessage} data
- */
-declare function PortalLinkProcessMessage(sender: Character, data: ServerChatRoomMessage): void;
 /**
  * This file contains everything needed to add remote-style functions
  * (a.k.a PortalLink compatibility) to an asset, both as a transmitter
@@ -122,13 +57,13 @@ declare function PortalLinkProcessMessage(sender: Character, data: ServerChatRoo
  * If you want to add more functions, those are the main three you should look at.
  */
 /** Max length of sync codes */
-declare const PortalLinkCodeLength: 8;
+declare const PortalLinkCodeLength = 8;
 /** Regex string for what consitutes a valid sync code */
-declare const PortalLinkCodeText: "[0-9a-f]{8}";
+declare const PortalLinkCodeText = "[0-9a-f]{8}";
 /** Same thing but in regex form for quick .test and .match */
 declare const PortalLinkCodeRegex: RegExp;
 /** The DOM ID for the sync code field */
-declare const PortalLinkCodeInputID: "PortalLinkCode";
+declare const PortalLinkCodeInputID = "PortalLinkCode";
 /**
  * Parameters for the button grid
  * @type {CommonGenerateGridParameters}
@@ -146,3 +81,60 @@ declare const PortalLinkCopyCodeButton: RectTuple;
 declare const PortalLinkPasteCodeButton: RectTuple;
 /** @type {Record<PortalLinkStatus, string>} */
 declare const PortalLinkStatusColors: Record<PortalLinkStatus, string>;
+/**
+ * Draw the sync code UI depending on the mode.
+ * Reciever has Random and Copy to clipboard buttons, transmitter has
+ * Copy from clipboard and link status label.
+ *
+ * @param {boolean} reciever - Whether it's in reciever or transmitter mode
+ */
+declare function PortalLinkSyncCodeInputDraw(reciever: boolean): void;
+declare function PortalLinkSyncCodeInputClick(reciever: any): void;
+/**
+ * Input listener for changes to the sync code field
+ * @param {Character} C - The character wearing the item
+ * @param {Item} Item - The item being changed
+ * @param {boolean} reciever - Whether the called is a reciever or not
+ */
+declare function PortalLinkCodeChanged(C: Character, Item: Item, reciever: boolean): void;
+/**
+ * Get the transmitter sync code from a character
+ * @param {Character} C
+ */
+declare function PortalLinkGetTransmitterCode(C: Character): string | undefined;
+/**
+ * Get the list of all items that match a given sync code in the chatroom.
+ * @param {string} linkCode
+ * @returns {[Character, Item][]}
+ */
+declare function PortalLinkGetItemsWithCode(linkCode: string): [Character, Item][];
+/**
+ * Checks the transmitter's link status with its reciever.
+ * @param {Character} C - The character wearing the transmitter
+ * @param {boolean} newLink - Whether it's a new link being setup
+ */
+declare function PortalLinkTransmitterCheckLinkStatus(C: Character, newLink?: boolean): void;
+/**
+ * Gathers the list of available functions for a given asset.
+ * @param {Item} item
+ */
+declare function PortalLinkGetFunctions(item: Item): PortalLinkFunction[];
+/**
+ * Broadcast an hidden ProcessLink message to the chatroom
+ * @param {Character} target
+ * @param {Item} item
+ * @param {PortalLinkFunction} func
+ */
+declare function PortalLinkPublishMessage(target: Character, item: Item, func: PortalLinkFunction): void;
+/**
+ *
+ * @param {Character} sender
+ * @param {Item} item
+ */
+declare function PortalLinkCycleChastityModule(sender: Character, item: Item): void;
+/**
+ * The handler for processing the hidden PortalLink messages
+ * @param {Character} sender
+ * @param {ServerChatRoomMessage} data
+ */
+declare function PortalLinkProcessMessage(sender: Character, data: ServerChatRoomMessage): void;
