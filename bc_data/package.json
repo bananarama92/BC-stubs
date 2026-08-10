@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/bananarama92/BC-stubs/tree/main/bc_data#readme",
   "devDependencies": {
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "@types/node": "^24.10.0",
     "minimist": "^1.2.8",
     "@types/minimist": "^1.2.5"
