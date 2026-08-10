@@ -78,7 +78,7 @@ jobs:
 
       - name: Generate .d.ts
         run: |
-          python ./build.py Bondage-College/BondageClub
+          python ./scripts/build.py Bondage-College/BondageClub
           rm -rf bc
           mv Bondage-College/BondageClub/dist bc
 
@@ -91,7 +91,7 @@ jobs:
 
       - name: Push artifacts
         run: |
-          BC_VERSION=$(python get_bc_version.py Bondage-College/BondageClub/Scripts/Game.js)
+          BC_VERSION=$(python scripts/get_bc_version.py Bondage-College/BondageClub/Scripts/Game.js)
           rm -rf Bondage-College
 
           git config --local user.name "github-actions[bot]"

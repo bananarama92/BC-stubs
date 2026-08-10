@@ -183,7 +183,7 @@ def main(bc_root: str | os.PathLike[str], bc_stubs_root: str | os.PathLike[str])
             f"{pprint.pformat(missing_bc)}",
         )
 
-    missing_bc_stubs = sorted(i for i in [".github"] if not os.path.isdir(bc_stubs_root / i))
+    missing_bc_stubs = sorted(i for i in ["scripts"] if not os.path.isdir(bc_stubs_root / i))
     if missing_bc_stubs:
         raise FileNotFoundError(
             f"Failed to find the following expected BC-Stubs directories in {os.fspath(bc_stubs_root)!r}: "
@@ -199,14 +199,14 @@ def main(bc_root: str | os.PathLike[str], bc_stubs_root: str | os.PathLike[str])
 
     # Copy files
     with Log("Copy pre-existing typescript files") as log:
-        src = bc_stubs_root / ".github"/ "tsconfig.json"
+        src = bc_stubs_root / "scripts"/ "_tsconfig.json"
         target = bc_root / "tsconfig.json"
         log.info(f"Coppying {os.fspath(src)!r} to {os.fspath(target)!r}")
-        shutil.copy2(bc_stubs_root / ".github"/ "tsconfig.json", bc_root / "tsconfig.json")
+        shutil.copy2(src, bc_root / "tsconfig.json")
 
         for (relative_dir, file) in get_d_ts_iter(bc_root):
             src = bc_root / relative_dir / file
-            target_dir = bc_root / "dist" / "NativeDeclarations" / relative_dir / file
+            target_dir = bc_root / "dist" / "NativeDeclarations" / relative_dir
             target = target_dir / file
             log.info(f"Coppying {os.fspath(src)!r} to {os.fspath(target)!r}")
             os.makedirs(target_dir, exist_ok=True)
@@ -240,7 +240,7 @@ if __name__ == "__main__":
     parser.add_argument("bc_root", help="Path to BC")
     parser.add_argument("--bc_stubs_root", default=None, help="Path to BC-Stubs")
     args = parser.parse_args()
-    bc_stubs_fallback = os.path.dirname(os.path.realpath(__file__))
+    bc_stubs_fallback = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     try:
         main(
             args.bc_root,
