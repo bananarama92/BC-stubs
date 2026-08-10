@@ -76,10 +76,10 @@ function updateJSON(jsonPath, assetDefs) {
 		const assets = newAssets.length > 30 ? [...newAssets.slice(0, 30), "..."] : newAssets;
 		const groups = newGroups.length > 30 ? [...newGroups.slice(0, 30), "..."] : newGroups;
 		console.log(
-			`Adding ${newAssets.length} new assets and ${newGroups.length} new groups",
-			"\nassets:`, JSON.stringify(assets, undefined, 4),
-			"\ngroups:", JSON.stringify(groups, undefined, 4),
-			"\n",
+			`Adding ${newAssets.length} new assets and ${newGroups.length} new groups`,
+			`\nassets:`, JSON.stringify(assets, undefined, 4),
+			`\ngroups:`, JSON.stringify(groups, undefined, 4),
+			`\n`,
 		);
 	} else {
 		console.log("No new assets or groups", "\n");
