@@ -1,14 +1,14 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "ES2021",
-		"lib": ["ES2021"],
+		"target": "ES2022",
+		"lib": ["ES2022"],
 		"types": ["node"],
 		"checkJs": true,
 		"strict": true
 	},
 	"include": [
-		"../bc/NativeDeclarations/**.d.ts",
+		"../bc/**/*.d.ts",
 		"scripts/*.js"
 	]
 }
