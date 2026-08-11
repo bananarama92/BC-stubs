@@ -119,24 +119,23 @@ declare function ExtendedItemRequirementCheckMessage<T extends ExtendedItemOptio
  * wearer may select the option)
  * @param {Character} C - The character on whom the bondage is applied
  * @param {ExtendedItemOption} Option - The option whose requirements should be checked against
- * @returns {string | undefined} - undefined if the
+ * @returns {string | null} - undefined if the
  */
-declare function ExtendedItemCheckSelfSelect(C: Character, Option: ExtendedItemOption): string | undefined;
+declare function ExtendedItemCheckSelfSelect(C: Character, Option: ExtendedItemOption): string | null;
 /**
  * Checks whether the player meets an option's self-bondage/bondage skill level requirements
  * @param {Character} C - The character on whom the bondage is applied
  * @param {Item} Item - The item whose options are being checked
  * @param {ExtendedItemOption} Option - The option whose requirements should be checked against
- * @returns {string|undefined} - undefined if the player meets the option's skill level requirements. Otherwise returns
- * a string message informing them of the requirements they do not meet.
+ * @returns {string|null} - Returns a string message informing them of the requirements they do not meet, otherwise null.
  */
-declare function ExtendedItemCheckSkillRequirements(C: Character, Item: Item, Option: ExtendedItemOption): string | undefined;
+declare function ExtendedItemCheckSkillRequirements(C: Character, Item: Item, Option: ExtendedItemOption): string | null;
 /**
  * Checks whether the character meets an option's required bought items
  * @param {ExtendedItemOption} Option - The option being checked
- * @returns {string|undefined} undefined if the requirement is met, otherwise the error message
+ * @returns {string|null} undefined if the requirement is met, otherwise the error message
  */
-declare function ExtendedItemCheckBuyGroups(Option: ExtendedItemOption): string | undefined;
+declare function ExtendedItemCheckBuyGroups(Option: ExtendedItemOption): string | null;
 /**
  * Checks whether a change from the given current option to the newly selected option is valid.
  * @template {ExtendedItemOption} T
@@ -147,9 +146,9 @@ declare function ExtendedItemCheckBuyGroups(Option: ExtendedItemOption): string 
  * @param {T} previousOption - The currently applied option on the item
  * @param {boolean} [permitExisting] - Determines whether the validation should allow the new option and previous option
  * to be identical. Defaults to false.
- * @returns {string} - Returns a non-empty message string if the item failed validation, or an empty string otherwise
+ * @returns {string | null} - Returns a reason if the item failed validation, or null otherwise
  */
-declare function ExtendedItemValidate<T extends ExtendedItemOption>(data: null | ExtendedItemData<T>, C: Character, Item: Item, newOption: T, previousOption: T, permitExisting?: boolean): string;
+declare function ExtendedItemValidate<T extends ExtendedItemOption>(data: null | ExtendedItemData<T>, C: Character, Item: Item, newOption: T, previousOption: T, permitExisting?: boolean): string | null;
 /**
  * Simple getter for the function prefix used for the passed extended item - used for calling standard
  * extended item functions (e.g. if the currently focused it is the hemp rope arm restraint, this will return

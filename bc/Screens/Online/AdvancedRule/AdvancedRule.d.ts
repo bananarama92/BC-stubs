@@ -7,7 +7,7 @@ declare function AdvancedRuleLoad(): Promise<void>;
 declare function AdvancedRuleOpen(RuleType: LogNameAdvanced): void;
 /**
  * Convert an option to its descriptive name
- * @param {AdvancedRuleType} type
+ * @param {LogNameAdvanced} type
  * @param {string} option
  */
 declare function AdvancedRuleTextGet(type: LogNameAdvanced, option: string): string;
