@@ -108,7 +108,7 @@ declare function ElementCreateDropdown(id: string | null, optionsList: readonly 
     name?: string;
 }, htmlOptions?: null | Partial<Record<"select", Omit<HTMLOptions<"select">, "tag">>>): HTMLSelectElement;
 /**
- * Construct a custom searchable dropdown menu.
+ * Construct a custom searchable dropdown menu or, on mobile, a conventional `<select>` element.
  *
  * The element comprises a button trigger displaying the current selection,
  * and a popup containing a search input and a scrollable list of options.
@@ -134,9 +134,9 @@ declare function ElementCreateDropdown(id: string | null, optionsList: readonly 
  * @param {readonly ElementSearchableDropdown.OptionItem[]} optionsList - The available options.
  * @param {(value: string) => void} onChange - Called when the selection changes.
  * @param {ElementSearchableDropdown.CreateOptions | null} [options]
- * @returns {ElementSearchableDropdown.SearchableDropdownElement}
+ * @returns {ElementSearchableDropdown.SearchableDropdownElement | HTMLSelectElement}
  */
-declare function ElementCreateSearchableDropdown(id: string | null, optionsList: readonly ElementSearchableDropdown.OptionItem[], onChange: (value: string) => void, options?: ElementSearchableDropdown.CreateOptions | null): ElementSearchableDropdown.SearchableDropdownElement;
+declare function ElementCreateSearchableDropdown(id: string | null, optionsList: readonly ElementSearchableDropdown.OptionItem[], onChange: (value: string) => void, options?: ElementSearchableDropdown.CreateOptions | null): ElementSearchableDropdown.SearchableDropdownElement | HTMLSelectElement;
 /**
  * Creates a new div element in the main document. Does not create a new element if there is already an existing one with the same ID
  * @param {string | null} ID - The id of the div tag to create.

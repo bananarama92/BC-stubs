@@ -1,4 +1,8 @@
-declare function GameStart(): Promise<void>;
+/**
+ * Start BC after the webpage has fully loaded
+ * @param {boolean} isNode Whether BC is run through the browser or via Node (_i.e._ the testing suite)
+ */
+declare function GameStart(isNode?: boolean): Promise<void>;
 declare function GameHandleError(): void;
 /**
  * Periodically called in the background with low frequency, so the game doesn't freeze, even if the user switches to a different tab.

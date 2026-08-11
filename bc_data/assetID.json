@@ -234,7 +234,23 @@
             "MaidApron": 110,
             "MilitaryFatigue": 111,
             "Transparentraincoat": 112,
-            "Plugsuit": 113
+            "Plugsuit": 113,
+            "BunnySuit": 114,
+            "CorsetBikini1": 115,
+            "CuteBikini1": 116,
+            "DominatrixLeotard": 117,
+            "FishnetBikini1": 118,
+            "LatexBunnySuit": 119,
+            "LeatherVestSuit": 120,
+            "OuvertPerl1": 121,
+            "SexyBikini1": 122,
+            "SexyBikini3": 123,
+            "ShinyLeotard": 124,
+            "SleevelessSlimLatexLeotard": 125,
+            "SportSwimsuit": 126,
+            "Swimsuit1": 127,
+            "Swimsuit2": 128,
+            "Swimsuit3": 129
         }
     },
     "ClothAccessory": {
@@ -2721,7 +2737,21 @@
             "TransparentBunnyGirl": 17,
             "FeatherLingerie": 18,
             "DiaperSuit": 19,
-            "LatexBodysuit": 20
+            "LatexBodysuit": 20,
+            "BunnySuit": 21,
+            "CorsetBikini1": 22,
+            "CuteBikini1": 23,
+            "DominatrixLeotard": 24,
+            "FishnetBikini1": 25,
+            "LatexBunnySuit": 26,
+            "LeatherVestSuit": 27,
+            "OuvertPerl1": 28,
+            "SexyBikini1": 29,
+            "SexyBikini3": 30,
+            "SportSwimsuit": 31,
+            "Swimsuit1": 32,
+            "Swimsuit2": 33,
+            "Swimsuit3": 34
         }
     },
     "SuitLower": {

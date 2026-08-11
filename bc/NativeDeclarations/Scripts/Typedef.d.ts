@@ -2721,7 +2721,7 @@ interface ExtendedItemDialog<
 	OptionType extends ExtendedItemOption,
 > {
 	/** The dialogue prefix for the player prompt that is displayed on each module's menu screen */
-	header: string | ExtendedItemHeaderCallback<DataType>;
+	header?: string | ExtendedItemHeaderCallback<DataType>;
 	/** The dialogue prefix for the name of each module */
 	module?: string;
 	/** The dialogue prefix for the name of each option */
@@ -2867,7 +2867,7 @@ declare namespace ExtendedItemCallbacks {
 	 */
 	type Validate<
 		OptionType extends ExtendedItemOption = ExtendedItemOption
-	> = ExtendedItemCallback<[C: Character, item: Item, newOption: OptionType, previousOption: OptionType, permitExisting?: boolean], string>;
+	> = ExtendedItemCallback<[C: Character, item: Item, newOption: OptionType, previousOption: OptionType, permitExisting?: boolean], string | null>;
 	/**
 	 * Callback for extended item `PublishAction` functions.
 	 * `PublishAction` functions are responsible for reporting any changes to an item's properties via a chat message.
@@ -2985,7 +2985,7 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	type Validate<
 		DataType extends ExtendedItemData<any>,
 		OptionType extends ExtendedItemOption
-	> = ExtendedItemScriptHookCallback<DataType, [C: Character, item: Item, newOption: OptionType, previousOption: OptionType, permitExisting?: boolean], string>;
+	> = ExtendedItemScriptHookCallback<DataType, [C: Character, item: Item, newOption: OptionType, previousOption: OptionType, permitExisting?: boolean], string | undefined>;
 	/**
 	 * Callback for extended item `PublishAction` script hooks.
 	 * `PublishAction` functions are responsible for reporting any changes to an item's properties via a chat message.
@@ -3324,6 +3324,17 @@ interface ItemPropertiesBase {
 	/** KD modules */
 	// FIXME: Note that, as far as I can see, it's only ever set, never read
 	Modules?: number[];
+
+	/** Transformation properties */
+	TranslationX?: number;
+	TranslationY?: number;
+
+	/** Scale is currently limited from 0.01 to 3.00 (3 times the size) */
+	ScaleX?: number;
+	ScaleY?: number;
+
+	/** Rotation is in degrees from -180 to 180 */
+	Rotation?: number;
 }
 
 /**
@@ -3532,7 +3543,17 @@ interface ItemPropertiesCustom {
 	// #endregion
 }
 
-interface ItemProperties extends ItemPropertiesBase, AssetDefinitionProperties, ItemPropertiesCustom { }
+interface ItemProperties extends ItemPropertiesBase, AssetDefinitionProperties, ItemPropertiesCustom {
+	LayerTranslationX?: Record<string, number | undefined>;
+	/** Translation Y */
+	LayerTranslationY?: Record<string, number | undefined>;
+	/** Scale X */
+	LayerScaleX?: Record<string, number | undefined>;
+	/** Scale Y */
+	LayerScaleY?: Record<string, number | undefined>;
+	/** Rotation */
+	LayerRotation?: Record<string, number | undefined>;
+}
 
 /** Base type for unparsed extended item properties */
 interface ItemPropertiesConfig extends Omit<ItemProperties, "DrawingTop" | "DrawingLeft"> {
@@ -3900,7 +3921,7 @@ interface NoArchItemData extends ExtendedItemData<NoArchItemOption> {
 	drawData: ExtendedItemDrawData<ElementMetaData.NoArch>;
 	dialogPrefix: {
 		/** The dialog key for the item's load text (usually a prompt to select the type) */
-		header: string | ExtendedItemHeaderCallback<NoArchItemData>;
+		header?: string | ExtendedItemHeaderCallback<NoArchItemData>;
 		/** The prefix used for dialog keys representing the display names of the item's types */
 		option?: string;
 		/** The prefix used for dialog keys representing the item's chatroom messages when its type is changed */
@@ -4135,6 +4156,16 @@ type DrawOptions = {
 	Mirror?: boolean;
 	/** Zoom factor */
 	Zoom?: number;
+	/** Translation X */
+	TranslationX?: number;
+	/** Translation Y */
+	TranslationY?: number;
+	/** Scale X */
+	ScaleX?: number;
+	/** Scale Y */
+	ScaleY?: number;
+	/** Rotation */
+	Rotation?: number;
 	/* Color of the image to draw */
 	HexColor?: HexColor;
 	/* Whether or not it is drawn in full alpha mode */
