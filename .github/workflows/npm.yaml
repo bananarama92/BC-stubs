@@ -23,7 +23,7 @@ jobs:
         run: |
           case "${{ github.event_name }}" in
             "workflow_dispatch")
-              echo "DRY=${{ inputs.repo }}" >> $GITHUB_ENV
+              echo "DRY=${{ inputs.dry }}" >> $GITHUB_ENV
               ;;
             *)
               echo "DRY=false" >> $GITHUB_ENV
