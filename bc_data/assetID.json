@@ -303,7 +303,9 @@
             "BowAccessory": 44,
             "DollHandle": 45,
             "Epaulet": 46,
-            "SchoolBag": 47
+            "SchoolBag": 47,
+            "ChainBelt": 48,
+            "ForeheadJewelry": 49
         }
     },
     "ClothLower": {
@@ -522,7 +524,8 @@
             "LaceLegRing": 11,
             "LaceLegStrap": 12,
             "SocksBow": 13,
-            "XLegStraps": 14
+            "XLegStraps": 14,
+            "ChainBelt": 15
         }
     },
     "Glasses": {
@@ -637,7 +640,8 @@
             "WingedHeadpiece": 55,
             "BlackCatEarsMirror": 56,
             "DaggerRibbon": 57,
-            "TongqianHairpin": 58
+            "TongqianHairpin": 58,
+            "ForeheadJewelry": 59
         }
     },
     "HairAccessory2": {
@@ -685,7 +689,8 @@
             "CustomizableElfEars": 39,
             "CustomizableFluffyEars1": 40,
             "CustomizableFluffyEars2": 41,
-            "CustomizableFluffyEars3": 42
+            "CustomizableFluffyEars3": 42,
+            "ForeheadJewelry": 43
         }
     },
     "HairAccessory3": {
@@ -701,7 +706,8 @@
             "Ribbons2": 7,
             "Ribbons3": 8,
             "Ribbons4": 9,
-            "WeddingVeil1": 10
+            "WeddingVeil1": 10,
+            "ForeheadJewelry": 11
         }
     },
     "HairBack": {

@@ -278,10 +278,10 @@ declare function DialogHasKey(C: Character, item: Item): boolean;
 /**
  * Checks whether the player is able to unlock the provided item on the provided character
  * @param {Character} C - The character on whom the item is equipped
- * @param {Item} Item - The item that should be unlocked
+ * @param {Item} item - The item that should be unlocked
  * @returns {boolean} - Returns true, if the player can unlock the given item, false otherwise
  */
-declare function DialogCanUnlock(C: Character, Item: Item): boolean;
+declare function DialogCanUnlock(C: Character, item: Item): boolean;
 /**
  * Checks whether we can lockpick a lock.
  * @param {Character} C

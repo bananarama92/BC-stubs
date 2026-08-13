@@ -63,7 +63,7 @@ jobs:
 
       - name: Clone BC
         run: |
-          git clone $REPO_NAME --depth=1 --branch=$REPO_BRANCH
+          python ./scripts/clone.py $REPO_NAME $REPO_BRANCH
           cd Bondage-College
           echo "BC_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 

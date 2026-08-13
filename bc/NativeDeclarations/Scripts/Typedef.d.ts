@@ -4823,6 +4823,7 @@ interface LogNameType {
 		| "ReleasedCollar"
 		| LogNameAdvanced
 		| "ForbiddenWords"
+		| "ForbiddenWordsMute"
 	),
 	PrivateRoom: (
 		"RentRoom"

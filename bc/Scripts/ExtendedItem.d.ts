@@ -388,6 +388,13 @@ declare function ExtendedItemGetDrawingOptions(item: Item): ExtendedItemOptionCo
  */
 declare var ExtendedItemOffsets: Record<string, number>;
 /**
+ * A set of properties to-be ignored by the `Init()` validation.
+ * This more relaxed validation is required as these properties can be fully configured by the user in one way or another
+ * and are thus not guaranteed to be linked to specific `TypeRecord` values
+ * @type {ReadonlySet<keyof ItemProperties>}
+ */
+declare const ExtendedItemInitPropertyIgnore: ReadonlySet<keyof ItemProperties>;
+/**
  * The X & Y co-ordinates of each option's button, based on the number to be displayed per page.
  * @type {[number, number][][]}
  */
