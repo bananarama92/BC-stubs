@@ -30,7 +30,7 @@ declare function ItemModuleVoiceCommandHandle(C: Character, item: Item, LastTime
  * @param {AssetGroupItemName[]} tamperZones
  */
 declare function ItemModulePunishCheck(C: Character, item: Item, shockCooldown: number, tamperZones: AssetGroupItemName[]): "Struggle" | "Orgasm" | "StandUp" | "StruggleOther" | null;
-declare namespace Item {
+declare namespace AppearanceItem {
     /**
      * Construct an item from the passed asset
      * @param {Asset} asset The asset in question

@@ -1,4 +1,5 @@
 declare namespace Layering {
+    let PropertyNames: ReadonlySet<keyof ItemProperties>;
     let Character: null | Character;
     let activeTab: string;
     let Display: null | LayeringDisplay;
@@ -18,7 +19,7 @@ declare namespace Layering {
     function UpdateProperty(item: Item, propName: string, value: any, layerName?: string): void;
     /**
      * Return whether the layering sub screen has currently been initialized (be it either active or unloaded)
-     * @returns {this is typeof this & Pick<Required<typeof this>, "Character" | "Display" | "Item">}
+     * @returns {this is Pick<Required<typeof Layering>, "Character" | "Display" | "Item">}
      */
     function IsActive(): this is Pick<Required<typeof Layering>, "Character" | "Display" | "Item">;
     let DisplayDefault: Readonly<LayeringDisplay>;
