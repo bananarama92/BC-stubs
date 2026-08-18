@@ -301,6 +301,7 @@
         "StudentOutfit3Bow2": "R98",
         "StudentOutfit3Bow3": "R98",
         "StudentOutfit3Scarf": "R98",
+        "TriskelionNecklace": "R131",
         "VampiricCloak": "R121",
         "WitchShawl": "R121",
         "WombTattoos": "R101",
@@ -691,7 +692,6 @@
         "Ears2": "R98",
         "ElfEars": "R98",
         "FloppyBunnyEars": "R117",
-        "ForeheadJewelry": "R131",
         "FoxEars1": "R98",
         "FoxEars2": "R98",
         "FoxEars3": "R98",
@@ -2349,7 +2349,8 @@
         "PlantNecklace": "R121",
         "RosePendant": "R118",
         "RuffledCollar": "R120",
-        "SatinScarf": "R112"
+        "SatinScarf": "R112",
+        "TriskelionNecklace": "R131"
     },
     "Nipples": {
         "Nipples1": "R98",

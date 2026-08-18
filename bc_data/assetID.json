@@ -305,7 +305,8 @@
             "Epaulet": 46,
             "SchoolBag": 47,
             "ChainBelt": 48,
-            "ForeheadJewelry": 49
+            "ForeheadJewelry": 49,
+            "TriskelionNecklace": 50
         }
     },
     "ClothLower": {
@@ -2457,7 +2458,8 @@
             "EldritchNecklace": 24,
             "PlantNecklace": 25,
             "NecklaceRoseBallGag": 26,
-            "PearlNecklace2": 27
+            "PearlNecklace2": 27,
+            "TriskelionNecklace": 28
         }
     },
     "Nipples": {
