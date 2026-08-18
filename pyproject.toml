@@ -1,0 +1,51 @@
+[build-system]
+requires = [
+    "setuptools",
+    "setuptools_scm[toml]",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bc_tools"
+dynamic = [
+    "version",
+    "readme",
+]
+description = "Helper tools for bc-stubs."
+license = "MIT"
+authors = [
+    { name = "bananarama92", email = "bananarama921@outlook.com" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+requires-python = ">=3.12"
+
+[project.urls]
+Homepage = "https://github.com/bananarama92/BC-stubs"
+
+[project.scripts]
+"bc_tools.build" = "bc_tools.entry_points:build"
+"bc_tools.clone" = "bc_tools.entry_points:clone"
+"bc_tools.get_bc_version" = "bc_tools.entry_points:get_bc_version"
+
+[tool.setuptools.packages.find]
+include = ["bc_tools", "bc_tools.data"]
+
+[tool.setuptools.package-data]
+bc_tools = ["py.typed", "data/*.json"]
+
+[tool.setuptools.dynamic]
+readme = { file = ["README.md"], content-type = "text/markdown" }
+
+[tool.setuptools_scm]
+write_to = "bc_tools/_version.py"

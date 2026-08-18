@@ -222,6 +222,17 @@ declare namespace ElementButton {
 		/** The {@link HTMLButtonElement.ariaHasPopup} of the button */
 		ariaHasPopup?: boolean | "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
 	}
+
+	interface AssetOptions extends Options {
+		/**
+		 * Whether the crafted item is currently worn.
+		 *
+		 * Used for determining whether the presence of a lock will be inferred from `Item.Property` ("worn") or `Item.Craft` ("not worn").
+		 * @default true
+		 * @deprecated To-be removed for R132
+		 */
+		_craftIsWorn?: boolean;
+	}
 }
 
 declare namespace ElementCheckbox {
@@ -3521,10 +3532,16 @@ interface ItemPropertiesCustom {
 	/** PortalLink: Used to link a remote to its target asset. */
 	PortalLinkCode?: string;
 
-	/** Override the top-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually. */
+	/**
+	 * Override the top-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually.
+	 * @deprecated Superseded by {@link ItemProperties.TranslationY} and {@link ItemProperties.LayerTranslationY}
+	 */
 	DrawingTop?: TopLeft.ItemData;
 
-	/** Override the left-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually. */
+	/**
+	 * Override the left-position of a layer. A value of {@link AssetOverride} will be override the _relative_ position of each and every layer individually.
+	 * @deprecated Superseded by {@link ItemProperties.TranslationX} and {@link ItemProperties.LayerTranslationX}
+	 */
 	DrawingLeft?: TopLeft.ItemData;
 
 	// #region Techno Chastity Cage settings */

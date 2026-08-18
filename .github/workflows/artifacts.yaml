@@ -61,9 +61,16 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Set up bc-tools
+        run: |
+          python --version
+          pip --version
+          pip install . --verbose
+          pip list
+
       - name: Clone BC
         run: |
-          python ./scripts/clone.py $REPO_NAME $REPO_BRANCH
+          bc_tools.clone $REPO_NAME $REPO_BRANCH
           cd Bondage-College
           echo "BC_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
@@ -78,7 +85,7 @@ jobs:
 
       - name: Generate .d.ts
         run: |
-          python ./scripts/build.py Bondage-College/BondageClub
+          bc_tools.build Bondage-College/BondageClub
           rm -rf bc
           mv Bondage-College/BondageClub/dist bc
 
@@ -91,7 +98,7 @@ jobs:
 
       - name: Push artifacts
         run: |
-          BC_VERSION=$(python scripts/get_bc_version.py Bondage-College/BondageClub/Scripts/Game.js)
+          BC_VERSION=$(bc_tools.get_bc_version Bondage-College/BondageClub/Scripts/Game.js)
           rm -rf Bondage-College
 
           git config --local user.name "github-actions[bot]"
