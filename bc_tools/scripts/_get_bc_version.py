@@ -3,7 +3,7 @@
 import re
 import argparse
 
-from bc_tools import entry_point, append_docstring
+from ..utils import entry_point, append_docstring
 
 __all__ = ["main"]
 
@@ -24,7 +24,7 @@ def get_bc_version(filename: str) -> str:
 @entry_point
 @append_docstring(__doc__)
 def main():
-    parser = argparse.ArgumentParser(usage="python ./get_bc_version.py Scripts/Game.js", description=__doc__)
+    parser = argparse.ArgumentParser(usage="bc_tools.get_bc_version Scripts/Game.js", description=__doc__)
     parser.add_argument("path", help="Path to the BC index.html file")
     args = parser.parse_args();
     print(get_bc_version(args.path))

@@ -12,7 +12,8 @@ import logging
 
 from collections.abc import Generator
 
-from bc_tools import logger, entry_point, append_docstring
+from .. import data as paths
+from ..utils import logger, entry_point, append_docstring
 
 __all__ = ["main"]
 
@@ -99,9 +100,9 @@ def _get_d_ts_iter(root: pathlib.Path) -> Generator[tuple[pathlib.Path, str], No
 
 
 @logger.log_group("Copy pre-existing typescript files")
-def copy_ts_declarations(bc_root: pathlib.Path, bc_stubs_root: pathlib.Path):
+def copy_ts_declarations(bc_root: pathlib.Path):
     """Copy `tsconfig.json` and all pre-existing BC `*.d.ts` files."""
-    src = bc_stubs_root / "data"/ "_tsconfig.json"
+    src = paths.tsconfig
     target = bc_root / "tsconfig.json"
     logger.info(f"Coppying {os.fspath(src)!r} to {os.fspath(target)!r}")
     shutil.copy2(src, bc_root / "tsconfig.json")
@@ -122,7 +123,7 @@ def _ts_log_callback(log: logging.Logger, exc: BaseException) -> None:
         msg = next((f": {i.strip()}" for i in exc.output.split("\n") if re.search(pattern, i) is not None), "")
         logger.info(exc.output)
         logger.warning(
-            "::warning::Error encountered while running Typescript with "
+            "Error encountered while running Typescript with "
             f"exit status {str(exc.returncode)!r}{msg}",
         )
 
@@ -132,25 +133,28 @@ def _ts_log_callback(log: logging.Logger, exc: BaseException) -> None:
     suppress_error=subprocess.CalledProcessError,
     error_callback=_ts_log_callback,
 )
-def generate_ts_declarations(bc_root: pathlib.Path, bc_stubs_root: pathlib.Path):
+def generate_ts_declarations(bc_root: pathlib.Path, ts_root: pathlib.Path):
     """Generate all BC Typescript declaration files."""
-    ts_path = os.fspath(bc_stubs_root.parent / "node_modules" / "typescript")
     output = subprocess.check_output(
-        f"npx -p {ts_path} tsc", shell=True, cwd=bc_root, stderr=subprocess.STDOUT, encoding="utf8"
+        f"npx -p {os.path.abspath(ts_root)} tsc",
+        shell=True,
+        cwd=os.path.abspath(bc_root),
+        stderr=subprocess.STDOUT,
+        encoding="utf8",
     )
     logger.info(output)
     logger.info("::notice::No errors encountered while running Typescript")
 
 
-def build(bc_root: str | os.PathLike[str], bc_stubs_root: str | os.PathLike[str]) -> None:
+def build(bc_root: str | os.PathLike[str], ts_root: str | os.PathLike[str]) -> None:
     """Main function."""
     bc_root = pathlib.Path(bc_root)
-    bc_stubs_root = pathlib.Path(bc_stubs_root)
+    ts_root = pathlib.Path(ts_root)
 
     # Prepare dist
     with logger.log_group(f"Preparing directories"):
         logger.info(f"BC root directory: {os.path.abspath(bc_root)!r}")
-        logger.info(f"BC-Stubs root directory: {os.path.abspath(bc_stubs_root)!r}")
+        logger.info(f"Typescript root directory: {os.path.abspath(ts_root)!r}")
 
         bc_directories = DIRECTORY_INCLUDE
         missing_bc = sorted(i for i in bc_directories if not os.path.isdir(bc_root / i))
@@ -160,12 +164,9 @@ def build(bc_root: str | os.PathLike[str], bc_stubs_root: str | os.PathLike[str]
                 f"{pprint.pformat(missing_bc)}",
             )
 
-        bc_stubs_directories = {"data"}
-        missing_bc_stubs = sorted(i for i in bc_stubs_directories if not os.path.isdir(bc_stubs_root / i))
-        if missing_bc_stubs:
+        if not os.path.isdir(ts_root):
             raise FileNotFoundError(
-                f"Failed to find the following expected BC-Stubs directories in {os.fspath(bc_stubs_root)!r}: "
-                f"{pprint.pformat(missing_bc_stubs)}",
+                f"Failed to find the TypeScript root directory in {os.fspath(bc_root)!r}",
             )
 
         if os.path.exists(bc_root / "dist"):
@@ -174,28 +175,24 @@ def build(bc_root: str | os.PathLike[str], bc_stubs_root: str | os.PathLike[str]
         os.makedirs(bc_root / "dist" / "NativeDeclarations")
 
     # Copy files
-    copy_ts_declarations(bc_root, bc_stubs_root)
+    copy_ts_declarations(bc_root)
 
     # TS-related fixups
     remove_private_protected(bc_root)
     namespace_function_sanitize(bc_root)
 
     # Run TS
-    generate_ts_declarations(bc_root, bc_stubs_root)
+    generate_ts_declarations(bc_root, ts_root)
 
 
 @entry_point
 @append_docstring(__doc__)
 def main():
-    parser = argparse.ArgumentParser(usage="python ./build.py BondageClub", description=__doc__)
+    parser = argparse.ArgumentParser(usage="bc_tools.build /BondageClub /node_modules/typescript", description=__doc__)
     parser.add_argument("bc_root", help="Path to BC")
-    parser.add_argument("--bc_stubs_root", default=None, help="Path to BC-Stubs")
-    bc_stubs_fallback = pathlib.Path(os.path.realpath(__file__)).parent.parent
-    args = parser.parse_args();
-    build(
-        args.bc_root,
-        args.bc_stubs_root if args.bc_stubs_root is not None else bc_stubs_fallback,
-    )
+    parser.add_argument("typescript_root", help="Path to typescript (e.g. 'node_modules/typescript')")
+    args = parser.parse_args()
+    build(args.bc_root, args.typescript_root)
 
 
 if __name__ == "__main__":
