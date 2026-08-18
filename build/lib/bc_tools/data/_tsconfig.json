@@ -1,0 +1,18 @@
+{
+  "include": ["Assets", "Audio", "Backgrounds", "Icons", "Screens", "Scripts"],
+  "exclude": [
+    "Screens/MiniGame/KinkyDungeon",
+    "Scripts/MessagesPatch.d.ts",
+    "Scripts/DeclarationsExpensive.d.ts"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "newLine": "lf",
+    "outDir": "dist",
+    "pretty": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+  }
+}

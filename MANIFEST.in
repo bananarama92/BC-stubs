@@ -1,0 +1,5 @@
+exclude .*
+exclude .github/**
+exclude bc/**
+exclude bc_data/**
+exclude package.json
