@@ -7,3 +7,4 @@ _version.py
 *.egg-info/
 *.whl
 build/
+.vscode
