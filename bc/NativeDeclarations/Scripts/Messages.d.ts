@@ -9,13 +9,7 @@ type ChatRoomMapPos = {
 
 type ChatRoomMapData = {
 	Pos: ChatRoomMapPos
-	PrivateState: {
-		HasKeyBronze?: boolean;
-		HasKeySilver?: boolean;
-		HasKeyGold?: boolean;
-
-		[key: string]: any;
-	}
+	PrivateState: Record<string, any>
 }
 
 interface ServerAccountImmutableData {
@@ -70,7 +64,7 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	Nickname?: string;
 	Crafting?: string;
 	/** String-based values have been deprecated as of BondageProjects/Bondage-College#2138 */
-	Inventory?: string | Partial<Record<AssetGroupName, string[]>>;
+	Inventory?: string | Partial<Record<AssetGroupName, AssetName[]>>;
 	InventoryData?: string;
 	/** Initialized by {@link CharacterCreate} */
 	AssetFamily: "Female3DCG";
@@ -78,11 +72,11 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	SavedColors?: HSVColor[];
 	/** @deprecated */
 	ChatSearchFilterTerms?: string;
-	Difficulty?: { Level: DifficultyLevel; LastChange: number };
+	Difficulty?: { Level: DifficultyLevel; LastChange?: number };
 	MapData?: ChatRoomMapData;
 	PrivateCharacter?: ServerPrivateCharacterData[];
 	SavedExpressions?: ({ Group: ExpressionGroupName, CurrentExpression?: ExpressionName }[] | null)[];
-	ConfiscatedItems?: { Group: AssetGroupName, Name: string }[];
+	ConfiscatedItems?: { Group: AssetGroupName, Name: AssetName }[];
 	RoomCreateLanguage?: ServerChatRoomLanguage;
 	/** @deprecated */
 	RoomSearchLanguage?: "" | ServerChatRoomLanguage;
@@ -102,6 +96,7 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	SubmissivesList?: string;
 	KinkyDungeonExploredLore?: unknown[];
 	KeybindingSettings?: string;
+	RecentlyUsedMapElements?: ChatRoomMapDoodad[];
 }
 
 // TODO: Add `Lover` after figuring out why {@link ServerPlayerSync} still passes this field to the server
@@ -128,7 +123,7 @@ type ServerAccountDataDeprecations = (
 type ServerAccountDataNoDeprecated = ServerAccountData & { [k in ServerAccountDataDeprecations]?: never } & {
 	// Fields with one or more deprecated union members removed
 	LastChatRoom?: null | ServerChatRoomSettings;
-	Inventory?: Partial<Record<AssetGroupName, string[]>>;
+	Inventory?: Partial<Record<AssetGroupName, AssetName[]>>;
 };
 
 /**
@@ -137,7 +132,7 @@ type ServerAccountDataNoDeprecated = ServerAccountData & { [k in ServerAccountDa
  */
 interface ServerItemPermissions {
 	/** The {@link Asset.Name} of the item */
-	Name: string;
+	Name: AssetName;
 	/** The {@link AssetGroup.Name} of the item */
 	Group: AssetGroupName;
 	/**
@@ -148,7 +143,7 @@ interface ServerItemPermissions {
 }
 
 /** A packed record-based version of {@link ServerItemPermissions}. */
-type ServerItemPermissionsPacked = Partial<Record<AssetGroupName, Record<string, (undefined | null | string)[]>>>;
+type ServerItemPermissionsPacked = Partial<Record<AssetGroupName, Record<AssetName, (undefined | null | string)[]>>>;
 
 interface ServerMapDataResponse {
 	MemberNumber: number;
@@ -180,11 +175,11 @@ interface ServerLovership {
 /** An ItemBundle is a minified version of the normal Item */
 interface ServerItemBundle {
 	Group: AssetGroupName;
-	Name: string;
+	Name: AssetName;
 	Difficulty?: number;
 	Color?: ItemColor;
-	Property?: ItemProperties;
-	Craft?: CraftingItem;
+	Property?: ItemPropertiesMinimized;
+	Craft?: CraftingPartialItem;
 }
 
 interface ServerPrivateCharacterData {
@@ -214,7 +209,7 @@ type ServerChatRoomBlockCategory =
 	/** Those are known as AssetCategory to the client */
 	"Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" | "Smoking" |
 	/** Those are room features */
-	"Leashing" | "Photos" | "Arousal";
+	"Leashing" | "Photos" | "Arousal" | "BlockLocationSharing";
 
 
 
@@ -699,7 +694,7 @@ interface GroupReferenceDictionaryEntry extends TaggedDictionaryEntry {
  */
 interface AssetReferenceDictionaryEntry extends GroupReferenceDictionaryEntry {
 	/** The name of the asset being referenced */
-	AssetName: string;
+	AssetName: AssetName;
 	/** The (optional) {@link CraftingItem.Name} in case the asset was referenced via a crafted item */
 	CraftName?: string;
 }
@@ -942,7 +937,7 @@ interface ServerGameLARPDataAction {
 	GameProgress: "Action";
 	Action: GameLARPActionName;
 	Target: number;
-	Item: string;
+	Item: AssetName;
 }
 
 interface ServerGameLARPDataQuery {
@@ -1074,29 +1069,29 @@ interface ServerChatRoomReorderResponse {
 
 interface ServerCharacterUpdate {
 	ID: string;
-	ActivePose: readonly string[];
+	ActivePose: readonly AssetPoseName[];
 	Appearance: ServerAppearanceBundle;
 }
 
 interface ServerCharacterExpressionUpdate {
-	Name: string;
-	Group: string;
+	Name: ExpressionName;
+	Group: ExpressionGroupName;
 	Appearance: ServerAppearanceBundle;
 }
 
 interface ServerCharacterExpressionResponse {
     MemberNumber: number;
-    Name: string;
-    Group: string
+    Name: ExpressionName;
+    Group: ExpressionGroupName;
 }
 
 interface ServerCharacterPoseUpdate {
-	Pose: string | readonly string[] | null;
+	Pose: AssetPoseName | readonly AssetPoseName[] | null;
 }
 
 interface ServerCharacterPoseResponse {
     MemberNumber: number;
-    Pose: readonly string[];
+    Pose: readonly AssetPoseName[];
 }
 
 interface ServerCharacterArousalUpdate {
@@ -1114,14 +1109,9 @@ interface ServerCharacterArousalResponse {
     ProgressTimer: number;
 }
 
-interface ServerCharacterItemUpdate {
+interface ServerCharacterItemUpdate extends Omit<ServerItemBundle, "Name"> {
 	Target: number;
-	Group: AssetGroupName;
-	Name: string | undefined;
-	Color: ItemColor;
-	Difficulty: number;
-	Property?: ItemProperties;
-	Craft?: CraftingItem;
+	Name: AssetName | string;
 }
 
 interface ServerChatRoomSyncItemResponse {

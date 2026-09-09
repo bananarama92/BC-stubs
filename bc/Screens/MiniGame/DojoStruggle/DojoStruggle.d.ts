@@ -1,4 +1,5 @@
 declare function DojoStruggleLoad(): Promise<void>;
+declare function DojoStruggleReset(): void;
 /**
  * Runs the dojo struggle mini game and draws the relevant information on screen
  * @returns {void} - Nothing

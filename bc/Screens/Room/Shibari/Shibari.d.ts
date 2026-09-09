@@ -128,16 +128,17 @@ declare function ShibariPayForTraining(SkillType: SkillType): void;
 declare function ShibariClubCardStart(): void;
 /**
  * When the player ends a club card game against the shibari student
+ * @returns {SafePromise<void>}
  */
-declare function ShibariClubCardEnd(): Promise<void>;
+declare function ShibariClubCardEnd(): SafePromise<void>;
 declare var ShibariBackground: string;
-/** @type {null | NPCCharacter} */
-declare var ShibariTeacher: null | NPCCharacter;
-/** @type {null | Item[]} */
-declare var ShibariTeacherAppearance: null | Item[];
+/** @type {NPCCharacter} */
+declare var ShibariTeacher: NPCCharacter;
+/** @type {Item[]} */
+declare var ShibariTeacherAppearance: Item[];
 declare var ShibariAllowTeacherItem: boolean;
-/** @type {null | NPCCharacter} */
-declare var ShibariStudent: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var ShibariStudent: NPCCharacter;
 /** @type {null | Item[]} */
 declare var ShibariPlayerAppearance: null | Item[];
 declare var ShibariSubCommentDone: boolean;

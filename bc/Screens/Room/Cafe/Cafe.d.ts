@@ -118,18 +118,17 @@ declare function CafeTurnDildoUp(): void;
 declare function CafeClubCardStart(): void;
 /**
  * When the player ends a club card game
+ * @returns {SafePromise<void>}
  */
-declare function CafeClubCardEnd(): Promise<void>;
+declare function CafeClubCardEnd(): SafePromise<void>;
 /**
  * Sends the bound player back to the main hall
  * @returns {void} - Nothing
  */
 declare function CafeClubCardMainHall(): void;
 declare var CafeBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CafeMaid: null | NPCCharacter;
-declare var CafeIsMaid: boolean;
-declare var CafeIsHeadMaid: boolean;
+/** @type {NPCCharacter} */
+declare var CafeMaid: NPCCharacter;
 declare var CafeVibeIncreased: boolean;
 declare var CafeEnergyDrinkPrice: number;
 declare var CafeGlassMilkPrice: number;

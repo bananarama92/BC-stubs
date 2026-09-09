@@ -134,16 +134,19 @@ declare function PrisonBecomeBadGirl(): void;
 declare function PrisonLeaveBadGirl(): void;
 /**
  * Wear NPC as Police
+ * @param {Character} C
  */
-declare function PrisonWearPoliceEquipment(C: any): void;
+declare function PrisonWearPoliceEquipment(C: Character): void;
 /**
  * Determine how strongly the player is wanted for MainHall
  */
-declare function PrisonWantedPlayer(): 1 | 3 | 5 | 7 | undefined;
+declare function PrisonWantedPlayer(): 0 | 1 | 3 | 5 | 7;
 /**
  * Catch by Police in MainHall
+ * @param {string} RoomBackground
+ * @returns {SafePromise<void>}
  */
-declare function PrisonMeetPoliceIntro(RoomBackground: any): Promise<void>;
+declare function PrisonMeetPoliceIntro(RoomBackground: string): SafePromise<void>;
 declare function PrisonPutHandsInTheAir(): void;
 declare function PrisonRaiseHandsHigher(): void;
 declare function PrisonCatchKneel(): void;
@@ -172,8 +175,9 @@ declare function PrisonFightPoliceOutro(): void;
 declare function PrisonCatchByPolice(): Promise<void>;
 /**
  * Change the Prison Behavior >0 Good, <0 Bad
+ * @param {number} Behavior
  */
-declare function PrisonSetBehavior(Behavior: any): void;
+declare function PrisonSetBehavior(Behavior: number): void;
 declare function PrisonArrestHandoverDices(): void;
 declare function PrisonArrestHandoverKeys(): void;
 declare function PrisonArrestHandoverSleepingPills(): void;
@@ -195,8 +199,8 @@ declare var PrisonBackground: string;
 declare var PrisonNextEventTimer: null | number;
 declare var PrisonNextEvent: boolean;
 declare var PrisonBehavior: number;
-/** @type {null | NPCCharacter} */
-declare var PrisonMaid: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PrisonMaid: NPCCharacter;
 /** @type {null | Item[]} */
 declare var PrisonMaidAppearance: null | Item[];
 declare var PrisonMaidIsPresent: boolean;
@@ -204,23 +208,23 @@ declare var PrisonMaidIsAngry: boolean;
 /** @type {null | string} */
 declare var PrisonMaidCharacter: null | string;
 declare var PrisonMaidCharacterList: string[];
-/** @type {null | number} */
-declare var PrisonMaidChaotic: null | number;
-/** @type {null | NPCCharacter} */
-declare var PrisonSub: null | NPCCharacter;
-/** @type {null | Item[]} */
-declare var PrisonSubAppearance: null | Item[];
+/** @type {number} */
+declare var PrisonMaidChaotic: number;
+/** @type {NPCCharacter} */
+declare var PrisonSub: NPCCharacter;
+/** @type {Item[]} */
+declare var PrisonSubAppearance: Item[];
 declare var PrisonSubBehindBars: boolean;
 declare var PrisonSubSelfCuffed: boolean;
 declare var PrisonSubIsPresent: boolean;
 declare var PrisonSubAskedCuff: boolean;
 declare var PrisonSubIsLeaveOut: boolean;
 declare var PrisonSubIsStripSearch: boolean;
-/** @type {null | NPCCharacter} */
-declare var PrisonPolice: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PrisonPolice: NPCCharacter;
 declare var PrisonPoliceIsPresent: boolean;
 declare var PrisonPlayerCatchedBadGirl: boolean;
-/** @type {null | Item[]} */
-declare var PrisonPlayerAppearance: null | Item[];
+/** @type {Item[]} */
+declare var PrisonPlayerAppearance: Item[];
 declare var PrisonPlayerBehindBars: boolean;
 declare var PrisonPlayerForIllegalChange: boolean;

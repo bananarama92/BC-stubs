@@ -24,7 +24,14 @@ declare function GameLARPIsAdmin(C: Character): boolean;
  * @returns {void} - Nothing
  */
 declare function GameLARPDrawIcon(C: Character, X: number, Y: number, Zoom: number): void;
+/**
+ *
+ * @param {Character} char
+ * @returns {Required<GameLARPParameters>}
+ */
+declare function GameLARPGetData(char: Character): Required<GameLARPParameters>;
 declare function GameLARPLoad(): Promise<void>;
+declare function GameLARPInitialize(): void;
 /**
  * Runs and draws the LARP game.
  * @returns {void} - Nothing
@@ -142,13 +149,13 @@ declare function GameLARPGetPlayer(MemberNumber: number): Character | null;
 /**
  * Processes an action for a player.
  * @param {string} Action - Action attempted.
- * @param {string} ItemName - Name of the item to attempt to use.
+ * @param {AssetName} ItemName - Name of the item to attempt to use.
  * @param {Character} Source - Source character of the action
  * @param {Character} Target - Character targetted by the action
  * @param {number} RNG - Random odds received for which the character's odds will be compared.
  * @returns {void} - Nothing
  */
-declare function GameLARPProcessAction(Action: string, ItemName: string, Source: Character, Target: Character, RNG: number): void;
+declare function GameLARPProcessAction(Action: string, ItemName: AssetName, Source: Character, Target: Character, RNG: number): void;
 /**
  * Processes the LARP game clicks. This method is called from the generic OnlineGameClickCharacter function when the current game is LARP.
  * @param {Character} C - Character clicked on
@@ -159,12 +166,12 @@ declare function GameLARPCharacterClick(C: Character): boolean;
  * Builds a universal substitution array for LARP messages/options.
  * @param {Character} Source - Source character
  * @param {Character} Target - Target character
- * @param {string} Description - Item/team description
- * @param {number} RNG - Random number
- * @param {number} Odds - Odds number
+ * @param {string} [Description] - Item/team description
+ * @param {number | null} [RNG] - Random number
+ * @param {number | null} [Odds] - Odds number
  * @returns {CommonSubtituteSubstitution[]} - Array of placeholder substitutions
  */
-declare function GameLARPBuildSubstitutions(Source: Character, Target: Character, Description: string, RNG: number, Odds: number): CommonSubtituteSubstitution[];
+declare function GameLARPBuildSubstitutions(Source: Character, Target: Character, Description?: string, RNG?: number | null, Odds?: number | null): CommonSubtituteSubstitution[];
 /**
  * Adds a LARP message to the chat log.
  * @param {string} Msg - Message tag from the dictionary
@@ -291,8 +298,8 @@ declare var GameLARPInventoryOffset: number;
 declare var GameLARPTurnAdmin: number;
 declare var GameLARPTurnPosition: number;
 declare var GameLARPTurnAscending: boolean;
-/** @type {null | number} */
-declare var GameLARPTurnTimer: null | number;
+/** @type {number} */
+declare var GameLARPTurnTimer: number;
 declare var GameLARPTurnTimerDelay: number;
 /** @type {null | Character} */
 declare var GameLARPTurnFocusCharacter: null | Character;

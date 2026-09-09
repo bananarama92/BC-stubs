@@ -42,18 +42,18 @@ declare function PhotographicPlayerClothRemove(Group: AssetGroupName): void;
  */
 declare function PhotographicAppearanceAvailable(C: Character, Group: AssetGroupName): boolean;
 /**
- * @param {string} Asset
+ * @param {AssetName} Asset
  * @param {AssetGroupName} Group
  * @deprecated
  */
-declare function PhotographicPlayerAssetAvailable(Asset: string, Group: AssetGroupName): boolean;
+declare function PhotographicPlayerAssetAvailable(Asset: AssetName, Group: AssetGroupName): boolean;
 declare function PhotographicPlayerRelease(): void;
 /**
- * @param {string} Asset
+ * @param {AssetName} Asset
  * @param {AssetGroupName} Group
  * @deprecated
  */
-declare function PhotographicUseAsset(Asset: string, Group: AssetGroupName): void;
+declare function PhotographicUseAsset(Asset: AssetName, Group: AssetGroupName): void;
 declare function PhotographicPlayerDressBack(): void;
 declare function PhotographicSubDressBack(): void;
 /**

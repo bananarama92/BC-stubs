@@ -30,11 +30,11 @@ declare function TextGetInScope(filePath: string, key: string): string;
 declare function TextLoad(TextGroup?: string): TextCache;
 /**
  * Cache the Module and TextGroup for later use, speeds up first use
- * @param {string} Module
- * @param {string} TextGroup
+ * @param {ModuleType} Module
+ * @param {ScreenName} TextGroup
  * @returns {TextCache}  - The Module + TextGroup's correpsonding text cache
  */
-declare function TextPrefetch(Module: string, TextGroup: string): TextCache;
+declare function TextPrefetch(Module: ModuleType, TextGroup: ScreenName): TextCache;
 /**
  * Trigger the caching of a specific file into the text cache
  * @param {string} file

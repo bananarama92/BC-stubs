@@ -39,9 +39,9 @@ declare function EmptyShopRelease(): void;
 /**
  * Releases the player from the item she was trying to sell, and sets the following dialog.
  * @param {string|boolean} Sold - Whether or not the item was sold, "true" if sold
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function EmptyShopEnd(Sold: string | boolean): void;
+declare function EmptyShopEnd(Sold: string | boolean): SafePromise<void>;
 /**
  * Starts the slave training
  * @param {number} TrainingType - The type of training to do
@@ -63,9 +63,9 @@ declare function EmptySlaveMarketTrainingProgress(Intensity: number): void;
 /**
  * Triggered when the slave market training ends
  * @param {string} Status - The status the game ended with, "Success" if won
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function EmptySlaveMarketTrainingEnd(Status: string): void;
+declare function EmptySlaveMarketTrainingEnd(Status: string): SafePromise<void>;
 declare var EmptyBackground: string;
 /** @type {Character[]} */
 declare var EmptyCharacter: Character[];

@@ -46,9 +46,9 @@ declare function DailyJobSubSearchIsActive(): boolean;
 declare function DailyJobKidnapStart(): void;
 /**
  * Triggered at the end of the kidnap daily job fight mini-game
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function DailyJobKidnapEnd(): void;
+declare function DailyJobKidnapEnd(): SafePromise<void>;
 /**
  * Triggered when the kidnap daily job fight mini-game is won. Sends the player back to the main hall.
  * @returns {void} - Nothing
@@ -66,8 +66,9 @@ declare function DailyJobKidnapFail(): void;
 declare function DailyJobPuppyGameStart(): void;
 /**
  * Triggered at the end of the puppy walker job fight mini-game
+ * @returns {SafePromise<void>}
  */
-declare function DailyJobPuppyGameEnd(): Promise<void>;
+declare function DailyJobPuppyGameEnd(): SafePromise<void>;
 /**
  * Triggered when a daily job ends, sends the player back to the main hall
  * @returns {void} - Nothing
@@ -90,8 +91,9 @@ declare function DailyJobDojoRestrainPlayer(): void;
 declare function DailyJobDojoGameStart(): void;
 /**
  * Triggered at the end of the dojo struggle job minigame
+ * @returns {SafePromise<void>}
  */
-declare function DailyJobDojoGameEnd(): Promise<void>;
+declare function DailyJobDojoGameEnd(): SafePromise<void>;
 declare var DailyJobBackground: string;
 /** @type {null | NPCCharacter} */
 declare var DailyJobOpponent: null | NPCCharacter;

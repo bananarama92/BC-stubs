@@ -111,9 +111,9 @@ declare function AsylumEntranceStartNurse(): void;
 declare function AsylumEntranceFightNurse(): void;
 /**
  * Resolves the result of the fight against the nurse
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceFightNurseEnd(): void;
+declare function AsylumEntranceFightNurseEnd(): SafePromise<void>;
 /**
  * Restrains the player in a straitjacket with a custom difficulty
  * @param {string} Pose - The tightness of the straitjacket
@@ -144,9 +144,9 @@ declare function AsylumEntranceNurseStrap(RepChange: number): void;
 declare function AsylumEntranceRecommit(): void;
 /**
  * Handles the player being caught by a nurse, after escaping the Asylum. The player is brought back and the doors locked
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceNurseCatchEscapedPlayer(): void;
+declare function AsylumEntranceNurseCatchEscapedPlayer(): SafePromise<void>;
 /**
  * Handled the player'S fight against the kidnap nurse
  * @returns {void} - Nothing
@@ -155,9 +155,9 @@ declare function AsylumEntranceKidnapNurseFight(): void;
 /**
  * Resolved the fight against the kidnap nurse
  * @param {boolean} Surrender - Wether the player surrendered or not
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceKidnapNurseFightOutro(Surrender: boolean): void;
+declare function AsylumEntranceKidnapNurseFightOutro(Surrender: boolean): SafePromise<void>;
 /**
  * Handles the bribe attempt of the kidnapping nurse
  * @param {number} BribeAmount - The offered bribe amount
@@ -183,9 +183,9 @@ declare function AsylumEntranceGoToAsylum(): void;
 declare function AsylumEntranceBackAsPatient(): void;
 /**
  * The player meets  an escaped patient while on nurse duty
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceEscapedPatientMeet(): void;
+declare function AsylumEntranceEscapedPatientMeet(): SafePromise<void>;
 /**
  * When the player starts a fight against the escaped patient
  * @returns {void} - Nothing
@@ -194,9 +194,9 @@ declare function AsylumEntranceEscapedPatientFight(): void;
 /**
  * Resolves the fight against an escaped patient
  * @param {boolean} Surrender - Wether the player surrendered or not
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceEscapedPatientFightOutro(Surrender: boolean): void;
+declare function AsylumEntranceEscapedPatientFightOutro(Surrender: boolean): SafePromise<void>;
 /**
  * Resolves the bribe attempt towards the player by an escaped patient
  * @returns {void} - Nothing
@@ -263,8 +263,9 @@ declare function AsylumEntrancePayTenMinutes(): void;
 declare function AsylumEntranceClubCardStart(): void;
 /**
  * When the player ends a club card game
+ * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceClubCardEnd(): Promise<void>;
+declare function AsylumEntranceClubCardEnd(): SafePromise<void>;
 declare var AsylumEntranceBackground: string;
 /** @type {NPCCharacter} */
 declare var AsylumEntranceNurse: NPCCharacter;

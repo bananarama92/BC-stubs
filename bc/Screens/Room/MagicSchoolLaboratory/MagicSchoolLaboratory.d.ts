@@ -24,9 +24,9 @@ declare function MagicSchoolLaboratoryClick(): void;
 declare function MagicSchoolLaboratorySpellPractice(SpellNumber: number): void;
 /**
  * When the magic spell practice puzzle ends
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function MagicSchoolLaboratorySpellPracticeEnd(): Promise<void>;
+declare function MagicSchoolLaboratorySpellPracticeEnd(): SafePromise<void>;
 /**
  * Check if someone is a member of a magic house or not
  * @param {"" | "Maiestas" | "Vincula" | "Amplector" | "Corporis"} House - The house name

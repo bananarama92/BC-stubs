@@ -43,8 +43,9 @@ declare function SlaveMarketAuctionStart(): void;
 /**
  * Triggered when the auction ends.
  * If the player was the last bidder, she buys the slave and gets in a dialog with her, otherwise she returns to the main area of the slave market
+ * @returns {SafePromise<void>}
  */
-declare function SlaveMarketAuctionEnd(): Promise<void>;
+declare function SlaveMarketAuctionEnd(): SafePromise<void>;
 /**
  * Generates a new slave for the slave market
  * @returns {void} - Nothing
@@ -57,9 +58,9 @@ declare function SlaveMarketNewSlave(): void;
 declare function SlaveMarketVisitRoom(): void;
 /**
  * Triggered when the slave training start. Sets the NPC and dialog before sending the player to an empty room with the trainee.
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function SlaveMarketTrainingStart(): void;
+declare function SlaveMarketTrainingStart(): SafePromise<void>;
 /**
  * Triggered when the auctioned player gets stripped and chained
  * @returns {void} - Nothing
@@ -72,8 +73,9 @@ declare function SlaveMarketAuctionPlayerStrip(): void;
 declare function SlaveMarketAuctionPlayerStart(): void;
 /**
  * Triggered when the player auction ends, we create the buyer and activate her
+ * @returns {SafePromise<void>}
  */
-declare function SlaveMarketPlayerAuctionEnd(): Promise<void>;
+declare function SlaveMarketPlayerAuctionEnd(): SafePromise<void>;
 /**
  * Triggered when the player auction has ended and both characters are transferred to the player room
  * @returns {void} - Nothing

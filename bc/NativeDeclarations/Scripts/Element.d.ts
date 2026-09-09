@@ -62,7 +62,7 @@ declare namespace ElementSearchableDropdown {
 	/** Imperative helpers attached to the root element returned from {@link ElementCreateSearchableDropdown}. */
 	interface SearchableDropdownInstance {
 		bcSetOptions(optionsList: readonly OptionItem[], newValue?: string): void;
-		bcSetValue(newValue: string): void;
+		bcSetNewValue(newValue: string): void;
 		bcSetDisabled(disabled: boolean): void;
 	}
 

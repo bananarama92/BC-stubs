@@ -31,32 +31,32 @@ declare function PreferenceVisibilityExit(SaveChanges: boolean): void;
 declare function PreferenceSubscreenVisibilityBuildLayout(): void;
 /**
  * Builds the dropdown options for the group selector.
- * @returns {{ value: string, label: string, group: string }[]}
+ * @returns {{ value: AssetGroupName, label: string, group: "Appearance" | "Item" | "Script" }[]}
  */
 declare function PreferenceSubscreenVisibilityGetGroupOptions(): {
-    value: string;
+    value: AssetGroupName;
     label: string;
-    group: string;
+    group: "Appearance" | "Item" | "Script";
 }[];
 /**
  * Builds the dropdown options for the asset selector based on the currently selected group.
  * @param {number} groupIndex
- * @returns {{ value: string, label: string }[]}
+ * @returns {{ value: AssetName, label: string }[]}
  */
 declare function PreferenceSubscreenVisibilityGetAssetOptions(groupIndex: number): {
-    value: string;
+    value: AssetName;
     label: string;
 }[];
 /**
  * Handles selection changes on the group dropdown.
- * @param {string} value
+ * @param {AssetGroupName} value
  */
-declare function PreferenceSubscreenVisibilityOnGroupChange(value: string): void;
+declare function PreferenceSubscreenVisibilityOnGroupChange(value: AssetGroupName): void;
 /**
  * Handles selection changes on the asset dropdown.
- * @param {string} value
+ * @param {AssetName} value
  */
-declare function PreferenceSubscreenVisibilityOnAssetChange(value: string): void;
+declare function PreferenceSubscreenVisibilityOnAssetChange(value: AssetName): void;
 /**
  * Prompts via the browser confirmation dialog before clearing all Hidden flags
  * and exiting with save.
@@ -93,11 +93,11 @@ declare function PreferenceVisibilityHideChange(): void;
 declare function PreferenceVisibilityBlockChange(): void;
 /**
  * Adds or removes the current item to/from the list based on the new state of the corresponding checkbox
- * @param {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} permissionRecord - The record to add or remove the item from
+ * @param {Partial<Record<AssetFullPath, ItemPermissions>>} permissionRecord - The record to add or remove the item from
  * @param {boolean} CheckSetting - The new true/false setting of the checkbox
  * @param {"Hidden" | "Block"} Type
  */
-declare function PreferenceVisibilityCheckboxChanged(permissionRecord: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>, CheckSetting: boolean, Type: "Hidden" | "Block"): void;
+declare function PreferenceVisibilityCheckboxChanged(permissionRecord: Partial<Record<AssetFullPath, ItemPermissions>>, CheckSetting: boolean, Type: "Hidden" | "Block"): void;
 /** @type {{ Group: AssetGroup, Assets: { Asset: Asset, Hidden: boolean, Blocked: boolean, Limited: boolean }[]}[]} */
 declare var PreferenceVisibilityGroupList: {
     Group: AssetGroup;
@@ -120,8 +120,8 @@ declare var PreferenceVisibilityCanBlock: boolean;
 declare var PreferenceVisibilityPreviewAsset: Asset;
 /** @deprecated See {@link PreferenceSubscreenVisibilityOnResetClick}. */
 declare var PreferenceVisibilityResetClicked: boolean;
-/** @type {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} */
-declare var PreferenceVisibilityRecord: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
+/** @type {Partial<Record<AssetFullPath, ItemPermissions>>} */
+declare var PreferenceVisibilityRecord: Partial<Record<AssetFullPath, ItemPermissions>>;
 declare const PreferenceSubscreenVisibilityIDs: Readonly<{
     grid: "preference-visibility-grid";
     controls: "preference-visibility-controls";

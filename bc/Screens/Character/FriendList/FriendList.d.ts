@@ -5,8 +5,11 @@ declare function FriendListDraw(): void;
 declare function FriendListClick(event: PointerEvent): void;
 declare function FriendListKeyDown(event: KeyboardEvent): boolean;
 declare function FriendListUnload(): void;
-/** @t ype {ScreenExitHandler} */
-declare function FriendListExit(): Promise<void>;
+/**
+ * @satisfies {ScreenExitHandler}
+ * @return {SafePromise<void>}
+ */
+declare function FriendListExit(): SafePromise<void>;
 /**
  * Creates beep message menu
  * @param {number} MemberNumber Member number of target player
@@ -24,8 +27,9 @@ declare function FriendListBeepMenuSend(): void;
 /**
  * Shows the wanted beep on click from beep list
  * @param {number} i index of the beep
+ * @returns {SafePromise<void>}
  */
-declare function FriendListShowBeep(i: number): Promise<void>;
+declare function FriendListShowBeep(i: number): SafePromise<void>;
 /**
  * Exits the friendlist
  * @param {string | undefined} room The room to search for
@@ -156,8 +160,9 @@ declare function FriendListCanDelete(memberNumber: number): boolean;
 declare function FriendListCanAdd(memberNumber: number): boolean;
 /**
  * Opens the friendlist from any screen
+ * @returns {SafePromise<void>}
  */
-declare function FriendListShow(): Promise<void>;
+declare function FriendListShow(): SafePromise<void>;
 declare var FriendListBackground: string;
 /** @deprecated @type {number[]} */
 declare var FriendListConfirmDelete: number[];

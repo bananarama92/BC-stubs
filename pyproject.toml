@@ -39,7 +39,7 @@ Homepage = "https://github.com/bananarama92/BC-stubs"
 "bc_tools.get_bc_version" = "bc_tools.entry_points:get_bc_version"
 
 [tool.setuptools.packages.find]
-include = ["bc_tools", "bc_tools.data"]
+include = ["bc_tools", "bc_tools.data", "bc_tools.scripts", "bc_tools.utils"]
 
 [tool.setuptools.package-data]
 bc_tools = ["py.typed", "data/*.json"]

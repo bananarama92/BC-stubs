@@ -390,6 +390,27 @@ declare function ElementSetFontSize(elementOrId: ElementHelp.ElementOrId, target
  * @param {HTMLElement | Element} el
  */
 declare function ElementFitText(el: HTMLElement | Element): void;
+/**
+ * Sets an element's text content, skipping the write when it already matches.
+ * @param {ElementHelp.ElementOrId | null} ElementOrId
+ * @param {string} text
+ * @returns {void} - Nothing
+ */
+declare function ElementSetText(ElementOrId: ElementHelp.ElementOrId | null, text: string): void;
+/**
+ * Sets the value of an input, select, or textarea, skipping the write when it already matches.
+ * @param {ElementHelp.ElementOrId | null} ElementOrId
+ * @param {string | number} value
+ * @returns {void} - Nothing
+ */
+declare function ElementSetValue(ElementOrId: ElementHelp.ElementOrId | null, value: string | number): void;
+/**
+ * Sets the checked state of an input, skipping the write when it already matches.
+ * @param {ElementHelp.ElementOrId | null} ElementOrId
+ * @param {boolean} checked
+ * @returns {void} - Nothing
+ */
+declare function ElementSetChecked(ElementOrId: ElementHelp.ElementOrId | null, checked: boolean): void;
 declare function ElementGenerateID(): string;
 /** @satisfies {ElementNoParent} */
 declare const ElementNoParent: 0;
@@ -543,8 +564,11 @@ declare namespace ElementButton {
      * Set the `[role]` attribute of the passed button
      * @param {HTMLButtonElement} button
      * @param {null | ElementButton.Options["role"]} role
+     * @param {null | { force?: boolean }} options
      */
-    function SetRole(button: HTMLButtonElement, role: null | ElementButton.Options["role"]): void;
+    function SetRole(button: HTMLButtonElement, role: null | ElementButton.Options["role"], options?: null | {
+        force?: boolean;
+    }): void;
     /**
      * Create a generic button.
      * @param {null | string} id - The ID of the to-be created search button
@@ -566,10 +590,10 @@ declare namespace ElementButton {
      */
     function CreateForAsset(idPrefix: string | null, asset: Asset | Item, C: null | Character, onClick: null | ((this: HTMLButtonElement, ev: PointerEvent) => any), options?: null | ElementButton.Options, htmlOptions?: null | Partial<Record<"button" | "tooltip" | "img" | "label", Omit<HTMLOptions<any>, "tag">>>): HTMLButtonElement;
     /**
-     * @param {CraftingItem} craft
+     * @param {CraftingPartialItem} craft
      * @returns {HTMLElement[]}
      */
-    function CreateCraftTooltipContent(craft: CraftingItem): HTMLElement[];
+    function CreateCraftTooltipContent(craft: CraftingPartialItem): HTMLElement[];
     /**
      * Create a button for an activity, including image, label and icons.
      * @param {string | null} idPrefix - The ID of the to-be created search button
@@ -589,6 +613,23 @@ declare namespace ElementButton {
      * @returns {boolean} - Whether the icons were updated or not
      */
     function ReloadAssetIcons(button: HTMLButtonElement, asset: Asset | Item, C: null | Character): boolean;
+    /**
+     * Set the src of the button's image (`.button-image`).
+     *
+     * Supports both `<img>`- and `<div role="img">`-style button images.
+     * @param {ElementHelp.ElementOrId} button The button in question  (`.button`) or its image  (`.button-image`). May be specified either as an element or its ID.
+     * @param {string} src The new image source
+     * @returns {null | HTMLElement} The updated `.button-image` element or null if it cannot be found
+     */
+    function SetImage(button: ElementHelp.ElementOrId, src: string): null | HTMLElement;
+    /**
+     * Get the src of the button's image (`.button-image`).
+     *
+     * Supports both `<img>`- and `<div role="img">`-style button images.
+     * @param {ElementHelp.ElementOrId} button The button in question  (`.button`) or its image  (`.button-image`). May be specified either as an element or its ID.
+     * @returns {null | string} The src of the `.button-image` represented in a {@link HTMLImageElement.src}-compatible format or null if it cannot be found/is empty.
+     */
+    function GetImage(button: ElementHelp.ElementOrId): null | string;
 }
 declare namespace ElementMenu {
     export let _observers: WeakMap<Element, MutationObserver>;

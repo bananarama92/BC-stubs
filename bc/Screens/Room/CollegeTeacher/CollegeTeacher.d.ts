@@ -62,6 +62,6 @@ declare function CollegeTeacherNewBackground(New: string): void;
  */
 declare function CollegeTeacherInviteToPrivateRoom(Role?: string): void;
 declare var CollegeTeacherBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeTeacherMildred: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeTeacherMildred: NPCCharacter;
 declare var CollegeTeacherMildredLove: number;

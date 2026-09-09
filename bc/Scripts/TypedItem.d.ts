@@ -85,28 +85,28 @@ declare function TypedItemSetAllowLockType(asset: Mutable<Asset>, allowLockType:
 /**
  * Returns the options configuration array for a typed item
  * @param {AssetGroupName} groupName - The name of the asset group
- * @param {string} assetName - The name of the asset
+ * @param {AssetName} assetName - The name of the asset
  * @returns {TypedItemOption[]|null} - The options array for the item, or null if no typed item data was found
  */
-declare function TypedItemGetOptions(groupName: AssetGroupName, assetName: string): TypedItemOption[] | null;
+declare function TypedItemGetOptions(groupName: AssetGroupName, assetName: AssetName): TypedItemOption[] | null;
 /**
  * Returns a list of typed item option names available for the given asset, or an empty array if the asset is not typed
  * @public
  * @param {AssetGroupName} groupName - The name of the asset group
- * @param {string} assetName - The name of the asset
+ * @param {AssetName} assetName - The name of the asset
  * @returns {string[]} - The option names available for the asset, or an empty array if the asset is not typed or no
  * typed item data was found
  */
-declare function TypedItemGetOptionNames(groupName: AssetGroupName, assetName: string): string[];
+declare function TypedItemGetOptionNames(groupName: AssetGroupName, assetName: AssetName): string[];
 /**
  * Returns the named option configuration object for a typed item
  * @public
  * @param {AssetGroupName} groupName - The name of the asset group
- * @param {string} assetName - The name of the asset
+ * @param {AssetName} assetName - The name of the asset
  * @param {string} optionName - The name of the option
  * @returns {TypedItemOption|null} - The named option configuration object, or null if none was found
  */
-declare function TypedItemGetOption(groupName: AssetGroupName, assetName: string, optionName: string): TypedItemOption | null;
+declare function TypedItemGetOption(groupName: AssetGroupName, assetName: AssetName, optionName: string): TypedItemOption | null;
 /**
  * Validates a selected option. A typed item may provide a custom validation function. Returning a non-empty string from
  * the validation function indicates that the new option is not compatible with the character's current state (generally

@@ -46,11 +46,11 @@ declare function DialogSetReputation(RepType: ReputationType, Value: number): vo
 declare function DialogChangeReputation(RepType: ReputationType, Value: number): void;
 /**
  * Equips a specific item on the player from dialog
- * @param {string} AssetName - The name of the asset that should be equipped
+ * @param {AssetName} AssetName - The name of the asset that should be equipped
  * @param {AssetGroupName} AssetGroup - The name of the corresponding asset group
  * @returns {void} - Nothing
  */
-declare function DialogWearItem(AssetName: string, AssetGroup: AssetGroupName): void;
+declare function DialogWearItem(AssetName: AssetName, AssetGroup: AssetGroupName): void;
 /**
  * Equips a random item from a given group to the player from dialog
  * @param {AssetGroupName} AssetGroup - The name of the asset group to pick from
@@ -178,11 +178,11 @@ declare function DialogSetPose(C: "Player" | "CurrentCharacter", NewPose?: null 
 declare function DialogSkillGreater(SkillType: SkillType, Value: number): boolean;
 /**
  * Checks, if a given item is available in the player's inventory
- * @param {string} InventoryName
+ * @param {AssetName} InventoryName
  * @param {AssetGroupName} InventoryGroup
  * @returns {boolean} - Returns true, if the item is available, false otherwise
  */
-declare function DialogInventoryAvailable(InventoryName: string, InventoryGroup: AssetGroupName): boolean;
+declare function DialogInventoryAvailable(InventoryName: AssetName, InventoryGroup: AssetGroupName): boolean;
 /**
  * Checks, if the player is the administrator of the current chat room
  * @returns {boolean} - Returns true, if the player belongs to the group of administrators for the current char room false otherwise
@@ -211,11 +211,11 @@ declare function DialogGGTSMinuteGreater(Minute: number): boolean;
 declare function DialogGGTSCanSpendMinutes(): boolean;
 /**
  * The player can ask GGTS for specific actions at level 6, requiring minutes as currency
- * @param {string} Action - The action to trigger
+ * @param {GGTSTask | "MoneyForMinutes" | "GetHelmet"} Action - The action to trigger
  * @param {string} Minute - The number of minutes to spend
  * @returns {void}
  */
-declare function DialogGGTSAction(Action: string, Minute: string): void;
+declare function DialogGGTSAction(Action: GGTSTask | "MoneyForMinutes" | "GetHelmet", Minute: string): void;
 /**
  * Checks if the player can beg GGTS to unlock the room
  * @returns {boolean} - TRUE if GGTS can unlock
@@ -231,6 +231,8 @@ declare function DialogGGTSCanGetHelmet(): boolean;
  * @returns {boolean} - TRUE if the player is a nurse in a GGTS room
  */
 declare function DialogCanStartGGTSInteractions(): boolean;
+declare function DialogIsMaid(): boolean;
+declare function DialogIsHeadMaid(): boolean;
 /**
  * Nurses can ask GGTS for specific interactions with other players
  * @param {string} Interaction - The interaction to trigger
@@ -266,8 +268,9 @@ declare function DialogCanWatchKinkyDungeon(): boolean;
 declare function DialogStartKinkyDungeon(): void;
 /**
  * Return to previous room
+ * @returns {SafePromise<void>}
  */
-declare function DialogEndKinkyDungeon(): Promise<void>;
+declare function DialogEndKinkyDungeon(): SafePromise<void>;
 /**
  * Checks whether the player has a key for the item
  * @param {Character} C - The character on whom the item is equipped
@@ -371,18 +374,20 @@ declare function DialogLeaveFocusItem(allowModeChange?: boolean): void;
  * @param {Item} item - The item to be added to the inventory
  * @param {boolean} isWorn - Should be true, if the item is currently being worn, false otherwise
  * @param {DialogSortOrder} [sortOrder] - Defines where in the inventory list the item is sorted
+ * @param {CraftingItem} [craft]
  * @returns {void} - Nothing
  */
-declare function DialogInventoryAdd(C: Character, item: Item, isWorn: boolean, sortOrder?: DialogSortOrder): void;
+declare function DialogInventoryAdd(C: Character, item: Item, isWorn: boolean, sortOrder?: DialogSortOrder, craft?: CraftingItem): void;
 /**
  * Creates an individual item for the dialog inventory list
  * @param {Character} C - The character the inventory is being built for
  * @param {Item} item - The item to be added to the inventory
  * @param {boolean} isWorn - Should be true if the item is currently being worn, false otherwise
  * @param {DialogSortOrder} [sortOrder] - Defines where in the inventory list the item is sorted
+ * @param {CraftingItem} [craft]
  * @returns {DialogInventoryItem} - The inventory item
  */
-declare function DialogInventoryCreateItem(C: Character, item: Item, isWorn: boolean, sortOrder?: DialogSortOrder): DialogInventoryItem;
+declare function DialogInventoryCreateItem(C: Character, item: Item, isWorn: boolean, sortOrder?: DialogSortOrder, craft?: CraftingItem): DialogInventoryItem;
 /**
  * Returns settings for an item based on whether the player and target have favorited it, if any
  * @param {Character} C - The targeted character
@@ -476,12 +481,13 @@ declare function DialogCanUseFamilyLockOn(target: Character): boolean;
  * Build the inventory listing for the dialog which is what's equipped,
  * the player's inventory and the character's inventory for that group
  * @param {Character} C - The character whose inventory must be built
+ * @param {AssetGroup} focusGroup - The group whose inventory to build
  * @param {boolean} [resetOffset=false] - The offset to be at, if specified.
  * @param {boolean} [locks=false] - If TRUE we build a list of locks instead.
  * @param {boolean} reload - Perform a {@link DialogMenu.Reload} hard reset of the active `items`, `locking` or `permissions` mode
  * @returns {void} - Nothing
  */
-declare function DialogInventoryBuild(C: Character, resetOffset?: boolean, locks?: boolean, reload?: boolean): void;
+declare function DialogInventoryBuild(C: Character, focusGroup: AssetGroup, resetOffset?: boolean, locks?: boolean, reload?: boolean): void;
 /**
  * Create a stringified list of the group and the assets currently in the dialog inventory
  * @param {Character} C - The character the dialog inventory has been built for
@@ -766,9 +772,9 @@ declare function DialogActualNameForGroup(C: Character, G: AssetGroup): string;
  * @param {Character} C
  * @param {DialogStruggleActionType} Action
  * @param {Item | null} PrevItem
- * @param {Item | null} NextItem
+ * @param {DialogInventoryItem | null} NextItem
  */
-declare function DialogStruggleStart(C: Character, Action: DialogStruggleActionType, PrevItem: Item | null, NextItem: Item | null): void;
+declare function DialogStruggleStart(C: Character, Action: DialogStruggleActionType, PrevItem: Item | null, NextItem: DialogInventoryItem | null): void;
 declare function DialogStruggleStop(character: Character, game: StruggleKnownMinigames, data: StruggleCompletionData): void;
 declare function DialogKeyDown(event: KeyboardEvent): boolean;
 declare function DialogMouseDown(event: PointerEvent): void;
@@ -890,9 +896,9 @@ declare let DialogStruggleAction: DialogStruggleActionType | null;
 declare let DialogStrugglePrevItem: Item | null;
 /**
  * The item we're swapping to.
- * @type {Item | null}
+ * @type {DialogInventoryItem | null}
  */
-declare let DialogStruggleNextItem: Item | null;
+declare let DialogStruggleNextItem: DialogInventoryItem | null;
 /** Whether we went through the struggle selection screen or went straight through. */
 declare let DialogStruggleSelectMinigame: boolean;
 /** @type {Map<string, string>} */
@@ -907,8 +913,8 @@ declare var DialogFavoriteStateDetails: FavoriteState[];
  */
 declare var DialogSelfMenuOptions: readonly DialogSelfMenuName[];
 declare namespace DialogLeaveFocusItemHandlers {
-    let DialogTightenLoosenItem: Record<string, (item: Item) => void>;
-    let DialogFocusItem: Record<string, (item: Item) => void>;
+    let DialogTightenLoosenItem: Partial<Record<ScreenName, (item: Item) => void>>;
+    let DialogFocusItem: Partial<Record<ScreenName, (item: Item) => void>>;
 }
 declare namespace DialogEffectIcons {
     let Table: Partial<Record<InventoryIcon, readonly EffectName[]>>;

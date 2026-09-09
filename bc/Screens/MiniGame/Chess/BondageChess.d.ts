@@ -15,10 +15,10 @@ declare function ChessClick(): void;
  */
 declare function ChessPlayerColor(): "w" | "b";
 declare var ChessBackground: string;
-/** @type {null | Character} */
-declare var ChessCharacterWhite: null | Character;
-/** @type {null | Character} */
-declare var ChessCharacterBlack: null | Character;
+/** @type {Character} */
+declare var ChessCharacterWhite: Character;
+/** @type {Character} */
+declare var ChessCharacterBlack: Character;
 declare var ChessEndStatus: string;
 declare var ChessMinorPieceWhite: number;
 declare var ChessMajorPieceWhite: number;

@@ -273,7 +273,11 @@ declare namespace CommandsChangelog {
      * @param {Element} root
      */
     function _ParseA(root: Element): void;
-    function _SetTranslationText(changelog: Element): Promise<void>;
+    /**
+     * Set all translation-sensitive text in the changelog.
+     * @param {Element} changelog
+     */
+    function _SetTranslationText(changelog: Element): void;
     /**
      * Construct a changelog from the passed stringified HTML (constructed via _e.g._ the [marked](https://www.npmjs.com/package/marked) package).
      *

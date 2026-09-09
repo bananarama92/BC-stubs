@@ -1,5 +1,5 @@
-from ._common import logger, entry_point, append_docstring
 from ._version import __version__
-from . import entry_points
+from . import utils, data as paths, entry_points
+from .utils import logger
 
-__all__ = ["__version__", "logger", "entry_point", "entry_points", "append_docstring"]
+__all__ = ["__version__", "logger", "utils", "entry_points", "paths"]

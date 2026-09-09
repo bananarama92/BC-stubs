@@ -85,7 +85,7 @@ jobs:
 
       - name: Generate .d.ts
         run: |
-          bc_tools.build Bondage-College/BondageClub
+          bc_tools.build Bondage-College/BondageClub node_modules/typescript
           rm -rf bc
           mv Bondage-College/BondageClub/dist bc
 
@@ -103,7 +103,7 @@ jobs:
 
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add bc/*
+          git add --all bc/*
           git add bc_data/assetVersion.json
           git add bc_data/assetID.json
           git status

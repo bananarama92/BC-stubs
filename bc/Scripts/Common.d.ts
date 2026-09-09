@@ -46,15 +46,15 @@ declare function CommonParseCSV(str: string): string[][];
  * array you'll get back won't be populated until the fetch completes
  *
  * @param {string} url - URL to load
- * @returns {string[][]}
+ * @returns {Promise<string[][]>}
  */
-declare function CommonReadCSV(url: string): string[][];
+declare function CommonReadCSV(url: string): Promise<string[][]>;
 /**
  * Sleep for a number of milliseconds
  * @param {number} ms
- * @returns {Promise<number>}
+ * @returns {SafePromise<number>}
  */
-declare function CommonSleep(ms: number): Promise<number>;
+declare function CommonSleep(ms: number): SafePromise<number>;
 /**
  *
  * @param {() => boolean} func
@@ -149,9 +149,17 @@ declare function CommonGetScreen(): ScreenSpecifier;
 /**
  * Sets the current screen and calls the loading script if needed
  * @param {ScreenSpecifier} spec
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function CommonSetScreen(...spec: ScreenSpecifier): Promise<void>;
+declare function CommonSetScreen(...spec: ScreenSpecifier): SafePromise<void>;
+/**
+ * Screen setting implementation.
+ * Do not use; use {@link CommonSetScreen} instead.
+ * private
+ * @param {ScreenSpecifier} spec
+ * @returns {SafePromise<void>} - Nothing
+ */
+declare function CommonSetScreenWrapped(...spec: ScreenSpecifier): SafePromise<void>;
 /**
  * Gets the current time in ms
  * @returns {number} - Date in ms
@@ -201,6 +209,12 @@ declare function CommonColorTrimAlpha(color: HexColor): HexColor;
  * @returns {boolean}
  */
 declare function CommonEmailIsValid(Email: string): boolean;
+/**
+ * Splits a camelCase or PascalCase string into an array of lowercase words.
+ * @param {string} string
+ * @returns {string[]}
+ */
+declare function CommonUncamelize(string: string): string[];
 /**
  * Remove item from list on given index and returns it
  * @template T
@@ -357,6 +371,17 @@ declare function CommonDeepIsSubset<T>(subRec: unknown, superRec: T): subRec is 
  * @returns {T[]} - The destination array
  */
 declare function CommonArrayConcatDedupe<T>(dest: T[], src: readonly T[]): T[];
+/**
+ * Push a new value into a map of arrays
+ *
+ * A backport of Map.getOrInsert
+ * @template K
+ * @template V
+ * @param {Map<K, V>} map
+ * @param {K} key
+ * @param {V} defaultValue
+ */
+declare function CommonMapGetOrInsert<K, V>(map: Map<K, V>, key: K, defaultValue: V): V;
 /**
  * Common function for removing a padlock from an item and publishing a corresponding chat message (must be called with
  * the item's group focused)
@@ -602,9 +627,9 @@ declare function CommonJSONParse(data: string): unknown;
  *
  * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
  * @param {KeyboardEvent} event
- * @returns {"u"|"d"|"l"|"r"|undefined}
+ * @returns {"North"|"South"|"West"|"East"|undefined}
  */
-declare function CommonKeyMove(event: KeyboardEvent, allowArrowKeys?: boolean, checkModifiers?: boolean): "u" | "d" | "l" | "r" | undefined;
+declare function CommonKeyMove(event: KeyboardEvent, allowArrowKeys?: boolean, checkModifiers?: boolean): "North" | "South" | "West" | "East" | undefined;
 /**
  * A {@link Set.has}/{@link Map.has} version annotated to return a type guard.
  * @template T
@@ -680,30 +705,30 @@ declare function CommonScreenName(screen: RoomName): string | undefined;
  * Generates the path to a translation CSV file for a screen
  *
  * @overload
- * @param {string} module - The screen's module
- * @param {string} screen - The screen's name
+ * @param {ModuleType} module - The screen's module
+ * @param {ScreenName} screen - The screen's name
  * @param {string} group - The text group
  * @returns {string}
  */
-declare function ScreenFileGetTranslation(module: string, screen: string, group: string): string;
+declare function ScreenFileGetTranslation(module: ModuleType, screen: ScreenName, group: string): string;
 /**
  * Generates the path to a CSV Dialog file for a screen
  *
  * @param {string} npcType - The dialog file name
- * @param {string} [module] - The screen's module
- * @param {string} [screen] - The screen's name
+ * @param {ModuleType} [module] - The screen's module
+ * @param {ScreenName} [screen] - The screen's name
  * @returns {string}
  */
-declare function ScreenFileGetDialog(npcType: string, module?: string, screen?: string): string;
+declare function ScreenFileGetDialog(npcType: string, module?: ModuleType, screen?: ScreenName): string;
 /**
  * Generate a path to one of our Screen assets
  *
  * @param {string} file
- * @param {string} [module]
- * @param {string} [screen]
+ * @param {ModuleType} [module]
+ * @param {ScreenName | "Game"} [screen]
  * @returns
  */
-declare function ScreenFileGetPath(file: string, module?: string, screen?: string): string;
+declare function ScreenFileGetPath(file: string, module?: ModuleType, screen?: ScreenName | "Game"): string;
 /**
  * Gets the common prefix of a list of strings
  * @param {string[]} strings
@@ -894,6 +919,12 @@ declare function CommonUnwrapThunk(thunk: Thunk<unknown, unknown[]>, ...args: un
 declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
 declare function CommonUnwrapThunk<T, A extends readonly unknown[]>(thunk: Thunk<T, A>, ...args: A): T;
 /**
+ * Catch a promise and make it log
+ *
+ * @param {Promise<any> | undefined} p
+ */
+declare function CommonPromiseCatch(p: Promise<any> | undefined): void;
+/**
  * Read text data from the browser's clipboard.
  *
  * @param {(result: Result<string | null, ClipboardError>) => void} cb}
@@ -979,7 +1010,20 @@ declare const FETCH_MAX_RETRIES: 10;
 declare const FETCH_MAX_RETRY_BACKOFF_TIME: 16;
 declare const FETCH_RETRY_JITTER_MIN: 0.25;
 declare const FETCH_RETRY_JITTER_MAX: 1.75;
+/**
+ * Whether a screen is currently (async) loading via {@link CommonSetScreen}.
+ *
+ * See {@link ScreenIsLoadingPromise} for a promise-based variant of this variable for async checking.
+ * @type {boolean}
+ */
 declare var ScreenIsLoading: boolean;
+/**
+ * A promise that resolves upon async loading a screen via {@link CommonSetScreen}.
+ *
+ * See {@link ScreenIsLoading} for a promise-based variant of this variable for sync checking.
+ * @type {SafePromise<void>}
+ */
+declare var ScreenIsLoadingPromise: SafePromise<void>;
 /**
  * Memoized getter function. Returns a font string specifying the player's
  * preferred font and the provided size. This is memoized as it is called on

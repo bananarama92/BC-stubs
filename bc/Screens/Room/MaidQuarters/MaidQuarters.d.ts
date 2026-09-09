@@ -1,3 +1,7 @@
+declare function MaidQuartersCanBecomeMaid(): boolean;
+declare function MaidQuartersCannotBecomeMaidYet(): boolean;
+declare function MaidQuartersCanBecomeHeadMaid(): boolean;
+declare function MaidQuartersCannotBecomeHeadMaidYet(): boolean;
 /**
  * Returns TRUE if the player is head maid and can receive the latex uniform
  * @returns {boolean} - TRUE if she can receive it
@@ -175,9 +179,9 @@ declare function MaidQuartersMiniGameStart(GameType: ModuleScreens["MiniGame"], 
 /**
  * Is called when the mini game ends and sends the player back to the maid quarters.
  * Depending on the choosen game, the next dialog option is selected
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function MaidQuartersMiniGameEnd(): Promise<void>;
+declare function MaidQuartersMiniGameEnd(): SafePromise<void>;
 /**
  * Rewards the player with the latex maid outfit
  * @returns {void} - Nothing
@@ -288,12 +292,6 @@ declare var MaidQuartersItemClothPrev: {
     ItemFeet?: Item;
 };
 declare var MaidQuartersMaidReleasedPlayer: boolean;
-declare var MaidQuartersCanBecomeMaid: boolean;
-declare var MaidQuartersCannotBecomeMaidYet: boolean;
-declare var MaidQuartersCanBecomeHeadMaid: boolean;
-declare var MaidQuartersCannotBecomeHeadMaidYet: boolean;
-declare var MaidQuartersIsMaid: boolean;
-declare var MaidQuartersIsHeadMaid: boolean;
 declare var MaidQuartersSelfBondageMaidDrinksAccepted: boolean;
 declare var MaidQuartersSelfBondageMaidCleaningAccepted: boolean;
 declare var MaidQuartersDominantRep: number;

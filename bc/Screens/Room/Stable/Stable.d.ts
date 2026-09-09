@@ -29,105 +29,114 @@ declare function StableRun(): void;
 declare function StableClick(): void;
 declare function StableTrialPonyTraining(): void;
 declare function StableTrialTrainerTraining(): void;
-declare function StableTrialTrainerTrainingEnd(): Promise<void>;
 /**
- * @param {"PonyExam" | "TrainPony" | "TrainerExam" | "BecomeTrainer" | "WhiskeyRounds"} Fee
- * @returns {number}
+ * @returns {SafePromise<void>}
  */
-declare function StableFeeValue(Fee: "PonyExam" | "TrainPony" | "TrainerExam" | "BecomeTrainer" | "WhiskeyRounds"): number;
+declare function StableTrialTrainerTrainingEnd(): SafePromise<void>;
 /**
- * @param {"PonyExam" | "TrainPony" | "TrainerExam" | "BecomeTrainer" | "WhiskeyRounds"} Fee
- * @returns {boolean}
+ * @param {StableFeeType} Fee
+ * @returns
  */
-declare function StableCanPayTheFee(Fee: "PonyExam" | "TrainPony" | "TrainerExam" | "BecomeTrainer" | "WhiskeyRounds"): boolean;
+declare function StableFeeValue(Fee: StableFeeType): 0 | 10 | 500 | 50;
 /**
- * @param {"PonyExam" | "TrainPony" | "TrainerExam" | "BecomeTrainer" | "WhiskeyRounds"} Fee
- * @returns {void}
+ * @param {StableFeeType} Fee
+ * @returns
  */
-declare function StablePayTheFee(Fee: "PonyExam" | "TrainPony" | "TrainerExam" | "BecomeTrainer" | "WhiskeyRounds"): void;
+declare function StableCanPayTheFee(Fee: StableFeeType): boolean;
+/**
+ * @param {StableFeeType} Fee
+ */
+declare function StablePayTheFee(Fee: StableFeeType): void;
 declare function StableCanBecomePony(): void;
 declare function StablePlayerStartTrainingLesson(): void;
 declare function StablePlayerGetTrainingLesson(): void;
 /**
- * Start Traning Gallop
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Gallop
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingGallop(Behavior: string): void;
+declare function StablePlayerTrainingGallop(Behavior: number): void;
 /**
- * Start Traning Walk
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Walk
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingWalk(Behavior: string): void;
+declare function StablePlayerTrainingWalk(Behavior: number): void;
 /**
- * Start Traning Dance
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Dance
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingDance(Behavior: string): void;
+declare function StablePlayerTrainingDance(Behavior: number): void;
 /**
- * Start Traning Hurdle
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Hurdle
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingHurdles(Behavior: string): void;
-declare function StablePlayerTrainingHurdlesEnd(): Promise<void>;
+declare function StablePlayerTrainingHurdles(Behavior: number): void;
 /**
- * Start Traning Treadmill
- * @param {string} Behavior
- * @returns {void}
+ * @returns {SafePromise<void>}
  */
-declare function StablePlayerTrainingTreadmill(Behavior: string): void;
+declare function StablePlayerTrainingHurdlesEnd(): SafePromise<void>;
 /**
- * Start Traning Strong Treadmill
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Treadmill
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingStrongTreadmill(Behavior: string): void;
+declare function StablePlayerTrainingTreadmill(Behavior: number): void;
 /**
- * Start Traning Carriage
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Strong Treadmill
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingCarriage(Behavior: string): void;
+declare function StablePlayerTrainingStrongTreadmill(Behavior: number): void;
 /**
- * Start Traning Strong Carriage
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Carriage
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingStrongCarriage(Behavior: string): void;
+declare function StablePlayerTrainingCarriage(Behavior: number): void;
 /**
- * Start Traning Race
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Strong Carriage
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingRace(Behavior: string): void;
+declare function StablePlayerTrainingStrongCarriage(Behavior: number): void;
 /**
- * Start Traning Strong Race
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Race
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingStrongRace(Behavior: string): void;
+declare function StablePlayerTrainingRace(Behavior: number): void;
 /**
- * Start Traning Carrots - MiniGame
- * @param {string} Behavior
- * @returns {void}
+ * Start Training Strong Race
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingCarrots(Behavior: string): void;
-declare function StablePlayerTrainingCarrotsEnd(): Promise<void>;
+declare function StablePlayerTrainingStrongRace(Behavior: number): void;
+/**
+ * Start Training Carrots - MiniGame
+ *
+ * @param {number} Behavior
+ */
+declare function StablePlayerTrainingCarrots(Behavior: number): void;
+/**
+ * End Traning Carrots - MiniGame
+ * @returns {SafePromise<void>}
+ */
+declare function StablePlayerTrainingCarrotsEnd(): SafePromise<void>;
 /**
  * Reward for passed
- * @param {string} Behavior
- * @returns {void}
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingPass(Behavior: string): void;
+declare function StablePlayerTrainingPass(Behavior: number): void;
 /**
  * Guarantee for failed
- * @param {string} Behavior
- * @returns {void}
+ *
+ * @param {number} Behavior
  */
-declare function StablePlayerTrainingFail(Behavior: string): void;
+declare function StablePlayerTrainingFail(Behavior: number): void;
 declare function StablePlayerOtherPonys(): void;
 declare function StablePlayerToStable(): void;
 declare function StableDressPonyStart(): void;
@@ -136,55 +145,95 @@ declare function StableTrainingStoped(): void;
 declare function StablePlayerToHerd(): void;
 declare function StableDressBackPlayer(): void;
 declare function StableCheckEquipment(): void;
-declare function StablePlayerWearEquipment(Behavior: any): void;
-declare function StableWearPonyEquipment(C: any): void;
+/**
+ * Dress the Equipment to the Player
+ *
+ * @param {number} Behavior
+ */
+declare function StablePlayerWearEquipment(Behavior: number): void;
+/**
+ * Dress Character like a Pony
+ * @param {Character} C
+ */
+declare function StableWearPonyEquipment(C: Character): void;
 declare function StablePlayerStartExam(): void;
 declare function StablePlayerExamHurdles(): void;
-declare function StablePlayerExamHurdlesEnd(): Promise<void>;
+/**
+ * @returns {SafePromise<void>}
+ */
+declare function StablePlayerExamHurdlesEnd(): SafePromise<void>;
 declare function StablePlayerExamRace(): void;
 declare function StablePlayerExamDressage(): void;
 declare function StablePlayerExamPass(): void;
 declare function StablePlayerExamEnd(): void;
 declare function StableCanBecomeTrainer(): void;
 declare function StableBecomeTrainer(): void;
-declare function StableWearTrainerEquipment(C: any): void;
+/**
+ * Dress as Trainer
+ * @param {Character} C
+ */
+declare function StableWearTrainerEquipment(C: Character): void;
 declare function StableTrainerStart(): void;
 declare function StablePonyWearEquipment(): void;
-declare function StablePonyTraining(probability: any): void;
-declare function StablePonyTrainingHurdles(): void;
-declare function StablePonyTrainingHurdlesEnd(): Promise<void>;
-declare function StableTrainerWhip(): void;
-declare function StableTrainerWhipEnd(): Promise<void>;
 /**
- * @param {null | Character} C
- * @returns {void}
+ * @param {number} probability
  */
-declare function StablePonyStraightens(C: null | Character): void;
+declare function StablePonyTraining(probability: number): void;
+declare function StablePonyTrainingHurdles(): void;
+/**
+ * @returns {SafePromise<void>}
+ */
+declare function StablePonyTrainingHurdlesEnd(): SafePromise<void>;
+declare function StableTrainerWhip(): void;
+/**
+ * @returns {SafePromise<void>}
+ */
+declare function StableTrainerWhipEnd(): SafePromise<void>;
+/**
+ *
+ * @param {Character | undefined} [C]
+ */
+declare function StablePonyStraightens(C?: Character | undefined): void;
 declare function StablePlayerStartTExam(): void;
 declare function StablePlayerTExamKnow(): void;
 declare function StablePlayerTExamWhip(): void;
-declare function StablePlayerTExamWhipEnd(): Promise<void>;
+/**
+ * @returns {SafePromise<void>}
+ */
+declare function StablePlayerTExamWhipEnd(): SafePromise<void>;
 declare function StablePlayerTExamHurdles(): void;
-declare function StablePlayerTExamHurdlesEnd(): Promise<void>;
+/**
+ * @returns {SafePromise<void>}
+ */
+declare function StablePlayerTExamHurdlesEnd(): SafePromise<void>;
 declare function StablePlayerTExamPass(): void;
 declare function StablePlayerTExamEnd(): void;
-declare function StableGenericProgressStart(Timer: any, S: any, S2: any, Item: any, Background: any, Character: any, SecondCharacter: any, Stage: any, CurrentDialog: any, CancelStage: any, CancelCurrentDialog: any, Behavior: any, ProgressOperation: any): void;
+/**
+ * @param {number} Timer
+ * @param {number} S
+ * @param {number} S2
+ * @param {string} Item
+ * @param {string} Background
+ * @param {Character} Character
+ * @param {Character | null} SecondCharacter
+ * @param {string} Stage
+ * @param {string} CurrentDialog
+ * @param {string} CancelStage
+ * @param {string} CancelCurrentDialog
+ * @param {*} Behavior
+ * @param {StableProgressType} ProgressOperation
+ */
+declare function StableGenericProgressStart(Timer: number, S: number, S2: number, Item: string, Background: string, Character: Character, SecondCharacter: Character | null, Stage: string, CurrentDialog: string, CancelStage: string, CancelCurrentDialog: string, Behavior: any, ProgressOperation: StableProgressType): void;
 declare function StableGenericDrawProgress(): void;
 declare function StableGenericFinished(): void;
 declare function StableGenericCancel(): void;
 declare function StableGenericProgressEnd(): void;
 declare function StableKeyDown(event: KeyboardEvent): boolean;
 /**
+ *
  * @param {boolean} Reverse
  */
 declare function StableGenericRun(Reverse: boolean): void;
-/**
- * Returns true if a Appearance Group for Character available
- * @param {Character} C
- * @param {AssetGroupName} AppearanceGroup
- * @returns {boolean}
- */
-declare function StableCharacterAppearanceGroupAvailable(C: Character, AppearanceGroup: AssetGroupName): boolean;
 declare function StableHideDice(): void;
 /**
  * When the player starts a club card game
@@ -193,8 +242,9 @@ declare function StableHideDice(): void;
 declare function StableClubCardStart(): void;
 /**
  * When the player ends a club card game
+ * @returns {SafePromise<void>}
  */
-declare function StableClubCardEnd(): Promise<void>;
+declare function StableClubCardEnd(): SafePromise<void>;
 /**
  * Runs the pony command from the online chat box
  * @param {string} Activity - The activity to validate
@@ -202,14 +252,14 @@ declare function StableClubCardEnd(): Promise<void>;
  */
 declare function StableDoActivity(Activity: string): void;
 declare var StableBackground: string;
-/** @type {null | NPCCharacter} */
-declare var StableTrainer: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var StablePony: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var StableTrainer: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var StablePony: NPCCharacter;
 declare var StablePonyPass: boolean;
 declare var StablePonyFail: boolean;
-/** @type {Item[]} */
-declare var StablePlayerAppearance: Item[];
+/** @type {Item[] | null} */
+declare var StablePlayerAppearance: Item[] | null;
 /** @type {"Pony" | "Trainer" | null} */
 declare var StablePlayerOutfitWorn: "Pony" | "Trainer" | null;
 declare var StablePlayerTrainingActiv: boolean;
@@ -217,26 +267,30 @@ declare var StablePlayerTrainingLessons: number;
 declare var StablePlayerTrainingBehavior: number;
 declare var StableTrainerTrainingExercises: number;
 declare var StablePlayerInIsolation: boolean;
-/** @type {null | number} */
-declare var StablePlayerInIsolationStart: null | number;
-/** @type {null | number} */
-declare var StablePlayerInIsolationEnd: null | number;
+/** @type {number} */
+declare var StablePlayerInIsolationStart: number;
+/** @type {number} */
+declare var StablePlayerInIsolationEnd: number;
 declare var StableExamPoint: number;
 declare var StableProgress: number;
 declare var StableSecondProgress: number;
 declare var StableProgressAuto: number;
 declare var StableSecondProgressAuto: number;
 declare var StableProgressClick: number;
-declare var StableProgressLastKeyPress: null;
+/** @type {string} */
+declare var StableProgressLastKeyPress: string;
 declare var StableProgressItem: string;
 declare var StableProgressFinished: boolean;
-declare var StableProgressCharacter: null;
-declare var StableProgressSecondCharacter: null;
-declare var StableProgressEndStage: number;
-declare var StableProgressEndDialog: null;
-declare var StableProgressCancelStage: null;
-declare var StableProgressCancelDialog: null;
+/** @type {Character} */
+declare var StableProgressCharacter: Character;
+/** @type {Character | null} */
+declare var StableProgressSecondCharacter: Character | null;
+declare var StableProgressEndStage: string;
+declare var StableProgressEndDialog: string;
+declare var StableProgressCancelStage: string;
+declare var StableProgressCancelDialog: string;
 declare var StableProgressBehavior: number;
-declare var StableProgressOperation: null;
-declare var StableProgressStruggleCount: null;
+/** @type {StableProgressType | "StruggleImpossible"} */
+declare var StableProgressOperation: StableProgressType | "StruggleImpossible";
+declare var StableProgressStruggleCount: number;
 declare var StableActivityList: string[];

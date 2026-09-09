@@ -44,7 +44,7 @@ declare function PoseSetByItems(C: Character, category: AssetPoseCategory, poseN
  * Sets a new pose for the character
  * @param {Character} C - Character for which to set the pose
  * @param {null | AssetPoseName} poseName - Name of the pose to set as active or `null` to return to the default pose
- * @param {boolean} [ForceChange=false] - TRUE if the set pose(s) should overwrite current active pose(s)
+ * @param {boolean} [ForceChange=false] - TRUE if the set pose should overwrite all current active poses
  * @param {boolean} [RefreshDialog] - Refresh {@link DialogSelfMenuMapping.Pose} if so required
  * @returns {void} - Nothing
  */

@@ -23,7 +23,9 @@
             "FacePaints": 3,
             "Splatters": 4,
             "FacePaint": 5,
-            "FaceCrests": 6
+            "FaceCrests": 6,
+            "BabyPowderDust": 7,
+            "NavelBar1": 8
         }
     },
     "BodyUpper": {
@@ -101,7 +103,12 @@
             "SportBra": 58,
             "SportSwimsuit": 59,
             "FeatherLingerie": 60,
-            "Pasties1": 61
+            "Pasties1": 61,
+            "HeartPasties": 62,
+            "KittyPasties": 63,
+            "LatexBodysuit": 64,
+            "Plugsuit": 65,
+            "TransparentBunnyGirl": 66
         }
     },
     "Bracelet": {
@@ -250,7 +257,9 @@
             "SportSwimsuit": 126,
             "Swimsuit1": 127,
             "Swimsuit2": 128,
-            "Swimsuit3": 129
+            "Swimsuit3": 129,
+            "LatexBodysuit": 130,
+            "TransparentBunnyGirl": 131
         }
     },
     "ClothAccessory": {
@@ -403,7 +412,8 @@
             "RibbonCorset": 13,
             "ExtremeCorset": 14,
             "SatinCorset": 15,
-            "BarrelCorset": 16
+            "BarrelCorset": 16,
+            "HeavyLatexCorset": 17
         }
     },
     "Emoticon": {
@@ -1460,7 +1470,12 @@
             "Chocolate": 78,
             "ElectricGuitar": 79,
             "Laptop": 80,
-            "CustomPaddle": 81
+            "CustomPaddle": 81,
+            "CandyCane": 82,
+            "Foldingfan": 83,
+            "GrilledSausage": 84,
+            "Oilpaperumbrella": 85,
+            "R18Baton": 86
         }
     },
     "ItemHands": {
@@ -2345,7 +2360,8 @@
             "VibeEggGlans": 11,
             "VibeHeartClitPiercing": 12,
             "CockRingLeash": 13,
-            "ModularVulvaPiercings": 14
+            "ModularVulvaPiercings": 14,
+            "Catheter": 15
         }
     },
     "Jewelry": {
@@ -2353,7 +2369,8 @@
         "assets": {
             "JewelrySet": 0,
             "AnkletA": 1,
-            "TriskelionNecklace": 2
+            "TriskelionNecklace": 2,
+            "NavelBar1": 3
         }
     },
     "LeftAnklet": {
@@ -2623,7 +2640,17 @@
             "PumpHighHeels": 48,
             "Slippers": 49,
             "ZipperLeatherBoots": 50,
-            "ToeNails": 51
+            "ToeNails": 51,
+            "BalletHeels": 52,
+            "BalletWedges": 53,
+            "HighThighBoots": 54,
+            "HoofShoe": 55,
+            "Laceupshoes": 56,
+            "MaryJaneShoes": 57,
+            "PeeptoeHeels": 58,
+            "PrintedCrocs": 59,
+            "ThickSlippers": 60,
+            "ToeRing": 61
         }
     },
     "Socks": {
@@ -2944,7 +2971,74 @@
             "WoolCoat": 9,
             "LabCoat": 10,
             "GhostCloak": 11,
-            "Transparentraincoat": 12
+            "Transparentraincoat": 12,
+            "AdultBabyDress1": 13,
+            "AdultBabyDress2": 14,
+            "AdultBabyDress3": 15,
+            "AdultBabyDress4": 16,
+            "AllureSidecut": 17,
+            "Blouse1": 18,
+            "BodyTowel1": 19,
+            "BondageDress1": 20,
+            "BondageDress2": 21,
+            "BridesmaidDress1": 22,
+            "BrocadeCloudsSnowEmbroideryQipao": 23,
+            "CasualDroppedSuit": 24,
+            "CheerleaderTop": 25,
+            "ChineseDress1": 26,
+            "ChineseDress2": 27,
+            "CocktailDress": 28,
+            "ComfyTop": 29,
+            "CorsetShirt": 30,
+            "CrimsonCloudsInkRhymeQipaoDress": 31,
+            "CropTopShirt": 32,
+            "CrossStrapDress": 33,
+            "Dress2": 34,
+            "Dress3": 35,
+            "DressFur": 36,
+            "EveningGown": 37,
+            "FishnetTop": 38,
+            "FlowerDress": 39,
+            "FuzzyDress": 40,
+            "GardenDress": 41,
+            "Gown1": 42,
+            "Gown2Top": 43,
+            "Gown3": 44,
+            "GrandMage": 45,
+            "HeavyLeatherDress": 46,
+            "Jacket": 47,
+            "LatexHobbleDress": 48,
+            "LeatherBolero": 49,
+            "LeatherCropTop": 50,
+            "LittleFormalShirt": 51,
+            "LolitaShortDress": 52,
+            "LongQipaoDress": 53,
+            "MaidApron": 54,
+            "MeshTop": 55,
+            "MilitaryFatigue": 56,
+            "NunRobes": 57,
+            "OffTheShoulderTop": 58,
+            "RuffledDress": 59,
+            "SeethroughTop": 60,
+            "ShoulderlessTop": 61,
+            "SlaveRags": 62,
+            "SleevelessTop": 63,
+            "StarryOceanEveningGown": 64,
+            "StudentOutfit1": 65,
+            "StudentOutfit2": 66,
+            "StudentOutfit3": 67,
+            "SummerDress": 68,
+            "Sweater1": 69,
+            "TeacherOutfit1": 70,
+            "TennisShirt1": 71,
+            "TShirt1": 72,
+            "VirginKiller1": 73,
+            "WeddingDress1": 74,
+            "WeddingDress2": 75,
+            "WhiteDress": 76,
+            "Xmas2025": 77,
+            "Yukata1": 78,
+            "YuletideVelvetWarmth": 79
         }
     },
     "Decals": {
@@ -2988,7 +3082,10 @@
             "MissMariasManor": 35,
             "CRABS": 36,
             "PirateRockRadio": 37,
-            "MelodysBoutique": 38
+            "MelodysBoutique": 38,
+            "BellFlower": 39,
+            "LMF": 40,
+            "VelvetBunny": 41
         }
     }
 }

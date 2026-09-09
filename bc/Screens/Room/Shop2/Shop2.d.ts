@@ -142,7 +142,7 @@ declare namespace Shop2Consts {
         Value: number;
         Assets: readonly ItemBundle[];
     }>;
-    let Keys: Set<string>;
+    let Keys: Set<AssetFullName>;
     let Remotes: Set<string>;
 }
 declare namespace Shop2 {

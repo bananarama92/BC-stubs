@@ -108,8 +108,9 @@ declare function MagicSchoolFindsAroundKitsuneMagicBattleEnd(): Promise<void>;
 declare function MagicSchoolFindsAroundClubCardStart(): void;
 /**
  * When the player ends a club card game
+ * @returns {SafePromise<void>}
  */
-declare function MagicSchoolFindsAroundClubCardEnd(): Promise<void>;
+declare function MagicSchoolFindsAroundClubCardEnd(): SafePromise<void>;
 /**
  * Run out of the Findings room
  * @returns {void} - Nothing

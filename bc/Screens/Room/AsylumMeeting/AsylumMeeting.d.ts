@@ -96,9 +96,9 @@ declare function AsylumMeetingQuitGGTSMainHall(): void;
 declare function AsylumMeetingClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function AsylumMeetingClubCardEnd(): void;
+declare function AsylumMeetingClubCardEnd(): SafePromise<void>;
 declare var AsylumMeetingBackground: string;
 /** @type {NPCCharacter} */
 declare var AsylumMeetingPatientLeft: NPCCharacter;

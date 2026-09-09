@@ -6,3 +6,5 @@ __pycache__/
 _version.py
 *.egg-info/
 *.whl
+build/
+.vscode

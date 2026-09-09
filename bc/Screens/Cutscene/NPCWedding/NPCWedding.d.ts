@@ -1,10 +1,10 @@
 /**
  * Puts a wedding dress on a specified character
  * @param {Character} C - The character that must wear the ring.
- * @param {string} Dress - The asset name of wedding dress to wear.
+ * @param {AssetName} Dress - The asset name of wedding dress to wear.
  * @returns {void} - Nothing.
  */
-declare function NPCWeddingDress(C: Character, Dress: string): void;
+declare function NPCWeddingDress(C: Character, Dress: AssetName): void;
 /**
  * Puts a bridesmaid dress on a specified character
  * @param {Character} C - The character that must wear the ring.

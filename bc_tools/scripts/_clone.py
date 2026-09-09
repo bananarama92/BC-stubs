@@ -5,7 +5,7 @@ import sys
 import subprocess
 import logging
 
-from bc_tools import logger, entry_point, append_docstring
+from ..utils import logger, entry_point, append_docstring
 
 __all__ = ["main"]
 
@@ -34,7 +34,10 @@ def clone(repo: str, branch: str):
 @entry_point
 @append_docstring(__doc__)
 def main():
-    parser = argparse.ArgumentParser(usage="python ./clone.py", description=__doc__)
+    parser = argparse.ArgumentParser(
+        usage="bc_tools.clone https://gitgud.io/BondageProjects/Bondage-College.git master",
+        description=__doc__,
+    )
     parser.add_argument("repo", help="Repo URL")
     parser.add_argument("branch", help="Repo branch")
     args = parser.parse_args();

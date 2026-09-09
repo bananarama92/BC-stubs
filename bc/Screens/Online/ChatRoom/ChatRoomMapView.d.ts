@@ -1,3 +1,20 @@
+declare function ChatRoomMapViewCheckForDuplicateIds(): boolean;
+/**
+ * Creates an function that loops through images
+ * @param {string} baseName - Source
+ * @param {number} frames
+ * @param {number} duration - in ms
+ * @param {boolean} reverse - TRUE for reverse, totalFramesCount to 1
+ * @returns {(X: number, Y: number) => string}
+ */
+declare function ChatRoomMapViewCreateAnimation(baseName: string, frames: number, duration?: number, reverse?: boolean): (X: number, Y: number) => string;
+/**
+ * To prevent repeating the same logic, we create a function that returns a function
+ * @param {ChatRoomMapDirection} direction
+ * @param {number} speed - how fast to trigger, in ms
+ * @returns {() => void}
+ */
+declare function ChatRoomMapViewCreateOnEnterConveyorLogic(direction: ChatRoomMapDirection, speed: number): () => void;
 /**
  * Returns TRUE if the player is an admin and activated her super powers on the map
  * @returns {boolean} - TRUE if super powers are active
@@ -42,6 +59,72 @@ declare function ChatRoomMapViewLeave(): void;
  */
 declare function ChatRoomMapViewActivate(): void;
 /**
+ *
+ * @param {ChatRoomMapDoodad} item
+ * @param {keyof typeof ChatRoomMapViewLookupTables} type
+ * @param {boolean} updateRecent
+ * @returns
+ */
+declare function ChatRoomMapViewSetSelection(item: ChatRoomMapDoodad, type: keyof typeof ChatRoomMapViewLookupTables, updateRecent?: boolean): void;
+/**
+ * Refreshes the UI
+ * @param {boolean} [selectionOnly]
+ * @param {string} [search]
+ */
+declare function ChatRoomMapViewReloadEditorPanel(selectionOnly?: boolean, search?: string): void;
+declare function ChatRoomMapViewGetButtons(): HTMLButtonElement[];
+/**
+ * Creates a category button
+ * @param {(this: HTMLButtonElement, ev: PointerEvent) => void} callback
+ * @param {string} image
+ * @param {string} [tooltip]
+ */
+declare function ChatMapRoomViewCreateCategoryButton(callback: (this: HTMLButtonElement, ev: PointerEvent) => void, image: string, tooltip?: string): HTMLButtonElement;
+/**
+ * Returns the list of items for the current mode
+ * @param {string} [search]
+ * @returns {Element[]}
+ */
+declare function ChatRoomMapViewGetItems(search?: string): Element[];
+/**
+ * Typecheck for {@link ChatRoomMapEffect}
+ * @param {ChatRoomMapDoodad} element - The element to check
+ * @returns {element is ChatRoomMapEffect}
+ */
+declare function ChatRoomMapViewIsChatRoomMapEffect(element: ChatRoomMapDoodad): element is ChatRoomMapEffect;
+/**
+ * Typecheck for {@link ChatRoomMapPhysicalElement}
+ * @param {ChatRoomMapDoodad} element - The element to check
+ * @returns {element is ChatRoomMapPhysicalElement}
+ */
+declare function ChatRoomMapViewIsChatRoomMapPhysicalElement(element: ChatRoomMapDoodad): element is ChatRoomMapPhysicalElement;
+/**
+ * Typecheck for {@link ChatRoomMapObject}
+ * @param {ChatRoomMapDoodad} element - The element to check
+ * @returns {element is ChatRoomMapObject}
+ */
+declare function ChatRoomMapViewIsChatRoomMapObject(element: ChatRoomMapDoodad): element is ChatRoomMapObject;
+/**
+ * Typecheck for {@link ChatRoomMapTile}
+ * @param {ChatRoomMapDoodad} element - The element to check
+ * @returns {element is ChatRoomMapTile}
+ */
+declare function ChatRoomMapViewIsChatRoomMapTile(element: ChatRoomMapDoodad): element is ChatRoomMapTile;
+/**
+ * Creates an item for the chat room map view
+ * @param {ChatRoomMapDoodad} item - The map element to create
+ * @param {boolean} [updateRecent]
+ * @returns {Element} - The created item
+ */
+declare function ChatRoomMapViewCreateMapElementItem(item: ChatRoomMapDoodad, updateRecent?: boolean, readOnly?: boolean): Element;
+declare function ChatRoomMapViewGetSelection(): Element[];
+/**
+ * Returns the last 8 recently used items
+ * @returns {Element[]}
+ */
+declare function ChatRoomMapViewGetRecentItems(): Element[];
+declare function ChatRoomMapViewResize(load: boolean): void;
+/**
  * Deactivates the chat room map
  * @returns {void} - Nothing
  */
@@ -76,17 +159,16 @@ declare function ChatRoomMapViewRoomUpdated(): void;
 /**
  * Gets a index number for the tile and obejct lists and returns the corrosponting coordinates in X and Y
  * @param {number} index - Index number for the tile and object lists
- * @returns {{x: number, y: number}} - Object containing the resulting x and y coordinates.
+ * @returns {ChatRoomMapPos} - Object containing the resulting x and y coordinates.
+ * @deprecated moved to {@link MapIndexToCoordinates}
  */
-declare function ChatRoomMapViewIndexToCoordinates(index: number): {
-    x: number;
-    y: number;
-};
+declare function ChatRoomMapViewIndexToCoordinates(index: number): ChatRoomMapPos;
 /**
  * Gets coordinates in X and Y and returns the corrosponding index number for the tile and object list
  * @param {number} x - X-coordinate to be translated
  * @param {number} y - Y-coordinate to be translated
  * @returns {number} - Index number for the tile and object lists
+ * @deprecated moved to {@link MapCoordinatesToIndex}
  */
 declare function ChatRoomMapViewCoordinatesToIndex(x: number, y: number): number;
 /**
@@ -140,11 +222,11 @@ declare function ChatRoomMapViewCharacterOnInteractionRange(C: Character): boole
 declare function ChatRoomMapViewFindWallEffectTile(CW: boolean, CE: boolean, SW: boolean, SC: boolean, SE: boolean): number;
 /**
  * Returns TRUE if the X and Y coordinates is a wall tile, if out of bound we also return TRUE
- * @param {number} X - The X position on the map
- * @param {number} Y - The Y position on the map
+ * @param {number} x - The X position on the map
+ * @param {number} y - The Y position on the map
  * @returns {boolean} - TRUE if it's a wall
  */
-declare function ChatRoomMapViewIsWall(X: number, Y: number): boolean;
+declare function ChatRoomMapViewIsWall(x: number, y: number): boolean;
 /**
  * Checks for connectivity in 4 directions based on a provided validation function
  * @param {number} X - The X position on the map
@@ -160,18 +242,20 @@ declare function ChatRoomMapViewGetConnectivityDirections(X: number, Y: number, 
 };
 /**
  * Returns the object located at a X and Y position on the map, or NULL if nothing
- * @param {number} X - The X position on the map
- * @param {number} Y - The Y position on the map
- * @returns {ChatRoomMapTile | undefined} - The object at the position
+ * @param {number} x - The X position on the map
+ * @param {number} y - The Y position on the map
+ * @returns {ChatRoomMapTile | null} - The object at the position
+ * @deprecated since August 2026, use {@link MapGetCell}
  */
-declare function ChatRoomMapViewGetTileAtPos(X: number, Y: number): ChatRoomMapTile | undefined;
+declare function ChatRoomMapViewGetTileAtPos(x: number, y: number): ChatRoomMapTile | null;
 /**
  * Returns the object located at a X and Y position on the map, or NULL if nothing
- * @param {number} X - The X position on the map
- * @param {number} Y - The Y position on the map
- * @returns {ChatRoomMapObject | undefined} - The object at the position
+ * @param {number} x - The X position on the map
+ * @param {number} y - The Y position on the map
+ * @returns {ChatRoomMapObject | null} - The object at the position
+ * @deprecated since August 2026, use {@link MapGetCell}
  */
-declare function ChatRoomMapViewGetObjectAtPos(X: number, Y: number): ChatRoomMapObject | undefined;
+declare function ChatRoomMapViewGetObjectAtPos(x: number, y: number): ChatRoomMapObject | null;
 /**
  * Returns TRUE if a given position cannot be entered
  * @param {number} X - The X position on the map
@@ -238,6 +322,7 @@ declare function ChatRoomMapViewDrawGrid(Left: number, Top: number, Width: numbe
 /**
  * Sets the next update flag for the room if it's not already set, the delay is 5 seconds
  * @returns {void} - Nothing
+ * @deprecated since August 2026, use {@link MapValidateCells}
  */
 declare function ChatRoomMapViewUpdateFlag(): void;
 /**
@@ -291,8 +376,9 @@ declare function ChatRoomMapViewDrawUi(): void;
  * Change the key of charachter - sender
  * @param {Character} target
  * @param {("gold" | "silver" | "bronze")[]} keys
+ * @param {boolean} give
  */
-declare function ChatRoomMapViewChangeKey(target: Character, keys: ("gold" | "silver" | "bronze")[], boolean: any): void;
+declare function ChatRoomMapViewChangeKey(target: Character, keys: ("gold" | "silver" | "bronze")[], give: boolean): void;
 /**
  * Change a key from a character from a hidden message - reciver
  * @param {Character} sender
@@ -320,10 +406,11 @@ declare function ChatRoomMapViewTeleportHiddenMessage(sender: Character, data: S
 declare function ChatRoomMapViewCanEnterTile(X: number, Y: number): number;
 /**
  * Moves the player
- * @param {"West" | "East" | "North" | "South"} D - The direction being travelled (North, South, East, West)
+ * @param {ChatRoomMapDirection} D - The direction being travelled (North, South, East, West)
+ * @param {boolean} Force - Force the movement
  * @returns {void} - Nothing
  */
-declare function ChatRoomMapViewMove(D: "West" | "East" | "North" | "South"): void;
+declare function ChatRoomMapViewMove(D: ChatRoomMapDirection, Force?: boolean): void;
 /**
  * Undoes the changes made to the map, from the latest backup in the stack
  * @returns {void} - Nothing
@@ -341,6 +428,17 @@ declare function ChatRoomMapViewClick(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewMouseDown(): void;
+/**
+ *
+ * @param {ChatRoomData | null} data
+ * @returns {data is ChatRoomData & { MapData: { Objects: string, Tiles: string }}}
+ */
+declare function validMapData(data: ChatRoomData | null): data is ChatRoomData & {
+    MapData: {
+        Objects: string;
+        Tiles: string;
+    };
+};
 /**
  * Mouse move event is used to draw on screen
  * @returns {void} - Nothing
@@ -376,14 +474,16 @@ declare var ChatRoomMapViewObjectStartID: number;
 declare var ChatRoomMapViewObjectEntryID: number;
 /** @type {"" |  "Tile" | "Object" | "TileType" | "ObjectType" | "Effect"} */
 declare var ChatRoomMapViewEditMode: "" | "Tile" | "Object" | "TileType" | "ObjectType" | "Effect";
+declare var ChatRoomMapViewEditPath: string;
 /** @type {"" | ChatRoomMapTileType | ChatRoomMapObjectType} */
 declare var ChatRoomMapViewEditSubMode: "" | ChatRoomMapTileType | ChatRoomMapObjectType;
 declare var ChatRoomMapViewEditStarted: boolean;
-/** @type {null | ChatRoomMapDoodad | ChatRoomMapEffect} */
-declare var ChatRoomMapViewEditObject: null | ChatRoomMapDoodad | ChatRoomMapEffect;
+/** @type {null | ChatRoomMapDoodad} */
+declare var ChatRoomMapViewEditObject: null | ChatRoomMapDoodad;
 /** @type {number[]} */
 declare var ChatRoomMapViewEditSelection: number[];
 declare var ChatRoomMapViewEditRange: number;
+declare var ChatRoomMapViewMaxEditRange: number;
 /** @type {ServerChatRoomMapData[]} */
 declare var ChatRoomMapViewEditBackup: ServerChatRoomMapData[];
 /** @type {null | number} */
@@ -416,18 +516,31 @@ declare var ChatRoomMapViewTileFog: Uint16Array | null;
 /** @type {Uint16Array | null} */
 declare var ChatRoomMapViewObjectFog: Uint16Array | null;
 declare namespace ChatRoomMapViewKeysPressed {
-    let u: boolean;
-    let d: boolean;
-    let l: boolean;
-    let r: boolean;
+    let North: boolean;
+    let South: boolean;
+    let West: boolean;
+    let East: boolean;
 }
 declare var ChatRoomMapViewStartOfKeyPress: number;
 /** @type {Record<number, ChatRoomMapTile | undefined>} */
 declare var ChatRoomMapViewTileLookup: Record<number, ChatRoomMapTile | undefined>;
 /** @type {Record<number, ChatRoomMapObject | undefined>} */
 declare var ChatRoomMapViewObjectLookup: Record<number, ChatRoomMapObject | undefined>;
+/** @type {Record<number, ChatRoomMapEffect | undefined>} */
+declare var ChatRoomMapViewEffectLookup: Record<number, ChatRoomMapEffect | undefined>;
 /** @type {Map<number, Character>} */
 declare var ChatRoomMapViewCharacterMap: Map<number, Character>;
+declare namespace ChatRoomMapViewLookupTables {
+    let Tile: {
+        [x: number]: ChatRoomMapTile | undefined;
+    };
+    let Object: {
+        [x: number]: ChatRoomMapObject | undefined;
+    };
+    let Effect: {
+        [x: number]: ChatRoomMapEffectStaticLighting | undefined;
+    };
+}
 declare const ChatRoomMapViewEffectStartID: 10;
 /**
  * A list of predefined lighting effects. May be replaced with a color picker in the future.
@@ -436,8 +549,13 @@ declare const ChatRoomMapViewEffectStartID: 10;
 declare const ChatRoomMapViewEffectList: ChatRoomMapEffect[];
 /** @type {ChatRoomMapTile[]} */
 declare const ChatRoomMapViewTileList: ChatRoomMapTile[];
+/** @type {Partial<Record<ChatRoomMapObject["Type"], Partial<Omit<ChatRoomMapObject, "ID">>>>} */
+declare const ChatRoomMapViewObjectDefaultValues: Partial<Record<ChatRoomMapObject["Type"], Partial<Omit<ChatRoomMapObject, "ID">>>>;
 /** @type {ChatRoomMapObject[]} */
 declare const ChatRoomMapViewObjectList: ChatRoomMapObject[];
+declare const ChatRoomMapViewTileTypes: Set<ChatRoomMapTileType>;
+declare const ChatRoomMapViewObjectTypes: Set<ChatRoomMapObjectType>;
+declare const ChatRoomMapViewEffectTypes: Set<"StaticLighting">;
 declare namespace ChatRoomMapManager {
     let Map: {
         /**
@@ -468,7 +586,7 @@ declare namespace ChatRoomMapManager {
         getEffectsByXY(x: number, y: number): ChatRoomMapEffect[];
         /**
          * Get the current active effects array at a given tile index.
-         * @param {number} tileIndex the index of a map tile, as returned by ChatRoomMapViewCoordinatesToIndex.
+         * @param {number} tileIndex the index of a map tile, as returned by MapCoordinatesToIndex.
          * @returns {ChatRoomMapEffect[]}
          */
         getEffectsByIndex(tileIndex: number): ChatRoomMapEffect[];
@@ -528,9 +646,10 @@ declare namespace ChatRoomMapManager {
         _markDirty(flag: number): void;
         /**
          * Marks a specific part of the map data as clean, that is, synchronized with the server.
+         * @param {number} flag
          * @returns {void}
          */
-        _markClean(flag: any): void;
+        _markClean(flag: number): void;
         /**
          * Marks the current effects data as dirty, that is, changed and not yet synchronized with the server.
          * @returns {void}

@@ -52,6 +52,7 @@ type GraphicsFontName =
 	"Arial" | "TimesNewRoman" | "Papyrus" | "ComicSans" | "Impact" | "HelveticaNeue" | "Verdana" |
 	"CenturyGothic" | "Georgia" | "CourierNew" | "Copperplate"
 	;
+type GraphicsShowFullscreenButton = "on" | "off" | "on_when_mobile";
 
 // #endregion
 

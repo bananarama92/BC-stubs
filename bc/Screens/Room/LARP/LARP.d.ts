@@ -27,9 +27,9 @@ declare function LARPSelectClass(NewClass: string): void;
 declare function LARPClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function LARPClubCardEnd(): Promise<void>;
+declare function LARPClubCardEnd(): SafePromise<void>;
 declare var LARPBackground: string;
 /** @type {NPCCharacter} */
 declare var LARPOrganiser: NPCCharacter;

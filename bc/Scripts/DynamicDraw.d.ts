@@ -69,9 +69,9 @@ declare function DynamicDrawTextAndEffects(text: string, ctx: CanvasRenderingCon
 /**
  * Parses a dynamic drawing options object, returning default values for properties that aren't defined.
  * @param {DynamicDrawOptions} [options] - The options object to parse
- * @returns {DynamicDrawOptions} - A complete options object, with default values where not specified
+ * @returns {Required<DynamicDrawOptions>} - A complete options object, with default values where not specified
  */
-declare function DynamicDrawParseOptions(options?: DynamicDrawOptions): DynamicDrawOptions;
+declare function DynamicDrawParseOptions(options?: DynamicDrawOptions): Required<DynamicDrawOptions>;
 /**
  * Applies a set of dynamic drawing options to a canvas rendering context. This sets the canvas up with the relevant font size, color, etc.
  * ready for drawing text
@@ -91,7 +91,7 @@ declare function DynamicDrawApplyOptions(ctx: CanvasRenderingContext2D, { fontSi
  * @type {object}
  * @property {number} [fontSize] - The target font size. Note that if space is constrained, the actual drawn font size will be reduced
  * automatically to fit. Defaults to 30px.
- * @property {string | null} [fontFamily] - The desired font family to draw text in. This can be a single font name, or a full CSS font stack
+ * @property {string} [fontFamily] - The desired font family to draw text in. This can be a single font name, or a full CSS font stack
  * (e.g. "'Helvetica', 'Arial', sans-serif"). Defaults to the player's chosen global font.
  * @property {CanvasTextAlign} [textAlign] - The text alignment to use. Can be any valid
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-align text alignment}. Not applicable to the {@link DynamicDrawTextArc}
@@ -225,7 +225,7 @@ type DynamicDrawOptions = {
      * - The desired font family to draw text in. This can be a single font name, or a full CSS font stack
      * (e.g. "'Helvetica', 'Arial', sans-serif"). Defaults to the player's chosen global font.
      */
-    fontFamily?: string | null | undefined;
+    fontFamily?: string | undefined;
     /**
      * - The text alignment to use. Can be any valid
      * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-align text alignment}. Not applicable to the {@link DynamicDrawTextArc}function. Defaults to "center".

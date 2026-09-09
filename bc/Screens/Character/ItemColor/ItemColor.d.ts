@@ -88,9 +88,9 @@ declare function ItemColorCancelAndExit(): void;
 declare function ItemColorSaveClick(): void;
 /**
  * Revert the {@link ItemColorItem} colors and opacity.
- * @param {"initial" | "default"} type - The type of revertion: the initial state prior to opening the color picker or the assets default
+ * @param {"initial" | "default" | "intermediateSaved"} type - The type of revertion: the initial state prior to opening the color picker or the assets default
  */
-declare function ItemColorRevert(type: "initial" | "default"): void;
+declare function ItemColorRevert(type: "initial" | "default" | "intermediateSaved"): void;
 /**
  * Handles color picker cancellation clicks when the item color UI is in color picker mode
  * @returns {void} - Nothing
@@ -221,9 +221,9 @@ declare namespace ItemColorMode {
 declare let ItemColorCharacter: Character;
 /**
  * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called
- * @type {Item}
+ * @type {ItemColorItem}
  */
-declare let ItemColorItem: Item;
+declare let ItemColorItem: ItemColorItem;
 /** @type {null | ItemColorMode} */
 declare let ItemColorCurrentMode: null | ItemColorMode;
 /**

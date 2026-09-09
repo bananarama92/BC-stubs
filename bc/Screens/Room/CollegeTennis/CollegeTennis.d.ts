@@ -28,15 +28,16 @@ declare function CollegeTennisClick(): void;
 declare function CollegeTennisGameStart(Difficulty: "Easy" | "Normal" | "Hard"): void;
 /**
  * Triggered when the tennis game ends. Winning opens a dialog option to allow the player to invite Jennifer to their room.
+ * @returns {SafePromise<void>}
  */
-declare function CollegeTennisGameEnd(): Promise<void>;
+declare function CollegeTennisGameEnd(): SafePromise<void>;
 /**
  * Triggered when Jennifer is invited to the player's private room. The player earns a tennis racket.
  * @returns {void} - Nothing
  */
 declare function CollegeTennisInviteToPrivateRoom(): void;
 declare var CollegeTennisBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeTennisJennifer: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeTennisJennifer: NPCCharacter;
 declare var CollegeTennisJenniferStatus: string;
 declare var CollegeTennisJenniferWillJoinRoom: boolean;

@@ -7,6 +7,7 @@ import subprocess
 import functools
 
 from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 __all__ = ["logger", "entry_point", "append_docstring"]
 
@@ -104,6 +105,13 @@ class BCLogger(logging.Logger):
             self, enter_msg,
             suppress_error=suppress_error, error_callback=error_callback,
         )
+
+    if not TYPE_CHECKING:
+        def warning(self, msg: object, *args, **kwargs) -> None:
+            return super().warning(f"::warning::{msg}", *args, **kwargs)
+
+        def error(self, msg: object, *args, **kwargs) -> None:
+            return super().error(f"::error::{msg}", *args, **kwargs)
 
 
 logger = BCLogger("bc-stubs", logging.DEBUG)

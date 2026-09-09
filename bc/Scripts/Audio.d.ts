@@ -60,10 +60,10 @@ declare function AudioPlaySoundForAsset(character: Character, asset: Asset): boo
  *
  * @param {Character} character
  * @param {AssetGroupName} groupName
- * @param {string} assetName
+ * @param {AssetName} assetName
  * @returns {AudioSoundEffect | null}
  */
-declare function AudioGetSoundFromAsset(character: Character, groupName: AssetGroupName, assetName: string): AudioSoundEffect | null;
+declare function AudioGetSoundFromAsset(character: Character, groupName: AssetGroupName, assetName: AssetName): AudioSoundEffect | null;
 /**
  * Get a file name for a given sound effect.
  * @param {string} sound - The sound effect to load a file from.

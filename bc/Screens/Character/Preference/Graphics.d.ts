@@ -56,6 +56,8 @@ declare var PreferenceGraphicsPowerModeIndex: number;
 declare var PreferenceGraphicsWebGLOptions: WebGLContextAttributes;
 declare var PreferenceGraphicsAnimationQualityList: number[];
 declare var PreferenceGraphicsFrameLimit: number[];
+/** @type {GraphicsShowFullscreenButton[]} */
+declare var PreferenceGraphicsFullscreenButtonList: GraphicsShowFullscreenButton[];
 declare const PreferenceSubscreenGraphicsIDs: Readonly<{
     grid: "preference-graphics-grid";
     noWebGL: "preference-graphics-no-webgl";

@@ -92,9 +92,11 @@ declare function PokerCardFileName(Card: number): string;
 declare function PokerTableDraw(): void;
 /**
  * When all players chip in the pot
+ * @param {number} Multiplier
+ * @param {number} StartPos
  * @returns {void} - Nothing
  */
-declare function PokerAddPot(Multiplier: any, StartPos: any): void;
+declare function PokerAddPot(Multiplier: number, StartPos: number): void;
 /**
  * When the player wins, she can unlock new opponents and win money
  * @returns {void}
@@ -103,9 +105,9 @@ declare function PokerChallengeDone(): void;
 /**
  * Process an action to advance the poker game
  * @param {string} Action - Bet, Raise, Fold or Watch
- * @returns {string} - The file name of the card image
+ * @returns {void}
  */
-declare function PokerProcess(Action: string): string;
+declare function PokerProcess(Action: string): void;
 /**
  * Deals a fresh new hand for all poker players
  * @returns {void} - Nothing
