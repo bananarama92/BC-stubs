@@ -30,10 +30,23 @@ declare function AsylumGGTSGetLevel(C: Character): GameGGTSLevel;
  */
 declare function AsylumGGTSGetLevelTime(C: Character): number;
 /**
+ * Returns the character's current level timer
+ * @param {Character} C
+ * @param {number} time
+ */
+declare function AsylumGGTSSetLevelTime(C: Character, time: number, push?: boolean): void;
+/**
  * Returns the character's current strike count
  * @param {Character} C
  */
 declare function AsylumGGTSGetStrikes(C: Character): number;
+/**
+ * Set the character's current strike count
+ * @param {Character} C
+ * @param {number} strikes
+ * @returns {number}
+ */
+declare function AsylumGGTSSetStrikes(C: Character, strikes: number): number;
 /**
  * Returns the character's currently set GGTS rules
  * @param {Character} C
@@ -95,10 +108,10 @@ declare function AsylumGGTSCharacterName(C: Character): string;
 /**
  * Sends a chat message from the GGTS.  GGTS slowly replaces the player name by the player number as level rises.
  * @param {string} Msg - The message to publish
- * @param {Character} [Target] - The member number of the target character
+ * @param {Character | null} [Target] - The member number of the target character
  * @returns {void} - Nothing
  */
-declare function AsylumGGTSMessage(Msg: string, Target?: Character): void;
+declare function AsylumGGTSMessage(Msg: string, Target?: Character | null): void;
 /**
  * Generates a new GGTS Task for the player and publishes it
  * @returns {void} - Nothing
@@ -122,10 +135,10 @@ declare function AsylumGGTSQueryDone(Level: number, Text: string): boolean;
 /**
  * Returns TRUE if the task T is currently done by character C
  * @param {Character} C - The character to evaluate
- * @param {string} T - The task to evaluate
+ * @param {GGTSTask | null} T - The task to evaluate
  * @returns {boolean} - TRUE if the is done
  */
-declare function AsylumGGTSTaskDone(C: Character, T: string): boolean;
+declare function AsylumGGTSTaskDone(C: Character, T: GGTSTask | null): boolean;
 /**
  * Returns TRUE if GGTS can remove an item for a body group
  * @param {Character} C - The character to evaluate
@@ -136,23 +149,23 @@ declare function AsylumGGTSCanRemove(C: Character, Group: AssetGroupName): boole
 /**
  * Returns TRUE if the task T can be done in character C predicament
  * @param {Character} C - The character to evaluate
- * @param {string} T - The task to evaluate
+ * @param {GGTSTask | null} T - The task to evaluate
  * @returns {boolean} - TRUE if the task can be done
  */
-declare function AsylumGGTSTaskCanBeDone(C: Character, T: string): boolean;
+declare function AsylumGGTSTaskCanBeDone(C: Character, T: GGTSTask | null): boolean;
 /**
  * Returns TRUE if the task T was failed by character C
  * @param {Character} C - The character to evaluate
- * @param {string} T - The task to evaluate
+ * @param {GGTSTask | null} T - The task to evaluate
  * @returns {boolean} - TRUE if the task was failed
  */
-declare function AsylumGGTSTaskFail(C: Character, T: string): boolean;
+declare function AsylumGGTSTaskFail(C: Character, T: GGTSTask | null): boolean;
 /**
  * Checks if there's a futuristic item in the group slot and remove it if it's the case
- * @param {AssetGroupName} Group - The group name to validate
+ * @param {AssetGroupName[]} groups - The group name to validate
  * @returns {void} - Nothing
  */
-declare function AsylumGGTSTaskRemoveFuturisticItem(Group: AssetGroupName): void;
+declare function AsylumGGTSTaskRemoveFuturisticItem(groups: AssetGroupName[]): void;
 /**
  * Transforms a ballgag to a panelgag for the specified group
  * @param {AssetGroupName} Group - The group name to transform
@@ -172,10 +185,10 @@ declare function AsylumGGTSConfigureGag(Group: AssetGroupName): void;
 declare function AsylumGGTSAutomaticTask(): void;
 /**
  * In a public room, some GGTS tasks can target another valid player.  Patients will do physical activities, nurses will restraint.
- * @param {string} T - The task to evaluate
- * @returns {Character} - The target character
+ * @param {GGTSTask} T - The task to evaluate
+ * @returns {Character | null} - The target character
  */
-declare function AsylumGGTSFindTaskTarget(T: string): Character;
+declare function AsylumGGTSFindTaskTarget(T: GGTSTask): Character | null;
 /**
  * Generates a new GGTS Task for the player and publishes it
  * @returns {void} - Nothing
@@ -252,9 +265,10 @@ declare function AsylumGGTSControlItem(C: Character, Item: Item): boolean;
 declare function AsylumGGTSHasMinutes(Minute: number): boolean;
 /**
  * At level 6, the player can spend GGTS minutes for various reasons
+ * @param {number} Minute
  * @returns {void} - Nothing
  */
-declare function AsylumGGTSSpendMinute(Minute: any): void;
+declare function AsylumGGTSSpendMinute(Minute: number): void;
 /**
  * Adds a strike to the player game info.  At strike 3, we auto-unlock the door to allow players to leave.
  * @returns {void} - Nothing
@@ -289,9 +303,9 @@ declare function AsylumGGTSOrgasmResist(): void;
  * When the player is sent to do GGTS by her owner
  * @param {number} LockTime - The number of minutes to do
  * @param {string} Msg - The nurse intro message
- * @return {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function AsylumGGTSLock(LockTime: number, Msg: string): void;
+declare function AsylumGGTSLock(LockTime: number, Msg: string): SafePromise<void>;
 /**
  * Fully dress the character in a drone futuristic gear setup
  * @param {Character} [C] - The character to dress, if omitted, we use the player
@@ -306,11 +320,11 @@ declare function AsylumGGTSDroneDress(C?: Character): void;
 declare function AsylumGGTSAllowChange(C: Character): boolean;
 /**
  * Called from Dialog.js, triggers a specific action from GGTS game
- * @param {String} Action - The action to perform
- * @param {Number} Minute - The number of minutes to remove
+ * @param {GGTSTask | "MoneyForMinutes" | "GetHelmet"} Action - The action to perform
+ * @param {number} Minute - The number of minutes to remove
  * @returns {void} - Nothing
  */
-declare function AsylumGGTSDialogAction(Action: string, Minute: number): void;
+declare function AsylumGGTSDialogAction(Action: GGTSTask | "MoneyForMinutes" | "GetHelmet", Minute: number): void;
 /**
  * Called from Dialog.js, as nurse, trigger a specific interaction for the current character
  * @param {String} Interaction - The interaction to perform
@@ -331,9 +345,9 @@ declare function AsylumGGTSDialogPause(pauseDuration: string): void;
  * Called from chat room, processes hidden GGTS messages
  * @param {Character} SenderCharacter - The character sending the message
  * @param {ServerChatRoomMessage} data - The full message recieved
- * @returns {Object} - Nothing to be used
+ * @returns {void} - Nothing to be used
  */
-declare function AsylumGGTSHiddenMessage(SenderCharacter: Character, data: ServerChatRoomMessage): Object;
+declare function AsylumGGTSHiddenMessage(SenderCharacter: Character, data: ServerChatRoomMessage): void;
 /**
  * GGTS Draws the level, the number of strikes and a progress bar, level 6 shows the time in a gold frame
  * @param {Character} C - Character to draw the info for
@@ -349,22 +363,24 @@ declare function AsylumGGTSDrawCharacter(C: Character, X: number, Y: number, Zoo
  */
 declare function AsylumGGTSReset(): void;
 declare var AsylumGGTSBackground: string;
-/** @type {null | NPCCharacter} */
-declare var AsylumGGTSComputer: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumGGTSComputer: NPCCharacter;
 declare var AsylumGGTSIntroDone: boolean;
 declare var AsylumGGTSTimer: number;
-/** @type {null | string} */
-declare var AsylumGGTSTask: null | string;
+/** @type {null | GGTSTask} */
+declare var AsylumGGTSTask: null | GGTSTask;
 /** @type {null | Character} */
 declare var AsylumGGTSTaskTarget: null | Character;
-declare var AsylumGGTSLastTask: string;
+/** @type {null | GGTSTask} */
+declare var AsylumGGTSLastTask: null | GGTSTask;
 declare var AsylumGGTSTaskStart: number;
 declare var AsylumGGTSTaskEnd: number;
 declare var AsylumGGTSChatToParse: string;
 /**
  * The list of available tasks, partitioned by level.
+ * @type {GGTSTask[][]}
  */
-declare var AsylumGGTSTaskList: string[][];
+declare var AsylumGGTSTaskList: GGTSTask[][];
 declare var AsylumGGTSLevelTime: number[];
 /**
  * The last pose the character had. Used to enforce KeepPose rules.

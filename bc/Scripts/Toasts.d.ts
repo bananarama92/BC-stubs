@@ -15,6 +15,12 @@ declare var ToastManager: {
      */
     active: number;
     /**
+     * Maximum number of toast buddies that can chill together in one spot.
+     * @type {number}
+     * @static
+     */
+    maxStack: number;
+    /**
      * Show an info toast, because you need to know stuff.
      *
      * @param {string | Element | readonly (string | Element)[]} msg - Text content of the toast.

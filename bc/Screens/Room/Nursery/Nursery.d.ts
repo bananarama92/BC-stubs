@@ -45,14 +45,14 @@ declare function NurseryNPCRestrained(CurrentNPC: any, restraintSet: any): void;
 /** Random diaper selection
  * @param {Character} character
  * @param {keyof typeof NurseryDiapers} size
- * @returns {string}
+ * @returns {AssetName}
  */
-declare function NurseryRandomDiaper(character: Character, size: keyof typeof NurseryDiapers): string;
+declare function NurseryRandomDiaper(character: Character, size: keyof typeof NurseryDiapers): AssetName;
 /** Random dress selection
  * @param {Character} character
- * @returns {string}
+ * @returns {AssetName}
  */
-declare function NurseryRandomDress(character: Character, itemPool: any): string;
+declare function NurseryRandomDress(character: Character, itemPool: any): AssetName;
 /** Random selection for dress colors
  * @param {Character} character
  * @param {BCColor[]} colors
@@ -127,18 +127,18 @@ declare const NurseryLeaveMessages: Readonly<{
 declare const NurseryDressColors: BCColor[];
 /** @type {BCColor[]} */
 declare const NurseryDiaperColors: BCColor[];
-/** @type {String[]} */
-declare let NurseryDresses: string[];
-/** @type {{Small: String[], Medium: String[], Large: String[]}} */
+/** @type {AssetName[]} */
+declare let NurseryDresses: AssetName[];
+/** @type {{Small: AssetName[], Medium: AssetName[], Large: AssetName[]}} */
 declare let NurseryDiapers: {
-    Small: string[];
-    Medium: string[];
-    Large: string[];
+    Small: AssetName[];
+    Medium: AssetName[];
+    Large: AssetName[];
 };
-/** @type {{Normal: String[], Restrained: String[]}} */
+/** @type {{Normal: AssetName[], Restrained: AssetName[]}} */
 declare let NurseryPacifiers: {
-    Normal: string[];
-    Restrained: string[];
+    Normal: AssetName[];
+    Restrained: AssetName[];
 };
 /**
  * message about nursery gate

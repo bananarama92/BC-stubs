@@ -541,10 +541,10 @@ declare namespace AssetPoseMapping {
         export { Hogtied_34 as Hogtied };
     }
 }
-/** @type {string[]} */
-declare const AssetMalePantiesList: string[];
-/** @type {string[]} */
-declare const AssetMaleChasityCagesList: string[];
+/** @type {readonly AssetFullName[]} */
+declare const AssetMalePantiesList: readonly AssetFullName[];
+/** @type {readonly AssetFullName[]} */
+declare const AssetMaleChasityCagesList: readonly AssetFullName[];
 /**
  * 3D Custom Girl based assets
  * @type {AssetGroupDefinition[]}

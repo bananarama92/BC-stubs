@@ -16,8 +16,9 @@ declare function ClubCardLoungeClick(): void;
 declare function ClubCardLoungePraticeGameStart(): void;
 /**
  * When the practice game ends
+ * @returns {SafePromise<void>}
  */
-declare function ClubCardLoungePraticeGameEnd(): Promise<void>;
+declare function ClubCardLoungePraticeGameEnd(): SafePromise<void>;
 declare var ClubCardLoungeBackground: string;
-/** @type {null | NPCCharacter} */
-declare var ClubCardLoungeTutor: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var ClubCardLoungeTutor: NPCCharacter;

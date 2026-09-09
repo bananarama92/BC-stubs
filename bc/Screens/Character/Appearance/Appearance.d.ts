@@ -1,6 +1,7 @@
 /**
  * Builds all the assets that can be used to dress up the character
  * @param {Character} C - The character whose appearance is modified
+ * @deprecated Use {@link AssetGetAllAppearanceForCharacter} instead
  * @returns {void} - Nothing
  */
 declare function CharacterAppearanceBuildAssets(C: Character): void;
@@ -83,20 +84,20 @@ declare function CharacterAppearanceBuildMasks(C: Character): AssetLayer[];
 /**
  * Determines whether an item or a whole item group is visible or not
  * @param {Character} C - The character whose assets are checked
- * @param {string | undefined} AssetName - The name of the asset to check
+ * @param {AssetName | undefined} AssetName - The name of the asset to check
  * @param {AssetGroupName} GroupName - The name of the item group to check
  * @param {boolean} Recursive - If TRUE, then other items which are themselves hidden will not hide this item. Parameterising this prevents
  *     infinite loops.
  * @returns {boolean} - Returns TRUE if we can show the item or the item group
  */
-declare function CharacterAppearanceVisible(C: Character, AssetName: string | undefined, GroupName: AssetGroupName, Recursive?: boolean): boolean;
+declare function CharacterAppearanceVisible(C: Character, AssetName: AssetName | undefined, GroupName: AssetGroupName, Recursive?: boolean): boolean;
 /**
  * Determines whether the player has set this item to not appear on screen
- * @param {string} AssetName - The name of the asset to check
+ * @param {AssetName} AssetName - The name of the asset to check
  * @param {AssetGroupName} GroupName - The name of the item group to check
  * @returns {boolean} - TRUE if the item is hidden
  */
-declare function CharacterAppearanceItemIsHidden(AssetName: string, GroupName: AssetGroupName): boolean;
+declare function CharacterAppearanceItemIsHidden(AssetName: AssetName, GroupName: AssetGroupName): boolean;
 /**
  * Calculates and sets the height modifier which affects the character's vertical position on screen
  * @param {Character} C - The character whose height modifier must be calculated
@@ -148,9 +149,10 @@ declare function AppearanceLoad(): Promise<void>;
 /**
  * Build the buttons in the top menu
  * @param {Character} C - The character the appearance is being set for
+ * @param {AssetGroup | null} group - The currently selected group
  * @returns {void} - Nothing
  */
-declare function AppearanceMenuBuild(C: Character): void;
+declare function AppearanceMenuBuild(C: Character, group: AssetGroup | null): void;
 /**
  * Checks if the appearance is locked for the current player
  * @param {Character} C - The character to validate
@@ -181,10 +183,11 @@ declare function AppearanceMenuDraw(): void;
 /**
  * Create a list of characters with different items from the group applied, to use as the preview images
  * @param {Character} C - The character that the dialog inventory has been loaded for
+ * @param {AssetGroup} focusGroup - The group being previewed
  * @param {boolean} buildCanvases - Determines whether the preview canvases need to be (re)built, e.g. for the initial load or due to an appearance change
  * @returns {void} - Nothing
  */
-declare function AppearancePreviewBuild(C: Character, buildCanvases: boolean): void;
+declare function AppearancePreviewBuild(C: Character, focusGroup: AssetGroup, buildCanvases: boolean): void;
 /**
  * Delete all characters created for preview images
  * @returns {void} - Nothing
@@ -200,7 +203,7 @@ declare function AppearancePreviewUseCharacter(assetGroup: AssetGroup | null): b
  * Sets an item in the character appearance
  * @param {Character} C - The character whose appearance should be changed
  * @param {AssetGroupName} Group - The name of the corresponding groupr for the item
- * @param {Asset|null} ItemAsset - The asset collection of the item to be changed
+ * @param {Asset|null} ItemAsset - The asset collection of the item to be changed. Passing a `null` is equivalent to removing an item (see {@link InventoryRemove})
  * @param {null | ItemColor} [NewColor] - The new color (as "#xxyyzz" hex value) for that item
  * @param {null | number} [DifficultyFactor=0] - The difficulty, on top of the base asset difficulty, that should be assigned
  * to the item
@@ -211,11 +214,11 @@ declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName,
 /**
  * Cycle in the appearance assets to find the next item in a group
  * @param {Character} C - The character whose assets are used
- * @param {AssetGroupName} Group - The name of the group to cycle
+ * @param {AssetGroupBodyName} Group - The name of the group to cycle
  * @param {boolean} [Forward=true] - Sets the direction of the cycling
  * @returns {Asset|null} - The next item to select, or null if there's none applicable
  */
-declare function CharacterAppearanceNextItem(C: Character, Group: AssetGroupName, Forward?: boolean): Asset | null;
+declare function CharacterAppearanceNextItem(C: Character, Group: AssetGroupBodyName, Forward?: boolean): Asset | null;
 /**
  * Find the next color for the item
  * @param {Character} C - The character whose items are cycled
@@ -238,14 +241,6 @@ declare function CharacterAppearanceMoveGroup(C: Character, Move: number): void;
  * @returns {void} - Nothing
  */
 declare function CharacterAppearanceSetColorForGroup(C: Character, Color: BCColor, Group: AssetGroupName): void;
-/**
- * Advance to the next reordering mode, or set the mode to the specified
- * value.  The reordering mode cycles through the values:
- * "None" -> "Select" -> "Place"
- *
- * @param {WardrobeReorderType|null} newmode - The mode to set.  If null, advance to next mode.
- */
-declare function AppearanceWardrobeReorderModeSet(newmode?: WardrobeReorderType | null): void;
 /**
  * Handle the clicks in the character appearance selection screen. The function name is created dynamically.
  * @returns {void} - Nothing
@@ -290,7 +285,7 @@ declare function CharacterAppearanceCopy(FromC: Character, ToC: Character): void
  */
 declare function CharacterAppearanceLoadCharacter(C: Character, resultCallback?: (result: boolean) => void): void;
 /**
- * Load wardrobe menu in appearance selection screen
+ * Open the wardrobe screen for the character currently in the appearance editor.
  * @param {Character} C - The character whose wardrobe should be loaded
  * @returns {void} - Nothing
  */
@@ -324,11 +319,11 @@ declare function AppearanceItemParse(stringified: string): Item[];
  * Opens the color picker for a selected item
  * @param {Character} C - The character the appearance is being changed for
  * @param {Item} Item - The currently selected item
- * @param {AssetGroupName} AssetGroup - The focused group
- * @param {"" | "Wardrobe" | "Cloth" | "Color"} CurrentMode - The mode to revert to on exiting the color picker
+ * @param {AssetGroup} AssetGroup - The focused group
+ * @param {"" | "Cloth" | "Color"} CurrentMode - The mode to revert to on exiting the color picker
  * @returns {void}
  */
-declare function AppearanceItemColor(C: Character, Item: Item, AssetGroup: AssetGroupName, CurrentMode: "" | "Wardrobe" | "Cloth" | "Color"): void;
+declare function AppearanceItemColor(C: Character, Item: Item, AssetGroup: AssetGroup, CurrentMode: "" | "Cloth" | "Color"): void;
 /**
  * Combine two sets of appearance changes from the same base, favouring the newer changes where conflicting
  * @param {readonly Item[]} BaseAppearance - The previous appearance before either of the other two sets of changes were made
@@ -382,7 +377,7 @@ declare var CharacterAppearanceOffset: number;
 declare var CharacterAppearanceNumGroupPerPage: number;
 /** Number of entries per cloth page */
 declare var CharacterAppearanceNumClothPerPage: number;
-/** Number of entries per wardrobe page */
+/** @deprecated */
 declare var CharacterAppearanceWardrobeNumPerPage: number;
 declare var CharacterAppearanceHeaderText: string;
 declare var CharacterAppearanceHeaderTextTime: number;
@@ -396,7 +391,9 @@ declare var CharacterAppearanceBackup: string;
 /**
  * Backup of the current appearance; used when canceling out of loading a wardrobe outfit.
  *
- * @type {undefined | string} */
+ * @type {undefined | string}
+ * @deprecated
+ */
 declare var CharacterAppearanceInProgressBackup: undefined | string;
 /**
  * The list of all customizable groups
@@ -405,10 +402,17 @@ declare var CharacterAppearanceInProgressBackup: undefined | string;
 declare var CharacterAppearanceGroups: AssetGroup[];
 /**
  * The list of all assets (owned or available)
- *
- * @type {Asset[]}
+ * @deprecated
+ * @type {never[]}
  */
-declare var CharacterAppearanceAssets: Asset[];
+declare var CharacterAppearanceAssets: never[];
+/**
+ * The list of all appearance assets (owned or available) grouped by group name
+ *
+ * Only valid when the Appearance screen is up.
+ * @type {Map<AssetGroupBodyName, Asset[]>}
+ */
+declare var CharacterAppearanceGroupedAssets: Map<AssetGroupBodyName, Asset[]>;
 /** @type {AssetGroupName} */
 declare var CharacterAppearanceColorPickerGroupName: AssetGroupName;
 /** @type {ItemColor | undefined} */
@@ -431,18 +435,23 @@ declare var CharacterAppearanceSelection: Character;
 declare var CharacterAppearanceResultCallback: ((accept: boolean) => void);
 /** @type {ScreenSpecifier} */
 declare var CharacterAppearanceReturnScreen: ScreenSpecifier;
+/** @deprecated */
 declare var CharacterAppearanceWardrobeOffset: number;
+/** @deprecated */
 declare var CharacterAppearanceWardrobeText: string;
+/** @deprecated */
 declare var CharacterAppearanceWardrobeName: string;
 declare var CharacterAppearanceForceUpCharacter: number;
 /** @type {"" | ExpressionNameMap["Emoticon"]} */
 declare var CharacterAppearancePreviousEmoticon: "" | ExpressionNameMap["Emoticon"];
-/** @type {"" | "Wardrobe" | "Cloth" | "Color" | "Permissions"} */
-declare var CharacterAppearanceMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
-/** @type {"" | "Wardrobe" | "Cloth" | "Color" | "Permissions"} */
-declare var CharacterAppearanceMenuMode: "" | "Wardrobe" | "Cloth" | "Color" | "Permissions";
+/** @type {"" | "Cloth" | "Color" | "Permissions"} */
+declare var CharacterAppearanceMode: "" | "Cloth" | "Color" | "Permissions";
+/** @type {"" | "Cloth" | "Color" | "Permissions"} */
+declare var CharacterAppearanceMenuMode: "" | "Cloth" | "Color" | "Permissions";
 /** @type {null | Item} */
 declare var CharacterAppearanceCloth: null | Item;
+/** @type {AssetGroup | null} */
+declare var CharacterAppearanceSelectedGroup: AssetGroup | null;
 /** @type {AppearanceMenuButtonType[]} */
 declare var AppearanceMenu: AppearanceMenuButtonType[];
 /** @type {Character[]} */
@@ -451,9 +460,13 @@ declare var AppearanceUseCharacterInPreviewsSetting: boolean;
 /**
  * List of item indices collected for swapping.
  * @type {number[]}
+ * @deprecated
  */
 declare let AppearanceWardrobeReorderList: number[];
-/** @type {WardrobeReorderType} */
+/**
+ * @type {WardrobeReorderType}
+ * @deprecated
+ */
 declare let AppearanceWardrobeReorderMode: WardrobeReorderType;
 declare const CanvasUpperOverflow: 700;
 declare const CanvasLowerOverflow: 150;

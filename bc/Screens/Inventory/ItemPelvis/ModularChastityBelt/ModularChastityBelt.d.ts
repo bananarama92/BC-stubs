@@ -1,22 +1,22 @@
 declare function InventoryItemPelvisModularChastityBeltDrawHook(data: ModularItemData, originalFunction: () => void): void;
 /**
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltDrawBase(item: Item, _offset: number): void;
 /**
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltDrawIntensity(item: Item, _offset: number): void;
 /**
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltDrawShockModule(item: Item, _offset: number): void;
 /**
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltDrawVoiceControl(item: Item, _offset: number): void;
 declare function InventoryItemPelvisModularChastityBeltDrawVoiceControlCleanup(): void;
@@ -25,13 +25,13 @@ declare function InventoryItemPelvisModularChastityBeltClickHook(data: ModularIt
 /**
  * @param {Character} C
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltClickIntensity(C: Character, item: Item, _offset: number): void;
 /**
  * @param {Character} C
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltClickVoiceControl(C: Character, item: Item, _offset: number): void;
 /**
@@ -64,7 +64,7 @@ declare function InventoryItemPelvisModularChastityBeltResetDeny(C: Character, i
 /**
  * @param {Character} C
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltClickShockModule(C: Character, item: Item, _offset: number): void;
 declare function InventoryItemPelvisModularChastityBeltScriptDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>): void;

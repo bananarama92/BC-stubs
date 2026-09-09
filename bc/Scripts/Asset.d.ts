@@ -26,6 +26,14 @@ declare function ItemParseTopLeft(value: TopLeft.ItemDefinition, propName?: null
  */
 declare function AssetActivityMirrorGroupSet(group: AssetGroup): void;
 /**
+ * Validate the name of a group, asset or layer.
+ * @template {string | null} T
+ * @param {T} name The name in question
+ * @param {string} errMsgSuffix A suffix for any potential error messages
+ * @returns {T}
+ */
+declare function AssetParseName<T extends string | null>(name: T, errMsgSuffix: string): T;
+/**
  * Adds a new asset to the main list
  * @param {AssetGroup} Group
  * @param {AssetDefinition} AssetDef
@@ -59,11 +67,11 @@ declare function AssetBuildExtended(A: Asset, baseConfig: AssetArchetypeConfig, 
  * Finds the extended item configuration for the provided group and asset name, if any exists
  * @param {ExtendedItemMainConfig} ExtendedConfig - The full extended item configuration object
  * @param {AssetGroupName} GroupName - The name of the asset group to find extended configuration for
- * @param {string} AssetName - The name of the asset to find extended configuration fo
+ * @param {AssetName} AssetName - The name of the asset to find extended configuration fo
  * @returns {AssetArchetypeConfig | undefined} - The extended asset configuration object for the specified asset, if
  * any exists, or undefined otherwise
  */
-declare function AssetFindExtendedConfig(ExtendedConfig: ExtendedItemMainConfig, GroupName: AssetGroupName, AssetName: string): AssetArchetypeConfig | undefined;
+declare function AssetFindExtendedConfig(ExtendedConfig: ExtendedItemMainConfig, GroupName: AssetGroupName, AssetName: AssetName): AssetArchetypeConfig | undefined;
 /**
  * Maps a layer definition to a drawable layer object
  * @param {AssetLayerDefinition} Layer - The raw layer definition
@@ -148,10 +156,10 @@ declare function AssetLoadAll(): void;
  * Gets a specific asset by family/group/name
  * @param {IAssetFamily} Family - The family to search in (Ignored until other family is added)
  * @param {AssetGroupName} Group - Name of the group of the searched asset
- * @param {string} Name - Name of the searched asset
+ * @param {AssetName} Name - Name of the searched asset
  * @returns {Asset | null}
  */
-declare function AssetGet(Family: IAssetFamily, Group: AssetGroupName, Name: string): Asset | null;
+declare function AssetGet(Family: IAssetFamily, Group: AssetGroupName, Name: AssetName): Asset | null;
 /**
  * Gets all activities on a family and name
  * @param {IAssetFamily} family - The family to search in
@@ -244,14 +252,26 @@ declare function AssetTextGet(msg: string): string;
  */
 declare function AssetInventoryIDValidate(): Promise<void>;
 declare function AssetLoadCheckActivities(): void;
+/**
+ * Returns the complete list of character-appropriate assets
+ * @param {Character} char
+ */
+declare function AssetGetAllAppearanceForCharacter(char: Character): Map<AssetGroupBodyName, Asset[]>;
+/**
+ * Return all entries in `list` that are absent from `referenceList`
+ * @param {readonly RemoveOnItemRemove[]} list
+ * @param {readonly RemoveOnItemRemove[]} referenceList
+ * @returns {RemoveOnItemRemove[]}
+ */
+declare function AssetGetRemoveOnItemRemoveDiff(list: readonly RemoveOnItemRemove[], referenceList: readonly RemoveOnItemRemove[]): RemoveOnItemRemove[];
 /** @type {AssetOverride} */
 declare const AssetOverride: AssetOverride;
 /** @type {Asset[]} */
 declare var Asset: Asset[];
 /** @type {AssetGroup[]} */
 declare var AssetGroup: AssetGroup[];
-/** @type {Map<`${AssetGroupName}/${string}`, Asset>} */
-declare var AssetMap: Map<`${AssetGroupName}/${string}`, Asset>;
+/** @type {Map<AssetFullPath, Asset>} */
+declare var AssetMap: Map<AssetFullPath, Asset>;
 /** @type {Map<AssetGroupName, AssetGroup>} */
 declare var AssetGroupMap: Map<AssetGroupName, AssetGroup>;
 /** @type {Pose[]} */
@@ -289,11 +309,11 @@ declare namespace AssetResolveCopyConfig {
     }[]): void;
     /**
      * Merge the passed config with all it's to-be copied super configs (per its `CopyConfig` settings)
-     * @template {{ CopyConfig?: { GroupName?: AssetGroupName, AssetName: string }, BuyGroup?: string, Value?: number, Name?: string }} T
+     * @template {{ CopyConfig?: { GroupName?: AssetGroupName, AssetName: AssetName }, BuyGroup?: string, Value?: number, Name?: string }} T
      * @param {T} config - The (extended) asset config
-     * @param {string} assetName - The name of the corresponding asset
+     * @param {AssetName} assetName - The name of the corresponding asset
      * @param {AssetGroupName} groupName - The name of the corresponding asset group
-     * @param {Partial<Record<AssetGroupName, Record<string, T>>>} configRecord - A (nested) record containing the configs of all assets
+     * @param {Partial<Record<AssetGroupName, Partial<Record<AssetName, T>>>>} configRecord - A (nested) record containing the configs of all assets
      * @param {string} configType - The name of the config type. Used for error reporting
      * @param {null | AssetCopyConfigValidator<T>} configValidator - An optional validator for comparing the config with its to-be copied counterpart(s)
      * @param {boolean} setBuyGroup - Whether to automatically assign a buygroup to the config and, if required, all `CopyConfig`-referenced super configs
@@ -302,22 +322,22 @@ declare namespace AssetResolveCopyConfig {
     function _Resolve<T extends {
         CopyConfig?: {
             GroupName?: AssetGroupName;
-            AssetName: string;
+            AssetName: AssetName;
         };
         BuyGroup?: string;
         Value?: number;
         Name?: string;
-    }>(config: T, assetName: string, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Record<string, T>>>, configType: string, configValidator?: null | AssetCopyConfigValidator<T>, setBuyGroup?: boolean): null | T;
+    }>(config: T, assetName: AssetName, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Partial<Record<AssetName, T>>>>, configType: string, configValidator?: null | AssetCopyConfigValidator<T>, setBuyGroup?: boolean): null | T;
     function _ExtendedValidator(config: TextItemConfig | TypedItemConfig | NoArchItemConfig | ModularItemConfig | VibratingItemConfig | VariableHeightConfig, superConfig: TextItemConfig | TypedItemConfig | NoArchItemConfig | ModularItemConfig | VibratingItemConfig | VariableHeightConfig, key: string, superKey: string): boolean;
     /**
      * Construct the items asset config, merging via {@link AssetDefinition.CopyConfig} if required.
      * @param {AssetDefinition} assetDef - The asset definition
      * @param {AssetGroupName} groupName - The name of the asset group
-     * @param {Partial<Record<AssetGroupName, Record<string, AssetDefinition>>>} assetRecord - A record containg all asset definitions
+     * @param {Partial<Record<AssetGroupName, Record<AssetName, AssetDefinition>>>} assetRecord - A record containg all asset definitions
      * @returns {null | AssetDefinition} - The oiginally passed base item configuration.
      * Returns `null` insstead if an error was encountered.
      */
-    function AssetDefinition(assetDef: AssetDefinition, groupName: AssetGroupName, assetRecord: Partial<Record<AssetGroupName, Record<string, AssetDefinition>>>): null | AssetDefinition;
+    function AssetDefinition(assetDef: AssetDefinition, groupName: AssetGroupName, assetRecord: Partial<Record<AssetGroupName, Record<AssetName, AssetDefinition>>>): null | AssetDefinition;
     /**
      * Construct the items extended item config, merging via {@link AssetArchetypeConfig.CopyConfig} if required.
      * @param {Asset} asset - The asset to configure

@@ -11,9 +11,9 @@ declare function MagicSchoolEscapeRun(): void;
 declare function MagicSchoolEscapeClick(): void;
 /**
  * When the spell ends, we remove some restraints if the player succeeded
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function MagicSchoolEscapeSpellEnd(): Promise<void>;
+declare function MagicSchoolEscapeSpellEnd(): SafePromise<void>;
 /**
  * Sets the difficulty for the escape challenge
  * @param {number} Seconds - The number of seconds before the challenge ends

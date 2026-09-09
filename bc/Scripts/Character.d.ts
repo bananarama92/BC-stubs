@@ -69,9 +69,9 @@ declare function CharacterOnlineRefresh(Char: Character, data: ServerAccountData
  * Loads an online character and flags it for a refresh if any data was changed
  * @param {ServerAccountDataSynced} data - Character data received
  * @param {number} SourceMemberNumber - Source number of the load trigger
- * @returns {Character} - The reloaded character
+ * @returns {OnlineCharacter} - The reloaded character
  */
-declare function CharacterLoadOnline(data: ServerAccountDataSynced, SourceMemberNumber: number): Character;
+declare function CharacterLoadOnline(data: ServerAccountDataSynced, SourceMemberNumber: number): OnlineCharacter;
 /**
  * Deletes a character from the cached list of characters
  * @param {Character} C - The character to remove from the character cache
@@ -207,10 +207,10 @@ declare function CharacterDress(C: Character, Appearance: readonly Item[]): void
 /**
  * Removes all binding items from a given character
  * @param {Character} C - Character to release
- * @param {boolean} [Refresh=false] - do not call CharacterRefresh if false
+ * @param {boolean} [refresh=true] - do not call CharacterRefresh if false
  * @returns {void} - Nothing
  */
-declare function CharacterRelease(C: Character, Refresh?: boolean): void;
+declare function CharacterRelease(C: Character, refresh?: boolean): void;
 /**
  * Releases a character from all locks matching the given lock name
  * @param {Character} C - Character to release from the lock(s)
@@ -528,10 +528,10 @@ declare const CharacterDeafLevels: Map<DeafEffectName, number>;
 /** @type {Map<BlurEffectName, number>} */
 declare const CharacterBlurLevels: Map<BlurEffectName, number>;
 declare namespace Difficulty {
-    let ROLEPLAY: number;
-    let REGULAR: number;
-    let HARDCORE: number;
-    let EXTREME: number;
+    let ROLEPLAY: 0;
+    let REGULAR: 1;
+    let HARDCORE: 2;
+    let EXTREME: 3;
 }
 declare namespace AllowedInteractions {
     let Everyone: 0;

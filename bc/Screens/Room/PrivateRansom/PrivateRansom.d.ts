@@ -15,6 +15,10 @@ declare function PrivateRansomRun(): void;
  */
 declare function PrivateRansomClick(): void;
 /**
+ * @returns {SafePromise<void>}
+ */
+declare function PrivateRansomTalkSupervisor(): SafePromise<void>;
+/**
  * When the player leaves the note, we go back to the private room
  * @returns {void} - Nothing.
  */

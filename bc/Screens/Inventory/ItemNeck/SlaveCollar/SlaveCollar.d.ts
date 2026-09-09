@@ -10,11 +10,11 @@ declare function InventoryItemNeckSlaveCollarClickHook(data: NoArchItemData, ori
 declare function InventoryItemNeckSlaveCollarSetType(C: Character, item: Item, NewType: number): void;
 declare var InventoryItemNeckSlaveCollarColorMode: boolean;
 declare var InventoryItemNeckSlaveCollarOffset: number;
-/** @type {{ Name: string, Property: ItemProperties & { TypeRecord: TypeRecord }, Image: string }[]} */
+/** @type {{ Name: string, Property: ItemProperties & { TypeRecord: TypeRecord }, Image: AssetName }[]} */
 declare var InventoryItemNeckSlaveCollarTypes: {
     Name: string;
     Property: ItemProperties & {
         TypeRecord: TypeRecord;
     };
-    Image: string;
+    Image: AssetName;
 }[];

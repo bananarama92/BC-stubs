@@ -84,7 +84,13 @@ declare function GameClubCardBoardDoBundle(Cards: readonly ClubCard[]): string;
  * @returns {string} - A string with all the cards
  */
 declare function GameClubCardHandDoBundle(Cards: readonly ClubCard[]): string;
-declare function GameClubCardUndoBundle(Bundle: any, IncludeTime?: boolean, Location?: null): any[];
+/**
+ * @param {string} Bundle
+ * @param {boolean} [IncludeTime]
+ * @param {string | null} [Location]
+ * @returns {ClubCard[]}
+ */
+declare function GameClubCardUndoBundle(Bundle: string, IncludeTime?: boolean, Location?: string | null): ClubCard[];
 /**
  * Parses a string to return an updated array of ClubCard objects.
  * @param {string} bundle - A string containing all the cards
@@ -92,7 +98,13 @@ declare function GameClubCardUndoBundle(Bundle: any, IncludeTime?: boolean, Loca
  * @returns {ClubCard[]} - An array of updated ClubCard objects
  */
 declare function GameClubCardBoardUndoBundle(bundle: string, Location: string): ClubCard[];
-declare function GameClubCardHandUndoBundle(Bundle: any, Location?: null): any[];
+/**
+ *
+ * @param {string} Bundle
+ * @param {string | null} [Location]
+ * @returns {ClubCard[]}
+ */
+declare function GameClubCardHandUndoBundle(Bundle: string, Location?: string | null): ClubCard[];
 /**
  * Loads the full server bundle for a player
  * @param {ClubCardPlayer} CCPlayer - The club card player

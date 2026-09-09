@@ -4,7 +4,6 @@
  * @returns {void} - Nothing
  */
 declare function ClubCardBuilderLoadDeck(Deck: number): void;
-declare function ClubCardBuilderLoadPrecon(): void;
 /**
  * Saves the modified deck as a string on the server
  * @returns {void} - Nothing
@@ -28,7 +27,6 @@ declare function ClubCardBuilderSaveCardBack(CardBack: number): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardBuilderShowScreen(FromChatRoom: boolean): void;
-declare function ClubCardBuilderTagChanged(): void;
 /**
  * Resets the tag selection and remove the elements when we finish editing the deck
  * @returns {void} - Nothing
@@ -84,7 +82,8 @@ declare const ClubCardBuilderFilterGroupFilters: Record<ClubCardTag, (card: Club
 declare var ClubCardBuilderRenameIndex: number;
 declare var ClubCardBuilderCustomizationIndex: string;
 declare var ClubCardBuilderSelectedCardBack: number;
-declare var ClubCardBuilderCardBackFocus: null;
+/** @type {number | null} */
+declare var ClubCardBuilderCardBackFocus: number | null;
 declare var ClubCardBuilderCardBackCount: number;
 declare var ClubCardBuilderView: ClubCard[];
 declare var ClubCardBuilderDefaultDeck: number[];

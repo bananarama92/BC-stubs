@@ -91,10 +91,10 @@ declare function StruggleMinigameIsRunning(): boolean;
  * @param {Character} C - The character currently doing the struggling, either on itself (ie. as Player), or on someone else.
  * @param {StruggleKnownMinigames} MiniGame - The minigame to start
  * @param {Item | null} PrevItem - The item currently being present on the character, or null if none
- * @param {Item | null} NextItem - The item currently being added on the character, or null if it's a removal
+ * @param {DialogInventoryItem | null} NextItem - The item currently being added on the character, or null if it's a removal
  * @param {StruggleCompletionCallback} Completion - A callback that will be called when the minigame ends
  */
-declare function StruggleMinigameStart(C: Character, MiniGame: StruggleKnownMinigames, PrevItem: Item | null, NextItem: Item | null, Completion: StruggleCompletionCallback): void;
+declare function StruggleMinigameStart(C: Character, MiniGame: StruggleKnownMinigames, PrevItem: Item | null, NextItem: DialogInventoryItem | null, Completion: StruggleCompletionCallback): void;
 /**
  * Stop the struggle minigame and reset it so it can be reentered.
  *
@@ -406,9 +406,9 @@ declare var StruggleProgressPrevItem: Item | null;
  * which can happen if someone else removes the item we're currently
  * struggling with. Changes made to it might be ignored!
  *
- * @type {Item | null}
+ * @type {DialogInventoryItem | null}
  */
-declare var StruggleProgressNextItem: Item | null;
+declare var StruggleProgressNextItem: DialogInventoryItem | null;
 /**
  * A function called when the struggle minigame completes
  * @type {StruggleCompletionCallback}

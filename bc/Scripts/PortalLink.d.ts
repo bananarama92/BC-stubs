@@ -14,7 +14,13 @@ declare function PortalLinkTransmitterExitHook(data: ExtendedItemData<any>, orig
  * @param {boolean} reciever - Whether it's in reciever or transmitter mode
  */
 declare function PortalLinkSyncCodeInputDraw(reciever: boolean): void;
-declare function PortalLinkSyncCodeInputClick(reciever: any): void;
+/**
+ *
+ * @param {Item} item
+ * @param {boolean} receiver
+ * @returns
+ */
+declare function PortalLinkSyncCodeInputClick(item: Item, receiver: boolean): void;
 /**
  * Input listener for changes to the sync code field
  * @param {Character} C - The character wearing the item
@@ -26,7 +32,7 @@ declare function PortalLinkCodeChanged(C: Character, Item: Item, reciever: boole
  * Get the transmitter sync code from a character
  * @param {Character} C
  */
-declare function PortalLinkGetTransmitterCode(C: Character): string | undefined;
+declare function PortalLinkGetTransmitterCode(C: Character): string;
 /**
  * Get the list of all items that match a given sync code in the chatroom.
  * @param {string} linkCode

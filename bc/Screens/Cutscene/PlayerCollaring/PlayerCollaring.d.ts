@@ -9,6 +9,10 @@ declare function PlayerCollaringRun(): void;
  * @returns {void} - Nothing
  */
 declare function PlayerCollaringClick(): void;
+/**
+ * @returns {SafePromise<void>}
+ */
+declare function PlayerCollaringReturnToMistress(): SafePromise<void>;
 declare var PlayerCollaringBackground: string;
 /** @type {NPCCharacter} */
 declare var PlayerCollaringMistress: NPCCharacter;

@@ -15,7 +15,12 @@ declare function ForbiddenWordsRun(): void;
  * @returns {void} - Nothing
  */
 declare function ForbiddenWordsClick(): void;
-declare function ForbiddenWordsExit(): void;
+/**
+ * Handles exiting from the screen, updates the sub rules
+ * @satisfies {ScreenExitHandler}
+ * @returns {SafePromise<void>}
+ */
+declare function ForbiddenWordsExit(): SafePromise<void>;
 declare var ForbiddenWordsBackground: string;
 /** @type {null | Character } */
 declare var ForbiddenWordsTarget: null | Character;

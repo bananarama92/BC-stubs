@@ -3,9 +3,9 @@
  * @param {ServerChatRoomSpace} space - Name of the chatroom space
  * @param {ScreenSpecifier | undefined} returnScreen - Screen to go back to when exiting leaving the lobby.
  * @param {ChatSearchLobbyOptions} [options]
- * @returns {Promise<void>} - Nothing.
+ * @returns {SafePromise<void>} - Nothing.
  */
-declare function ChatSearchStart(space: ServerChatRoomSpace, returnScreen: ScreenSpecifier | undefined, options?: ChatSearchLobbyOptions): Promise<void>;
+declare function ChatSearchStart(space: ServerChatRoomSpace, returnScreen: ScreenSpecifier | undefined, options?: ChatSearchLobbyOptions): SafePromise<void>;
 declare function ChatSearchLoad(): Promise<void>;
 declare function ChatSearchResize(load: boolean): void;
 declare function ChatSearchUnload(): void;
@@ -202,9 +202,9 @@ declare function ChatSearchAutoJoinRoom(): void;
 /**
  * Sends the search query data to the server. The response will be handled by ChatSearchResponse once it is received
  * @param {string} Query - The search term to look for
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function ChatSearchQuery(Query: string): Promise<void>;
+declare function ChatSearchQuery(Query: string): SafePromise<void>;
 /**
  * Sorts the room result based on a player's settings
  * @returns {void} - Nothing

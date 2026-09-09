@@ -1,11 +1,11 @@
 /**
 * Add a new item by group & name to character inventory
 * @param {Character} C - The character that gets the new item added to her inventory
-* @param {string} NewItemName - The name of the new item to add
+* @param {AssetName} NewItemName - The name of the new item to add
 * @param {AssetGroupName} NewItemGroup - The group name of the new item to add
 * @param {boolean} [Push=true] - Set to TRUE to push to the server
 */
-declare function InventoryAdd(C: Character, NewItemName: string, NewItemGroup: AssetGroupName, Push?: boolean): void;
+declare function InventoryAdd(C: Character, NewItemName: AssetName, NewItemGroup: AssetGroupName, Push?: boolean): void;
 /**
  * Adds multiple new items by group & name to the character inventory
  * @param {Character} C - The character that gets the new items added to her inventory
@@ -17,20 +17,20 @@ declare function InventoryAddMany(C: Character, NewItems: InventoryBundle[], Pus
  * Creates a new item for a character based on asset group and name
  * @param {Character} C - The character to create the item for
  * @param {AssetGroupName} Group - The name of the asset group the item belongs to
- * @param {string} Name - The name of the asset for the item
+ * @param {AssetName} Name - The name of the asset for the item
  * @return {InventoryItem | null} A new item for character using the specified asset name, or null if the specified asset could not be
  *     found in the named group
  */
-declare function InventoryItemCreate(C: Character, Group: AssetGroupName, Name: string): InventoryItem | null;
+declare function InventoryItemCreate(C: Character, Group: AssetGroupName, Name: AssetName): InventoryItem | null;
 /**
 * Deletes an item from the character inventory
 * @param {Character} C - The character on which we should remove the item
-* @param {string} DelItemName - The name of the item to delete
+* @param {AssetName} DelItemName - The name of the item to delete
 * @param {AssetGroupName} DelItemGroup - The group name of the item to delete
 * @param {boolean} [Push=true] - Set to TRUE to push to the server
 * @return {InventoryItem | null}
 */
-declare function InventoryDelete(C: Character, DelItemName: string, DelItemGroup: AssetGroupName, Push?: boolean): InventoryItem | null;
+declare function InventoryDelete(C: Character, DelItemName: AssetName, DelItemGroup: AssetGroupName, Push?: boolean): InventoryItem | null;
 /**
  * Deletes all currently-owned items from a given group.
  *
@@ -42,11 +42,11 @@ declare function InventoryDelete(C: Character, DelItemName: string, DelItemGroup
 declare function InventoryDeleteGroup(C: Character, group: AssetGroupName, push?: boolean): InventoryItem[];
 /**
  * Loads the current inventory for a character, can be loaded from an object of Name/Group or a compressed array using LZString
- * @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>} Inventory - An array of Name / Group of items to load
+ * @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly AssetName[]>>} Inventory - An array of Name / Group of items to load
  * @param {string} InventoryData
  * @return {InventoryBundle[]}
  */
-declare function InventoryLoad(Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly string[]>>, InventoryData: string): InventoryBundle[];
+declare function InventoryLoad(Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly AssetName[]>>, InventoryData: string): InventoryBundle[];
 /**
  * Decompress inventory data into an item bundle
  * @param {string} Data - The string of data to load
@@ -61,10 +61,10 @@ declare function InventoryDataBuild(C: Character): string;
 /**
 * Checks if the character has the inventory available
 * @param {Character} C - The character on which we should remove the item
-* @param {string} Name - The name of the item to validate
+* @param {AssetName} Name - The name of the item to validate
 * @param {AssetGroupName} Group - The group name of the item to validate
 */
-declare function InventoryAvailable(C: Character, Name: string, Group: AssetGroupName): boolean;
+declare function InventoryAvailable(C: Character, Name: AssetName, Group: AssetGroupName): boolean;
 /**
  * Returns an error message if a prerequisite clashes with the character's items and clothes
  * @param {Character} C - The character on which we check for prerequisites
@@ -78,11 +78,11 @@ declare function InventoryPrerequisiteMessage(C: Character, Prerequisite: AssetP
  * whose name matches one of the names in the provided list.
  * @param {Character} C - The character for whom to check equipped items
  * @param {AssetGroupName} ItemGroup - The name of the item group to check
- * @param {readonly string[]} ItemList - A list of item names to check against
+ * @param {readonly AssetName[]} ItemList - A list of item names to check against
  * @returns {boolean} - TRUE if the character has an item from the item list equipped in the named slot, FALSE
  * otherwise
  */
-declare function InventoryIsItemInList(C: Character, ItemGroup: AssetGroupName, ItemList: readonly string[]): boolean;
+declare function InventoryIsItemInList(C: Character, ItemGroup: AssetGroupName, ItemList: readonly AssetName[]): boolean;
 /**
  * Prerequisite utility function that returns TRUE if the given character has an item equipped in the provided group
  * which has the provided prerequisite.
@@ -180,7 +180,7 @@ declare function InventoryCraftPropertyIs(): void;
 /**
  * Makes the character wear an item on a body area
  * @param {Character} C - The character that must wear the item
- * @param {string} AssetName - The name of the asset to wear
+ * @param {AssetName} AssetName - The name of the asset to wear
  * @param {AssetGroupName} AssetGroup - The name of the asset group to wear
  * @param {null | ItemColor} [ItemColor] - The hex color of the item, can be undefined or "Default"
  * @param {null | number} [Difficulty] - The difficulty, on top of the base asset difficulty, to assign to the item
@@ -189,7 +189,7 @@ declare function InventoryCraftPropertyIs(): void;
  * @param {boolean} [Refresh] - Whether to refresh the character and push the changes to the server
  * @returns {Item | null} - Thew newly created item or `null` if the asset does not exist
  */
-declare function InventoryWear(C: Character, AssetName: string, AssetGroup: AssetGroupName, ItemColor?: null | ItemColor, Difficulty?: null | number, MemberNumber?: null | number, Craft?: null | CraftingItem, Refresh?: boolean): Item | null;
+declare function InventoryWear(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, ItemColor?: null | ItemColor, Difficulty?: null | number, MemberNumber?: null | number, Craft?: null | CraftingItem, Refresh?: boolean): Item | null;
 /**
 * Sets the difficulty to remove an item for a body area
 * @param {Character} C - The character that is wearing the item
@@ -210,17 +210,17 @@ declare function InventoryLocked(C: Character, AssetGroup: AssetGroupItemName, C
  * @param {Character} C - The character that must wear the item
  * @param {AssetGroupName} GroupName - The name of the asset group (body area)
  * @param {number} [Difficulty] - The difficulty, on top of the base asset difficulty, to assign to the item
- * @param {boolean} [Refresh=true] - Do not call CharacterRefresh if false
- * @param {boolean} [MustOwn=false] - If TRUE, only assets that the character owns can be worn. Otherwise any asset can
+ * @param {null | boolean} [Refresh=true] - Do not call CharacterRefresh if false
+ * @param {null | boolean} [MustOwn=false] - If TRUE, only assets that the character owns can be worn. Otherwise any asset can
  * be used
  * @param {boolean} [Extend=true] - Whether or not to randomly extend the item (i.e. set the item type), provided it has
  * an archetype that supports random extension
- * @param {readonly string[]} [AllowedAssets=null] - A list of assets from which one must be selected
+ * @param {readonly AssetName[]} [AllowedAssets=null] - A list of assets from which one must be selected
  * @param {boolean} [IgnoreRequirements=false] - If True, the group being blocked and prerequisites will not prevent the item being added.
  *  NOTE: Long-term this should be replaced with better checks before calling this function.
  * @returns {Item | null} - The equipped item (if any)
  */
-declare function InventoryWearRandom(C: Character, GroupName: AssetGroupName, Difficulty?: number, Refresh?: boolean, MustOwn?: boolean, Extend?: boolean, AllowedAssets?: readonly string[], IgnoreRequirements?: boolean): Item | null;
+declare function InventoryWearRandom(C: Character, GroupName: AssetGroupName, Difficulty?: number, Refresh?: null | boolean, MustOwn?: null | boolean, Extend?: boolean, AllowedAssets?: readonly AssetName[], IgnoreRequirements?: boolean): Item | null;
 /**
  * Randomly extends an item (sets an item type, etc.) on a character
  * @param {Character} C - The character wearing the item
@@ -242,12 +242,31 @@ declare function InventoryRandomExtend(C: Character, GroupName: AssetGroupName, 
  */
 declare function InventoryGetRandom(C: Character, GroupName: AssetGroupName | undefined, AllowedAssets?: readonly Asset[], IgnorePrerequisites?: boolean): Asset | null;
 /**
-* Removes a specific item from a character body area
-* @param {Character} C - The character on which we must remove the item
-* @param {AssetGroupName} AssetGroup - The name of the asset group (body area)
-* @param {boolean} [Refresh] - Whether or not to trigger a character refresh. Defaults to true
-*/
-declare function InventoryRemove(C: Character, AssetGroup: AssetGroupName, Refresh?: boolean): void;
+ * See {@link InventoryRemove}
+ * private
+ * @param {Character} C
+ * @param {Set<number>} outputIndices
+ * @param {Item[]} outputItems
+ * @param {Item} superItem
+ * @param {null | readonly RemoveOnItemRemove[]} removeItemOnRemove
+ */
+declare function _InventoryRemoveDFS(C: Character, outputIndices: Set<number>, outputItems: Item[], superItem: Item, removeItemOnRemove?: null | readonly RemoveOnItemRemove[]): void;
+/**
+ * Removes one or more specific items from a character body area via their group name(s)
+ * @param {Character} C - The character on which we must remove the item
+ * @param {AssetGroupName | readonly AssetGroupName[]} AssetGroup - The name of the asset group(s)
+ * @param {boolean | null | InventoryRemoveOptions} [options] - Further options. A boolean is interpreted as the `refresh` option.
+ * @returns {Item[]} - The removed items
+ */
+declare function InventoryRemove(C: Character, AssetGroup: AssetGroupName | readonly AssetGroupName[], options?: boolean | null | InventoryRemoveOptions): Item[];
+/**
+ * Removes one or more specific items from a character
+ * @param {Character} C - The character on which we must remove the item
+ * @param {Item | readonly Item[]} items - The item(s) in question
+ * @param {null | InventoryRemoveOptions} [options] - Further options
+ * @returns {Item[]} - The removed items
+ */
+declare function InventoryRemoveItems(C: Character, items: Item | readonly Item[], options?: null | InventoryRemoveOptions): Item[];
 /**
 * Returns TRUE if the body area (Asset Group) for a character is blocked for either restraints (default) or activities and cannot be used
 * @param {Character} C - The character on which we validate the group
@@ -437,20 +456,20 @@ declare function InventoryConfiscateRemote(): void;
  * Returns TRUE if character wears any of the requested items in the given group
  * @param {Character} C - The character to scan
  * @param {AssetGroupName} group - The asset group name to scan
- * @param {"None" | string | readonly (string | "None")[]} assetName - The asset / item names to scan. `null` means none is worn. Multiple names means any of them.
+ * @param {"None" | AssetName | readonly (AssetName | "None")[]} assetName - The asset / item names to scan. `null` means none is worn. Multiple names means any of them.
  * @returns {boolean} - TRUE if item is worn
  */
-declare function InventoryIsWorn(C: Character, group: AssetGroupName, assetName: "None" | string | readonly (string | "None")[]): boolean;
+declare function InventoryIsWorn(C: Character, group: AssetGroupName, assetName: "None" | AssetName | readonly (AssetName | "None")[]): boolean;
 /**
  * Set the item's permission to a specific value for the player.
  * @param {AssetGroupName} groupName
- * @param {string} assetName
+ * @param {AssetName} assetName
  * @param {ItemPermissionMode} permissionType
  * @param {null | string} type - The relevant extended item option identifier of the item (if any)
  * @param {boolean} push - Whether to push the permission changes to the server
  * @returns {void} - Nothing
  */
-declare function InventorySetPermission(groupName: AssetGroupName, assetName: string, permissionType: ItemPermissionMode, type?: null | string, push?: boolean): void;
+declare function InventorySetPermission(groupName: AssetGroupName, assetName: AssetName, permissionType: ItemPermissionMode, type?: null | string, push?: boolean): void;
 /**
  * Toggles an item's permission for the player
  * @param {Item} Item - Appearance item to toggle
@@ -463,30 +482,30 @@ declare function InventoryTogglePermission(Item: Item, Type?: string | null, Wor
 /**
 * Returns TRUE if a specific item / asset is blocked by the character item permissions
 * @param {Character} C - The character on which we check the permissions
-* @param {string} AssetName - The asset / item name to scan
+* @param {AssetName} AssetName - The asset / item name to scan
 * @param {AssetGroupName} AssetGroup - The asset group name to scan
 * @param {string | null} [AssetType] - The asset type to scan
 * @returns {boolean} - TRUE if asset / item is blocked
 */
-declare function InventoryIsPermissionBlocked(C: Character, AssetName: string, AssetGroup: AssetGroupName, AssetType?: string | null): boolean;
+declare function InventoryIsPermissionBlocked(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, AssetType?: string | null): boolean;
 /**
 * Returns TRUE if a specific item / asset is favorited by the character item permissions
 * @param {Character} C - The character on which we check the permissions
-* @param {string} AssetName - The asset / item name to scan
+* @param {AssetName} AssetName - The asset / item name to scan
 * @param {AssetGroupName} AssetGroup - The asset group name to scan
 * @param {string | null} [AssetType] - The asset type to scan
 * @returns {boolean} - TRUE if asset / item is a favorite
 */
-declare function InventoryIsFavorite(C: Character, AssetName: string, AssetGroup: AssetGroupName, AssetType?: string | null): boolean;
+declare function InventoryIsFavorite(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, AssetType?: string | null): boolean;
 /**
  * Returns TRUE if a specific item / asset is limited by the character item permissions
  * @param {Character} C - The character on which we check the permissions
- * @param {string} AssetName - The asset / item name to scan
+ * @param {AssetName} AssetName - The asset / item name to scan
  * @param {AssetGroupName} AssetGroup - The asset group name to scan
  * @param {string | null} [AssetType] - The asset type to scan
  * @returns {boolean} - TRUE if asset / item is limited
  */
-declare function InventoryIsPermissionLimited(C: Character, AssetName: string, AssetGroup: AssetGroupName, AssetType?: string | null): boolean;
+declare function InventoryIsPermissionLimited(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, AssetType?: string | null): boolean;
 /**
  * Returns TRUE if the item is not limited, if the player is an owner or a lover of the character, or on their whitelist
  * @param {Character} C - The character on which we check the limited permissions for the item

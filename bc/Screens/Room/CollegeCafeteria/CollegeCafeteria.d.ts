@@ -34,9 +34,9 @@ declare function CollegeCafeteriaSidneyLoveChange(LoveChange: number, MoneyChang
 declare function CollegeCafeteriaFightStart(): void;
 /**
  * Resolves the fight between the player and Sidney
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function CollegeCafeteriaFightEnd(): void;
+declare function CollegeCafeteriaFightEnd(): SafePromise<void>;
 /**
  * When the plater invites Sidney to her room, she also gets a college dunce hat
  * @returns {void} - Nothing

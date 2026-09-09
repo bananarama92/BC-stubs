@@ -25,6 +25,7 @@ declare function GameMagicBattleIsAdmin(C: Character): boolean;
  */
 declare function GameMagicBattleDrawIcon(C: Character, X: number, Y: number, Zoom: number): void;
 declare function GameMagicBattleLoad(): Promise<void>;
+declare function GameMagicBattleInitialize(): void;
 /**
  * Returns the team setup for the online magic battle.
  * @returns {"FreeForAll" | "House"} - "FreeForAll" or "House", depending on the team setup
@@ -47,8 +48,9 @@ declare function GameMagicBattleRunProcess(): void;
 declare function GameMagicBattleClickProcess(): boolean;
 /**
  * When the magic puzzle ends, we go back to the chat room
+ * @returns {SafePromise<void>}
  */
-declare function GameMagicBattlePuzzleEnd(): Promise<void>;
+declare function GameMagicBattlePuzzleEnd(): SafePromise<void>;
 /**
  * Starts a Magic Battle match.
  * @returns {void} - Nothing

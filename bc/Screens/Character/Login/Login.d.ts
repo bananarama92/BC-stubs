@@ -211,7 +211,7 @@ declare namespace LoginEventListeners {
  * If it's an asset merge (say 3 into one typed asset), it will either set
  * the fixed up item to the specified `Option` or the first one if unspecified.
  *
- * @type {{ Old: { Group: string, Name: string | '*' }, New: { Group: AssetGroupName, Name?: string, Option?: string } }[]}
+ * @type {{ Old: { Group: string, Name: string | '*' }, New: { Group: AssetGroupName, Name?: AssetName, Option?: string } }[]}
  */
 declare let LoginInventoryFixups: {
     Old: {
@@ -220,7 +220,7 @@ declare let LoginInventoryFixups: {
     };
     New: {
         Group: AssetGroupName;
-        Name?: string;
+        Name?: AssetName;
         Option?: string;
     };
 }[];

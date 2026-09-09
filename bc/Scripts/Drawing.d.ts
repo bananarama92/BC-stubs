@@ -146,9 +146,10 @@ declare function DrawImageZoomCanvas(Source: string | HTMLImageElement | HTMLCan
  * @param {number} Y - Position of the image on the Y axis
  * @param {number} Width - Width of the image after being resized
  * @param {number} Height - Height of the image after being resized
+ * @param {DrawOptions} [Options] Options to use when drawing
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawImageResize(Source: string | HTMLImageElement | HTMLCanvasElement, X: number, Y: number, Width: number, Height: number): boolean;
+declare function DrawImageResize(Source: string | HTMLImageElement | HTMLCanvasElement, X: number, Y: number, Width: number, Height: number, Options?: DrawOptions): boolean;
 /**
  * Draws a zoomed image from a source to a specific canvas
  * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of the image
@@ -223,11 +224,11 @@ declare function GetWrapTextSize(Text: string, Width: number, MaxLine: number): 
  * @param {string} ForeColor - Foreground color
  * @param {string} [BackColor] - Background color
  * @param {number} [MaxLine] - Maximum of lines the word can wrap for
- * @param {number} LineSpacing - The number of pixels between each lines (default to 23)
- * @param {"Center" | "Top"} Alignment - How the text should be alligned w.r.t. the Y position when wrapped over multiple lines
+ * @param {number} [LineSpacing] - The number of pixels between each lines (default to 23)
+ * @param {"Center" | "Top" | null} Alignment - How the text should be alligned w.r.t. the Y position when wrapped over multiple lines
  * @returns {void} - Nothing
  */
-declare function DrawTextWrap(Text: string, X: number, Y: number, Width: number, Height: number, ForeColor: string, BackColor?: string, MaxLine?: number, LineSpacing?: number, Alignment?: "Center" | "Top"): void;
+declare function DrawTextWrap(Text: string, X: number, Y: number, Width: number, Height: number, ForeColor: string, BackColor?: string, MaxLine?: number, LineSpacing?: number, Alignment?: "Center" | "Top" | null): void;
 /**
  * Draws a text element on the canvas that will fit on the specified width
  * @param {string} Text - Text to draw

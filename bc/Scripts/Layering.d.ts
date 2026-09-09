@@ -1,22 +1,22 @@
 declare namespace Layering {
     let PropertyNames: ReadonlySet<keyof ItemProperties>;
+    let Defaults: null | Readonly<ItemProperties>;
     let Character: null | Character;
-    let activeTab: string;
+    let activeTab: "priority" | "translation" | "scale" | "rotate";
     let Display: null | LayeringDisplay;
     let Item: null | Item;
     let Readonly: boolean;
     const Asset: Asset;
     let OverridePriority: undefined | AssetLayerOverridePriority;
-    let _PriorityDefault: undefined | AssetLayerOverridePriority;
     let _Readonly: boolean;
     /**
      * Update an item's property, optionally for a specific layer, and refresh the character.
      * @param {Item} item - The item to update.
-     * @param {string} propName - The property name (e.g., "Rotation", "ScaleX").
-     * @param {any} value - The new value.
-     * @param {string} [layerName] - Optional layer name to update. If provided, updates layer-specific property.
+     * @param {"Priority" | "TranslationX" | "TranslationX" | "ScaleX" | "ScaleY" | "Rotate"} propName - The property name (e.g., "Rotation", "ScaleX").
+     * @param {number} value - The new value.
+     * @param {LayerName} [layerName] - Optional layer name to update. If provided, updates layer-specific property.
      */
-    function UpdateProperty(item: Item, propName: string, value: any, layerName?: string): void;
+    function UpdateProperty(item: Item, propName: "Priority" | "TranslationX" | "TranslationX" | "ScaleX" | "ScaleY" | "Rotate", value: number, layerName?: LayerName): void;
     /**
      * Return whether the layering sub screen has currently been initialized (be it either active or unloaded)
      * @returns {this is Pick<Required<typeof Layering>, "Character" | "Display" | "Item">}
@@ -44,11 +44,11 @@ declare namespace Layering {
     function _InitOverridePriorityObject(): void;
     /**
      * private
-     * @param {string} name - The name of the layer
+     * @param {LayerName | AssetName} name - The name of the layer
      * @param {number} priority - The stringified layer priority
      * @param {string} defaultPriority - The stringified default priority of the layer
      */
-    function _ApplyLayerPriority(name: string, priority: number, defaultPriority: string): void;
+    function _ApplyLayerPriority(name: LayerName | AssetName, priority: number, defaultPriority: string): void;
     /**
      * private
      * @param {number} priority - The layer priority
@@ -96,28 +96,30 @@ declare namespace Layering {
     function _UpdateLimits(): void;
     /**
      * private
-     * @param {string} propType
-     * @param {string[]} properties
-     * @param {number} min
-     * @param {number} max
-     * @param {number} step
-     * @param {number} defaultValue
-     * @param {Record<string, [number, number]>} [constraints={}]
-     * @returns {Element[]}
-     */
-    function _CreateTabContent(propType: string, properties: string[], min: number, max: number, step: number, defaultValue: number, isShowingHiddenLayers: any, constraints?: Record<string, [number, number]>): Element[];
-    /**
-     * private
-     * @param {AssetLayer} layer
-     * @param {string[]} properties
+     * @param {"Scale" | "Rotation" | "Translation"} propType
+     * @param {("ScaleX" | "ScaleY" |"Rotation" | "TranslationX" | "TranslationY")[]} properties
      * @param {number} min
      * @param {number} max
      * @param {number} step
      * @param {number} defaultValue
      * @param {boolean} isShowingHiddenLayers
-     * @param {Record<string, [number, number]>} constraints
+     * @param {Record<string, [min: number, max: number]>} [constraints={}]
+     * @returns {Element[]}
      */
-    function _CreateLayerFieldset(layer: AssetLayer, propType: any, properties: string[], min: number, max: number, step: number, defaultValue: number, isShowingHiddenLayers: boolean, constraints: Record<string, [number, number]>): {
+    function _CreateTabContent(propType: "Scale" | "Rotation" | "Translation", properties: ("ScaleX" | "ScaleY" | "Rotation" | "TranslationX" | "TranslationY")[], min: number, max: number, step: number, defaultValue: number, isShowingHiddenLayers: boolean, constraints?: Record<string, [min: number, max: number]>): Element[];
+    /**
+     * private
+     * @param {AssetLayer} layer
+     * @param {"Rotation" | "Scale" | "Translation"} propType
+     * @param {("ScaleX" | "ScaleY" |"Rotation" | "TranslationX" | "TranslationY")[]} properties
+     * @param {number} min
+     * @param {number} max
+     * @param {number} step
+     * @param {number} defaultValue
+     * @param {boolean} isShowingHiddenLayers
+     * @param {Record<string, [min: number, max: number]>} constraints
+     */
+    function _CreateLayerFieldset(layer: AssetLayer, propType: "Rotation" | "Scale" | "Translation", properties: ("ScaleX" | "ScaleY" | "Rotation" | "TranslationX" | "TranslationY")[], min: number, max: number, step: number, defaultValue: number, isShowingHiddenLayers: boolean, constraints: Record<string, [min: number, max: number]>): {
         tag: string;
         classList: string[];
         attributes: {
@@ -140,7 +142,7 @@ declare namespace Layering {
                         tag: string;
                         attributes: {
                             type: string;
-                            value: any;
+                            value: number;
                             step: number;
                             min: number;
                             max: number;
@@ -176,30 +178,31 @@ declare namespace Layering {
     function _IsPussy(group: AssetGroup): boolean;
     /**
      * private
-     * @param {string} tabKey
+     * @param {"priority" | "translation" | "scale" | "rotate"} tabKey
      * @returns {Element[]}
      */
-    function _GetTabContents(tabKey: string): Element[];
+    function _GetTabContents(tabKey: "priority" | "translation" | "scale" | "rotate"): Element[];
     /**
      * Helper to build priority fieldset to avoid repetition
+     * @param {boolean} isShowingHiddenLayers
      * private
      */
-    function _BuildLayerPriorityFieldset(isShowingHiddenLayers: any): HTMLFieldSetElement;
+    function _BuildLayerPriorityFieldset(isShowingHiddenLayers: boolean): HTMLFieldSetElement;
     /**
      * Group all layers by their {@link AssetLayer.CopyLayerColor} properties
      * private
      * @param {readonly AssetLayer[]} layers
-     * @returns {Record<string, AssetLayer[]>}
+     * @returns {Record<"" | LayerName, AssetLayer[]>}
      */
-    function _GroupLayers(layers: readonly AssetLayer[]): Record<string, AssetLayer[]>;
+    function _GroupLayers(layers: readonly AssetLayer[]): Record<"" | LayerName, AssetLayer[]>;
     /**
-     * Return the default `Property.OverridePriority` of the current item.
+     * Return the default item property values for those specified in {@link Layering.PropertyNames}.
      *
-     * This is generally `undefined`, though certain extended item options do overwrite it.
+     * Values are generally undefined, with the extended item options of certain items overwriting them.
      * private
-     * @returns {undefined | AssetLayerOverridePriority}
+     * @returns {ItemProperties}
      */
-    function _GetDefaultPriority(): undefined | AssetLayerOverridePriority;
+    function _GetDefaults(): ItemProperties;
     /**
      * Update all input elements and buttons with the passed {@link Layering.Readonly} status.
      * @param {boolean} isReadonly

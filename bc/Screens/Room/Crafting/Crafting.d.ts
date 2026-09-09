@@ -133,14 +133,25 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): boolea
  */
 declare function CraftingItemListBuild(): Asset[];
 /**
- * Validate and sanitize crafting properties of the passed item inplace.
- * @param {CraftingItem} Craft - The crafted item properties or `null`
- * @param {Asset | null} asset - The matching Asset. Will be extracted from the player inventory if `null`
- * @param {boolean} Warn - Whether a warning should logged whenever the crafting validation fails
- * @param {boolean} checkPlayerInventory - Whether or not the player must own the crafted item's underlying asset
- * @return {CraftingStatusType} - One of the {@link CraftingStatusType} status codes; 0 denoting an unrecoverable validation error
+ * @overload
+ * @param {CraftingPartialItem} Craft
+ * @param {Asset | null} asset
+ * @param {boolean} Warn
+ * @param {boolean} checkPlayerInventory
+ * @param {true} partial
+ * @return {CraftingStatusType}
  */
-declare function CraftingValidate(Craft: CraftingItem, asset?: Asset | null, Warn?: boolean, checkPlayerInventory?: boolean): CraftingStatusType;
+declare function CraftingValidate(Craft: CraftingPartialItem, asset: Asset | null | undefined, Warn: boolean | undefined, checkPlayerInventory: boolean | undefined, partial: true): CraftingStatusType;
+/**
+ * @overload
+ * @param {CraftingItem} Craft
+ * @param {Asset | null} [asset]
+ * @param {boolean} [Warn]
+ * @param {boolean} [checkPlayerInventory]
+ * @param {boolean} [partial]
+ * @return {CraftingStatusType}
+ */
+declare function CraftingValidate(Craft: CraftingItem, asset?: Asset | null | undefined, Warn?: boolean | undefined, checkPlayerInventory?: boolean | undefined, partial?: boolean | undefined): CraftingStatusType;
 /** The background of the crafting screen. */
 declare var CraftingBackground: string;
 /**
@@ -174,9 +185,9 @@ declare let CraftingReturnToChatroom: boolean;
  * Eligible assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
  *
  * The first asset in each list is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
- * @type {Record<string, Asset[]>}
+ * @type {Partial<Record<AssetName, Asset[]>>}
  */
-declare let CraftingAssets: Record<string, Asset[]>;
+declare let CraftingAssets: Partial<Record<AssetName, Asset[]>>;
 /** The separator used between different crafted items when serializing them. */
 declare const CraftingSerializeItemSep: "\u00A7";
 /** The separator used between fields within a single crafted item when serializing them. */

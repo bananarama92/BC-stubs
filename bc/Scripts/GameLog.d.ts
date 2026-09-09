@@ -144,7 +144,7 @@ declare namespace MainHallAllowIDToScreenMap {
     let Arcade: "7";
 }
 declare namespace AdvancedRulesBackCompat {
-    let BlockScreen: Record<"Q" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "F" | "M" | "L" | "R" | "A" | "B" | "C" | "S" | "T" | "P" | "D" | "E" | "G" | "H" | "I" | "J" | "K" | "N" | "O", "ClubCard" | "Arcade" | "Cafe" | "Cell" | "Crafting" | "Gambling" | "Infiltration" | "Introduction" | "KidnapLeague" | "Magic" | "MaidQuarters" | "MovieStudio" | "Nursery" | "Photographic" | "Platform" | "Poker" | "Prison" | "Private" | "Sarah" | "Shop" | "SlaveMarket" | "Stable" | "Asylum" | "College" | "MagicSchool" | "ShibariDojo" | "Trouble" | "LARPBattle">;
+    let BlockScreen: Record<"Q" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "M" | "F" | "L" | "R" | "A" | "B" | "C" | "S" | "T" | "P" | "D" | "E" | "G" | "H" | "I" | "J" | "K" | "N" | "O", "ClubCard" | "Arcade" | "Cafe" | "Cell" | "Crafting" | "Gambling" | "Infiltration" | "Introduction" | "KidnapLeague" | "Magic" | "MaidQuarters" | "MovieStudio" | "Nursery" | "Photographic" | "Platform" | "Poker" | "Prison" | "Private" | "Sarah" | "Shop" | "SlaveMarket" | "Stable" | "Asylum" | "College" | "MagicSchool" | "ShibariDojo" | "Trouble" | "LARPBattle">;
     let BlockAppearance: {
         readonly A: "Cloth";
         readonly B: "ClothAccessory";

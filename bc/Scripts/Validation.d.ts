@@ -137,11 +137,11 @@ declare function ValidationCloneLock(sourceProperty: ItemProperties, targetPrope
  * Copies the value of a single property key from a source Property object to a target Property object.
  * @param {ItemProperties} sourceProperty - The original Property object on the item
  * @param {ItemProperties} targetProperty - The Property object on the modified item
- * @param {string} key - The property key whose value to copy
+ * @param {keyof ItemProperties} key - The property key whose value to copy
  * @returns {boolean} - TRUE if the target Property object was modified as a result of copying (indicating that there
  * were invalid changes to the property), FALSE otherwise
  */
-declare function ValidationCopyProperty(sourceProperty: ItemProperties, targetProperty: ItemProperties, key: string): boolean;
+declare function ValidationCopyProperty(sourceProperty: ItemProperties, targetProperty: ItemProperties, key: keyof ItemProperties): boolean;
 /**
  * Determines whether an item can be added to the target character, based on the provided appearance update parameters.
  * Note that the item's properties are not taken into account at this stage - this merely checks whether the basic item
@@ -158,12 +158,12 @@ declare function ValidationCanAddItem(newItem: Item, params: AppearanceUpdatePar
  * @param {Character} C - The target character
  * @param {number} sourceMemberNumber - The member number of the source character
  * @param {AssetGroupName} groupName - The name of the asset group for the intended item
- * @param {string} assetName - The asset name of the intended item
+ * @param {AssetName} assetName - The asset name of the intended item
  * @param {string|null} [type] - The type of the intended item
  * @returns {boolean} - TRUE if the character with the provided source member number is _not_ allowed to equip the
  * described asset on the target character, FALSE otherwise.
  */
-declare function ValidationIsItemBlockedOrLimited(C: Character, sourceMemberNumber: number, groupName: AssetGroupName, assetName: string, type?: string | null): boolean;
+declare function ValidationIsItemBlockedOrLimited(C: Character, sourceMemberNumber: number, groupName: AssetGroupName, assetName: AssetName, type?: string | null): boolean;
 /**
  * Determines whether an item can be removed from the target character, based on the provided appearance update
  * parameters.
@@ -244,11 +244,11 @@ declare function ValidationSanitizeSetPose(C: Character, item: Item): boolean;
  * a valid array and is not null, it will be deleted from the object. If it is a valid array, any non-string entries
  * will be removed.
  * @param {ItemProperties} property - The object whose property should be sanitized
- * @param {string} key - The key indicating which property on the object should be sanitized
+ * @param {keyof ItemProperties} key - The key indicating which property on the object should be sanitized
  * @returns {boolean} - TRUE if the object's property was modified as part of the sanitization process (indicating  that
  * the property was not a valid array, or that it contained a non-string entry), FALSE otherwise
  */
-declare function ValidationSanitizeStringArray(property: ItemProperties, key: string): boolean;
+declare function ValidationSanitizeStringArray(property: ItemProperties, key: keyof ItemProperties): boolean;
 /**
  * Completely removes a lock from an item's Property object. This removes all lock-related properties, and the "Lock"
  * effect from the property object.
@@ -333,11 +333,11 @@ declare const ValidationPasswordRegex: RegExp;
 declare const ValidationDefaultCombinationNumber: "0000";
 declare const ValidationDefaultPassword: "UNLOCK";
 declare const ValidationRemoveTimerToleranceMs: 5000;
-declare const ValidationNonModifiableLockProperties: string[];
-declare const ValidationRestrictedLockProperties: string[];
-declare const ValidationTimerLockProperties: string[];
-declare const ValidationAllLockProperties: string[];
-declare const ValidationModifiableProperties: string[];
-declare const ValidationScriptableProperties: string[];
+declare const ValidationNonModifiableLockProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage"];
+declare const ValidationRestrictedLockProperties: readonly ["EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed"];
+declare const ValidationTimerLockProperties: readonly ["MemberNumberList", "RemoveTimer"];
+declare const ValidationAllLockProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage", "EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed", "MemberNumberList", "RemoveTimer", "MemberNumberListKeys"];
+declare const ValidationModifiableProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage", "EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed", "MemberNumberList", "RemoveTimer", "MemberNumberListKeys", "Effect", "Expression", "ExpressionTimer"];
+declare const ValidationScriptableProperties: readonly ["Hide", "HideItem", "UnHide", "Block"];
 /** @type {Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>} */
 declare const ValidationPropertyPermissions: Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>;

@@ -112,9 +112,9 @@ declare function KidnapLeagueTakeBounty(Difficulty: number): void;
 declare function KidnapLeagueBountyRemind(): void;
 /**
  * Starts the bounty hunter mission in the kidnap league screen.
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function KidnapLeagueBountyStart(): void;
+declare function KidnapLeagueBountyStart(): SafePromise<void>;
 /**
  * Starts the bounty hunter fight with its settings.
  * @returns {void} - Nothing
@@ -122,9 +122,9 @@ declare function KidnapLeagueBountyStart(): void;
 declare function KidnapLeagueBountyFightStart(): void;
 /**
  * Ends the bounty hunter fight and goes back to the kidnap league screen.
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function KidnapLeagueBountyFightEnd(): void;
+declare function KidnapLeagueBountyFightEnd(): SafePromise<void>;
 /**
  * Triggered when the player pays for a kidnap league bounty.
  * @returns {void} - Nothing
@@ -143,9 +143,9 @@ declare function KidnapLeagueBountyReset(): void;
 declare function KidnapLeagueStartKidnap(Difficulty: number): void;
 /**
  * Ends a kidnap match ends. Send the player to the kidnap league screen and sets the right trainer dialog.
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function KidnapLeagueEndKidnap(): void;
+declare function KidnapLeagueEndKidnap(): SafePromise<void>;
 /**
  * Resets the player and teacher for another kidnapping by releasing them and dressing them up.
  * @returns {void} - Nothing
@@ -159,9 +159,9 @@ declare function KidnapLeagueRandomIntro(): Promise<void>;
 /**
  * Triggered at the end of a match, sets a random outro sequence.
  * @param {boolean} Surrender - Whether or not the player surrendered.
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function KidnapLeagueRandomOutro(Surrender: boolean): Promise<void>;
+declare function KidnapLeagueRandomOutro(Surrender: boolean): SafePromise<void>;
 /**
  * Triggered when a random kidnap match starts. We start the kidnap minigame with the appropriate settings.
  * @returns {void} - Nothing
@@ -216,9 +216,9 @@ declare function KidnapLeagueTransferToRoom(): void;
 declare function KidnapLeagueRandomClubCardStart(): void;
 /**
  * When the player ends a club card game
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function KidnapLeagueRandomClubCardEnd(): Promise<void>;
+declare function KidnapLeagueRandomClubCardEnd(): SafePromise<void>;
 /**
  * Returns TRUE if the player can get the anime girl costume
  * @returns {boolean} - TRUE if it's possible

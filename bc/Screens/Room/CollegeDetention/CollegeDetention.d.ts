@@ -81,7 +81,7 @@ declare function CollegeDetentionRestrainPlayer(Type: "Arms" | "Legs" | "Mouth")
  */
 declare function CollegeDetentionInviteToPrivateRoom(Role?: string): void;
 declare var CollegeDetentionBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeDetentionYuki: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeDetentionYuki: NPCCharacter;
 declare var CollegeDetentionYukiLove: number;
 declare var CollegeDetentionYukiWillReleaseAt: number;

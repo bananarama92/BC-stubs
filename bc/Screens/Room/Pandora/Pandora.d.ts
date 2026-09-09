@@ -292,9 +292,9 @@ declare function PandoraPenitentiaryIsInmate(C: Character): boolean;
 declare function PandoraPenitentiaryIsGuard(C: Character): boolean;
 /**
  * Called from MainHall and ChatSearch - Checks if we must create the Pandora prison and creates it
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function PandoraPenitentiaryCreate(): void;
+declare function PandoraPenitentiaryCreate(): SafePromise<void>;
 /**
  * Intercept chat results and auto-join Pandora room if currently in the Penitentiary
  * This function expects to only be called with the ChatSearch screen running
@@ -366,8 +366,9 @@ declare function PandoraBuyRandomClothes(): void;
 declare function PandoraChestLockpickStart(): void;
 /**
  * When the picklock mini-game ends, adds 30 seconds to the timer
+ * @returns {SafePromise<void>}
  */
-declare function PandoraChestLockEnd(): Promise<void>;
+declare function PandoraChestLockEnd(): SafePromise<void>;
 /**
  * When the player loots the chest, we add some money and the chest disappear
  * @returns {void} - Nothing
@@ -385,8 +386,9 @@ declare function PandoraGetPaint(): void;
 declare function PandoraClubCardStart(): void;
 /**
  * When the player ends a club card game
+ * @returns {SafePromise<void>}
  */
-declare function PandoraClubCardEnd(): Promise<void>;
+declare function PandoraClubCardEnd(): SafePromise<void>;
 declare var PandoraBackground: string;
 /** @type {PandoraBaseRoom} */
 declare var PandoraCurrentRoom: PandoraBaseRoom;
@@ -427,5 +429,6 @@ declare var PandoraPenitentiaryCreateTimer: number;
 declare var PandoraPenitentiaryActivityList: string[];
 declare var PandoraPenitentiaryActivityTimer: number;
 declare var PandoraPenitentiarySafewordRooms: any[];
-declare var PandoraPenitentiaryCageList: string[];
+/** @type {AssetName[]} */
+declare var PandoraPenitentiaryCageList: AssetName[];
 declare var PandoraPenitentiaryStartNewRoom: boolean;

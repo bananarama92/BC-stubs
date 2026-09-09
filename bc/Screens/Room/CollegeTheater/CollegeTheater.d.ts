@@ -90,8 +90,8 @@ declare function CollegeTheaterDressBack(): void;
  */
 declare function CollegeTheaterInviteToPrivateRoom(Role: string): void;
 declare var CollegeTheaterBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeTheaterJulia: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeTheaterJulia: NPCCharacter;
 declare var CollegeTheaterJuliaLove: number;
 /** @type {BCColor[]} */
 declare var CollegeTheaterRandomColors: BCColor[];

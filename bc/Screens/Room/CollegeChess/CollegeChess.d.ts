@@ -21,9 +21,10 @@ declare function CollegeChessClick(): void;
 declare function CollegeChessGameStart(Difficulty: number, Bet: string): void;
 /**
  * In strip or bondage chess, a player can lose one piece of cloth
+ * @param {Character} C
  * @returns {void} - Nothing, the returns are quick exit short cuts
  */
-declare function CollegeChessStrip(C: any): void;
+declare function CollegeChessStrip(C: Character): void;
 /**
  * In bondage chess, a player can get restrained progressively
  * @param {Character} C
@@ -42,8 +43,9 @@ declare function CollegeChessGameProgress(): void;
 declare function CollegeChessGameConcede(): void;
 /**
  * Triggered when the chess game ends.
+ * @returns {SafePromise<void>}
  */
-declare function CollegeChessGameEnd(): Promise<void>;
+declare function CollegeChessGameEnd(): SafePromise<void>;
 /**
  * When both the player and the opponent should dress back up, we restore the backup appearance
  * @returns {void} - Nothing
@@ -60,8 +62,8 @@ declare function CollegeChessOpponentBlush(): void;
  */
 declare function CollegeChessPlayerFullBondage(): void;
 declare var CollegeChessBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeChessOpponent: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeChessOpponent: NPCCharacter;
 declare var CollegeChessDifficulty: number;
 declare var CollegeChessBet: string;
 /** @type {null | Item[]} */

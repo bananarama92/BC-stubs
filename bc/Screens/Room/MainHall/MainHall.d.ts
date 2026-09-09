@@ -196,12 +196,6 @@ declare var MainHallNextEventTimer: null | number;
 declare var MainHallRandomEventOdds: number;
 /** @type {null | NPCCharacter} */
 declare var MainHallMaid: null | NPCCharacter;
-declare var MainHallIsMaid: boolean;
-declare var MainHallIsHeadMaid: boolean;
-declare var MainHallHasOwnerLock: boolean;
-declare var MainHallHasLoverLock: boolean;
-declare var MainHallHasFamilyLock: boolean;
-declare var MainHallHasSlaveCollar: boolean;
 /** The max number of known tips */
 declare var MainHallMaxTip: number;
 /** The index of the current tip */
@@ -222,40 +216,8 @@ declare var MainHallBeingPunished: boolean;
 declare var MainHallFirstFrame: boolean;
 /** @type {AssetLockType[]} */
 declare var MainHallStrongLocks: AssetLockType[];
-declare var MainHallPunishmentList: ({
-    ItemMouth: string;
-    ItemHead: string;
-    ItemHands: string;
-    ItemArms?: undefined;
-    ItemLegs?: undefined;
-    ItemPelvis?: undefined;
-    ItemBreast?: undefined;
-    ItemVulva?: undefined;
-    ItemBoots?: undefined;
-    ItemFeet?: undefined;
-} | {
-    ItemMouth: string;
-    ItemArms: string;
-    ItemLegs: string;
-    ItemPelvis: string;
-    ItemBreast: string;
-    ItemVulva: string;
-    ItemBoots: string;
-    ItemHead: string;
-    ItemHands: string;
-    ItemFeet?: undefined;
-} | {
-    ItemMouth: string;
-    ItemArms: string;
-    ItemLegs: string;
-    ItemFeet: string;
-    ItemPelvis: string;
-    ItemBreast: string;
-    ItemVulva: string;
-    ItemBoots: string;
-    ItemHead: string;
-    ItemHands: string;
-})[];
+/** @type {Partial<Record<AssetGroupName, AssetName>>[]} */
+declare var MainHallPunishmentList: Partial<Record<AssetGroupName, AssetName>>[];
 declare var MainHallPunishmentChoice: number;
 /** @type {BCColor} */
 declare var MainHallRopeColor: BCColor;

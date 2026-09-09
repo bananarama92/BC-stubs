@@ -637,7 +637,10 @@ declare function ChatRoomMenuClick(event: PointerEvent): void;
  * @returns {void}
  */
 declare function ChatRoomMenuPerformAction(action: ChatRoomMenuButton, event: MouseEvent): void;
-declare function ChatRoomAttemptStandMinigameEnd(): Promise<void>;
+/**
+ * @returns {SafePromise<void>}
+ */
+declare function ChatRoomAttemptStandMinigameEnd(): SafePromise<void>;
 /**
  * Checks if the given chat room visibility property causes it to be "private" (has any form of visibility control)
  * @param {ServerChatRoomData | ServerChatRoomSearchData | ServerChatRoomSettings | null | undefined} room - The visibility property to check
@@ -872,10 +875,10 @@ declare function ChatRoomRegisterMessageHandler(handler: ChatRoomMessageHandler)
  * Performs the processing for an hidden message.
  *
  * @param {ServerChatRoomMessage} data
- * @param {Character} SenderCharacter
+ * @param {OnlineCharacter} SenderCharacter
  * @returns {boolean}
  */
-declare function ChatRoomMessageProcessHidden(data: ServerChatRoomMessage, SenderCharacter: Character): boolean;
+declare function ChatRoomMessageProcessHidden(data: ServerChatRoomMessage, SenderCharacter: OnlineCharacter): boolean;
 /**
  * Extracts the metadata and message substitutions from a message's dictionary.
  *
@@ -935,12 +938,12 @@ declare function ChatRoomMessageRunExtractors(data: ServerChatRoomMessage, sende
  *
  * @param {"pre"|"post"} type - The type of processing to perform
  * @param {ServerChatRoomMessage} data - The recieved message
- * @param {Character} sender - The actual message sender character object
+ * @param {OnlineCharacter} sender - The actual message sender character object
  * @param {string} msg - The escaped message, likely different from data.Contents
  * @param {IChatRoomMessageMetadata} [metadata] - The message metadata, only available for post-handlers
  * @returns {boolean | string}
  */
-declare function ChatRoomMessageRunHandlers(type: "pre" | "post", data: ServerChatRoomMessage, sender: Character, msg: string, metadata?: IChatRoomMessageMetadata): boolean | string;
+declare function ChatRoomMessageRunHandlers(type: "pre" | "post", data: ServerChatRoomMessage, sender: OnlineCharacter, msg: string, metadata?: IChatRoomMessageMetadata): boolean | string;
 /**
  * Handles the reception of a chatroom message.
  *
@@ -1026,11 +1029,11 @@ declare function ChatRoomMessageDisplay(data: ServerChatRoomMessage, msg: string
 declare function ChatRoomHideIdentity(C: Character): boolean;
 /**
  * Adds a character into the chat room.
- * @param {Character} newCharacter - The new character to be added to the chat room.
+ * @param {OnlineCharacter} newCharacter - The new character to be added to the chat room.
  * @param {ServerChatRoomSyncCharacterResponse["Character"]} newRawCharacter - The raw character data of the new character as it was received from the server.
  * @returns {void} - Nothing
  */
-declare function ChatRoomAddCharacterToChatRoom(newCharacter: Character, newRawCharacter: ServerChatRoomSyncCharacterResponse["Character"]): void;
+declare function ChatRoomAddCharacterToChatRoom(newCharacter: OnlineCharacter, newRawCharacter: ServerChatRoomSyncCharacterResponse["Character"]): void;
 /**
  * Handles the reception of the complete room data from the server.
  * @param {unknown} obj - Room object containing the updated chatroom data.
@@ -1118,9 +1121,9 @@ declare function ChatRoomRefreshChatSettings(): void;
 declare function DialogViewProfile(): void;
 /**
  * Brings the player into the main hall and starts the maid punishment sequence
- * @returns {void}
+ * @returns {SafePromise<void>}
  */
-declare function DialogCallMaids(): void;
+declare function DialogCallMaids(): SafePromise<void>;
 /**
  * Triggered when the player assists another player to struggle out, the bonus is evasion / 2 + 1, with penalties if
  * the player is restrained.
@@ -1149,12 +1152,17 @@ declare function ChatRoomDoHoldLeash(SenderCharacter: Character): void;
  */
 declare function ChatRoomStopHoldLeash(): void;
 /**
+ * Handle breaking off a leash
+ * @param {null | Exclude<ServerChatRoomJoinResponse, "JoinedRoom"> | "RoomBlocked" | "GhostList" | "TempHidden" | "Timeout"} event
+ */
+declare function ChatRoomBreakLeash(event: null | Exclude<ServerChatRoomJoinResponse, "JoinedRoom"> | "RoomBlocked" | "GhostList" | "TempHidden" | "Timeout"): void;
+/**
  * Handle the reply to a leash being released
  * @param {Character} SenderCharacter
  */
 declare function ChatRoomDoStopHoldLeash(SenderCharacter: Character): void;
 /**
- * Triggered when a dom enters the room
+ * Triggered when a leash holder changes rooms
  * @returns {void} - Nothing.
  */
 declare function ChatRoomPingLeashedPlayers(): void;
@@ -1322,6 +1330,10 @@ declare function ChatRoomCanChangeNickname(): boolean;
  * @returns {void}
  */
 declare function ChatRoomChangeNickname(): void;
+/**
+ * @returns {SafePromise<void>}
+ */
+declare function ChatRoomMaidSentOutForDrinks(): SafePromise<void>;
 /**
  * Gets a rule from the current character
  * @param {LogNameType["OwnerRule" | "LoverRule"]} RuleType - The name of the rule to retrieve.
@@ -1525,9 +1537,9 @@ declare function ChatRoomGetSettings(room: ChatRoomData): ChatRoomSettings;
 /**
  * Gets a character by MemberNumber or name or nickname
  * @param {string|number} spec
- * @return {Character|null}
+ * @return {OnlineCharacter|null}
  */
-declare function ChatRoomGetCharacter(spec: string | number): Character | null;
+declare function ChatRoomGetCharacter(spec: string | number): OnlineCharacter | null;
 /**
  * Returns the currently running game in the room
  */
@@ -1557,13 +1569,13 @@ declare var ChatRoomBackground: string;
  * The data for the current chatroom, as recieved from the server.
  * @type {null | ServerChatRoomData}
  */
-declare let ChatRoomData: null | ServerChatRoomData;
+declare var ChatRoomData: null | ServerChatRoomData;
 /**
  * The list of chatroom characters.
  * This is unpacked characters from the data recieved from the server in {@link ChatRoomData.Character}.
- * @type {Character[]}
+ * @type {OnlineCharacter[]}
  */
-declare var ChatRoomCharacter: Character[];
+declare var ChatRoomCharacter: OnlineCharacter[];
 declare var ChatRoomJustEntered: boolean;
 /** @type {ChatRoomChatLogEntry[]} */
 declare var ChatRoomChatLog: ChatRoomChatLogEntry[];
@@ -1620,9 +1632,9 @@ declare var ChatRoomChatHidden: boolean;
 /**
  * The chatroom characters that were drawn in the last frame.
  * Used for limiting the "fov". Characters come from {@link ChatRoomCharacter}
- * @type {Character[]}
+ * @type {OnlineCharacter[]}
  */
-declare var ChatRoomCharacterDrawlist: Character[];
+declare var ChatRoomCharacterDrawlist: OnlineCharacter[];
 /**
  * If non-empty, ChatRoomCharacterDrawlist will be filtered (after immersion removals) to only include the player and these character(s).
  * Used for the /focus command. List will be automatically removed if characters are removed from the room.
@@ -1655,12 +1667,10 @@ declare var ChatRoomLeashList: number[];
 declare var ChatRoomLeashPlayer: number | null;
 /**
  * The room name to join when being leashed
- * @type {string}
+ * @deprecated
+ * @type {never}
  */
-declare var ChatRoomJoinLeash: string;
-/**
- * Whether the chat room customization settings are user-enabled or not
- */
+declare var ChatRoomJoinLeash: never;
 declare var ChatRoomCustomized: boolean;
 /** @satisfies {Record<"Never" | "DisabledByDefault" | "EnabledByDefault" | "Always", ChatRoomCustomizationType>} */
 declare const ChatRoomCustomization: Readonly<{
@@ -1810,10 +1820,24 @@ declare namespace ChatRoomSep {
      * @returns {boolean}
      */
     function IsCollapsed(roomSep: HTMLDivElement): boolean;
-    function Uncollapse(roomSep: HTMLDivElement): Promise<void>;
-    function Collapse(roomSep: HTMLDivElement): Promise<void>;
-    function SetRoomData(roomSep: HTMLDivElement, data: Pick<ServerChatRoomData, "Name" | "Visibility" | "Space">): Promise<void>;
-    function UpdateDisplayNames(): Promise<void>;
+    /**
+     * Uncollapse the passed room separator
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     */
+    function Uncollapse(roomSep: HTMLDivElement): void;
+    /**
+     * Collapse the passed room separator
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     */
+    function Collapse(roomSep: HTMLDivElement): void;
+    /**
+     * Set the room-specific of the currently active chat room separator
+     * @param {HTMLDivElement} roomSep - The chat room separator
+     * @param {Pick<ServerChatRoomData, "Name" | "Visibility" | "Space">} data - The data of the room
+     */
+    function SetRoomData(roomSep: HTMLDivElement, data: Pick<ServerChatRoomData, "Name" | "Visibility" | "Space">): void;
+    /** Update all the displayed room names based on the player's degree of sensory deprivation. */
+    function UpdateDisplayNames(): void;
 }
 declare let ChatRoomStatusDeadKeys: string[];
 /** When slowed, we can't leave quicker than this */

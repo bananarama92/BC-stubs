@@ -12,11 +12,6 @@ declare function PreferenceSubscreenScriptsUpdateCheckboxes(): void;
 declare function PreferenceSubscreenScriptsUpdateWarning(): void;
 declare function PreferenceSubscreenScriptsUpdateHelp(): void;
 declare function PreferenceSubscreenScriptsUpdateHelpButtons(): void;
-/**
- * @param {string} buttonId
- * @param {string} icon
- */
-declare function PreferenceSubscreenScriptsSetHelpIcon(buttonId: string, icon: string): void;
 /** @type {ScriptPermissionProperty[]} */
 declare const PreferenceScriptPermissionProperties: ScriptPermissionProperty[];
 /** @type {null | "global" | "Hide" | "Block"} */

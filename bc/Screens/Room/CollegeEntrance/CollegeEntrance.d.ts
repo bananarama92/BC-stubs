@@ -46,5 +46,5 @@ declare function CollegeEntranceIsWearingTennisClothes(): boolean;
  */
 declare function CollegeEntranceIsWearingCollegeClothes(): boolean;
 declare var CollegeEntranceBackground: string;
-/** @type {null | NPCCharacter} */
-declare var CollegeEntranceStudent: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CollegeEntranceStudent: NPCCharacter;

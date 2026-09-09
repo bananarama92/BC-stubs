@@ -72,18 +72,18 @@ declare function ServerPlayerSync(): void;
 declare function ServerPlayerInventorySync(): void;
 /**
  * Unpack the all item permissions into the quartet of blocked, limited, favorited and hidden item object
- * @param {Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>} permissionItems - The packed item permission data
+ * @param {Partial<Record<`${AssetGroupName}/${AssetName}`, ItemPermissions>>} permissionItems - The packed item permission data
  * @returns {Pick<ServerAccountUpdateRequest, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">} - The unpacked item permission data
  */
-declare function ServerPackItemPermissions(permissionItems: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>): Pick<ServerAccountUpdateRequest, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">;
+declare function ServerPackItemPermissions(permissionItems: Partial<Record<`${AssetGroupName}/${AssetName}`, ItemPermissions>>): Pick<ServerAccountUpdateRequest, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">;
 /**
  * Unpack the quartet of blocked, limited, favorited and hidden item permissions into a single object
  * @param {Pick<Partial<ServerAccountDataSynced>, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">} data - The item permission data as received from the server
  * @param {boolean} onExtreme - If the expected difficulty is Extreme
- * @returns {{ permissions: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>; shouldSync: boolean }} - The packed item permission data
+ * @returns {{ permissions: Partial<Record<`${AssetGroupName}/${AssetName}`, ItemPermissions>>; shouldSync: boolean }} - The packed item permission data
  */
 declare function ServerUnPackItemPermissions(data: Pick<Partial<ServerAccountDataSynced>, "BlockItems" | "LimitedItems" | "FavoriteItems" | "HiddenItems">, onExtreme: boolean): {
-    permissions: Partial<Record<`${AssetGroupName}/${string}`, ItemPermissions>>;
+    permissions: Partial<Record<`${AssetGroupName}/${AssetName}`, ItemPermissions>>;
     shouldSync: boolean;
 };
 /**
@@ -150,10 +150,10 @@ declare function ServerBuildAppearanceDiff(assetFamily: IAssetFamily, appearance
  * Maps a bundled appearance item, as stored on the server and used for appearance update messages, into a full
  * appearance item, as used by the game client
  * @param {IAssetFamily} assetFamily - The asset family of the appearance item
- * @param {ItemBundle} item - The bundled appearance item
+ * @param {ItemBundle} itemBundle - The bundled appearance item
  * @returns {null | Item} - A full appearance item representation of the provided bundled appearance item
  */
-declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, item: ItemBundle): null | Item;
+declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, itemBundle: ItemBundle): null | Item;
 /**
  * Convert an item into a (JSON-safe) item bundle
  * @param {Item} item The to-be converted item
@@ -163,11 +163,11 @@ declare function ServerBundledItemFromAppearanceItem(item: Item): ItemBundle;
 /**
  * Parses an item color, based on the allowed colorable layers on an asset, and the asset's color schema
  * @param {Asset} asset - The asset on which the color is set
- * @param {BCColor | readonly BCColor[]} color - The color value to parse
+ * @param {undefined | BCColor | readonly BCColor[]} color - The color value to parse
  * @param {readonly BCColor[]} schema - The color schema to validate against
  * @returns {BCColor[]} - A parsed valid item color
  */
-declare function ServerParseColor(asset: Asset, color: BCColor | readonly BCColor[], schema: readonly BCColor[]): BCColor[];
+declare function ServerParseColor(asset: Asset, color: undefined | BCColor | readonly BCColor[], schema: readonly BCColor[]): BCColor[];
 /**
  * Populates an appearance diff map with any required items, to ensure that all asset groups are present that need to
  * be.
@@ -234,6 +234,12 @@ declare function ServerShowBeep(message: string, duration: number, options?: {
     silent?: boolean | undefined;
 }, title?: string): void;
 /**
+ * Handle a leash beep from another player
+ *
+ * @param {ServerAccountBeepResponse} data
+ */
+declare function ServerHandleLeashBeep(data: ServerAccountBeepResponse): Promise<void>;
+/**
  * Callback used to parse received information related to the player ownership data
  * @param {object} data - Data object containing the Owner name and Ownership object
  * @returns {void} - Nothing
@@ -281,6 +287,12 @@ declare function ServerRoomSearch(queryString: string, options: Omit<ServerChatR
  * @return {Promise<Result<string, ServerError>>}
  */
 declare function ServerRoomJoin(roomName: string): Promise<Result<string, ServerError>>;
+/**
+ * Update the player's friend- and submissive-related arrays based on the inc
+ * @param {ServerFriendInfo[]} data An array of data, we receive from the server
+ * @returns {boolean} Whether the player's {@link Player["FriendNames"]} and/or {@link Player["SubmissivesList"]} were updated
+ */
+declare function ServerUpdateFriendList(data: ServerFriendInfo[]): boolean;
 /** @type {SocketIO.Socket} */
 declare var ServerSocket: SocketIO.Socket;
 declare var ServerURL: string;
@@ -416,10 +428,10 @@ declare namespace ServerAccountDataSyncedValidate {
     function AllowedInteractions(arg: Partial<AllowedInteractions>, C: Character): AllowedInteractions;
     function Difficulty(arg: Partial<{
         Level: DifficultyLevel;
-        LastChange: number;
+        LastChange?: number;
     } | undefined>, C: Character): {
         Level: DifficultyLevel;
-        LastChange: number | undefined;
+        LastChange?: number;
     };
     function ArousalSettings(arg: Partial<ArousalSettingsType | undefined>, C: Character): {
         Active: ArousalActiveName;
@@ -484,6 +496,8 @@ declare namespace ServerAccountDataSyncedValidate {
     function BlackList(arg: (number | undefined)[], C: Character): number[];
     let MapData: ((arg: ChatRoomMapData | undefined, C: Character) => ChatRoomMapData) & { [k in keyof ChatRoomMapData]: (arg: Partial<ChatRoomMapData[k]>, C: Character) => ChatRoomMapData[k]; };
     function ChatSearchSettings(arg: ServerAccountDataSynced["ChatSearchSettings"], C: Character): ChatRoomSearchSettings;
+    function WardrobeCharacterNames(arg: Partial<string[] | undefined>, C: Character): any[];
+    function RecentlyUsedMapElements(arg: ServerAccountDataSynced["RecentlyUsedMapElements"], C: Character): ChatRoomMapDoodad[];
 }
 /**
  * Namespace with default values for {@link ChatRoomSearchSettings} properties.

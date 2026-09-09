@@ -2,7 +2,7 @@ declare function InventoryItemVulvaTechnoChastityCageDrawHook(data: ModularItemD
 declare function InventoryItemVulvaTechnoChastityCageClickHook(data: ModularItemData, originalFunction: () => void): void;
 /**
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset How many pixels down will the UI be shifted
  */
 declare function InventoryItemVulvaChastityCageDrawVoiceControl(item: Item, _offset: number): void;
 declare function InventoryItemVulvaTechnoChastityCageDrawVoiceControlCleanup(): void;
@@ -10,7 +10,7 @@ declare function InventoryItemVulvaTechnoChastityCageExitHook(data: ModularItemD
 /**
  * @param {Character} C
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset How many pixels down will the UI be shifted
  */
 declare function InventoryItemVulvaTechnoChastityCageClickVoiceControl(C: Character, item: Item, _offset: number): void;
 /**
@@ -37,7 +37,7 @@ declare function InventoryItemVulvaChastityCageScriptDrawHook(data: ModularItemD
 declare function InventoryItemVulvaTechnoChastityCagePropertiesCheck(item: Item): void;
 /**
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemVulvaChastityCageScriptDrawArousalPunishment(item: Item, _offset: number): void;
 /**
@@ -53,7 +53,7 @@ declare function InventoryItemVulvaChastityCageNextArousalPunishmentMode(current
 /**
  * @param {Character} C
  * @param {Item} item
- * @param {number} _offset //How many pixels down will the UI be shifted
+ * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemVulvaChastityCageClickArousalPunishment(C: Character, item: Item, _offset: number): void;
 /**

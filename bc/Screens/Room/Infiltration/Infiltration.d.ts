@@ -82,9 +82,9 @@ declare function InfiltrationSelectChallenge(Difficulty: number): void;
 declare function InfiltrationPrepareMission(): void;
 /**
  * Starts the mission and jumps to Pandora's box
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function InfiltrationStartMission(): void;
+declare function InfiltrationStartMission(): SafePromise<void>;
 /**
  * Returns to Pandora's box with the same stats and room layout
  * @returns {void} - Nothing
@@ -113,9 +113,9 @@ declare function InfiltrationCatBurglarClothes(): void;
 declare function InfiltrationPayRansom(Type: string): void;
 /**
  * The revenge kidnapping can happen when infiltration level is at 4 or more, in that case, a Pandora girl can try to kidnap the player from the club and bring her to a Pandora's Box prison
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function InfiltrationStartKidnapping(): void;
+declare function InfiltrationStartKidnapping(): SafePromise<void>;
 /**
  * Ends the revenge kidnapping scenario and goes back to the main hall
  * @param {"Money"|"Skill"|"Private"} [Reward]
@@ -134,14 +134,14 @@ declare function InfiltrationKidnapperSurrender(): void;
 declare function InfiltrationKidnapperStartFight(): void;
 /**
  * Ends the fight with the NPC kidnapper
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function InfiltrationKidnapperEndFight(): void;
+declare function InfiltrationKidnapperEndFight(): SafePromise<void>;
 /**
  * Enter Pandora's Box as the kidnapper victim
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>}
  */
-declare function InfiltrationKidnapperEnterPandora(): void;
+declare function InfiltrationKidnapperEnterPandora(): SafePromise<void>;
 /**
  * Removes the gag from the kidnapper
  * @returns {void} - Nothing
@@ -200,8 +200,9 @@ declare function InfiltrationSetPandoraPrisoner(): void;
 declare function InfiltrationClubCardStart(): void;
 /**
  * When the player ends a club card game against the supervisor
+ * @returns {SafePromise<void>}
  */
-declare function InfiltrationClubCardEnd(): Promise<void>;
+declare function InfiltrationClubCardEnd(): SafePromise<void>;
 /**
  * Checks if the role in parameter is the current player role
  * @param {string} Role - The role to evaluate (I for Inmate, G for Guard)

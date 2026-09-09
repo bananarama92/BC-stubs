@@ -24,5 +24,5 @@ declare function CellDepositKeys(DepositTime: number): void;
 declare var CellBackground: string;
 declare var CellMinutes: number;
 declare var CellOpenTimer: number;
-/** @type {null | NPCCharacter} */
-declare var CellKeyDepositStaff: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var CellKeyDepositStaff: NPCCharacter;
