@@ -135,13 +135,13 @@ declare function CraftingItemListBuild(): Asset[];
 /**
  * @overload
  * @param {CraftingPartialItem} Craft
- * @param {Asset | null} asset
- * @param {boolean} Warn
- * @param {boolean} checkPlayerInventory
+ * @param {Asset | null} [asset]
+ * @param {boolean} [Warn]
+ * @param {boolean} [checkPlayerInventory]
  * @param {true} partial
  * @return {CraftingStatusType}
  */
-declare function CraftingValidate(Craft: CraftingPartialItem, asset: Asset | null | undefined, Warn: boolean | undefined, checkPlayerInventory: boolean | undefined, partial: true): CraftingStatusType;
+declare function CraftingValidate(Craft: CraftingPartialItem, asset?: Asset | null | undefined, Warn?: boolean | undefined, checkPlayerInventory?: boolean | undefined, partial: true): CraftingStatusType;
 /**
  * @overload
  * @param {CraftingItem} Craft
