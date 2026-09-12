@@ -1,14 +1,14 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "ES2022",
-		"lib": ["ES2022"],
+		"target": "esnext",
+		"lib": ["esnext"],
 		"types": ["node"],
 		"checkJs": true,
 		"strict": true
 	},
 	"include": [
 		"../bc/**/*.d.ts",
-		"scripts/*.js"
+		"scripts/*.cjs"
 	]
 }

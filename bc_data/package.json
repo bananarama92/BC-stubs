@@ -12,7 +12,13 @@
     "index.js",
     "index.d.ts",
     "assetVersion.json",
-    "assetID.json"
+    "assetID.json",
+    "icons.json",
+    "icons.d.ts",
+    "audio.json",
+    "audio.d.ts",
+    "backgrounds.json",
+    "backgrounds.d.ts"
   ],
   "description": "Miscellaneous data extracted from BC",
   "bugs": {
@@ -20,9 +26,10 @@
   },
   "homepage": "https://github.com/bananarama92/BC-stubs/tree/main/bc_data#readme",
   "devDependencies": {
-    "typescript": "^6.0.3",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^24.10.0",
+    "csv-parse": "^7.0.2",
     "minimist": "^1.2.8",
-    "@types/minimist": "^1.2.5"
+    "typescript": "^6.0.3"
   }
 }

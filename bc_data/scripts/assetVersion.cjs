@@ -1,12 +1,12 @@
 const fs = require("fs");
 const minimist = require("minimist");
-const { validateArgv, runVM } = require("./common");
+const { validateArgv, runVM } = require("./common.cjs");
 
 const HELP = `\
 Script for updating "assetVersion.json" with new assets.
 
 Usage:
-node scripts/assetVersion --root="bla/bla/BondageClub/"
+node scripts/assetVersion.cjs --root="bla/bla/BondageClub/"
 
 Options:
 	-h, --help              Show help
