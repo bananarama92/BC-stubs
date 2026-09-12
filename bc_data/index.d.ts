@@ -1,5 +1,8 @@
 import * as versions from "./assetVersion.json";
 import * as ids from "./assetID.json";
+import type { IconsType } from "./icons.d.ts";
+import type { BackgroundsType } from "./backgrounds.d.ts";
+import type { AudioType } from "./audio.d.ts";
 
 type AssetName = string;
 
@@ -21,4 +24,29 @@ declare const assetVersion: { readonly [k in keyof typeof versions]: Readonly<Re
  */
 declare const assetID: { readonly [k in keyof typeof ids]: { readonly id: number, readonly assets: Readonly<Record<AssetName, number>> } };
 
-export { assetVersion, assetID };
+/**
+ * All .png and .svg icon files in the BC `Icons/` directory.
+ */
+declare const iconPaths: { [k in keyof IconsType]: IconsType[k] };
+
+/**
+ * All .jpg, .jpeg and .png background files in the BC `Backgrounds/` directory.
+ */
+declare const backgroundPaths: { [k in keyof BackgroundsType]: BackgroundsType[k] };
+
+/**
+ * All .mp3 audio files in the BC `Audio/` directory.
+ */
+declare const audioPaths: { [k in keyof AudioType]: AudioType[k] };
+
+/** All {@link iconPaths} keys */
+type Icons = keyof IconsType;
+
+/** All {@link backgroundPaths} keys */
+type Backgrounds = keyof BackgroundsType;
+
+/** All {@link audioPaths} keys */
+type Audio = keyof AudioType;
+
+export { assetVersion, assetID, iconPaths, backgroundPaths, audioPaths };
+export type { Icons, Audio, Backgrounds }

@@ -73,7 +73,30 @@ function runVM(root) {
 	return { assetDefs: context.AssetFemale3DCG, version: context.GameVersion };
 }
 
+/**
+ * @template {{}} T
+ * @param {T} obj
+ * @returns {[key: keyof T, value: T[keyof T]][]}
+ */
+function entries(obj) {
+    // @ts-expect-error
+    return Object.entries(obj);
+}
+
+/**
+ * @template {string} KT
+ * @template VT
+ * @param {Iterable<readonly [key: KT, value: VT]>} iterable
+ * @returns {Record<KT, VT>}
+ */
+function fromEntries(iterable) {
+    // @ts-expect-error
+    return Object.fromEntries(iterable);
+}
+
 module.exports = {
 	runVM,
 	validateArgv,
+    entries,
+    fromEntries,
 };

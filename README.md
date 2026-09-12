@@ -1,4 +1,5 @@
 [![npm version](https://badge.fury.io/js/bc-stubs.svg)](https://badge.fury.io/js/bc-stubs)
+[![npm version](https://badge.fury.io/js/bc-data.svg)](https://badge.fury.io/js/bc-data)
 
 # BC-stubs
 Auto-generated .d.ts stub files for the Bondage Club game (https://gitgud.io/BondageProjects/Bondage-College).

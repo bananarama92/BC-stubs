@@ -93,8 +93,9 @@ jobs:
         run: |
           cd bc_data
           npm install
-          node --unhandled-rejections=strict scripts/assetVersion --root="../Bondage-College/BondageClub" --bc_version="$BC_VERSION"
-          node --unhandled-rejections=strict scripts/assetID --root="../Bondage-College/BondageClub"
+          node --unhandled-rejections=strict scripts/assetVersion.cjs --root="../Bondage-College/BondageClub" --bc_version="$BC_VERSION"
+          node --unhandled-rejections=strict scripts/assetID.cjs --root="../Bondage-College/BondageClub"
+          node --unhandled-rejections=strict scripts/paths.cjs --root="../Bondage-College/BondageClub"
 
       - name: Push artifacts
         run: |
@@ -106,6 +107,12 @@ jobs:
           git add --all bc/*
           git add bc_data/assetVersion.json
           git add bc_data/assetID.json
+          git add bc_data/icons.json
+          git add bc_data/icons.d.ts
+          git add bc_data/backgrounds.json
+          git add bc_data/backgrounds.d.ts
+          git add bc_data/audio.json
+          git add bc_data/audio.d.ts
           git status
           git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $REPO_NAME" -m "Branch: \`$REPO_BRANCH\`" -m "Commit: \`$BC_HASH\`"
           git push
