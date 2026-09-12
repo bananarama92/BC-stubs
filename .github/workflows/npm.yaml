@@ -56,6 +56,8 @@ jobs:
         run: |
           if [ $DRY == true ]; then
             npm publish --dry-run --tag="dry"
+          elif [ "${{ github.event.release.prerelease }}" == true ]; then
+            npm publish --tag="next"
           else
             npm publish --tag="latest"
           fi
