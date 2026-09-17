@@ -475,6 +475,7 @@ declare var ChatRoomMapViewObjectEntryID: number;
 /** @type {"" |  "Tile" | "Object" | "TileType" | "ObjectType" | "Effect"} */
 declare var ChatRoomMapViewEditMode: "" | "Tile" | "Object" | "TileType" | "ObjectType" | "Effect";
 declare var ChatRoomMapViewEditPath: string;
+declare var ChatRoomMapViewLastSearch: string;
 /** @type {"" | ChatRoomMapTileType | ChatRoomMapObjectType} */
 declare var ChatRoomMapViewEditSubMode: "" | ChatRoomMapTileType | ChatRoomMapObjectType;
 declare var ChatRoomMapViewEditStarted: boolean;

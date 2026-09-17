@@ -502,8 +502,8 @@ declare namespace ElementButton {
         left: "button-label-left";
         right: "button-label-right";
     }>;
-    let _KeyDown: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
-    let _KeyUp: (this: HTMLButtonElement, ev: KeyboardEvent) => Promise<void>;
+    function _KeyDown(this: HTMLButtonElement, ev: KeyboardEvent): void;
+    function _KeyUp(this: HTMLButtonElement, ev: KeyboardEvent): void;
     function _GetClickTouchListeners(): {
         click: (this: HTMLButtonElement, ev: PointerEvent) => void;
         touchend: (this: HTMLButtonElement, ev: TouchEvent) => void;
@@ -632,18 +632,22 @@ declare namespace ElementButton {
     function GetImage(button: ElementHelp.ElementOrId): null | string;
 }
 declare namespace ElementMenu {
-    export let _observers: WeakMap<Element, MutationObserver>;
+    let _observers: WeakMap<Element, MutationObserver>;
     /**
      * private
      * @satisfies {MutationCallback}
      * @param {readonly { addedNodes: readonly Node[] | NodeList, target: Node }[]} mutationList
      */
-    export function _osbserverCallback(mutationList: readonly {
+    function _osbserverCallback(mutationList: readonly {
         addedNodes: readonly Node[] | NodeList;
         target: Node;
     }[]): void;
-    export function _KeyDown_1(this: HTMLElement, ev: KeyboardEvent): Promise<void>;
-    export { _KeyDown_1 as _KeyDown };
+    /**
+     * KeyDown event listener that implements menubar-style keyboard navigation
+     * @this {HTMLElement}
+     * @param {KeyboardEvent} ev
+     */
+    function _KeyDown(this: HTMLElement, ev: KeyboardEvent): void;
     /**
      * Construct a menubar of button elements
      * @example
@@ -669,7 +673,7 @@ declare namespace ElementMenu {
      * @param {null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>} [htmlOptions] - Additional {@link ElementCreate} options to-be applied to the respective (child) element
      * @returns {HTMLDivElement} - The menu
      */
-    export function Create(id: string | null, menuItems: readonly (string | Node | HTMLOptionsUnion)[], options?: {
+    function Create(id: string | null, menuItems: readonly (string | Node | HTMLOptionsUnion)[], options?: {
         direction?: "ltr" | "rtl" | undefined;
         role?: "menu" | "menubar" | undefined;
     }, htmlOptions?: null | Partial<Record<"menu", Omit<HTMLOptions<any>, "tag">>>): HTMLDivElement;
@@ -679,14 +683,14 @@ declare namespace ElementMenu {
      * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
      * @deprecated - Fully equivalent to {@link HTMLElement.append}
      */
-    export function AppendButton(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
+    function AppendButton(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
     /**
      * Prepend a menuitem to the passed menubar
      * @param {HTMLElement} menu - The menubar
      * @param {readonly HTMLElement[]} menuitems - The to-be prepended menuitem
      * @deprecated - Fully equivalent to {@link HTMLElement.prepend}
      */
-    export function PrependItem(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
+    function PrependItem(menu: HTMLElement, ...menuitems: readonly HTMLElement[]): void;
 }
 declare namespace ElementCheckbox {
     function _change(this: HTMLInputElement, ev: Event): void;

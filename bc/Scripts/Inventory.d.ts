@@ -157,13 +157,13 @@ declare function InventoryGet(C: Character, AssetGroup: AssetGroupName | null | 
 * @param {null | Character} Source - The character that used the item (if any)
 * @param {Character} Target - The character on which the item is used
 * @param {AssetGroupItemName} GroupName - The name of the asset group to scan
-* @param {CraftingItem} Craft - The crafted properties to apply
+* @param {CraftingItem | CraftingPartialItem} Craft - The crafted properties to apply
 * @param {boolean} Refresh - TRUE if we must refresh the character
 * @param {boolean} PreConfigureItem - TRUE if the default, pre-configured item state of the crafted item must be (re-)applied
 * @param {boolean} CraftWarn - Whether a warning should logged whenever the crafting validation fails
 * @returns {void}
 */
-declare function InventoryCraft(Source: null | Character, Target: Character, GroupName: AssetGroupItemName, Craft: CraftingItem, Refresh: boolean, PreConfigureItem?: boolean, CraftWarn?: boolean): void;
+declare function InventoryCraft(Source: null | Character, Target: Character, GroupName: AssetGroupItemName, Craft: CraftingItem | CraftingPartialItem, Refresh: boolean, PreConfigureItem?: boolean, CraftWarn?: boolean): void;
 /**
 * Returns the number of items on a character with a specific property
 * @param {Character} C - The character to validate
@@ -185,11 +185,11 @@ declare function InventoryCraftPropertyIs(): void;
  * @param {null | ItemColor} [ItemColor] - The hex color of the item, can be undefined or "Default"
  * @param {null | number} [Difficulty] - The difficulty, on top of the base asset difficulty, to assign to the item
  * @param {null | number} [MemberNumber] - The member number of the character putting the item on - defaults to -1
- * @param {null | CraftingItem} [Craft] - The crafting properties of the item
+ * @param {null | CraftingItem | CraftingPartialItem} [Craft] - The crafting properties of the item
  * @param {boolean} [Refresh] - Whether to refresh the character and push the changes to the server
  * @returns {Item | null} - Thew newly created item or `null` if the asset does not exist
  */
-declare function InventoryWear(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, ItemColor?: null | ItemColor, Difficulty?: null | number, MemberNumber?: null | number, Craft?: null | CraftingItem, Refresh?: boolean): Item | null;
+declare function InventoryWear(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, ItemColor?: null | ItemColor, Difficulty?: null | number, MemberNumber?: null | number, Craft?: null | CraftingItem | CraftingPartialItem, Refresh?: boolean): Item | null;
 /**
 * Sets the difficulty to remove an item for a body area
 * @param {Character} C - The character that is wearing the item

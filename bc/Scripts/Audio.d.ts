@@ -115,7 +115,7 @@ declare var AudioBackgroundMusic: HTMLAudioElement & {
     };
 };
 declare const AudioSupportedMusicFormats: string[];
-/** @type AudioEffect[] */
+/** @type {AudioEffect[]} */
 declare var AudioList: AudioEffect[];
 /**
  * A list of chat message audio effect "detectors".
