@@ -367,10 +367,10 @@ declare function CommonDeepIsSubset<T>(subRec: unknown, superRec: T): subRec is 
  * Adds all items from the source array to the destination array if they aren't already included
  * @template T
  * @param {T[]} dest - The destination array
- * @param {readonly T[]} src - The source array
+ * @param {readonly NoInfer<T>[]} src - The source array
  * @returns {T[]} - The destination array
  */
-declare function CommonArrayConcatDedupe<T>(dest: T[], src: readonly T[]): T[];
+declare function CommonArrayConcatDedupe<T>(dest: T[], src: readonly NoInfer<T>[]): T[];
 /**
  * Push a new value into a map of arrays
  *

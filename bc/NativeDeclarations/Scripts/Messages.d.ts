@@ -209,7 +209,7 @@ type ServerChatRoomBlockCategory =
 	/** Those are known as AssetCategory to the client */
 	"Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" | "Smoking" |
 	/** Those are room features */
-	"Leashing" | "Photos" | "Arousal" | "BlockLocationSharing";
+	"Leashing" | "Photos" | "Arousal" | "Location";
 
 
 

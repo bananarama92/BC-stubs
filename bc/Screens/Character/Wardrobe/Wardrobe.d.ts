@@ -341,7 +341,7 @@ declare function WardrobeDeleteSelectedOutfit(): void;
  */
 declare function WardrobeRenameSelectedOutfit(push?: boolean): boolean;
 /**
- * Confirm and apply a wardrobe slot onto the current character.
+ * Apply a wardrobe slot onto the current character.
  * @param {number} slot
  * @returns {void} - Nothing
  */

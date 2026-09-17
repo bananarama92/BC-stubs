@@ -133,6 +133,11 @@ declare function CraftingAppliesToItem(Craft: CraftingItem, Item: Asset): boolea
  */
 declare function CraftingItemListBuild(): Asset[];
 /**
+ * @param {CraftingPartialItem} craft
+ * @returns {craft is CraftingItem}
+ */
+declare function CraftingIsNonPartial(craft: CraftingPartialItem): craft is CraftingItem;
+/**
  * @overload
  * @param {CraftingPartialItem} Craft
  * @param {Asset | null} asset
