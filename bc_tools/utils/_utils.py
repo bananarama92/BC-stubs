@@ -7,7 +7,7 @@ import subprocess
 import functools
 
 from collections.abc import Callable
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 __all__ = ["logger", "entry_point", "append_docstring"]
 
@@ -24,9 +24,9 @@ class ContextLogger(contextlib.ContextDecorator):
 
     See https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands
     """
-    RED = "\033[31m"
-    GREEN = "\033[32m"
-    COLOR_END = "\033[0m"
+    RED: ClassVar = "\033[31m"
+    GREEN: ClassVar = "\033[32m"
+    COLOR_END: ClassVar = "\033[0m"
 
     _logger: logging.Logger
     _enter_msg: str
@@ -118,17 +118,18 @@ logger = BCLogger("bc-stubs", logging.DEBUG)
 logger.addHandler(logging.StreamHandler(stream=sys.stdout))
 
 
-def entry_point[**P](func: Callable[P, None], /) -> Callable[P, None]:
+def entry_point[**P, T](func: Callable[P, T], /) -> Callable[P, T | None]:
     """A decorator with entry point-specific helping logic."""
     @functools.wraps(func)
-    def _wrapper(*args: P.args, **kwargs: P.kwargs) -> None:
+    def _wrapper(*args: P.args, **kwargs: P.kwargs) -> T | None:
         if sys.platform == "win32":
             subprocess.run("color", shell=True, check=False)
         try:
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
         except KeyboardInterrupt:
             logger.warning("Aborting: User keyboard interruption")
             sys.exit(130)  # unix exit code for ctrl + C keyboard interruptions
+            return None
     return _wrapper
 
 

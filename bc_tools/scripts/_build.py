@@ -146,33 +146,37 @@ def generate_ts_declarations(bc_root: pathlib.Path, ts_root: pathlib.Path):
     logger.info("::notice::No errors encountered while running Typescript")
 
 
+@logger.log_group("Preparing directories")
+def prepare_directories(bc_root: pathlib.Path, ts_root: pathlib.Path):
+    logger.info(f"BC root directory: {os.path.abspath(bc_root)!r}")
+    logger.info(f"Typescript root directory: {os.path.abspath(ts_root)!r}")
+
+    bc_directories = DIRECTORY_INCLUDE
+    missing_bc = sorted(i for i in bc_directories if not os.path.isdir(bc_root / i))
+    if missing_bc:
+        raise FileNotFoundError(
+            f"Failed to find the following expected BC directories in {os.fspath(bc_root)!r}: "
+            f"{pprint.pformat(missing_bc)}",
+        )
+
+    if not os.path.isdir(ts_root):
+        raise FileNotFoundError(
+            f"Failed to find the TypeScript root directory in {os.fspath(bc_root)!r}",
+        )
+
+    if os.path.exists(bc_root / "dist"):
+        logger.info(f"Emptying pre-existing BC {os.fspath(bc_root / "dist")!r} directory")
+        shutil.rmtree(bc_root / "dist")
+    os.makedirs(bc_root / "dist" / "NativeDeclarations")
+
+
 def build(bc_root: str | os.PathLike[str], ts_root: str | os.PathLike[str]) -> None:
     """Main function."""
     bc_root = pathlib.Path(bc_root)
     ts_root = pathlib.Path(ts_root)
 
-    # Prepare dist
-    with logger.log_group(f"Preparing directories"):
-        logger.info(f"BC root directory: {os.path.abspath(bc_root)!r}")
-        logger.info(f"Typescript root directory: {os.path.abspath(ts_root)!r}")
-
-        bc_directories = DIRECTORY_INCLUDE
-        missing_bc = sorted(i for i in bc_directories if not os.path.isdir(bc_root / i))
-        if missing_bc:
-            raise FileNotFoundError(
-                f"Failed to find the following expected BC directories in {os.fspath(bc_root)!r}: "
-                f"{pprint.pformat(missing_bc)}",
-            )
-
-        if not os.path.isdir(ts_root):
-            raise FileNotFoundError(
-                f"Failed to find the TypeScript root directory in {os.fspath(bc_root)!r}",
-            )
-
-        if os.path.exists(bc_root / "dist"):
-            logger.info(f"Emptying pre-existing BC {os.fspath(bc_root / "dist")!r} directory")
-            shutil.rmtree(bc_root / "dist")
-        os.makedirs(bc_root / "dist" / "NativeDeclarations")
+    # Prepare directories
+    prepare_directories(bc_root, ts_root)
 
     # Copy files
     copy_ts_declarations(bc_root)
