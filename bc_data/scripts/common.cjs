@@ -6,7 +6,7 @@ const NEEDED_FILES = [
 	"Scripts/Common.js",
 	"Scripts/Game.js",
 	"Scripts/Pose.js",
-	"Assets/Female3DCG/Female3DCG.js",
+	"Assets/Female3DCG.js",
 ];
 
 /**
