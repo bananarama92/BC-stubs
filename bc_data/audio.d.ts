@@ -432,6 +432,10 @@ export type AudioType = {
 	 */
 	readonly SqueakToy: "Audio/SqueakToy.mp3";
 	/**
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Audio/SqueakyToy.mp3|BondageProjects/Bondage-College}
+	 */
+	readonly SqueakyToy: "Audio/SqueakyToy.mp3";
+	/**
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Audio/Sybian.mp3|BondageProjects/Bondage-College}
 	 */
 	readonly Sybian: "Audio/Sybian.mp3";

@@ -179,7 +179,10 @@ declare namespace CommandsHelp {
      * @param {HTMLElement} help
      */
     function _Publish(help: HTMLElement): void;
-    function _BuildDelete(id: any): HTMLButtonElement;
+    /**
+     * @param {string} id
+     */
+    function _BuildDelete(id: string): HTMLButtonElement;
     /**
      *
      * @param {string} id
@@ -196,11 +199,11 @@ declare namespace CommandsHelp {
     function _GetDescription(command: ICommand, translationTag?: string): string;
     /**
      * @param {ArgumentDef} arg
-     * @param {string} translationTag
+     * @param {string | undefined} translationTag
      * @param {"name" | "desc"} type
      * @returns {string}
      */
-    function _GetArgumentTranslated(arg: ArgumentDef, translationTag?: string, type?: "name" | "desc"): string;
+    function _GetArgumentTranslated(arg: ArgumentDef, translationTag?: string | undefined, type?: "name" | "desc"): string;
     /**
     * @param {ICommand} command
     * @param {string} setCommand
@@ -323,9 +326,9 @@ declare namespace CommandsModsList {
     function ShowLocal(): void;
     /**
      * @param {ServerChatRoomMessage} data
-     * @param {Character} senderCharacter
+     * @param {OnlineCharacter} senderCharacter
      */
-    function ProcessHiddenRemote(data: ServerChatRoomMessage, senderCharacter: Character): void;
+    function ProcessHiddenRemote(data: ServerChatRoomMessage, senderCharacter: OnlineCharacter): void;
     /** @param {string} argsTrimmed */
     function StartRemote(argsTrimmed: string): void;
     function _CancelActiveRemote(): void;
@@ -335,9 +338,9 @@ declare namespace CommandsModsList {
     /**
      * @param {string} id
      * @param {ModSDKModInfo[]} mods
-     * @param {Character} char
+     * @param {OnlineCharacter} char
      */
-    function _BuildCopyButton(id: string, mods: ModSDKModInfo[], char: Character): HTMLButtonElement;
+    function _BuildCopyButton(id: string, mods: ModSDKModInfo[], char: OnlineCharacter): HTMLButtonElement;
     /** @param {string} id */
     function _BuildDeleteButton(id: string): HTMLButtonElement;
     /** @param {ModSDKModInfo[]} mods */
@@ -351,7 +354,7 @@ declare namespace CommandsModsList {
     function _HandleRemoteQuery(data: ServerChatRoomMessage): void;
     /**
      * @param {ServerChatRoomMessage} data
-     * @param {Character} senderCharacter
+     * @param {OnlineCharacter} senderCharacter
      */
-    function _HandleRemoteReply(data: ServerChatRoomMessage, senderCharacter: Character): void;
+    function _HandleRemoteReply(data: ServerChatRoomMessage, senderCharacter: OnlineCharacter): void;
 }

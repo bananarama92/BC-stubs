@@ -83,16 +83,16 @@ declare function CraftingSaveServer(): void;
 declare function CraftingDeserialize(craftString: string): null | CraftingItem;
 /**
  * Deserialize and unpack the crafting data from the server.
- * @param {string | undefined | (null | CraftingItem)[]} Data The serialized crafting data or already-decompressed crafting item list
+ * @param {string | undefined} Data The serialized crafting data or already-decompressed crafting item list
  * @returns {(null | CraftingItem)[]}
  */
-declare function CraftingDecompressServerData(Data: string | undefined | (null | CraftingItem)[]): (null | CraftingItem)[];
+declare function CraftingDecompressServerData(Data: string | undefined): (null | CraftingItem)[];
 /**
  * Loads the server packet and creates the crafting array for the player
- * @param {string | (null | CraftingItem)[]} Packet - The packet or already-decompressed crafting item list
+ * @param {string | undefined} Packet - The packet or already-decompressed crafting item list
  * @returns {void} - Nothing
  */
-declare function CraftingLoadServer(Packet: string | (null | CraftingItem)[]): void;
+declare function CraftingLoadServer(Packet: string | undefined): void;
 declare function CraftingClick(event: PointerEvent): void;
 /**
  * Refreshes the preview model with a slight delay so the item color process is done
@@ -140,13 +140,13 @@ declare function CraftingIsNonPartial(craft: CraftingPartialItem): craft is Craf
 /**
  * @overload
  * @param {CraftingPartialItem} Craft
- * @param {Asset | null} asset
- * @param {boolean} Warn
- * @param {boolean} checkPlayerInventory
+ * @param {Asset | null | undefined} asset
+ * @param {boolean | undefined} Warn
+ * @param {boolean | undefined} checkPlayerInventory
  * @param {true} partial
  * @return {CraftingStatusType}
  */
-declare function CraftingValidate(Craft: CraftingPartialItem, asset: Asset | null, Warn: boolean, checkPlayerInventory: boolean, partial: true): CraftingStatusType;
+declare function CraftingValidate(Craft: CraftingPartialItem, asset: Asset | null | undefined, Warn: boolean | undefined, checkPlayerInventory: boolean | undefined, partial: true): CraftingStatusType;
 /**
  * @overload
  * @param {CraftingItem} Craft
@@ -338,7 +338,7 @@ declare namespace CraftingEventListeners {
     function _InputSearch(this: HTMLInputElement): Promise<void>;
     let _InputSearchEffect: (this: HTMLInputElement, ev: Event) => Promise<void>;
     function _ClickAsciiDescription(this: HTMLInputElement, ev: Event): void;
-    function _ClickGroup(this: HTMLButtonElement, ev: MouseEvent): void;
+    function _ClickGroup(this: HTMLButtonElement, ev: PointerEvent): void;
     let _FocusSearchAsset: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
     let _FocusSearch: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
 }

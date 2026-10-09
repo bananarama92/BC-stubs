@@ -1,5 +1,7 @@
-declare function SarahStatusIs(QueryStatus: any): boolean;
-declare function SarahAmandaStatusIs(QueryStatus: any): boolean;
+/** @param {string} QueryStatus */
+declare function SarahStatusIs(QueryStatus: string): boolean;
+/** @param {string} QueryStatus */
+declare function SarahAmandaStatusIs(QueryStatus: string): boolean;
 declare function SarahCanKissLover(): boolean;
 declare function SarahCanKissNotLover(): boolean;
 declare function SarahCanSpankOwner(): boolean;
@@ -22,7 +24,8 @@ declare function SarahAmandaCanKiss(): boolean;
 declare function SarahIsClubSlave(): boolean;
 declare function SarahCanKissSophie(): boolean;
 declare function SarahCanFightSophie(): boolean;
-declare function SarahSophiePunishmentStageIs(Stage: any): boolean;
+/** @param {number} Stage  */
+declare function SarahSophiePunishmentStageIs(Stage: number): boolean;
 declare function SarahSophieLikesPlayer(): boolean;
 declare function SarahCanStrip(): boolean;
 declare function SarahIsInside(): boolean;
@@ -51,16 +54,33 @@ declare function SarahTransferToRoom(): void;
 declare function SarahAmandaLeaveRoom(): void;
 declare function SarahSophieLeaveRoom(): void;
 declare function SarahTransferAmandaToRoom(): void;
-declare function SarahUpsetSophie(Offset: any): void;
-declare function SarahRestrainedBySophie(Phase: any, DomRep: any): void;
+/**
+ * When Sophie gets too upset, she might kick the player out
+ * @param {number} Offset
+ */
+declare function SarahUpsetSophie(Offset: number): void;
+/**
+ * When a the player gets restrained by Sophie on different phases
+ * @param {number} phase
+ * @param {number} domRep
+ */
+declare function SarahRestrainedBySophie(phase: number, domRep: number): void;
 declare function SarahFightSophie(): void;
 declare function SarahFightSophieEnd(): void;
 declare function SarahSophiePunishGirls(): void;
 declare function SarahSophieFreeSarahAndLeave(): void;
 declare function SarahSophieFreePlayerAndAmandaTheyLeave(): void;
 declare function SarahKickPlayerOut(): void;
-declare function SarahTransferSophieToRoom(Love: any): void;
-declare function SarahSophieSetPunishmentIntro(DomRep: any): void;
+/**
+ * When Sophie transfers to the room (the player will follow if it was a kidnapping)
+ * @param {number} Love
+ */
+declare function SarahTransferSophieToRoom(Love: number): void;
+/**
+ * When we need to set Sophie intro
+ * @param {string | number} DomRep
+ */
+declare function SarahSophieSetPunishmentIntro(DomRep: string | number): void;
 /**
  * Strips and restrains a character
  * @param {Character} C
@@ -88,18 +108,21 @@ declare function SarahPlayerPunishGirls(): void;
 /**
  * Returns TRUE if the current slave(s) are naked and without restrains
  * @param {NPCCharacter} [C]
+ * @returns {boolean}
  */
-declare function SarahSlaveNakedWithoutRestrains(C?: NPCCharacter): any;
+declare function SarahSlaveNakedWithoutRestrains(C?: NPCCharacter): boolean;
 /**
  * Returns TRUE if the current slave(s) are wearing clamps, egg and butt plug
  * @param {NPCCharacter} [C]
+ * @returns {boolean}
  */
-declare function SarahSlaveWithClampEggPlug(C?: NPCCharacter): any;
+declare function SarahSlaveWithClampEggPlug(C?: NPCCharacter): boolean;
 /**
  * Returns TRUE if the current slave(s) are wearing clamps, egg, butt plug, chastity belt & bra
  * @param {NPCCharacter} [C]
+ * @returns {boolean}
  */
-declare function SarahSlaveChaste(C?: NPCCharacter): any;
+declare function SarahSlaveChaste(C?: NPCCharacter): boolean;
 /**
  * Returns TRUE if the current slave(s) are wearing clamps, egg, butt plug, chastity belt, bra & locked cuffs
  * @param {NPCCharacter} [C]
@@ -141,15 +164,17 @@ declare function SarahSlaveOrgasmBuild(Pleasure: string | number, Bonus: string 
 declare function SarahSlaveReset(): void;
 declare var SarahRoomAvailable: boolean;
 declare var SarahBackground: string;
-declare var SarahStatus: string;
-declare var AmandaStatus: string;
+/** @type {"" | "Owned" | "Curfew" | "SchoolMate" | "Lover" | "ExLover" | "WillBePunished" | "CameWithPlayer" | "InPrivateRoom"} */
+declare var SarahStatus: "" | "Owned" | "Curfew" | "SchoolMate" | "Lover" | "ExLover" | "WillBePunished" | "CameWithPlayer" | "InPrivateRoom";
+/** @type {"" | "SchoolMate" | "Lover" | "ExLover" | "Owned" | "Curfew" | "Owner" | "ExOwner" | "InPrivateRoom"} */
+declare var AmandaStatus: "" | "SchoolMate" | "Lover" | "ExLover" | "Owned" | "Curfew" | "Owner" | "ExOwner" | "InPrivateRoom";
 declare var SophieStatus: string;
-/** @type {null | NPCCharacter} */
-declare var Sarah: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var Amanda: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var Sophie: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var Sarah: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var Amanda: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var Sophie: NPCCharacter;
 declare var SarahInside: boolean;
 declare var AmandaInside: boolean;
 declare var SophieInside: boolean;

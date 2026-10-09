@@ -16,31 +16,12 @@ declare function DrawRGBToHex(color: readonly [R: number, G: number, B: number])
  */
 declare function DrawLoad(): void;
 /**
- * Returns the image file from cache or build it from the source
- * @param {string} Source - URL of the image
- * @returns {HTMLImageElement} - Image file
- */
-declare function DrawGetImage(Source: string): HTMLImageElement;
-/**
- * Reloads all character canvas once all images are loaded
- * @param {HTMLImageElement | null} img
- * @returns {void} - Nothing
- */
-declare function DrawGetImageOnLoad(img: HTMLImageElement | null): void;
-/**
+ * Returns the image's pixels from cache, starting its load if needed.
  *
- * @param {HTMLImageElement | null} img
+ * @param {string} url - URL of the image
+ * @returns {ImageBitmap | undefined} - The image's pixels, or undefined while it isn't available
  */
-declare function DrawRefreshCharacterForImage(img: HTMLImageElement | null): void;
-/**
- * Attempts to redownload an image if it previously failed to load
- * @param {HTMLImageElement & { errorcount?: number }} Img - Image tag that failed to load
- * @param {boolean} IsAsset - Whether or not the image is part of an asset
- * @returns {void} - Nothing
- */
-declare function DrawGetImageOnError(Img: HTMLImageElement & {
-    errorcount?: number;
-}, IsAsset: boolean): void;
+declare function DrawGetImage(url: string): ImageBitmap | undefined;
 /**
  * Draws the glow under the arousal meter under the screen
  * @param {number} X - Position of the meter on the X axis
@@ -125,7 +106,7 @@ declare function DrawClearRect(Canvas: CanvasRenderingContext2D, x: number, y: n
 declare function DrawClearAlphaMasks(Canvas: CanvasRenderingContext2D, X: number, Y: number, AlphaMasks: readonly RectTuple[]): void;
 /**
  * Draws a zoomed image from a source to a specific canvas
- * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of image or image itself
+ * @param {DrawSource} Source - URL of image or image itself
  * @param {CanvasRenderingContext2D} Canvas - Canvas on which to draw the image
  * @param {number} SX - The X coordinate where to start clipping
  * @param {number} SY - The Y coordinate where to start clipping
@@ -138,10 +119,10 @@ declare function DrawClearAlphaMasks(Canvas: CanvasRenderingContext2D, X: number
  * @param {boolean} [Invert] - Flips the image vertically
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawImageZoomCanvas(Source: string | HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, SX: number, SY: number, SWidth: number, SHeight: number, X: number, Y: number, Width: number, Height: number, Invert?: boolean): boolean;
+declare function DrawImageZoomCanvas(Source: DrawSource, Canvas: CanvasRenderingContext2D, SX: number, SY: number, SWidth: number, SHeight: number, X: number, Y: number, Width: number, Height: number, Invert?: boolean): boolean;
 /**
  * Draws a resized image from a source to the main canvas
- * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of image or image itself
+ * @param {DrawSource} Source - URL of image or image itself
  * @param {number} X - Position of the image on the X axis
  * @param {number} Y - Position of the image on the Y axis
  * @param {number} Width - Width of the image after being resized
@@ -149,20 +130,20 @@ declare function DrawImageZoomCanvas(Source: string | HTMLImageElement | HTMLCan
  * @param {DrawOptions} [Options] Options to use when drawing
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawImageResize(Source: string | HTMLImageElement | HTMLCanvasElement, X: number, Y: number, Width: number, Height: number, Options?: DrawOptions): boolean;
+declare function DrawImageResize(Source: DrawSource, X: number, Y: number, Width: number, Height: number, Options?: DrawOptions): boolean;
 /**
  * Draws a zoomed image from a source to a specific canvas
- * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of the image
+ * @param {DrawSource} Source - URL of the image
  * @param {CanvasRenderingContext2D} Canvas - Canvas on which to draw the image
  * @param {number} X - Position of the image on the X axis
  * @param {number} Y - Position of the image on the Y axis
  * @param {DrawOptions} [Options] Options to use when drawing
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawImageCanvas(Source: string | HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, X: number, Y: number, Options?: DrawOptions): boolean;
+declare function DrawImageCanvas(Source: DrawSource, Canvas: CanvasRenderingContext2D, X: number, Y: number, Options?: DrawOptions): boolean;
 /**
  * Draws a canvas to a specific canvas
- * @param {HTMLImageElement | HTMLCanvasElement} Img - Canvas to draw
+ * @param {Exclude<DrawSource, string>} Img - Canvas to draw
  * @param {CanvasRenderingContext2D} Canvas - Canvas on which to draw the image
  * @param {number} X - Position of the image on the X axis
  * @param {number} Y - Position of the image on the Y axis
@@ -170,16 +151,16 @@ declare function DrawImageCanvas(Source: string | HTMLImageElement | HTMLCanvasE
  * @param {readonly TextureAlphaMask[]} TextureAlphaMasks - A list of mask layers to apply to the asset
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawCanvas(Img: HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, X: number, Y: number, AlphaMasks: readonly RectTuple[], TextureAlphaMasks: readonly TextureAlphaMask[]): boolean;
+declare function DrawCanvas(Img: Exclude<DrawSource, string>, Canvas: CanvasRenderingContext2D, X: number, Y: number, AlphaMasks: readonly RectTuple[], TextureAlphaMasks: readonly TextureAlphaMask[]): boolean;
 /**
  * Draws an image from a source on the main canvas
- * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of image or image itself
+ * @param {DrawSource} Source - URL of image or image itself
  * @param {number} X - Position of the image on the X axis
  * @param {number} Y - Position of the image on the Y axis
  * @param {boolean} [Invert] - Flips the image vertically
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawImage(Source: string | HTMLImageElement | HTMLCanvasElement, X: number, Y: number, Invert?: boolean): boolean;
+declare function DrawImage(Source: DrawSource, X: number, Y: number, Invert?: boolean): boolean;
 /**
  * Applies texture masks to a canvas about to be drawn
  * @param {CanvasRenderingContext2D} destCanvas
@@ -190,14 +171,14 @@ declare function DrawImage(Source: string | HTMLImageElement | HTMLCanvasElement
 declare function DrawApplyTextureAlphaMask(destCanvas: CanvasRenderingContext2D, X: number, Y: number, TextureAlphaMasks: readonly TextureAlphaMask[]): void;
 /**
  * Draws an image on canvas, applying all options
- * @param {string | HTMLImageElement | HTMLCanvasElement} Source - URL of image or image itself
+ * @param {DrawSource} Source - URL of image or image itself
  * @param {CanvasRenderingContext2D} Canvas - Canvas on which to draw the image
  * @param {number} X - Position of the image on the X axis
  * @param {number} Y - Position of the image on the Y axis
  * @param {DrawOptions} [Options = {}] - any extra options
  * @returns {boolean} - whether the image was complete or not
  */
-declare function DrawImageEx(Source: string | HTMLImageElement | HTMLCanvasElement, Canvas: CanvasRenderingContext2D, X: number, Y: number, Options?: DrawOptions): boolean;
+declare function DrawImageEx(Source: DrawSource, Canvas: CanvasRenderingContext2D, X: number, Y: number, Options?: DrawOptions): boolean;
 /**
  * Wrapping text in fragments to support languages that do not separate between words using space.
  * This function can also break between a long English word if somehow needed in the script.
@@ -521,14 +502,14 @@ declare function DrawCharacterSegment(C: Character, Left: number, Top: number, W
  * smaller in the original image. If it's less than 1, then the top edge will be smaller than in the original (like the
  * Star Wars title text transform).
  *
- * @param {HTMLCanvasElement | HTMLImageElement} image - The source image
+ * @param {Exclude<DrawSource, string>} image - The source image
  * @param {HTMLCanvasElement} targetCanvas - The target canvas to draw the transformed image onto
  * @param {number} topToBottomRatio - The ratio between the desired length of the top edge and the bottom edge of the
  * final image.
  * @param {number} [x] - The x-position on the target canvas that the final image should be drawn at
  * @param {number} [y] - The y-position on the target canvas that the final image should be drawn at
  */
-declare function DrawImageTrapezify(image: HTMLCanvasElement | HTMLImageElement, targetCanvas: HTMLCanvasElement, topToBottomRatio: number, x?: number, y?: number): void;
+declare function DrawImageTrapezify(image: Exclude<DrawSource, string>, targetCanvas: HTMLCanvasElement, topToBottomRatio: number, x?: number, y?: number): void;
 /**
  * Make a new rect from a 4-tuple
  * @param {number} x
@@ -573,6 +554,12 @@ declare function RectScale(rect: Rect, wScale: number, hScale: number): Rect;
 declare let MainCanvas: CanvasRenderingContext2D;
 declare const MainCanvasWidth: 2000;
 declare const MainCanvasHeight: 1000;
+declare const DEFAULT_FRAMERATE: 60;
+/**
+ * The global cache of images for Drawing.js
+ * @type {ImageCache<ImageBitmap>}
+ */
+declare var DrawImageCache: ImageCache<ImageBitmap>;
 /**
  * Temporary GPU-based canvas
  * @type {CanvasRenderingContext2D}
@@ -590,8 +577,6 @@ declare var BlindFlash: boolean;
  */
 declare var BlindFlashQueue: boolean;
 declare var DrawingBlindFlashTimer: number;
-/** @type {Map<string, HTMLImageElement>} */
-declare const DrawCacheImage: Map<string, HTMLImageElement>;
 declare var DrawLastDarkFactor: number;
 /**
  * A list of the characters that are drawn every frame

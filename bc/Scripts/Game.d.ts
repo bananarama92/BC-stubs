@@ -74,7 +74,8 @@ declare var GameWorker: Worker | null;
 declare var CommonVersionUpdated: boolean;
 /** @type {TouchList | null} */
 declare var CommonTouchList: TouchList | null;
-declare const DEFAULT_FRAMERATE: 60;
+/** @type {BrowserCache} */
+declare var BrowserStorageCache: BrowserCache;
 declare namespace GameReadyState {
     let load: Promise<void>;
     let login: undefined | Promise<void>;

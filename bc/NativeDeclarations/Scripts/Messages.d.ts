@@ -231,7 +231,7 @@ type ServerChatRoomData = {
 	BlockCategory: ServerChatRoomBlockCategory[];
 	Language: ServerChatRoomLanguage;
 	Space: ServerChatRoomSpace;
-	MapData?: ServerChatRoomMapData;
+	MapData?: ServerChatRoomMapData; // Please use MapManager to access this
 	Custom?: ServerChatRoomCustomData;
 	Character: ServerAccountDataSynced[];
 }
@@ -242,6 +242,7 @@ interface ServerChatRoomMapData {
 	Tiles?: string;
 	Objects?: string;
 	Effects?: string;
+	CellData?: Record<number,ChatRoomMapObjectConfig> | undefined;
 }
 
 interface ServerChatRoomCustomData {
@@ -824,7 +825,7 @@ interface ModSdkModsReplyPayloadDictionaryEntry {
 	Tag: "ModSdkModsReplyPayload";
 	RequestId: string;
 	Status: CommandsModListStatus;
-	ModsJson: string;
+	ModsJson?: string;
 }
 
 /**
@@ -1111,7 +1112,7 @@ interface ServerCharacterArousalResponse {
 
 interface ServerCharacterItemUpdate extends Omit<ServerItemBundle, "Name"> {
 	Target: number;
-	Name: AssetName | string;
+	Name: AssetName;
 }
 
 interface ServerChatRoomSyncItemResponse {

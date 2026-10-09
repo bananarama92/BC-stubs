@@ -144,6 +144,12 @@ declare function MaidQuartersCanUngagAndMaidsDisabled(): boolean;
 declare function MaidQuartersCannotUngagAndMaidsNotDisabled(): boolean;
 declare function MaidQuartersLoad(): Promise<void>;
 /**
+ * Create the greeting Maid.
+ *
+ * @param {boolean} [newMaid=false] Swap in a new maid
+ */
+declare function MaidQuartersGetMaid(newMaid?: boolean): NPCCharacter;
+/**
  * Runs the maid quarters dialog
  * This function is called periodically so don't use it for extensive use or the call of other complex functions
  * @returns {void} - Nothing
@@ -277,19 +283,22 @@ declare function MaidQuartersOnlineDrinkPay(): void;
  * @returns {void} - Nothing
  */
 declare function MaidQuartersNotFromOwner(): void;
-declare function MaidQuartersSetMaidsDisabled(minutes: any): void;
+/**
+ * @param {number} minutes
+ */
+declare function MaidQuartersSetMaidsDisabled(minutes: number): void;
 declare var MaidQuartersBackground: string;
 /** @type {null | NPCCharacter} */
 declare var MaidQuartersMaid: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var MaidQuartersMaidInitiation: null | NPCCharacter;
-/** @type {{ Cloth?: Item, Hat?: Item, ItemArms?: Item, ItemLegs?: Item, ItemFeet?: Item }} */
+/** @type {NPCCharacter} */
+declare var MaidQuartersMaidInitiation: NPCCharacter;
+/** @type {{ Cloth: Item | null, Hat: Item | null, ItemArms: Item | null, ItemLegs: Item | null, ItemFeet: Item | null }} */
 declare var MaidQuartersItemClothPrev: {
-    Cloth?: Item;
-    Hat?: Item;
-    ItemArms?: Item;
-    ItemLegs?: Item;
-    ItemFeet?: Item;
+    Cloth: Item | null;
+    Hat: Item | null;
+    ItemArms: Item | null;
+    ItemLegs: Item | null;
+    ItemFeet: Item | null;
 };
 declare var MaidQuartersMaidReleasedPlayer: boolean;
 declare var MaidQuartersSelfBondageMaidDrinksAccepted: boolean;

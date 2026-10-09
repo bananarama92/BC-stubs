@@ -82,8 +82,9 @@ declare function ManagementOwnerRefused(): boolean;
 /**
  * Helper function to check a group's unlockability.
  * @param {AssetGroupItemName} groupName - The name of the group to unlock
+ * @returns {boolean}
  */
-declare function ManagementCanUnlockGroup(groupName: AssetGroupItemName): any;
+declare function ManagementCanUnlockGroup(groupName: AssetGroupItemName): boolean;
 /**
  * Checks if the mistress can remove the player's chastity bra
  * @returns {boolean} - TRUE if the mistress can remove the item. (Not owner locked while owned and has at least 25$.)
@@ -535,14 +536,14 @@ declare function ManagementChangeSlaveCollarType(NewType: string): void;
  */
 declare function ManagementClubSlaveDialog(C: Character): void;
 declare var ManagementBackground: string;
-/** @type {null | NPCCharacter} */
-declare var ManagementMistress: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var ManagementSub: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var ManagementMistress: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var ManagementSub: NPCCharacter;
 declare var ManagementMistressAngryCount: number;
 declare var ManagementMistressReleaseTimer: number;
-/** @type {null | Item[]} */
-declare var ManagementPlayerAppearance: null | Item[];
+/** @type {Item[]} */
+declare var ManagementPlayerAppearance: Item[];
 declare var ManagementMistressAllowPlay: boolean;
 declare var ManagementCanReleaseChastity: boolean;
 declare var ManagementEmpty: boolean;

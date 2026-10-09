@@ -53,10 +53,10 @@ declare namespace KeybindingManager {
         NumpadDivide: "Num /";
         NumpadEnter: "Enter";
         NumpadDecimal: "Num .";
-        ArrowLeft: "Left";
-        ArrowRight: "Right";
-        ArrowUp: "Up";
-        ArrowDown: "Down";
+        ArrowLeft: "Left Arrow";
+        ArrowRight: "Right Arrow";
+        ArrowUp: "Up Arrow";
+        ArrowDown: "Down Arrow";
         Tab: "Tab";
         Escape: "Esc";
         Space: "Space";

@@ -13,7 +13,7 @@ type FriendRawData = {
   memberNickname?: string;
   chatRoom?: FriendRawRoom;
   beep?: FriendRawBeep;
-  relationType: FriendListRelationType;
+  relationType?: FriendListRelationType;
   canDelete: boolean;
 	canAdd: boolean;
 	isOnline: boolean;
@@ -28,12 +28,6 @@ type FriendRawRoom = {
   types: (null | FriendListIcon)[];
   ChatRoomLimit?: number;
   ChatRoomMemberCount?: number;
-};
-
-type FriendRawBeep = {
-  beepIndex?: number;
-  caption: string;
-  hasMessage?: boolean;
 };
 
 interface FriendListIcon {
@@ -63,4 +57,71 @@ interface FriendListActionDefinition {
 	getIcon?: (context: FriendListActionContext) => string;
 	isVisible?: (context: FriendListActionContext) => boolean;
 	isEnabled?: (context: FriendListActionContext) => boolean;
+}
+
+interface IFriendListBeepLogMessage {
+	MemberNumber?: number; /* undefined for NPCs */
+	MemberName: string;
+	ChatRoomName?: string;
+	Private: boolean;
+	ChatRoomSpace?: ServerChatRoomSpace;
+	Sent: boolean;
+	Time: Date;
+	Message?: string;
+	Read: boolean;
+	/** Stable id for reply/reaction targeting (from metadata or assigned locally). */
+	Id?: string;
+}
+
+type FriendRawBeep = {
+  beepIndex?: number;
+  chatKey?: string;
+  caption: string;
+  hasMessage?: boolean;
+  unreadCount?: number;
+};
+
+interface FriendListBeepChat {
+	chatKey: string;
+	memberNumber: number | undefined;
+	memberName: string;
+	messageIndices: number[];
+	lastIndex: number;
+	lastTime: Date;
+	hasMessage: boolean;
+}
+
+type BeepMessageType = "Message" | "Emote" | "Action" | "Reply" | "Reaction";
+
+type BeepMessageReplyTo = {
+	id: string;
+	senderName: string;
+	snippet: string;
+};
+
+type BeepMessageMetadata = {
+	messageType?: BeepMessageType;
+	messageColor?: string;
+	messageId?: string;
+	replyTo?: BeepMessageReplyTo;
+	reactionTo?: string;
+	reactionEmoji?: string;
+	reactionRemove?: boolean;
+	[key: string]: any;
+};
+
+interface FriendListBeepActionContext {
+	beepIndex: number;
+	beep: IFriendListBeepLogMessage;
+	senderName: string;
+	isOwn: boolean;
+}
+
+interface FriendListBeepActionDefinition {
+	id: string;
+	getLabel: (context: FriendListBeepActionContext) => string;
+	onClick: (context: FriendListBeepActionContext, ev: PointerEvent) => void;
+	getIcon?: (context: FriendListBeepActionContext) => string;
+	isVisible?: (context: FriendListBeepActionContext) => boolean;
+	isEnabled?: (context: FriendListBeepActionContext) => boolean;
 }

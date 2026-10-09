@@ -506,13 +506,12 @@ declare function PrivateCancelSecurity(): void;
 declare function PrivateLoadCharacter(data: PrivateCharacterData): boolean;
 /**
  * Triggered when a new character is added to the player's private room.
- * @template {ModuleType} T
  * @param {NPCCharacter} Template - The base of the character, includes the name and appearance.
  * @param {"" | NPCArchetype | null} [Archetype] - The type of character such as maid or mistress.
  * @param {boolean} [incomplete=false] - Whether the caller plans to customize the NPC more. Skips generating random traits and calling {@link ServerPrivateCharacterSync()}.
  * @returns {NPCCharacter} - The new private room character.
  */
-declare function PrivateAddCharacter<T extends ModuleType>(Template: NPCCharacter, Archetype?: "" | NPCArchetype | null, incomplete?: boolean): NPCCharacter;
+declare function PrivateAddCharacter(Template: NPCCharacter, Archetype?: "" | NPCArchetype | null, incomplete?: boolean): NPCCharacter;
 /**
  * Gets the index of a given private room character.
  * @returns {number} - Index of the NPC inside the private characters array.

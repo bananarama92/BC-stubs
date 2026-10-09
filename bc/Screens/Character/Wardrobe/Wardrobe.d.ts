@@ -19,10 +19,12 @@ declare function WardrobeClick(event: PointerEvent): void;
 declare function WardrobeResize(load: boolean): void;
 /**
  * Shrink visible slot names so they fit their label box after a layout change.
+ * Fitting every slot in the mode-switch turn forces layout and holds the new grid off screen.
  * @returns {void} - Nothing
  */
 declare function WardrobeFitSlotLabels(): void;
 declare function WardrobeKeyDown(event: KeyboardEvent): boolean;
+declare function WardrobePaste(event: ClipboardEvent): void;
 declare function WardrobeExit(): void;
 /**
  * Unload the Wardrobe screen
@@ -115,7 +117,7 @@ declare function WardrobeLoadCharacterNames(): void;
  */
 declare function WardrobeFixLength(): void;
 /**
- * Reset wardrobe preview characters. Characters are loaded lazily for the visible page.
+ * Reset wardrobe preview characters. Characters are loaded lazily for the visible outfits.
  * @returns {void} - Nothing
  */
 declare function WardrobeLoadCharacters(): void;
@@ -125,9 +127,11 @@ declare function WardrobeLoadCharacters(): void;
  * @returns {Character | null}
  */
 declare function WardrobeEnsureSlotCharacter(slot: number): Character | null;
+/** @returns {void} */
+declare function WardrobeScheduleVisibleCharacters(): void;
 /**
- * Ensure preview characters exist for the current page (and selected overlay slot).
- * Releases off-page characters to keep memory bounded.
+ * Keep the scrollport (plus one buffer row) and the selected slot loaded. Delete every other preview.
+ * New slots are queued and built a few milliseconds per frame.
  * @param {number[]} [filteredSlots]
  * @returns {void} - Nothing
  */
@@ -217,6 +221,16 @@ declare function WardrobeGetSlotsPerPage(): number;
 declare function WardrobeGetGridDimensions(): {
     columns: number;
     rows: number;
+};
+/**
+ * Slot-grid rectangle for the current wardrobe display mode.
+ * @returns {{ x: number, y: number, width: number, height: number }}
+ */
+declare function WardrobeGetSlotGridRect(): {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
 };
 /**
  * @param {number} slot
@@ -313,10 +327,9 @@ declare function WardrobeInvalidateFilteredSlots(): void;
 declare function WardrobeGetFilteredSlots(): number[];
 /**
  * @param {string} search
- * @param {boolean} [resetOffset]
  * @returns {void} - Nothing
  */
-declare function WardrobeSetSearch(search: string, resetOffset?: boolean): void;
+declare function WardrobeSetSearch(search: string): void;
 /**
  * @this {HTMLInputElement}
  * @returns {void} - Nothing
@@ -328,10 +341,10 @@ declare function WardrobeSearchInput(this: HTMLInputElement): void;
 declare function WardrobeSyncNameInput(): void;
 declare function WardrobeNameKeyDown(event: KeyboardEvent): boolean;
 /**
- * @param {1 | -1} change
+ * @deprecated
  * @returns {void} - Nothing
  */
-declare function WardrobeChangePage(change: 1 | -1): void;
+declare function WardrobeChangePage(): void;
 /**
  * @returns {void} - Nothing
  */
@@ -375,6 +388,7 @@ declare var WardrobeBackground: string;
 /** @type {(Character | null)[]} */
 declare var WardrobeCharacter: (Character | null)[];
 declare var WardrobeSelection: number;
+/** @deprecated */
 declare var WardrobeOffset: number;
 declare var WardrobeSize: number;
 /** @type {WardrobeReorderType} */
@@ -402,6 +416,8 @@ declare namespace Wardrobe {
         signature: string;
     }>;
     let drawGeneration: number;
+    let slotQueue: number[];
+    let slotFrame: number;
     let emptySlotImage: string;
     let filledSlotImage: string;
     let previewAction: null | WardrobeActionPreview;
@@ -423,7 +439,7 @@ declare namespace Wardrobe {
         let height_1: number;
         export { height_1 as height };
     }
-    namespace grid {
+    namespace previewGrid {
         let x_1: number;
         export { x_1 as x };
         let y_1: number;
@@ -433,17 +449,25 @@ declare namespace Wardrobe {
         let height_2: number;
         export { height_2 as height };
     }
+    namespace labelGrid {
+        let x_2: number;
+        export { x_2 as x };
+        let y_2: number;
+        export { y_2 as y };
+        let width_3: number;
+        export { width_3 as width };
+        let height_3: number;
+        export { height_3 as height };
+    }
 }
 declare const WardrobeID: Readonly<{
     screen: "wardrobe-screen";
-    previous: "wardrobe-previous";
-    next: "wardrobe-next";
-    page: "wardrobe-page";
     load: "wardrobe-load";
     save: "wardrobe-save";
     delete: "wardrobe-delete";
     rename: "wardrobe-rename";
-    search: "wardrobe-search";
+    search: "wardrobe-search-button";
+    searchInput: "wardrobe-search";
     name: "wardrobe-name";
     noMatches: "wardrobe-no-matches";
     status: "wardrobe-status";
@@ -458,6 +482,8 @@ declare const WardrobeID: Readonly<{
     loadPreview: "wardrobe-load-preview";
     savePreview: "wardrobe-save-preview";
     slotGrid: "wardrobe-slot-grid";
+    paginatePrev: "wardrobe-paginate-prev";
+    paginateNext: "wardrobe-paginate-next";
     /**
      * @param {number} index
      * @returns {string}
@@ -478,6 +504,11 @@ declare const WardrobeID: Readonly<{
      * @returns {string}
      */
     slotEmpty: (index: number) => string;
+    /**
+     * @param {number} index
+     * @returns {string}
+     */
+    slotActions: (index: number) => string;
     /**
      * @param {number} index
      * @returns {string}

@@ -63,6 +63,7 @@ declare function InventoryDataBuild(C: Character): string;
 * @param {Character} C - The character on which we should remove the item
 * @param {AssetName} Name - The name of the item to validate
 * @param {AssetGroupName} Group - The group name of the item to validate
+* @returns {boolean} Whether the given item is in the given character's inventory.
 */
 declare function InventoryAvailable(C: Character, Name: AssetName, Group: AssetGroupName): boolean;
 /**
@@ -182,14 +183,14 @@ declare function InventoryCraftPropertyIs(): void;
  * @param {Character} C - The character that must wear the item
  * @param {AssetName} AssetName - The name of the asset to wear
  * @param {AssetGroupName} AssetGroup - The name of the asset group to wear
- * @param {null | ItemColor} [ItemColor] - The hex color of the item, can be undefined or "Default"
+ * @param {null | Readonly<ItemColor>} [ItemColor] - The hex color of the item, can be undefined or "Default"
  * @param {null | number} [Difficulty] - The difficulty, on top of the base asset difficulty, to assign to the item
  * @param {null | number} [MemberNumber] - The member number of the character putting the item on - defaults to -1
- * @param {null | CraftingItem | CraftingPartialItem} [Craft] - The crafting properties of the item
+ * @param {null | Readonly<CraftingItem> | Readonly<CraftingPartialItem>} [Craft] - The crafting properties of the item
  * @param {boolean} [Refresh] - Whether to refresh the character and push the changes to the server
  * @returns {Item | null} - Thew newly created item or `null` if the asset does not exist
  */
-declare function InventoryWear(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, ItemColor?: null | ItemColor, Difficulty?: null | number, MemberNumber?: null | number, Craft?: null | CraftingItem | CraftingPartialItem, Refresh?: boolean): Item | null;
+declare function InventoryWear(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, ItemColor?: null | Readonly<ItemColor>, Difficulty?: null | number, MemberNumber?: null | number, Craft?: null | Readonly<CraftingItem> | Readonly<CraftingPartialItem>, Refresh?: boolean): Item | null;
 /**
 * Sets the difficulty to remove an item for a body area
 * @param {Character} C - The character that is wearing the item
@@ -226,9 +227,11 @@ declare function InventoryWearRandom(C: Character, GroupName: AssetGroupName, Di
  * @param {Character} C - The character wearing the item
  * @param {AssetGroupName} GroupName - The name of the item's group
  * @param {Character | undefined} [C_Source] - The character setting the new item option. If `null`, assume that it is _not_ the player character.
+ * @param {boolean} [push] - Whether the change should be pushed.
+ * @param {boolean} [refresh] - Whether the character's appearance should be refreshed.
  * @returns {Item | null} - The equipped item (if any)
  */
-declare function InventoryRandomExtend(C: Character, GroupName: AssetGroupName, C_Source?: Character | undefined): Item | null;
+declare function InventoryRandomExtend(C: Character, GroupName: AssetGroupName, C_Source?: Character | undefined, push?: boolean, refresh?: boolean): Item | null;
 /**
  * Select a random asset from a group, narrowed to the most preferable available options (i.e
  * unblocked/visible/unlimited) based on their binary "rank"
@@ -618,6 +621,6 @@ declare namespace InventoryPrerequisiteConflicts {
     }): InventoryPrerequisiteConflicts.ErrMessage;
 }
 /** @satisfies {Set<keyof PropertiesArray>} */
-declare const PropertiesArrayLike: Set<"Block" | "Hide" | "Prerequisite" | "AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "ExpressionTrigger" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "Effect" | "SetPose" | "AllowExpression" | "MemberNumberList" | "UnHide" | "Texts">;
+declare const PropertiesArrayLike: Set<"Block" | "Hide" | "Effect" | "Prerequisite" | "AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "ExpressionTrigger" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "SetPose" | "AllowExpression" | "MemberNumberList" | "UnHide" | "Texts">;
 /** @satisfies {Set<keyof PropertiesRecord>} */
 declare const PropertiesObjectLike: Set<"AllowLockType" | "ActivityExpression" | "RemoveItemOnRemove" | "PoseMapping" | "TypeRecord">;

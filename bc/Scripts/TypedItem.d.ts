@@ -153,10 +153,11 @@ declare function TypedItemFindPreviousOption<T extends TypedItemOption | Vibrati
  * @param {boolean} [push] - Whether or not appearance updates should be persisted (only applies if the character is the
  * player) - defaults to false.
  * @param {null | Character} [C_Source] - The character setting the new item option. If `null`, assume that it is _not_ the player character.
+ * @param {boolean} [refresh] - Whether the character's appearance should be refreshed.
  * @returns {string|undefined} - undefined or an empty string if the type was set correctly. Otherwise, returns a string
  * informing the player of the requirements that are not met.
  */
-declare function TypedItemSetRandomOption(C: Character, itemOrGroupName: Item | AssetGroupName, push?: boolean, C_Source?: null | Character): string | undefined;
+declare function TypedItemSetRandomOption(C: Character, itemOrGroupName: Item | AssetGroupName, push?: boolean, C_Source?: null | Character, refresh?: boolean): string | undefined;
 /**
  * Initialize the typed item properties
  * @param {TypedItemData | VibratingItemData} Data - The item's extended item data

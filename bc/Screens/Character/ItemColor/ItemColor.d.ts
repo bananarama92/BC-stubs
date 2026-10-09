@@ -256,8 +256,11 @@ declare let ItemColorPickerIndices: number[];
 declare const ItemColorPickerLayers: Map<number, AssetLayer>;
 /** @type {ItemColorExitListener[]} */
 declare let ItemColorExitListeners: ItemColorExitListener[];
-/** @type {string} */
-declare let ItemColorBackup: string;
+/**
+ * @deprecated See the `initial<X>` fields in {@link ItemColorState}
+ * @type {undefined | string}
+ */
+declare let ItemColorBackup: undefined | string;
 declare let ItemColorText: TextCache;
 /**
  * Initialized in {@link ItemColorLoad} and valid until {@link ItemColorReset} is called

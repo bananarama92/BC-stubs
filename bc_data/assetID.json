@@ -1330,7 +1330,9 @@
             "XFrame": 74,
             "InflatableRestraintBag": 75,
             "LongBag": 76,
-            "Stroller": 77
+            "Stroller": 77,
+            "BirdCage": 78,
+            "CardBoardBox": 79
         }
     },
     "ItemEars": {
@@ -1477,7 +1479,10 @@
             "Foldingfan": 83,
             "GrilledSausage": 84,
             "Oilpaperumbrella": 85,
-            "R18Baton": 86
+            "R18Baton": 86,
+            "Book": 87,
+            "Rattle": 88,
+            "ToyHammer": 89
         }
     },
     "ItemHands": {
@@ -1610,7 +1615,8 @@
             "CreepyIronMask": 57,
             "HalloIII": 58,
             "TransparentLatexHood": 59,
-            "CybertechMask": 60
+            "CybertechMask": 60,
+            "LatexHood": 61
         }
     },
     "ItemLegs": {
@@ -1642,7 +1648,10 @@
             "FrogtieMetalCuffs": 23,
             "BarrelCorset": 24,
             "PawPaddedPetsuitLegs": 25,
-            "StrappedPetsuitLegs": 26
+            "StrappedPetsuitLegs": 26,
+            "KneeSpreader": 27,
+            "OverKneeOvernighter": 28,
+            "ShockDevice": 29
         }
     },
     "ItemMisc": {
@@ -1799,7 +1808,8 @@
             "PumpkinHarnessGag": 101,
             "BallGag2": 102,
             "ShapedMouthCage": 103,
-            "PacifierClip": 104
+            "PacifierClip": 104,
+            "CheekRetractor": 105
         }
     },
     "ItemMouth2": {
@@ -2141,7 +2151,8 @@
             "TapedVibeEggs": 18,
             "VibeNippleClamp": 19,
             "VibratorRemote": 20,
-            "XmasBell": 21
+            "XmasBell": 21,
+            "NippleClamps1": 22
         }
     },
     "ItemNipplesPiercings": {
@@ -2159,7 +2170,9 @@
             "RoundPiercing": 9,
             "StraightPiercing": 10,
             "VibeHeartPiercings": 11,
-            "PiercingNameBadge": 12
+            "PiercingNameBadge": 12,
+            "ShortStraightPiercings": 13,
+            "ThroughPiercings": 14
         }
     },
     "ItemNose": {
@@ -2175,7 +2188,8 @@
             "PigNoseHook": 7,
             "GlueNose": 8,
             "NoseClip": 9,
-            "NoseShackle": 10
+            "NoseShackle": 10,
+            "ExpandingNoseHook": 11
         }
     },
     "ItemPelvis": {
@@ -2260,7 +2274,10 @@
             "BarrelCorset": 32,
             "ExtremeCorset": 33,
             "SteelBelt": 34,
-            "FullBodyStraps": 35
+            "FullBodyStraps": 35,
+            "Movableglasscabinet": 36,
+            "RestraintSet": 37,
+            "TentacleSuit": 38
         }
     },
     "ItemTorso2": {
@@ -2301,7 +2318,10 @@
             "BarrelCorset": 32,
             "ExtremeCorset": 33,
             "SteelBelt": 34,
-            "FullBodyStraps": 35
+            "FullBodyStraps": 35,
+            "Movableglasscabinet": 36,
+            "RestraintSet": 37,
+            "TentacleSuit": 38
         }
     },
     "ItemVulva": {
@@ -2342,7 +2362,8 @@
             "LockingCockring": 32,
             "Ballspreader": 33,
             "MysteryBox": 34,
-            "UsedCondom": 35
+            "UsedCondom": 35,
+            "MoreWiredVibrators": 36
         }
     },
     "ItemVulvaPiercings": {
@@ -3087,7 +3108,9 @@
             "MelodysBoutique": 38,
             "BellFlower": 39,
             "LMF": 40,
-            "VelvetBunny": 41
+            "VelvetBunny": 41,
+            "BFPin": 42,
+            "CTSimplified": 43
         }
     }
 }

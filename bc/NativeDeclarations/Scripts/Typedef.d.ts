@@ -36,7 +36,15 @@ type MemoizedFunction<T extends AnyFunction> = T & {
 type SafePromise<T> = Promise<T>;
 
 // GL shim
-interface WebGLTextureData {
+
+/**
+ * Something GLDrawImage/DrawImage can draw: either the URL of an image that goes
+ * through the ImageCache, or an already available image source that gets
+ * uploaded on the spot.
+*/
+type DrawSource = string | HTMLImageElement | HTMLCanvasElement | ImageBitmap;
+
+interface GLDrawImageData {
 	width: number,
 	height: number,
 	texture: WebGLTexture,
@@ -48,7 +56,6 @@ interface WebGL2RenderingContext {
 	programHalf?: WebGLProgram;
 	programTexMask?: WebGLProgram;
 	programPreMultiplyAlpha?: WebGLProgram;
-	textureCache?: Map<string, WebGLTextureData>;
 	maskCache?: Map<string, WebGLTexture>;
 }
 
@@ -217,7 +224,7 @@ declare namespace ElementButton {
 		/** Whether the button should be disabled or not */
 		disabled?: boolean;
 		/** A click event listener to-be fired when a button is disabled via `aria-disabled: "true"`. */
-		clickDisabled?: (this: HTMLButtonElement, event: MouseEvent) => any;
+		clickDisabled?: (this: HTMLButtonElement, event: PointerEvent) => any;
 		/**
 		 * Enabled buttons with a `checkbox` or `radio` role can normally not be clicked if the `aria-required: "true"` is set.
 		 * Setting this option to `true` disables that behavior, clicking an already enabled button thus firing its click events once again rather than aborting.
@@ -277,8 +284,8 @@ type RectTuple = [X: number, Y: number, W: number, H: number];
 /** A 4-tuple with X & Y coordinates and, optionally, width and height */
 type PartialRectTuple = [X: number, Y: number, W?: number, H?: number];
 
-type CommonSubstituteReplacer = (match: string, offset: number, replacement: string, string: string) => string;
-type CommonSubtituteSubstitution = [tag: string, substitution: string, replacer?: CommonSubstituteReplacer];
+type CommonSubstituteReplacer = (match: string, offset: number, replacement: string, string: string, groups?: Partial<Record<string, string>>) => string;
+type CommonSubtituteSubstitution = [tag: string | RegExp, substitution: string, replacer?: CommonSubstituteReplacer];
 
 interface CommonGenerateGridParameters {
 	/** Starting X coordinate of the grid */
@@ -499,7 +506,7 @@ declare namespace DialogMenu {
 		 * @param properties The {@link InitProperties} associated with the specific dialog menu
 		 * @param equippedItem The equipped item in question (if any)
 		 */
-		click: (button: HTMLButtonElement, ev: MouseEvent, properties: T, equippedItem?: Item | null) => any;
+		click: (button: HTMLButtonElement, ev: PointerEvent, properties: T, equippedItem?: Item | null) => any;
 		/** An object mapping labels to custom validation functions for button clicks. */
 		validate?: Record<string, MenuButtonValidator<T>>;
 	}
@@ -597,7 +604,7 @@ interface ExpressionNameMap {
 		"TonguePinch" | "LipBite" | "Happy" | "Devious" | "Laughing" | "Grin" | "Smirk" | "Pout"
 	),
 	Pussy: null | "Hard",
-	Blush: null | "Low" | "Medium" | "High" | "VeryHigh" | "Extreme" | "ShortBreath",
+	Blush: null | "Low" | "Medium" | "High" | "VeryHigh" | "Extreme" | "ShortBreath" | "Dread",
 	Fluids: (
 		null | "DroolLow" | "DroolMedium" | "DroolHigh" | "DroolSides" | "DroolMessy" | "DroolTearsLow" |
 		"DroolTearsMedium" | "DroolTearsHigh" | "DroolTearsMessy" | "DroolTearsSides" |
@@ -672,11 +679,12 @@ type AssetLockType =
 	"TimerPasswordPadlock"
 	;
 
-type CraftingPropertyType =
+type CraftingPropertyType = (
 	"Normal" | "Large" | "Small" | "Thick" | "Thin" | "Secure" | "Loose" | "Decoy" |
 	"Malleable" | "Rigid" | "Simple" | "Puzzling" | "Painful" | "Comfy" | "Strong" |
-	"Flexible" | "Nimble" | "Arousing" | "Dull" | "Edging" | "Heavy" | "Light"
-	;
+	"Flexible" | "Nimble" | "Arousing" | "Dull" | "Edging" | "Heavy" | "Light" |
+	"Deaf" | "Audible"
+);
 
 type AssetGenericSize = "Small" | "Medium" | "Large";
 type AssetAttribute =
@@ -689,7 +697,7 @@ type AssetAttribute =
 	| "FuturisticRecolor" | "FuturisticRecolorDisplay" | "FuturisticLock"
 	| "PortalLinkLockable" | `PortalLinkChastity${string}` | `PortalLinkActivity${ActivityName}` | `PortalLinkTarget${AssetGroupItemName}`
 	| "Diaper" | `Diaper${AssetGenericSize}` | "IsNurseryOutfit" | "Pacifier"
-	| "PetSuit" | "ArcadeGaming"
+	| "PetSuit" | "ArcadeGaming" | "HandheldItem"
 	;
 
 type PosePrerequisite = `Can${AssetPoseName}`;
@@ -868,7 +876,6 @@ type ChatRoomOwnershipEvent =
 	| "CanOfferEndTrial"
 	| "CanEndTrial";
 
-type ChatRoomData = ServerChatRoomData;
 // TODO: Review the partial nature of the `Custom` and `Space` fields
 type ChatRoomSettings = Prettify<
 	Omit<ServerChatRoomData, "Character" | "Custom" | "Space">
@@ -1049,21 +1056,6 @@ interface ChatRoomMessageHandler {
 
 //#endregion
 
-//#region FriendList
-
-interface IFriendListBeepLogMessage {
-	MemberNumber?: number; /* undefined for NPCs */
-	MemberName: string;
-	ChatRoomName?: string;
-	Private: boolean;
-	ChatRoomSpace?: ServerChatRoomSpace;
-	Sent: boolean;
-	Time: Date;
-	Message?: string;
-}
-
-//#endregion
-
 /**
  * Make all properties in T mutable.
  * Opposite of {@link Readonly}
@@ -1163,6 +1155,7 @@ interface AssetAppearanceGroup extends AssetGroup {
 	readonly Category: "Appearance";
 	readonly Name: AssetGroupBodyName;
 	readonly IsRestraint: false;
+	readonly Effect: readonly Exclude<EffectName, GagEffectName | BlindEffectName | DeafEffectName | BlurEffectName>[];
 }
 
 /** An AssetGroup subtype for the `Item` {@link AssetGroup.Category} */
@@ -1322,7 +1315,7 @@ interface Asset {
 	readonly Wear: boolean;
 	readonly Activity: ActivityName | null;
 	readonly AllowActivity?: readonly ActivityName[];
-	readonly ActivityAudio?: readonly string[];
+	readonly ActivityAudio?: readonly AudioEffectName[];
 	readonly ActivityExpression: Readonly<Partial<Record<ActivityName, readonly ExpressionTrigger[]>>>;
 	readonly AllowActivityOn: readonly AssetGroupItemName[];
 	readonly InventoryID?: number;
@@ -1388,7 +1381,7 @@ interface Asset {
 	 */
 	readonly DefaultColor: readonly BCColor[];
 	readonly EditOpacity: boolean;
-	readonly Audio?: string;
+	readonly Audio?: AudioEffectName;
 	readonly Category?: readonly AssetCategory[];
 	readonly Fetish?: readonly FetishName[];
 	/** See {@link BackgroundsList} */
@@ -1398,13 +1391,13 @@ interface Asset {
 	readonly BodyCosplay: boolean;
 	readonly OverrideBlinking: boolean;
 	readonly DialogSortOverride?: DialogSortOrder;
-	readonly DynamicDescription: (C: Character) => string;
+	readonly DynamicDescription: (this: Asset, C: Character) => string;
 	readonly DynamicPreviewImage: (C: Character) => string;
 	readonly DynamicAllowInventoryAdd: (C: Character) => boolean;
-	readonly DynamicName: (C: Character) => AssetName;
+	readonly DynamicName: (this: Asset, C: Character) => AssetName;
 	readonly DynamicGroupName: AssetGroupName;
 	readonly DynamicActivity: (C: Character) => ActivityName | null | undefined;
-	readonly DynamicAudio: ((C: Character) => string) | null;
+	readonly DynamicAudio: ((C: Character) => AudioEffectName) | null;
 	readonly AllowRemoveExclusive: boolean;
 	readonly InheritColor: null | AssetGroupName;
 	readonly DynamicBeforeDraw: boolean;
@@ -1502,10 +1495,31 @@ type ActivityNameBasic = "Bite" | "Brush" | "Caress" | "Choke" | "Clean" | "Cudd
 	"PenetrateSlow" | "Pet" | "Pinch" | "PoliteKiss" | "Pull" |
 	"RestHead" | "Rub" | "Scratch" | "Sit" | "Slap" | "Spank" | "Step" | "StruggleArms" | "StruggleLegs" |
 	"Suck" | "SuckPenetrateItem" | "DeepThroat" | "TakeCare" | "Tickle" | "Whisper" | "Wiggle" |
-	"SistersHug" | "BrothersHandshake" | "SiblingsCheekKiss" | "CollarGrab"
+	"SistersHug" | "BrothersHandshake" | "SiblingsCheekKiss" | "SiblingsHug" | "CollarGrab" | "SpitOutGag"
 ;
 
-type ActivityNameItem = "Inject" | "MasturbateItem" | "PenetrateItem" | "ChewItem" | "PourItem" | "RollItem" | "RubItem" | "BrushItem" | "ShockItem" | "SipItem" | "SpankItem" | "SqueezeItem" | "TickleItem" | "EatItem" | "Scratch" | "ThrowItem";
+type ActivityNameItem =
+	| "PowderItem"
+	| "ShakeItem"
+	| "SpitItem"
+	| "Inject"
+	| "MasturbateItem"
+	| "PenetrateItem"
+	| "ChewItem"
+	| "PourItem"
+	| "RollItem"
+	| "RubItem"
+	| "BrushItem"
+	| "ShockItem"
+	| "SipItem"
+	| "SpankItem"
+	| "SqueezeItem"
+	| "TickleItem"
+	| "EatItem"
+	| "Scratch"
+	| "ThrowItem"
+	| "GagItem"
+;
 
 type ActivityName = ActivityNameBasic | ActivityNameItem;
 
@@ -1515,7 +1529,7 @@ type ActivityPrerequisite =
 	`TargetNeeds-${ActivityNameItem}` |
 	"TargetCanUseTongue" | "TargetKneeling" | "TargetMouthBlocked" | "TargetMouthOpen" | "TargetZoneAccessible" | "TargetZoneNaked" |
 	"UseArms" | "UseFeet" | "UseHands" | "UseMouth" | "UseTongue" | "VulvaEmpty" | "ZoneAccessible" | "ZoneNaked" |
-	"Sisters" | "Brothers" | "SiblingsWithDifferentGender" | "Collared"
+	"Sisters" | "Brothers" | "SiblingsWithDifferentGender" | "SiblingsNeutral" | "Collared"
 ;
 
 interface Activity {
@@ -1611,7 +1625,7 @@ interface InventoryRemoveOptions {
 	 */
 	removeItemOnRemove?: readonly RemoveOnItemRemove[];
 	/**
-	 * Whether to trigger a character refresh on a successful item removal.
+	 * Whether to trigger {@link CharacterRefresh} on a successful item removal.
 	 * @default true
 	 */
 	refresh?: boolean;
@@ -1988,6 +2002,7 @@ interface Character {
 	Canvas: HTMLCanvasElement | null;
 	CanvasBlink: HTMLCanvasElement | null;
 	MustDraw: boolean;
+	DrawnAssets: Set<string>;
 	BlinkFactor: number;
 	AllowItem: boolean;
 	/** A record with all asset- and type-specific permission settings */
@@ -2127,6 +2142,13 @@ interface Character {
 	HeightRatioProportion?: number;
 	GetGenders: () => AssetGender[];
 	GetPronouns: () => CharacterPronouns;
+	/**
+	 * The duration a timer lock is allowed to be set to.
+	 * null = default value
+	 * number = seconds
+	 * infinite = unlimited
+	 */
+	GetLockTimerLimit: () => null | number;
 	HasPenis: () => boolean;
 	HasVagina: () => boolean;
 	IsFlatChested: () => boolean;
@@ -2196,7 +2218,7 @@ interface Character {
 	Rule?: LogRecord[];
 	Status?: string | null;
 	StatusTimer?: number;
-	Crafting: (CraftingItem | null)[]; // technically never as it is Online-only
+	Crafting?: (CraftingItem | null)[];
 	LastMapData?: ChatRoomMapData;
 	/**
 	 * The custom background to use for the current room
@@ -2229,6 +2251,7 @@ interface CharacterOnlineSharedSettings {
 	ItemsAffectExpressions: boolean;
 	ScriptPermissions: ScriptPermissions;
 	WheelFortune: string;
+	LockTimerLimit: LockTimerLimitName
 }
 
 type NicknameStatus = "NicknameTooLong" | "NicknameTooShort" | "NicknameInvalidChars" | "NicknameLocked";
@@ -2281,7 +2304,7 @@ interface Character {
 }
 
 /** Private Room & Private Bed */
-interface Character {
+interface PrivateBedCharacter {
 	PrivateBed?: boolean;
 	PrivateBedActivityTimer?: number;
 	PrivateBedLeft?: number;
@@ -2289,6 +2312,8 @@ interface Character {
 	PrivateBedMoveTimer?: number;
 	PrivateBedAppearance?: string;
 }
+
+interface Character extends PrivateBedCharacter {}
 
 type PrivatePunishment = (
 	"Cage" | "Bound" | "BoundPet" | "ChastityBra" | "ForceNaked" | "ConfiscateKey" | "ConfiscateCrop" | "ConfiscateWhip"
@@ -2380,7 +2405,7 @@ interface OnlineCharacter extends Character {
 	Nickname?: string;
 	Title: TitleName | undefined;
 	LabelColor: HexColor;
-	Creation: number;
+	Creation?: number;
 	Description: string;
 	OnlineSharedSettings: CharacterOnlineSharedSettings;
 	Game: CharacterGameParameters;
@@ -2394,11 +2419,13 @@ interface OnlineCharacter extends Character {
 	Status?: string | null;
 	StatusTimer?: number;
 	LastMapData?: ChatRoomMapData;
+	Crafting: (CraftingItem | null)[];
 }
 
 interface PlayerCharacter extends OnlineCharacter {
 	// All the following are guaranteed to be set on login
 
+	Creation: number;
 	// PreferenceInitPlayer() must be updated with defaults, when adding a new setting
 	ChatSettings: ChatSettingsType;
 	VisualSettings: VisualSettingsType;
@@ -2608,6 +2635,7 @@ interface PlayerOnlineSettings {
 	ShowRoomCustomization: ChatRoomCustomizationType;
 	FriendListAutoRefresh: boolean;
 	DefaultChatRoomBackground: string;
+	LockTimerLimit: LockTimerLimitName
 }
 
 /** Pandora Player extension */
@@ -3194,7 +3222,7 @@ interface AssetOverrideHeight {
  * Either a single number that will cause all of the asset's layer to
  * inherit that priority, or a more precise specifier keyed by layer name.
  */
-type AssetLayerOverridePriority = Partial<Record<LayerName | "", number>> | number;
+type AssetLayerOverridePriority = Partial<Record<LayerName, number>> | number;
 
 /**
  * Base properties of extended items derived from their respective {@link Asset} definition.
@@ -3381,10 +3409,6 @@ interface ItemPropertiesBase {
 	/** The vibrator's state; only relevant for advanced vibrator modes */
 	State?: VibratorModeState;
 
-	/** KD modules */
-	// FIXME: Note that, as far as I can see, it's only ever set, never read
-	Modules?: number[];
-
 	/** Transformation properties */
 	TranslationX?: number;
 	TranslationY?: number;
@@ -3490,11 +3514,6 @@ interface ItemPropertiesCustom {
 	OriginalSetting?: 0 | 1 | 2 | 3;
 	/** Whether gag's blinking light is on or off */
 	BlinkState?: boolean;
-	/**
-	 * An extended item option
-	 * @todo Investigate whether this property still actually exists
-	 */
-	Option?: ExtendedItemOption;
 
 	// #endregion
 
@@ -3607,25 +3626,44 @@ interface ItemPropertiesCustom {
 	ArousalLvl?: ItemVulvaChastityCageExcitementLevel;
 
 	// #endregion
+
+	/** Unused within {@link ItemProperties}; see {@link ItemPropertiesMinimized} */
+	IsLeashed?: undefined;
 }
 
 interface ItemProperties extends ItemPropertiesBase, AssetDefinitionProperties, ItemPropertiesCustom {
-	LayerTranslationX?: Partial<Record<LayerName | "", number>>;
+	LayerTranslationX?: Partial<Record<LayerName, number>>;
 	/** Translation Y */
-	LayerTranslationY?: Partial<Record<LayerName | "", number>>;
+	LayerTranslationY?: Partial<Record<LayerName, number>>;
 	/** Scale X */
-	LayerScaleX?: Partial<Record<LayerName | "", number>>;
+	LayerScaleX?: Partial<Record<LayerName, number>>;
 	/** Scale Y */
-	LayerScaleY?: Partial<Record<LayerName | "", number>>;
+	LayerScaleY?: Partial<Record<LayerName, number>>;
 	/** Rotation */
-	LayerRotation?: Partial<Record<LayerName | "", number>>;
+	LayerRotation?: Partial<Record<LayerName, number>>;
 }
 
 /** Properties in {@link ItemPropertiesMinimized} with a minimization format distinct from their representation {@link ItemProperties} */
-type ItemPropertiesCompressdKeys = never; // TODO: Add property names
+type ItemPropertiesCompressedKeys = Extract<keyof ItemProperties,
+	"LayerRotation"
+	| "LayerTranslationX"
+	| "LayerTranslationY"
+	| "LayerScaleX"
+	| "LayerScaleY"
+	| "OverridePriority"
+	| "IsLeashed"
+>;
 
 /** Minimization format for {@link ItemProperties} */
-interface ItemPropertiesMinimized extends Omit<ItemProperties, ItemPropertiesCompressdKeys> {
+interface ItemPropertiesMinimized extends Omit<ItemProperties, ItemPropertiesCompressedKeys> {
+	/** Corresponds to the `"IsLeashed"` effect in {@link EffectName} */
+	IsLeashed?: boolean;
+	LayerRotation?: string;
+	LayerTranslationX?: string;
+	LayerTranslationY?: string;
+	LayerScaleX?: string;
+	LayerScaleY?: string;
+	OverridePriority?: number | string;
 }
 
 /** Base type for unparsed extended item properties */
@@ -3963,11 +4001,8 @@ interface TextItemData extends ExtendedItemData<TextItemOption> {
 	font?: string;
 }
 
-// NOTE: Use the intersection operator to enforce that the it remains a `keyof ItemProperties` subtype
 /** Property keys of {@link ItemProperties} with text input fields */
-type TextItemNames = keyof ItemProperties & (
-	"Text" | "Text2" | "Text3"
-);
+type TextItemNames = Extract<keyof ItemProperties, "Text" | "Text2" | "Text3">;
 
 type TextItemRecord<T> = Partial<Record<TextItemNames, T>>;
 
@@ -4007,7 +4042,14 @@ interface NoArchItemData extends ExtendedItemData<NoArchItemOption> {
 
 // #endregion
 
+/** Take a type and convert all of its properties into `unknown` */
+type Unknown<T> = { [k in keyof T]: unknown };
+
+/** Make all specified keys in the type optional */
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+/** Make all specified keys in the type non-optional */
+type Mandatory<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
 
 /** The {@link Window} type with all non-function values removed (though they may still be optional) */
 type WindowFunctions = { [k in keyof Window as NonNullable<Window[k]> extends AnyFunction ? k : never]: Window[k] };
@@ -4016,22 +4058,32 @@ type WindowFunctions = { [k in keyof Window as NonNullable<Window[k]> extends An
 
 type StruggleKnownMinigames = "Strength" | "Flexibility" | "Dexterity" | "Loosen" | "LockPick";
 
+interface StruggleEventTypes {
+	Click: null;
+	MouseDown: PointerEvent;
+	KeyDown: KeyboardEvent;
+}
+
+type StruggleEventListener = (
+	...args: {
+		[K in keyof StruggleEventTypes]: [EventType: K, event: StruggleEventTypes[K]]
+	}[keyof StruggleEventTypes]
+) => boolean;
+
 interface StruggleMinigame {
-	Setup: (C: Character, PrevItem: Item, NextItem: Item) => void;
+	Setup: (C: Character, PrevItem: Item | null, NextItem: Item | null) => void;
 	Draw: (C: Character) => void;
-	HandleEvent?: (EventType: "KeyDown"|"Click", event: Event) => boolean;
+	HandleEvent?: StruggleEventListener;
 	DisablingCraftedProperty?: CraftingPropertyType;
 }
 
-interface StruggleCompletionData {
+type StruggleCompletionData = {
 	Progress: number;
-	PrevItem: Item;
-	NextItem?: DialogInventoryItem;
 	Skill: number;
 	Attempts: number;
 	Interrupted: boolean;
 	Auto?: boolean;
-}
+} & ({ PrevItem: Item; NextItem: DialogInventoryItem; } | { PrevItem: null; NextItem: DialogInventoryItem; } | { PrevItem: Item; NextItem: null; })
 
 type StruggleCompletionCallback = (character: Character, game: StruggleKnownMinigames, data: StruggleCompletionData) => void;
 
@@ -4045,10 +4097,10 @@ interface StruggleOnlineData {
 	LoosenMode: boolean;
 	Item: Item;
 	NextAnim: number;
-	StartExpressionEyes: ExpressionName; // technically ExpressionNameMap["Eyes"];
-	StartExpressionBlush: ExpressionName;
-	StartExpressionMouth: ExpressionName;
-	StartExpressionEyebrows: ExpressionName;
+	StartExpressionEyes: ExpressionName | undefined; // technically ExpressionNameMap["Eyes"];
+	StartExpressionBlush: ExpressionName | undefined;
+	StartExpressionMouth: ExpressionName | undefined;
+	StartExpressionEyebrows: ExpressionName | undefined;
 }
 
 // #endregion
@@ -4268,11 +4320,118 @@ type GGTSTask =
 
 // #region Audio
 
-type AudioSoundEffect = [sound: string, volume: number];
+type AudioEffectName =
+	| "AirDoorClosing"
+	| "AirDoorOpening"
+	| "Bag"
+	| "BalloonRubbing"
+	| "BalloonStretch"
+	| "Beep"
+	| "BellMedium"
+	| "BellSmall"
+	| "Belt"
+	| "BrushHair"
+	| "BrushSpank"
+	| "Buckle"
+	| "CageClose"
+	| "CageEquip"
+	| "CageOpen"
+	| "CageStruggle"
+	| "ChainLong"
+	| "ClothKnot"
+	| "ClothSlip"
+	| "SciFiEffect"
+	| "SciFiPump"
+	| "SciFiConfigure"
+	| "SciFiBeeps"
+	| "ChainShort"
+	| "CuffsMetal"
+	| "EMLevitate"
+	| "EMDisable"
+	| "FanOpen"
+	| "Hallo"
+	| "FuturisticApply"
+	| "HoodedCloak"
+	| "HydraulicLock"
+	| "HydraulicUnlock"
+	| "Deflation"
+	| "DuctTape"
+	| "DuctTapeRoll"
+	| "DuctTapeRollShort"
+	| "Inflation"
+	| "MetalClose"
+	| "MetalCuffs"
+	| "LeatherStretching1"
+	| "LockLarge"
+	| "LockSmall"
+	| "RopeLong"
+	| "RopeShort"
+	| "Shocks"
+	| "SmackCrop"
+	| "Squeak"
+	| "SqueakyToy"
+	| "Whip1"
+	| "Whip2"
+	| "Sybian"
+	| "Unlock"
+	| "VibrationLong1"
+	| "VibrationLong2"
+	| "VibrationShort"
+	| "VibrationEdgeLow"
+	| "VibrationEdgeMedium"
+	| "VibrationEdgeHigh"
+	| "VibrationTeaseLow"
+	| "VibrationTeaseMedium"
+	| "VibrationMaximum"
+	| "VibrationCooldown"
+	| "Vibrator"
+	| "Wand"
+	| "WandBig"
+	| "WoodenCuffs"
+	| "ZipTie"
+	| "SpankSkin"
+	| "WhipCrack"
+	| "LeverShort"
+	| "Zipper1"
+	| "HighChair"
+	| "AdultBabyHarness"
+	| "BondageBouquet"
+	| "Cigarette"
+	| "Flogger"
+	| "LeatherCreak"
+	| "LeatherCreakWithMetal"
+	| "LeatherStretchingShort"
+	| "LeatherStretchingWithMetal"
+	| "PolyesterWoosh1"
+	| "PolyesterWoosh2"
+	| "PolyesterWooshWithMetal1"
+	| "PolyesterWooshWithMetal2"
+	| "PolyesterWooshWithMetal3"
+	| "Slime"
+	| "SofterCageClose"
+	| "LockerClose"
+	| "SoftCloth1"
+	| "SoftCloth2"
+	| "SoftClothWithMetal1"
+	| "SoftClothWithMetal2"
+	| "TightLeatherStretchWithMetalLong"
+	| "TightLeatherStretch"
+	| "PlasticRustle"
+	| "PlaceBowl"
+	| "MetalStraps"
+	| "MetalShut"
+	| "MetalClip"
+	| "SoftFurniture"
+	| "WoodFurniture"
+	| "PutDownPlastic"
+	| "EnemaFixture"
+;
+
+type AudioSoundEffect = [sound: AudioEffectName, volume: number];
 
 interface AudioEffect {
 	/** The sound effect name */
-	Name: string;
+	Name: AudioEffectName;
 
 	/** The sound file, or files to choose from randomly */
 	File: string | string[];
@@ -4286,7 +4445,7 @@ interface AudioChatAction {
 	IsAction: (data: ServerChatRoomMessage) => boolean;
 
 	/** Extracts the actual sound effect from the chat message */
-	GetSoundEffect: (data: ServerChatRoomMessage, metadata: IChatRoomMessageMetadata) => (AudioSoundEffect | string | null);
+	GetSoundEffect: (data: ServerChatRoomMessage, metadata: IChatRoomMessageMetadata) => (AudioSoundEffect | AudioEffectName | null);
 }
 
 // #endregion
@@ -4445,9 +4604,9 @@ interface DynamicDrawingData<T extends AnimationPersistentData = AnimationPersis
 	Opacity: number;
 	Property: ItemProperties;
 	A: Asset;
-	G: "" | AssetName;
+	G: AssetName;
 	AG: AssetGroup;
-	L: "" | LayerName;
+	L: LayerName;
 	Pose: AssetPoseName | NullPoseType;
 	LayerType: string;
 	BlinkExpression: string;
@@ -4469,7 +4628,7 @@ interface DynamicBeforeDrawOverrides {
 	X?: number;
 	Y?: number;
 	LayerType?: string;
-	L?: "" | LayerName;
+	L?: LayerName;
 	AlphaMasks?: RectTuple[];
 	Pose?: AssetPoseName | NullPoseType;
 }
@@ -4688,7 +4847,7 @@ interface CraftingItem extends CraftingPartialItem {
 	 * * {@link ItemProperties.OverridePriority} in either its record or number form.
 	 * * Properties as specified in {@link ExtendedItemData.baselineProperty}
 	 */
-	ItemProperty: ItemPropertiesMinimized | null;
+	ItemProperty: ItemProperties | null;
 	/**
 	 * A record for extended items mapping screen names to option indices.
 	 * @see {@link ItemProperties.TypeRecord}
@@ -4750,7 +4909,7 @@ interface CraftingItemSelected {
 	 * * {@link ItemProperties.OverridePriority} in either its record or number form.
 	 * * Properties as specified in {@link ExtendedItemData.baselineProperty}
 	 */
-	ItemProperty: ItemPropertiesMinimized;
+	ItemProperty: ItemProperties;
 	/** Get or set the `OverridePriority` property of {@link CraftingItemSelected.ItemProperty} */
 	get OverridePriority(): undefined | AssetLayerOverridePriority;
 	set OverridePriority(value: undefined | AssetLayerOverridePriority);
@@ -5090,7 +5249,7 @@ interface NotificationData {
 interface NotificationBeep {
 	Message: string;
 	Duration: number;
-	ClickHandler?: (event: MouseEvent) => void;
+	ClickHandler?: (event: PointerEvent) => void;
 	Silent?: boolean;
 	/** Internal use; timer that is set when the beep first appears on screen */
 	Timer?: number;
@@ -5201,7 +5360,7 @@ interface ChatRoomMapDoodad {
 	Name?: string;
 }
 
-/** {@link ChatRoomMapViewIsChatRoomMapPhysicalElement }  */
+/** {@link ChatRoomMapViewIsChatRoomMapPhysicalElement}  */
 interface ChatRoomMapPhysicalElement extends ChatRoomMapDoodad {
 	Style: string;
 	Rotation?: number;
@@ -5221,12 +5380,12 @@ interface ChatRoomMapPhysicalElement extends ChatRoomMapDoodad {
 	CanPlaceInWalls?: boolean; // ex. Doors
 }
 
-/** {@link ChatRoomMapViewIsChatRoomMapTile }  */
+/** {@link ChatRoomMapViewIsChatRoomMapTile}  */
 interface ChatRoomMapTile extends ChatRoomMapPhysicalElement {
 	Type: ChatRoomMapTileType;
 }
 
-/** {@link ChatRoomMapViewIsChatRoomMapObject }  */
+/** {@link ChatRoomMapViewIsChatRoomMapObject}  */
 interface ChatRoomMapObject extends ChatRoomMapPhysicalElement {
 	Type: ChatRoomMapObjectType;
 	Exit?: boolean;
@@ -5234,10 +5393,11 @@ interface ChatRoomMapObject extends ChatRoomMapPhysicalElement {
 	AssetName?: AssetName;
 	IsVisible?: () => boolean;
 	BuildImageName?: (X: number, Y: number) => string;
+	OnClick?: (x: number, y: number) => void;
 }
 
-/** {@link ChatRoomMapViewIsChatRoomMapEffect }  */
-interface ChatRoomMapEffectStaticLighting extends ChatRoomMapDoodad{
+/** {@link ChatRoomMapViewIsChatRoomMapEffect}  */
+interface ChatRoomMapEffectStaticLighting extends ChatRoomMapDoodad {
 	Type: "StaticLighting";
 	TypeId: 1,
 	/**
@@ -5245,6 +5405,15 @@ interface ChatRoomMapEffectStaticLighting extends ChatRoomMapDoodad{
 	 */
 	Color: [r: number, g: number, b: number, a: number];
 }
+
+type ChatRoomMapObjectConfig = ChatRoomMapSignObjectConfig
+
+interface ChatRoomMapSignObjectConfig {
+	Type: "Sign";
+	Text: string;
+}
+
+
 
 /**
  * A union of all effect types.
@@ -5361,5 +5530,34 @@ declare namespace Item {
 		difficulty?: number;
 		craft?: Readonly<CraftingPartialItem>;
 		property?: Readonly<ItemProperties>;
+	}
+}
+
+declare namespace ImageCache {
+	/**
+	 * How an ImageCache turns bytes into a payload, and how it frees that payload.
+	 */
+	interface Options<T> {
+		/** Decode fetched bytes into the in-memory payload. */
+		decode(blob: Blob): T | Promise<T>;
+		/** Release a payload that is no longer stored. */
+		dispose?(data: T): void;
+	}
+}
+
+/**
+ * A cached image whose data is guaranteed to be available.
+ */
+interface LoadedCachedImage<T extends { width: number, height: number }> extends CachedImage<T> {
+	data: T;
+}
+
+declare namespace BrowserCache {
+	interface FetchOptions {
+		/**
+		 * Called if a background revalidation finds a newer version of the resource.
+		 * The response is fresh and unconsumed.
+		 */
+		onUpdate?(response: Response): void;
 	}
 }

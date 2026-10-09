@@ -446,7 +446,7 @@ declare function ChatRoomTarget(): void;
  * @param {ChatRoomData|null} room - room to set it to. null to reset.
  * @returns {void} - Nothing
  */
-declare function ChatRoomSetLastChatRoom(room: ChatRoomData | null): void;
+declare function ChatRoomSetLastChatRoom(room: (ServerChatRoomData | null) | null): void;
 /**
  * Triggers a chat room message for stimulation events.
  *
@@ -1039,7 +1039,7 @@ declare function ChatRoomAddCharacterToChatRoom(newCharacter: OnlineCharacter, n
  * @param {unknown} obj - Room object containing the updated chatroom data.
  * @returns {obj is ChatRoomData} - Returns true if the passed properties are valid and false if they're invalid.
  */
-declare function ChatRoomValidateProperties(obj: unknown): obj is ChatRoomData;
+declare function ChatRoomValidateProperties(obj: unknown): obj is ServerChatRoomData | null;
 /**
  * Handles the reception of the data for a room we've just entered.
  *
@@ -1533,7 +1533,7 @@ declare function ChatRoomPronounSubstitutions(C: Character, key: string, hideIde
  * @param {ChatRoomData} room
  * @return {ChatRoomSettings}
  */
-declare function ChatRoomGetSettings(room: ChatRoomData): ChatRoomSettings;
+declare function ChatRoomGetSettings(room: ServerChatRoomData | null): ChatRoomSettings;
 /**
  * Gets a character by MemberNumber or name or nickname
  * @param {string|number} spec
@@ -1606,8 +1606,8 @@ declare var ChatRoomHelpSeen: boolean;
 declare var ChatRoomAllowCharacterUpdate: boolean;
 declare var ChatRoomStruggleAssistBonus: number;
 declare var ChatRoomStruggleAssistTimer: number;
-/** @type {StruggleOnlineData} */
-declare var ChatRoomStruggleData: StruggleOnlineData;
+/** @type {StruggleOnlineData | null} */
+declare var ChatRoomStruggleData: StruggleOnlineData | null;
 /**
  * The timer started when a slowed player attempts to leave
  * @type {number}

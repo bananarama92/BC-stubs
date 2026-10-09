@@ -210,16 +210,30 @@ declare function ServerAccountBeep(data: ServerAccountBeepResponse): void;
  * @param {string} [msg] - The message to send to the target.
  * @param {object} [options] - Options for the beep message
  * @param {boolean} [options.includeRoom] - If set, we'll include the current room data we're in
+ * @param {"Reply"|"Reaction"} [options.messageType]
+ * @param {{ id: string, senderName: string, snippet: string }} [options.replyTo]
+ * @param {string} [options.reactionTo]
+ * @param {string} [options.reactionEmoji]
+ * @param {boolean} [options.reactionRemove]
  */
 declare function ServerSendBeepMessage(target: number, msg?: string, options?: {
     includeRoom?: boolean | undefined;
+    messageType?: "Reply" | "Reaction" | undefined;
+    replyTo?: {
+        id: string;
+        senderName: string;
+        snippet: string;
+    } | undefined;
+    reactionTo?: string | undefined;
+    reactionEmoji?: string | undefined;
+    reactionRemove?: boolean | undefined;
 }): void;
 /**
  * Show a message as a beep
  * @param {string} message
  * @param {number} duration
  * @param {object} [options]
- * @param {(this: HTMLDivElement, event: MouseEvent) => void} [options.onClick]
+ * @param {(this: HTMLDivElement, event: PointerEvent) => void} [options.onClick]
  * @param {number} [options.memberNumber]
  * @param {string} [options.memberName]
  * @param {string} [options.chatRoomName]
@@ -227,7 +241,7 @@ declare function ServerSendBeepMessage(target: number, msg?: string, options?: {
  * @param {string} [title]
  */
 declare function ServerShowBeep(message: string, duration: number, options?: {
-    onClick?: ((this: HTMLDivElement, event: MouseEvent) => void) | undefined;
+    onClick?: ((this: HTMLDivElement, event: PointerEvent) => void) | undefined;
     memberNumber?: number | undefined;
     memberName?: string | undefined;
     chatRoomName?: string | undefined;
@@ -420,6 +434,13 @@ declare namespace ServerValidation {
      * @returns {(arg: Partial<NotificationSetting>) => NotificationSetting}
      */
     function isValidNotification(defaultNotif: NotificationSetting): (arg: Partial<NotificationSetting>) => NotificationSetting;
+    /**
+     * Private helper to validate object shapes
+     * @template {object} T
+     * @param {T} shape
+     * @returns {(arg: T) => T}
+     */
+    function hasSameShape<T extends object>(shape: T): (arg: T) => T;
 }
 declare namespace ServerAccountDataSyncedValidate {
     function Title(arg: Partial<TitleName | undefined>, C: Character): Partial<TitleName | undefined>;
@@ -464,6 +485,7 @@ declare namespace ServerAccountDataSyncedValidate {
         ItemsAffectExpressions: boolean;
         ScriptPermissions: ScriptPermissions;
         WheelFortune: string;
+        LockTimerLimit: LockTimerLimitName;
     };
     function Crafting(arg: Partial<string | undefined>, C: Character): (CraftingItem | null)[];
     function Game(arg: Partial<CharacterGameParameters | undefined>, C: Character): {

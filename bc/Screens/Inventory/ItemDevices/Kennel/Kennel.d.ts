@@ -2,9 +2,9 @@ declare function AssetsItemDevicesKennelBeforeDraw(drawData: DynamicDrawingData<
 declare function AssetsItemDevicesKennelScriptDraw(drawData: DynamicScriptCallbackData<KennelPersistentData>): void;
 /**
  * @param {Character} C
- * @returns {string}
+ * @returns {AudioEffectName}
  */
-declare function InventoryItemDevicesKennelGetAudio(C: Character): string;
+declare function InventoryItemDevicesKennelGetAudio(C: Character): AudioEffectName;
 type KennelPersistentData = {
     DoorState?: number;
     DrawRequested?: boolean;

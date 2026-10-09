@@ -60,11 +60,11 @@ declare function CharacterLoadNPC<T extends ModuleType>(CharacterID: string, NPC
 declare function CharacterLoadSimple(CharacterID: string): Character;
 /**
  * Sets up an online character
- * @param {Character} Char - Online character to set up
+ * @param {OnlineCharacter} Char - Online character to set up
  * @param {ServerAccountDataSynced} data - Character data received
  * @param {number} SourceMemberNumber - Source number of the refresh
  */
-declare function CharacterOnlineRefresh(Char: Character, data: ServerAccountDataSynced, SourceMemberNumber: number): void;
+declare function CharacterOnlineRefresh(Char: OnlineCharacter, data: ServerAccountDataSynced, SourceMemberNumber: number): void;
 /**
  * Loads an online character and flags it for a refresh if any data was changed
  * @param {ServerAccountDataSynced} data - Character data received
@@ -132,6 +132,19 @@ declare function CharacterSetCurrent(C: Character, options?: null | {
     mode?: DialogMenuMode;
     selfMode?: DialogSelfMenuName;
 }): void;
+declare function CharacterDialogPatternSubstitutor(match: string, offset: number, replacement: string, string: string, groups?: Partial<Record<string, string>>): string;
+/**
+ * Apply scaling factors to a change in money and format into a string, returning the absolute value
+ * @param {number} value The money value
+ * @returns {string}
+ */
+declare function CharacterMoneyFormat(value: number): string;
+/**
+ * Apply scaling factors to a change in money
+ * @param {number} value The money value
+ * @returns {number}
+ */
+declare function CharacterMoneyApplyFactor(value: number): number;
 /**
  * Changes the character money and sync with the account server, factors in the cheaters version.
  * @param {Character} C - Character for which we are altering the money amount
@@ -554,3 +567,16 @@ declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE" | "PLAYER", Charac
  * @type {Record<string, () => null | Character>}
  */
 declare var CharacterGetCurrentHandlers: Record<string, () => null | Character>;
+/**
+ * An expression representing `{foo=bar}`-type and `{foo}`-type of patterns.
+ *
+ * See {@link CharacterDialogPatternSubstitutor} for key-specific substitution logic.
+ */
+declare const CharacterDialogSubstitutionPattern: RegExp;
+/**
+ * A scaling factor for all money gains, effectively introducing wage inflation as more and more items are added to the shop.
+ *
+ * Proportional to the sum of all asset values divided by `50_000`.
+ * @type {number}
+ */
+declare var CharacterMoneyFactor: number;

@@ -156,3 +156,325 @@ declare namespace PropertyLayerOrigin {
      */
     function getOriginal(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
 }
+/**
+ * @template {keyof ItemProperties} T
+ * @implements {ItemProperty.EntryNullable<T>}
+ */
+declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemProperty.EntryNullable<T> {
+    /**
+     * @readonly
+     * private
+     * @type {Map<keyof ItemProperties, PropertyDataEntry<any>>}
+     */
+    static readonly _entries: Map<keyof ItemProperties, PropertyDataEntry<any>>;
+    /**
+     * Construct a new entry via shallow copying and renaming an existing one.
+     *
+     * Note that both new- and old-entries _must_ have the same property- and metadata types.
+     * @template {keyof ItemProperties} T
+     * @param {keyof ItemProperties} fromName The old property name of the to-be copied entry object
+     * @param {T} toName The new property name
+     * @param {ItemProperty.Entry<T>} [override] Override specific entries from the copied data
+     * @returns {PropertyDataEntry<T>} The newly copied entry
+     */
+    static copyFrom<T_1 extends keyof ItemProperties>(fromName: keyof ItemProperties, toName: T_1, override?: ItemProperty.Entry<T_1>): PropertyDataEntry<T_1>;
+    /**
+     * Character code offset for excluding ASCII control characters.
+     * @readonly
+     */
+    static readonly ASCIIControlOffset: 32;
+    /**
+     * Compress a number into the `uint16` range from `float64`.
+     * @param {number} value
+     * @param {1 | 0.01} [floatResolution]
+     * @returns {number}
+     */
+    static compressNumber(value: number, floatResolution?: 1 | 0.01): number;
+    /**
+     * Decompress a number from the `uint16` range into `float64`.
+     * @param {number} value
+     * @param {1 | 0.01} [floatResolution]
+     * @returns {number}
+     */
+    static decompressNumber(value: number, floatResolution?: 1 | 0.01): number;
+    /**
+     * Comparison function for set-like arrays
+     * @satisfies {ItemProperty.Compare<any>}
+     * @template {string | boolean | number} T
+     * @param {readonly T[]} value1
+     * @param {readonly NoInfer<T>[]} value2
+     * @returns {boolean}
+     */
+    static compareSetLikeArrays<T_1 extends string | boolean | number>(value1: readonly T_1[], value2: readonly NoInfer<T_1>[]): boolean;
+    /**
+     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
+     * @satisfies {ItemProperty.Union<any>}
+     * @template {string | boolean | number} T
+     * @param {readonly (readonly T[])[]} values
+     * @returns {T[]}
+     */
+    static unionSetLikeArrays<T_1 extends string | boolean | number>(values: readonly (readonly T_1[])[]): T_1[];
+    /**
+     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
+     * @satisfies {ItemProperty.Compare<any>}
+     * @template {Readonly<Record<string, undefined | null | string | boolean | number>>} T
+     * @param {T} value1
+     * @param {Readonly<Record<string, undefined | null | string | boolean | number>>} value2
+     * @returns {value2 is T}
+     */
+    static compareShallowObjects<T_1 extends Readonly<Record<string, undefined | null | string | boolean | number>>>(value1: T_1, value2: Readonly<Record<string, undefined | null | string | boolean | number>>): value2 is T_1;
+    /**
+     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
+     * @satisfies {ItemProperty.Union<any>}
+     * @template {Record<string, undefined | null | string | boolean | number>} T
+     * @param {readonly Readonly<T>[]} values
+     * @returns {T}
+     */
+    static unionShallowObjects<T_1 extends Record<string, undefined | null | string | boolean | number>>(values: readonly Readonly<T_1>[]): T_1;
+    /**
+     * @param {T} name
+     * @param {ItemProperty.PropertyMetaData[T]} metaData
+     * @param {Omit<ItemProperty.Entry<T>, "metaData">} functions
+     */
+    constructor(name: T, metaData: ItemProperty.PropertyMetaData[T], functions: Omit<ItemProperty.Entry<T>, "metaData">);
+    /**
+     * @readonly
+     * @type {NonNullable<ItemProperty.PropertyMetaData[T]>}
+     */
+    readonly metaData: NonNullable<ItemProperty.PropertyMetaData[T]>;
+    /**
+     * @readonly
+     * @type {T}
+     */
+    readonly name: T;
+    /**
+     * private
+     * @type {undefined | ItemProperty.Compress<T>}
+     */
+    _compress: undefined | ItemProperty.Compress<T>;
+    /**
+     * private
+     * @type {undefined | ItemProperty.Decompress<T>}
+     */
+    _decompress: undefined | ItemProperty.Decompress<T>;
+    /**
+     * private
+     * @type {undefined | ItemProperty.Union<T>}
+     */
+    _union: undefined | ItemProperty.Union<T>;
+    /**
+     * private
+     * @type {undefined | ItemProperty.Difference<T>}
+     */
+    _difference: undefined | ItemProperty.Difference<T>;
+    /**
+     * private
+     * @type {undefined | ItemProperty.Compare<T>}
+     */
+    _compare: undefined | ItemProperty.Compare<T>;
+    /**
+     * private
+     * @type {undefined | ItemProperty.Validate<T>}
+     */
+    _validate: undefined | ItemProperty.Validate<T>;
+    /**
+     * private
+     * @type {undefined | ItemProperty.IsSubset<T>}
+     */
+    _isSubset: undefined | ItemProperty.IsSubset<T>;
+    /**
+     * Compress the passed item property
+     * @param {ItemProperties[T]} property The item property value
+     * @param {ItemProperty.DataBundle} itemData The item data
+     * @param {ItemProperties[T]} [defaults] The default value of the property (if any)
+     * @returns {ItemPropertiesMinimized} The compressed property
+     */
+    compress(property: ItemProperties[T], itemData: ItemProperty.DataBundle, defaults?: ItemProperties[T]): ItemPropertiesMinimized;
+    /**
+     * Decompress the passed item property
+     * @param {ItemPropertiesMinimized[T] | ItemProperties[T]} property The item property value. This property value _should_ be compressed though decompressed value _must_ be handled correctly.
+     * @param {ItemProperty.DataBundle} itemData The item data
+     * @returns {ItemProperties} The decompressed property
+     */
+    decompress(property: ItemPropertiesMinimized[T] | ItemProperties[T], itemData: ItemProperty.DataBundle): ItemProperties;
+    /**
+     * Property union function.
+     *
+     * By default, properties follow a "first non-nullish entry wins" approach if no property-specific merge function is available.
+     * @param {readonly ItemProperties[T][]} properties The to-be merged property values
+     * @param {ItemProperty.DataBundle} itemData The item data
+     * @returns {undefined | ItemProperties[T]} The merged property
+     */
+    union(properties: readonly ItemProperties[T][], itemData: ItemProperty.DataBundle): undefined | ItemProperties[T];
+    /**
+     * Property difference function.
+     * @param {readonly ItemProperties[T][]} properties The to-be differenced property values
+     * @param {ItemProperty.DataBundle} itemData The item data
+     * @returns {undefined | ItemProperties[T]} The differenced property
+     */
+    difference(properties: readonly ItemProperties[T][], itemData: ItemProperty.DataBundle): undefined | ItemProperties[T];
+    /**
+     * Property comparison function
+     * @param {ItemProperties[T]} prop1 The firs to-be compared property
+     * @param {ItemProperties[T]} prop2 The firs to-be compared property
+     * @param {ItemProperty.DataBundle} itemData The item data
+     * @returns {boolean} whether both properties are equivalent
+     */
+    compare(prop1: ItemProperties[T], prop2: ItemProperties[T], itemData: ItemProperty.DataBundle): boolean;
+    /**
+     * Property subset-or-equivalency comparison function
+     * @param {ItemProperties[T]} subProp The firs to-be compared property
+     * @param {ItemProperties[T]} superProp The firs to-be compared property
+     * @param {ItemProperty.DataBundle} itemData The item data
+     * @returns {boolean} whether both properties are equivalent _or_ whether `subProp` represents a property subset of `superProp`
+     */
+    isSubset(subProp: ItemProperties[T], superProp: ItemProperties[T], itemData: ItemProperty.DataBundle): boolean;
+    /**
+     * Property comparison function
+     * @param {ItemProperties[T]} prop The firs to-be compared property
+     * @param {ItemProperty.DataBundle} itemData The item data
+     * @param {ItemProperties[T]} [defaults] The default value of the property (if any)
+     * @returns {ItemProperty.ValidationOutput<ItemProperties[T]>} whether both properties are equivalent
+     */
+    validate(prop: ItemProperties[T], itemData: ItemProperty.DataBundle, defaults?: ItemProperties[T]): ItemProperty.ValidationOutput<ItemProperties[T]>;
+    /**
+     * Compress an object with layer-specific numeric entries into a string.
+     *
+     * The string is of length `<= Asset.Layer.length`,
+     * with the character code of each substring mapping to their layer-specific numeric entry per `charCodeCallback`.
+     *
+     * The utilized UTF16 character code ranges (_i.e._ `uint16`) are as following:
+     * * `[0, 31]` reserved; ASCII control character range. The `0` code is used for padding
+     * * `[32, 2**15 - 1]` positive number range
+     * * `[2**15, 2**15 + 31]` reserved; mirroring the (offsetted) ASCII control character range
+     * * `[2**15 + 32, 2**16 - 1]` negative number range; offset and represented by their absolute value
+     *
+     * Floating point values (defined per {@link PropertyDataEntry.metaData.stepSize}) are represented with a decimal resolution of 0.01,
+     * _i.e._ multiplied by 100 and rounded to the nearest integer.
+     * @param {Partial<Record<LayerName | "", number>>} value The to-be compressed value
+     * @param {Asset} asset The asset
+     * @param {undefined | Partial<Record<LayerName | "", number>>} defaults Layer-specific default values (if any)
+     * @returns {undefined | string} The compressed entries
+     */
+    compressNumberRecord(value: Partial<Record<LayerName | "", number>>, asset: Asset, defaults: undefined | Partial<Record<LayerName | "", number>>): undefined | string;
+    /**
+     * Decompress a string back into an object with layer-specific numeric entries
+     *
+     * The is expected to be string of length `<= Asset.Layer.length`,
+     * with the character code of each substring mapping to their layer-specific numeric entry per `charCodeCallback`.
+     * @param {string} value The to-be decompressed value
+     * @param {Asset} asset The asset
+     * @returns {undefined | Partial<Record<LayerName | "", number>>} The decompressed entries
+     */
+    decompressNumberRecord(value: string, asset: Asset): undefined | Partial<Record<LayerName | "", number>>;
+}
+declare namespace PropertyData {
+    let AccessMode: undefined;
+    let AllowActivePose: undefined;
+    let AllowActivity: undefined;
+    let AllowActivityOn: undefined;
+    let ArousalLvl: undefined;
+    let Attribute: undefined;
+    let AutoPunish: undefined;
+    let AutoPunishUndoTime: undefined;
+    let AutoPunishUndoTimeSetting: undefined;
+    let BlinkState: PropertyDataEntry<"BlinkState">;
+    let Block: PropertyDataEntry<"Block">;
+    let BlockRemotes: undefined;
+    let CombinationNumber: undefined;
+    let CustomBlindBackground: undefined;
+    let DefaultColor: undefined;
+    let Difficulty: undefined;
+    let Door: undefined;
+    let DrawingLeft: undefined;
+    let DrawingTop: undefined;
+    let Effect: PropertyDataEntry<"Effect">;
+    let EnableRandomInput: undefined;
+    let Expression: undefined;
+    let Fetish: undefined;
+    let HeartRate: PropertyDataEntry<"HeartRate">;
+    let HeightModifier: undefined;
+    let Hide: PropertyDataEntry<"Hide">;
+    let HideItem: PropertyDataEntry<"HideItem">;
+    let HideItemExclude: undefined;
+    let Hint: undefined;
+    let InflateLevel: undefined;
+    let InsertedBeads: undefined;
+    let Intensity: undefined;
+    let IsLeashed: PropertyDataEntry<"IsLeashed">;
+    let Iterations: undefined;
+    let LastShrinkWarningTime: undefined;
+    let LayerRotation: PropertyDataEntry<"LayerRotation">;
+    let LayerScaleX: PropertyDataEntry<"LayerScaleX">;
+    let LayerScaleY: PropertyDataEntry<"LayerScaleY">;
+    let LayerTranslationX: PropertyDataEntry<"LayerTranslationX">;
+    let LayerTranslationY: PropertyDataEntry<"LayerTranslationY">;
+    let LockButt: undefined;
+    let LockMemberName: undefined;
+    let LockMemberNumber: undefined;
+    let LockMessage: undefined;
+    let LockPickSeed: undefined;
+    let LockSet: undefined;
+    let LockedBy: undefined;
+    let MemberNumberList: PropertyDataEntry<"MemberNumberList">;
+    let MemberNumberListKeys: undefined;
+    let Mode: undefined;
+    let NextShockTime: undefined;
+    let NextShrinkTime: undefined;
+    let Opacity: undefined;
+    let OpenPermission: undefined;
+    let OpenPermissionArm: undefined;
+    let OpenPermissionChastity: undefined;
+    let OpenPermissionLeg: undefined;
+    let OrgasmCount: undefined;
+    let OriginalSetting: undefined;
+    let OverrideHeight: undefined;
+    let OverridePriority: PropertyDataEntry<"OverridePriority">;
+    let Padding: undefined;
+    let Password: undefined;
+    let PortalLinkCode: undefined;
+    let PublicModeCurrent: undefined;
+    let PublicModePermission: undefined;
+    let PunishActivity: undefined;
+    let PunishOrgasm: undefined;
+    let PunishProhibitedSpeech: undefined;
+    let PunishProhibitedSpeechWords: undefined;
+    let PunishRequiredSpeech: undefined;
+    let PunishRequiredSpeechWord: undefined;
+    let PunishSpeech: undefined;
+    let PunishStandup: undefined;
+    let PunishStruggle: undefined;
+    let PunishStruggleOther: undefined;
+    let RemoveItem: undefined;
+    let RemoveOnUnlock: undefined;
+    let RemoveTimer: undefined;
+    let Revert: undefined;
+    let Rotation: undefined;
+    let RuinedOrgasmCount: undefined;
+    let ScaleX: undefined;
+    let ScaleY: undefined;
+    let SelfUnlock: undefined;
+    let SetPose: undefined;
+    let ShockLevel: undefined;
+    let ShowShrinkText: undefined;
+    let ShowText: undefined;
+    let ShowTimer: undefined;
+    let ShrinkCooldown: undefined;
+    let State: undefined;
+    let SuctionLevel: undefined;
+    let TargetAngle: undefined;
+    let Text: undefined;
+    let Text2: undefined;
+    let Text3: undefined;
+    let Texts: undefined;
+    let TimeSinceLastOrgasm: undefined;
+    let TimeWorn: undefined;
+    let Tint: undefined;
+    let TranslationX: undefined;
+    let TranslationY: undefined;
+    let TriggerCount: undefined;
+    let TriggerValues: undefined;
+    let Type: undefined;
+    let TypeRecord: PropertyDataEntry<"TypeRecord">;
+    let UnHide: PropertyDataEntry<"UnHide">;
+}

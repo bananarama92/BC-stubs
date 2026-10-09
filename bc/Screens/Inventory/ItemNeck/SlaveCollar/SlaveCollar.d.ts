@@ -1,3 +1,4 @@
+declare function InventoryItemNeckSlaveCollarInitHook(data: NoArchItemData, originalFunction: (C: Character, item: Item, push: boolean, refresh: boolean) => boolean, C: Character, item: Item, push: boolean, refresh: boolean): boolean;
 declare function InventoryItemNeckSlaveCollarLoadHook(data: NoArchItemData, originalFunction: () => void): void;
 declare function InventoryItemNeckSlaveCollarDrawHook(data: NoArchItemData, originalFunction: () => void): void;
 declare function InventoryItemNeckSlaveCollarClickHook(data: NoArchItemData, originalFunction: () => void): void;

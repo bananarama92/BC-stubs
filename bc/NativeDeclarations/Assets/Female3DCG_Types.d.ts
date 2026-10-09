@@ -460,6 +460,7 @@ declare namespace AssetGroupDefinition {
 		IsRestraint?: false;
 		Zone?: never;
 		Time?: never;
+		Effect?: Exclude<EffectName, GagEffectName | BlindEffectName | DeafEffectName | BlurEffectName>[];
 	}
 	/** An {@link AssetGroupDefinition} subtype for groups of the `Script` category. */
 	interface Script extends AssetGroupDefinitionBase {
@@ -567,7 +568,7 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	AllowActivity?: ActivityName[];
 
 	/** Array of sound effects for each one of the item's allowed activities */
-	ActivityAudio?: string[];
+	ActivityAudio?: AudioEffectName[];
 
 	/** The expression on the targeted character */
 	ActivityExpression?: Partial<Record<ActivityName, ExpressionTrigger[]>>;
@@ -700,7 +701,7 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	 */
 	AllowTighten?: boolean;
 	DefaultColor?: ItemColor;
-	Audio?: string;
+	Audio?: AudioEffectName;
 
 	/** A list of categories. Used to prevent the asset to be used, per chatroom settings */
 	Category?: AssetCategory[];
@@ -719,7 +720,7 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	DynamicGroupName?: AssetGroupName;
 
 	DynamicActivity?: (C: Character) => ActivityName | null | undefined;
-	DynamicAudio?: (C: Character) => string;
+	DynamicAudio?: (C: Character) => AudioEffectName;
 
 	AllowRemoveExclusive?: boolean;
 
@@ -823,6 +824,7 @@ declare namespace AssetDefinition {
 		SelfUnlock?: false;
 		Time?: never;
 		Block?: never;
+		Effect?: Exclude<EffectName, GagEffectName | BlindEffectName | DeafEffectName | BlurEffectName>[];
 		// We only allow a specific subset of those for clothing
 		Prerequisite?: AssetAppearancePrerequisite | AssetAppearancePrerequisite[];
 	}
@@ -1333,7 +1335,7 @@ interface ModularItemOption extends Omit<ModularItemOptionConfig, "ArchetypeConf
 /** Partially parsed extended item option subtype for vibrating items */
 interface VibratingItemOptionConfig extends ExtendedItemOptionConfig {
 	Name: VibratorMode;
-	Property: ItemProperties & Pick<Required<ItemProperties>, "Intensity" | "Effect"> & Omit<ItemProperties, "TypeRecord">;
+	Property: ItemProperties & Pick<Required<ItemProperties>, "Effect"> & Omit<ItemProperties, "TypeRecord">;
 	ArchetypeConfig?: null;
 	/** Whether this option should be picked as default for NPC's (rather than just going for the first option) */
 	NPCDefault?: boolean;
@@ -1343,7 +1345,7 @@ interface VibratingItemOptionConfig extends ExtendedItemOptionConfig {
 interface VibratingItemOption extends Omit<VibratingItemOptionConfig, "ArchetypeConfig">, Omit<ExtendedItemOption, "Name" | "Property"> {
 	OptionType: "VibratingItemOption";
 	ParentData: VibratingItemData;
-	Property: ItemProperties & Pick<Required<ItemProperties>, "TypeRecord" | "Intensity" | "Effect">;
+	Property: ItemProperties & Pick<Required<ItemProperties>, "TypeRecord" | "Effect">;
 	ArchetypeData?: null;
 	Advanced: boolean;
 }

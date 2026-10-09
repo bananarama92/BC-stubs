@@ -35,9 +35,10 @@ declare function CharacterAppearanceMustHide(C: Character, GroupName: AssetGroup
  * Sets a full random set of items for a character. Only items that do not have the "Random" property set to false will be used.
  * @param {Character} C - The character to dress
  * @param {boolean} [ClothOnly=false] - Defines, if only clothes should be used
+ * @param {boolean} [refresh] - Whether the character should be refreshed.
  * @returns {void} - Nothing
  */
-declare function CharacterAppearanceFullRandom(C: Character, ClothOnly?: boolean): void;
+declare function CharacterAppearanceFullRandom(C: Character, ClothOnly?: boolean, refresh?: boolean): void;
 /**
  * Removes all items that can be removed, making the character naked. Checks for a blocking of CosPlayItem removal.
  * @param {Character} C - The character to undress
@@ -204,13 +205,13 @@ declare function AppearancePreviewUseCharacter(assetGroup: AssetGroup | null): b
  * @param {Character} C - The character whose appearance should be changed
  * @param {AssetGroupName} Group - The name of the corresponding groupr for the item
  * @param {Asset|null} ItemAsset - The asset collection of the item to be changed. Passing a `null` is equivalent to removing an item (see {@link InventoryRemove})
- * @param {null | ItemColor} [NewColor] - The new color (as "#xxyyzz" hex value) for that item
+ * @param {null | Readonly<ItemColor>} [NewColor] - The new color (as "#xxyyzz" hex value) for that item
  * @param {null | number} [DifficultyFactor=0] - The difficulty, on top of the base asset difficulty, that should be assigned
  * to the item
  * @param {null | number} [ItemMemberNumber=-1] - The member number of the player adding the item - defaults to -1
  * @returns {Item | null} - Thew newly created item or `undefined` if the asset does not exist
  */
-declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName, ItemAsset: Asset | null, NewColor?: null | ItemColor, DifficultyFactor?: null | number, ItemMemberNumber?: null | number): Item | null;
+declare function CharacterAppearanceSetItem(C: Character, Group: AssetGroupName, ItemAsset: Asset | null, NewColor?: null | Readonly<ItemColor>, DifficultyFactor?: null | number, ItemMemberNumber?: null | number): Item | null;
 /**
  * Cycle in the appearance assets to find the next item in a group
  * @param {Character} C - The character whose assets are used

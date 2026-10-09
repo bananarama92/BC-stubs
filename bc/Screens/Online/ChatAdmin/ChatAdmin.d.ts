@@ -4,9 +4,9 @@
 declare function ChatAdminShowCreate(): void;
 /**
  * Show the room editor screen in update mode
- * @param {ChatRoomData} roomData
+ * @param {ServerChatRoomData} roomData
  */
-declare function ChatAdminShowEdit(roomData: ChatRoomData): void;
+declare function ChatAdminShowEdit(roomData: ServerChatRoomData): void;
 /**
  * Sets up the chat room editor screen and switches to it
  *
@@ -21,6 +21,11 @@ declare function ChatAdminStart(mode: "create" | "update", roomData?: ChatRoomSe
  * @returns {boolean}
  */
 declare function ChatAdminCanEdit(): boolean;
+/**
+ * Return whether the data in the editor can actually be committed
+ * @returns {boolean}
+ */
+declare function ChatAdminCanCommit(): boolean;
 declare function ChatAdminLoad(): Promise<void>;
 declare function ChatAdminUnload(): void;
 /**

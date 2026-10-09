@@ -186,7 +186,10 @@ declare function MainHallMaidIntroduction(): void;
  * @returns {void} - Nothing
  */
 declare function MainHallMaidIntroductionDone(): void;
-declare function MainHallSetMaidsDisabled(minutes: any): void;
+/**
+ * @param {number} minutes
+ */
+declare function MainHallSetMaidsDisabled(minutes: number): void;
 declare function MainHallMoveToChatSelect(): void;
 declare var MainHallBackground: string;
 /** @type {null | number} */
@@ -194,8 +197,8 @@ declare var MainHallStartEventTimer: null | number;
 /** @type {null | number} */
 declare var MainHallNextEventTimer: null | number;
 declare var MainHallRandomEventOdds: number;
-/** @type {null | NPCCharacter} */
-declare var MainHallMaid: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MainHallMaid: NPCCharacter;
 /** The max number of known tips */
 declare var MainHallMaxTip: number;
 /** The index of the current tip */
@@ -216,8 +219,8 @@ declare var MainHallBeingPunished: boolean;
 declare var MainHallFirstFrame: boolean;
 /** @type {AssetLockType[]} */
 declare var MainHallStrongLocks: AssetLockType[];
-/** @type {Partial<Record<AssetGroupName, AssetName>>[]} */
-declare var MainHallPunishmentList: Partial<Record<AssetGroupName, AssetName>>[];
+/** @type {Partial<Record<AssetGroupItemName, AssetName>>[]} */
+declare var MainHallPunishmentList: Partial<Record<AssetGroupItemName, AssetName>>[];
 declare var MainHallPunishmentChoice: number;
 /** @type {BCColor} */
 declare var MainHallRopeColor: BCColor;

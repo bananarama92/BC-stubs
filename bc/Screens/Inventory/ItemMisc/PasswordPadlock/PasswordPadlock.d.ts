@@ -21,7 +21,7 @@ declare function InventoryItemMiscPasswordPadlockControlsClick(C: Character, ite
  */
 declare function InventoryItemMiscPasswordPadlockHandleOpenClick(C: Character, item: Item): void;
 /**
- *
+ * Handle the first set and leave the UI if accepted
  * @param {Character} C
  * @param {Item} item
  */
@@ -34,7 +34,7 @@ declare function InventoryItemMiscPasswordPadlockExitHook(data: NoArchItemData, 
  */
 declare function InventoryItemMiscPasswordPadlockIsSet(item: Item): boolean;
 /**
- *
+ * Publish password changes to the chat room and leave the UI
  * @param {Character} C
  * @param {Item} item
  */

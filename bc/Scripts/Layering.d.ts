@@ -95,6 +95,13 @@ declare namespace Layering {
      */
     function _UpdateLimits(): void;
     /**
+     * Insert soft hyphens between all upper- and lower cased letters, signaling them as valid word break points.
+     * private
+     * @param {string} txt
+     * @returns {string}
+     */
+    function _TextInsertBreakpoints(txt: string): string;
+    /**
      * private
      * @param {"Scale" | "Rotation" | "Translation"} propType
      * @param {("ScaleX" | "ScaleY" |"Rotation" | "TranslationX" | "TranslationY")[]} properties

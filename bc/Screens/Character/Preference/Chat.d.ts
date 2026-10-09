@@ -15,14 +15,6 @@ declare function PreferenceSubscreenChatClick(): void;
  */
 declare function PreferenceSubscreenChatExit(): boolean;
 declare function PreferenceSubscreenChatResize(load: boolean): void;
-/** @type {ChatColorThemeType[]} */
-declare var PreferenceChatColorThemeList: ChatColorThemeType[];
-/** @type {ChatEnterLeaveType[]} */
-declare var PreferenceChatEnterLeaveList: ChatEnterLeaveType[];
-/** @type {ChatMemberNumbersType[]} */
-declare var PreferenceChatMemberNumbersList: ChatMemberNumbersType[];
-/** @type {ChatFontSizeType[]} */
-declare var PreferenceChatFontSizeList: ChatFontSizeType[];
 /** @type {PreferenceCheckboxOption[]} */
 declare const PreferenceSubscreenChatCheckboxes: PreferenceCheckboxOption[];
 /** @type {Record<string, PreferenceDropdownOption>} */

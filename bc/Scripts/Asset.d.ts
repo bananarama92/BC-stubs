@@ -39,9 +39,9 @@ declare function AssetParseName<T extends string | null>(name: T, errMsgSuffix: 
  * @param {AssetDefinition} AssetDef
  * @param {ExtendedItemMainConfig} ExtendedConfig
  * @param {AssetGroupDefinition} GroupDef
- * @returns {void} - Nothing
+ * @returns {Asset} - The created asset
  */
-declare function AssetAdd(Group: AssetGroup, AssetDef: AssetDefinition, ExtendedConfig: ExtendedItemMainConfig, GroupDef: AssetGroupDefinition): void;
+declare function AssetAdd(Group: AssetGroup, AssetDef: AssetDefinition, ExtendedConfig: ExtendedItemMainConfig, GroupDef: AssetGroupDefinition): Asset;
 /**
  * Automatically generated pose-related asset prerequisites
  * @param {Partial<Pick<Asset, "AllowActivePose" | "SetPose" | "Prerequisite" | "Effect">>} asset The asset or any other object with the expected asset interface subset
@@ -170,7 +170,7 @@ declare function AssetAllActivities(family: IAssetFamily): Activity[];
  * Gets an activity asset by family and name
  * @param {IAssetFamily} family - The family to search in
  * @param {string} name - Name of activity to search for
- * @returns {Activity|null}
+ * @returns {Activity | null}
  */
 declare function AssetGetActivity(family: IAssetFamily, name: string): Activity | null;
 /**
@@ -274,10 +274,12 @@ declare var AssetGroup: AssetGroup[];
 declare var AssetMap: Map<AssetFullPath, Asset>;
 /** @type {Map<AssetGroupName, AssetGroup>} */
 declare var AssetGroupMap: Map<AssetGroupName, AssetGroup>;
+/** @type {Map<string, Asset[]>} */
+declare var AssetBuyGroupMap: Map<string, Asset[]>;
 /** @type {Pose[]} */
 declare var Pose: Pose[];
 /** A record mapping pose names to their respective {@link Pose}. */
-declare const PoseRecord: Record<AssetPoseName, Pose>;
+declare var PoseRecord: Record<AssetPoseName, Pose>;
 declare namespace PoseCategoryPriority {
     let BodyAddon: number;
     let BodyLower: number;
@@ -348,5 +350,5 @@ declare namespace AssetResolveCopyConfig {
      */
     function ExtendedItemConfig(asset: Asset, config: AssetArchetypeConfig, extendedConfig: ExtendedItemMainConfig): null | AssetArchetypeConfig;
 }
-declare const AssetStringsPath: "Assets/Female3DCG/AssetStrings.csv";
+declare const AssetStringsPath: "Assets/AssetStrings.csv";
 type AssetCopyConfigValidator<T> = (config: T, superConfig: T, key: string, superKey: string) => boolean;

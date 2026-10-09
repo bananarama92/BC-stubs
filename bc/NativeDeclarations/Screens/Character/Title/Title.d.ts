@@ -7,7 +7,7 @@ type TitleName =
 	"PonyCold" | "PonyFarm" | "PonyFoal" | "InfilrationMole" | "InfilrationInfiltrator" | "InfilrationAgent" |
 	"InfilrationOperative" | "InfilrationSuperspy" | "MagicSchoolWizard" | "MagicSchoolMagus" |
 	"MagicSchoolMagician" | "MagicSchoolSorcerer" | "MagicSchoolSage" | "MagicSchoolOracle" |
-	"MagicSchoolWitch" | "MagicSchoolWarlock" | "Duchess" | "Duke" | "LittleOne" | "Baby" | "DL" |
+	"MagicSchoolWitch" | "MagicSchoolWarlock" | "Duchess" | "Duke" | "LittleOne" | "Baby" | "DL" | "PuddleMaker" | "DiaperPrincess" | "DiaperPrince" |
 	"BondageBaby" | "Switch" | "Princess" | "Prince" | "Liege" | "Majesty" | "Missy" | "Sissy" | "Tomboy" | "Femboy" | "GoodOne" |
 	"Pet" | "Dragon" | "Vampire" | "Turtle" | "Thing" | "Elf" | "Drow" | "Pixie" | "Brat" | "Kitten" | "Puppy" | "Foxy" | "Wolf" | "Monster" | "Shapeshifter" |
 	"Bunny" | "Doll" | "Demon" | "Angel" | "Alien" | "Captain" | "Admiral" | "Succubus" | "Incubus" | "Concubus" |
