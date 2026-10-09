@@ -27,37 +27,11 @@ declare function PreferenceSubscreenGraphicsUnload(): void;
  * @returns
  */
 declare function GraphicsCreateHint(id: string | null, tooltip: string, tooltipPosition: "left" | "right" | "top" | "bottom"): HTMLButtonElement;
-/** @type {GraphicsVFXName[]} */
-declare var PreferenceSettingsVFXList: GraphicsVFXName[];
-/** @deprecated */
-declare var PreferenceSettingsVFXIndex: number;
-/** @type {GraphicsVFXVibratorName[]} */
-declare var PreferenceSettingsVFXVibratorList: GraphicsVFXVibratorName[];
-/** @deprecated */
-declare var PreferenceSettingsVFXVibratorIndex: number;
-/** @type {GraphicsVFXFilterName[]} */
-declare var PreferenceSettingsVFXFilterList: GraphicsVFXFilterName[];
-/** @deprecated */
-declare var PreferenceSettingsVFXFilterIndex: number;
-/** @type {GraphicsFontName[]} */
-declare var PreferenceGraphicsFontList: GraphicsFontName[];
-/** @type {WebGLPowerPreference[]} */
-declare var PreferenceGraphicsPowerModes: WebGLPowerPreference[];
-/** @deprecated */
-declare var PreferenceGraphicsFontIndex: number;
-/** @deprecated @type {number} */
-declare var PreferenceGraphicsAnimationQualityIndex: number;
-/** @deprecated @type {number} */
-declare var PreferenceGraphicsPowerModeIndex: number;
 /**
  * Tied to the screen's lifetime
  * @type {WebGLContextAttributes}
  */
 declare var PreferenceGraphicsWebGLOptions: WebGLContextAttributes;
-declare var PreferenceGraphicsAnimationQualityList: number[];
-declare var PreferenceGraphicsFrameLimit: number[];
-/** @type {GraphicsShowFullscreenButton[]} */
-declare var PreferenceGraphicsFullscreenButtonList: GraphicsShowFullscreenButton[];
 declare const PreferenceSubscreenGraphicsIDs: Readonly<{
     grid: "preference-graphics-grid";
     noWebGL: "preference-graphics-no-webgl";

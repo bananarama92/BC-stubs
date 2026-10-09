@@ -275,3 +275,7 @@ declare var AsylumEntranceKidnapNurse: NPCCharacter;
 declare var AsylumEntranceEscapedPatient: NPCCharacter;
 declare var AsylumEntranceEscapedPatientWillBribe: boolean;
 declare var AsylumEntranceEscapedPatientWillJoin: boolean;
+/** Longest asylum commitment accepted on load. The game never commits anyone for
+ *  anywhere near this long; anything further out is treated as corrupt, as
+ *  CellLoad does for long cell timers. */
+declare var AsylumEntranceMaxCommitment: number;

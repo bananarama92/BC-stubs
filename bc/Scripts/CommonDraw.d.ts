@@ -98,4 +98,14 @@ declare function CommonDrawFindPose(C: Character, AllowedPoses: Partial<Record<A
  * @returns {AssetPoseName | NullPoseType} - The pose to use when drawing the given asset (or layer)
  */
 declare function CommonDrawResolveAssetPose(C: Character, Layer: AssetLayer): AssetPoseName | NullPoseType;
+/**
+ * A helper function used by the character drawing to track which resources it needed for a given character
+ * @param {Character} C
+ * @param {string | HTMLImageElement | HTMLCanvasElement} src
+ */
+declare function CommonDrawMarkDrawnAsset(C: Character, src: string | HTMLImageElement | HTMLCanvasElement): void;
+/**
+ * A helper function that keeps drawn asset on a character in the cache
+ */
+declare function CommonDrawWarmDrawnAssets(): void;
 type MaskLayersMap = Map<AssetGroupName, TextureAlphaMask[]>;

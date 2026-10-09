@@ -509,10 +509,10 @@ declare function CommonIncludes<T>(array: readonly T[], searchElement: unknown, 
  * @note The returned record is typed as being non-{@link Partial}, an assumption that may not hold in practice
  * @template {string} KT
  * @template VT
- * @param {Iterable<[key: KT, value: VT]>} iterable An iterable object that contains key-value entries for properties and methods
+ * @param {Iterable<readonly [key: KT, value: VT]>} iterable An iterable object that contains key-value entries for properties and methods
  * @returns {Record<KT, VT>} A record created from the passed key/value pairs
  */
-declare function CommonFromEntries<KT extends string, VT>(iterable: Iterable<[key: KT, value: VT]>): Record<KT, VT>;
+declare function CommonFromEntries<KT extends string, VT>(iterable: Iterable<readonly [key: KT, value: VT]>): Record<KT, VT>;
 /**
  * Automatically generate grid coordinates based on parameters.
  * @param {number} nItems - The upper bound to the number of grid points; fewer can be returned if they do not all fit on the grid
@@ -609,9 +609,13 @@ declare function CommonObjectEqual<T>(rec1: T, rec2: unknown): rec2 is T;
 declare function CommonObjectIsSubset<T>(subRec: unknown, superRec: T): subRec is Partial<T>;
 /**
  * Returns the object with keys and values reversed
- * @param {object} obj
+ * @template {{ [key: string | number | symbol]: string | number | symbol }} T
+ * @param {T} obj
+ * @returns {{ [k in keyof T as T[k]]: k }}
  */
-declare function CommonObjectFlip(obj: object): Record<string, any>;
+declare function CommonObjectFlip<T extends {
+    [key: string | number | symbol]: string | number | symbol;
+}>(obj: T): { [k in keyof T as T[k]]: k; };
 /**
  * Parse the passed stringified JSON data and catch any exceptions.
  * Exceptions will cause the function to return `undefined`.
@@ -937,6 +941,37 @@ declare function CommonClipboardRead(cb: (result: Result<string | null, Clipboar
  * @param {undefined | ((result: Result<null, ClipboardError>) => void)} [cb]
  */
 declare function CommonClipboardWrite(data: string, cb?: undefined | ((result: Result<null, ClipboardError>) => void)): void;
+/**
+ * A more type-safe version of {@link Object.assign}, demanding a type match of the target- and source object(s) instead of producing an intersection
+ * @template {{}} T
+ * @param {T} target
+ * @param  {(null | undefined | NoInfer<Partial<Readonly<T>>>)[]} src
+ * @returns {T}
+ */
+declare function CommonAssign<T extends {}>(target: T, ...src: (null | undefined | NoInfer<Partial<Readonly<T>>>)[]): T;
+/**
+ * A decorator for converting the variadic parameter of {@link String.replace} functions into something more sensible
+ * @param {CommonSubstituteReplacer} func
+ * @param {string} replacement
+ * @returns {(match: string, ...args: any[]) => string}
+ */
+declare function CommonStringReplacer(func: CommonSubstituteReplacer, replacement: string): (match: string, ...args: any[]) => string;
+/**
+ * A {@link Math.max} variant that demands at least one parameter and respects the (literal) number type
+ * @template {number} T
+ * @param {T} arg0
+ * @param  {T[]} args
+ * @returns {T}
+ */
+declare function CommonMax<T extends number>(arg0: T, ...args: T[]): T;
+/**
+ * A {@link Math.min} variant that demands at least one parameter and respects the (literal) number type
+ * @template {number} T
+ * @param {T} arg0
+ * @param  {T[]} args
+ * @returns {T}
+ */
+declare function CommonMin<T extends number>(arg0: T, ...args: T[]): T;
 /** @type {PlayerCharacter} */
 declare var Player: PlayerCharacter;
 /** @type {ModuleType} */
@@ -959,6 +994,12 @@ declare var CommonIsMobile: boolean;
 declare var CommonCSVCache: Record<string, string[][]>;
 declare var CutsceneStage: number;
 declare var CommonPhotoMode: boolean;
+declare const MS_PER_SEC: 1000;
+declare const MS_PER_MIN: number;
+declare const MS_PER_HOUR: number;
+declare const MS_PER_DAY: number;
+declare const MS_PER_WEEK: number;
+declare const MS_PER_YEAR: number;
 /**
  * An enum encapsulating possible chatroom message substitution tags. Character name substitution tags are interpreted
  * in chatrooms as follows (assuming the character name is Ben987):

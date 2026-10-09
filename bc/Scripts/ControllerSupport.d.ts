@@ -157,6 +157,7 @@ declare const MAX_KNOWN_AXIS: 4;
  * Default button name to gamepad button index mapping
  *
  * The player's calibrated config will be read from their preferences.
+ * @satisfies {Record<ControllerButton, number>}
  */
 declare const ControllerButtonMapping: {
     0: number;
@@ -181,6 +182,7 @@ declare const ControllerButtonMapping: {
  * Default axis name to gamepad axis index mapping
  *
  * The player's calibrated config will be read from their preferences.
+ * @satisfies {Record<ControllerAxis, number>}
  */
 declare const ControllerAxisMapping: {
     0: number;
@@ -204,8 +206,9 @@ declare var ControllerDeadZone: number;
  * At which stage of the calibration we are
  *
  * -1 means we're not calibrating
+ * @type {-1 | ControllerButton}
  */
-declare var ControllerCalibrationStage: number;
+declare var ControllerCalibrationStage: -1 | ControllerButton;
 /**
  * Whether the current gamepad actually has real D-Pad buttons
  */

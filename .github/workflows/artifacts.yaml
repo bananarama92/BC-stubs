@@ -53,6 +53,7 @@ jobs:
 
       - uses: actions/checkout@v7
         with:
+          fetch-tags: True
           repository: ${{ github.repository }}
           ref: ${{ github.head_ref }}
 

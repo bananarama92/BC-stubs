@@ -917,7 +917,6 @@ declare namespace DialogLeaveFocusItemHandlers {
     let DialogFocusItem: Partial<Record<ScreenName, (item: Item) => void>>;
 }
 declare namespace DialogEffectIcons {
-    let Table: Partial<Record<InventoryIcon, readonly EffectName[]>>;
     /**
      * Return icons for each "interesting" effect on the item.
      * @param {Item} item
@@ -927,7 +926,8 @@ declare namespace DialogEffectIcons {
     function GetEffectIcons(effects: Iterable<EffectName>, craftEffect?: Partial<Record<CraftingPropertyType, number>>): InventoryIcon[];
     function _GetGagIcon(effect: EffectName, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon;
     function _GetBlindIcon(effect: EffectName, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon;
-    function _GetDeafIcon(effect: EffectName): undefined | InventoryIcon;
+    function _GetDeafIcon(effect: EffectName, craftEffect?: Partial<Record<CraftingPropertyType, number>>): null | InventoryIcon;
+    function _DeafLevelToIcon(level: number): undefined | InventoryIcon;
     function _GagLevelToIcon(level?: number): null | InventoryIcon;
     function _BlindLevelToIcon(level?: number): null | InventoryIcon;
 }
@@ -995,10 +995,10 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
      * @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>}
      */
     readonly eventListeners: {
-        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: PointerEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
     /**
@@ -1222,10 +1222,10 @@ declare class _DialogFocusMenu<ModeType extends string = string, ClickedObj = an
      */
     get focusGroup(): AssetItemGroup | null;
     eventListeners: {
-        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: PointerEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
 }
@@ -1384,10 +1384,10 @@ declare class _DialogDialogMenu<T extends string> extends DialogMenu<T, DialogLi
     clickStatusCallbacks: DialogMenu<string, DialogLine>["clickStatusCallbacks"];
     eventListeners: {
         _ClickMenubarExit(this: HTMLButtonElement, ev: PointerEvent): void;
-        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: PointerEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
     /**
@@ -1457,12 +1457,12 @@ declare class _DialogSelfMenu<ModeType extends DialogSelfMenuName = DialogSelfMe
      */
     IsAvailable(C: PlayerCharacter): boolean;
     eventListeners: {
-        _ClickMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _ClickMenuButton(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: PointerEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
 }
@@ -1500,13 +1500,13 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
     get focusGroup(): AssetAppearanceGroup | null;
     /** @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>} */
     eventListeners: {
-        _expressionRadioGroupClick(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _expressionRadioGroupClick(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickMenuButton(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: PointerEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
     /** @satisfies {Record<string, DialogMenu.MenuButtonData<{ C: PlayerCharacter }>>} */
@@ -1592,13 +1592,13 @@ declare class _DialogPoseMenu<ModeType extends DialogSelfMenuName> extends _Dial
      */
     get poses(): Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>;
     eventListeners: {
-        _clickPoseMutuallyExclusive(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickDisabledButton(this: HTMLButtonElement, ev: MouseEvent): null | string;
-        _ClickPaginatePrev(this: HTMLButtonElement, ev: MouseEvent): void;
-        _ClickPaginateNext(this: HTMLButtonElement, ev: MouseEvent): void;
+        _clickPoseMutuallyExclusive(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickMenuButton(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickDisabledMenuButton(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickDisabledButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
+        _ClickPaginatePrev(this: HTMLButtonElement, ev: PointerEvent): void;
+        _ClickPaginateNext(this: HTMLButtonElement, ev: PointerEvent): void;
         _WheelGrid(this: HTMLDivElement, event: WheelEvent): void;
     };
     /**
@@ -1749,11 +1749,11 @@ declare namespace DialogFocusGroup {
     /**
      *
      * @param {string} id - The ID for the to-be created focus group grid
-     * @param {(this: HTMLButtonElement, ev: MouseEvent) => any} listener - The listener to-be executed upon selecting a group; the group name can be retrieved from `this.name`
+     * @param {(this: HTMLButtonElement, ev: PointerEvent) => any} clickListener - The listener to-be executed upon selecting a group; the group name can be retrieved from `this.name`
      * @param {null | { required?: boolean, useDynamicGroupName?: boolean }} options - Further options for the to-be created focus group grid
      * @returns {HTMLElement} - The created element
      */
-    function Create(id: string, listener: (this: HTMLButtonElement, ev: MouseEvent) => any, options?: null | {
+    function Create(id: string, clickListener: (this: HTMLButtonElement, ev: PointerEvent) => any, options?: null | {
         required?: boolean;
         useDynamicGroupName?: boolean;
     }): HTMLElement;

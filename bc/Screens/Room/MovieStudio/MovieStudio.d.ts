@@ -154,25 +154,25 @@ declare function MovieStudioClubCardStart(): void;
  */
 declare function MovieStudioClubCardEnd(): SafePromise<void>;
 declare var MovieStudioBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MovieStudioDirector: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MovieStudioDirector: NPCCharacter;
 /** @type {"" | "OpenHouse" | "Interview"} */
 declare var MovieStudioCurrentMovie: "" | "OpenHouse" | "Interview";
 declare var MovieStudioCurrentScene: number;
 /** @type {"" | "Journalist" | "Maid" | "Mistress" | "Wife"} */
 declare var MovieStudioCurrentRole: "" | "Journalist" | "Maid" | "Mistress" | "Wife";
-/** @type {null | NPCCharacter} */
-declare var MovieStudioActor1: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var MovieStudioActor2: null | NPCCharacter;
-/** @type {null | number} */
-declare var MovieStudioTimer: null | number;
+/** @type {NPCCharacter} */
+declare var MovieStudioActor1: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MovieStudioActor2: NPCCharacter;
+/** @type {number} */
+declare var MovieStudioTimer: number;
 declare var MovieStudioMeter: number;
 declare var MovieStudioDecay: number;
 /** @type {string[]} */
 declare var MovieStudioActivity: string[];
 declare var MovieStudioMoney: number;
-/** @type {null | Item[]} */
-declare var MovieStudioOriginalClothes: null | Item[];
+/** @type {Item[]} */
+declare var MovieStudioOriginalClothes: Item[];
 /** @type {"" | "Interview" | "OpenHouse"} */
 declare var MovieStudioDailyMovie: "" | "Interview" | "OpenHouse";

@@ -38,6 +38,10 @@ declare function GLDrawRevertToCanvas2D(): void;
  */
 declare function GLDrawOnContextRestored(): void;
 /**
+ * Debug helper to force a context lost event
+ */
+declare function GLDrawForceContextLoss(): void;
+/**
  * Resets the GLDraw renderer
  *
  * This function removes the current canvas, removes cached textures from the
@@ -74,8 +78,8 @@ declare function GLDrawCreateShader(gl: WebGL2RenderingContext, source: string, 
  */
 declare function GLDrawCreateProgram(gl: WebGL2RenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader): WebGLProgram;
 /**
- * Draws an image from a given url to a WebGLRenderingContext
- * @param {string} url - URL of the image to render
+ * Draws an image to a WebGLRenderingContext
+ * @param {DrawSource} source - The image to render, or the URL to load it from
  * @param {WebGL2RenderingContext} gl - The context we're drawing with
  * @param {number} dstX - Position of the image on the X axis
  * @param {number} dstY - Position of the image on the Y axis
@@ -83,7 +87,7 @@ declare function GLDrawCreateProgram(gl: WebGL2RenderingContext, vertexShader: W
  * @param {number} [offsetX=0] - Additional offset to add to the X axis (for blinking)
  * @returns {void} - Nothing
  */
-declare function GLDrawImage(url: string, gl: WebGL2RenderingContext, dstX: number, dstY: number, options?: DrawOptions, offsetX?: number): void;
+declare function GLDrawImage(source: DrawSource, gl: WebGL2RenderingContext, dstX: number, dstY: number, options?: DrawOptions, offsetX?: number): void;
 /**
  * Chooses right program using input parameters
  * @param {WebGL2RenderingContext} gl - WebGL context
@@ -105,20 +109,36 @@ declare function GLChooseProgram(gl: WebGL2RenderingContext, color: string | nul
  */
 declare function GLDraw2DCanvas(gl: WebGL2RenderingContext, Img: HTMLImageElement | HTMLCanvasElement, X: number, Y: number, blinkOffset: number, alphaMasks?: readonly RectTuple[], texMasks?: readonly TextureAlphaMask[]): void;
 /**
- * Sets texture info from image data
- * @param {WebGLRenderingContext} gl - WebGL context
- * @param {HTMLImageElement} Img - Image to get the data of
- * @param {WebGLTextureData} textureInfo - Texture information
- * @returns {void} - Nothing
+ * Decode image bytes into a GL texture, then drop the bitmap.
+ * @param {Blob} blob
+ * @returns {Promise<GLDrawImageData>}
  */
-declare function GLDrawBingImageToTextureInfo(gl: WebGLRenderingContext, Img: HTMLImageElement, textureInfo: WebGLTextureData): void;
+declare function GLDrawDecodeImage(blob: Blob): Promise<GLDrawImageData>;
+/**
+ * Free a cached GL texture.
+ * @param {GLDrawImageData} data
+ */
+declare function GLDrawDisposeImage(data: GLDrawImageData): void;
+/**
+ * Creates a texture with the parameters every image texture uses
+ * @param {WebGL2RenderingContext} gl - WebGL context
+ * @returns {WebGLTexture}
+ */
+declare function GLDrawCreateTexture(gl: WebGL2RenderingContext): WebGLTexture;
 /**
  * Loads image texture data
  * @param {WebGL2RenderingContext} gl - WebGL context
  * @param {string} url - URL of the image
- * @returns {WebGLTextureData} - The texture info of a given image
+ * @returns {GLDrawImageData | null} - The texture info of a given image, or null if it has nothing to draw yet
  */
-declare function GLDrawLoadImage(gl: WebGL2RenderingContext, url: string): WebGLTextureData;
+declare function GLDrawLoadImage(gl: WebGL2RenderingContext, url: string): GLDrawImageData | null;
+/**
+ * Uploads an image source into the scratch texture
+ * @param {WebGL2RenderingContext} gl - WebGL context
+ * @param {Exclude<DrawSource, string>} source - The source to upload
+ * @returns {GLDrawImageData | null} - The texture info for that source, or null if it has nothing to draw yet
+ */
+declare function GLDrawLoadTransient(gl: WebGL2RenderingContext, source: Exclude<DrawSource, string>): GLDrawImageData | null;
 /**
  * Loads alpha mask data
  * @param {WebGL2RenderingContext} gl - The WebGL context
@@ -173,8 +193,6 @@ declare function GLDrawHexToRGBA(color: string | null | undefined, alpha?: numbe
  * @returns {void} - Nothing
  */
 declare function GLDrawAppearanceBuild(C: Character): void;
-/** @type {Map<string, HTMLImageElement>} */
-declare var GLDrawImageCache: Map<string, HTMLImageElement>;
 /** @type {"webgl2"|"webgl"|"No WebGL"} */
 declare var GLVersion: "webgl2" | "webgl" | "No WebGL";
 /** @type {null | HTMLCanvasElement} */
@@ -197,6 +215,8 @@ declare let GLDrawCrashTimeout: ReturnType<typeof setTimeout>;
 declare var GLDrawAlphaThreshold: number;
 declare var GLDrawHalfAlphaLow: number;
 declare var GLDrawHalfAlphaHigh: number;
+/** @type {ImageCache<GLDrawImageData>} */
+declare var GLDrawImageCache: ImageCache<GLDrawImageData>;
 /**
  * Source used for the Vertex Shader
  * @constant
@@ -233,3 +253,11 @@ declare var GLDrawFragmentShaderSourceFullAlpha: string;
  * @type {string}
  */
 declare var GLDrawFragmentShaderSourceHalfAlpha: string;
+/**
+ * Temporary scratch texture.
+ *
+ * Used for stuff that's being dynamically drawn, like canvas for animations.
+ *
+ * @type {WebGLTexture | undefined}
+ */
+declare let GLDrawScratchTexture: WebGLTexture | undefined;

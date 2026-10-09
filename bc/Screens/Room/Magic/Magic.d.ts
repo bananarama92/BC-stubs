@@ -171,16 +171,16 @@ declare function MagicRestrainRemove(C: Character): void;
  */
 declare function MagicRestrainCopyTransfer(FromC: Character, ToC: Character): void;
 declare var MagicBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MagicPerformer: null | NPCCharacter;
-/** @type {null | Item[]} */
-declare var MagicPerformerAppearance: null | Item[];
-/** @type {null | NPCCharacter} */
-declare var MagicAssistant: null | NPCCharacter;
-/** @type {null | Item[]} */
-declare var MagicAssistantAppearance: null | Item[];
-/** @type {null | Item[]} */
-declare var MagicPlayerAppearance: null | Item[];
+/** @type {NPCCharacter} */
+declare var MagicPerformer: NPCCharacter;
+/** @type {Item[]} */
+declare var MagicPerformerAppearance: Item[];
+/** @type {NPCCharacter} */
+declare var MagicAssistant: NPCCharacter;
+/** @type {Item[]} */
+declare var MagicAssistantAppearance: Item[];
+/** @type {Item[]} */
+declare var MagicPlayerAppearance: Item[];
 /** @type {null | string} */
 declare var MagicTrick: null | string;
 declare var MagicTrickList: string[];

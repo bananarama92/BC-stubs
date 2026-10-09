@@ -109,14 +109,14 @@ declare function ActivityCanBeDone(C: Character, Activity: ActivityName, Group: 
  * Calculates the effect of an activity performed on a zone
  * @param {Character} S - The character performing the activity
  * @param {Character} C - The character on which the activity is performed
- * @param {ActivityName | Activity} A - The activity performed
+ * @param {ActivityName | ItemActivity} A - The activity performed
  * @param {AssetGroupItemName} Z - The group/zone name where the activity was performed
  * @param {number} [Count=1] - If the activity is done repeatedly, this defines the number of times, the activity is done.
  * If you don't want an activity to modify arousal, set this parameter to '0'
  * @param {Asset | null} [Asset] - The asset used to perform the activity
  * @return {void} - Nothing
  */
-declare function ActivityEffect(S: Character, C: Character, A: ActivityName | Activity, Z: AssetGroupItemName, Count?: number, Asset?: Asset | null): void;
+declare function ActivityEffect(S: Character, C: Character, A: ActivityName | ItemActivity, Z: AssetGroupItemName, Count?: number, Asset?: Asset | null): void;
 /**
  * Used for arousal events that are not activities, such as stimulation events
  * @param {Character} S - The character performing the activity
@@ -243,6 +243,14 @@ declare function ActivityBuildChatTag(character: Character, group: AssetGroup, a
  * @param {boolean} sendMessage - Whether to send a message to the chat or not
  */
 declare function ActivityRun(actor: Character, acted: Character, targetGroup: AssetItemGroup, ItemActivity: ItemActivity, sendMessage?: boolean): void;
+/**
+ * Runs the logic for a given activity
+ * @param {Character} actor - Character which is performing the activity
+ * @param {Character} acted - Character on which the activity was triggered
+ * @param {AssetGroupItemName | AssetGroupName} targetGroup - The group targetted by the activity
+ * @param {ItemActivity} ItemActivity - The activity performed, with its optional item used
+ */
+declare function ActivityRunLogic(actor: Character, acted: Character, targetGroup: AssetGroupItemName | AssetGroupName, ItemActivity: ItemActivity): void;
 /**
  * Checks if a used asset should trigger an activity/arousal progress on the target character
  * @param {Character} Source - The character who used the item

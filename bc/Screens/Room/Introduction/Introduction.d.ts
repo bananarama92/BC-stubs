@@ -180,8 +180,8 @@ declare var IntroductionJobList: IntroductionJobType[];
 /** @type {IntroductionJobType | null} */
 declare var IntroductionJobCurrent: IntroductionJobType | null;
 declare var IntroductionJobCount: number;
-/** @type {null | string} */
-declare var IntroductionJobParam: null | string;
+/** @type {undefined | string} */
+declare var IntroductionJobParam: undefined | string;
 /** @type {{ Active: boolean; X: number; Y: number } & ({} | { ClickScreen: string; ClickX: number; ClickY: number })} */
 declare var IntroductionJobPosition: {
     Active: boolean;

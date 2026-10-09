@@ -24,14 +24,14 @@ declare function ChatRoomCharacterViewScreenshot(): void;
 declare function ChatRoomCharacterViewShowMapButton(): boolean;
 /**
  * Called when character is clicked
- * @param {Character} C The target character
+ * @param {OnlineCharacter} C The target character
  * @param {number} CharX Character's X position on canvas
  * @param {number} CharY Character's Y position on canvas
  * @param {number} Zoom Room zoom
  * @param {number} ClickX Click X postion relative to character, without zoom
  * @param {number} ClickY Click Y postion relative to character, without zoom
  */
-declare function ChatRoomCharacterViewClickCharacter(C: Character, CharX: number, CharY: number, Zoom: number, ClickX: number, ClickY: number): void;
+declare function ChatRoomCharacterViewClickCharacter(C: OnlineCharacter, CharX: number, CharY: number, Zoom: number, ClickX: number, ClickY: number): void;
 /**
  * Draws the chatroom characters.
  * @returns {void} - Nothing.
@@ -52,12 +52,12 @@ declare function ChatRoomCharacterViewDrawUi(): void;
 declare function ChatRoomCharacterViewLoopCharacters(callback: (charIdx: number, charX: number, charY: number, space: number, zoom: number) => boolean | void): void;
 /**
  * Draws any overlays on top of character
- * @param {Character} C The target character
+ * @param {OnlineCharacter} C The target character
  * @param {number} CharX Character's X position on canvas
  * @param {number} CharY Character's Y position on canvas
  * @param {number} Zoom Room zoom
  */
-declare function ChatRoomCharacterViewDrawOverlay(C: Character, CharX: number, CharY: number, Zoom: number): void;
+declare function ChatRoomCharacterViewDrawOverlay(C: OnlineCharacter, CharX: number, CharY: number, Zoom: number): void;
 declare var ChatRoomCharacterViewInitialize: boolean;
 declare var ChatRoomCharacterViewSlideWeight: number;
 declare var ChatRoomCharacterViewX_Upper: number;

@@ -39,28 +39,50 @@ declare function NurseryClick(): void;
 declare function NurseryDrawText(): void;
 declare function NurseryLoadNurse(): void;
 declare function NurseryIsClothingInappropriate(): boolean;
-declare function NurseryNurseOutfitForNPC(CurrentNPC: any): void;
-declare function NurseryABDLOutfitForNPC(CurrentNPC: any): void;
-declare function NurseryNPCRestrained(CurrentNPC: any, restraintSet: any): void;
+/**
+ * Sets the outfit for the NPC Nurse
+ *
+ * @param {NPCCharacter} CurrentNPC
+ */
+declare function NurseryNurseOutfitForNPC(CurrentNPC: NPCCharacter): void;
+/**
+ * Sets the outfit for the NPC ABDL
+ * @param {NPCCharacter} CurrentNPC
+ */
+declare function NurseryABDLOutfitForNPC(CurrentNPC: NPCCharacter): void;
+/**
+ *
+ * @param {NPCCharacter} CurrentNPC
+ * @param {number} restraintSet
+ */
+declare function NurseryNPCRestrained(CurrentNPC: NPCCharacter, restraintSet: number): void;
 /** Random diaper selection
  * @param {Character} character
  * @param {keyof typeof NurseryDiapers} size
  * @returns {AssetName}
  */
 declare function NurseryRandomDiaper(character: Character, size: keyof typeof NurseryDiapers): AssetName;
-/** Random dress selection
+/**
+ * Random dress selection
  * @param {Character} character
  * @returns {AssetName}
  */
-declare function NurseryRandomDress(character: Character, itemPool: any): AssetName;
+declare function NurseryRandomDress(character: Character): AssetName;
 /** Random selection for dress colors
  * @param {Character} character
  * @param {BCColor[]} colors
  * @returns {BCColor}
  */
 declare function NurseryRandomColor(character: Character, colors?: BCColor[]): BCColor;
+/**
+ * Remove baby dresses from inventory for testing only
+ */
 declare function NurseryDeleteItem(): void;
-declare function NurseryPlayerUndress(Cost: any): void;
+/**
+ * When the player undresses ready to join the nursery
+ * @param {number} Cost
+ */
+declare function NurseryPlayerUndress(Cost: number): void;
 /**
  * @param {Character} character
  * @returns {number}
@@ -68,13 +90,17 @@ declare function NurseryPlayerUndress(Cost: any): void;
 declare function NurseryGetRegressionScore(character: Character): number;
 /**
  * When the player puts on diapers or has them put on
- * @param {number} domChange;
- * @param {keyof typeof NurseryDiapers} size;
+ * @param {number} [domChange];
+ * @param {keyof typeof NurseryDiapers} [size];
  */
 declare function NurseryPlayerGetsDiapered(domChange?: number, size?: keyof typeof NurseryDiapers): void;
 declare function NurseryPlayerAdmitted(): void;
 declare function NurseryPlayerWearBabyDress(): void;
-declare function NurseryPlayerRestrained(restraintSet: any): void;
+/**
+ * Restraints used on player
+ * @param {number} restraintSet
+ */
+declare function NurseryPlayerRestrained(restraintSet: number): void;
 declare function NurseryPlayerRePacified(character?: PlayerCharacter): void;
 declare function NurseryPlayerDePacified(): void;
 declare function NurseryPlayerRedressed(): void;
@@ -92,24 +118,32 @@ declare function NurseryEscapeGate(): void;
 declare function NurseryPlayerForgiven(): void;
 declare function NurseryPlayerReadmitted(): void;
 declare function NurseryPlayerRemoveCloth(): void;
-declare function NurseryPlayerNeedsPunishing(severity: any): void;
-declare function NurseryPlayerPunished(severity: any): void;
+/**
+ * Player needs more discipline
+ * @param {number} severity
+ */
+declare function NurseryPlayerNeedsPunishing(severity: number): void;
+/**
+ * Player is punished by nurse
+ * @param {number} severity
+ */
+declare function NurseryPlayerPunished(severity: number): void;
 declare function NurseryGoodBehaviour(): void;
 declare var NurseryBackground: string;
 /** @type {null | string} */
 declare var NurserySituation: null | string;
-declare var NurseryJustClicked: null;
-/** @type {null | NPCCharacter} */
-declare var NurseryNurse: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NurseryABDL1: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var NurseryABDL2: null | NPCCharacter;
+declare var NurseryJustClicked: boolean;
+/** @type {NPCCharacter} */
+declare var NurseryNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NurseryABDL1: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var NurseryABDL2: NPCCharacter;
 /** 0 = Good girl; 1 = ready to be forgiven; >= 2 = severity of naughtiness. */
 declare var NurseryPlayerBadBabyStatus: number;
 declare var NurseryCoolDownTime: number;
-/** @type {null | Item[]} */
-declare var NurseryPlayerAppearance: null | Item[];
+/** @type {Item[]} */
+declare var NurseryPlayerAppearance: Item[];
 declare var RandomNumber: number;
 /** @type {null | BCColor} */
 /** @type {null | boolean} */
@@ -150,7 +184,7 @@ declare var NurseryGateMsg: null | boolean;
  * @type {keyof typeof NurseryLeaveMessages | null}
  */
 declare var NurseryLeaveMessage: keyof typeof NurseryLeaveMessages | null;
-/** @type {null | number} */
-declare var NurseryEscapeAttempts: null | number;
-/** @type {null | number} */
-declare var NurseryRepeatOffender: null | number;
+/** @type {number} */
+declare var NurseryEscapeAttempts: number;
+/** @type {number} */
+declare var NurseryRepeatOffender: number;

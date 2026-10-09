@@ -39,11 +39,6 @@ declare function LoginPerformInventoryFixups(Inventory: InventoryBundle[]): void
  */
 declare function LoginPerformAppearanceFixups(Appearance: ItemBundle[]): boolean;
 /**
- * Perform the crafting fixups needed
- * @param {readonly (CraftingItem | null)[]} Crafting - The server-provided, uncompressed crafting data
- */
-declare function LoginPerformCraftingFixups(Crafting: readonly (CraftingItem | null)[]): void;
-/**
  * Make sure the slave collar is equipped or unequipped based on the owner
  * @returns {void} Nothing
  */

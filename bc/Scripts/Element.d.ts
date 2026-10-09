@@ -209,9 +209,10 @@ declare function ElementRemoveAttribute(ElementOrId: ElementHelp.ElementOrId, Na
 /**
  * Scrolls to the end of a specified element
  * @param {ElementHelp.ElementOrId} ElementOrId - The id of the element to scroll down to the bottom of.
+ * @param {ScrollOptions} [options] - The behavior of the scroll. Defaults to 'instant'.
  * @returns {void} - Nothing
  */
-declare function ElementScrollToEnd(ElementOrId: ElementHelp.ElementOrId): void;
+declare function ElementScrollToEnd(ElementOrId: ElementHelp.ElementOrId, options?: ScrollOptions): void;
 /**
  * Returns the given element's scroll position as a percentage, with the top of the element being close to 0 depending on scroll bar size, and the bottom being around 1.
  * To clarify, this is the position of the bottom edge of the scroll bar.
@@ -515,7 +516,7 @@ declare namespace ElementButton {
     };
     function _QueryDFS(root: Element, query: string, filter: (el: Element) => boolean): Generator<Element, void>;
     function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
-    function _ClickSpin(this: HTMLButtonElement, ev: MouseEvent): void;
+    function _ClickSpin(this: HTMLButtonElement, ev: PointerEvent): void;
     function _KeyDownSpin(this: HTMLButtonElement, ev: KeyboardEvent): void;
     /**
      * @this {HTMLElement}

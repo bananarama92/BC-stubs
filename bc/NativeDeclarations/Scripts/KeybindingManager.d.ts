@@ -66,7 +66,7 @@ declare namespace Keybindings {
 	 */
 	type Context = {
 		/** Unique identifier */
-		readonly id: "chat" | "always" | "isInChatRoom" | "isOnChatRoomScreen" | "isChatRoomCharacterMode" | "isChatRoomMapMode" | "isChatRoomChatFocused" | "isChatRoomChatNOTFocused" | "noModifiers";
+		readonly id: "chat" | "always" | "isInChatRoom" | "isOnChatRoomScreen" | "isChatRoomCharacterMode" | "isChatRoomMapMode" | "isChatRoomChatFocused" | "isChatRoomChatNOTFocused";
 
 		/** User-facing label */
 		readonly name?: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;

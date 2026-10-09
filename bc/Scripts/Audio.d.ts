@@ -60,10 +60,10 @@ declare function AudioPlaySoundForAsset(character: Character, asset: Asset): boo
  *
  * @param {Character} character
  * @param {AssetGroupName} groupName
- * @param {AssetName} assetName
+ * @param {string} assetName
  * @returns {AudioSoundEffect | null}
  */
-declare function AudioGetSoundFromAsset(character: Character, groupName: AssetGroupName, assetName: AssetName): AudioSoundEffect | null;
+declare function AudioGetSoundFromAsset(character: Character, groupName: AssetGroupName, assetName: string): AudioSoundEffect | null;
 /**
  * Get a file name for a given sound effect.
  * @param {string} sound - The sound effect to load a file from.
@@ -81,15 +81,15 @@ declare function AudioGetSoundFromChatMessage(data: ServerChatRoomMessage, metad
  * Processes the sound for vibrators
  * @param {ServerChatRoomMessage} data - Represents the chat message received
  * @param {IChatRoomMessageMetadata} metadata - The metadata from the recieved message
- * @returns {[string, number] | null} - The name of the sound to play, followed by the noise modifier
+ * @returns {AudioSoundEffect | null} - The name of the sound to play, followed by the noise modifier
  */
-declare function AudioVibratorSounds(data: ServerChatRoomMessage, metadata: IChatRoomMessageMetadata): [string, number] | null;
+declare function AudioVibratorSounds(data: ServerChatRoomMessage, metadata: IChatRoomMessageMetadata): AudioSoundEffect | null;
 /**
  * Processes the sound for shocks
  * @param {ServerChatRoomMessage} data - Represents the chat message received
- * @returns {[string, number]} - The name of the sound to play, followed by the noise modifier
+ * @returns {AudioSoundEffect} - The name of the sound to play, followed by the noise modifier
  */
-declare function AudioShockSounds(data: ServerChatRoomMessage): [string, number];
+declare function AudioShockSounds(data: ServerChatRoomMessage): AudioSoundEffect;
 /**
  * Sets the volume of the background music
  * @param {number} volume

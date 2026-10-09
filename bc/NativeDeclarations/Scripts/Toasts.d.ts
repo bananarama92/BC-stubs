@@ -37,7 +37,7 @@ declare namespace Toasts {
 		/** Whether to stop the progress bar animation when the mouse hovers over the toast. */
 		stopProgressOnHover?: boolean;
 		/** Callback when the toast is clicked. */
-		onClick?: (ev: MouseEvent, toast: ToastElement) => void;
+		onClick?: (ev: PointerEvent, toast: ToastElement) => void;
 		/** Callback when the toast is displayed. */
 		onShow?: (toast: ToastElement) => void;
 		/** Callback when the toast is closed, with a reason. */
@@ -62,7 +62,7 @@ declare namespace Toasts {
 		label: string;
 		/** Handler invoked when the button is clicked.
 		 *  The `this` context is bound to the actual HTMLButtonElement created for this toast. */
-		onClick: (this: HTMLButtonElement, ev: MouseEvent, toast: ToastElement) => void;
+		onClick: (this: HTMLButtonElement, ev: PointerEvent, toast: ToastElement) => void;
 	}
 
 	/**

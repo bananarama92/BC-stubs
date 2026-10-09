@@ -32,6 +32,16 @@ declare function ExtendedItemParseScriptHooks<DataType extends ExtendedItemData<
  */
 declare function ExtendedItemInit(C: Character, Item: Item, Push?: boolean, Refresh?: boolean): boolean;
 /**
+ * Initialize the subscreen properties of the passed extended item option (if any)
+ * @param {ExtendedItemOptionUnion} option - The extended item option
+ * @param {Item} item - The item in question
+ * @param {Character} C - The character that has the item equiped
+ * @param {boolean} [push] - Whether to push to changes to the server
+ * @param {boolean} [refresh] - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
+ * @returns {boolean} Whether properties were updated or not
+ */
+declare function ExtendedItemInitSubscreen(option: ExtendedItemOptionUnion, item: Item, C: Character, push?: boolean, refresh?: boolean): boolean;
+/**
  * Helper init function for extended items without an archetype.
  * Note that on the long term this function should ideally be removed in favor of adding appropriate archetypes.
  * @param {Item} Item - The item in question
@@ -371,9 +381,14 @@ declare function ExtendedItemTypeToRecord(asset: Asset, type: null | string): Ty
  * @returns {ExtendedItemOptionConfig["DrawOptions"]}
  */
 declare function ExtendedItemGetDrawingOptions(item: Item): ExtendedItemOptionConfig["DrawOptions"];
-/**
- * Utility file for handling extended items
- */
+declare namespace ExtendedArchetype {
+    let MODULAR: "modular";
+    let TYPED: "typed";
+    let VIBRATING: "vibrating";
+    let VARIABLEHEIGHT: "variableheight";
+    let TEXT: "text";
+    let NOARCH: "noarch";
+}
 /**
  * A lookup for the current pagination offset for all extended item options. Offsets are only recorded if the extended
  * item requires pagination. Example format:

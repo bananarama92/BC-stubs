@@ -19,6 +19,16 @@ declare function VibratorModeRegister(asset: Asset, config: VibratingItemConfig,
  */
 declare function VibratorModeSetOption(data: VibratingItemData, C: Character, item: Item, newOption: VibratingItemOption, previousOption: VibratingItemOption, push?: boolean): void;
 /**
+ * Set the baseline intensity and effects of the given advanced vibrator mode
+ * @param {Item} item
+ * @param {VibratorMode} mode
+ * @param {null | { reset?: boolean }} [options]
+ * @returns {boolean} Whether an intensity change was triggered
+ */
+declare function VibratorModeSetAdvancedProperties(item: Item, mode: VibratorMode, options?: null | {
+    reset?: boolean;
+}): boolean;
+/**
  * Parse the passed typed item draw data as passed via the extended item config
  * @param {readonly VibratorModeSet[]} modeSet - The vibrator mode sets for the item
  * @param {ExtendedItemConfigDrawData<{ drawImage?: false }> | undefined} drawData - The to-be parsed draw data

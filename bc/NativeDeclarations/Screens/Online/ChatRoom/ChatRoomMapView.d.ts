@@ -1,4 +1,4 @@
-declare namespace ChatRoomMapManager {
+declare namespace MapManager {
 	interface EffectsCodec {
 		write(effectsFlat: ChatRoomMapEffect[][], writer: BitStringWriter): boolean;
 		read(
@@ -36,4 +36,17 @@ declare namespace ChatRoomMapManager {
 			remapIdToEffectIdShifted: Map<number, number>;
 		}
 	}
+
+	type UndoGroup = {
+		cbs: (() => void)[];
+		add(cb: () => void): void;
+	}
 }
+
+interface MapDataLookupTable {
+	Tile: ChatRoomMapTile;
+	Object: ChatRoomMapObject;
+	Effect: ChatRoomMapEffect;
+}
+
+type MapDataDoodadType = keyof MapDataLookupTable;

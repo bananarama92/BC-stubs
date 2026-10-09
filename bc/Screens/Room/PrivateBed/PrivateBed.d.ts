@@ -11,10 +11,10 @@ declare function PrivateBedCount(): number;
 declare function PrivateBedLoad(): Promise<void>;
 /**
  * Draws a private bedroom character.
- * @param {Character} C - The character to draw.
+ * @param {Character & Required<PrivateBedCharacter>} C - The character to draw.
  * @returns {void} - Nothing.
  */
-declare function PrivateBedDrawCharacter(C: Character): void;
+declare function PrivateBedDrawCharacter(C: Character & Required<PrivateBedCharacter>): void;
 /**
  * Runs the private bedroom screen.
  * @returns {void} - Nothing.
@@ -57,8 +57,8 @@ declare function PrivateBedExit(): void;
  */
 declare function PrivateBedOrgasm(C: Character): void;
 declare var PrivateBedBackground: string;
-/** @type {Character[]} */
-declare var PrivateBedCharacter: Character[];
+/** @type {(Character & Required<PrivateBedCharacter>)[]} */
+declare var PrivateBedCharacter: (Character & Required<PrivateBedCharacter>)[];
 /** @type {ActivityName} */
 declare var PrivateBedActivity: ActivityName;
 /** @type {ActivityName[]} */

@@ -14,8 +14,3 @@ declare function PreferenceSubscreenControllerClick(): void;
  */
 declare function PreferenceSubscreenControllerExit(): boolean;
 declare function PreferenceSubscreenControllerUnload(): void;
-declare var PreferenceSettingsSensitivityList: number[];
-declare var PreferenceSettingsSensitivityIndex: number;
-declare var PreferenceSettingsDeadZoneList: number[];
-declare var PreferenceSettingsDeadZoneIndex: number;
-declare var PreferenceCalibrationStage: number;

@@ -14,6 +14,12 @@ declare const PasswordTimerChooseOptions: ({
         readonly seconds: 3600;
     };
     values: number[];
+} | {
+    unit: {
+        readonly label: "Days";
+        readonly seconds: 86400;
+    };
+    values: number[];
 })[];
 declare let PasswordTimerChooseOptionsIndex: number;
 declare let PasswordTimerChooseIndexes: number[];

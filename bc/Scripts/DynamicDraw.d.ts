@@ -69,9 +69,9 @@ declare function DynamicDrawTextAndEffects(text: string, ctx: CanvasRenderingCon
 /**
  * Parses a dynamic drawing options object, returning default values for properties that aren't defined.
  * @param {DynamicDrawOptions} [options] - The options object to parse
- * @returns {Required<DynamicDrawOptions>} - A complete options object, with default values where not specified
+ * @returns {typeof DynamicDrawTextDefaultOptions} - A complete options object, with default values where not specified
  */
-declare function DynamicDrawParseOptions(options?: DynamicDrawOptions): Required<DynamicDrawOptions>;
+declare function DynamicDrawParseOptions(options?: DynamicDrawOptions): typeof DynamicDrawTextDefaultOptions;
 /**
  * Applies a set of dynamic drawing options to a canvas rendering context. This sets the canvas up with the relevant font size, color, etc.
  * ready for drawing text
@@ -145,7 +145,7 @@ declare function DynamicDrawApplyOptions(ctx: CanvasRenderingContext2D, { fontSi
  *
  * This is an *allowlist* (not a blocklist): it accepts Unicode letters (`\p{L}`) and numbers (`\p{N}`) so that scripts such
  * as Chinese, Japanese, Korean, Cyrillic, Greek and accented (precomposed) Latin can be drawn, plus the legacy ASCII
- * punctuation set (`_ ~!$#%*+` and the space). Because it is an allowlist, every other Unicode category is rejected by
+ * character range (`[\x20-\x7e]`). Because it is an allowlist, every other Unicode category is rejected by
  * construction - in particular control characters (`\p{Cc}`), format characters (`\p{Cf}`, which covers bidirectional
  * overrides such as U+202E and zero-width/invisible characters), private-use and surrogate code points, separators other
  * than the literal space, symbols/emoji, and combining marks (`\p{M}`, the source of "Zalgo" rendering overflow). Keeping
@@ -199,9 +199,9 @@ declare namespace DynamicDrawTextEffect {
 }
 /**
  * The default options that are used for dynamic text drawing.
- * @type {DynamicDrawOptions}
+ * @type {Optional<Required<DynamicDrawOptions>, "effect" | "width" | "strokeColor">}
  */
-declare const DynamicDrawTextDefaultOptions: DynamicDrawOptions;
+declare const DynamicDrawTextDefaultOptions: Optional<Required<DynamicDrawOptions>, "effect" | "width" | "strokeColor">;
 /**
  * Dynamic text effect definitions. The definitions define the drawing effects that can be applied to dynamically drawn text.
  * @type {Record.<DynamicDrawTextEffect, DynamicDrawTextEffectDefinition>}

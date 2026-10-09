@@ -990,6 +990,12 @@ export type IconsType = {
 	 */
 	readonly Remove: "Icons/Remove.png";
 	/**
+	 * ![Reply](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Reply.svg)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Reply.svg|BondageProjects/Bondage-College}
+	 */
+	readonly Reply: "Icons/Reply.svg";
+	/**
 	 * ![Reset](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Reset.svg)
 	 * 
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Reset.svg|BondageProjects/Bondage-College}
@@ -1356,17 +1362,317 @@ export type IconsType = {
 	 */
 	readonly info_circle: "Icons/info_circle.svg";
 	/**
+	 * ![Activity_Bite](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Bite.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Bite.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Bite: "Icons/Activity/Bite.png";
+	/**
+	 * ![Activity_BrothersHandshake](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/BrothersHandshake.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/BrothersHandshake.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_BrothersHandshake: "Icons/Activity/BrothersHandshake.png";
+	/**
 	 * ![Activity_Caress](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Caress.png)
 	 * 
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Caress.png|BondageProjects/Bondage-College}
 	 */
 	readonly Activity_Caress: "Icons/Activity/Caress.png";
 	/**
+	 * ![Activity_Choke](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Choke.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Choke.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Choke: "Icons/Activity/Choke.png";
+	/**
+	 * ![Activity_Clean](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Clean.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Clean.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Clean: "Icons/Activity/Clean.png";
+	/**
+	 * ![Activity_CollarGrab](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/CollarGrab.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/CollarGrab.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_CollarGrab: "Icons/Activity/CollarGrab.png";
+	/**
+	 * ![Activity_Cuddle](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Cuddle.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Cuddle.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Cuddle: "Icons/Activity/Cuddle.png";
+	/**
+	 * ![Activity_FrenchKiss](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/FrenchKiss.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/FrenchKiss.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_FrenchKiss: "Icons/Activity/FrenchKiss.png";
+	/**
+	 * ![Activity_GagKiss](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/GagKiss.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/GagKiss.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_GagKiss: "Icons/Activity/GagKiss.png";
+	/**
+	 * ![Activity_GaggedKiss](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/GaggedKiss.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/GaggedKiss.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_GaggedKiss: "Icons/Activity/GaggedKiss.png";
+	/**
+	 * ![Activity_Grope](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Grope.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Grope.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Grope: "Icons/Activity/Grope.png";
+	/**
+	 * ![Activity_HandGag](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/HandGag.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/HandGag.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_HandGag: "Icons/Activity/HandGag.png";
+	/**
+	 * ![Activity_Inject](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Inject.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Inject.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Inject: "Icons/Activity/Inject.png";
+	/**
+	 * ![Activity_Kick](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Kick.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Kick.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Kick: "Icons/Activity/Kick.png";
+	/**
 	 * ![Activity_Kiss](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Kiss.png)
 	 * 
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Kiss.png|BondageProjects/Bondage-College}
 	 */
 	readonly Activity_Kiss: "Icons/Activity/Kiss.png";
+	/**
+	 * ![Activity_Lick](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Lick.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Lick.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Lick: "Icons/Activity/Lick.png";
+	/**
+	 * ![Activity_MassageFeet](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MassageFeet.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MassageFeet.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MassageFeet: "Icons/Activity/MassageFeet.png";
+	/**
+	 * ![Activity_MassageHands](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MassageHands.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MassageHands.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MassageHands: "Icons/Activity/MassageHands.png";
+	/**
+	 * ![Activity_MasturbateFist](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MasturbateFist.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MasturbateFist.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MasturbateFist: "Icons/Activity/MasturbateFist.png";
+	/**
+	 * ![Activity_MasturbateFoot](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MasturbateFoot.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MasturbateFoot.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MasturbateFoot: "Icons/Activity/MasturbateFoot.png";
+	/**
+	 * ![Activity_MasturbateHand](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MasturbateHand.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MasturbateHand.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MasturbateHand: "Icons/Activity/MasturbateHand.png";
+	/**
+	 * ![Activity_MasturbateTongue](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MasturbateTongue.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MasturbateTongue.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MasturbateTongue: "Icons/Activity/MasturbateTongue.png";
+	/**
+	 * ![Activity_MoanGag](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MoanGag.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MoanGag.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MoanGag: "Icons/Activity/MoanGag.png";
+	/**
+	 * ![Activity_MoanGagAngry](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MoanGagAngry.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MoanGagAngry.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MoanGagAngry: "Icons/Activity/MoanGagAngry.png";
+	/**
+	 * ![Activity_MoanGagGiggle](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MoanGagGiggle.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MoanGagGiggle.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MoanGagGiggle: "Icons/Activity/MoanGagGiggle.png";
+	/**
+	 * ![Activity_MoanGagGroan](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MoanGagGroan.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MoanGagGroan.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MoanGagGroan: "Icons/Activity/MoanGagGroan.png";
+	/**
+	 * ![Activity_MoanGagTalk](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MoanGagTalk.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MoanGagTalk.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MoanGagTalk: "Icons/Activity/MoanGagTalk.png";
+	/**
+	 * ![Activity_MoanGagWhimper](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/MoanGagWhimper.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/MoanGagWhimper.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_MoanGagWhimper: "Icons/Activity/MoanGagWhimper.png";
+	/**
+	 * ![Activity_Nibble](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Nibble.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Nibble.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Nibble: "Icons/Activity/Nibble.png";
+	/**
+	 * ![Activity_Nod](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Nod.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Nod.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Nod: "Icons/Activity/Nod.png";
+	/**
+	 * ![Activity_PenetrateFast](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/PenetrateFast.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/PenetrateFast.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_PenetrateFast: "Icons/Activity/PenetrateFast.png";
+	/**
+	 * ![Activity_PenetrateSlow](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/PenetrateSlow.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/PenetrateSlow.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_PenetrateSlow: "Icons/Activity/PenetrateSlow.png";
+	/**
+	 * ![Activity_Pet](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Pet.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Pet.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Pet: "Icons/Activity/Pet.png";
+	/**
+	 * ![Activity_Pinch](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Pinch.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Pinch.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Pinch: "Icons/Activity/Pinch.png";
+	/**
+	 * ![Activity_PoliteKiss](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/PoliteKiss.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/PoliteKiss.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_PoliteKiss: "Icons/Activity/PoliteKiss.png";
+	/**
+	 * ![Activity_Pull](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Pull.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Pull.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Pull: "Icons/Activity/Pull.png";
+	/**
+	 * ![Activity_RestHead](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/RestHead.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/RestHead.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_RestHead: "Icons/Activity/RestHead.png";
+	/**
+	 * ![Activity_Rub](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Rub.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Rub.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Rub: "Icons/Activity/Rub.png";
+	/**
+	 * ![Activity_SiblingsCheekKiss](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/SiblingsCheekKiss.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/SiblingsCheekKiss.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_SiblingsCheekKiss: "Icons/Activity/SiblingsCheekKiss.png";
+	/**
+	 * ![Activity_SiblingsHug](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/SiblingsHug.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/SiblingsHug.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_SiblingsHug: "Icons/Activity/SiblingsHug.png";
+	/**
+	 * ![Activity_SistersHug](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/SistersHug.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/SistersHug.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_SistersHug: "Icons/Activity/SistersHug.png";
+	/**
+	 * ![Activity_Sit](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Sit.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Sit.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Sit: "Icons/Activity/Sit.png";
+	/**
+	 * ![Activity_Slap](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Slap.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Slap.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Slap: "Icons/Activity/Slap.png";
+	/**
+	 * ![Activity_Spank](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Spank.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Spank.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Spank: "Icons/Activity/Spank.png";
+	/**
+	 * ![Activity_Step](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Step.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Step.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Step: "Icons/Activity/Step.png";
+	/**
+	 * ![Activity_StruggleArms](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/StruggleArms.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/StruggleArms.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_StruggleArms: "Icons/Activity/StruggleArms.png";
+	/**
+	 * ![Activity_StruggleLegs](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/StruggleLegs.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/StruggleLegs.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_StruggleLegs: "Icons/Activity/StruggleLegs.png";
+	/**
+	 * ![Activity_Suck](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Suck.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Suck.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Suck: "Icons/Activity/Suck.png";
+	/**
+	 * ![Activity_TakeCare](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/TakeCare.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/TakeCare.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_TakeCare: "Icons/Activity/TakeCare.png";
+	/**
+	 * ![Activity_Tickle](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Tickle.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Tickle.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Tickle: "Icons/Activity/Tickle.png";
+	/**
+	 * ![Activity_Whisper](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Whisper.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Whisper.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Whisper: "Icons/Activity/Whisper.png";
+	/**
+	 * ![Activity_Wiggle](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Activity/Wiggle.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Activity/Wiggle.png|BondageProjects/Bondage-College}
+	 */
+	readonly Activity_Wiggle: "Icons/Activity/Wiggle.png";
 	/**
 	 * ![ClubCard_PlayerSlot0](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/ClubCard/PlayerSlot0.png)
 	 * 
@@ -2034,6 +2340,36 @@ export type IconsType = {
 	 */
 	readonly Previews_Unlocked: "Icons/Previews/Unlocked.png";
 	/**
+	 * ![Range_1](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Range/1.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Range/1.png|BondageProjects/Bondage-College}
+	 */
+	readonly Range_1: "Icons/Range/1.png";
+	/**
+	 * ![Range_2](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Range/2.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Range/2.png|BondageProjects/Bondage-College}
+	 */
+	readonly Range_2: "Icons/Range/2.png";
+	/**
+	 * ![Range_3](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Range/3.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Range/3.png|BondageProjects/Bondage-College}
+	 */
+	readonly Range_3: "Icons/Range/3.png";
+	/**
+	 * ![Range_4](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Range/4.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Range/4.png|BondageProjects/Bondage-College}
+	 */
+	readonly Range_4: "Icons/Range/4.png";
+	/**
+	 * ![Range_5](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Range/5.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Range/5.png|BondageProjects/Bondage-College}
+	 */
+	readonly Range_5: "Icons/Range/5.png";
+	/**
 	 * ![Rectangle_Admin](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Rectangle/Admin.png)
 	 * 
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Rectangle/Admin.png|BondageProjects/Bondage-College}
@@ -2327,4 +2663,622 @@ export type IconsType = {
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Struggle/Strength.png|BondageProjects/Bondage-College}
 	 */
 	readonly Struggle_Strength: "Icons/Struggle/Strength.png";
+	/**
+	 * ![Expressions_Blush_Default](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Blush/Default.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Blush/Default.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Blush_Default: "Icons/Expressions/Blush/Default.png";
+	/**
+	 * ![Expressions_Blush_Dread](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Blush/Dread.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Blush/Dread.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Blush_Dread: "Icons/Expressions/Blush/Dread.png";
+	/**
+	 * ![Expressions_Blush_Extreme](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Blush/Extreme.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Blush/Extreme.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Blush_Extreme: "Icons/Expressions/Blush/Extreme.png";
+	/**
+	 * ![Expressions_Blush_High](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Blush/High.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Blush/High.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Blush_High: "Icons/Expressions/Blush/High.png";
+	/**
+	 * ![Expressions_Blush_Low](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Blush/Low.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Blush/Low.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Blush_Low: "Icons/Expressions/Blush/Low.png";
+	/**
+	 * ![Expressions_Blush_Medium](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Blush/Medium.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Blush/Medium.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Blush_Medium: "Icons/Expressions/Blush/Medium.png";
+	/**
+	 * ![Expressions_Blush_ShortBreath](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Blush/ShortBreath.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Blush/ShortBreath.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Blush_ShortBreath: "Icons/Expressions/Blush/ShortBreath.png";
+	/**
+	 * ![Expressions_Blush_VeryHigh](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Blush/VeryHigh.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Blush/VeryHigh.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Blush_VeryHigh: "Icons/Expressions/Blush/VeryHigh.png";
+	/**
+	 * ![Expressions_Emoticon_Afk](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Afk.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Afk.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Afk: "Icons/Expressions/Emoticon/Afk.png";
+	/**
+	 * ![Expressions_Emoticon_Annoyed](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Annoyed.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Annoyed.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Annoyed: "Icons/Expressions/Emoticon/Annoyed.png";
+	/**
+	 * ![Expressions_Emoticon_Bathing](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Bathing.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Bathing.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Bathing: "Icons/Expressions/Emoticon/Bathing.png";
+	/**
+	 * ![Expressions_Emoticon_Brb](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Brb.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Brb.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Brb: "Icons/Expressions/Emoticon/Brb.png";
+	/**
+	 * ![Expressions_Emoticon_BrokenHeart](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/BrokenHeart.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/BrokenHeart.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_BrokenHeart: "Icons/Expressions/Emoticon/BrokenHeart.png";
+	/**
+	 * ![Expressions_Emoticon_Call](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Call.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Call.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Call: "Icons/Expressions/Emoticon/Call.png";
+	/**
+	 * ![Expressions_Emoticon_Car](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Car.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Car.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Car: "Icons/Expressions/Emoticon/Car.png";
+	/**
+	 * ![Expressions_Emoticon_Coding](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Coding.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Coding.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Coding: "Icons/Expressions/Emoticon/Coding.png";
+	/**
+	 * ![Expressions_Emoticon_Coffee](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Coffee.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Coffee.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Coffee: "Icons/Expressions/Emoticon/Coffee.png";
+	/**
+	 * ![Expressions_Emoticon_Confusion](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Confusion.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Confusion.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Confusion: "Icons/Expressions/Emoticon/Confusion.png";
+	/**
+	 * ![Expressions_Emoticon_Default](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Default.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Default.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Default: "Icons/Expressions/Emoticon/Default.png";
+	/**
+	 * ![Expressions_Emoticon_Drawing](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Drawing.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Drawing.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Drawing: "Icons/Expressions/Emoticon/Drawing.png";
+	/**
+	 * ![Expressions_Emoticon_Exclamation](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Exclamation.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Exclamation.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Exclamation: "Icons/Expressions/Emoticon/Exclamation.png";
+	/**
+	 * ![Expressions_Emoticon_Fork](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Fork.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Fork.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Fork: "Icons/Expressions/Emoticon/Fork.png";
+	/**
+	 * ![Expressions_Emoticon_Gaming](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Gaming.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Gaming.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Gaming: "Icons/Expressions/Emoticon/Gaming.png";
+	/**
+	 * ![Expressions_Emoticon_Hanger](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Hanger.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Hanger.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Hanger: "Icons/Expressions/Emoticon/Hanger.png";
+	/**
+	 * ![Expressions_Emoticon_Hearing](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Hearing.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Hearing.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Hearing: "Icons/Expressions/Emoticon/Hearing.png";
+	/**
+	 * ![Expressions_Emoticon_Hearts](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Hearts.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Hearts.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Hearts: "Icons/Expressions/Emoticon/Hearts.png";
+	/**
+	 * ![Expressions_Emoticon_Lightbulb](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Lightbulb.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Lightbulb.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Lightbulb: "Icons/Expressions/Emoticon/Lightbulb.png";
+	/**
+	 * ![Expressions_Emoticon_LoveGag](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/LoveGag.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/LoveGag.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_LoveGag: "Icons/Expressions/Emoticon/LoveGag.png";
+	/**
+	 * ![Expressions_Emoticon_LoveLock](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/LoveLock.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/LoveLock.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_LoveLock: "Icons/Expressions/Emoticon/LoveLock.png";
+	/**
+	 * ![Expressions_Emoticon_LoveRope](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/LoveRope.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/LoveRope.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_LoveRope: "Icons/Expressions/Emoticon/LoveRope.png";
+	/**
+	 * ![Expressions_Emoticon_Music](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Music.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Music.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Music: "Icons/Expressions/Emoticon/Music.png";
+	/**
+	 * ![Expressions_Emoticon_RaisedHand](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/RaisedHand.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/RaisedHand.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_RaisedHand: "Icons/Expressions/Emoticon/RaisedHand.png";
+	/**
+	 * ![Expressions_Emoticon_Read](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Read.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Read.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Read: "Icons/Expressions/Emoticon/Read.png";
+	/**
+	 * ![Expressions_Emoticon_SOS](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/SOS.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/SOS.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_SOS: "Icons/Expressions/Emoticon/SOS.png";
+	/**
+	 * ![Expressions_Emoticon_Shopping](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Shopping.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Shopping.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Shopping: "Icons/Expressions/Emoticon/Shopping.png";
+	/**
+	 * ![Expressions_Emoticon_Sleep](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Sleep.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Sleep.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Sleep: "Icons/Expressions/Emoticon/Sleep.png";
+	/**
+	 * ![Expressions_Emoticon_Spectator](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Spectator.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Spectator.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Spectator: "Icons/Expressions/Emoticon/Spectator.png";
+	/**
+	 * ![Expressions_Emoticon_TV](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/TV.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/TV.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_TV: "Icons/Expressions/Emoticon/TV.png";
+	/**
+	 * ![Expressions_Emoticon_Tear](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Tear.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Tear.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Tear: "Icons/Expressions/Emoticon/Tear.png";
+	/**
+	 * ![Expressions_Emoticon_ThumbsDown](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/ThumbsDown.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/ThumbsDown.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_ThumbsDown: "Icons/Expressions/Emoticon/ThumbsDown.png";
+	/**
+	 * ![Expressions_Emoticon_ThumbsUp](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/ThumbsUp.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/ThumbsUp.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_ThumbsUp: "Icons/Expressions/Emoticon/ThumbsUp.png";
+	/**
+	 * ![Expressions_Emoticon_Wardrobe](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Wardrobe.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Wardrobe.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Wardrobe: "Icons/Expressions/Emoticon/Wardrobe.png";
+	/**
+	 * ![Expressions_Emoticon_Warning](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Warning.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Warning.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Warning: "Icons/Expressions/Emoticon/Warning.png";
+	/**
+	 * ![Expressions_Emoticon_Whisper](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Whisper.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Whisper.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Whisper: "Icons/Expressions/Emoticon/Whisper.png";
+	/**
+	 * ![Expressions_Emoticon_Work](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Emoticon/Work.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Emoticon/Work.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Emoticon_Work: "Icons/Expressions/Emoticon/Work.png";
+	/**
+	 * ![Expressions_Eyebrows_Angry](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyebrows/Angry.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyebrows/Angry.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyebrows_Angry: "Icons/Expressions/Eyebrows/Angry.png";
+	/**
+	 * ![Expressions_Eyebrows_Default](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyebrows/Default.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyebrows/Default.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyebrows_Default: "Icons/Expressions/Eyebrows/Default.png";
+	/**
+	 * ![Expressions_Eyebrows_Harsh](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyebrows/Harsh.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyebrows/Harsh.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyebrows_Harsh: "Icons/Expressions/Eyebrows/Harsh.png";
+	/**
+	 * ![Expressions_Eyebrows_Lowered](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyebrows/Lowered.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyebrows/Lowered.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyebrows_Lowered: "Icons/Expressions/Eyebrows/Lowered.png";
+	/**
+	 * ![Expressions_Eyebrows_OneRaised](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyebrows/OneRaised.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyebrows/OneRaised.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyebrows_OneRaised: "Icons/Expressions/Eyebrows/OneRaised.png";
+	/**
+	 * ![Expressions_Eyebrows_Raised](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyebrows/Raised.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyebrows/Raised.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyebrows_Raised: "Icons/Expressions/Eyebrows/Raised.png";
+	/**
+	 * ![Expressions_Eyebrows_Soft](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyebrows/Soft.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyebrows/Soft.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyebrows_Soft: "Icons/Expressions/Eyebrows/Soft.png";
+	/**
+	 * ![Expressions_Eyes_Angry](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Angry.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Angry.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Angry: "Icons/Expressions/Eyes/Angry.png";
+	/**
+	 * ![Expressions_Eyes_Closed](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Closed.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Closed.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Closed: "Icons/Expressions/Eyes/Closed.png";
+	/**
+	 * ![Expressions_Eyes_Daydream](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Daydream.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Daydream.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Daydream: "Icons/Expressions/Eyes/Daydream.png";
+	/**
+	 * ![Expressions_Eyes_Dazed](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Dazed.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Dazed.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Dazed: "Icons/Expressions/Eyes/Dazed.png";
+	/**
+	 * ![Expressions_Eyes_Default](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Default.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Default.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Default: "Icons/Expressions/Eyes/Default.png";
+	/**
+	 * ![Expressions_Eyes_Dizzy](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Dizzy.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Dizzy.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Dizzy: "Icons/Expressions/Eyes/Dizzy.png";
+	/**
+	 * ![Expressions_Eyes_Heart](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Heart.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Heart.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Heart: "Icons/Expressions/Eyes/Heart.png";
+	/**
+	 * ![Expressions_Eyes_HeartPink](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/HeartPink.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/HeartPink.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_HeartPink: "Icons/Expressions/Eyes/HeartPink.png";
+	/**
+	 * ![Expressions_Eyes_Horny](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Horny.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Horny.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Horny: "Icons/Expressions/Eyes/Horny.png";
+	/**
+	 * ![Expressions_Eyes_Lewd](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Lewd.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Lewd.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Lewd: "Icons/Expressions/Eyes/Lewd.png";
+	/**
+	 * ![Expressions_Eyes_LewdHeart](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/LewdHeart.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/LewdHeart.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_LewdHeart: "Icons/Expressions/Eyes/LewdHeart.png";
+	/**
+	 * ![Expressions_Eyes_LewdHeartPink](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/LewdHeartPink.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/LewdHeartPink.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_LewdHeartPink: "Icons/Expressions/Eyes/LewdHeartPink.png";
+	/**
+	 * ![Expressions_Eyes_Sad](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Sad.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Sad.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Sad: "Icons/Expressions/Eyes/Sad.png";
+	/**
+	 * ![Expressions_Eyes_Scared](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Scared.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Scared.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Scared: "Icons/Expressions/Eyes/Scared.png";
+	/**
+	 * ![Expressions_Eyes_Shy](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Shy.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Shy.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Shy: "Icons/Expressions/Eyes/Shy.png";
+	/**
+	 * ![Expressions_Eyes_ShylyHappy](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/ShylyHappy.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/ShylyHappy.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_ShylyHappy: "Icons/Expressions/Eyes/ShylyHappy.png";
+	/**
+	 * ![Expressions_Eyes_Surprised](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/Surprised.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/Surprised.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_Surprised: "Icons/Expressions/Eyes/Surprised.png";
+	/**
+	 * ![Expressions_Eyes_VeryLewd](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Eyes/VeryLewd.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Eyes/VeryLewd.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Eyes_VeryLewd: "Icons/Expressions/Eyes/VeryLewd.png";
+	/**
+	 * ![Expressions_Fluids_Default](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/Default.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/Default.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_Default: "Icons/Expressions/Fluids/Default.png";
+	/**
+	 * ![Expressions_Fluids_DroolHigh](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolHigh.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolHigh.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolHigh: "Icons/Expressions/Fluids/DroolHigh.png";
+	/**
+	 * ![Expressions_Fluids_DroolLow](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolLow.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolLow.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolLow: "Icons/Expressions/Fluids/DroolLow.png";
+	/**
+	 * ![Expressions_Fluids_DroolMedium](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolMedium.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolMedium.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolMedium: "Icons/Expressions/Fluids/DroolMedium.png";
+	/**
+	 * ![Expressions_Fluids_DroolMessy](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolMessy.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolMessy.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolMessy: "Icons/Expressions/Fluids/DroolMessy.png";
+	/**
+	 * ![Expressions_Fluids_DroolSides](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolSides.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolSides.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolSides: "Icons/Expressions/Fluids/DroolSides.png";
+	/**
+	 * ![Expressions_Fluids_DroolTearsHigh](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolTearsHigh.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolTearsHigh.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolTearsHigh: "Icons/Expressions/Fluids/DroolTearsHigh.png";
+	/**
+	 * ![Expressions_Fluids_DroolTearsLow](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolTearsLow.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolTearsLow.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolTearsLow: "Icons/Expressions/Fluids/DroolTearsLow.png";
+	/**
+	 * ![Expressions_Fluids_DroolTearsMedium](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolTearsMedium.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolTearsMedium.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolTearsMedium: "Icons/Expressions/Fluids/DroolTearsMedium.png";
+	/**
+	 * ![Expressions_Fluids_DroolTearsMessy](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolTearsMessy.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolTearsMessy.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolTearsMessy: "Icons/Expressions/Fluids/DroolTearsMessy.png";
+	/**
+	 * ![Expressions_Fluids_DroolTearsSides](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/DroolTearsSides.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/DroolTearsSides.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_DroolTearsSides: "Icons/Expressions/Fluids/DroolTearsSides.png";
+	/**
+	 * ![Expressions_Fluids_TearsHigh](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/TearsHigh.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/TearsHigh.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_TearsHigh: "Icons/Expressions/Fluids/TearsHigh.png";
+	/**
+	 * ![Expressions_Fluids_TearsLow](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/TearsLow.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/TearsLow.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_TearsLow: "Icons/Expressions/Fluids/TearsLow.png";
+	/**
+	 * ![Expressions_Fluids_TearsMedium](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Fluids/TearsMedium.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Fluids/TearsMedium.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Fluids_TearsMedium: "Icons/Expressions/Fluids/TearsMedium.png";
+	/**
+	 * ![Expressions_Mouth_Ahegao](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Ahegao.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Ahegao.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Ahegao: "Icons/Expressions/Mouth/Ahegao.png";
+	/**
+	 * ![Expressions_Mouth_Angry](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Angry.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Angry.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Angry: "Icons/Expressions/Mouth/Angry.png";
+	/**
+	 * ![Expressions_Mouth_Default](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Default.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Default.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Default: "Icons/Expressions/Mouth/Default.png";
+	/**
+	 * ![Expressions_Mouth_Devious](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Devious.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Devious.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Devious: "Icons/Expressions/Mouth/Devious.png";
+	/**
+	 * ![Expressions_Mouth_Frown](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Frown.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Frown.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Frown: "Icons/Expressions/Mouth/Frown.png";
+	/**
+	 * ![Expressions_Mouth_Grin](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Grin.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Grin.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Grin: "Icons/Expressions/Mouth/Grin.png";
+	/**
+	 * ![Expressions_Mouth_HalfOpen](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/HalfOpen.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/HalfOpen.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_HalfOpen: "Icons/Expressions/Mouth/HalfOpen.png";
+	/**
+	 * ![Expressions_Mouth_Happy](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Happy.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Happy.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Happy: "Icons/Expressions/Mouth/Happy.png";
+	/**
+	 * ![Expressions_Mouth_Laughing](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Laughing.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Laughing.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Laughing: "Icons/Expressions/Mouth/Laughing.png";
+	/**
+	 * ![Expressions_Mouth_LipBite](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/LipBite.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/LipBite.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_LipBite: "Icons/Expressions/Mouth/LipBite.png";
+	/**
+	 * ![Expressions_Mouth_Moan](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Moan.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Moan.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Moan: "Icons/Expressions/Mouth/Moan.png";
+	/**
+	 * ![Expressions_Mouth_Open](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Open.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Open.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Open: "Icons/Expressions/Mouth/Open.png";
+	/**
+	 * ![Expressions_Mouth_Pained](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Pained.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Pained.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Pained: "Icons/Expressions/Mouth/Pained.png";
+	/**
+	 * ![Expressions_Mouth_Pout](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Pout.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Pout.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Pout: "Icons/Expressions/Mouth/Pout.png";
+	/**
+	 * ![Expressions_Mouth_Sad](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Sad.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Sad.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Sad: "Icons/Expressions/Mouth/Sad.png";
+	/**
+	 * ![Expressions_Mouth_Smirk](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/Smirk.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/Smirk.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_Smirk: "Icons/Expressions/Mouth/Smirk.png";
+	/**
+	 * ![Expressions_Mouth_TonguePinch](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Mouth/TonguePinch.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Mouth/TonguePinch.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Mouth_TonguePinch: "Icons/Expressions/Mouth/TonguePinch.png";
+	/**
+	 * ![Expressions_Pussy_Default](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Pussy/Default.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Pussy/Default.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Pussy_Default: "Icons/Expressions/Pussy/Default.png";
+	/**
+	 * ![Expressions_Pussy_Hard](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Expressions/Pussy/Hard.png)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Expressions/Pussy/Hard.png|BondageProjects/Bondage-College}
+	 */
+	readonly Expressions_Pussy_Hard: "Icons/Expressions/Pussy/Hard.png";
 }

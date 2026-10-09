@@ -15,6 +15,13 @@ declare function TextItemRegister(asset: Asset, config: TextItemConfig, parentOp
  */
 declare function TextItemGetDrawData(fieldNames: readonly TextItemNames[], drawData: ExtendedItemConfigDrawData<{}> | undefined): ExtendedItemDrawData<ElementMetaData.Text>;
 /**
+ * Walk up the extended item option graph and grab the first baseline property matching the provided key
+ * @param {TextItemNames} key
+ * @param {null | ExtendedItemOption} [parentOption]
+ * @returns {string}
+ */
+declare function TextItemGetBaseline(key: TextItemNames, parentOption?: null | ExtendedItemOption): string;
+/**
  * Generates an asset's typed item data
  * @param {Asset} asset - The asset to generate modular item data for
  * @param {TextItemConfig} config - The item's extended item configuration
