@@ -318,16 +318,17 @@ declare function ValidationHasScriptPermission(character: Character, property: S
  */
 declare function ValidationHasSomeScriptPermission(character: Character, property: ScriptPermissionProperty, permissionLevels: readonly ScriptPermissionLevel[]): boolean;
 /**
- * @template {{ [key: string]: (arg: any, C: Character) => any }} T
+ * @template O
+ * @template {{ [key: string]: (arg: any, C: O) => any }} T
  * @param {unknown} arg The to-be validated record
- * @param {Character} C The character in question
+ * @param {O} object An extra object to validate with. Passed to the validator as a 2nd argument
  * @param {T} validators A record of validation functions; one for each property in `arg`
  * @param {boolean} allowExtraKeys whether to allow extra key/value pairs in `arg` (absent from the `validators` record) to-be returned
  * @returns {{ [k in keyof T]: ReturnType<T[k]> }} The validated `arg`
  */
-declare function ValidationApplyRecord<T extends {
-    [key: string]: (arg: any, C: Character) => any;
-}>(arg: unknown, C: Character, validators: T, allowExtraKeys?: boolean): { [k in keyof T]: ReturnType<T[k]>; };
+declare function ValidationApplyRecord<O, T extends {
+    [key: string]: (arg: any, C: O) => any;
+}>(arg: unknown, object: O, validators: T, allowExtraKeys?: boolean): { [k in keyof T]: ReturnType<T[k]>; };
 declare const ValidationCombinationNumberRegex: RegExp;
 declare const ValidationPasswordRegex: RegExp;
 declare const ValidationDefaultCombinationNumber: "0000";

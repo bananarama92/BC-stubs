@@ -15,6 +15,11 @@ declare function ChatRoomMapViewCreateAnimation(baseName: string, frames: number
  */
 declare function ChatRoomMapViewCreateOnEnterConveyorLogic(direction: ChatRoomMapDirection, speed: number): ChatRoomMapObject["OnEnter"];
 /**
+ * @param {unknown} text
+ * @returns {string}
+ */
+declare function MapSanitizeSignText(text: unknown): string;
+/**
  * To prevent repeating the same logic, we create a function that returns a function
  * @param {string} name - Sign Name
  * @returns {ChatRoomMapObject["OnClick"]}

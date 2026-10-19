@@ -14,23 +14,6 @@ declare function ChatRoomMapViewBlur(): void;
  */
 declare function ChatRoomMapViewInitialize(mode: ChatRoomMapType): ServerChatRoomMapData;
 /**
- * Get the tile ID at the given coordinates
- * @overload
- * @param {number} index
- * @param {ChatRoomMapObjectConfig["Type"]} type
- * @return {void}
- */
-declare function ChatRoomMapViewSetCellSelection(index: number, type: ChatRoomMapObjectConfig["Type"]): void;
-/**
- * @overload
- * @param {number} x
- * @param {number} y
- * @param {ChatRoomMapObjectConfig["Type"]} type
- * @return {void}
- */
-declare function ChatRoomMapViewSetCellSelection(x: number, y: number, type: ChatRoomMapObjectConfig["Type"]): void;
-declare function ChatRoomMapViewClearCellSelection(): void;
-/**
  * Initializes the character's map data to its default blank state
  * @param {Character} C - The character to be initialized
  * @returns {ChatRoomMapData | null}
@@ -334,7 +317,7 @@ declare function ChatRoomMapViewDrawGrid(Left: number, Top: number, Width: numbe
 /**
  * Sets the next update flag for the room if it's not already set, the delay is 5 seconds
  * @returns {void} - Nothing
- * @deprecated since August 2026, use {@link MapValidateCells}
+ * @deprecated since August 2026, {@link MapManager.Map.updateGlobalMapData} handles map updates
  */
 declare function ChatRoomMapViewUpdateFlag(): void;
 /**
@@ -343,6 +326,17 @@ declare function ChatRoomMapViewUpdateFlag(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewUpdatePlayerFlag(UpdateTimeOffset?: number): void;
+/**
+ * Schedule a map update to be sent to the server.
+ *
+ * The update will only happen once at the end of a 5s period.
+ * Do note that calling {@link MapManager.Map.updateGlobalMapData()} will also
+ * cause an update to be sent out, while making sure the data we're sending *is*
+ * the current map data.
+ *
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewScheduleMapUpdate(): void;
 /**
  * Updates the room data if needed
  * @returns {void} - Nothing
@@ -435,6 +429,13 @@ declare function ChatRoomMapViewKeyUp(event: KeyboardEvent): boolean;
  * @returns {void} - Nothing.
  */
 declare function ChatRoomMapViewClick(): void;
+/**
+ * @param {{ X: number, Y: number} | undefined} pos
+ */
+declare function ChatRoomMapViewSetSelectedTile(pos: {
+    X: number;
+    Y: number;
+} | undefined): void;
 declare function ChatRoomMapViewMouseDown(event: PointerEvent): void;
 /**
  *
@@ -523,6 +524,7 @@ declare var ChatRoomMapViewUpdatePlayerTime: number;
 declare const ChatRoomMapViewWhisperRange: 1;
 declare const ChatRoomMapViewInteractionRange: 1;
 declare const ChatRoomMapViewRemoteRange: number;
+declare const ChatRoomMapSignTextMaxLength: 150;
 /** @type {boolean[]}
  * @deprecated Use {@link MapManager.Map.isTileVisible()}
 */
@@ -553,5 +555,3 @@ declare var ChatRoomMapViewPanel: HTMLElement;
 declare var ChatRoomMapViewPanelContainer: HTMLElement;
 /** @type {null | number} */
 declare var ChatRoomMapViewSelectedObjectIndex: null | number;
-/** @type {ChatRoomMapObjectConfig["Type"] | null} */
-declare var ChatRoomMapViewSelectedObjectConfigType: ChatRoomMapObjectConfig["Type"] | null;

@@ -215,8 +215,8 @@ declare let GLDrawCrashTimeout: ReturnType<typeof setTimeout>;
 declare var GLDrawAlphaThreshold: number;
 declare var GLDrawHalfAlphaLow: number;
 declare var GLDrawHalfAlphaHigh: number;
-/** @type {ImageCache<GLDrawImageData>} */
-declare var GLDrawImageCache: ImageCache<GLDrawImageData>;
+/** @type {ImageCache<GLDrawImageData> | undefined} */
+declare var GLDrawImageCache: ImageCache<GLDrawImageData> | undefined;
 /**
  * Source used for the Vertex Shader
  * @constant
