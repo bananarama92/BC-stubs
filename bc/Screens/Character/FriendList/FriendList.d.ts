@@ -230,6 +230,22 @@ declare function FriendListShowBeepChat(chatKey: string): Promise<void>;
  */
 declare function FriendListLoadFriendList(data: ServerFriendInfo[]): void;
 /**
+ * An OnlineFriends query was queued. Waiters of {@link FriendListReady} block until it is applied.
+ * Overlapping queries share one promise and resolve only after the last of them returns.
+ * @returns {void}
+ */
+declare function FriendListMarkNotReady(): void;
+/**
+ * An OnlineFriends query result was applied. Resolves {@link FriendListReady.promise} when none remain in flight.
+ * @returns {void}
+ */
+declare function FriendListMarkReady(): void;
+/**
+ * Drops in-flight OnlineFriends waits. Those queries will not return after a disconnect.
+ * @returns {void}
+ */
+declare function FriendListResetReady(): void;
+/**
  * Registers an action for the friend list action menu.
  * @param {FriendListActionDefinition} action
  */
@@ -380,6 +396,16 @@ declare let FriendListBeepChatInterlocutorName: string;
 declare const FriendListBeepMetadataIndicator: "\uF124";
 /** Server beep messages are capped at this length, including the metadata trailer. */
 declare const FriendListBeepMessageLimit: 1000;
+/**
+ * Resolves once every OnlineFriends query queued via {@link FriendListMarkNotReady} has been applied.
+ * Starts settled so opening a chat with no request does not wait.
+ * @type {{ promise: Promise<void>, resolve: (() => void) | null, pending: number }}
+ */
+declare var FriendListReady: {
+    promise: Promise<void>;
+    resolve: (() => void) | null;
+    pending: number;
+};
 /** @type {Record<string, FriendListActionDefinition>} */
 declare var FriendListActionDefinitions: Record<string, FriendListActionDefinition>;
 /** @satisfies {{ [key in (ServerChatRoomSpace | "Private")]: FriendListIcon }} */

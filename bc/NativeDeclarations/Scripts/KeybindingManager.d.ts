@@ -55,7 +55,7 @@ declare namespace Keybindings {
 	 */
 	type Category = {
 		/** Unique identifier */
-		readonly id: "chat" | "maproom" | "navigation" | "chatroom" | "unknown";
+		readonly id: "beep" | "chat" | "maproom" | "navigation" | "chatroom" | "unknown";
 
 		/** User-facing label */
 		readonly name?: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;
@@ -66,7 +66,7 @@ declare namespace Keybindings {
 	 */
 	type Context = {
 		/** Unique identifier */
-		readonly id: "chat" | "always" | "isInChatRoom" | "isOnChatRoomScreen" | "isChatRoomCharacterMode" | "isChatRoomMapMode" | "isChatRoomChatFocused" | "isChatRoomChatNOTFocused";
+		readonly id: "chat" | "always" | "isInChatRoom" | "isOnChatRoomScreen" | "isChatRoomCharacterMode" | "isChatRoomMapMode" | "isChatRoomChatFocused" | "isChatRoomChatNOTFocused" | "isBeepMessageFocused";
 
 		/** User-facing label */
 		readonly name?: string | Partial<Record<ServerChatRoomLanguage | "TW", string>>;

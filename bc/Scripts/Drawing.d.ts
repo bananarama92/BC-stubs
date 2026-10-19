@@ -1,9 +1,9 @@
 /**
  * Converts a hex color string to a RGB color
- * @param {string} color - Hex color to conver
+ * @param {HexColor} color - Hex color to convert
  * @returns {RGBColor} - RGB color
  */
-declare function DrawHexToRGB(color: string): RGBColor;
+declare function DrawHexToRGB(color: HexColor): RGBColor;
 /**
  * Converts a RGB color to a hex color string
  * @param {readonly [R: number, G: number, B: number]} color - RGB color to conver
@@ -15,6 +15,17 @@ declare function DrawRGBToHex(color: readonly [R: number, G: number, B: number])
  * @returns {void} - Nothing
  */
 declare function DrawLoad(): void;
+/**
+ * Decode image bytes into an ImageBitmap.
+ *
+ * `createImageBitmap` cannot decode SVG, and mods pass SVG icons in as
+ * `data:` URLs. Those are drawn to a canvas first, at the SVG's own pixel
+ * size, and the canvas is what becomes the bitmap.
+ *
+ * @param {Blob} blob
+ * @returns {Promise<ImageBitmap>}
+ */
+declare function DrawDecodeImageBitmap(blob: Blob): Promise<ImageBitmap>;
 /**
  * Returns the image's pixels from cache, starting its load if needed.
  *

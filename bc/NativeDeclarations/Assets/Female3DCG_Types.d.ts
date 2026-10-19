@@ -774,7 +774,7 @@ interface AssetDefinitionBase extends AssetCommonPropertiesGroupAsset, AssetComm
 	/** Applies screen tints when the asset is worn */
 	Tint?: TintDefinition[];
 	/** The default tint color (unless overriden by {@link TintDefinition.DefaultColor} */
-	DefaultTint?: BCColor;
+	DefaultTint?: HexColor;
 	Gender?: AssetGender;
 
 	/**

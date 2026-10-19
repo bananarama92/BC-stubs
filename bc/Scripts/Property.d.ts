@@ -380,7 +380,7 @@ declare namespace PropertyData {
     let AutoPunishUndoTimeSetting: undefined;
     let BlinkState: PropertyDataEntry<"BlinkState">;
     let Block: PropertyDataEntry<"Block">;
-    let BlockRemotes: undefined;
+    let BlockRemotes: PropertyDataEntry<"BlockRemotes">;
     let CombinationNumber: undefined;
     let CustomBlindBackground: undefined;
     let DefaultColor: undefined;
@@ -467,8 +467,8 @@ declare namespace PropertyData {
     let Text2: undefined;
     let Text3: undefined;
     let Texts: undefined;
-    let TimeSinceLastOrgasm: undefined;
-    let TimeWorn: undefined;
+    let TimeSinceLastOrgasm: PropertyDataEntry<"TimeSinceLastOrgasm">;
+    let TimeWorn: PropertyDataEntry<"TimeWorn">;
     let Tint: undefined;
     let TranslationX: undefined;
     let TranslationY: undefined;

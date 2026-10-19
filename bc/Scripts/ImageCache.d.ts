@@ -55,8 +55,9 @@ declare class CachedImage<T extends {
      * Load the cached image if it's not already available.
      *
      * Reports its outcome through the state, and never rejects.
+     * @param {undefined | Error} errCause - An error object the be attached as cause for failed fetch responses. Used primarily for extending the traceback
      */
-    _load(): Promise<void>;
+    _load(errCause?: undefined | Error): Promise<void>;
     /**
      * Unload the image from the cache
      */
@@ -70,10 +71,11 @@ declare class CachedImage<T extends {
      * Fetch the raw bytes of the image.
      *
      * @param {number} generation - The generation the fetch belongs to
+     * @param {undefined | Error} errCause - An error object the be attached as cause for failed fetch responses. Used primarily for extending the traceback
      * @returns {Promise<Blob>}
      * private
      */
-    _fetch(generation: number): Promise<Blob>;
+    _fetch(generation: number, errCause?: undefined | Error): Promise<Blob>;
     /**
      * Decode fetched bytes into the cache's payload.
      *
@@ -194,6 +196,13 @@ declare class BrowserCache {
      * private
      */
     _isStorable(response: Response): boolean;
+    /**
+     * Check if a given URL can be cached.
+     * @param {string} url
+     * @returns {boolean}
+     * private
+     */
+    _isCacheable(url: string): boolean;
     /**
      * Store a response into the cache.
      *
