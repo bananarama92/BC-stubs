@@ -130,6 +130,12 @@ def _parse_ts_stdout_line(line: str, root_url: str) -> tuple[str | None, str]:
     return (dct["file"], f"[TS{dct["errcode"]}]({url}):{dct["message"]}")
 
 
+def _key_sorter(items: tuple[str | None, object]):
+    # Sort None as a max-size unicode string
+    key = items[0]
+    return chr(0x10ffff) if key is None else key
+
+
 def _parse_ts_stdout(lines: Iterable[str], root_url: str) -> Iterator[str]:
     dct: dict[str | None, list[str]] = collections.defaultdict(list)
     for i in lines:
@@ -138,15 +144,16 @@ def _parse_ts_stdout(lines: Iterable[str], root_url: str) -> Iterator[str]:
             continue
         (key, value) = _parse_ts_stdout_line(i, root_url)
         dct[key].append(value)
-    for (k, v) in dct.items():
+
+    for (k, v) in sorted(dct.items(), key=_key_sorter):
         if k is None:
             continue
-        yield f"> ### {k}\n"
+        yield "> <details open>\n"
+        yield f"> <summary><h3>{k}</h3></summary>\n"
+        yield ">\n"
         for i in v:
             yield f"> * {i}\n"
-    yield "> ### Misc\n"
-    for i in dct[None]:
-        yield f"> * {i}\n"
+        yield "> </details>\n"
 
 
 def _ts_log_callback(log: logging.Logger, exc: BaseException, root_url: str, comment_path: None | pathlib.Path) -> None:
@@ -163,7 +170,7 @@ def _ts_log_callback(log: logging.Logger, exc: BaseException, root_url: str, com
             with open(comment_path, "w", encoding="utf8") as f:
                 f.write("> [!WARNING]\n")
                 f.write("> <details>\n")
-                f.write(f"> <summary>{summary}</summary>\n")
+                f.write(f"> <summary><b>{summary}</b></summary>\n")
                 f.write(">\n")
                 for i in _parse_ts_stdout(output.split("\n"), root_url):
                     f.write(i)
