@@ -127,7 +127,13 @@ def _parse_ts_stdout_line(line: str, root_url: str) -> tuple[str | None, str]:
 
     dct = match.groupdict()
     url = f"{root_url}/{dct["file"]}#L{dct["lineno"]}"
-    return (dct["file"], f"[TS{dct["errcode"]}]({url}):{dct["message"]}")
+    return (dct["file"], f"[{dct["errcode"]}]({url}):{dct["message"]}")
+
+
+def _key_sorter(items: tuple[str | None, object]):
+    # Sort None as a max-size unicode string
+    key = items[0]
+    return chr(0x10ffff) if key is None else key
 
 
 def _parse_ts_stdout(lines: Iterable[str], root_url: str) -> Iterator[str]:
@@ -138,15 +144,16 @@ def _parse_ts_stdout(lines: Iterable[str], root_url: str) -> Iterator[str]:
             continue
         (key, value) = _parse_ts_stdout_line(i, root_url)
         dct[key].append(value)
-    for (k, v) in dct.items():
+
+    for (k, v) in sorted(dct.items(), key=_key_sorter):
         if k is None:
             continue
-        yield f"> ### {k}\n"
+        yield "> <details open>\n"
+        yield f"> <summary><h3>{k}</h3></summary>\n"
+        yield ">\n"
         for i in v:
             yield f"> * {i}\n"
-    yield "> ### Misc\n"
-    for i in dct[None]:
-        yield f"> * {i}\n"
+        yield "> </details>\n"
 
 
 def _ts_log_callback(log: logging.Logger, exc: BaseException, root_url: str, comment_path: None | pathlib.Path) -> None:
@@ -155,15 +162,15 @@ def _ts_log_callback(log: logging.Logger, exc: BaseException, root_url: str, com
         pattern = re.compile("Found \\d+ errors")
         output = re.sub(r"\033\[\d+m\S+\033\[0m", "", exc.output)
         msg = next((f": {i.strip()}" for i in output.split("\n") if re.search(pattern, i) is not None), "")
-        summary = f"Error encountered while running Typescript with exit status {str(exc.returncode)!r}{msg}"
+        summary_prefix = "Error encountered while running Typescript with exit status "
 
         log.info(exc.output)
-        log.warning(summary.replace("'", "`"))
+        log.warning(f"{summary_prefix}{str(exc.returncode)!r}{msg}")
         if comment_path is not None:
             with open(comment_path, "w", encoding="utf8") as f:
                 f.write("> [!WARNING]\n")
                 f.write("> <details>\n")
-                f.write(f"> <summary>{summary}</summary>\n")
+                f.write(f"> <summary><b>{summary_prefix}<code>{exc.returncode}</code>{msg}</b></summary>\n")
                 f.write(">\n")
                 for i in _parse_ts_stdout(output.split("\n"), root_url):
                     f.write(i)
