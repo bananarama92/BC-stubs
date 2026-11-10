@@ -1,5 +1,8 @@
 name: Generate stubs
 
+env:
+    GH_TOKEN: ${{ github.token }}
+
 on:
   workflow_dispatch:
     inputs:
@@ -24,6 +27,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 # Allow one concurrent deployment
 concurrency:
@@ -86,7 +90,12 @@ jobs:
 
       - name: Generate .d.ts
         run: |
-          bc_tools.build Bondage-College/BondageClub node_modules/typescript
+          bc_tools.build Bondage-College/BondageClub node_modules/typescript $REPO_NAME $BC_HASH output.txt
+          case "${{ github.event_name }}" in
+            "pull_request")
+              gh pr comment ${{ github.event.number }} --edit-last --create-if-none --body-file output.txt
+              ;;
+          esac
           rm -rf bc
           mv Bondage-College/BondageClub/dist bc
 
