@@ -1,3 +1,50 @@
+declare var KidnapLeagueBackground: string;
+/** @type {NPCCharacter} */
+declare var KidnapLeagueTrainer: NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var KidnapLeagueRandomKidnapper: null | NPCCharacter;
+declare var KidnapLeagueRandomKidnapperScenario: string;
+declare var KidnapLeagueRandomKidnapperDifficulty: number;
+/** @type {null | "" | "Maid" | "Mistress" | "AnimeGirl"} */
+declare var KidnapLeagueArchetype: null | "" | "Maid" | "Mistress" | "AnimeGirl";
+declare var KidnapLeagueWillPayForFreedom: boolean;
+/** @type {KidnapActivity[]} */
+declare var KidnapLeagueRandomActivityList: KidnapActivity[];
+/** @type {KidnapActivity | ""} */
+declare var KidnapLeagueRandomActivity: KidnapActivity | "";
+declare var KidnapLeagueRandomActivityCount: number;
+/** @type {null | { Bounty: NPCCharacter; Difficulty: number; Location: string; Victory?: boolean }} */
+declare var KidnapLeagueBountyState: null | {
+    Bounty: NPCCharacter;
+    Difficulty: number;
+    Location: string;
+    Victory?: boolean;
+};
+/**
+ * @type {null | NPCCharacter}
+ * @deprecated
+ */
+declare var KidnapLeagueBounty: null | NPCCharacter;
+/**
+ * @type {null | number}
+ * @deprecated
+ */
+declare var KidnapLeagueBountyDifficulty: null | number;
+/** @deprecated */
+declare var KidnapLeagueBountyLocation: string;
+declare var KidnapLeagueBountyLocationList: string[];
+/**
+ * @type {null | boolean}
+ * @deprecated
+ */
+declare var KidnapLeagueBountyVictory: null | boolean;
+declare var KidnapLeagueVisitRoom: boolean;
+/** @type {number[]} */
+declare var KidnapLeagueSearchingPlayers: number[];
+declare var KidnapLeagueSearchFinishTime: number;
+declare var KidnapLeagueSearchFinishDuration: number;
+declare var KidnapLeagueOnlineBountyTarget: number;
+declare var KidnapLeagueOnlineBountyTargetStartedTime: number;
 /**
  * Checks if the player can be kidnapped
  * @returns {boolean} - Returns TRUE if the player is restrained and the trainer is not.
@@ -88,6 +135,10 @@ declare function KidnapLeagueOnlineBountyFinish(): void;
  * @returns {void} - Nothing
  */
 declare function KidnapLeagueResetOnlineBountyProgress(): void;
+/**
+ * Loads the kidnap league NPC
+ * @type {ScreenLoadHandler}
+ */
 declare function KidnapLeagueLoad(): Promise<void>;
 /**
  * Runs and draws the kidnap league,  this room can be used for daily job search
@@ -101,10 +152,10 @@ declare function KidnapLeagueRun(): void;
 declare function KidnapLeagueClick(): void;
 /**
  * Triggered when the player takes a bounty of a given difficulty. An easy bounty lowers the kidnap reputation.
- * @param {number} Difficulty - Difficulty factor of the bounty.
+ * @param {number} difficulty - Difficulty factor of the bounty.
  * @returns {void} - Nothing
  */
-declare function KidnapLeagueTakeBounty(Difficulty: number): void;
+declare function KidnapLeagueTakeBounty(difficulty: number): void;
 /**
  * Triggered when the league trainer reminds the player of her current bounty. The proper character dialog for it is set.
  * @returns {void} - Nothing
@@ -122,9 +173,10 @@ declare function KidnapLeagueBountyStart(): SafePromise<void>;
 declare function KidnapLeagueBountyFightStart(): void;
 /**
  * Ends the bounty hunter fight and goes back to the kidnap league screen.
+ * @param {boolean} victory - Whether the player won the encounter
  * @returns {SafePromise<void>} - Nothing
  */
-declare function KidnapLeagueBountyFightEnd(): SafePromise<void>;
+declare function KidnapLeagueBountyFightEnd(victory: boolean): SafePromise<void>;
 /**
  * Triggered when the player pays for a kidnap league bounty.
  * @returns {void} - Nothing
@@ -143,9 +195,10 @@ declare function KidnapLeagueBountyReset(): void;
 declare function KidnapLeagueStartKidnap(Difficulty: number): void;
 /**
  * Ends a kidnap match ends. Send the player to the kidnap league screen and sets the right trainer dialog.
+ * @param {boolean} victory - Whether the player won the encounter
  * @returns {SafePromise<void>} - Nothing
  */
-declare function KidnapLeagueEndKidnap(): SafePromise<void>;
+declare function KidnapLeagueEndKidnap(victory: boolean): SafePromise<void>;
 /**
  * Resets the player and teacher for another kidnapping by releasing them and dressing them up.
  * @returns {void} - Nothing
@@ -158,10 +211,11 @@ declare function KidnapLeagueResetTrainer(): void;
 declare function KidnapLeagueRandomIntro(): Promise<void>;
 /**
  * Triggered at the end of a match, sets a random outro sequence.
- * @param {boolean} Surrender - Whether or not the player surrendered.
+ * @param {boolean} victory - Wether the player won or not
+ * @param {boolean} surrender - Wether the player surrendered or not
  * @returns {SafePromise<void>} - Nothing
  */
-declare function KidnapLeagueRandomOutro(Surrender: boolean): SafePromise<void>;
+declare function KidnapLeagueRandomOutro(victory: boolean, surrender: boolean): SafePromise<void>;
 /**
  * Triggered when a random kidnap match starts. We start the kidnap minigame with the appropriate settings.
  * @returns {void} - Nothing
@@ -234,31 +288,3 @@ declare function KidnapLeagueWearAnimeGirl(): void;
  * @returns {boolean} - TRUE if wearing
  */
 declare function KidnapLeaguePlayerIsAnimeGirl(): boolean;
-declare var KidnapLeagueBackground: string;
-/** @type {null | NPCCharacter} */
-declare var KidnapLeagueTrainer: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var KidnapLeagueRandomKidnapper: null | NPCCharacter;
-declare var KidnapLeagueRandomKidnapperScenario: string;
-declare var KidnapLeagueRandomKidnapperDifficulty: number;
-/** @type {null | "" | "Maid" | "Mistress" | "AnimeGirl"} */
-declare var KidnapLeagueArchetype: null | "" | "Maid" | "Mistress" | "AnimeGirl";
-declare var KidnapLeagueWillPayForFreedom: boolean;
-declare var KidnapLeagueRandomActivityList: string[];
-declare var KidnapLeagueRandomActivity: string;
-declare var KidnapLeagueRandomActivityCount: number;
-/** @type {null | NPCCharacter} */
-declare var KidnapLeagueBounty: null | NPCCharacter;
-/** @type {null | number} */
-declare var KidnapLeagueBountyDifficulty: null | number;
-declare var KidnapLeagueBountyLocation: string;
-declare var KidnapLeagueBountyLocationList: string[];
-/** @type {null | boolean} */
-declare var KidnapLeagueBountyVictory: null | boolean;
-declare var KidnapLeagueVisitRoom: boolean;
-/** @type {number[]} */
-declare var KidnapLeagueSearchingPlayers: number[];
-declare var KidnapLeagueSearchFinishTime: number;
-declare var KidnapLeagueSearchFinishDuration: number;
-declare var KidnapLeagueOnlineBountyTarget: number;
-declare var KidnapLeagueOnlineBountyTargetStartedTime: number;

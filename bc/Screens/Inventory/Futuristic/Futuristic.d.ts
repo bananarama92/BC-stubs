@@ -1,3 +1,8 @@
+declare var FuturisticAccessDeniedMessage: string;
+declare var FuturisticAccessCollarGroups: string[];
+declare var FuturisticAccessArmGroups: string[];
+declare var FuturisticAccessLegGroups: string[];
+declare var FuturisticAccessChastityGroups: string[];
 /**
  * Helper function for the futuristic hook scripts.
  * @param {ExtendedItemData<any>} data
@@ -32,7 +37,11 @@ declare function FuturisticAccessDraw(Data: ExtendedItemData<any>, OriginalFunct
  * @returns {void} - Nothing
  */
 declare function FuturisticAccessExit(): void;
-declare function FuturisticAccessValidate(data: ExtendedItemData<any>, originalFunction: ((C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean | undefined) => string | undefined) | null, C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean | undefined): string | undefined;
+/**
+ * Hook script for injecting futuristic features into a typed or modular item
+ * @type {ExtendedItemScriptHookCallbacks.Validate<ExtendedItemData<any>, any>}
+ */
+declare function FuturisticAccessValidate(Data: ExtendedItemData<any>, OriginalFunction: ((C: Character, item: Item, newOption: any, previousOption: any, permitExisting?: boolean | undefined) => string | undefined) | null, C: Character, Item: Item, Option: any, CurrentOption: any, permitExisting: boolean | undefined): string | undefined;
 declare function InventoryItemFuturisticLoadAccessDenied(): void;
 /**
  * Draw the futuristic item ACCESS DENIED screen
@@ -58,8 +67,3 @@ declare function InventoryItemFuturisticValidate(C: Character, Item?: Item | nul
  * @param {Character} C - The character that got denied access.
  */
 declare function InventoryItemFuturisticPublishAccessDenied(C: Character): void;
-declare var FuturisticAccessDeniedMessage: string;
-declare var FuturisticAccessCollarGroups: string[];
-declare var FuturisticAccessArmGroups: string[];
-declare var FuturisticAccessLegGroups: string[];
-declare var FuturisticAccessChastityGroups: string[];

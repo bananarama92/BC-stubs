@@ -1,3 +1,24 @@
+declare var MagicPuzzleBackground: string;
+declare var MagicPuzzleStart: number;
+declare var MagicPuzzleFinish: number;
+declare var MagicPuzzleSize: number;
+declare var MagicPuzzleSpell: number;
+declare var MagicPuzzleAutoExit: boolean;
+declare var MagicPuzzleCanStart: boolean;
+declare var MagicPuzzleTimer: number;
+declare var MagicPuzzleLastMouseX: number;
+declare var MagicPuzzleLastMouseY: number;
+/** @type { { X: number, Y: number }[] } */
+declare var MagicPuzzleTrail: {
+    X: number;
+    Y: number;
+}[];
+declare var MagicPuzzleTrailLimit: number;
+declare var MagicPuzzleTrailRainbow: boolean;
+/**
+ * Loads the magic puzzle mini game and sets the difficulty ratio
+ * @type {ScreenLoadHandler}
+ */
 declare function MagicPuzzleLoad(): Promise<void>;
 /**
  * Returns the time in seconds with 3 digits milliseconds
@@ -50,26 +71,13 @@ declare function MagicPuzzleClick(): void;
  * @returns {void} - Nothing
  */
 declare function MagicPuzzleMouseDown(): void;
+/**
+ * Handles the key press in the mini game, the C key for cheats adds 5 seconds to the enemy timer
+ * @type {KeyboardEventListener}
+ */
 declare function MagicPuzzleKeyDown(event: KeyboardEvent): boolean;
 /**
  * When the magic puzzle must end
  * @returns {void} - Nothing
  */
 declare function MagicPuzzleEnd(): void;
-declare var MagicPuzzleBackground: string;
-declare var MagicPuzzleStart: number;
-declare var MagicPuzzleFinish: number;
-declare var MagicPuzzleSize: number;
-declare var MagicPuzzleSpell: number;
-declare var MagicPuzzleAutoExit: boolean;
-declare var MagicPuzzleCanStart: boolean;
-declare var MagicPuzzleTimer: number;
-declare var MagicPuzzleLastMouseX: number;
-declare var MagicPuzzleLastMouseY: number;
-/** @type { { X: number, Y: number }[] } */
-declare var MagicPuzzleTrail: {
-    X: number;
-    Y: number;
-}[];
-declare var MagicPuzzleTrailLimit: number;
-declare var MagicPuzzleTrailRainbow: boolean;

@@ -10,6 +10,6 @@
 /**
  * An object containing all extended item configurations.
  * @type {ExtendedItemMainConfig}
- * @const
+ * @constant
  */
 declare var AssetFemale3DCGExtended: ExtendedItemMainConfig;

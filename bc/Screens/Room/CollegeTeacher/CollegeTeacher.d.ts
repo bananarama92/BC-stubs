@@ -1,3 +1,7 @@
+declare var CollegeTeacherBackground: string;
+/** @type {NPCCharacter} */
+declare var CollegeTeacherMildred: NPCCharacter;
+declare var CollegeTeacherMildredLove: number;
 /**
  * Checks, if the teacher can be invited to the player's room
  * @returns {boolean} - Returns true, if the player can invite the teacher to her room, false otherwise
@@ -25,6 +29,10 @@ declare function CollegeTeacherIsMildredSubmissive(): boolean;
  * @returns {void} - Nothing
  */
 declare function CollegeTeacherMildredClothes(C: Character): void;
+/**
+ * Loads the teacher's lounge and generates Mildred
+ * @type {ScreenLoadHandler}
+ */
 declare function CollegeTeacherLoad(): Promise<void>;
 /**
  * Runs the room (shows the player and Mildred)
@@ -61,7 +69,3 @@ declare function CollegeTeacherNewBackground(New: string): void;
  * @returns {void} - Nothing
  */
 declare function CollegeTeacherInviteToPrivateRoom(Role?: string): void;
-declare var CollegeTeacherBackground: string;
-/** @type {NPCCharacter} */
-declare var CollegeTeacherMildred: NPCCharacter;
-declare var CollegeTeacherMildredLove: number;

@@ -1,3 +1,16 @@
+declare const ValidationCombinationNumberRegex: RegExp;
+declare const ValidationPasswordRegex: RegExp;
+declare const ValidationDefaultCombinationNumber = "0000";
+declare const ValidationDefaultPassword = "UNLOCK";
+declare const ValidationRemoveTimerToleranceMs = 5000;
+declare const ValidationNonModifiableLockProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage"];
+declare const ValidationRestrictedLockProperties: readonly ["EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed"];
+declare const ValidationTimerLockProperties: readonly ["MemberNumberList", "RemoveTimer"];
+declare const ValidationAllLockProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage", "EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed", "MemberNumberList", "RemoveTimer", "MemberNumberListKeys"];
+declare const ValidationModifiableProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage", "EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed", "MemberNumberList", "RemoveTimer", "MemberNumberListKeys", "Effect", "Expression", "ExpressionTimer"];
+declare const ValidationScriptableProperties: readonly ["Hide", "HideItem", "UnHide", "Block"];
+/** @type {Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>} */
+declare const ValidationPropertyPermissions: Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>;
 /**
  * Creates the appearance update parameters used to validate an appearance diff, based on the provided target character
  * and the source character's member number.
@@ -34,7 +47,7 @@ declare function ValidationHasArrayPropertyBeenModified<T>(oldArray: T[], newArr
  * @param {Item|null} previousItem - The previous item in the group
  * @param {Item|null} newItem - The new item in the group
  * @param {AppearanceUpdateParameters} params - The appearance update parameters that apply to the diff
- * @return {ItemDiffResolution} - The diff resolution
+ * @returns {ItemDiffResolution} - The diff resolution
  */
 declare function ValidationResolveScriptDiff(previousItem: Item | null, newItem: Item | null, { C, permissions, sourceMemberNumber }: AppearanceUpdateParameters): ItemDiffResolution;
 /**
@@ -179,7 +192,7 @@ declare function ValidationCanRemoveItem(previousItem: Item, params: AppearanceU
  * parameters.
  * @param {Item} item - The item to add or remove
  * @param {AppearanceUpdateParameters} params - The appearance update parameters that apply to the diff
- * @return {boolean} - TRUE if the item can be added or removed based on the appearance update parameters, FALSE
+ * @returns {boolean} - TRUE if the item can be added or removed based on the appearance update parameters, FALSE
  * otherwise
  */
 declare function ValidationCanAddOrRemoveItem(item: Item, { C, fromOwner, fromLover, fromFamily }: AppearanceUpdateParameters): boolean;
@@ -318,27 +331,16 @@ declare function ValidationHasScriptPermission(character: Character, property: S
  */
 declare function ValidationHasSomeScriptPermission(character: Character, property: ScriptPermissionProperty, permissionLevels: readonly ScriptPermissionLevel[]): boolean;
 /**
+ * Validators may be called on their own with just the field value. Records that need extra context
+ * take it as a second argument; this function forwards `object` to those and one-argument validators ignore it.
  * @template O
- * @template {{ [key: string]: (arg: any, C: O) => any }} T
+ * @template {{ [key: string]: ((value: any) => any) | ((value: any, object: O) => any) }} T
  * @param {unknown} arg The to-be validated record
- * @param {O} object An extra object to validate with. Passed to the validator as a 2nd argument
+ * @param {O} object An extra object to validate with. Passed to validators that accept a 2nd argument
  * @param {T} validators A record of validation functions; one for each property in `arg`
  * @param {boolean} allowExtraKeys whether to allow extra key/value pairs in `arg` (absent from the `validators` record) to-be returned
  * @returns {{ [k in keyof T]: ReturnType<T[k]> }} The validated `arg`
  */
 declare function ValidationApplyRecord<O, T extends {
-    [key: string]: (arg: any, C: O) => any;
+    [key: string]: ((value: any) => any) | ((value: any, object: O) => any);
 }>(arg: unknown, object: O, validators: T, allowExtraKeys?: boolean): { [k in keyof T]: ReturnType<T[k]>; };
-declare const ValidationCombinationNumberRegex: RegExp;
-declare const ValidationPasswordRegex: RegExp;
-declare const ValidationDefaultCombinationNumber: "0000";
-declare const ValidationDefaultPassword: "UNLOCK";
-declare const ValidationRemoveTimerToleranceMs: 5000;
-declare const ValidationNonModifiableLockProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage"];
-declare const ValidationRestrictedLockProperties: readonly ["EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed"];
-declare const ValidationTimerLockProperties: readonly ["MemberNumberList", "RemoveTimer"];
-declare const ValidationAllLockProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage", "EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed", "MemberNumberList", "RemoveTimer", "MemberNumberListKeys"];
-declare const ValidationModifiableProperties: readonly ["LockedBy", "LockMemberNumber", "LockMemberName", "LockMessage", "EnableRandomInput", "RemoveItem", "ShowTimer", "CombinationNumber", "Password", "Hint", "LockSet", "LockPickSeed", "MemberNumberList", "RemoveTimer", "MemberNumberListKeys", "Effect", "Expression", "ExpressionTimer"];
-declare const ValidationScriptableProperties: readonly ["Hide", "HideItem", "UnHide", "Block"];
-/** @type {Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>} */
-declare const ValidationPropertyPermissions: Partial<Record<keyof ItemProperties, ScriptPermissionProperty>>;

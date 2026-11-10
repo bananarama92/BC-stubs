@@ -1,3 +1,41 @@
+/** @type {Character[]} */
+declare var Character: Character[];
+declare var CharacterNextId: number;
+/** @type {Map<BlindEffectName, number>} */
+declare const CharacterBlindLevels: Map<BlindEffectName, number>;
+/** @type {Map<DeafEffectName, number>} */
+declare const CharacterDeafLevels: Map<DeafEffectName, number>;
+/** @type {Map<BlurEffectName, number>} */
+declare const CharacterBlurLevels: Map<BlurEffectName, number>;
+/** @satisfies {Record<string, DifficultyLevel>} */
+declare const Difficulty: {
+    ROLEPLAY: 0;
+    REGULAR: 1;
+    HARDCORE: 2;
+    EXTREME: 3;
+};
+/** @satisfies {Record<string, AllowedInteractions>} */
+declare const AllowedInteractions: {
+    readonly Everyone: 0;
+    readonly EveryoneExceptBlacklist: 1;
+    readonly OwnerLoversWhitelistAndDomsOnly: 2;
+    readonly OwnerLoversWhitelistOnly: 3;
+    readonly OwnerLoversOnly: 4;
+    readonly OwnerOnly: 5;
+};
+/**
+ * An enum representing the various character archetypes
+ * ONLINE: The player, or a character representing another online player
+ * NPC: Any NPC
+ * SIMPLE: Any simple character, generally used internally and not to represent an actual in-game character
+ * @type {Record<"ONLINE"|"NPC"|"SIMPLE"|"PLAYER", CharacterType>}
+ */
+declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE" | "PLAYER", CharacterType>;
+/**
+ * A record mapping screen names to functions for returning {@link CharacterGetCurrent} characters.
+ * @type {Record<string, () => null | Character>}
+ */
+declare var CharacterGetCurrentHandlers: Record<string, () => null | Character>;
 declare function CharacterCreatePlayer(): void;
 /**
  * Loads a character into the buffer, creates it if it does not exist
@@ -12,6 +50,12 @@ declare function CharacterCreate(CharacterAssetFamily: IAssetFamily, Type: Chara
  * @returns {string} - Nothing
  */
 declare function CharacterGenerateRandomName(): string;
+/**
+ * An expression representing `{foo=bar}`-type and `{foo}`-type of patterns.
+ *
+ * See {@link CharacterDialogPatternSubstitutor} for key-specific substitution logic.
+ */
+declare const CharacterDialogSubstitutionPattern: RegExp;
 /**
  * Substitute name and pronoun fields in dialog.
  * @param {Character} C - Character for which to build the dialog
@@ -99,11 +143,11 @@ declare function CharacterLoadAttributes(C: Character): void;
 /**
  * Returns a list of effects for a character from some or all groups
  * @param {Character} C - The character to check
- * @param {readonly AssetGroupName[] | undefined} [Groups=null] - Optional: The list of groups to consider. If none defined, check all groups
- * @param {boolean} [AllowDuplicates=false] - Optional: If true, keep duplicates of the same effect provided they're taken from different groups
+ * @param {readonly AssetGroupName[]} [Groups] - Optional: The list of groups to consider. If none defined, check all groups
+ * @param {boolean} [AllowDuplicates] - Optional: If true, keep duplicates of the same effect provided they're taken from different groups
  * @returns {EffectName[]} - A list of effects
  */
-declare function CharacterGetEffects(C: Character, Groups?: readonly AssetGroupName[] | undefined, AllowDuplicates?: boolean): EffectName[];
+declare function CharacterGetEffects(C: Character, Groups?: readonly AssetGroupName[], AllowDuplicates?: boolean): EffectName[];
 /**
  * Loads a character's tints, resolving tint definitions against items from the character's appearance
  * @param {Character} C - Character whose tints should be loaded
@@ -132,7 +176,18 @@ declare function CharacterSetCurrent(C: Character, options?: null | {
     mode?: DialogMenuMode;
     selfMode?: DialogSelfMenuName;
 }): void;
-declare function CharacterDialogPatternSubstitutor(match: string, offset: number, replacement: string, string: string, groups?: Partial<Record<string, string>>): string;
+/**
+ * A scaling factor for all money gains, effectively introducing wage inflation as more and more items are added to the shop.
+ *
+ * Proportional to the sum of all asset values divided by `50_000`.
+ * @type {number}
+ */
+declare var CharacterMoneyFactor: number;
+/**
+ * String subsitution helper for money changes referenced in character dialog
+ * @type {CommonSubstituteReplacer}
+ */
+declare function CharacterDialogPatternSubstitutor(match: string, offset: number, replacement: string, string: string, _groups: Partial<Record<string, string>> | undefined): string;
 /**
  * Apply scaling factors to a change in money and format into a string, returning the absolute value
  * @param {number} value The money value
@@ -155,10 +210,10 @@ declare function CharacterChangeMoney(C: Character, Value: number): void;
 /**
  * Refreshes the character parameters (Effects, poses, canvas, settings, etc.)
  * @param {Character} C - Character to refresh
- * @param {boolean} [Push=true] - Pushes the data to the server database if true or null.
+ * @param {boolean} [Push] - Pushes the data to the server database if true or null.
  * Note that this will *not* push appearance changes to the rest of the chatroom,
  * which requires either {@link ChatRoomCharacterItemUpdate} or {@link ChatRoomCharacterUpdate}.
- * @param {boolean} [RefreshDialog=true] - Refreshes the character dialog
+ * @param {boolean} [RefreshDialog] - Refreshes the character dialog
  * @returns {void} - Nothing
  */
 declare function CharacterRefresh(C: Character, Push?: boolean, RefreshDialog?: boolean): void;
@@ -220,7 +275,7 @@ declare function CharacterDress(C: Character, Appearance: readonly Item[]): void
 /**
  * Removes all binding items from a given character
  * @param {Character} C - Character to release
- * @param {boolean} [refresh=true] - do not call CharacterRefresh if false
+ * @param {boolean} [refresh] - do not call CharacterRefresh if false
  * @returns {void} - Nothing
  */
 declare function CharacterRelease(C: Character, refresh?: boolean): void;
@@ -343,18 +398,18 @@ declare function CharacterIsEdged(C: Character): boolean;
 /**
  * Checks if the character is wearing an item flagged as a category in a blocked list
  * @param {Character} C - The character to validate
- * @param {readonly AssetCategory[]} BlockList - An array of strings to validate
+ * @param {readonly ServerChatRoomBlockCategory[]} BlockList - An array of strings to validate
  * @returns {boolean} - TRUE if the character is wearing a blocked item, FALSE otherwise
  */
-declare function CharacterHasBlockedItem(C: Character, BlockList: readonly AssetCategory[]): boolean;
+declare function CharacterHasBlockedItem(C: Character, BlockList: readonly ServerChatRoomBlockCategory[]): boolean;
 /**
  * Retrieves the member numbers of the given character
  * @param {Character} C - The character to retrieve the lovers numbers from
- * @param {Boolean} [MembersOnly] - Whether to omit NPC lovers - defaults to false (NPCs will be included by default)
- * @returns {Array<String | Number>} - A list of member numbers or NPC account names representing the lovers of the
+ * @param {boolean} [MembersOnly] - Whether to omit NPC lovers - defaults to false (NPCs will be included by default)
+ * @returns {(string | number)[]} - A list of member numbers or NPC account names representing the lovers of the
  * given character
  */
-declare function CharacterGetLoversNumbers(C: Character, MembersOnly?: boolean): Array<string | number>;
+declare function CharacterGetLoversNumbers(C: Character, MembersOnly?: boolean): (string | number)[];
 /**
  * Returns whether the character appears upside-down on the screen which may depend on the player's own inverted status
  * @param {Character} C - The character to check
@@ -364,7 +419,7 @@ declare function CharacterAppearsInverted(C: Character): boolean;
 /**
  * Checks whether the given character can kneel. {@link minimumStatus} determines to what extent the character must be able to kneel for this to pass.
  * @param {Character} C - The character to check
- * @param {PoseChangeStatus} [minimumStatus=PoseChangeStatus.ALWAYS] - The threshold pose change status required for this check to succeed.
+ * @param {PoseChangeStatus} [minimumStatus] - The threshold pose change status required for this check to succeed.
  * By default, the player must be able to kneel unaided, but this can be set lower (to allow struggling to kneel, aid, etc.).
  * @returns {boolean} - Returns true if the character's ability to kneel meets the specified threshold, false otherwise
  */
@@ -372,7 +427,7 @@ declare function CharacterCanKneel(C: Character, minimumStatus?: PoseChangeStatu
 /**
  * Determines how much the character's view should be darkened based on their blind level. 1 is fully visible, 0 is pitch black.
  * @param {Character} C - The character to check
- * @param {boolean} [eyesOnly=false] - If TRUE only check whether the character has eyes closed, and ignore item effects
+ * @param {boolean} [eyesOnly] - If TRUE only check whether the character has eyes closed, and ignore item effects
  * @returns {number} - The number between 0 (dark) and 1 (bright) that determines screen darkness
  */
 declare function CharacterGetDarkFactor(C: Character, eyesOnly?: boolean): number;
@@ -457,7 +512,8 @@ declare function CharacterCanChangeNickname(C: Character): boolean;
  *
  * @param {Character} C - The character to change the nickname of.
  * @param {null | string} Nick - The name to use as the new nickname. An empty string uses the character's real name.
- * @return {null | NicknameStatus} null if the nickname was valid, or an explanation for why the nickname was rejected.
+ * @param {boolean} [fromOwner] - Whether the nickname change comes from the owner rule.
+ * @returns {null | NicknameStatus} null if the nickname was valid, or an explanation for why the nickname was rejected.
  */
 declare function CharacterSetNickname(C: Character, Nick: null | string, fromOwner?: boolean): null | NicknameStatus;
 /**
@@ -465,7 +521,8 @@ declare function CharacterSetNickname(C: Character, Nick: null | string, fromOwn
  *
  * @param {Character} C - The character to change the nickname of.
  * @param {string} Nick - The name to use as the new nickname.
- * @return {null | NicknameStatus} null if the nickname was valid, or an explanation for why the nickname was rejected.
+ * @param {boolean} [fromOwner] - Whether the nickname change comes from the owner
+ * @returns {null | NicknameStatus} null if the nickname was valid, or an explanation for why the nickname was rejected.
  */
 declare function CharacterValidateNickname(C: Character, Nick: string, fromOwner?: boolean): null | NicknameStatus;
 /**
@@ -505,7 +562,7 @@ declare function CharacterScriptRemove(C: Character): void;
  * Sets a new pose for the character
  * @param {Character} C - Character for which to set the pose
  * @param {null | AssetPoseName} poseName - Name of the pose to set as active or `null` to return to the default pose
- * @param {boolean} [forceChange=false] - TRUE if the set pose(s) should overwrite current active pose(s)
+ * @param {boolean} [forceChange] - TRUE if the set pose(s) should overwrite current active pose(s)
  * @returns {void} - Nothing
  * @deprecated - Deprecated alias for {@link PoseSetActive}
  */
@@ -531,52 +588,3 @@ declare function CharacterIsOnList(listOwner: Character, listTarget: Character |
  * @param {Character} C
  */
 declare function CharacterGetHeight(C: Character): number;
-/** @type {Character[]} */
-declare var Character: Character[];
-declare var CharacterNextId: number;
-/** @type {Map<BlindEffectName, number>} */
-declare const CharacterBlindLevels: Map<BlindEffectName, number>;
-/** @type {Map<DeafEffectName, number>} */
-declare const CharacterDeafLevels: Map<DeafEffectName, number>;
-/** @type {Map<BlurEffectName, number>} */
-declare const CharacterBlurLevels: Map<BlurEffectName, number>;
-declare namespace Difficulty {
-    let ROLEPLAY: 0;
-    let REGULAR: 1;
-    let HARDCORE: 2;
-    let EXTREME: 3;
-}
-declare namespace AllowedInteractions {
-    let Everyone: 0;
-    let EveryoneExceptBlacklist: 1;
-    let OwnerLoversWhitelistAndDomsOnly: 2;
-    let OwnerLoversWhitelistOnly: 3;
-    let OwnerLoversOnly: 4;
-    let OwnerOnly: 5;
-}
-/**
- * An enum representing the various character archetypes
- * ONLINE: The player, or a character representing another online player
- * NPC: Any NPC
- * SIMPLE: Any simple character, generally used internally and not to represent an actual in-game character
- * @type {Record<"ONLINE"|"NPC"|"SIMPLE"|"PLAYER", CharacterType>}
- */
-declare var CharacterType: Record<"ONLINE" | "NPC" | "SIMPLE" | "PLAYER", CharacterType>;
-/**
- * A record mapping screen names to functions for returning {@link CharacterGetCurrent} characters.
- * @type {Record<string, () => null | Character>}
- */
-declare var CharacterGetCurrentHandlers: Record<string, () => null | Character>;
-/**
- * An expression representing `{foo=bar}`-type and `{foo}`-type of patterns.
- *
- * See {@link CharacterDialogPatternSubstitutor} for key-specific substitution logic.
- */
-declare const CharacterDialogSubstitutionPattern: RegExp;
-/**
- * A scaling factor for all money gains, effectively introducing wage inflation as more and more items are added to the shop.
- *
- * Proportional to the sum of all asset values divided by `50_000`.
- * @type {number}
- */
-declare var CharacterMoneyFactor: number;

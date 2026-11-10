@@ -10,6 +10,8 @@ type ChatRoomMapPos = {
 type ChatRoomMapData = {
 	Pos: ChatRoomMapPos
 	PrivateState: Record<string, any>
+	/** The map object the character's leash is tied to */
+	Tether?: ChatRoomMapTether
 }
 
 interface ServerAccountImmutableData {
@@ -84,7 +86,6 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	LastMapData?: null | ChatRoomMapData;
 	/** String-based values have been deprecated and are superseded by {@link ServerChatRoomSettings} objects */
 	LastChatRoom?: null | ServerChatRoomSettings;
-	ControllerSettings?: ControllerSettingsType;
 	ImmersionSettings?: ImmersionSettingsType;
 	RestrictionSettings?: RestrictionSettingsType;
 	OnlineSettings?: PlayerOnlineSettings;
@@ -96,7 +97,7 @@ interface ServerAccountData extends ServerAccountImmutableData {
 	SubmissivesList?: string;
 	KinkyDungeonExploredLore?: unknown[];
 	KeybindingSettings?: string;
-	RecentlyUsedMapElements?: ChatRoomMapDoodad[];
+	RecentlyUsedMapElements?: MapDoodadRef[];
 }
 
 // TODO: Add `Lover` after figuring out why {@link ServerPlayerSync} still passes this field to the server
@@ -185,14 +186,14 @@ interface ServerItemBundle {
 interface ServerPrivateCharacterData {
 	Name: string;
 	Love: number;
-	Title: TitleName;
+	Title?: TitleName;
 	Trait: NPCTrait[];
 	Cage: boolean;
 	Owner: string;
-	Lover: string;
+	Lover: string | undefined;
 	AssetFamily: "Female3DCG";
 	Appearance: ServerAppearanceBundle;
-	AppearanceFull: ServerAppearanceBundle;
+	AppearanceFull: ServerAppearanceBundle | undefined;
 	ArousalSettings: ArousalSettingsType;
 	Event: NPCEvent[];
 	FromPandora?: boolean;
@@ -206,8 +207,7 @@ type ServerChatRoomLanguage = "EN" | "DE" | "FR" | "ES" | "CN" | "RU" | "UA";
 type ServerChatRoomRole = "All" | "Admin" | "Whitelist";
 type ServerChatRoomGame = "" | "ClubCard" | "LARP" | "MagicBattle" | "GGTS" | "Prison";
 type ServerChatRoomBlockCategory =
-	/** Those are known as AssetCategory to the client */
-	"Medical" | "Extreme" | "Pony" | "SciFi" | "ABDL" | "Fantasy" | "Smoking" |
+	AssetCategory |
 	/** Those are room features */
 	"Leashing" | "Photos" | "Arousal" | "Location";
 
@@ -243,6 +243,24 @@ interface ServerChatRoomMapData {
 	Objects?: string;
 	Effects?: string;
 	CellData?: Record<number,ChatRoomMapObjectConfig> | undefined;
+	/** How admins turned, sized and colored placed objects, BitString-encoded by {@link MapManager} */
+	ObjectSettings?: string;
+}
+
+/** How an admin turned, sized and colored the object placed on a tile */
+type ChatRoomMapObjectSettings = {
+	/** The object it applies to; it no longer applies once another object is placed there */
+	ID: number
+	/** In degrees, from 1 to 359 */
+	Rotation?: number
+	/** In percent, from 50 to 200 */
+	Size?: number
+	/** One entry per colorable layer of {@link ChatRoomMapObject.Layers}, `"Default"` keeping the layer's default color */
+	Colors?: (HexColor | "Default")[]
+	/** A decal of {@link AssetGetDecals}, drawn on the object's {@link ChatRoomMapObject.DecalArea} */
+	Decal?: AssetName
+	/** The color the decal is tinted with, like a worn decal; without one the decal keeps its own colors */
+	DecalColor?: HexColor
 }
 
 interface ServerChatRoomCustomData {
@@ -469,7 +487,7 @@ interface ServerChatRoomSearchData {
     MemberCount: number;
     MemberLimit: number;
     Description: string;
-    BlockCategory: AssetCategory[];
+    BlockCategory: ServerChatRoomBlockCategory[];
     Game: ServerChatRoomGame;
     Friends: ServerFriendInfo[];
     Space: ServerChatRoomSpace;
@@ -562,11 +580,11 @@ interface TaggedDictionaryEntry {
  * A dictionary entry used to reference a character. The character reference tag will be replaced with the provided
  * character's name or pronoun. The display format will depend on the tag chosen.
  * Example substitutions for each tag (assuming the character name is Ben987):
- * * SourceCharacter: "Ben987"
- * * DestinationCharacter: "Ben987's" (if character is not self), "her"/"him" (if character is self)
- * * DestinationCharacterName: "Ben987's"
- * * TargetCharacter: "Ben987" (if character is not self), "herself"/"himself" (if character is self)
- * * TargetCharacterName: "Ben987"
+ * - SourceCharacter: "Ben987"
+ * - DestinationCharacter: "Ben987's" (if character is not self), "her"/"him" (if character is self)
+ * - DestinationCharacterName: "Ben987's"
+ * - TargetCharacter: "Ben987" (if character is not self), "herself"/"himself" (if character is self)
+ * - TargetCharacterName: "Ben987"
  * @deprecated Use {@link SourceCharacterDictionaryEntry} and {@link TargetCharacterDictionaryEntry} instead.
  */
 interface CharacterReferenceDictionaryEntry extends TaggedDictionaryEntry {
@@ -804,6 +822,15 @@ interface MapViewTeleportEventDictionaryEntry {
 }
 
 /**
+ * A dictionary entry for tether events: tying a leash to a tether point, untying it, or the resulting tether
+ */
+interface MapViewTetherEventDictionaryEntry {
+	Tag: "MapViewTether";
+	/** The tether, or `null` when the leash is untied */
+	Tether: ChatRoomMapTether | null;
+}
+
+/**
  * A dictionary entry for change key events
  */
 interface MapViewChangeKeyEventDictionaryEntry {
@@ -873,6 +900,7 @@ type ChatMessageDictionaryEntry =
 	| ReplyIdDictionaryEntry
 	| MapViewTeleportEventDictionaryEntry
 	| MapViewChangeKeyEventDictionaryEntry
+	| MapViewTetherEventDictionaryEntry
 	| GGTSDictionaryEntry
 	| ModSdkModsQueryPayloadDictionaryEntry
 	| ModSdkModsReplyPayloadDictionaryEntry
@@ -1028,6 +1056,7 @@ type ServerGameMagicBattleData =
 type ServerGameMagicBattleResponse = ServerChatRoomGameResponseBase<ServerGameMagicBattleData>
 
 interface ServerChatRoomGameResponseBase<T> extends ServerChatRoomMessageBase {
+	Sender: number;
 	Data: T;
 	RNG: number;
 }
@@ -1112,7 +1141,7 @@ interface ServerCharacterArousalResponse {
 
 interface ServerCharacterItemUpdate extends Omit<ServerItemBundle, "Name"> {
 	Target: number;
-	Name: AssetName;
+	Name: AssetName | null;
 }
 
 interface ServerChatRoomSyncItemResponse {

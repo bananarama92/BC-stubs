@@ -1,4 +1,14 @@
 /**
+ * @type {null | string[][]}
+ * @deprecated
+ */
+declare let OnlineGameDictionary: null | string[][];
+/**
+ * @type {((gameDict: string[][]) => void) | undefined}
+ * @deprecated
+ */
+declare let OnlineGameTranslateResolve: ((gameDict: string[][]) => void) | undefined;
+/**
  * Loads the online game dictionary that will be used throughout the game to output messages
  * @returns {void} - Nothing
  */
@@ -17,13 +27,13 @@ declare function OnlineGameTranslate(CachePath: string): void;
 declare function OnlineGameDictionaryText(KeyWord: string): string;
 /**
  * Catches the character click from chat rooms and make sure the online game doesn't need to handle them
- * @param {Character} C - Character that has been clicked on
- * @return {boolean} Returns the return content of click function of the currently selected game, or false if there is no corresponding game
+ * @param {OnlineCharacter} C - Character that has been clicked on
+ * @returns {boolean} Returns the return content of click function of the currently selected game, or false if there is no corresponding game
  */
-declare function OnlineGameClickCharacter(C: Character): boolean;
+declare function OnlineGameClickCharacter(C: OnlineCharacter): boolean;
 /**
  * Catches the chat room clicks and make sure the online game doesn't need to handle them
- * @return {boolean} Returns the return content of click function of the currently selected game, or false if there is no corresponding game
+ * @returns {boolean} Returns the return content of click function of the currently selected game, or false if there is no corresponding game
  */
 declare function OnlineGameClick(): boolean;
 /**
@@ -70,13 +80,3 @@ declare function OnlineGameDrawCharacter(C: Character, X: number, Y: number, Zoo
  * Returns whether the room's current game has a specific option screen
  */
 declare function OnlineGameHasOptions(): boolean;
-/**
- * @type {null | string[][]}
- * @deprecated
- */
-declare let OnlineGameDictionary: null | string[][];
-/**
- * @type {((gameDict: string[][]) => void) | undefined}
- * @deprecated
- */
-declare let OnlineGameTranslateResolve: ((gameDict: string[][]) => void) | undefined;

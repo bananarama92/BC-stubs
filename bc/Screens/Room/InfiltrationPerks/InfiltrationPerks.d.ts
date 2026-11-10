@@ -1,3 +1,6 @@
+declare var InfiltrationPerksBackground: string;
+/** @type {InfiltrationPerks[]} */
+declare var InfiltrationPerksList: InfiltrationPerks[];
 /**
  * Checks if a named perk is activated or not
  * @param {InfiltrationPerks} PerkName
@@ -20,10 +23,23 @@ declare function InfiltrationPerksTaken(): number;
  * @returns {number} - Number of perks available for the player
  */
 declare function InfiltrationPerksAvail(): number;
+/**
+ * Loads the infiltration perks screen, checks if there's an invalid perk and clears the list if it's the case
+ * @type {ScreenLoadHandler}
+ */
 declare function InfiltrationPerksLoad(): Promise<void>;
-declare function InfiltrationPerksRun(time: number): void;
-declare function InfiltrationPerksClick(event: PointerEvent): void;
+/**
+ * Runs and draws the infiltration perks screen
+ * @type {ScreenRunHandler}
+ */
+declare function InfiltrationPerksRun(): void;
+/**
+ * Handles clicks in the infiltration perks screen.
+ * @type {MouseEventListener}
+ */
+declare function InfiltrationPerksClick(): void;
+/**
+ * Updates the infiltration data for the player
+ * @type {ScreenExitHandler}
+ */
 declare function InfiltrationPerksExit(): void;
-declare var InfiltrationPerksBackground: string;
-/** @type {InfiltrationPerks[]} */
-declare var InfiltrationPerksList: InfiltrationPerks[];

@@ -1,3 +1,11 @@
+declare var AfkTimerTimout: number;
+declare var AfkTimerIsSet: boolean;
+declare var AfkTimerLastEvent: number;
+/** @type {null | boolean} */
+declare var AfkTimerIsEnabled: null | boolean;
+declare var AfkTimerEventsList: string[];
+/** @type {null | ExpressionNameMap["Emoticon"]} */
+declare var AfkTimerOldEmoticon: null | ExpressionNameMap["Emoticon"];
 /**
  * Resets the timer for AFK count
  * @returns {void} - Nothing
@@ -24,11 +32,3 @@ declare function AfkTimerSetEnabled(Enabled: boolean): void;
  * @returns {void} - Nothing
  */
 declare function AfkTimerSetIsAfk(): void;
-declare var AfkTimerTimout: number;
-declare var AfkTimerIsSet: boolean;
-declare var AfkTimerLastEvent: number;
-/** @type {null | boolean} */
-declare var AfkTimerIsEnabled: null | boolean;
-declare var AfkTimerEventsList: string[];
-/** @type {null | ExpressionNameMap["Emoticon"]} */
-declare var AfkTimerOldEmoticon: null | ExpressionNameMap["Emoticon"];

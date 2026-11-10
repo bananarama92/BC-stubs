@@ -1,17 +1,3 @@
-/**
- * @returns {ScriptPermissionLevel[]}
- */
-declare function PreferenceSubscreenScriptsGetPermissionLevels(): ScriptPermissionLevel[];
-declare function PreferenceSubscreenScriptsLoad(): void;
-declare function PreferenceSubscreenScriptsRun(): void;
-declare function PreferenceSubscreenScriptsClick(): void;
-declare function PreferenceSubscreenScriptsExit(allowPanelClose?: boolean): boolean;
-declare function PreferenceSubscreenScriptsUnload(): void;
-declare function PreferenceSubscreenScriptsResize(load: boolean): void;
-declare function PreferenceSubscreenScriptsUpdateCheckboxes(): void;
-declare function PreferenceSubscreenScriptsUpdateWarning(): void;
-declare function PreferenceSubscreenScriptsUpdateHelp(): void;
-declare function PreferenceSubscreenScriptsUpdateHelpButtons(): void;
 /** @type {ScriptPermissionProperty[]} */
 declare const PreferenceScriptPermissionProperties: ScriptPermissionProperty[];
 /** @type {null | "global" | "Hide" | "Block"} */
@@ -33,10 +19,10 @@ declare const PreferenceSubscreenScriptsIDs: Readonly<{
     table: "preference-scripts-table";
     helpOverlay: "preference-scripts-help-overlay";
     /**
-         * @param {ScriptPermissionProperty} property
-         * @param {ScriptPermissionLevel} permissionLevel
-         * @returns {string}
-         */
+     * @param {ScriptPermissionProperty} property
+     * @param {ScriptPermissionLevel} permissionLevel
+     * @returns {string}
+     */
     scriptsCheckboxId: (property: ScriptPermissionProperty, permissionLevel: ScriptPermissionLevel) => string;
     /**
      * @param {ScriptPermissionProperty} property
@@ -61,3 +47,18 @@ declare const ScriptPermissionBits: Readonly<{
     Public: 32;
 }>;
 declare const maxScriptPermission: number;
+/**
+ * @returns {ScriptPermissionLevel[]}
+ */
+declare function PreferenceSubscreenScriptsGetPermissionLevels(): ScriptPermissionLevel[];
+declare function PreferenceSubscreenScriptsLoad(): void;
+declare function PreferenceSubscreenScriptsRun(): void;
+declare function PreferenceSubscreenScriptsClick(): void;
+declare function PreferenceSubscreenScriptsExit(allowPanelClose?: boolean): boolean;
+declare function PreferenceSubscreenScriptsUnload(): void;
+/** @type {ScreenResizeHandler} */
+declare function PreferenceSubscreenScriptsResize(): void;
+declare function PreferenceSubscreenScriptsUpdateCheckboxes(): void;
+declare function PreferenceSubscreenScriptsUpdateWarning(): void;
+declare function PreferenceSubscreenScriptsUpdateHelp(): void;
+declare function PreferenceSubscreenScriptsUpdateHelpButtons(): void;

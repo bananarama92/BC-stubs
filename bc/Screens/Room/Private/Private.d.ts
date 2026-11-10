@@ -1,3 +1,40 @@
+declare var PrivateBackground: string;
+/** @type {NPCCharacter} */
+declare var PrivateVendor: NPCCharacter;
+/** @type {(PlayerCharacter | NPCCharacter)[]} */
+declare var PrivateCharacter: (PlayerCharacter | NPCCharacter)[];
+declare var PrivateCharacterOffset: number;
+declare var PrivateCharacterShouldSync: boolean;
+declare var PrivateCharacterMax: number;
+declare var PrivateReleaseTimer: number;
+declare var PrivateActivity: string;
+declare var PrivateActivityCount: number;
+declare var PrivateActivityAffectLove: boolean;
+declare var PrivateActivityList: string[];
+/** @type {null | NPCCharacter} */
+declare var PrivateActivityTarget: null | NPCCharacter;
+/** @type {PrivatePunishmentType | null} */
+declare var PrivatePunishment: PrivatePunishmentType | null;
+/** @type {PrivatePunishmentType[]} */
+declare var PrivatePunishmentList: PrivatePunishmentType[];
+/** @type {NPCTraitType | null} */
+declare var PrivateSlaveImproveType: NPCTraitType | null;
+declare var PrivateNextLoveYou: number;
+/** @type {PrivateActivityType | null} */
+declare var PrivateLoverActivity: PrivateActivityType | null;
+/** @type {PrivateActivityType[]} */
+declare var PrivateLoverActivityList: PrivateActivityType[];
+/** @type {AssetName[]} */
+declare var PrivateBeltList: AssetName[];
+declare var PrivateEntryEvent: boolean;
+declare var PrivateClubCardVictoryMode: boolean;
+declare var PrivateClubCardDefeatConsequence: string[];
+/** @type {Asset | null} */
+declare var PrivateGiftRegular: Asset | null;
+/** @type {Asset | null} */
+declare var PrivateGiftRestraint: Asset | null;
+declare var PrivateBaseDecay: number;
+declare const PrivateCollegeNPCNames: readonly ["Amanda", "Sarah", "Jennifer", "Sidney"];
 /**
  * Checks if the player is caged.
  * @returns {boolean} - TRUE if the player is in the cage.
@@ -425,6 +462,10 @@ declare function PrivateIsSuccubus(): boolean;
  * @returns {Asset|null} - The item asset that can be given
  */
 declare function PrivateGetPossibleGift(Restraint: boolean): Asset | null;
+/**
+ * Loads the private room screen and the vendor NPC.
+ * @type {ScreenLoadHandler}
+ */
 declare function PrivateLoad(): Promise<void>;
 /**
  * NPCs can change clothes randomly everyday
@@ -500,15 +541,15 @@ declare function PrivateGetSecurity(): void;
 declare function PrivateCancelSecurity(): void;
 /**
  * Loads a given private room character.
- * @param {PrivateCharacterData} data - The packed character data recieved from the server
+ * @param {ServerPrivateCharacterData} data - The packed character data recieved from the server
  * @returns {boolean} - Update required.
  */
-declare function PrivateLoadCharacter(data: PrivateCharacterData): boolean;
+declare function PrivateLoadCharacter(data: ServerPrivateCharacterData): boolean;
 /**
  * Triggered when a new character is added to the player's private room.
  * @param {NPCCharacter} Template - The base of the character, includes the name and appearance.
  * @param {"" | NPCArchetype | null} [Archetype] - The type of character such as maid or mistress.
- * @param {boolean} [incomplete=false] - Whether the caller plans to customize the NPC more. Skips generating random traits and calling {@link ServerPrivateCharacterSync()}.
+ * @param {boolean} [incomplete] - Whether the caller plans to customize the NPC more. Skips generating random traits and calling {@link ServerPrivateCharacterSync()}.
  * @returns {NPCCharacter} - The new private room character.
  */
 declare function PrivateAddCharacter(Template: NPCCharacter, Archetype?: "" | NPCArchetype | null, incomplete?: boolean): NPCCharacter;
@@ -719,6 +760,10 @@ declare function PrivateNPCCheat(Type: "TraitDominant" | "TraitSubmissive"): voi
  * @returns {void} - Nothing.
  */
 declare function PrivateGetBed(Type: "White" | "Black" | "Pink"): void;
+/**
+ * When the player exits the private room
+ * @type {ScreenExitHandler}
+ */
 declare function PrivateExit(): void;
 /**
  * When the player joins the NPC in bed
@@ -874,40 +919,3 @@ declare function PrivateOwnerHallParadeEnd(Action: string): void;
  * @param {string} name
  */
 declare function PrivateCharacterIsInRoom(name: string): boolean;
-declare var PrivateBackground: string;
-/** @type {NPCCharacter} */
-declare var PrivateVendor: NPCCharacter;
-/** @type {NPCCharacter[]} */
-declare var PrivateCharacter: NPCCharacter[];
-declare var PrivateCharacterOffset: number;
-declare var PrivateCharacterShouldSync: boolean;
-declare var PrivateCharacterMax: number;
-declare var PrivateReleaseTimer: number;
-declare var PrivateActivity: string;
-declare var PrivateActivityCount: number;
-declare var PrivateActivityAffectLove: boolean;
-declare var PrivateActivityList: string[];
-/** @type {null | NPCCharacter} */
-declare var PrivateActivityTarget: null | NPCCharacter;
-/** @type {PrivatePunishmentType | null} */
-declare var PrivatePunishment: PrivatePunishmentType | null;
-/** @type {PrivatePunishmentType[]} */
-declare var PrivatePunishmentList: PrivatePunishmentType[];
-/** @type {NPCTraitType | null} */
-declare var PrivateSlaveImproveType: NPCTraitType | null;
-declare var PrivateNextLoveYou: number;
-/** @type {PrivateActivityType | null} */
-declare var PrivateLoverActivity: PrivateActivityType | null;
-/** @type {PrivateActivityType[]} */
-declare var PrivateLoverActivityList: PrivateActivityType[];
-/** @type {AssetName[]} */
-declare var PrivateBeltList: AssetName[];
-declare var PrivateEntryEvent: boolean;
-declare var PrivateClubCardVictoryMode: boolean;
-declare var PrivateClubCardDefeatConsequence: string[];
-/** @type {Asset | null} */
-declare var PrivateGiftRegular: Asset | null;
-/** @type {Asset | null} */
-declare var PrivateGiftRestraint: Asset | null;
-declare var PrivateBaseDecay: number;
-declare const PrivateCollegeNPCNames: readonly ["Amanda", "Sarah", "Jennifer", "Sidney"];

@@ -1,21 +1,3 @@
-declare function RelogLoad(): Promise<void>;
-/**
- * Unload the relog screen
- */
-declare function RelogUnload(): void;
-/**
- * Runs the relog screen
- * @returns {void} Nothing
- */
-declare function RelogRun(): void;
-/**
- * Handles player click events on the relog screen
- * @returns {void} Nothing
- */
-declare function RelogClick(): void;
-declare function RelogKeyDown(event: KeyboardEvent): boolean;
-declare function RelogExit(): void;
-declare function RelogResize(): void;
 /** @type {null | RelogData} */
 declare var RelogData: null | RelogData;
 declare const RelogIDs: Readonly<{
@@ -31,3 +13,33 @@ declare const RelogIDs: Readonly<{
     buttons: "relog-buttons";
     passwordAndButtons: "relog-password-and-buttons";
 }>;
+/**
+ * Loads the relog screen
+ * @type {ScreenLoadHandler}
+ */
+declare function RelogLoad(): Promise<void>;
+/**
+ * Unload the relog screen
+ */
+declare function RelogUnload(): void;
+/**
+ * Runs the relog screen
+ * @returns {void} Nothing
+ */
+declare function RelogRun(): void;
+/**
+ * Handles player click events on the relog screen
+ * @returns {void} Nothing
+ */
+declare function RelogClick(): void;
+/**
+ * Handles player keyboard events on the relog screen
+ * @type {KeyboardEventListener}
+ */
+declare function RelogKeyDown(event: KeyboardEvent): boolean;
+/**
+ * Sends the player back to the main login screen
+ * @type {ScreenExitHandler}
+ */
+declare function RelogExit(): void;
+declare function RelogResize(): void;

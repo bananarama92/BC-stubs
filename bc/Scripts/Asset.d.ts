@@ -1,3 +1,53 @@
+/** @type {AssetOverride} */
+declare const AssetOverride: AssetOverride;
+/** @type {Asset[]} */
+declare var Asset: Asset[];
+/** @type {AssetGroup[]} */
+declare var AssetGroup: AssetGroup[];
+/** @type {Map<AssetFullPath, Asset>} */
+declare var AssetMap: Map<AssetFullPath, Asset>;
+/** @type {Map<AssetGroupName, AssetGroup>} */
+declare var AssetGroupMap: Map<AssetGroupName, AssetGroup>;
+/** @type {Map<string, Asset[]>} */
+declare var AssetBuyGroupMap: Map<string, Asset[]>;
+/** @type {Pose[]} */
+declare var Pose: Pose[];
+/** A record mapping pose names to their respective {@link Pose}. */
+declare var PoseRecord: Record<AssetPoseName, Pose>;
+/**
+ * A record mapping pose categories to sorting priorities.
+ *
+ * Used for prioritising certain poses over others in {@link CommonDrawResolveAssetPose},
+ * a process required due to BC's lack of pose combinatorics support.
+ * @satisfies {Record<AssetPoseCategory, number>}
+ */
+declare const PoseCategoryPriority: {
+    BodyAddon: number;
+    BodyLower: number;
+    BodyFull: number;
+    BodyHands: number;
+    BodyUpper: number;
+};
+/** @type {Map<AssetGroupName, AssetGroup[]>} */
+declare var AssetActivityMirrorGroups: Map<AssetGroupName, AssetGroup[]>;
+/**
+ * A record mapping all {@link Asset.IsLock} asset names to their respective assets.
+ * @type {Record<AssetLockType, Asset>}
+ */
+declare const AssetLocks: Record<AssetLockType, Asset>;
+/** Special values for {@link AssetDefinition.PoseMapping} for hiding or using pose-agnostic assets. */
+declare const PoseType: {
+    /**
+     * Ensures that the asset is hidden for a specific pose.
+     * Supercedes the old `HideForPose` property.
+     */
+    readonly HIDE: "Hide";
+    /**
+     * Ensures that the default (pose-agnostic) asset used for a particular pose.
+     * Supercedes the old `AllowPose` property.
+     */
+    readonly DEFAULT: "";
+};
 /**
  * Adds a new asset group to the main list
  * @param {IAssetFamily} Family
@@ -52,6 +102,72 @@ declare function AssetParsePosePrerequisite({ SetPose, AllowActivePose, Effect, 
     AllowActivePose?: AssetPoseName[];
     SetPose?: AssetPoseName[];
 };
+type AssetCopyConfigValidator<T> = (config: T, superConfig: T, key: string, superKey: string) => boolean;
+/**
+ * @template T
+ * @param config The config
+ * @param superConfig The super config
+ * @param key A human-readable identifier for `config`
+ * @param superKey A human-readable identifier for `superConfig`
+ * @returns `true` if the validation failed and `false` otherwise
+ * @typedef {(config: T, superConfig: T, key: string, superKey: string) => boolean} AssetCopyConfigValidator
+ */
+/**
+ * Namespace for resolving `CopyConfig` fields in (extended) asset configs.
+ * @namespace
+ */
+declare var AssetResolveCopyConfig: {
+    /**
+     * Take an (ordered) list of `CopyConfig`-referenced configs and group them all together in a `BuyGroup`.
+     * The buygroup's name will either be extracted from the configs if present, or alternatively use the `Name` of the top-most config.
+     * @param {readonly { BuyGroup?: string, Value?: number, Name?: string }[]} configList
+     */
+    _AssignBuyGroup(configList: readonly {
+        BuyGroup?: string;
+        Value?: number;
+        Name?: string;
+    }[]): void;
+    /**
+     * Merge the passed config with all it's to-be copied super configs (per its `CopyConfig` settings)
+     * @template {{ CopyConfig?: { GroupName?: AssetGroupName, AssetName: AssetName }, BuyGroup?: string, Value?: number, Name?: string }} T
+     * @param {T} config - The (extended) asset config
+     * @param {AssetName} assetName - The name of the corresponding asset
+     * @param {AssetGroupName} groupName - The name of the corresponding asset group
+     * @param {Partial<Record<AssetGroupName, Partial<Record<AssetName, T>>>>} configRecord - A (nested) record containing the configs of all assets
+     * @param {string} configType - The name of the config type. Used for error reporting
+     * @param {null | AssetCopyConfigValidator<T>} configValidator - An optional validator for comparing the config with its to-be copied counterpart(s)
+     * @param {boolean} setBuyGroup - Whether to automatically assign a buygroup to the config and, if required, all `CopyConfig`-referenced super configs
+     * @returns {null | T} - The original config merged with its to-be copied super configs. Returns `null` if an error is encountered.
+     */
+    _Resolve<T extends {
+        CopyConfig?: {
+            GroupName?: AssetGroupName;
+            AssetName: AssetName;
+        };
+        BuyGroup?: string;
+        Value?: number;
+        Name?: string;
+    }>(config: T, assetName: AssetName, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Partial<Record<AssetName, T>>>>, configType: string, configValidator?: null | AssetCopyConfigValidator<T>, setBuyGroup?: boolean): null | T;
+    _ExtendedValidator(config: ModularItemConfig | NoArchItemConfig | TextItemConfig | TypedItemConfig | VariableHeightConfig | VibratingItemConfig, superConfig: ModularItemConfig | NoArchItemConfig | TextItemConfig | TypedItemConfig | VariableHeightConfig | VibratingItemConfig, key: string, superKey: string): boolean;
+    /**
+     * Construct the items asset config, merging via {@link AssetDefinition.CopyConfig} if required.
+     * @param {AssetDefinition} assetDef - The asset definition
+     * @param {AssetGroupName} groupName - The name of the asset group
+     * @param {Partial<Record<AssetGroupName, Record<AssetName, AssetDefinition>>>} assetRecord - A record containg all asset definitions
+     * @returns {null | AssetDefinition} - The oiginally passed base item configuration.
+     * Returns `null` insstead if an error was encountered.
+     */
+    AssetDefinition(assetDef: AssetDefinition, groupName: AssetGroupName, assetRecord: Partial<Record<AssetGroupName, Record<AssetName, AssetDefinition>>>): null | AssetDefinition;
+    /**
+     * Construct the items extended item config, merging via {@link AssetArchetypeConfig.CopyConfig} if required.
+     * @param {Asset} asset - The asset to configure
+     * @param {AssetArchetypeConfig} config - The extended item configuration of the base item
+     * @param {ExtendedItemMainConfig} extendedConfig - The extended item configuration object for the asset's family
+     * @returns {null | AssetArchetypeConfig} - The oiginally passed base item configuration.
+     * Returns `null` instead if an error was encountered.
+     */
+    ExtendedItemConfig(asset: Asset, config: AssetArchetypeConfig, extendedConfig: ExtendedItemMainConfig): null | AssetArchetypeConfig;
+};
 /**
  * Constructs extended item functions for an asset, if extended item configuration exists for the asset.
  * Updates the passed config inplace if {@link ExtendedItem.CopyConfig} is present.
@@ -79,7 +195,7 @@ declare function AssetFindExtendedConfig(ExtendedConfig: ExtendedItemMainConfig,
  * @param {number} I - The index of the layer within the asset
  * @param {AssetDefinition} AssetDef - The definition for the built asset
  * @param {AssetGroupDefinition} GroupDef - The definition for the built asset's group
- * @return {AssetLayer} - A Layer object representing the drawable properties of the given layer
+ * @returns {AssetLayer} - A Layer object representing the drawable properties of the given layer
  */
 declare function AssetMapLayer(Layer: AssetLayerDefinition, A: Asset, I: number, AssetDef: AssetDefinition, GroupDef: AssetGroupDefinition): AssetLayer;
 /**
@@ -122,7 +238,7 @@ declare function AssetParseAlpha(alphaDef: undefined | Alpha.Definition[], warni
  * @param {AssetLayerDefinition} Layer - The raw layer definition
  * @param {AssetDefinition} NewAsset - The raw asset definition
  * @param {number} I - The index of the layer within its asset
- * @return {Alpha.Data[]} - a list of alpha mask data for the layer
+ * @returns {Alpha.Data[]} - a list of alpha mask data for the layer
  */
 declare function AssetParseLayerAlpha(Layer: AssetLayerDefinition, NewAsset: AssetDefinition, I: number): Alpha.Data[];
 /**
@@ -132,6 +248,19 @@ declare function AssetParseLayerAlpha(Layer: AssetLayerDefinition, NewAsset: Ass
  * @returns {void} - Nothing
  */
 declare function AssetAssignColorIndices(A: Mutable<Asset>): void;
+/**
+ * Parse a layer's {@link AssetLayerDefinition.Color} preset list.
+ * @param {BCColor} fillValue The group's first {@link AssetGroup.ColorSchema} entry
+ * @param {(readonly BCColor[]) | undefined} color
+ * @returns {BCColor[]}
+ */
+declare function AssetParseLayerColor(fillValue: BCColor, color: (readonly BCColor[]) | undefined): BCColor[];
+/**
+ * Generate the asset's DefaultColor list from its layers.
+ * @param {Mutable<Asset>} A
+ * @returns {void}
+ */
+declare function AssetAssignDefaultColor(A: Mutable<Asset>): void;
 /**
  * Builds the asset description from the CSV file
  * @param {IAssetFamily} Family
@@ -207,6 +336,14 @@ declare function AssetGetFetish(family: IAssetFamily, name: FetishName): Fetish 
  */
 declare function AssetGroupGet<T extends AssetGroupName>(Family: IAssetFamily, Group: T): AssetGroupMapping[T] | null;
 /**
+ * Gets the decals other items can show, like the seat of the Bar Stool or map objects with a {@link ChatRoomMapObject.DecalArea}:
+ * every single-image asset of the `Decals` group, so new decals show up on them without any change.
+ * Items that save a decal by its position in this list need new decals appended at the end of the group.
+ * @param {IAssetFamily} [family]
+ * @returns {Asset[]} - Empty until the `Decals` group has loaded
+ */
+declare function AssetGetDecals(family?: IAssetFamily): Asset[];
+/**
  * Check whether a group can be hidden through the item visibility settings
  * @param {AssetGroup} group
  */
@@ -231,14 +368,7 @@ declare function AssetGetInventoryPath(A: Asset): string;
  * @returns {AssetLayer[]} - The newly sorted asset layers
  */
 declare function AssetLayerSort(layers: AssetLayer[]): AssetLayer[];
-/**
- * Convert {@link AssetDefinition} default color into a {@link Asset} default color list
- * @param {number} colorableLayerCount The number of colorable layers
- * @param {BCColor} fillValue The default color. Usually `"Default"` though skin colors can also be supplied on occasion.
- * @param {BCColor | readonly BCColor[]} [color] See {@link AssetDefinition.DefaultColor}
- * @returns {BCColor[]} See {@link Asset.DefaultColor}
- */
-declare function AssetParseDefaultColor(colorableLayerCount: number, fillValue: BCColor, color?: BCColor | readonly BCColor[]): BCColor[];
+declare const AssetStringsPath = "Assets/AssetStrings.csv";
 /**
  * Get the translated string for an asset-specific message
  * @param {string} msg
@@ -264,91 +394,3 @@ declare function AssetGetAllAppearanceForCharacter(char: Character): Map<AssetGr
  * @returns {RemoveOnItemRemove[]}
  */
 declare function AssetGetRemoveOnItemRemoveDiff(list: readonly RemoveOnItemRemove[], referenceList: readonly RemoveOnItemRemove[]): RemoveOnItemRemove[];
-/** @type {AssetOverride} */
-declare const AssetOverride: AssetOverride;
-/** @type {Asset[]} */
-declare var Asset: Asset[];
-/** @type {AssetGroup[]} */
-declare var AssetGroup: AssetGroup[];
-/** @type {Map<AssetFullPath, Asset>} */
-declare var AssetMap: Map<AssetFullPath, Asset>;
-/** @type {Map<AssetGroupName, AssetGroup>} */
-declare var AssetGroupMap: Map<AssetGroupName, AssetGroup>;
-/** @type {Map<string, Asset[]>} */
-declare var AssetBuyGroupMap: Map<string, Asset[]>;
-/** @type {Pose[]} */
-declare var Pose: Pose[];
-/** A record mapping pose names to their respective {@link Pose}. */
-declare var PoseRecord: Record<AssetPoseName, Pose>;
-declare namespace PoseCategoryPriority {
-    let BodyAddon: number;
-    let BodyLower: number;
-    let BodyFull: number;
-    let BodyHands: number;
-    let BodyUpper: number;
-}
-/** @type {Map<AssetGroupName, AssetGroup[]>} */
-declare var AssetActivityMirrorGroups: Map<AssetGroupName, AssetGroup[]>;
-/**
- * A record mapping all {@link Asset.IsLock} asset names to their respective assets.
- * @type {Record<AssetLockType, Asset>}
- */
-declare const AssetLocks: Record<AssetLockType, Asset>;
-declare namespace PoseType {
-    let HIDE: "Hide";
-    let DEFAULT: "";
-}
-declare namespace AssetResolveCopyConfig {
-    /**
-     * Take an (ordered) list of `CopyConfig`-referenced configs and group them all together in a `BuyGroup`.
-     * The buygroup's name will either be extracted from the configs if present, or alternatively use the `Name` of the top-most config.
-     * @param {readonly { BuyGroup?: string, Value?: number, Name?: string }[]} configList
-     */
-    function _AssignBuyGroup(configList: readonly {
-        BuyGroup?: string;
-        Value?: number;
-        Name?: string;
-    }[]): void;
-    /**
-     * Merge the passed config with all it's to-be copied super configs (per its `CopyConfig` settings)
-     * @template {{ CopyConfig?: { GroupName?: AssetGroupName, AssetName: AssetName }, BuyGroup?: string, Value?: number, Name?: string }} T
-     * @param {T} config - The (extended) asset config
-     * @param {AssetName} assetName - The name of the corresponding asset
-     * @param {AssetGroupName} groupName - The name of the corresponding asset group
-     * @param {Partial<Record<AssetGroupName, Partial<Record<AssetName, T>>>>} configRecord - A (nested) record containing the configs of all assets
-     * @param {string} configType - The name of the config type. Used for error reporting
-     * @param {null | AssetCopyConfigValidator<T>} configValidator - An optional validator for comparing the config with its to-be copied counterpart(s)
-     * @param {boolean} setBuyGroup - Whether to automatically assign a buygroup to the config and, if required, all `CopyConfig`-referenced super configs
-     * @returns {null | T} - The original config merged with its to-be copied super configs. Returns `null` if an error is encountered.
-     */
-    function _Resolve<T extends {
-        CopyConfig?: {
-            GroupName?: AssetGroupName;
-            AssetName: AssetName;
-        };
-        BuyGroup?: string;
-        Value?: number;
-        Name?: string;
-    }>(config: T, assetName: AssetName, groupName: AssetGroupName, configRecord: Partial<Record<AssetGroupName, Partial<Record<AssetName, T>>>>, configType: string, configValidator?: null | AssetCopyConfigValidator<T>, setBuyGroup?: boolean): null | T;
-    function _ExtendedValidator(config: TextItemConfig | TypedItemConfig | NoArchItemConfig | ModularItemConfig | VibratingItemConfig | VariableHeightConfig, superConfig: TextItemConfig | TypedItemConfig | NoArchItemConfig | ModularItemConfig | VibratingItemConfig | VariableHeightConfig, key: string, superKey: string): boolean;
-    /**
-     * Construct the items asset config, merging via {@link AssetDefinition.CopyConfig} if required.
-     * @param {AssetDefinition} assetDef - The asset definition
-     * @param {AssetGroupName} groupName - The name of the asset group
-     * @param {Partial<Record<AssetGroupName, Record<AssetName, AssetDefinition>>>} assetRecord - A record containg all asset definitions
-     * @returns {null | AssetDefinition} - The oiginally passed base item configuration.
-     * Returns `null` insstead if an error was encountered.
-     */
-    function AssetDefinition(assetDef: AssetDefinition, groupName: AssetGroupName, assetRecord: Partial<Record<AssetGroupName, Record<AssetName, AssetDefinition>>>): null | AssetDefinition;
-    /**
-     * Construct the items extended item config, merging via {@link AssetArchetypeConfig.CopyConfig} if required.
-     * @param {Asset} asset - The asset to configure
-     * @param {AssetArchetypeConfig} config - The extended item configuration of the base item
-     * @param {ExtendedItemMainConfig} extendedConfig - The extended item configuration object for the asset's family
-     * @returns {null | AssetArchetypeConfig} - The oiginally passed base item configuration.
-     * Returns `null` instead if an error was encountered.
-     */
-    function ExtendedItemConfig(asset: Asset, config: AssetArchetypeConfig, extendedConfig: ExtendedItemMainConfig): null | AssetArchetypeConfig;
-}
-declare const AssetStringsPath: "Assets/AssetStrings.csv";
-type AssetCopyConfigValidator<T> = (config: T, superConfig: T, key: string, superKey: string) => boolean;

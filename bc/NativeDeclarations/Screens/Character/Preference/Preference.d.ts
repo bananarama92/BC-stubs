@@ -2,7 +2,7 @@
 
 type PreferenceSubscreenName =
 	"General" | "Difficulty" | "Restriction" | "Chat" | "CensoredWords" | "Audio" | "Arousal" |
-	"Security" | "Online" | "Visibility" | "Immersion" | "Graphics" | "Controller" | "Notifications" |
+	"Security" | "Online" | "Visibility" | "Immersion" | "Graphics" | "Notifications" |
 	"Gender" | "Scripts" | "Extensions" | "Main" | "Keybindings"
 	;
 
@@ -109,6 +109,7 @@ interface ArousalSettingsType {
 	OrgasmStage: 0 | 1 | 2;
 	OrgasmCount: number;
 	DisableAdvancedVibes: boolean;
+	AffectErection: boolean;
 }
 
 // #endregion
@@ -116,7 +117,7 @@ interface ArousalSettingsType {
 // #region Immersion
 
 type ImmersionSensDepName = "SensDepLight" | "Normal" | "SensDepNames" | "SensDepTotal" | "SensDepExtreme";
-type LockTimerLimitName = "LockTimerLimitDefault" | "LockTimerLimitDay" | "LockTimerLimitWeek" | "LockTimerLimitMonth" | "LockTimerLimitYear" | "LockTimerLimitDecade";
+type LockTimerLimitName = "LockTimerLimitDefault" | "LockTimerLimitDay" | "LockTimerLimitWeek" | "LockTimerLimitMonth" | "LockTimerLimitYear" | "LockTimerLimitUnlimited";
 
 // #endregion
 

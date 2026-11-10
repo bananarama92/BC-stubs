@@ -1,3 +1,30 @@
+declare var AsylumGGTSBackground: string;
+/** @type {NPCCharacter} */
+declare var AsylumGGTSComputer: NPCCharacter;
+declare var AsylumGGTSIntroDone: boolean;
+declare var AsylumGGTSTimer: number;
+/** @type {null | GGTSTask} */
+declare var AsylumGGTSTask: null | GGTSTask;
+/** @type {null | Character} */
+declare var AsylumGGTSTaskTarget: null | Character;
+/** @type {null | GGTSTask} */
+declare var AsylumGGTSLastTask: null | GGTSTask;
+declare var AsylumGGTSTaskStart: number;
+declare var AsylumGGTSTaskEnd: number;
+declare var AsylumGGTSChatToParse: string;
+/**
+ * The list of available tasks, partitioned by level.
+ * @type {GGTSTask[][]}
+ */
+declare var AsylumGGTSTaskList: GGTSTask[][];
+declare var AsylumGGTSLevelTime: number[];
+/**
+ * The last pose the character had. Used to enforce KeepPose rules.
+ * @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>}
+ */
+declare var AsylumGGTSPreviousPose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
+declare var AsylumGGTSWordCheck: number;
+declare var AsylumGGTSSpeed: number;
 /**
  * Returns TRUE if the player has three strikes on record
  * @returns {boolean} - TRUE if three strikes or more
@@ -10,7 +37,7 @@ declare function AsylumGGTSHasThreeStrikes(): boolean;
 declare function AsylumGGTSCanQuit(): boolean;
 /**
  * Check that GGTS is enabled in the current room.
- * @returns true if GGTS is running, false otherwise.
+ * @returns {boolean} true if GGTS is running, false otherwise.
  */
 declare function AsylumGGTSIsEnabled(): boolean;
 /**
@@ -33,6 +60,7 @@ declare function AsylumGGTSGetLevelTime(C: Character): number;
  * Returns the character's current level timer
  * @param {Character} C
  * @param {number} time
+ * @param {boolean} [push]
  */
 declare function AsylumGGTSSetLevelTime(C: Character, time: number, push?: boolean): void;
 /**
@@ -67,6 +95,10 @@ declare function AsylumGGTSLoadMessages(): Promise<void>;
  * @param {string} key
  */
 declare function AsylumGGTSGetMessage(key: string): string;
+/**
+ * Loads the GGTS and computer NPC
+ * @type {ScreenLoadHandler}
+ */
 declare function AsylumGGTSLoad(): Promise<void>;
 /**
  * Runs the room
@@ -122,7 +154,7 @@ declare function AsylumGGTSSetTimer(): void;
  * Makes it easier to respond to GGTS queries on lower levels.
  * @param {number} Level - GGTS level
  * @param {string} Text - the text to sanitize
- * @return {string} - sanitized text
+ * @returns {string} - sanitized text
  */
 declare function AsylumGGTSSanitizeText(Level: number, Text: string): string;
 /**
@@ -196,7 +228,7 @@ declare function AsylumGGTSFindTaskTarget(T: GGTSTask): Character | null;
 declare function AsylumGGTSNewTask(): void;
 /**
  * Saves the game progress after a task ended
- * @param {boolean} [Fail=false] - If the task was failed, we don't add bonus time
+ * @param {boolean} [Fail] - If the task was failed, we don't add bonus time
  * @returns {void} - Nothing
  */
 declare function AsylumGGTSEndTaskSave(Fail?: boolean): void;
@@ -235,8 +267,8 @@ declare function AsylumGGTSProcess(): void;
  * @param {Character} C - The character on which the activity is performed
  * @param {string} A - The name of the activity performed
  * @param {string} Z - The group/zone name where the activity was performed
- * @param {number} [Count=1] - If the activity is done repeatedly, this defines the number of times, the activity is done.
- * @return {void} - Nothing
+ * @param {number} [Count] - If the activity is done repeatedly, this defines the number of times, the activity is done.
+ * @returns {void} - Nothing
  */
 declare function AsylumGGTSActivity(S: Character, C: Character, A: string, Z: string, Count?: number): void;
 /**
@@ -287,16 +319,16 @@ declare function AsylumGGTSUngag(): void;
 /**
  * When an orgasm starts, we check if it breaks any GGTS rule
  * @param {Character} C - The character getting the orgasm
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
-declare function AsylumGGTSTOrgasm(C: Character): void;
+declare function AsylumGGTSOrgasm(C: Character): void;
 /**
  * When the player resists an orgasm, there's a chance the no-orgasm rule will be dropped
  * The chance like this:
  * Set the probability based on Willpower and ActivityOrgasmGameResistCount,
  * where higher Willpower decreases the probability and higher ActivityOrgasmGameResistCount increases it.
  * max chance = 0.9
- * @return {void} - TRUE if the character can change
+ * @returns {void} - TRUE if the character can change
  */
 declare function AsylumGGTSOrgasmResist(): void;
 /**
@@ -309,13 +341,13 @@ declare function AsylumGGTSLock(LockTime: number, Msg: string): SafePromise<void
 /**
  * Fully dress the character in a drone futuristic gear setup
  * @param {Character} [C] - The character to dress, if omitted, we use the player
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function AsylumGGTSDroneDress(C?: Character): void;
 /**
  * GGTS will not allow the character to change if she's being punished or she reached level 6
  * @param {Character} C - The character to evaluate
- * @return {boolean} - TRUE if the character can change
+ * @returns {boolean} - TRUE if the character can change
  */
 declare function AsylumGGTSAllowChange(C: Character): boolean;
 /**
@@ -327,7 +359,7 @@ declare function AsylumGGTSAllowChange(C: Character): boolean;
 declare function AsylumGGTSDialogAction(Action: GGTSTask | "MoneyForMinutes" | "GetHelmet", Minute: number): void;
 /**
  * Called from Dialog.js, as nurse, trigger a specific interaction for the current character
- * @param {String} Interaction - The interaction to perform
+ * @param {string} Interaction - The interaction to perform
  * @returns {void} - Nothing
  * @deprecated Use {@link AsylumGGTSDialogNewTask}, {@link AsylumGGTSDialogSpeed}, {@link AsylumGGTSDialogPause}
  */
@@ -362,30 +394,3 @@ declare function AsylumGGTSDrawCharacter(C: Character, X: number, Y: number, Zoo
  * @returns {void} - Nothing
  */
 declare function AsylumGGTSReset(): void;
-declare var AsylumGGTSBackground: string;
-/** @type {NPCCharacter} */
-declare var AsylumGGTSComputer: NPCCharacter;
-declare var AsylumGGTSIntroDone: boolean;
-declare var AsylumGGTSTimer: number;
-/** @type {null | GGTSTask} */
-declare var AsylumGGTSTask: null | GGTSTask;
-/** @type {null | Character} */
-declare var AsylumGGTSTaskTarget: null | Character;
-/** @type {null | GGTSTask} */
-declare var AsylumGGTSLastTask: null | GGTSTask;
-declare var AsylumGGTSTaskStart: number;
-declare var AsylumGGTSTaskEnd: number;
-declare var AsylumGGTSChatToParse: string;
-/**
- * The list of available tasks, partitioned by level.
- * @type {GGTSTask[][]}
- */
-declare var AsylumGGTSTaskList: GGTSTask[][];
-declare var AsylumGGTSLevelTime: number[];
-/**
- * The last pose the character had. Used to enforce KeepPose rules.
- * @type {null | Partial<Record<AssetPoseCategory, AssetPoseName>>}
- */
-declare var AsylumGGTSPreviousPose: null | Partial<Record<AssetPoseCategory, AssetPoseName>>;
-declare var AsylumGGTSWordCheck: number;
-declare var AsylumGGTSSpeed: number;

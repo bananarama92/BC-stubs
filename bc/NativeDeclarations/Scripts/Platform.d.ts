@@ -41,7 +41,7 @@ declare namespace Platform {
 	}
 
 	interface CharacterTemplate {
-		Name: string;
+		Name: Platform.CharacterName;
 		Status: string;
 
 		Width: number;
@@ -64,8 +64,8 @@ declare namespace Platform {
 		ProjectileDamage?: number[];
 		ProjectileBothSides?: boolean;
 
-		Perk?: string;
-		PerkName?: PerkName[];
+		Perk: string;
+		PerkName: PerkName[];
 
 		WalkSpeed: number;
 		RunSpeed?: number;
@@ -169,9 +169,9 @@ declare namespace Platform {
 		Immunity: number;
 		Damage: { Value: number, Expire: number }[];
 		RiseTime: number;
-		ProjectileAim: number;
+		ProjectileAim?: number;
 
-		Action: { Name: AnimationName, Start: number, Expire: number, Target?: number, Done?: boolean };
+		Action?: { Name: AnimationName, Start: number, Expire: number, Target?: number, Done?: boolean };
 		Effect?: { Name: EffectType, End: number };
 
 		Anim?: AnimationSpec;
@@ -185,21 +185,85 @@ declare namespace Platform {
 		Perk: string;
 	}
 
+	type CharacterName =
+		| "Melody"
+		| "Olivia"
+		| "Isabella"
+		| "Camille"
+		| "Edlaran"
+		| "Yuna"
+		| "Hazel"
+		| "Lucy"
+		| "Vera"
+		| "Lyn"
+		| "Zara"
+		| "Chest"
+		| "Crate"
+		| "Arrow"
+		| "Dagger"
+		| "Barrel"
+		| "Treasure"
+		| "Vulture"
+		| "Scorpion"
+	;
+
 	interface DialogCharacter {
-		Name: string;
+		Name: CharacterName;
 		Color: HexColor;
 
 		NickName?: string;
 
-		Love?: number;
+		Love: number;
 		LoverName?: string;
 		LoverLevel?: number;
 		OwnerName?: string;
 		OwnerLevel?: number;
 
-		Domination?: number;
+		Domination: number;
 
 		IdlePose?: CharacterStatus[];
+	}
+
+	interface DialogLineCharacter {
+		Name: Platform.CharacterName;
+		Status: string;
+		Pose?: string;
+		X?: number;
+		Y?: number;
+		Animation?: string;
+	}
+
+	type DialogAudioStyle = "cheerful" | "angry" | "sad" | "terrified" | "serious" | "calm" | "whispering" | "shouting" | "friendly" | "whisper";
+
+	interface DialogLine {
+		Text?: string;
+		Background?: string;
+		Character?: DialogLineCharacter[];
+		Audio?: string;
+		Answer?: {
+			Text: string;
+			Reply?: string;
+			Audio?: string;
+			Goto?: string; // A line ID
+			Domination?: number;
+			Love?: number;
+			AudioStyle?: DialogAudioStyle;
+			Script?: () => void;
+			Perk?: boolean;
+		}[];
+		ID?: string;
+		Entry?: () => void;
+		TextScript?: () => string;
+		AudioScript?: () => string | undefined;
+		AudioStyle?: DialogAudioStyle;
+		Prerequisite?: () => boolean;
+	}
+
+	interface Dialog {
+		Name: string;
+		Music: string;
+		Exit?: () => void;
+		Dialog: DialogLine[];
 	}
 
 	type RoomType = "Up" | "Down" | "Left" | "Right";

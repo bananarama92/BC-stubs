@@ -1,3 +1,33 @@
+declare var GameMagicBattleBackground: string;
+declare var GameMagicBattleTimerDelay: number;
+/** @type {OnlineCharacter[]} */
+declare var GameMagicBattlePlayer: OnlineCharacter[];
+declare var GameMagicBattleAction: string;
+/** @type {null | number} */
+declare var GameMagicBattleTurnAdmin: null | number;
+declare var GameMagicBattleTurnDone: boolean;
+/** @type {number} */
+declare var GameMagicBattleTurnTimer: number;
+/** @type {null | OnlineCharacter} */
+declare var GameMagicBattleFocusCharacter: null | OnlineCharacter;
+/** @type {{ Sender: number; Data: ServerGameMagicBattleDataAction }[]} */
+declare var GameMagicBattleLog: {
+    Sender: number;
+    Data: ServerGameMagicBattleDataAction;
+}[];
+/** @type {{ X: number, Y: number, W: number, H: number }[]} */
+declare var GameMagicBattleButton: {
+    X: number;
+    Y: number;
+    W: number;
+    H: number;
+}[];
+/**
+ * Get the player's current game state
+ * @param {Character} C
+ * @return {GameMagicBattleParameters}
+ */
+declare function GameMagicBattleGetState(C: Character): GameMagicBattleParameters;
 /**
  * Gets the current state of LARP.
  * @returns {OnlineGameStatus}
@@ -11,10 +41,10 @@ declare function GameMagicBattleGetStatus(): OnlineGameStatus;
 declare function GameMagicBattleSetStatus(NewStatus: OnlineGameStatus): void;
 /**
  * Checks if the character is an admin while the game is going.
- * @param {Character} C - Character to check for
+ * @param {OnlineCharacter} C - Character to check for
  * @returns {boolean} -  Returns TRUE if that character is an admin/the game administrator
  */
-declare function GameMagicBattleIsAdmin(C: Character): boolean;
+declare function GameMagicBattleIsAdmin(C: OnlineCharacter): boolean;
 /**
  * Draws the Magic Battle house icon of a character
  * @param {Character} C - Character for which to draw the icons
@@ -24,6 +54,10 @@ declare function GameMagicBattleIsAdmin(C: Character): boolean;
  * @returns {void} - Nothing
  */
 declare function GameMagicBattleDrawIcon(C: Character, X: number, Y: number, Zoom: number): void;
+/**
+ * Loads the Magic Battle game.
+ * @type {ScreenLoadHandler}
+ */
 declare function GameMagicBattleLoad(): Promise<void>;
 declare function GameMagicBattleInitialize(): void;
 /**
@@ -61,6 +95,10 @@ declare function GameMagicBattleStartProcess(): void;
  * @returns {void} - Nothing
  */
 declare function GameMagicBattleClick(): void;
+/**
+ * Triggered when the player exits the Magic Battle info screen.
+ * @type {ScreenExitHandler}
+ */
 declare function GameMagicBattleExit(): void;
 /**
  * Checks if a Magic Battle match can be launched. The player must be an admin and two different houses must be selected.
@@ -76,25 +114,25 @@ declare function GameMagicBattleNewTurn(Msg: string): void;
 /**
  * Gets a character from the Magic Battle game by member number
  * @param {number} MemberNumber - Member number of the character to get.
- * @returns {Character | null} - The corresponding character, if it exists.
+ * @returns {OnlineCharacter | null} - The corresponding character, if it exists.
  */
-declare function GameMagicBattleGetPlayer(MemberNumber: number): Character | null;
+declare function GameMagicBattleGetPlayer(MemberNumber: number): OnlineCharacter | null;
 /**
  * Processes the Magic Battle game clicks. This method is called from the generic OnlineGameClickCharacter function when the current game is Magic Battle.
- * @param {Character} C - Character clicked on
+ * @param {OnlineCharacter} C - Character clicked on
  * @returns {boolean} - returns TRUE if the code handles the click
  */
-declare function GameMagicBattleCharacterClick(C: Character): boolean;
+declare function GameMagicBattleCharacterClick(C: OnlineCharacter): boolean;
 /**
  * Adds a game message to the chat log.
  * @param {string} Msg - Message tag
- * @param {Character} Source - Source character of the message
- * @param {Character} Target - Character targetted by the message
- * @param {ServerGameMagicBattleDataAction} Data - The data linked to the packet
+ * @param {OnlineCharacter} Source - Source character of the message
+ * @param {OnlineCharacter} Target - Character targetted by the message
+ * @param {ServerGameMagicBattleDataAction | null} [Data] - The data linked to the packet
  * @param {string} [Color] - Color of the message to add.
  * @returns {void} - Nothing
  */
-declare function GameMagicBattleAddChatLog(Msg: string, Source: Character, Target: Character, Data: ServerGameMagicBattleDataAction, Color?: string): void;
+declare function GameMagicBattleAddChatLog(Msg: string, Source: OnlineCharacter, Target: OnlineCharacter, Data?: ServerGameMagicBattleDataAction | null, Color?: string): void;
 /**
  * Builds the game player list.
  * @returns {void} - Nothing
@@ -154,27 +192,3 @@ declare function GameMagicBattleLoadStatus(): void;
  * @returns {void} - Nothing
  */
 declare function GameMagicBattleDrawCharacter(C: Character, X: number, Y: number, Zoom: number): void;
-declare var GameMagicBattleBackground: string;
-declare var GameMagicBattleTimerDelay: number;
-/** @type {Character[]} */
-declare var GameMagicBattlePlayer: Character[];
-declare var GameMagicBattleAction: string;
-/** @type {null | number} */
-declare var GameMagicBattleTurnAdmin: null | number;
-declare var GameMagicBattleTurnDone: boolean;
-/** @type {null | number} */
-declare var GameMagicBattleTurnTimer: null | number;
-/** @type {null | Character} */
-declare var GameMagicBattleFocusCharacter: null | Character;
-/** @type {{ Sender: number; Data: ServerGameMagicBattleDataAction }[]} */
-declare var GameMagicBattleLog: {
-    Sender: number;
-    Data: ServerGameMagicBattleDataAction;
-}[];
-/** @type {{ X: number, Y: number, W: number, H: number}[]} */
-declare var GameMagicBattleButton: {
-    X: number;
-    Y: number;
-    W: number;
-    H: number;
-}[];

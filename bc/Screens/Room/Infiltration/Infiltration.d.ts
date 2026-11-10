@@ -1,3 +1,23 @@
+declare var InfiltrationBackground: string;
+/** @type {NPCCharacter} */
+declare var InfiltrationSupervisor: NPCCharacter;
+/** @type {InfiltrationMissionStateType | null } */
+declare var InfiltrationMissionState: InfiltrationMissionStateType | null;
+/** @type {InfiltrationMissionType[]} */
+declare var InfiltrationMissionType: InfiltrationMissionType[];
+/** @type {InfiltrationObjectListType[]} */
+declare var InfiltrationObjectList: InfiltrationObjectListType[];
+declare var InfiltrationCollectRansom: boolean;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationKidnapper: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationPandoraPrisoner: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var InfiltrationPartyPrisoner: null | NPCCharacter;
+declare var InfiltrationPenitentiaryMinutes: number;
+declare var InfiltrationPenitentiaryAmount: number;
+/** @type {"G" | "I"} */
+declare var InfiltrationPenitentiaryRole: "G" | "I";
 /**
  * Returns TRUE if the mission can complete as a success
  * @returns {boolean} - TRUE if successful
@@ -58,6 +78,10 @@ declare function InfiltrationCanPlayClubCard(): boolean;
  * @returns {boolean} - * Returns TRUE if the player has free space and is skilled enough.
  */
 declare function InfiltrationCanBrainwashCaptive(): boolean;
+/**
+ * Loads the infiltration screen by generating the supervisor.
+ * @type {ScreenLoadHandler}
+ */
 declare function InfiltrationLoad(): Promise<void>;
 /**
  * Runs and draws the infiltration screen.  Shows the player and the opponent.
@@ -71,10 +95,10 @@ declare function InfiltrationRun(): void;
 declare function InfiltrationClick(): void;
 /**
  * Sets the infiltration mission challenge difficulty
- * @param {number} Difficulty
+ * @param {0 | 1 | 2 | 3 | 4} Difficulty
  * @returns {void} - Nothing
  */
-declare function InfiltrationSelectChallenge(Difficulty: number): void;
+declare function InfiltrationSelectChallenge(Difficulty: 0 | 1 | 2 | 3 | 4): void;
 /**
  * Prepares the mission and presents it to the player
  * @returns {void} - Nothing
@@ -134,9 +158,10 @@ declare function InfiltrationKidnapperSurrender(): void;
 declare function InfiltrationKidnapperStartFight(): void;
 /**
  * Ends the fight with the NPC kidnapper
+ * @param {boolean} victory - Whether the player won the encounter
  * @returns {SafePromise<void>}
  */
-declare function InfiltrationKidnapperEndFight(): SafePromise<void>;
+declare function InfiltrationKidnapperEndFight(victory: boolean): SafePromise<void>;
 /**
  * Enter Pandora's Box as the kidnapper victim
  * @returns {SafePromise<void>}
@@ -228,26 +253,3 @@ declare function InfiltrationStartPenitentiary(Param?: "New"): void;
  * @returns {void} - Nothing
  */
 declare function InfiltrationGuardDressUp(): void;
-declare var InfiltrationBackground: string;
-/** @type {null | NPCCharacter} */
-declare var InfiltrationSupervisor: null | NPCCharacter;
-declare var InfiltrationDifficulty: number;
-/** @type {InfiltrationMissionType | ""} */
-declare var InfiltrationMission: InfiltrationMissionType | "";
-/** @type {InfiltrationMissionType[]} */
-declare var InfiltrationMissionType: InfiltrationMissionType[];
-/** @type {InfiltrationTargetType[]} */
-declare var InfiltrationObjectType: InfiltrationTargetType[];
-/** @type {InfiltrationMissionTarget | null} */
-declare var InfiltrationTarget: InfiltrationMissionTarget | null;
-declare var InfiltrationCollectRansom: boolean;
-/** @type {null | NPCCharacter} */
-declare var InfiltrationKidnapper: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var InfiltrationPandoraPrisoner: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var InfiltrationPartyPrisoner: null | NPCCharacter;
-declare var InfiltrationPenitentiaryMinutes: number;
-declare var InfiltrationPenitentiaryAmount: number;
-/** @type {"G" | "I"} */
-declare var InfiltrationPenitentiaryRole: "G" | "I";

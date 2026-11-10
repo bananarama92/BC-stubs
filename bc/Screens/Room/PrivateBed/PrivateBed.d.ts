@@ -1,3 +1,15 @@
+declare var PrivateBedBackground: string;
+/** @type {(Character & Required<PrivateBedCharacter>)[]} */
+declare var PrivateBedCharacter: (Character & Required<PrivateBedCharacter>)[];
+/** @type {ActivityName} */
+declare var PrivateBedActivity: ActivityName;
+/** @type {ActivityName[]} */
+declare var PrivateBedActivityList: ActivityName[];
+/** @type {string[]} */
+declare var PrivateBedLog: string[];
+declare var PrivateBedActivityDelay: number;
+declare var PrivateBedActivityMustRefresh: boolean;
+declare var PrivateBedLeaveTime: number;
 /**
  * Returns TRUE if the private bed is available.
  * @returns {boolean} - TRUE if available.
@@ -5,9 +17,13 @@
 declare function PrivateBedActive(): boolean;
 /**
  * Returns the number of girls in the private bedroom.
- * @returns {Number} - The number of girls.
+ * @returns {number} - The number of girls.
  */
 declare function PrivateBedCount(): number;
+/**
+ * Loads the private bedroom screen.
+ * @type {ScreenLoadHandler}
+ */
 declare function PrivateBedLoad(): Promise<void>;
 /**
  * Draws a private bedroom character.
@@ -49,6 +65,10 @@ declare function PrivateBedNPCActivity(Source: Character): void;
  * @returns {void|boolean} - Nothing.
  */
 declare function PrivateBedClick(): void | boolean;
+/**
+ * When the player exits the private bedroom.  The next sex scene will wait from 5 to 20 depending on luck and the frigid/honry trait.
+ * @type {ScreenExitHandler}
+ */
 declare function PrivateBedExit(): void;
 /**
  * When a character gets an orgasm
@@ -56,15 +76,3 @@ declare function PrivateBedExit(): void;
  * @returns {void} - Nothing.
  */
 declare function PrivateBedOrgasm(C: Character): void;
-declare var PrivateBedBackground: string;
-/** @type {(Character & Required<PrivateBedCharacter>)[]} */
-declare var PrivateBedCharacter: (Character & Required<PrivateBedCharacter>)[];
-/** @type {ActivityName} */
-declare var PrivateBedActivity: ActivityName;
-/** @type {ActivityName[]} */
-declare var PrivateBedActivityList: ActivityName[];
-/** @type {string[]} */
-declare var PrivateBedLog: string[];
-declare var PrivateBedActivityDelay: number;
-declare var PrivateBedActivityMustRefresh: boolean;
-declare var PrivateBedLeaveTime: number;

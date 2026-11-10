@@ -1,3 +1,12 @@
+declare var CellBackground: string;
+declare var CellMinutes: number;
+declare var CellOpenTimer: number;
+/** @type {NPCCharacter} */
+declare var CellKeyDepositStaff: NPCCharacter;
+/**
+ * Loads the cell screen and its NPC, then checks if it should be locked or not
+ * @type {ScreenLoadHandler}
+ */
 declare function CellLoad(): Promise<void>;
 /**
  * Runs and draws the cell screen
@@ -21,8 +30,3 @@ declare function CellLock(LockTime: number): void;
  * @returns {void} - Nothing
  */
 declare function CellDepositKeys(DepositTime: number): void;
-declare var CellBackground: string;
-declare var CellMinutes: number;
-declare var CellOpenTimer: number;
-/** @type {NPCCharacter} */
-declare var CellKeyDepositStaff: NPCCharacter;

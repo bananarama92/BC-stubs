@@ -1,3 +1,37 @@
+declare var PrisonBackground: string;
+/** @type {null | number} */
+declare var PrisonNextEventTimer: null | number;
+declare var PrisonNextEvent: boolean;
+declare var PrisonBehavior: number;
+/** @type {NPCCharacter} */
+declare var PrisonMaid: NPCCharacter;
+/** @type {null | Item[]} */
+declare var PrisonMaidAppearance: null | Item[];
+declare var PrisonMaidIsPresent: boolean;
+declare var PrisonMaidIsAngry: boolean;
+/** @type {null | string} */
+declare var PrisonMaidCharacter: null | string;
+declare var PrisonMaidCharacterList: string[];
+/** @type {number} */
+declare var PrisonMaidChaotic: number;
+/** @type {NPCCharacter} */
+declare var PrisonSub: NPCCharacter;
+/** @type {Item[]} */
+declare var PrisonSubAppearance: Item[];
+declare var PrisonSubBehindBars: boolean;
+declare var PrisonSubSelfCuffed: boolean;
+declare var PrisonSubIsPresent: boolean;
+declare var PrisonSubAskedCuff: boolean;
+declare var PrisonSubIsLeaveOut: boolean;
+declare var PrisonSubIsStripSearch: boolean;
+/** @type {NPCCharacter} */
+declare var PrisonPolice: NPCCharacter;
+declare var PrisonPoliceIsPresent: boolean;
+declare var PrisonPlayerCatchedBadGirl: boolean;
+/** @type {Item[]} */
+declare var PrisonPlayerAppearance: Item[];
+declare var PrisonPlayerBehindBars: boolean;
+declare var PrisonPlayerForIllegalChange: boolean;
 declare function PrisonPlayerIsHandcuffed(): boolean;
 declare function PrisonPlayerIsPanelGag(): boolean;
 declare function PrisonPlayerIsLegTied(): boolean;
@@ -15,9 +49,15 @@ declare function PrisonSubIsFree(): boolean;
 declare function PrisonSubAskForCuff(): boolean;
 declare function PrisonSubCanStripSearch(): boolean;
 declare function PrisonSubCanClothBack(): boolean;
+/**
+ * Loads the Prison screen
+ * @type {ScreenLoadHandler}
+ */
 declare function PrisonLoad(): Promise<void>;
-declare function PrisonRun(time: number): void;
-declare function PrisonClick(event: PointerEvent): void;
+/** @type {ScreenRunHandler} */
+declare function PrisonRun(): void;
+/** @type {MouseEventListener} */
+declare function PrisonClick(): void;
 /**
  * Player going in cell
  */
@@ -163,8 +203,9 @@ declare function PrisonCatchAdmitDefeat(): void;
 declare function PrisonFightPolice(): void;
 /**
  * When the fight against Police ends
+ * @param {boolean} victory - Whether the player won the encounter
  */
-declare function PrisonFightPoliceEnd(): Promise<void>;
+declare function PrisonFightPoliceEnd(victory: boolean): Promise<void>;
 /**
  * Outro for the Fight if Player win
  */
@@ -194,37 +235,3 @@ declare function PrisonArrestConfiscatSleepingPills(): void;
 declare function PrisonArrestConfiscatSpankingToys(): void;
 declare function PrisonArrestLeave(): void;
 declare function PrisonDiceBack(): void;
-declare var PrisonBackground: string;
-/** @type {null | number} */
-declare var PrisonNextEventTimer: null | number;
-declare var PrisonNextEvent: boolean;
-declare var PrisonBehavior: number;
-/** @type {NPCCharacter} */
-declare var PrisonMaid: NPCCharacter;
-/** @type {null | Item[]} */
-declare var PrisonMaidAppearance: null | Item[];
-declare var PrisonMaidIsPresent: boolean;
-declare var PrisonMaidIsAngry: boolean;
-/** @type {null | string} */
-declare var PrisonMaidCharacter: null | string;
-declare var PrisonMaidCharacterList: string[];
-/** @type {number} */
-declare var PrisonMaidChaotic: number;
-/** @type {NPCCharacter} */
-declare var PrisonSub: NPCCharacter;
-/** @type {Item[]} */
-declare var PrisonSubAppearance: Item[];
-declare var PrisonSubBehindBars: boolean;
-declare var PrisonSubSelfCuffed: boolean;
-declare var PrisonSubIsPresent: boolean;
-declare var PrisonSubAskedCuff: boolean;
-declare var PrisonSubIsLeaveOut: boolean;
-declare var PrisonSubIsStripSearch: boolean;
-/** @type {NPCCharacter} */
-declare var PrisonPolice: NPCCharacter;
-declare var PrisonPoliceIsPresent: boolean;
-declare var PrisonPlayerCatchedBadGirl: boolean;
-/** @type {Item[]} */
-declare var PrisonPlayerAppearance: Item[];
-declare var PrisonPlayerBehindBars: boolean;
-declare var PrisonPlayerForIllegalChange: boolean;

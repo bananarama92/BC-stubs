@@ -1,3 +1,18 @@
+declare var DisclaimerBackground: string;
+declare const DisclaimerIDs: Readonly<{
+    screen: "disclaimer-screen";
+    text: "disclaimer-text";
+    return: "disclaimer-return";
+    accept: "disclaimer-accept";
+    buttons: "disclaimer-buttons";
+}>;
+declare const DisclaimerVersion = 1;
+/** @type {null | ((accepted: boolean) => void)} */
+declare var DisclaimerCloseCallback: null | ((accepted: boolean) => void);
+/**
+ * Loads the disclaimer screen
+ * @type {ScreenLoadHandler}
+ */
 declare function DisclaimerLoad(): Promise<void>;
 /**
  * Runs & draws the disclaimer screen
@@ -9,6 +24,7 @@ declare function DisclaimerRun(): void;
  * @returns {void} - Nothing
  */
 declare function DisclaimerClick(): void;
+/** @type {ScreenUnloadHandler} */
 declare function DisclaimerUnload(): void;
 /**
  * Opens the disclaimer screen and optionally runs a callback when the player closes it.
@@ -21,14 +37,3 @@ declare function DisclaimerOpen(closeCallback: (accepted: boolean) => void): boo
  */
 declare function DisclaimerClose(accepted: boolean): void;
 declare function DisclaimerResize(): void;
-declare var DisclaimerBackground: string;
-declare const DisclaimerIDs: Readonly<{
-    screen: "disclaimer-screen";
-    text: "disclaimer-text";
-    return: "disclaimer-return";
-    accept: "disclaimer-accept";
-    buttons: "disclaimer-buttons";
-}>;
-declare const DisclaimerVersion: 1;
-/** @type {null | ((accepted: boolean) => void)} */
-declare var DisclaimerCloseCallback: null | ((accepted: boolean) => void);

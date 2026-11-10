@@ -1,9 +1,22 @@
+declare var GetUpVelocity: number;
+declare var GetUpPosition: number;
+declare var GetUpAcceleration: number;
+declare var GetUpMaxPosition: number;
+declare var GetUpGameDuration: number;
+declare var GetUpNextTick: number;
+declare var GetUpText: string;
+declare var GetUpChallenge: number;
+declare var GetUpBackground: string;
 /**
  * Ends the game and sends the result back to the screen
  * @param {boolean} Victory - Whether or not the player has won
  * @returns {void} - Nothing
  */
 declare function GetUpEnd(Victory: boolean): void;
+/**
+ * Loads the Get Up mini game
+ * @type {ScreenLoadHandler}
+ */
 declare function GetUpLoad(): Promise<void>;
 /**
  * @param {number} delta
@@ -24,12 +37,3 @@ declare function GetUpMouseDown(): void;
  * @returns {void} - Nothing
  */
 declare function GetUpClick(): void;
-declare var GetUpVelocity: number;
-declare var GetUpPosition: number;
-declare var GetUpAcceleration: number;
-declare var GetUpMaxPosition: number;
-declare var GetUpGameDuration: number;
-declare var GetUpNextTick: number;
-declare var GetUpText: string;
-declare var GetUpChallenge: number;
-declare var GetUpBackground: string;

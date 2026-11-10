@@ -1,3 +1,8 @@
+declare var AsylumBedroomBackground: string;
+/**
+ * Loads the room and initializes the UI elements. Called dynamically
+ * @type {ScreenLoadHandler}
+ */
 declare function AsylumBedroomLoad(): Promise<void>;
 /**
  * Runs the bedroom. Is called dynamically at very short intervals so don't use espensive loops or other functions from within
@@ -9,4 +14,3 @@ declare function AsylumBedroomRun(): void;
  * @returns {void} - Nothing
  */
 declare function AsylumBedroomClick(): void;
-declare var AsylumBedroomBackground: string;

@@ -1,4 +1,9 @@
-declare function InventoryItemPelvisModularChastityBeltDrawHook(data: ModularItemData, originalFunction: () => void): void;
+/** @type {VoiceTriggerType[]} */
+declare var InventoryItemPelvisModularChastityBeltVoiceTriggers: VoiceTriggerType[];
+/** @type {string[]} */
+declare var InventoryItemPelvisModularChastityBeltVoiceTriggerValues: string[];
+/** @type {ExtendedItemScriptHookCallbacks.Draw<ModularItemData>} */
+declare function InventoryItemPelvisModularChastityBeltDrawHook(data: ModularItemData, OriginalFunction: () => void): void;
 /**
  * @param {Item} item
  * @param {number} _offset - How many pixels down will the UI be shifted
@@ -20,8 +25,12 @@ declare function InventoryItemPelvisModularChastityBeltDrawShockModule(item: Ite
  */
 declare function InventoryItemPelvisModularChastityBeltDrawVoiceControl(item: Item, _offset: number): void;
 declare function InventoryItemPelvisModularChastityBeltDrawVoiceControlCleanup(): void;
+/** @type {ExtendedItemScriptHookCallbacks.Exit<ModularItemData>} */
 declare function InventoryItemPelvisModularChastityBeltExitHook(data: ModularItemData, originalFunction: (() => void) | null): void;
-declare function InventoryItemPelvisModularChastityBeltClickHook(data: ModularItemData, originalFunction: () => void): void;
+/**
+ * @type {ExtendedItemScriptHookCallbacks.Click<ModularItemData>}
+ */
+declare function InventoryItemPelvisModularChastityBeltClickHook(data: ModularItemData, OriginalFunction: () => void): void;
 /**
  * @param {Character} C
  * @param {Item} item
@@ -37,13 +46,13 @@ declare function InventoryItemPelvisModularChastityBeltClickVoiceControl(C: Char
 /**
  * @param {Character} C
  * @param {Item} item
- * @returns
+ * @returns {void}
  */
 declare function InventoryItemPelvisModularChastityBeltVoicePrevious(C: Character, item: Item): void;
 /**
  * @param {Character} C
  * @param {Item} item
- * @returns
+ * @returns {void}
  */
 declare function InventoryItemPelvisModularChastityBeltVoiceNext(C: Character, item: Item): void;
 /**
@@ -67,6 +76,19 @@ declare function InventoryItemPelvisModularChastityBeltResetDeny(C: Character, i
  * @param {number} _offset - How many pixels down will the UI be shifted
  */
 declare function InventoryItemPelvisModularChastityBeltClickShockModule(C: Character, item: Item, _offset: number): void;
+type ModularChastityBeltPersistentData = {
+    Cooldown?: number;
+    LastMessage?: number;
+    DenyDetected?: boolean;
+    OrgasmDetected?: boolean;
+    ChatroomCheck?: boolean;
+    SyncNeeded?: boolean;
+    SyncCooldown?: number;
+} & AnimationPersistentData;
+/**
+ * @typedef {{Cooldown?: number, LastMessage?: number, DenyDetected?: boolean, OrgasmDetected?: boolean, ChatroomCheck?: boolean, SyncNeeded?: boolean, SyncCooldown?: number} & AnimationPersistentData} ModularChastityBeltPersistentData
+ */
+/** @type {ExtendedItemScriptHookCallbacks.ScriptDraw<ModularItemData, ModularChastityBeltPersistentData>} */
 declare function InventoryItemPelvisModularChastityBeltScriptDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<ModularChastityBeltPersistentData>): void;
 /**
  * @param {ModularChastityBeltPersistentData} persistentData
@@ -114,16 +136,3 @@ declare function InventoryItemPelvisModularChastityBeltHandleChat(C: Character, 
  * @param {Character} C
  */
 declare function InventoryItemPelvisModularChastityBeltForceKneel(C: Character): void;
-/** @type {VoiceTriggerType[]} */
-declare var InventoryItemPelvisModularChastityBeltVoiceTriggers: VoiceTriggerType[];
-/** @type {string[]} */
-declare var InventoryItemPelvisModularChastityBeltVoiceTriggerValues: string[];
-type ModularChastityBeltPersistentData = {
-    Cooldown?: number;
-    LastMessage?: number;
-    DenyDetected?: boolean;
-    OrgasmDetected?: boolean;
-    ChatroomCheck?: boolean;
-    SyncNeeded?: boolean;
-    SyncCooldown?: number;
-} & AnimationPersistentData;

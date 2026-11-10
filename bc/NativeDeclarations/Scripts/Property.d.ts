@@ -1,16 +1,17 @@
 declare namespace ItemProperty {
 	/** Validation output status */
 	type ValidationStatus = (
-		"criticalError"		// Unrecoverable validation error; value discarded
-		| "error" 			// Required a fixup, but ok after
+		"criticalError"		// Unrecoverable validation error, _i.e._ discarding of a value
+		| "error" 			// Recoverable validation error, _i.e._ fixup of a value
 		| "ok" 				// All is ok 👌
 	);
 
+	// NOTE: Error description list entries are intended exclusively for human readability. They must be JSON-safe, and that's about all that is required (type-wise).
 	/** Validation output for single-property validation */
 	type ValidationOutput<T> = (
-		{ status: Extract<ValidationStatus, "criticalError">, value?: undefined, errorDescription: string }
-		| { status: Extract<ValidationStatus, "error">, value: T, errorDescription: string }
-		| { status: Extract<ValidationStatus, "ok">, value: T, errorDescription?: undefined }
+		{ status: Extract<ValidationStatus, "criticalError">, value?: undefined, errorDescription: unknown[], errorTags?: undefined }
+		| { status: Extract<ValidationStatus, "error">, value: T, errorDescription: unknown[], errorTags?: undefined }
+		| { status: Extract<ValidationStatus, "ok">, value: T, errorDescription?: undefined, errorTags?: undefined }
 	)
 
 	/** Validation output for multi-property validation */
@@ -20,41 +21,90 @@ declare namespace ItemProperty {
 		/** The validation status */
 		status: ValidationStatus;
 		/** Custom, human-readable description for error statuses */
-		errorDescriptions: Partial<Record<keyof ItemProperties, string>>;
+		errorDescriptions: Partial<Record<keyof ItemProperties, unknown>>;
+		/**
+		 * Not implemented.
+		 *
+		 * Consider adding if programatic (as opposed to human-readable) info about validation errors is desired.
+		 */
+		errorTags?: Partial<Record<keyof ItemProperties, never>>;
 	}
 
-	/** All allowed property-specific metadata keys */
-	export interface MetaData {
-		/** Minimum value of numeric properties. Must be larger than or equal to `-2**15`. */
-		min?: number,
-		/** Maximum value of numeric properties. Must be smaller than or equal to `2**15 - 1`. */
-		max?: number,
+	// Voodoo for transforming an item property into a set thereof, including handling of arrays and objects
+	type ValueSet<T extends keyof ItemProperties> = (
+		Required<ItemProperties>[T] extends ScalarType
+			? ReadonlySet<Required<ItemProperties>[T]>								// A: Scalar to Set<Scalar>
+			: Required<ItemProperties>[T] extends readonly ScalarType[]
+				? ReadonlySet<Required<ItemProperties>[T][number]> 					// B: Scalar[] to Set<Scalar>
+				: Required<ItemProperties>[T] extends Readonly<Partial<Record<string, ScalarType>>>
+					? ReadonlySet<NonNullable<Required<ItemProperties>[T][string]>>	// C: Record<string, Scalar> to Set<Scalar>
+					: ReadonlySet<never>
+	);
+
+	interface _MetaData<T extends keyof ItemProperties> {
+		/** Minimum value of numeric properties. */
+		readonly min?: number,
+		/** Maximum value of numeric properties. */
+		readonly max?: number,
+		/** The minimum length of a sized object (array, string, set, _etc._) */
+		readonly minLength?: number;
+		/** The maximum length of a sized object (array, string, set, _etc._) */
+		readonly maxLength?: number;
 		/**
 		 * Whether the numeric value represents an integer
 		 * @default true
 		 */
-		isInteger?: boolean,
+		readonly isInteger?: boolean,
 		/** Default value of numeric properties */
-		defaultNumber?: number,
+		readonly defaultNumber?: number,
+		/** A regex pattern for validation string properties */
+		readonly valuePattern?: RegExp;
+		readonly isColor?: boolean;
+		readonly colorSchema?: ReadonlySet<BCColor>;
+		/**
+		 * A set of all valid property values.
+		 * Should only be used when dealing with a set of literal scalars, an array therof or an object thereof
+		 */
+		readonly valueSet?: ValueSet<T>;
 	}
 
-	type MetaDataTemplate<T> = { [k in keyof T]: MetaData };
+	// Expand with private, `_`-prefixed properties that can be used as cache for lazy property loading
+	/** All allowed property-specific metadata keys */
+	type MetaData<T extends keyof ItemProperties> = Prettify<
+		_MetaData<T>
+		& { -readonly [k in keyof _MetaData<T> as `_${k}`]: _MetaData<T>[k] }
+	>;
+
+	interface MetaData2<T extends ScalarType> extends MetaData<any> {
+		name: string;
+		readonly valueSet?: ReadonlySet<T>;
+	}
+
+	// Voodoo for determining whether
+	type Extract2<K extends keyof ItemProperties, ValidatorType> = (
+		Required<ItemProperties>[K] extends ValidatorType
+			? Required<ItemProperties>[K]
+			: Extract<ItemProperties[K], ValidatorType>
+	);
+
+	type MetaDataTemplate = { [k in keyof ItemProperties]: MetaData<k> };
+
 
 	/** Item property specific metadata keys */
-	export interface PropertyMetaData extends MetaDataTemplate<ItemProperties> {
-		LayerScaleX: Mandatory<MetaData, "min" | "max" | "defaultNumber" | "isInteger">;
-		LayerScaleY: Mandatory<MetaData, "min" | "max" | "defaultNumber" | "isInteger">;
-		LayerTranslationX: Mandatory<MetaData, "min" | "max"  | "defaultNumber">;
-		LayerTranslationY: Mandatory<MetaData, "min" | "max" | "defaultNumber">;
-		LayerRotation: Mandatory<MetaData, "min" | "max" | "defaultNumber">;
+	interface PropertyMetaData extends MetaDataTemplate {
+		LayerScaleX: Mandatory<MetaData<"LayerScaleX">, "min" | "max" | "defaultNumber" | "isInteger">;
+		LayerScaleY: Mandatory<MetaData<"LayerScaleY">, "min" | "max" | "defaultNumber" | "isInteger">;
+		LayerTranslationX: Mandatory<MetaData<"LayerTranslationX">, "min" | "max"  | "defaultNumber">;
+		LayerTranslationY: Mandatory<MetaData<"LayerTranslationY">, "min" | "max" | "defaultNumber">;
+		LayerRotation: Mandatory<MetaData<"LayerRotation">, "min" | "max" | "defaultNumber">;
 	}
 
-	export type DataBundle = { asset: Asset, C?: Character };
+	type DataBundle = { asset: Asset, C?: Character };
 
 	/**
 	 * An interface representing constructor input for the {@link PropertyDataEntry} class.
 	 */
-	export interface Entry<T extends keyof ItemProperties> {
+	interface Entry<T extends keyof ItemProperties> {
 		/**
 		 * Property compression function
 		 * @param property The item property value
@@ -64,7 +114,7 @@ declare namespace ItemProperty {
 		 */
 		readonly compress?: (
 			this: PropertyDataEntry<T>,
-			property: NonNullable<ItemProperties[T]>,
+			property: Required<ItemProperties>[T],
 			itemData: DataBundle,
 			defaults?: ItemProperties[T],
 		) => undefined | ItemPropertiesMinimized;
@@ -76,7 +126,7 @@ declare namespace ItemProperty {
 		 */
 		readonly decompress?: (
 			this: PropertyDataEntry<T>,
-			property: NonNullable<ItemProperties[T] | ItemPropertiesMinimized[T]>,
+			property: Required<ItemProperties>[T] | Required<ItemPropertiesMinimized>[T],
 			itemData: DataBundle,
 		) => undefined | ItemProperties;
 		/**
@@ -87,7 +137,7 @@ declare namespace ItemProperty {
 		 */
 		readonly union?: (
 			this: PropertyDataEntry<T>,
-			properties: readonly [p0: NonNullable<ItemProperties[T]>, ...pN: NonNullable<ItemProperties[T]>[]],
+			properties: readonly [p0: Required<ItemProperties>[T], ...pN: Required<ItemProperties>[T][]],
 			itemData: DataBundle,
 		) => undefined | ItemProperties[T];
 		/**
@@ -98,7 +148,7 @@ declare namespace ItemProperty {
 		 */
 		readonly difference?: (
 			this: PropertyDataEntry<T>,
-			properties: readonly [p0: NonNullable<ItemProperties[T]>, p1: NonNullable<ItemProperties[T]>, ...pN: NonNullable<ItemProperties[T]>[]],
+			properties: readonly [p0: Required<ItemProperties>[T], p1: Required<ItemProperties>[T], ...pN: Required<ItemProperties>[T][]],
 			itemData: DataBundle,
 		) => undefined | ItemProperties[T];
 		/**
@@ -110,8 +160,8 @@ declare namespace ItemProperty {
 		 */
 		readonly compare?: (
 			this: PropertyDataEntry<T>,
-			prop1: NonNullable<ItemProperties[T]>,
-			prop2: NonNullable<ItemProperties[T]>,
+			prop1: Required<ItemProperties>[T],
+			prop2: Required<ItemProperties>[T],
 			itemData: DataBundle,
 		) => boolean;
 		/**
@@ -121,9 +171,9 @@ declare namespace ItemProperty {
 		 * @param defaults The default value of the property (if any)
 		 * @returns The validated property, validation status and an optional error message
 		 */
-		readonly validate?: (
+		readonly validate: (
 			this: PropertyDataEntry<T>,
-			prop: NonNullable<ItemProperties[T]>,
+			prop: Required<ItemProperties>[T],
 			itemData: DataBundle,
 			defaults?: ItemProperties[T],
 		) => ValidationOutput<ItemProperties[T]>;
@@ -136,30 +186,30 @@ declare namespace ItemProperty {
 		 */
 		readonly isSubset?: (
 			this: PropertyDataEntry<T>,
-			subProp: NonNullable<ItemProperties[T]>,
-			superProp: NonNullable<ItemProperties[T]>,
+			subProp: Required<ItemProperties>[T],
+			superProp: Required<ItemProperties>[T],
 			itemData: DataBundle,
 		) => boolean;
 		/**
 		 * Property-specific meta data (_e.g._ minimum and maximum values)
 		 */
-		readonly metaData: Readonly<PropertyMetaData[T]>;
+		readonly metaData?: PropertyMetaData[T];
 	}
 
-	export type Compress<T extends keyof ItemProperties> = NonNullable<Entry<T>["compress"]>;
-	export type Decompress<T extends keyof ItemProperties> = NonNullable<Entry<T>["decompress"]>;
-	export type Union<T extends keyof ItemProperties> = NonNullable<Entry<T>["union"]>;
-	export type Difference<T extends keyof ItemProperties> = NonNullable<Entry<T>["difference"]>;
-	export type Compare<T extends keyof ItemProperties> = NonNullable<Entry<T>["compare"]>;
-	export type Validate<T extends keyof ItemProperties> = NonNullable<Entry<T>["validate"]>;
-	export type IsSubset<T extends keyof ItemProperties> = NonNullable<Entry<T>["isSubset"]>;
+	type Compress<T extends keyof ItemProperties> = Required<Entry<T>>["compress"];
+	type Decompress<T extends keyof ItemProperties> = Required<Entry<T>>["decompress"];
+	type Union<T extends keyof ItemProperties> = Required<Entry<T>>["union"];
+	type Difference<T extends keyof ItemProperties> = Required<Entry<T>>["difference"];
+	type Compare<T extends keyof ItemProperties> = Required<Entry<T>>["compare"];
+	type Validate<T extends keyof ItemProperties> = Required<Entry<T>>["validate"];
+	type IsSubset<T extends keyof ItemProperties> = Required<Entry<T>>["isSubset"];
 
 	/**
 	 * An interface representing the {@link PropertyDataEntry} class.
 	 *
 	 * Compared to {@link Entry} function parameter types are generally a bit broader, being able to handle a wider range of nullish values
 	 */
-	export interface EntryNullable<T extends keyof ItemProperties> extends Unknown<Entry<T>> {
+	interface EntryNullable<T extends keyof ItemProperties> extends Unknown<Entry<T>> {
 		readonly compress: (
 			this: PropertyDataEntry<T>,
 			property: ItemProperties[T],
@@ -211,6 +261,6 @@ declare namespace ItemProperty {
 			superProp: ItemProperties[T],
 			itemData: DataBundle,
 		) => boolean;
-		readonly metaData: Readonly<NonNullable<PropertyMetaData[T]>>;
+		readonly metaData: Required<PropertyMetaData>[T];
 	}
 }

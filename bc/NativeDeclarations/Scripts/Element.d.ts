@@ -87,3 +87,49 @@ declare namespace ElementSearchQuery {
 		tag?: keyof HTMLElementTagNameMap;
 	}
 }
+
+declare namespace ElementInput {
+	/**
+	 * Controls {@link ElementInput.Create} can build.
+	 * Add a member here, then give it a tag in {@link ElementInput._tags}, when supporting another control.
+	 */
+	type KnownType = "text" | "number" | "password" | "textarea";
+
+	/**
+	 * {@link KnownType}, plus any other string so custom input types stay assignable
+	 * without collapsing autocomplete for the known controls.
+	 */
+	type Type = KnownType | (string & {});
+
+	/** Element produced for a {@link Type}. */
+	type ElementFor<T extends Type = Type> = T extends "textarea" ? HTMLTextAreaElement : HTMLInputElement;
+
+	/** DOM tag used for a {@link Type}. Only `"textarea"` is not an `<input>`. */
+	type TagFor<T extends Type = Type> = T extends "textarea" ? "textarea" : "input";
+
+	/** Fields shared by every {@link Type}. New controls should extend this. */
+	interface SharedOptions {
+		type?: Type;
+	}
+
+	/** `<input type="text">` and `<input type="password">`. */
+	interface TextOptions extends SharedOptions {
+		type?: "text";
+	}
+
+	/**
+	 * `<input type="number">`.
+	 * Sanitizes on blur and steps on wheel via {@link ElementNumberInputBlur} and {@link ElementNumberInputWheel},
+	 * unless `htmlOptions` replaces those listeners. `inputMode` defaults to `"numeric"`.
+	 */
+	interface NumberOptions extends SharedOptions {
+		type: "number";
+	}
+
+	/** `<textarea>`. */
+	interface TextAreaOptions extends SharedOptions {
+		type: "textarea";
+	}
+
+	type Options = TextOptions | NumberOptions | TextAreaOptions;
+}

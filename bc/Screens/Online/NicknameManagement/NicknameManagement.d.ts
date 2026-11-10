@@ -1,3 +1,11 @@
+declare var NicknameManagementBackground: string;
+/** @type {Character} */
+declare var NicknameManagementTarget: Character;
+declare var NicknameManagementLock: boolean;
+/**
+ * Loads the Nickname Management screen
+ * @type {ScreenLoadHandler}
+ */
 declare function NicknameManagementLoad(): Promise<void>;
 /**
  * Draws the Nickname Management controls
@@ -15,7 +23,3 @@ declare function NicknameManagementClick(): void;
  * @param {boolean} Save - Received rule data object.
  */
 declare function NicknameManagementExit(Save?: boolean): void;
-declare var NicknameManagementBackground: string;
-/** @type {Character} */
-declare var NicknameManagementTarget: Character;
-declare var NicknameManagementLock: boolean;

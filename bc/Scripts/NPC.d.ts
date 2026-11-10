@@ -1,4 +1,10 @@
 /**
+ * List for all possible pairs of NPC traits. A pair defines opposites.
+ * @constant
+ * @type {[NPCTraitType, NPCTraitType][]}
+ */
+declare var NPCTrait: [NPCTraitType, NPCTraitType][];
+/**
  * Sets a specific trait for a NPC
  * @param {NPCCharacter} C - NPC to set the trait for
  * @param {NPCTraitType} TraitName - Name of the trait to set
@@ -98,9 +104,3 @@ declare function NPCLoveChange(C: NPCCharacter, LoveFactor: number): void;
  * @returns {void} - Nothing
  */
 declare function NPCInteraction(C: NPCCharacter): void;
-/**
- * List for all possible pairs of NPC traits. A pair defines opposites.
- * @constant
- * @type {[NPCTraitType, NPCTraitType][]}
- */
-declare var NPCTrait: [NPCTraitType, NPCTraitType][];

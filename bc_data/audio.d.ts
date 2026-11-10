@@ -527,4 +527,12 @@ export type AudioType = {
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Audio/Zipper1.mp3|BondageProjects/Bondage-College}
 	 */
 	readonly Zipper1: "Audio/Zipper1.mp3";
+	/**
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Audio/bubbles.mp3|BondageProjects/Bondage-College}
+	 */
+	readonly bubbles: "Audio/bubbles.mp3";
+	/**
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Audio/pour.mp3|BondageProjects/Bondage-College}
+	 */
+	readonly pour: "Audio/pour.mp3";
 }

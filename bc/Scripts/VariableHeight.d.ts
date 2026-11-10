@@ -1,4 +1,20 @@
 /**
+ * The name of vertical slider element
+ * @constant {string}
+ */
+declare const VariableHeightSliderId = "VariableHeightSlider";
+/**
+ * The name of the numerical percentage input element
+ * @constant {string}
+ */
+declare const VariableHeightNumerId = "VariableHeightNumber";
+/**
+ * A lookup for the variable height configurations for each registered variable height item
+ * @constant
+ * @type {Record<string, VariableHeightData>}
+ */
+declare const VariableHeightDataLookup: Record<string, VariableHeightData>;
+/**
  * Registers a variable height extended item. This automatically creates the item's load, draw and click functions.
  * @param {Asset} asset - The asset being registered
  * @param {VariableHeightConfig} config - The variable height configuration
@@ -9,7 +25,7 @@ declare function VariableHeightRegister(asset: Asset, config: VariableHeightConf
 /**
  * Parse the passed variable height draw data as passed via the extended item config
  * @param {VariableHeightConfigDrawData} drawData - The to-be parsed draw data
- * @return {ExtendedItemDrawData<ElementMetaData.VariableHeight>} - The parsed draw data
+ * @returns {ExtendedItemDrawData<ElementMetaData.VariableHeight>} - The parsed draw data
  */
 declare function VariableHeightGetDrawData(drawData: VariableHeightConfigDrawData): ExtendedItemDrawData<ElementMetaData.VariableHeight>;
 /**
@@ -34,6 +50,16 @@ declare function VariableHeightDraw(data: VariableHeightData): void;
  * @returns {void} - Nothing
  */
 declare function VariableHeightClick(data: VariableHeightData): void;
+/**
+ * Apply the setting change, throttling to limit the refreshes
+ * @param {number} height - The new height value for the character
+ * @param {number} maxHeight - The maximum height value for the character
+ * @param {number} minHeight - The minimum height value for the character
+ * @param {VariableHeightSetHeightCallback} setHeight - The control that triggered the change
+ * @param {string} fromElementId - The element ID
+ * @returns {void} - Nothing
+ */
+declare const VariableHeightChange: (height: number, maxHeight: number, minHeight: number, setHeight: VariableHeightSetHeightCallback, fromElementId: string) => void;
 /**
  * Exit handler for the item's extended item screen. Updates the character and removes UI components.
  * @returns {void} - Nothing
@@ -66,13 +92,14 @@ declare function VariableHeightSetOverrideHeight(property: ItemProperties, heigh
 /**
  * Initialize the variable height item properties
  * @param {VariableHeightData} Data
- * @param {Item} Item - The item in question
  * @param {Character} C - The character that has the item equiped
+ * @param {Item} Item - The item in question
  * @param {boolean} Push - Whether to push to changes to the server
  * @param {boolean} Refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
+ * @param {boolean} log - Whether to log `Init()`-initialized property updates to the console
  * @returns {boolean} Whether properties were initialized or not
  */
-declare function VariableHeightInit(Data: VariableHeightData, C: Character, Item: Item, Push: boolean, Refresh: boolean): boolean;
+declare function VariableHeightInit(Data: VariableHeightData, C: Character, Item: Item, Push: boolean, Refresh: boolean, log?: boolean): boolean;
 /**
  * Dynamically construct the next and previous extended item option for the passed item
  * @param {VariableHeightData} data - The extended item data
@@ -89,29 +116,3 @@ declare function VariableHeightConstructOptions(data: VariableHeightData, item: 
  * @param {Item} item - The item in question
  */
 declare function VariableHeightPropertyRevert(C: Character, item: Item): void;
-/**
- * The name of vertical slider element
- * @const {string}
- */
-declare const VariableHeightSliderId: "VariableHeightSlider";
-/**
- * The name of the numerical percentage input element
- * @const {string}
- */
-declare const VariableHeightNumerId: "VariableHeightNumber";
-/**
- * A lookup for the variable height configurations for each registered variable height item
- * @const
- * @type {Record<string, VariableHeightData>}
- */
-declare const VariableHeightDataLookup: Record<string, VariableHeightData>;
-/**
- * Apply the setting change, throttling to limit the refreshes
- * @param {number} height - The new height value for the character
- * @param {number} maxHeight - The maximum height value for the character
- * @param {number} minHeight - The minimum height value for the character
- * @param {VariableHeightSetHeightCallback} setHeight - The control that triggered the change
- * @param {string} fromElementId - The element ID
- * @returns {void} - Nothing
- */
-declare const VariableHeightChange: (height: number, maxHeight: number, minHeight: number, setHeight: VariableHeightSetHeightCallback, fromElementId: string) => void;

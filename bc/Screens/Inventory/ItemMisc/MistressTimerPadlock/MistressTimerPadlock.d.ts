@@ -1,6 +1,3 @@
-declare function InventoryItemMiscMistressTimerPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemMiscMistressTimerPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemMiscMistressTimerPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 declare const MistressTimerChooseOptions: ({
     unit: {
         readonly label: "Minutes";
@@ -22,3 +19,9 @@ declare const MistressTimerChooseOptions: ({
 })[];
 declare let MistressTimerChooseOptionsIndex: number;
 declare let MistressTimerChooseIndexes: number[];
+/** @type {ExtendedItemScriptHookCallbacks.Draw<NoArchItemData>} */
+declare function InventoryItemMiscMistressTimerPadlockDrawHook({ asset }: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Click<NoArchItemData>} */
+declare function InventoryItemMiscMistressTimerPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Exit<NoArchItemData>} */
+declare function InventoryItemMiscMistressTimerPadlockExitHook(Data: NoArchItemData, OriginalFunction: (() => void) | null): void;

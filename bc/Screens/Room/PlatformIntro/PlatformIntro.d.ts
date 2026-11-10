@@ -1,3 +1,8 @@
+declare var PlatformIntroDrawAsset: number;
+/**
+ * Loads the screen
+ * @type {ScreenLoadHandler}
+ */
 declare function PlatformIntroLoad(): Promise<void>;
 /**
  * Runs and draws the screen.
@@ -14,4 +19,3 @@ declare function PlatformIntroClick(): void;
  * @returns {void} - Nothing
  */
 declare function PlatformIntroExit(): void;
-declare var PlatformIntroDrawAsset: number;

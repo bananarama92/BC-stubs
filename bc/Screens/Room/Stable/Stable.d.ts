@@ -1,3 +1,24 @@
+declare var StableBackground: string;
+/** @type {NPCCharacter} */
+declare var StableTrainer: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var StablePony: NPCCharacter;
+declare var StablePonyPass: boolean;
+declare var StablePonyFail: boolean;
+/** @type {Item[] | null} */
+declare var StablePlayerAppearance: Item[] | null;
+/** @type {"Pony" | "Trainer" | null} */
+declare var StablePlayerOutfitWorn: "Pony" | "Trainer" | null;
+declare var StablePlayerTrainingActiv: boolean;
+declare var StablePlayerTrainingLessons: number;
+declare var StablePlayerTrainingBehavior: number;
+declare var StableTrainerTrainingExercises: number;
+declare var StablePlayerInIsolation: boolean;
+/** @type {number} */
+declare var StablePlayerInIsolationStart: number;
+/** @type {number} */
+declare var StablePlayerInIsolationEnd: number;
+declare var StableExamPoint: number;
 declare function StablePlayerIsPony(): boolean;
 declare function StablePlayerIsExamPony(): boolean;
 declare function StablePlayerIsTrainer(): boolean;
@@ -24,6 +45,10 @@ declare function StableCanHideDice(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function StableCanPlayClubCard(): boolean;
+/**
+ * Loads the stable characters with many restraints
+ * @type {ScreenLoadHandler}
+ */
 declare function StableLoad(): Promise<void>;
 declare function StableRun(): void;
 declare function StableClick(): void;
@@ -35,12 +60,12 @@ declare function StableTrialTrainerTraining(): void;
 declare function StableTrialTrainerTrainingEnd(): SafePromise<void>;
 /**
  * @param {StableFeeType} Fee
- * @returns
+ * @returns {number}
  */
-declare function StableFeeValue(Fee: StableFeeType): 0 | 10 | 500 | 50;
+declare function StableFeeValue(Fee: StableFeeType): number;
 /**
  * @param {StableFeeType} Fee
- * @returns
+ * @returns {boolean}
  */
 declare function StableCanPayTheFee(Fee: StableFeeType): boolean;
 /**
@@ -208,70 +233,6 @@ declare function StablePlayerTExamHurdles(): void;
 declare function StablePlayerTExamHurdlesEnd(): SafePromise<void>;
 declare function StablePlayerTExamPass(): void;
 declare function StablePlayerTExamEnd(): void;
-/**
- * @param {number} Timer
- * @param {number} S
- * @param {number} S2
- * @param {string} Item
- * @param {string} Background
- * @param {Character} Character
- * @param {Character | null} SecondCharacter
- * @param {string} Stage
- * @param {string} CurrentDialog
- * @param {string} CancelStage
- * @param {string} CancelCurrentDialog
- * @param {*} Behavior
- * @param {StableProgressType} ProgressOperation
- */
-declare function StableGenericProgressStart(Timer: number, S: number, S2: number, Item: string, Background: string, Character: Character, SecondCharacter: Character | null, Stage: string, CurrentDialog: string, CancelStage: string, CancelCurrentDialog: string, Behavior: any, ProgressOperation: StableProgressType): void;
-declare function StableGenericDrawProgress(): void;
-declare function StableGenericFinished(): void;
-declare function StableGenericCancel(): void;
-declare function StableGenericProgressEnd(): void;
-declare function StableKeyDown(event: KeyboardEvent): boolean;
-/**
- *
- * @param {boolean} Reverse
- */
-declare function StableGenericRun(Reverse: boolean): void;
-declare function StableHideDice(): void;
-/**
- * When the player starts a club card game
- * @returns {void} - Nothing
- */
-declare function StableClubCardStart(): void;
-/**
- * When the player ends a club card game
- * @returns {SafePromise<void>}
- */
-declare function StableClubCardEnd(): SafePromise<void>;
-/**
- * Runs the pony command from the online chat box
- * @param {string} Activity - The activity to validate
- * @returns {void} - Nothing
- */
-declare function StableDoActivity(Activity: string): void;
-declare var StableBackground: string;
-/** @type {NPCCharacter} */
-declare var StableTrainer: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var StablePony: NPCCharacter;
-declare var StablePonyPass: boolean;
-declare var StablePonyFail: boolean;
-/** @type {Item[] | null} */
-declare var StablePlayerAppearance: Item[] | null;
-/** @type {"Pony" | "Trainer" | null} */
-declare var StablePlayerOutfitWorn: "Pony" | "Trainer" | null;
-declare var StablePlayerTrainingActiv: boolean;
-declare var StablePlayerTrainingLessons: number;
-declare var StablePlayerTrainingBehavior: number;
-declare var StableTrainerTrainingExercises: number;
-declare var StablePlayerInIsolation: boolean;
-/** @type {number} */
-declare var StablePlayerInIsolationStart: number;
-/** @type {number} */
-declare var StablePlayerInIsolationEnd: number;
-declare var StableExamPoint: number;
 declare var StableProgress: number;
 declare var StableSecondProgress: number;
 declare var StableProgressAuto: number;
@@ -293,4 +254,48 @@ declare var StableProgressBehavior: number;
 /** @type {StableProgressType | "StruggleImpossible"} */
 declare var StableProgressOperation: StableProgressType | "StruggleImpossible";
 declare var StableProgressStruggleCount: number;
+/**
+ * @param {number} Timer
+ * @param {number} S
+ * @param {number} S2
+ * @param {string} Item
+ * @param {string} Background
+ * @param {Character} Character
+ * @param {Character | null} SecondCharacter
+ * @param {string} Stage
+ * @param {string} CurrentDialog
+ * @param {string} CancelStage
+ * @param {string} CancelCurrentDialog
+ * @param {*} Behavior
+ * @param {StableProgressType} ProgressOperation
+ */
+declare function StableGenericProgressStart(Timer: number, S: number, S2: number, Item: string, Background: string, Character: Character, SecondCharacter: Character | null, Stage: string, CurrentDialog: string, CancelStage: string, CancelCurrentDialog: string, Behavior: any, ProgressOperation: StableProgressType): void;
+declare function StableGenericDrawProgress(): void;
+declare function StableGenericFinished(): void;
+declare function StableGenericCancel(): void;
+declare function StableGenericProgressEnd(): void;
+/** @type {KeyboardEventListener} */
+declare function StableKeyDown(event: KeyboardEvent): boolean;
+/**
+ *
+ * @param {boolean} Reverse
+ */
+declare function StableGenericRun(Reverse: boolean): void;
+declare function StableHideDice(): void;
+/**
+ * When the player starts a club card game
+ * @returns {void} - Nothing
+ */
+declare function StableClubCardStart(): void;
+/**
+ * When the player ends a club card game
+ * @returns {SafePromise<void>}
+ */
+declare function StableClubCardEnd(): SafePromise<void>;
 declare var StableActivityList: string[];
+/**
+ * Runs the pony command from the online chat box
+ * @param {string} Activity - The activity to validate
+ * @returns {void} - Nothing
+ */
+declare function StableDoActivity(Activity: string): void;

@@ -1,3 +1,52 @@
+declare var PandoraBackground: string;
+/** @type {PandoraBaseRoom} */
+declare var PandoraCurrentRoom: PandoraBaseRoom;
+/** @type {PandoraBaseRoom | null} */
+declare var PandoraPreviousRoom: PandoraBaseRoom | null;
+/** @type {PandoraBaseRoom[]} */
+declare var PandoraRoom: PandoraBaseRoom[];
+/** @type {PandoraFloorDirection[]} */
+declare var PandoraDirectionList: PandoraFloorDirection[];
+/** @type {PandoraFloorDirection[]} */
+declare var PandoraDirectionListFrom: PandoraFloorDirection[];
+/** @type {""|"Search"|"Rest"|"Paint"} */
+declare var PandoraMode: "" | "Search" | "Rest" | "Paint";
+declare var PandoraModeTimer: number;
+/** @type {Item[] | null} */
+declare var PandoraModeAppearance: Item[] | null;
+/** @type {{ Text: string, Timer: number } | null} */
+declare var PandoraMessage: {
+    Text: string;
+    Timer: number;
+} | null;
+/** @type {NPCCharacter[]} */
+declare var PandoraParty: NPCCharacter[];
+/** @type {null | NPCCharacter} */
+declare var PandoraFightCharacter: null | NPCCharacter;
+declare var PandoraRandomNPCList: string[];
+declare var PandoraMoveDirectionTimer: {
+    Direction: string;
+    Timer: number;
+};
+/** @type {PandoraBaseRoom} */
+declare var PandoraTargetRoom: PandoraBaseRoom;
+declare var PandoraClothes: string;
+declare var PandoraWillpower: number;
+declare var PandoraMaxWillpower: number;
+declare var PandoraMoney: number;
+declare var PandoraTimer: number;
+declare var PandoraChestCount: number;
+declare var PandoraPaint: boolean;
+declare var PandoraReverseMaidDone: number;
+declare var PandoraReverseMaidTotal: number;
+declare var PandoraPenitentiaryCreateTimer: number;
+declare var PandoraPenitentiaryActivityList: string[];
+declare var PandoraPenitentiaryActivityTimer: number;
+/** @type {string[]} */
+declare var PandoraPenitentiarySafewordRooms: string[];
+/** @type {AssetName[]} */
+declare var PandoraPenitentiaryCageList: AssetName[];
+declare var PandoraPenitentiaryStartNewRoom: boolean;
 /**
  * NPC Dialog functions
  * @returns {boolean} - TRUE if the dialog option will be available to the player
@@ -14,6 +63,10 @@ declare function PandoraCostumeIs(Costume: string): boolean;
 /** @param {number} Number */
 declare function PandoraQuizIs(Number: number): boolean;
 declare function PandoraCanAskForPaint(): boolean;
+/**
+ * Loads the Pandora's Box screen
+ * @type {ScreenLoadHandler}
+ */
 declare function PandoraLoad(): Promise<void>;
 /**
  * Returns the color of the direction buttons, it can change if the direction was recently navigated to
@@ -30,10 +83,10 @@ declare function PandoraDirectionButtonColor(Direction: "North" | "South" | "Eas
 declare function PandoraDirectionAvailable(Direction: "North" | "South" | "East" | "West"): boolean;
 /**
  * Draws the Pandora text data
- * @param {Number} Y - The Y position
- * @returns {boolean} - Whether the direction can be accessed
+ * @param {number} Y - The Y position
+ * @returns {void}
  */
-declare function PandoraDrawData(Y: number): boolean;
+declare function PandoraDrawData(Y: number): void;
 /**
  * Runs and draws all Pandora's Box screens
  * @returns {void} - Nothing
@@ -87,10 +140,10 @@ declare function PandoraDress(C: Character, Type: string): void;
 declare function PandoraEnterRoom(Room: PandoraBaseRoom, Direction?: PandoraDirection | ""): void;
 /**
  * Generates a chest randomly in the room cell (35% odds in cat burglar missions, 5% in other missions)
- * @param {object} Room - The room in which the chest could be placed
+ * @param {PandoraBaseRoom} Room - The room in which the chest could be placed
  * @returns {void} - Nothing
  */
-declare function PandoraCreateChest(Room: object): void;
+declare function PandoraCreateChest(Room: PandoraBaseRoom): void;
 /**
  * Generates random rooms linked on the entry room
  * @param {PandoraBaseRoom} EntryRoom - The room object that's leading to that floor
@@ -142,9 +195,10 @@ declare function PandoraCharacterLeave(): void;
 declare function PandoraCharacterFight(): void;
 /**
  * Resolves the fight between the player and the current character
- * @returns {void} - Nothing
+ * @param {boolean} victory - Wether the player won or not
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function PandoraCharacterFightEnd(): void;
+declare function PandoraCharacterFightEnd(victory: boolean): SafePromise<void>;
 /**
  * When the mission fails, we go back to the infiltration room
  * @returns {void} - Nothing
@@ -173,10 +227,10 @@ declare function PandoraPlayerClothes(Type: string): void;
 declare function PandoraStartRecruit(): void;
 /**
  * Increases the infiltration skill on some events
- * @param {string|number} Progress - The progression factor
+ * @param {number} Progress - The progression factor
  * @returns {void} - Nothing
  */
-declare function PandoraInfiltrationChange(Progress: string | number): void;
+declare function PandoraInfiltrationChange(Progress: number): void;
 /**
  * Checks if the player can bring the NPC to her private room
  * @returns {boolean} - Returns true if the player can
@@ -213,7 +267,7 @@ declare function PandoraBribeInfo(Amount: number, Type: "Little" | "Full"): void
 declare function PandoraRecruitBoost(): void;
 /**
  * Starts the player punishment process and jumps to the punishment Dominatrix
- * @param {Boolean} [FromKidnapper]
+ * @param {boolean} [FromKidnapper]
  * @param {string} [FixIntro]
  * @returns {void} - Nothing
  */
@@ -263,9 +317,9 @@ declare function PandoraPlayerUngag(): void;
 declare function PandoraPunishmentSentence(Minutes: string | number): void;
 /**
  * Starts the single-player punishment
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function PandoraPunishmentStart(): void;
+declare function PandoraPunishmentStart(): SafePromise<void>;
 /**
  * Prepares the multi-player punishment
  * @returns {void} - Nothing
@@ -344,7 +398,7 @@ declare function PandoraPenitentiaryDoActivity(Activity: string): void;
 /**
  * Called from chat room, processes hidden Pandora Prison messages
  * @param {Character} SenderCharacter - The character sending the message
- * @param {String} Interaction - The message sent
+ * @param {string} Interaction - The message sent
  * @returns {void} - Nothing to be used
  */
 declare function PandoraPenitentiaryHiddenMessage(SenderCharacter: Character, Interaction: string): void;
@@ -389,46 +443,3 @@ declare function PandoraClubCardStart(): void;
  * @returns {SafePromise<void>}
  */
 declare function PandoraClubCardEnd(): SafePromise<void>;
-declare var PandoraBackground: string;
-/** @type {PandoraBaseRoom} */
-declare var PandoraCurrentRoom: PandoraBaseRoom;
-/** @type {PandoraBaseRoom} */
-declare var PandoraPreviousRoom: PandoraBaseRoom;
-/** @type {PandoraBaseRoom[]} */
-declare var PandoraRoom: PandoraBaseRoom[];
-/** @type {PandoraFloorDirection[]} */
-declare var PandoraDirectionList: PandoraFloorDirection[];
-/** @type {PandoraFloorDirection[]} */
-declare var PandoraDirectionListFrom: PandoraFloorDirection[];
-/** @type {""|"Search"|"Rest"|"Paint"} */
-declare var PandoraMode: "" | "Search" | "Rest" | "Paint";
-declare var PandoraModeTimer: number;
-declare var PandoraModeAppearance: null;
-declare var PandoraMessage: null;
-/** @type {NPCCharacter[]} */
-declare var PandoraParty: NPCCharacter[];
-/** @type {null | NPCCharacter} */
-declare var PandoraFightCharacter: null | NPCCharacter;
-declare var PandoraRandomNPCList: string[];
-declare namespace PandoraMoveDirectionTimer {
-    let Direction: string;
-    let Timer: number;
-}
-/** @type {null | PandoraBaseRoom} */
-declare var PandoraTargetRoom: null | PandoraBaseRoom;
-declare var PandoraClothes: string;
-declare var PandoraWillpower: number;
-declare var PandoraMaxWillpower: number;
-declare var PandoraMoney: number;
-declare var PandoraTimer: number;
-declare var PandoraChestCount: number;
-declare var PandoraPaint: boolean;
-declare var PandoraReverseMaidDone: number;
-declare var PandoraReverseMaidTotal: number;
-declare var PandoraPenitentiaryCreateTimer: number;
-declare var PandoraPenitentiaryActivityList: string[];
-declare var PandoraPenitentiaryActivityTimer: number;
-declare var PandoraPenitentiarySafewordRooms: any[];
-/** @type {AssetName[]} */
-declare var PandoraPenitentiaryCageList: AssetName[];
-declare var PandoraPenitentiaryStartNewRoom: boolean;

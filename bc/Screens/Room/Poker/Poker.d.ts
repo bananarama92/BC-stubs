@@ -1,3 +1,27 @@
+declare var PokerBackground: string;
+/** @type {PokerPlayer[]} */
+declare var PokerPlayer: PokerPlayer[];
+/** @type {PokerMode} */
+declare var PokerMode: PokerMode;
+/** @type {PokerGameType} */
+declare var PokerGame: PokerGameType;
+declare var PokerShowPlayer: boolean;
+/** @type {PokerAsset[]} */
+declare var PokerAsset: PokerAsset[];
+declare var PokerPlayerCount: number;
+/** @type {number[]} */
+declare var PokerTableCards: number[];
+declare var PokerMessage: string;
+declare var PokerResultMessage: string;
+declare var PokerAnte: number;
+declare var PokerAnteCount: number;
+declare var PokerPot: number;
+declare var PokerChallenge: string[];
+declare var PokerOpponentList: string[];
+/**
+ * Loads the Bondage Poker room
+ * @type {ScreenLoadHandler}
+ */
 declare function PokerLoad(): Promise<void>;
 /**
  * Draws a poker player behind the table
@@ -67,6 +91,10 @@ declare function PokerNextChallenge(): PokerPlayer;
  * @returns {void} - Nothing
  */
 declare function PokerClick(): void;
+/**
+ * Handles key presses during the bondage poker game
+ * @type {KeyboardEventListener}
+ */
 declare function PokerKeyDown(event: KeyboardEvent): boolean;
 /**
  * When the player exits from Bondage Poker
@@ -113,23 +141,3 @@ declare function PokerProcess(Action: string): void;
  * @returns {void} - Nothing
  */
 declare function PokerDealHands(): void;
-declare var PokerBackground: string;
-/** @type {PokerPlayer[]} */
-declare var PokerPlayer: PokerPlayer[];
-/** @type {PokerMode} */
-declare var PokerMode: PokerMode;
-/** @type {PokerGameType} */
-declare var PokerGame: PokerGameType;
-declare var PokerShowPlayer: boolean;
-/** @type {PokerAsset[]} */
-declare var PokerAsset: PokerAsset[];
-declare var PokerPlayerCount: number;
-/** @type {number[]} */
-declare var PokerTableCards: number[];
-declare var PokerMessage: string;
-declare var PokerResultMessage: string;
-declare var PokerAnte: number;
-declare var PokerAnteCount: number;
-declare var PokerPot: number;
-declare var PokerChallenge: string[];
-declare var PokerOpponentList: string[];

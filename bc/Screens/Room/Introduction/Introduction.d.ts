@@ -1,3 +1,38 @@
+declare var IntroductionBackground: string;
+/** @type {NPCCharacter} */
+declare var IntroductionMaid: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var IntroductionSub: NPCCharacter;
+declare var IntroductionMaidOpinion: number;
+declare var IntroductionHasBasicItems: boolean;
+declare var IntroductionSubRestrained: boolean;
+/** @type {IntroductionRescueJobType | null} */
+declare var IntroductionRescueScenario: IntroductionRescueJobType | null;
+/** @type {IntroductionRescueJobType[]} */
+declare var IntroductionRescueScenarioList: IntroductionRescueJobType[];
+/** @type {IntroductionJobType[]} */
+declare var IntroductionJobList: IntroductionJobType[];
+/** @type {IntroductionJobType | null} */
+declare var IntroductionJobCurrent: IntroductionJobType | null;
+declare var IntroductionJobCount: number;
+/** @type {undefined | string} */
+declare var IntroductionJobParam: undefined | string;
+/** @type {{ Active: boolean; X: number; Y: number } & ({} | { ClickScreen: string; ClickX: number; ClickY: number })} */
+declare var IntroductionJobPosition: {
+    Active: boolean;
+    X: number;
+    Y: number;
+} & ({} | {
+    ClickScreen: string;
+    ClickX: number;
+    ClickY: number;
+});
+/** @type {AssetLockType[]} */
+declare var IntroductionJobLockList: AssetLockType[];
+/** @type {ModuleScreens["Room"][]} */
+declare var IntroductionJobSearchList: ModuleScreens["Room"][];
+/** @type {number[]} */
+declare var IntroductionJobMember: number[];
 /**
  * Checks if the introduction room is currently the scenario for maid rescue mission.
  * @param {string} ScenarioName - Name of the rescue scenario to check for.
@@ -44,6 +79,10 @@ declare function IntroductionCannotTakeJobRestrained(): boolean;
  * @returns {boolean} - Returns TRUE if both aren't restrained
  */
 declare function IntroductionCanPlayClubCard(): boolean;
+/**
+ * Loads the introduction room and its 2 NPCS
+ * @type {ScreenLoadHandler}
+ */
 declare function IntroductionLoad(): Promise<void>;
 /**
  * Runs and draws the main introduction room with its 3 characters.
@@ -163,38 +202,3 @@ declare function IntroductionClubCardStart(): void;
  * @returns {SafePromise<void>}
  */
 declare function IntroductionClubCardEnd(): SafePromise<void>;
-declare var IntroductionBackground: string;
-/** @type {NPCCharacter} */
-declare var IntroductionMaid: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var IntroductionSub: NPCCharacter;
-declare var IntroductionMaidOpinion: number;
-declare var IntroductionHasBasicItems: boolean;
-declare var IntroductionSubRestrained: boolean;
-/** @type {IntroductionRescueJobType | null} */
-declare var IntroductionRescueScenario: IntroductionRescueJobType | null;
-/** @type {IntroductionRescueJobType[]} */
-declare var IntroductionRescueScenarioList: IntroductionRescueJobType[];
-/** @type {IntroductionJobType[]} */
-declare var IntroductionJobList: IntroductionJobType[];
-/** @type {IntroductionJobType | null} */
-declare var IntroductionJobCurrent: IntroductionJobType | null;
-declare var IntroductionJobCount: number;
-/** @type {undefined | string} */
-declare var IntroductionJobParam: undefined | string;
-/** @type {{ Active: boolean; X: number; Y: number } & ({} | { ClickScreen: string; ClickX: number; ClickY: number })} */
-declare var IntroductionJobPosition: {
-    Active: boolean;
-    X: number;
-    Y: number;
-} & ({} | {
-    ClickScreen: string;
-    ClickX: number;
-    ClickY: number;
-});
-/** @type {AssetLockType[]} */
-declare var IntroductionJobLockList: AssetLockType[];
-/** @type {ModuleScreens["Room"][]} */
-declare var IntroductionJobSearchList: ModuleScreens["Room"][];
-/** @type {number[]} */
-declare var IntroductionJobMember: number[];

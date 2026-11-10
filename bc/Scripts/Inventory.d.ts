@@ -1,16 +1,16 @@
 /**
-* Add a new item by group & name to character inventory
-* @param {Character} C - The character that gets the new item added to her inventory
-* @param {AssetName} NewItemName - The name of the new item to add
-* @param {AssetGroupName} NewItemGroup - The group name of the new item to add
-* @param {boolean} [Push=true] - Set to TRUE to push to the server
-*/
+ * Add a new item by group & name to character inventory
+ * @param {Character} C - The character that gets the new item added to her inventory
+ * @param {AssetName} NewItemName - The name of the new item to add
+ * @param {AssetGroupName} NewItemGroup - The group name of the new item to add
+ * @param {boolean} [Push] - Set to TRUE to push to the server
+ */
 declare function InventoryAdd(C: Character, NewItemName: AssetName, NewItemGroup: AssetGroupName, Push?: boolean): void;
 /**
  * Adds multiple new items by group & name to the character inventory
  * @param {Character} C - The character that gets the new items added to her inventory
  * @param {InventoryBundle[]} NewItems - The new items to add
- * @param {Boolean} [Push=true] - Set to TRUE to push to the server, pushed by default
+ * @param {boolean} [Push] - Set to TRUE to push to the server, pushed by default
  */
 declare function InventoryAddMany(C: Character, NewItems: InventoryBundle[], Push?: boolean): void;
 /**
@@ -18,62 +18,62 @@ declare function InventoryAddMany(C: Character, NewItems: InventoryBundle[], Pus
  * @param {Character} C - The character to create the item for
  * @param {AssetGroupName} Group - The name of the asset group the item belongs to
  * @param {AssetName} Name - The name of the asset for the item
- * @return {InventoryItem | null} A new item for character using the specified asset name, or null if the specified asset could not be
+ * @returns {InventoryItem | null} A new item for character using the specified asset name, or null if the specified asset could not be
  *     found in the named group
  */
 declare function InventoryItemCreate(C: Character, Group: AssetGroupName, Name: AssetName): InventoryItem | null;
 /**
-* Deletes an item from the character inventory
-* @param {Character} C - The character on which we should remove the item
-* @param {AssetName} DelItemName - The name of the item to delete
-* @param {AssetGroupName} DelItemGroup - The group name of the item to delete
-* @param {boolean} [Push=true] - Set to TRUE to push to the server
-* @return {InventoryItem | null}
-*/
+ * Deletes an item from the character inventory
+ * @param {Character} C - The character on which we should remove the item
+ * @param {AssetName} DelItemName - The name of the item to delete
+ * @param {AssetGroupName} DelItemGroup - The group name of the item to delete
+ * @param {boolean} [Push] - Set to TRUE to push to the server
+ * @returns {InventoryItem | null}
+ */
 declare function InventoryDelete(C: Character, DelItemName: AssetName, DelItemGroup: AssetGroupName, Push?: boolean): InventoryItem | null;
 /**
  * Deletes all currently-owned items from a given group.
  *
  * @param {Character} C - The character to remove items from
  * @param {AssetGroupName} group - The group name to clear
- * @param {boolean} [push=true] - Whether to send an update to the server
- * @return {InventoryItem[]} The list of deleted items
+ * @param {boolean} [push] - Whether to send an update to the server
+ * @returns {InventoryItem[]} The list of deleted items
  */
 declare function InventoryDeleteGroup(C: Character, group: AssetGroupName, push?: boolean): InventoryItem[];
 /**
  * Loads the current inventory for a character, can be loaded from an object of Name/Group or a compressed array using LZString
- * @param {string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly AssetName[]>>} Inventory - An array of Name / Group of items to load
+ * @param {string | (readonly ItemBundle[]) | Partial<Record<AssetGroupName, readonly AssetName[]>>} Inventory - An array of Name / Group of items to load
  * @param {string} InventoryData
- * @return {InventoryBundle[]}
+ * @returns {InventoryBundle[]}
  */
-declare function InventoryLoad(Inventory: string | readonly ItemBundle[] | Partial<Record<AssetGroupName, readonly AssetName[]>>, InventoryData: string): InventoryBundle[];
+declare function InventoryLoad(Inventory: string | (readonly ItemBundle[]) | Partial<Record<AssetGroupName, readonly AssetName[]>>, InventoryData: string): InventoryBundle[];
 /**
  * Decompress inventory data into an item bundle
  * @param {string} Data - The string of data to load
- * @return {InventoryBundle[]}
+ * @returns {InventoryBundle[]}
  */
 declare function InventoryLoadCompressedData(Data: string): InventoryBundle[];
 /**
-* Creates the inventory data string from current inventory
-* @param {Character} C - The character on which we should load the inventory data string
-*/
+ * Creates the inventory data string from current inventory
+ * @param {Character} C - The character on which we should load the inventory data string
+ */
 declare function InventoryDataBuild(C: Character): string;
 /**
-* Checks if the character has the inventory available
-* @param {Character} C - The character on which we should remove the item
-* @param {AssetName} Name - The name of the item to validate
-* @param {AssetGroupName} Group - The group name of the item to validate
-* @returns {boolean} Whether the given item is in the given character's inventory.
-*/
+ * Checks if the character has the inventory available
+ * @param {Character} C - The character on which we should remove the item
+ * @param {AssetName} Name - The name of the item to validate
+ * @param {AssetGroupName} Group - The group name of the item to validate
+ * @returns {boolean} Whether the given item is in the given character's inventory.
+ */
 declare function InventoryAvailable(C: Character, Name: AssetName, Group: AssetGroupName): boolean;
 /**
  * Returns an error message if a prerequisite clashes with the character's items and clothes
  * @param {Character} C - The character on which we check for prerequisites
  * @param {AssetPrerequisite} Prerequisite - The name of the prerequisite
  * @param {null | Asset} asset - The asset (if any) for whom the prerequisite is checked
- * @returns - The error tag, can be converted to an error message
+ * @returns {AssetPrerequisiteCheck} - The error tag, can be converted to an error message
  */
-declare function InventoryPrerequisiteMessage(C: Character, Prerequisite: AssetPrerequisite, asset?: null | Asset): "CannotBeSuited" | "CannotHaveWand" | "NeedsChestHarness" | "NeedsHipHarness" | "NeedsNippleRings" | "CannotBaseUpper" | "CannotBackBoxTie" | "CannotBackCuffs" | "CannotBackElbowTouch" | "CannotOverTheHead" | "CannotYoked" | "CannotTapedHands" | "CannotBaseLower" | "CannotKneel" | "CannotKneelingSpread" | "CannotLegsClosed" | "CannotSpread" | "CannotHogtied" | "CannotAllFours" | "CannotSuspension" | "MustFreeFeetFirst" | "MustFreeArmsFirst" | "MustFreeLegsFirst" | "MustFreeHandsFirst" | "MustStandUpFirst" | "CannotBeUsedWhenMounted" | "RemoveSuspensionForItem" | "RemoveChastityFirst" | "RemoveChainForItem" | "MustCollaredFirst" | "MustBeOnBed" | "MustBeArmCuffedFirst" | "MustBeFeetCuffedFirst" | "RemoveClothesForItem" | "CannotBeUsedWhileServingDrinks" | "AddItemsToUse" | "MustHaveBreasts" | "MustHaveFlatChest" | "MustHaveVagina" | "MustHavePenis" | "CantHaveErection" | "CantBeLimp" | "MustRemoveChastityCage" | "MustNotHaveForcedErection" | "MustHaveFullPenisAccess" | "UnZipSuitForItem" | "CantCloseOnShaft" | InventoryPrerequisiteConflicts.ErrMessage | "CannotBeUsedOverMask" | "CannotBeUsedOverHood" | "MustFreeVulvaFirst" | "MustFreeClitFirst" | "MustFreeButtFirst" | "RemoveRestraintsFirst" | "RemoveFaceMaskFirst" | "OwnerBlockedRemotes" | "CantAttachMittens";
+declare function InventoryPrerequisiteMessage(C: Character, Prerequisite: AssetPrerequisite, asset?: null | Asset): AssetPrerequisiteCheck;
 /**
  * Prerequisite utility function that returns TRUE if the given character has an item equipped in the provided group
  * whose name matches one of the names in the provided list.
@@ -124,13 +124,69 @@ declare function InventoryDoItemsExposeGroup(C: Character, TargetGroup: AssetGro
  */
 declare function InventoryHasItemInAnyGroup(C: Character, GroupList: readonly AssetGroupName[]): boolean;
 /**
+ * Namespace with functions for identifying asset prerequisite conflicts.
+ * @namespace
+ */
+declare var InventoryPrerequisiteConflicts: {
+    /**
+     * The effective "layering" priorities of gags and (potentially) gag-like objects.
+     * Used for prerequisite checks that only apply to lower gags.
+     * @type {Partial<Record<AssetGroupName, number>>}
+     */
+    GagPriorities: Partial<Record<AssetGroupName, number>>;
+    /**
+     * private
+     * @template {keyof PropertiesArray} T
+     * @param {T} fieldName
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {PropertiesArray[T]} blockingPrereqs - The prerequisites we check for on lower gags
+     * @param {Asset|null} asset - The new gag
+     * @param {object} [options]
+     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
+     */
+    _GagCheck<T extends keyof PropertiesArray>(fieldName: T, C: Character, blockingPrereqs: PropertiesArray[T], asset?: Asset | null, options?: {
+        errMessage?: InventoryPrerequisiteConflicts.ErrMessage;
+        invert?: boolean;
+    }): InventoryPrerequisiteConflicts.ErrMessage;
+    /**
+     * Check if there are any lower gags with prerequisites that block the new gag from being applied
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {readonly AssetPrerequisite[]} blockingPrereqs - The prerequisites we check for on lower gags
+     * @param {Asset|null} asset - The new gag
+     * @param {object} [options]
+     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
+     */
+    GagPrerequisite(C: Character, blockingPrereqs: readonly AssetPrerequisite[], asset?: Asset | null, options?: {
+        errMessage?: InventoryPrerequisiteConflicts.ErrMessage;
+        invert?: boolean;
+    }): InventoryPrerequisiteConflicts.ErrMessage;
+    /**
+     * Check if there are any lower gags with effects that block the new gag from being applied
+     * @param {Character} C - The character on which we check for prerequisites
+     * @param {readonly EffectName[]} blockingEffects - The prerequisites we check for on lower gags
+     * @param {Asset|null} [asset] - The new gag
+     * @param {object} [options]
+     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
+     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
+     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
+     */
+    GagEffect(C: Character, blockingEffects: readonly EffectName[], asset?: Asset | null, options?: {
+        errMessage?: InventoryPrerequisiteConflicts.ErrMessage;
+        invert?: boolean;
+    }): InventoryPrerequisiteConflicts.ErrMessage;
+};
+/**
  * Returns an error message if we cannot add the item, no other items must block that prerequisite; `null` is returned otherwise
  * @param {Character} C - The character on which we check for prerequisites
  * @param {Asset} asset - The asset for which prerequisites should be checked. Any item equipped in the asset's group
  * will be ignored for the purposes of the prerequisite check.
- * @param {AssetPrerequisite | readonly AssetPrerequisite[]} [prerequisites=asset.Prerequisite] - An array of prerequisites or a string for a single
+ * @param {AssetPrerequisite | readonly AssetPrerequisite[]} [prerequisites] - An array of prerequisites or a string for a single
  * prerequisite. If nothing is provided, the asset's default prerequisites will be used
- * @param {readonly AssetPoseName[]} [allowActivePose=asset.AllowActivePose]
+ * @param {readonly AssetPoseName[]} [allowActivePose]
  * @returns {string | null} - An error message (if any)
  */
 declare function InventoryDisallow(C: Character, asset: Asset, prerequisites?: AssetPrerequisite | readonly AssetPrerequisite[], allowActivePose?: readonly AssetPoseName[]): string | null;
@@ -139,38 +195,39 @@ declare function InventoryDisallow(C: Character, asset: Asset, prerequisites?: A
  * @param {Character} C - The character on which we check for prerequisites
  * @param {Asset} asset - The asset for which prerequisites should be checked. Any item equipped in the asset's group
  * will be ignored for the purposes of the prerequisite check.
- * @param {AssetPrerequisite | readonly AssetPrerequisite[]} [prerequisites=asset.Prerequisite] - An array of prerequisites or a string for a single
+ * @param {AssetPrerequisite | readonly AssetPrerequisite[]} [prerequisites] - An array of prerequisites or a string for a single
  * prerequisite. If nothing is provided, the asset's default prerequisites will be used
- * @param {boolean} [setDialog=true] - If TRUE, set the screen dialog message at the same time
- * @param {readonly AssetPoseName[]} [allowActivePose=asset.AllowActivePose]
+ * @param {boolean} [setDialog] - If TRUE, set the screen dialog message at the same time
+ * @param {readonly AssetPoseName[]} [allowActivePose]
  * @returns {boolean} - TRUE if the item can be added to the character
  */
 declare function InventoryAllow(C: Character, asset: Asset, prerequisites?: AssetPrerequisite | readonly AssetPrerequisite[], setDialog?: boolean, allowActivePose?: readonly AssetPoseName[]): boolean;
 /**
-* Gets the current item / cloth worn a specific area (AssetGroup)
-* @param {Character} C - The character on which we must check the appearance
-* @param {AssetGroupName|null|undefined} AssetGroup - The name of the asset group to scan
-* @returns {Item|null} - Returns the appearance which is the item / cloth asset, color and properties
-*/
+ * Gets the current item / cloth worn a specific area (AssetGroup)
+ * @param {Character} C - The character on which we must check the appearance
+ * @param {AssetGroupName|null|undefined} AssetGroup - The name of the asset group to scan
+ * @returns {Item|null} - Returns the appearance which is the item / cloth asset, color and properties
+ */
 declare function InventoryGet(C: Character, AssetGroup: AssetGroupName | null | undefined): Item | null;
 /**
-* Applies crafted properties to the item used
-* @param {null | Character} Source - The character that used the item (if any)
-* @param {Character} Target - The character on which the item is used
-* @param {AssetGroupItemName} GroupName - The name of the asset group to scan
-* @param {CraftingItem | CraftingPartialItem} Craft - The crafted properties to apply
-* @param {boolean} Refresh - TRUE if we must refresh the character
-* @param {boolean} PreConfigureItem - TRUE if the default, pre-configured item state of the crafted item must be (re-)applied
-* @param {boolean} CraftWarn - Whether a warning should logged whenever the crafting validation fails
-* @returns {void}
-*/
+ * Applies crafted properties to the item used
+ * @param {null | Character} Source - The character that used the item (if any)
+ * @param {Character} Target - The character on which the item is used
+ * @param {AssetGroupItemName} GroupName - The name of the asset group to scan
+ * @param {CraftingItem | CraftingPartialItem} Craft - The crafted properties to apply
+ * @param {boolean} Refresh - TRUE if we must refresh the character
+ * @param {boolean} PreConfigureItem - TRUE if the default, pre-configured item state of the crafted item must be (re-)applied
+ * @param {boolean} CraftWarn - Whether a warning should logged whenever the crafting validation fails
+ * @returns {void}
+ */
 declare function InventoryCraft(Source: null | Character, Target: Character, GroupName: AssetGroupItemName, Craft: CraftingItem | CraftingPartialItem, Refresh: boolean, PreConfigureItem?: boolean, CraftWarn?: boolean): void;
 /**
-* Returns the number of items on a character with a specific property
-* @param {Character} C - The character to validate
-* @param {CraftingPropertyType} Property - The property to count
-* @returns {number} - The number of times the property is found
-*/
+ * Returns the number of items on a character with a specific property
+ * @param {Character} C - The character to validate
+ * @param {CraftingPropertyType} Property - The property to count
+ * @param {boolean} Stacking - Whether to account for property stacking
+ * @returns {number} - The number of times the property is found
+ */
 declare function InventoryCraftCount(C: Character, Property: CraftingPropertyType, Stacking?: boolean): number;
 /**
  * @deprecated - Superseded by {@link CraftingCraftGetEffect}
@@ -192,36 +249,36 @@ declare function InventoryCraftPropertyIs(): void;
  */
 declare function InventoryWear(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, ItemColor?: null | Readonly<ItemColor>, Difficulty?: null | number, MemberNumber?: null | number, Craft?: null | Readonly<CraftingItem> | Readonly<CraftingPartialItem>, Refresh?: boolean): Item | null;
 /**
-* Sets the difficulty to remove an item for a body area
-* @param {Character} C - The character that is wearing the item
-* @param {AssetGroupItemName} AssetGroup - The name of the asset group
-* @param {number} Difficulty - The new difficulty level to escape from the item
-*/
+ * Sets the difficulty to remove an item for a body area
+ * @param {Character} C - The character that is wearing the item
+ * @param {AssetGroupItemName} AssetGroup - The name of the asset group
+ * @param {number} Difficulty - The new difficulty level to escape from the item
+ */
 declare function InventorySetDifficulty(C: Character, AssetGroup: AssetGroupItemName, Difficulty: number): void;
 /**
-* Returns TRUE if there's already a locked item at a given body area
-* @param {Character} C - The character that is wearing the item
-* @param {AssetGroupItemName} AssetGroup - The name of the asset group (body area)
-* @param {boolean} CheckProperties - Set to TRUE to check for additionnal properties
-* @returns {boolean} - TRUE if the item is locked
-*/
+ * Returns TRUE if there's already a locked item at a given body area
+ * @param {Character} C - The character that is wearing the item
+ * @param {AssetGroupItemName} AssetGroup - The name of the asset group (body area)
+ * @param {boolean} CheckProperties - Set to TRUE to check for additionnal properties
+ * @returns {boolean} - TRUE if the item is locked
+ */
 declare function InventoryLocked(C: Character, AssetGroup: AssetGroupItemName, CheckProperties: boolean): boolean;
 /**
  * Makes the character wear a random item from a body area
  * @param {Character} C - The character that must wear the item
  * @param {AssetGroupName} GroupName - The name of the asset group (body area)
- * @param {number} [Difficulty] - The difficulty, on top of the base asset difficulty, to assign to the item
- * @param {null | boolean} [Refresh=true] - Do not call CharacterRefresh if false
- * @param {null | boolean} [MustOwn=false] - If TRUE, only assets that the character owns can be worn. Otherwise any asset can
+ * @param {null | number} [Difficulty] - The difficulty, on top of the base asset difficulty, to assign to the item
+ * @param {null | boolean} [Refresh] - Do not call CharacterRefresh if false
+ * @param {null | boolean} [MustOwn] - If TRUE, only assets that the character owns can be worn. Otherwise any asset can
  * be used
- * @param {boolean} [Extend=true] - Whether or not to randomly extend the item (i.e. set the item type), provided it has
+ * @param {boolean} [Extend] - Whether or not to randomly extend the item (i.e. set the item type), provided it has
  * an archetype that supports random extension
- * @param {readonly AssetName[]} [AllowedAssets=null] - A list of assets from which one must be selected
- * @param {boolean} [IgnoreRequirements=false] - If True, the group being blocked and prerequisites will not prevent the item being added.
+ * @param {readonly AssetName[]} [AllowedAssets] - A list of assets from which one must be selected
+ * @param {boolean} [IgnoreRequirements] - If True, the group being blocked and prerequisites will not prevent the item being added.
  *  NOTE: Long-term this should be replaced with better checks before calling this function.
  * @returns {Item | null} - The equipped item (if any)
  */
-declare function InventoryWearRandom(C: Character, GroupName: AssetGroupName, Difficulty?: number, Refresh?: null | boolean, MustOwn?: null | boolean, Extend?: boolean, AllowedAssets?: readonly AssetName[], IgnoreRequirements?: boolean): Item | null;
+declare function InventoryWearRandom(C: Character, GroupName: AssetGroupName, Difficulty?: null | number, Refresh?: null | boolean, MustOwn?: null | boolean, Extend?: boolean, AllowedAssets?: readonly AssetName[], IgnoreRequirements?: boolean): Item | null;
 /**
  * Randomly extends an item (sets an item type, etc.) on a character
  * @param {Character} C - The character wearing the item
@@ -239,7 +296,7 @@ declare function InventoryRandomExtend(C: Character, GroupName: AssetGroupName, 
  * @param {AssetGroupName | undefined} GroupName - The asset group to pick the asset from. Set to an empty string to not filter by group.
  * @param {readonly Asset[]} [AllowedAssets] - Optional parameter: A list of assets from which one can be selected. If not provided,
  *     the full list of all assets is used.
- * @param {boolean} [IgnorePrerequisites=false] - If True, skip the step to check whether prerequisites are met
+ * @param {boolean} [IgnorePrerequisites] - If True, skip the step to check whether prerequisites are met
  *  NOTE: Long-term this should be replaced with better checks before calling this function.
  * @returns {Asset|null} - The randomly selected asset or `undefined` if none found
  */
@@ -271,12 +328,12 @@ declare function InventoryRemove(C: Character, AssetGroup: AssetGroupName | read
  */
 declare function InventoryRemoveItems(C: Character, items: Item | readonly Item[], options?: null | InventoryRemoveOptions): Item[];
 /**
-* Returns TRUE if the body area (Asset Group) for a character is blocked for either restraints (default) or activities and cannot be used
-* @param {Character} C - The character on which we validate the group
-* @param {AssetGroupItemName} GroupName - The name of the asset group (body area), defaults to `C.FocusGroup`
-* @param {boolean} [Activity=false] - if TRUE check if activity is allowed on the asset group
-* @returns {boolean} - TRUE if the group is blocked
-*/
+ * Returns TRUE if the body area (Asset Group) for a character is blocked for either restraints (default) or activities and cannot be used
+ * @param {Character} C - The character on which we validate the group
+ * @param {AssetGroupItemName} GroupName - The name of the asset group (body area), defaults to `C.FocusGroup`
+ * @param {boolean} [Activity] - if TRUE check if activity is allowed on the asset group
+ * @returns {boolean} - TRUE if the group is blocked
+ */
 declare function InventoryGroupIsBlockedForCharacter(C: Character, GroupName: AssetGroupItemName, Activity?: boolean): boolean;
 /**
  * Returns TRUE if no item can be used by the player on the character because of the map distance
@@ -285,11 +342,11 @@ declare function InventoryGroupIsBlockedForCharacter(C: Character, GroupName: As
  */
 declare function InventoryIsBlockedByDistance(C: Character): boolean;
 /**
-* Returns TRUE if the body area is blocked by an owner rule
-* @param {Character} C - The character on which we validate the group
-* @param {AssetGroupName} GroupName - The name of the asset group (body area)
-* @returns {boolean} - TRUE if the group is blocked
-*/
+ * Returns TRUE if the body area is blocked by an owner rule
+ * @param {Character} C - The character on which we validate the group
+ * @param {AssetGroupName} GroupName - The name of the asset group (body area)
+ * @returns {boolean} - TRUE if the group is blocked
+ */
 declare function InventoryGroupIsBlockedByOwnerRule(C: Character, GroupName: AssetGroupName): boolean;
 /**
  * Returns an error message if the body area (Asset Group) for a character is blocked, and `null` otherwise.
@@ -312,25 +369,29 @@ declare function InventoryGroupIsAvailable(C: Character, GroupName: AssetGroupIt
  */
 declare function InventoryGroupIsBlocked(C: Character, GroupName: AssetGroupItemName, Activity?: boolean): boolean;
 /**
-* Returns TRUE if an item has a specific effect
-* @param {Item} Item - The item from appearance that must be validated
-* @param {EffectName} [Effect] - The name of the effect to validate, can be undefined to check for any effect
-* @param {boolean} [CheckProperties=true] - If properties should be checked (defaults to `true`)
-* @returns {boolean} `true` if the effect is on the item
-*/
+ * Returns TRUE if an item has a specific effect
+ * @param {Item} Item - The item from appearance that must be validated
+ * @param {EffectName} [Effect] - The name of the effect to validate, can be undefined to check for any effect
+ * @param {boolean} [CheckProperties] - If properties should be checked (defaults to `true`)
+ * @returns {boolean} `true` if the effect is on the item
+ */
 declare function InventoryItemHasEffect(Item: Item, Effect?: EffectName, CheckProperties?: boolean): boolean;
 /**
-* Returns TRUE if an item lock is pickable
-* @param {Item} Item - The item from appearance that must be validated
-* @returns {boolean} - TRUE if PickDifficulty is on the item
-*/
+ * Returns TRUE if an item lock is pickable
+ * @param {Item} Item - The item from appearance that must be validated
+ * @returns {boolean} - TRUE if PickDifficulty is on the item
+ */
 declare function InventoryItemIsPickable(Item: Item): boolean;
+/** @satisfies {Set<keyof PropertiesArray>} */
+declare const PropertiesArrayLike: Set<"AllowActivePose" | "AllowActivity" | "AllowActivityOn" | "AllowBlock" | "AllowEffect" | "AllowExpression" | "AllowHide" | "AllowHideItem" | "Attribute" | "AvailableLocations" | "Block" | "Category" | "DefaultColor" | "Effect" | "Expose" | "ExpressionPrerequisite" | "ExpressionTrigger" | "Fetish" | "Hide" | "HideItem" | "HideItemExclude" | "MemberNumberList" | "Prerequisite" | "Require" | "SetPose" | "Texts" | "Tint" | "UnHide">;
+/** @satisfies {Set<keyof PropertiesRecord>} */
+declare const PropertiesObjectLike: Set<"ActivityExpression" | "AllowLockType" | "PoseMapping" | "RemoveItemOnRemove" | "TypeRecord">;
 /**
  * Returns the value of a given property of an appearance item, prioritizes the Property object.
  * @template {keyof ItemProperties | keyof Asset | keyof AssetGroup} Name
  * @param {Item} Item - The appearance item to scan
  * @param {Name} PropertyName - The property name to get.
- * @param {boolean} [CheckGroup=false] - Whether or not to fall back to the item's group if the property is not found on
+ * @param {boolean} [CheckGroup] - Whether or not to fall back to the item's group if the property is not found on
  * Property or Asset.
  * @returns {(ItemProperties & Asset & AssetGroup)[Name] | undefined} - The value of the requested property for the given item.
  * Returns either undefined, an empty array or object if the property or the item itself does not exist.
@@ -343,34 +404,34 @@ declare function InventoryGetItemProperty<Name extends keyof ItemProperties | ke
  */
 declare function InventoryExpressionTriggerApply(C: Character, expressions: readonly ExpressionTrigger[]): void;
 /**
-* Returns the padlock item that locks another item
-* @param {Item} item - The item from appearance that must be scanned
-* @returns {Item|null} - A padlock item or NULL if none
-*/
+ * Returns the padlock item that locks another item
+ * @param {Item} item - The item from appearance that must be scanned
+ * @returns {Item|null} - A padlock item or NULL if none
+ */
 declare function InventoryGetLock(item: Item): Item | null;
 /**
-* Returns TRUE if the item has an OwnerOnly flag, such as the owner padlock
-* @param {Item} Item - The item from appearance that must be scanned
-* @returns {boolean} - TRUE if owner only
-*/
+ * Returns TRUE if the item has an OwnerOnly flag, such as the owner padlock
+ * @param {Item} Item - The item from appearance that must be scanned
+ * @returns {boolean} - TRUE if owner only
+ */
 declare function InventoryOwnerOnlyItem(Item: Item): boolean;
 /**
-* Returns TRUE if the item has a LoverOnly flag, such as the lover padlock
-* @param {Item} Item - The item from appearance that must be scanned
-* @returns {boolean} - TRUE if lover only
-*/
+ * Returns TRUE if the item has a LoverOnly flag, such as the lover padlock
+ * @param {Item} Item - The item from appearance that must be scanned
+ * @returns {boolean} - TRUE if lover only
+ */
 declare function InventoryLoverOnlyItem(Item: Item): boolean;
 /**
-* Returns TRUE if the item has a FamilyOnly flag, such as the D/s family padlock
-* @param {Item} Item - The item from appearance that must be scanned
-* @returns {boolean} - TRUE if family only
-*/
+ * Returns TRUE if the item has a FamilyOnly flag, such as the D/s family padlock
+ * @param {Item} Item - The item from appearance that must be scanned
+ * @returns {boolean} - TRUE if family only
+ */
 declare function InventoryFamilyOnlyItem(Item: Item): boolean;
 /**
-* Returns TRUE if the character is wearing at least one restraint that's locked with an extra lock
-* @param {Character} C - The character to scan
-* @returns {boolean} - TRUE if one restraint with an extra lock is found
-*/
+ * Returns TRUE if the character is wearing at least one restraint that's locked with an extra lock
+ * @param {Character} C - The character to scan
+ * @returns {boolean} - TRUE if one restraint with an extra lock is found
+ */
 declare function InventoryCharacterHasLockedRestraint(C: Character): boolean;
 /**
  *
@@ -380,30 +441,30 @@ declare function InventoryCharacterHasLockedRestraint(C: Character): boolean;
  */
 declare function InventoryCharacterIsWearingLock(C: Character, LockName: AssetLockType): boolean;
 /**
-* Returns TRUE if the character is wearing at least one item that's a restraint with a OwnerOnly flag, such as the
-* owner padlock
-* @param {Character} C - The character to scan
-* @returns {boolean} - TRUE if one owner only restraint is found
-*/
+ * Returns TRUE if the character is wearing at least one item that's a restraint with a OwnerOnly flag, such as the
+ * owner padlock
+ * @param {Character} C - The character to scan
+ * @returns {boolean} - TRUE if one owner only restraint is found
+ */
 declare function InventoryCharacterHasOwnerOnlyRestraint(C: Character): boolean;
 /**
-* Returns TRUE if the character is wearing at least one item that's a restraint with a LoverOnly flag, such as the
-* lover padlock
-* @param {Character} C - The character to scan
-* @returns {boolean} - TRUE if one lover only restraint is found
-*/
+ * Returns TRUE if the character is wearing at least one item that's a restraint with a LoverOnly flag, such as the
+ * lover padlock
+ * @param {Character} C - The character to scan
+ * @returns {boolean} - TRUE if one lover only restraint is found
+ */
 declare function InventoryCharacterHasLoverOnlyRestraint(C: Character): boolean;
 /**
-* Returns TRUE if the character is wearing at least one item that's a restraint with a FamilyOnly flag
-* @param {Character} C - The character to scan
-* @returns {boolean} - TRUE if one family only restraint is found
-*/
+ * Returns TRUE if the character is wearing at least one item that's a restraint with a FamilyOnly flag
+ * @param {Character} C - The character to scan
+ * @returns {boolean} - TRUE if one family only restraint is found
+ */
 declare function InventoryCharacterHasFamilyOnlyRestraint(C: Character): boolean;
 /**
-* Returns TRUE if at least one item on the character can be locked
-* @param {Character} C - The character to scan
-* @returns {boolean} - TRUE if at least one item can be locked
-*/
+ * Returns TRUE if at least one item on the character can be locked
+ * @param {Character} C - The character to scan
+ * @returns {boolean} - TRUE if at least one item can be locked
+ */
 declare function InventoryHasLockableItems(C: Character): boolean;
 /**
  * Determines whether an item in its current state permits locks.
@@ -417,22 +478,22 @@ declare function InventoryDoesItemAllowLock(item: Item): boolean;
  * @param {Item|AssetGroupName|null} ItemOrGroupName - The item from appearance to lock
  * @param {Item|AssetLockType} LockOrLockType - The asset of the lock or the name of the lock asset
  * @param {null|Character|string} [AppliedBy] - The character applying the lock, or message to show
- * @param {boolean} [Update=true] - Whether or not to update the character
-*/
+ * @param {boolean} [Update] - Whether or not to update the character
+ */
 declare function InventoryLock(C: Character, ItemOrGroupName: Item | AssetGroupName | null, LockOrLockType: Item | AssetLockType, AppliedBy?: null | Character | string, Update?: boolean): void;
 /**
  * Unlocks an item and removes all related properties
  * @param {Character} C - The character on which the item must be unlocked
  * @param {Item|AssetGroupItemName} ItemOrGroupName - The item from appearance to unlock
- * @param {boolean} [refreshDialog=true] - Refreshes the character dialog
+ * @param {boolean} [refreshDialog] - Refreshes the character dialog
  */
 declare function InventoryUnlock(C: Character, ItemOrGroupName: Item | AssetGroupItemName, refreshDialog?: boolean): void;
 /**
-* Applies a random lock on an item
-* @param {Character} C - The character on which the item must be locked
-* @param {Item} item - The item from appearance to lock
-* @param {Character} AppliedBy - Set to TRUE if the source is the owner, to apply owner locks
-*/
+ * Applies a random lock on an item
+ * @param {Character} C - The character on which the item must be locked
+ * @param {Item} item - The item from appearance to lock
+ * @param {Character} AppliedBy - Set to TRUE if the source is the owner, to apply owner locks
+ */
 declare function InventoryLockRandom(C: Character, item: Item, AppliedBy: Character): false | undefined;
 /**
  * Applies random locks on each character items that can be locked
@@ -448,12 +509,12 @@ declare function InventoryFullLockRandom(C: Character, AppliedBy: Character): vo
  */
 declare function InventoryFullLock(C: Character, LockType: AssetLockType, AppliedBy?: Character): void;
 /**
-* Removes all common keys from the player inventory
-*/
+ * Removes all common keys from the player inventory
+ */
 declare function InventoryConfiscateKey(): void;
 /**
-* Removes the remotes of the vibrators from the player inventory
-*/
+ * Removes the remotes of the vibrators from the player inventory
+ */
 declare function InventoryConfiscateRemote(): void;
 /**
  * Returns TRUE if character wears any of the requested items in the given group
@@ -483,22 +544,22 @@ declare function InventorySetPermission(groupName: AssetGroupName, assetName: As
  */
 declare function InventoryTogglePermission(Item: Item, Type?: string | null, Worn?: boolean, push?: boolean): ItemPermissionMode;
 /**
-* Returns TRUE if a specific item / asset is blocked by the character item permissions
-* @param {Character} C - The character on which we check the permissions
-* @param {AssetName} AssetName - The asset / item name to scan
-* @param {AssetGroupName} AssetGroup - The asset group name to scan
-* @param {string | null} [AssetType] - The asset type to scan
-* @returns {boolean} - TRUE if asset / item is blocked
-*/
+ * Returns TRUE if a specific item / asset is blocked by the character item permissions
+ * @param {Character} C - The character on which we check the permissions
+ * @param {AssetName} AssetName - The asset / item name to scan
+ * @param {AssetGroupName} AssetGroup - The asset group name to scan
+ * @param {string | null} [AssetType] - The asset type to scan
+ * @returns {boolean} - TRUE if asset / item is blocked
+ */
 declare function InventoryIsPermissionBlocked(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, AssetType?: string | null): boolean;
 /**
-* Returns TRUE if a specific item / asset is favorited by the character item permissions
-* @param {Character} C - The character on which we check the permissions
-* @param {AssetName} AssetName - The asset / item name to scan
-* @param {AssetGroupName} AssetGroup - The asset group name to scan
-* @param {string | null} [AssetType] - The asset type to scan
-* @returns {boolean} - TRUE if asset / item is a favorite
-*/
+ * Returns TRUE if a specific item / asset is favorited by the character item permissions
+ * @param {Character} C - The character on which we check the permissions
+ * @param {AssetName} AssetName - The asset / item name to scan
+ * @param {AssetGroupName} AssetGroup - The asset group name to scan
+ * @param {string | null} [AssetType] - The asset type to scan
+ * @returns {boolean} - TRUE if asset / item is a favorite
+ */
 declare function InventoryIsFavorite(C: Character, AssetName: AssetName, AssetGroup: AssetGroupName, AssetType?: string | null): boolean;
 /**
  * Returns TRUE if a specific item / asset is limited by the character item permissions
@@ -537,22 +598,22 @@ declare function InventoryIsAllowedLimited(C: Character, item: Item, type?: stri
 /**
  * Returns TRUE if the item is a key, having the effect of unlocking other items
  * @param {Item} Item - The item to validate
- * @returns {Boolean} - TRUE if item is a key
+ * @returns {boolean} - TRUE if item is a key
  */
 declare function InventoryIsKey(Item: Item): boolean;
 /**
  * Serialises the provided character's inventory into a string for easy comparisons, inventory items are uniquely
  * identified by their name and group
  * @param {PlayerCharacter} C - The character whose inventory we should serialise
- * @return {string} - A simple string representation of the character's inventory
+ * @returns {string} - A simple string representation of the character's inventory
  */
 declare function InventoryStringify(C: PlayerCharacter): string;
 /**
  * Returns TRUE if all of the asset categories are allowed in the current chat room
- * @param {readonly AssetCategory[] | undefined} Category - An array of string containing all the categories to validate
- * @return {boolean} - TRUE if it's allowed
+ * @param {(readonly AssetCategory[]) | undefined} Category - An array of string containing all the categories to validate
+ * @returns {boolean} - TRUE if it's allowed
  */
-declare function InventoryChatRoomAllow(Category: readonly AssetCategory[] | undefined): boolean;
+declare function InventoryChatRoomAllow(Category: (readonly AssetCategory[]) | undefined): boolean;
 /**
  * Applies a preset expression from being shocked to the character if able
  * @param {Character} C - The character to update
@@ -573,54 +634,3 @@ declare function InventoryExtractLockProperties(property: ItemProperties): ItemP
  * @returns {icon is AssetLockType}
  */
 declare function InventoryIconIsPadlock(icon: InventoryIcon): icon is AssetLockType;
-declare namespace InventoryPrerequisiteConflicts {
-    let GagPriorities: Partial<Record<AssetGroupName, number>>;
-    /**
-     * private
-     * @template {keyof PropertiesArray} T
-     * @param {T} fieldName
-     * @param {Character} C - The character on which we check for prerequisites
-     * @param {PropertiesArray[T]} blockingPrereqs - The prerequisites we check for on lower gags
-     * @param {Asset|null} asset - The new gag
-     * @param {object} [options]
-     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
-     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
-     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
-     */
-    function _GagCheck<T extends keyof PropertiesArray>(fieldName: T, C: Character, blockingPrereqs: PropertiesArray[T], asset?: Asset | null, options?: {
-        errMessage?: InventoryPrerequisiteConflicts.ErrMessage | undefined;
-        invert?: boolean | undefined;
-    }): InventoryPrerequisiteConflicts.ErrMessage;
-    /**
-     * Check if there are any lower gags with prerequisites that block the new gag from being applied
-     * @param {Character} C - The character on which we check for prerequisites
-     * @param {readonly AssetPrerequisite[]} blockingPrereqs - The prerequisites we check for on lower gags
-     * @param {Asset|null} asset - The new gag
-     * @param {Object} [options]
-     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
-     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
-     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
-     */
-    function GagPrerequisite(C: Character, blockingPrereqs: readonly AssetPrerequisite[], asset?: Asset | null, options?: {
-        errMessage?: InventoryPrerequisiteConflicts.ErrMessage | undefined;
-        invert?: boolean | undefined;
-    }): InventoryPrerequisiteConflicts.ErrMessage;
-    /**
-     * Check if there are any lower gags with effects that block the new gag from being applied
-     * @param {Character} C - The character on which we check for prerequisites
-     * @param {readonly EffectName[]} blockingEffects - The prerequisites we check for on lower gags
-     * @param {Asset|null} [asset] - The new gag
-     * @param {object} [options]
-     * @param {InventoryPrerequisiteConflicts.ErrMessage} [options.errMessage] - The to-be returned message if the gag is blocked
-     * @param {boolean} [options.invert] - Whether the prerequisite check should be inverted (_i.e._ if "not any" instead of "any")
-     * @returns {InventoryPrerequisiteConflicts.ErrMessage} - Returns the error message if the gag is blocked, or an empty string if not
-     */
-    function GagEffect(C: Character, blockingEffects: readonly EffectName[], asset?: Asset | null, options?: {
-        errMessage?: InventoryPrerequisiteConflicts.ErrMessage | undefined;
-        invert?: boolean | undefined;
-    }): InventoryPrerequisiteConflicts.ErrMessage;
-}
-/** @satisfies {Set<keyof PropertiesArray>} */
-declare const PropertiesArrayLike: Set<"Block" | "Hide" | "Effect" | "Prerequisite" | "AllowActivity" | "AllowActivityOn" | "Expose" | "HideItem" | "HideItemExclude" | "Require" | "AllowActivePose" | "ExpressionTrigger" | "AllowEffect" | "AllowBlock" | "AllowHide" | "AllowHideItem" | "DefaultColor" | "Category" | "Fetish" | "AvailableLocations" | "Attribute" | "Tint" | "ExpressionPrerequisite" | "SetPose" | "AllowExpression" | "MemberNumberList" | "UnHide" | "Texts">;
-/** @satisfies {Set<keyof PropertiesRecord>} */
-declare const PropertiesObjectLike: Set<"AllowLockType" | "ActivityExpression" | "RemoveItemOnRemove" | "PoseMapping" | "TypeRecord">;

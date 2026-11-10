@@ -1,3 +1,14 @@
+declare var CheatBackground: string;
+declare var CheatAllow: boolean;
+declare var CheatList: string[];
+declare var CheatBonusList: string[];
+declare var CheatBonusFactor: number;
+declare var CheatBonusTime: number;
+/** @type {string[]} */
+declare var CheatActivated: string[];
+declare var CheatBrowserName: string;
+declare var CheatBrowserVersion: string;
+declare var CheatBrowserTime: number;
 /**
  * Checks if the cheats are valid
  * @returns {void} - Nothing
@@ -36,15 +47,8 @@ declare function CheatRun(): void;
  * @returns {void} - Nothing
  */
 declare function CheatClick(): void;
+/**
+ * Handles exiting the cheat screen by saving the cheats and going back to the login screen.
+ * @type {ScreenExitHandler}
+ */
 declare function CheatExit(): void;
-declare var CheatBackground: string;
-declare var CheatAllow: boolean;
-declare var CheatList: string[];
-declare var CheatBonusList: string[];
-declare var CheatBonusFactor: number;
-declare var CheatBonusTime: number;
-/** @type {string[]} */
-declare var CheatActivated: string[];
-declare var CheatBrowserName: string;
-declare var CheatBrowserVersion: string;
-declare var CheatBrowserTime: number;

@@ -1,3 +1,151 @@
+declare var WardrobeBackground: string;
+/** @type {(Character | null)[]} */
+declare var WardrobeCharacter: (Character | null)[];
+declare var WardrobeSelection: number;
+/** @deprecated */
+declare var WardrobeOffset: number;
+declare var WardrobeSize: number;
+/** @type {WardrobeReorderType} */
+declare var WardrobeReorderMode: WardrobeReorderType;
+/** @type {number[]} */
+declare var WardrobeReorderList: number[];
+/**
+ * Wardrobe screen state.
+ * @namespace
+ */
+declare var Wardrobe: {
+    previewColumns: number;
+    previewRows: number;
+    previewPerPage: () => number;
+    labelColumns: number;
+    labelRows: number;
+    labelPerPage: () => number;
+    search: string;
+    /** @type {Character} */
+    selectedCharacter: Character;
+    excludeBodyparts: boolean;
+    /** @type {ScreenSpecifier | null} */
+    returnScreen: ScreenSpecifier | null;
+    /** @type {string | null} */
+    appearanceBackup: string | null;
+    /** Cached result of {@link WardrobeGetFilteredSlots}. */
+    filteredSlotsCache: number[] | null;
+    /** Search query used to build {@link Wardrobe.filteredSlotsCache}. */
+    filteredSlotsQuery: string | null;
+    /** {@link WardrobeSize} used to build {@link Wardrobe.filteredSlotsCache}. */
+    filteredSlotsSize: number;
+    /**
+     * Per-canvas draw cache so {@link WardrobeRun} can skip unchanged blits.
+     * @type {Map<string, { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, signature: string }>}
+     */
+    canvasCache: Map<string, {
+        canvas: HTMLCanvasElement;
+        ctx: CanvasRenderingContext2D;
+        signature: string;
+    }>;
+    /** Bumped whenever a wardrobe preview appearance may have changed. */
+    drawGeneration: number;
+    /** @type {number[]} */
+    slotQueue: number[];
+    slotFrame: number;
+    emptySlotImage: string;
+    filledSlotImage: string;
+    /** @type {null | WardrobeActionPreview} */
+    previewAction: null | WardrobeActionPreview;
+    /** Slot used by the current Load/Save preview; `-1` when none. */
+    previewSlot: number;
+    /** Confirm dialog is open; ignore hover leave/blur. */
+    previewLocked: boolean;
+    /** FastLoad result shown on the main canvas while hovering Load. */
+    previewLoadCharacter: Character | null;
+    /** FastSave result shown on the side canvas while hovering Save. */
+    previewSaveCharacter: Character | null;
+    /** Full-size character columns on the left. */
+    characterPreview: {
+        width: number;
+        height: number;
+        /** Left: current character, or Load result while hovering Load. */
+        mainX: number;
+        /** Right: selected slot, or Save result while hovering Save. */
+        sideX: number;
+    };
+    /** Slot inspector panel, kept clear of both character previews. */
+    inspectorRect: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+    /** Preview grid area to the right of the full-size character(s). */
+    previewGrid: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+    /** Outfit names when previews are off: one column on the right. */
+    labelGrid: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+};
+declare const WardrobeID: Readonly<{
+    screen: "wardrobe-screen";
+    load: "wardrobe-load";
+    save: "wardrobe-save";
+    delete: "wardrobe-delete";
+    rename: "wardrobe-rename";
+    search: "wardrobe-search-button";
+    searchInput: "wardrobe-search";
+    name: "wardrobe-name";
+    noMatches: "wardrobe-no-matches";
+    status: "wardrobe-status";
+    reorder: "wardrobe-reorder";
+    exit: "wardrobe-exit";
+    excludeBodyparts: "wardrobe-exclude-bodyparts";
+    showPreviews: "wardrobe-show-previews";
+    previewOverlay: "wardrobe-preview-overlay";
+    previewOverlayClose: "wardrobe-preview-overlay-close";
+    mainCanvas: "wardrobe-main-canvas";
+    sideCanvas: "wardrobe-side-canvas";
+    loadPreview: "wardrobe-load-preview";
+    savePreview: "wardrobe-save-preview";
+    slotGrid: "wardrobe-slot-grid";
+    paginatePrev: "wardrobe-paginate-prev";
+    paginateNext: "wardrobe-paginate-next";
+    /**
+     * @param {number} index
+     * @returns {string}
+     */
+    slotCell: (index: number) => string;
+    /**
+     * @param {number} index
+     * @returns {string}
+     */
+    slotButton: (index: number) => string;
+    /**
+     * @param {number} index
+     * @returns {string}
+     */
+    slotCanvas: (index: number) => string;
+    /**
+     * @param {number} index
+     * @returns {string}
+     */
+    slotEmpty: (index: number) => string;
+    /**
+     * @param {number} index
+     * @returns {string}
+     */
+    slotActions: (index: number) => string;
+    /**
+     * @param {number} index
+     * @returns {string}
+     */
+    slotLoad: (index: number) => string;
+}>;
 /**
  * Slot preview canvas size/zoom. Previews display much smaller than the full character,
  * so a half-res buffer saves fill-rate without looking soft on tablets (also `CommonIsMobile`).
@@ -8,6 +156,12 @@ declare function WardrobeGetSlotCanvasSize(): {
     height: number;
     zoom: number;
 };
+/**
+ * Loads the player's wardrobe. when the player opens the wardrobe screen for the first time.
+ * This function is called dynamically.
+ * @type {ScreenLoadHandler}
+ *
+ */
 declare function WardrobeLoad(): Promise<void>;
 /**
  * Shows the wardrobe screen. This function is called dynamically on a repeated basis. So don't call complex functions
@@ -15,16 +169,33 @@ declare function WardrobeLoad(): Promise<void>;
  * @returns {void} - Nothing
  */
 declare function WardrobeRun(): void;
-declare function WardrobeClick(event: PointerEvent): void;
-declare function WardrobeResize(load: boolean): void;
+/**
+ * Handles the click events in the wardrobe screen. Clicks are propagated from CommonClick()
+ * @type {MouseEventListener}
+ */
+declare function WardrobeClick(): void;
+/**
+ * @type {ScreenResizeHandler}
+ */
+declare function WardrobeResize(): void;
 /**
  * Shrink visible slot names so they fit their label box after a layout change.
  * Fitting every slot in the mode-switch turn forces layout and holds the new grid off screen.
  * @returns {void} - Nothing
  */
 declare function WardrobeFitSlotLabels(): void;
+/**
+ * @type {KeyboardEventListener}
+ */
 declare function WardrobeKeyDown(event: KeyboardEvent): boolean;
+/**
+ * @type {ClipboardEventListener}
+ */
 declare function WardrobePaste(event: ClipboardEvent): void;
+/**
+ * Exits the wardorbe screen and sends the player back to her private room
+ * @type {ScreenExitHandler}
+ */
 declare function WardrobeExit(): void;
 /**
  * Unload the Wardrobe screen
@@ -153,7 +324,7 @@ declare function WardrobeReorderModeSet(newMode?: WardrobeReorderType | null): v
  * Set a wardrobe character name, sync it with server
  * @param {number} W - The number of the wardrobe slot to save
  * @param {string} Name - The name of the wardrobe slot
- * @param {boolean} [Push=false] -If set to true, the changes are pushed to the server
+ * @param {boolean} [Push] -If set to true, the changes are pushed to the server
  */
 declare function WardrobeSetCharacterName(W: number, Name: string, Push?: boolean): void;
 /**
@@ -166,7 +337,7 @@ declare function WardrobeAssetBundle(A: Item): ItemBundle;
  * Load character appearance from wardrobe, only load clothes on others
  * @param {Character} C - The character the appearance should be loaded for
  * @param {number} W - The spot in the wardrobe the appearance should be loaded to
- * @param {boolean} [Update=false] - If set to true, the appearance will be updated to the server
+ * @param {boolean} [Update] - If set to true, the appearance will be updated to the server
  * @param {WardrobeFastLoadOptions} [Options]
  * @returns {void} - Nothing
  */
@@ -190,7 +361,7 @@ declare function WardrobeRefreshSlotCharacter(slot: number, source: Character): 
  * Saves character appearance in player's wardrobe, use player's body as base for others
  * @param {Character} C - The character, whose appearance should be saved
  * @param {number} W - The spot in the wardrobe the current outfit should be saved to
- * @param {boolean} [Push=false] - If set to true, the wardrobe is saved on the server
+ * @param {boolean} [Push] - If set to true, the wardrobe is saved on the server
  * @returns {void} - Nothing
  */
 declare function WardrobeFastSave(C: Character, W: number, Push?: boolean): void;
@@ -257,7 +428,7 @@ declare function WardrobeGetCanvasCacheEntry(canvasId: string): {
  * Draw a character onto a wardrobe DOM canvas, skipping the blit when nothing changed.
  * @param {string} canvasId
  * @param {Character} character
- * @param {number} [zoom=1]
+ * @param {number} [zoom]
  * @returns {void} - Nothing
  */
 declare function WardrobeDrawToCanvas(canvasId: string, character: Character, zoom?: number): void;
@@ -275,8 +446,8 @@ declare function WardrobeTogglePreviewOverlay(slot: number): void;
  * @returns {HTMLCanvasElement}
  */
 declare function WardrobeCreateCharacterCanvas(id: string, { parent, hidden }?: {
-    parent?: ParentNode | undefined;
-    hidden?: boolean | undefined;
+    parent?: ParentNode;
+    hidden?: boolean;
 }): HTMLCanvasElement;
 /**
  * Create DOM controls used by the wardrobe screen.
@@ -339,6 +510,7 @@ declare function WardrobeSearchInput(this: HTMLInputElement): void;
  * @returns {void} - Nothing
  */
 declare function WardrobeSyncNameInput(): void;
+/** @type {KeyboardEventListener} */
 declare function WardrobeNameKeyDown(event: KeyboardEvent): boolean;
 /**
  * @deprecated
@@ -350,6 +522,7 @@ declare function WardrobeChangePage(): void;
  */
 declare function WardrobeDeleteSelectedOutfit(): void;
 /**
+ * @param {boolean} [push]
  * @returns {boolean}
  */
 declare function WardrobeRenameSelectedOutfit(push?: boolean): boolean;
@@ -384,134 +557,3 @@ declare function WardrobeGetExpression(C: Character): Partial<Record<ExpressionG
 declare function WardrobeGroupAccessible(C: Character, Group: AssetGroup, Options?: {
     ExcludeNonCloth: boolean;
 }): boolean;
-declare var WardrobeBackground: string;
-/** @type {(Character | null)[]} */
-declare var WardrobeCharacter: (Character | null)[];
-declare var WardrobeSelection: number;
-/** @deprecated */
-declare var WardrobeOffset: number;
-declare var WardrobeSize: number;
-/** @type {WardrobeReorderType} */
-declare var WardrobeReorderMode: WardrobeReorderType;
-/** @type {number[]} */
-declare var WardrobeReorderList: number[];
-declare namespace Wardrobe {
-    let previewColumns: number;
-    let previewRows: number;
-    function previewPerPage(): number;
-    let labelColumns: number;
-    let labelRows: number;
-    function labelPerPage(): number;
-    let search: string;
-    let selectedCharacter: Character;
-    let excludeBodyparts: boolean;
-    let returnScreen: ScreenSpecifier | null;
-    let appearanceBackup: string | null;
-    let filteredSlotsCache: number[] | null;
-    let filteredSlotsQuery: string | null;
-    let filteredSlotsSize: number;
-    let canvasCache: Map<string, {
-        canvas: HTMLCanvasElement;
-        ctx: CanvasRenderingContext2D;
-        signature: string;
-    }>;
-    let drawGeneration: number;
-    let slotQueue: number[];
-    let slotFrame: number;
-    let emptySlotImage: string;
-    let filledSlotImage: string;
-    let previewAction: null | WardrobeActionPreview;
-    let previewSlot: number;
-    let previewLocked: boolean;
-    let previewLoadCharacter: Character | null;
-    let previewSaveCharacter: Character | null;
-    namespace characterPreview {
-        let width: number;
-        let height: number;
-        let mainX: number;
-        let sideX: number;
-    }
-    namespace inspectorRect {
-        export let x: number;
-        export let y: number;
-        let width_1: number;
-        export { width_1 as width };
-        let height_1: number;
-        export { height_1 as height };
-    }
-    namespace previewGrid {
-        let x_1: number;
-        export { x_1 as x };
-        let y_1: number;
-        export { y_1 as y };
-        let width_2: number;
-        export { width_2 as width };
-        let height_2: number;
-        export { height_2 as height };
-    }
-    namespace labelGrid {
-        let x_2: number;
-        export { x_2 as x };
-        let y_2: number;
-        export { y_2 as y };
-        let width_3: number;
-        export { width_3 as width };
-        let height_3: number;
-        export { height_3 as height };
-    }
-}
-declare const WardrobeID: Readonly<{
-    screen: "wardrobe-screen";
-    load: "wardrobe-load";
-    save: "wardrobe-save";
-    delete: "wardrobe-delete";
-    rename: "wardrobe-rename";
-    search: "wardrobe-search-button";
-    searchInput: "wardrobe-search";
-    name: "wardrobe-name";
-    noMatches: "wardrobe-no-matches";
-    status: "wardrobe-status";
-    reorder: "wardrobe-reorder";
-    exit: "wardrobe-exit";
-    excludeBodyparts: "wardrobe-exclude-bodyparts";
-    showPreviews: "wardrobe-show-previews";
-    previewOverlay: "wardrobe-preview-overlay";
-    previewOverlayClose: "wardrobe-preview-overlay-close";
-    mainCanvas: "wardrobe-main-canvas";
-    sideCanvas: "wardrobe-side-canvas";
-    loadPreview: "wardrobe-load-preview";
-    savePreview: "wardrobe-save-preview";
-    slotGrid: "wardrobe-slot-grid";
-    paginatePrev: "wardrobe-paginate-prev";
-    paginateNext: "wardrobe-paginate-next";
-    /**
-     * @param {number} index
-     * @returns {string}
-     */
-    slotCell: (index: number) => string;
-    /**
-     * @param {number} index
-     * @returns {string}
-     */
-    slotButton: (index: number) => string;
-    /**
-     * @param {number} index
-     * @returns {string}
-     */
-    slotCanvas: (index: number) => string;
-    /**
-     * @param {number} index
-     * @returns {string}
-     */
-    slotEmpty: (index: number) => string;
-    /**
-     * @param {number} index
-     * @returns {string}
-     */
-    slotActions: (index: number) => string;
-    /**
-     * @param {number} index
-     * @returns {string}
-     */
-    slotLoad: (index: number) => string;
-}>;

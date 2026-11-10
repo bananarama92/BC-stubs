@@ -1,3 +1,36 @@
+declare var MainHallBackground: string;
+/** @type {null | number} */
+declare var MainHallStartEventTimer: null | number;
+/** @type {null | number} */
+declare var MainHallNextEventTimer: null | number;
+declare var MainHallRandomEventOdds: number;
+/** @type {NPCCharacter} */
+declare var MainHallMaid: NPCCharacter;
+/** The max number of known tips */
+declare var MainHallMaxTip: number;
+/** The index of the current tip */
+declare var MainHallTip: number;
+/** The max delay to wait before changing the current tip */
+declare var MainHallTipCycleDelay: number;
+/**
+ * The timer that tracks the last time the tip cycled
+ * @type {number}
+ */
+declare var MainHallTipCycleTimer: number;
+declare var MainHallMaidWasCalledManually: boolean;
+declare var MainHallAsylumOpen: boolean;
+/**
+ * Whether the player just got safeworded out of a chatroom and needs punishment
+ */
+declare var MainHallBeingPunished: boolean;
+declare var MainHallFirstFrame: boolean;
+/** @type {AssetLockType[]} */
+declare var MainHallStrongLocks: AssetLockType[];
+/** @type {Partial<Record<AssetGroupItemName, AssetName>>[]} */
+declare var MainHallPunishmentList: Partial<Record<AssetGroupItemName, AssetName>>[];
+declare var MainHallPunishmentChoice: number;
+/** @type {BCColor} */
+declare var MainHallRopeColor: BCColor;
 /**
  * Checks to see if the player needs help in any way
  * @returns {boolean} - True if player has any restraints or locks, False otherwise
@@ -60,6 +93,10 @@ declare function MainHallPlayerNeedsHelpAndHasNoOwnerOrLoverItemAndMaidsNotDisab
  * @returns {boolean} - Returns true, if the screen is allowed
  */
 declare function MainHallAllow(room: keyof typeof MainHallAllowIDToScreenMap): boolean;
+/**
+ * Loads the main hall by setting up the NPCs, CSVs and global variables required.
+ * @type {ScreenLoadHandler}
+ */
 declare function MainHallLoad(): Promise<void>;
 /**
  * Runs the main hall screen
@@ -191,36 +228,3 @@ declare function MainHallMaidIntroductionDone(): void;
  */
 declare function MainHallSetMaidsDisabled(minutes: number): void;
 declare function MainHallMoveToChatSelect(): void;
-declare var MainHallBackground: string;
-/** @type {null | number} */
-declare var MainHallStartEventTimer: null | number;
-/** @type {null | number} */
-declare var MainHallNextEventTimer: null | number;
-declare var MainHallRandomEventOdds: number;
-/** @type {NPCCharacter} */
-declare var MainHallMaid: NPCCharacter;
-/** The max number of known tips */
-declare var MainHallMaxTip: number;
-/** The index of the current tip */
-declare var MainHallTip: number;
-/** The max delay to wait before changing the current tip */
-declare var MainHallTipCycleDelay: number;
-/**
- * The timer that tracks the last time the tip cycled
- * @type {number}
- */
-declare var MainHallTipCycleTimer: number;
-declare var MainHallMaidWasCalledManually: boolean;
-declare var MainHallAsylumOpen: boolean;
-/**
- * Whether the player just got safeworded out of a chatroom and needs punishment
- */
-declare var MainHallBeingPunished: boolean;
-declare var MainHallFirstFrame: boolean;
-/** @type {AssetLockType[]} */
-declare var MainHallStrongLocks: AssetLockType[];
-/** @type {Partial<Record<AssetGroupItemName, AssetName>>[]} */
-declare var MainHallPunishmentList: Partial<Record<AssetGroupItemName, AssetName>>[];
-declare var MainHallPunishmentChoice: number;
-/** @type {BCColor} */
-declare var MainHallRopeColor: BCColor;

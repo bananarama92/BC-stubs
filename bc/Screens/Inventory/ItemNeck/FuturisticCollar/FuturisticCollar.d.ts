@@ -1,17 +1,23 @@
+declare var FuturisticCollarPage: number;
+declare var FuturisticCollarMaxPage: number;
+/** @type {ExtendedItemScriptHookCallbacks.Load<NoArchItemData>} */
 declare function InventoryItemNeckFuturisticCollarLoadHook(data: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Draw<NoArchItemData>} */
 declare function InventoryItemNeckFuturisticCollarDrawHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemNeckFuturisticCollarExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
+/** @type {ExtendedItemScriptHookCallbacks.Exit<NoArchItemData>} */
+declare function InventoryItemNeckFuturisticCollarExitHook(): void;
+/** @type {ExtendedItemScriptHookCallbacks.Click<NoArchItemData>} */
 declare function InventoryItemNeckFuturisticCollarClickHook(data: NoArchItemData, originalFunction: () => void): void;
 /**
  * @param {Character} C
  * @param {AssetLockType} LockType
- * @returns
+ * @returns {boolean}
  */
 declare function InventoryItemNeckFuturisticCollarCanLock(C: Character, LockType: AssetLockType): boolean;
 /**
  * @param {Character} C
  * @param {boolean} [OnlyUnlockable]
- * @returns
+ * @returns {Item[]}
  */
 declare function InventoryItemNeckFuturisticCollarGetItems(C: Character, OnlyUnlockable?: boolean): Item[];
 /**
@@ -47,5 +53,3 @@ declare function InventoryItemNeckFuturisticCollarTogglePermission(C: Character,
  * @param {Item} Item
  */
 declare function InventoryItemNeckFuturisticCollarToggleRemotes(C: Character, Item: Item): void;
-declare var FuturisticCollarPage: number;
-declare var FuturisticCollarMaxPage: number;

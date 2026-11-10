@@ -1,6 +1,19 @@
+declare var CollegeChessBackground: string;
+/** @type {NPCCharacter} */
+declare var CollegeChessOpponent: NPCCharacter;
+declare var CollegeChessDifficulty: number;
+declare var CollegeChessBet: string;
+/** @type {null | Item[]} */
+declare var CollegeChessPlayerAppearance: null | Item[];
+/** @type {null | Item[]} */
+declare var CollegeChessOpponentAppearance: null | Item[];
 declare function CollegeChessCanStripPlayer(): boolean;
 declare function CollegeChessCanStripOpponent(): boolean;
 declare function CollegeChessCanMakeLove(): boolean;
+/**
+ * Loads the college chest screen by generating the opponent.
+ * @type {ScreenLoadHandler}
+ */
 declare function CollegeChessLoad(): Promise<void>;
 /**
  * Runs and draws the college chess screen.  Shows the player and the opponent.
@@ -61,12 +74,3 @@ declare function CollegeChessOpponentBlush(): void;
  * @returns {void} - Nothing
  */
 declare function CollegeChessPlayerFullBondage(): void;
-declare var CollegeChessBackground: string;
-/** @type {NPCCharacter} */
-declare var CollegeChessOpponent: NPCCharacter;
-declare var CollegeChessDifficulty: number;
-declare var CollegeChessBet: string;
-/** @type {null | Item[]} */
-declare var CollegeChessPlayerAppearance: null | Item[];
-/** @type {null | Item[]} */
-declare var CollegeChessOpponentAppearance: null | Item[];

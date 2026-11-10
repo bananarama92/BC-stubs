@@ -1,7 +1,3 @@
-declare function InventoryItemMiscTimerPasswordPadlockLoadHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemMiscTimerPasswordPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemMiscTimerPasswordPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
-declare function InventoryItemMiscTimerPasswordPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 declare const PasswordTimerChooseOptions: ({
     unit: {
         readonly label: "Minutes";
@@ -23,3 +19,11 @@ declare const PasswordTimerChooseOptions: ({
 })[];
 declare let PasswordTimerChooseOptionsIndex: number;
 declare let PasswordTimerChooseIndexes: number[];
+/** @type {ExtendedItemScriptHookCallbacks.Load<NoArchItemData>} */
+declare function InventoryItemMiscTimerPasswordPadlockLoadHook(data: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Draw<NoArchItemData>} */
+declare function InventoryItemMiscTimerPasswordPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Click<NoArchItemData>} */
+declare function InventoryItemMiscTimerPasswordPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Exit<NoArchItemData>} */
+declare function InventoryItemMiscTimerPasswordPadlockExitHook(Data: NoArchItemData, OriginalFunction: (() => void) | null): void;

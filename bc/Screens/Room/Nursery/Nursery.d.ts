@@ -1,134 +1,3 @@
-/**
- * @param {Character} character
- * @returns {boolean}
- */
-declare function NurseryCanSpitOutPacifier(character?: Character): boolean;
-/**
- * @param {Character} character
- * @returns {boolean}
- */
-declare function NurseryIsDiapered(character?: Character): boolean;
-/**
- * @param {Character} character
- * @returns {Item[]}
- */
-declare function NurseryGetPacifiers(character?: Character): Item[];
-/**
- * @param {Character} character
- * @returns {boolean}
- */
-declare function NurseryIsPacified(character?: Character): boolean;
-/**
- *
- * @param {Asset} item
- * @returns {boolean}
- */
-declare function NurseryIsRestrainedPacifier(item: Asset): boolean;
-declare function NurseryPlayerIsPacified(): boolean;
-declare function NurseryPlayerIsHarnessPacified(): boolean;
-declare function NurseryPlayerLostBinky(): boolean;
-declare function NurseryPlayerLostBinkyAgain(): boolean | null;
-declare function NurseryPlayerWearingBabyDress(): boolean;
-declare function NurseryPlayerReadyToAppologise(): boolean;
-declare function NurseryPlayerDiapered(): boolean | undefined;
-declare function NurseryPlayerReadyDiapered(): boolean;
-declare function NurseryPlayerCanRegress(): boolean;
-declare function NurseryLoad(): Promise<void>;
-declare function NurseryRun(): void;
-declare function NurseryClick(): void;
-declare function NurseryDrawText(): void;
-declare function NurseryLoadNurse(): void;
-declare function NurseryIsClothingInappropriate(): boolean;
-/**
- * Sets the outfit for the NPC Nurse
- *
- * @param {NPCCharacter} CurrentNPC
- */
-declare function NurseryNurseOutfitForNPC(CurrentNPC: NPCCharacter): void;
-/**
- * Sets the outfit for the NPC ABDL
- * @param {NPCCharacter} CurrentNPC
- */
-declare function NurseryABDLOutfitForNPC(CurrentNPC: NPCCharacter): void;
-/**
- *
- * @param {NPCCharacter} CurrentNPC
- * @param {number} restraintSet
- */
-declare function NurseryNPCRestrained(CurrentNPC: NPCCharacter, restraintSet: number): void;
-/** Random diaper selection
- * @param {Character} character
- * @param {keyof typeof NurseryDiapers} size
- * @returns {AssetName}
- */
-declare function NurseryRandomDiaper(character: Character, size: keyof typeof NurseryDiapers): AssetName;
-/**
- * Random dress selection
- * @param {Character} character
- * @returns {AssetName}
- */
-declare function NurseryRandomDress(character: Character): AssetName;
-/** Random selection for dress colors
- * @param {Character} character
- * @param {BCColor[]} colors
- * @returns {BCColor}
- */
-declare function NurseryRandomColor(character: Character, colors?: BCColor[]): BCColor;
-/**
- * Remove baby dresses from inventory for testing only
- */
-declare function NurseryDeleteItem(): void;
-/**
- * When the player undresses ready to join the nursery
- * @param {number} Cost
- */
-declare function NurseryPlayerUndress(Cost: number): void;
-/**
- * @param {Character} character
- * @returns {number}
- */
-declare function NurseryGetRegressionScore(character: Character): number;
-/**
- * When the player puts on diapers or has them put on
- * @param {number} [domChange];
- * @param {keyof typeof NurseryDiapers} [size];
- */
-declare function NurseryPlayerGetsDiapered(domChange?: number, size?: keyof typeof NurseryDiapers): void;
-declare function NurseryPlayerAdmitted(): void;
-declare function NurseryPlayerWearBabyDress(): void;
-/**
- * Restraints used on player
- * @param {number} restraintSet
- */
-declare function NurseryPlayerRestrained(restraintSet: number): void;
-declare function NurseryPlayerRePacified(character?: PlayerCharacter): void;
-declare function NurseryPlayerDePacified(): void;
-declare function NurseryPlayerRedressed(): void;
-declare function NurseryBadBabies(): void;
-declare function NurseryPlayerSkillsAmnesia(): void;
-declare function NurseryReplaceSkill(): void;
-declare function NurseryPlayerChangeDress(): void;
-declare function NurseryPlayerChangeDressColor(): void;
-declare function NurseryPlayerRemoveDress(): void;
-/**
- * Player gives an adorable ABDL reply
- */
-declare function NurseryPlayerCuteReply(): void;
-declare function NurseryEscapeGate(): void;
-declare function NurseryPlayerForgiven(): void;
-declare function NurseryPlayerReadmitted(): void;
-declare function NurseryPlayerRemoveCloth(): void;
-/**
- * Player needs more discipline
- * @param {number} severity
- */
-declare function NurseryPlayerNeedsPunishing(severity: number): void;
-/**
- * Player is punished by nurse
- * @param {number} severity
- */
-declare function NurseryPlayerPunished(severity: number): void;
-declare function NurseryGoodBehaviour(): void;
 declare var NurseryBackground: string;
 /** @type {null | string} */
 declare var NurserySituation: null | string;
@@ -188,3 +57,140 @@ declare var NurseryLeaveMessage: keyof typeof NurseryLeaveMessages | null;
 declare var NurseryEscapeAttempts: number;
 /** @type {number} */
 declare var NurseryRepeatOffender: number;
+/**
+ * @param {Character} character
+ * @returns {boolean}
+ */
+declare function NurseryCanSpitOutPacifier(character?: Character): boolean;
+/**
+ * @param {Character} character
+ * @returns {boolean}
+ */
+declare function NurseryIsDiapered(character?: Character): boolean;
+/**
+ * @param {Character} character
+ * @returns {Item[]}
+ */
+declare function NurseryGetPacifiers(character?: Character): Item[];
+/**
+ * @param {Character} character
+ * @returns {boolean}
+ */
+declare function NurseryIsPacified(character?: Character): boolean;
+/**
+ *
+ * @param {Asset} item
+ * @returns {boolean}
+ */
+declare function NurseryIsRestrainedPacifier(item: Asset): boolean;
+declare function NurseryPlayerIsPacified(): boolean;
+declare function NurseryPlayerIsHarnessPacified(): boolean;
+declare function NurseryPlayerLostBinky(): boolean;
+declare function NurseryPlayerLostBinkyAgain(): boolean | null;
+declare function NurseryPlayerWearingBabyDress(): boolean;
+declare function NurseryPlayerReadyToAppologise(): boolean;
+declare function NurseryPlayerDiapered(): boolean | undefined;
+declare function NurseryPlayerReadyDiapered(): boolean;
+declare function NurseryPlayerCanRegress(): boolean;
+/**
+ * Loads the nursery room
+ * @type {ScreenLoadHandler}
+ */
+declare function NurseryLoad(): Promise<void>;
+declare function NurseryRun(): void;
+declare function NurseryClick(): void;
+declare function NurseryDrawText(): void;
+declare function NurseryLoadNurse(): void;
+declare function NurseryIsClothingInappropriate(): boolean;
+/**
+ * Sets the outfit for the NPC Nurse
+ *
+ * @param {NPCCharacter} CurrentNPC
+ */
+declare function NurseryNurseOutfitForNPC(CurrentNPC: NPCCharacter): void;
+/**
+ * Sets the outfit for the NPC ABDL
+ * @param {NPCCharacter} CurrentNPC
+ */
+declare function NurseryABDLOutfitForNPC(CurrentNPC: NPCCharacter): void;
+/**
+ *
+ * @param {NPCCharacter} CurrentNPC
+ * @param {number} restraintSet
+ */
+declare function NurseryNPCRestrained(CurrentNPC: NPCCharacter, restraintSet: number): void;
+/**
+ * Random diaper selection
+ * @param {Character} character
+ * @param {keyof typeof NurseryDiapers} size
+ * @returns {AssetName}
+ */
+declare function NurseryRandomDiaper(character: Character, size: keyof typeof NurseryDiapers): AssetName;
+/**
+ * Random dress selection
+ * @param {Character} character
+ * @returns {AssetName}
+ */
+declare function NurseryRandomDress(character: Character): AssetName;
+/**
+ * Random selection for dress colors
+ * @param {Character} character
+ * @param {BCColor[]} colors
+ * @returns {BCColor}
+ */
+declare function NurseryRandomColor(character: Character, colors?: BCColor[]): BCColor;
+/**
+ * Remove baby dresses from inventory for testing only
+ */
+declare function NurseryDeleteItem(): void;
+/**
+ * When the player undresses ready to join the nursery
+ * @param {number} Cost
+ */
+declare function NurseryPlayerUndress(Cost: number): void;
+/**
+ * @param {Character} character
+ * @returns {number}
+ */
+declare function NurseryGetRegressionScore(character: Character): number;
+/**
+ * When the player puts on diapers or has them put on
+ * @param {number} [domChange]
+ * @param {keyof typeof NurseryDiapers} [size]
+ */
+declare function NurseryPlayerGetsDiapered(domChange?: number, size?: keyof typeof NurseryDiapers): void;
+declare function NurseryPlayerAdmitted(): void;
+declare function NurseryPlayerWearBabyDress(): void;
+/**
+ * Restraints used on player
+ * @param {number} restraintSet
+ */
+declare function NurseryPlayerRestrained(restraintSet: number): void;
+declare function NurseryPlayerRePacified(character?: PlayerCharacter): void;
+declare function NurseryPlayerDePacified(): void;
+declare function NurseryPlayerRedressed(): void;
+declare function NurseryBadBabies(): void;
+declare function NurseryPlayerSkillsAmnesia(): void;
+declare function NurseryReplaceSkill(): void;
+declare function NurseryPlayerChangeDress(): void;
+declare function NurseryPlayerChangeDressColor(): void;
+declare function NurseryPlayerRemoveDress(): void;
+/**
+ * Player gives an adorable ABDL reply
+ */
+declare function NurseryPlayerCuteReply(): void;
+declare function NurseryEscapeGate(): void;
+declare function NurseryPlayerForgiven(): void;
+declare function NurseryPlayerReadmitted(): void;
+declare function NurseryPlayerRemoveCloth(): void;
+/**
+ * Player needs more discipline
+ * @param {number} severity
+ */
+declare function NurseryPlayerNeedsPunishing(severity: number): void;
+/**
+ * Player is punished by nurse
+ * @param {number} severity
+ */
+declare function NurseryPlayerPunished(severity: number): void;
+declare function NurseryGoodBehaviour(): void;

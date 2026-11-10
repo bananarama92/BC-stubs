@@ -1,3 +1,7 @@
+declare var TightenLoosenItemMaximumDifficulty: number;
+declare var TightenLoosenItemMinimumDifficulty: number;
+/** A set of screen names for which one should *not* be able to access the tighten/loosen interface via the extended item menu */
+declare const TightenLoosenScreenBlacklist: Set<string>;
 /**
  * Loads the item properties
  * @param {Item} item
@@ -31,7 +35,3 @@ declare function TightenLoosenItemClick(C: Character, item: Item): void;
  * @returns {void} - Nothing
  */
 declare function TightenLoosenItemExit(): void;
-declare var TightenLoosenItemMaximumDifficulty: number;
-declare var TightenLoosenItemMinimumDifficulty: number;
-/** A set of screen names for which one should *not* be able to access the tighten/loosen interface via the extended item menu */
-declare const TightenLoosenScreenBlacklist: Set<string>;

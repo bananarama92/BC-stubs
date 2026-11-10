@@ -1,3 +1,20 @@
+declare var PandoraPrisonBackground: string;
+declare var PandoraWillpowerTimer: number;
+/** @type {NPCCharacter} */
+declare var PandoraPrisonMaid: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PandoraPrisonGuard: NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var PandoraPrisonCharacter: null | NPCCharacter;
+declare var PandoraPrisonCharacterTimer: number;
+declare var PandoraPrisonEscaped: boolean;
+declare var PandoraPrisonBribeEnabled: boolean;
+declare var PandoraQuickieCount: number;
+declare var PandoraQuickiePleasure: number;
+/**
+ * Loads the Pandora's Box prison screen
+ * @type {ScreenLoadHandler}
+ */
 declare function PandoraPrisonLoad(): Promise<void>;
 /**
  * Runs and draws the prison screen
@@ -31,19 +48,22 @@ declare function PandoraPrisonExitPrison(): void;
 declare function PandoraPrisonPlayerUngag(): void;
 /**
  * When the player gets restrained by an NPC, the arms bondage get tighter with difficulty and if a fight occured
+ * @param {"FEW" | "LOT" | "ALL"} [Level]
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonPlayerRestrain(Level: any): void;
+declare function PandoraPrisonPlayerRestrain(Level?: "FEW" | "LOT" | "ALL"): void;
 /**
  * When the player gets stripped and restrained by an NPC, call the regular restrain function
+ * @param {"FEW" | "LOT" | "ALL"} [Level]
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonPlayerStrip(Level: any): void;
+declare function PandoraPrisonPlayerStrip(Level?: "FEW" | "LOT" | "ALL"): void;
 /**
  * When the player gets locked in a chastity device by the guard
+ * @param {AssetLockType} LockType
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonPlayerChastity(LockType: any): void;
+declare function PandoraPrisonPlayerChastity(LockType: AssetLockType): void;
 /**
  * When the NPC leaves the prison
  * @returns {void} - Nothing
@@ -61,9 +81,9 @@ declare function PandoraPrisonCanStartFight(): boolean;
 declare function PandoraPrisonStartFight(): void;
 /**
  * When the fight with the NPC ends
- * @returns {void} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function PandoraPrisonFightEnd(): void;
+declare function PandoraPrisonFightEnd(): SafePromise<void>;
 /**
  * When the player must strips the current character
  * @returns {void} - Nothing
@@ -110,9 +130,11 @@ declare function PandoraPrisonBribeProcess(Money: number, Minutes: number): void
 declare function PandoraPrisonPickWeapon(): void;
 /**
  * When the guard beats up the player, she loses some strength for fights
+ * @param {number} Damage
+ * @param {ExpressionNameMap["Blush"]} Blush
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonPlayerBeat(Damage: any, Blush: any): void;
+declare function PandoraPrisonPlayerBeat(Damage: number, Blush: ExpressionNameMap["Blush"]): void;
 /**
  * When the current NPC picks a random tickling item
  * @returns {void} - Nothing
@@ -120,16 +142,16 @@ declare function PandoraPrisonPlayerBeat(Damage: any, Blush: any): void;
 declare function PandoraPrisonPickTickle(): void;
 /**
  * When the player squeals, it shorten her sentence
- * @param {string|number} Minutes - The number of minutes to remove from the sentence
+ * @param {number} Minutes - The number of minutes to remove from the sentence
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonPlayerSqueal(Minutes: string | number): void;
+declare function PandoraPrisonPlayerSqueal(Minutes: number): void;
 /**
  * When the player gets tickled, she reacts and loses some willpower
- * @param {string|number} Damage - The health damage done by the tickle
+ * @param {number} Damage - The health damage done by the tickle
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonPlayerTickle(Damage: string | number): void;
+declare function PandoraPrisonPlayerTickle(Damage: number): void;
 /**
  * When the player gets transfered, she gets a hood for the process
  * @returns {void} - Nothing
@@ -147,30 +169,18 @@ declare function PandoraPrisonRemoveHood(): void;
 declare function PandoraPrisonQuikieStart(): void;
 /**
  * Process the quickie scene, the player must progress slowly but only has 5 tries
- * @param {string|number} Factor - The pleasure factor to apply
+ * @param {number} Factor - The pleasure factor to apply
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonQuikieProcess(Factor: string | number): void;
+declare function PandoraPrisonQuikieProcess(Factor: number): void;
 /**
  * Ends the quickie scenario
+ * @param {string} [Message]
  * @returns {void} - Nothing
  */
-declare function PandoraPrisonQuickieEnd(Message: any): void;
+declare function PandoraPrisonQuickieEnd(Message?: string): void;
 /**
  * When the player drinks water, she heals 25% of her max
  * @returns {void} - Nothing
  */
 declare function PandoraPrisonDrinkWater(): void;
-declare var PandoraPrisonBackground: string;
-declare var PandoraWillpowerTimer: number;
-/** @type {null | NPCCharacter} */
-declare var PandoraPrisonMaid: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PandoraPrisonGuard: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var PandoraPrisonCharacter: null | NPCCharacter;
-declare var PandoraPrisonCharacterTimer: number;
-declare var PandoraPrisonEscaped: boolean;
-declare var PandoraPrisonBribeEnabled: boolean;
-declare var PandoraQuickieCount: number;
-declare var PandoraQuickiePleasure: number;

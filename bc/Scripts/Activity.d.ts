@@ -1,4 +1,26 @@
 /**
+ * @type {string[][]}
+ * @deprecated
+ */
+declare var ActivityDictionary: string[][];
+declare var ActivityOrgasmGameButtonX: number;
+declare var ActivityOrgasmGameButtonY: number;
+declare var ActivityOrgasmGameProgress: number;
+declare var ActivityOrgasmGameDifficulty: number;
+declare var ActivityOrgasmGameResistCount: number;
+declare var ActivityOrgasmGameTimer: number;
+declare var ActivityOrgasmResistLabel: string;
+declare var ActivityOrgasmRuined: boolean;
+/**
+ * @type { (() => void) | undefined }
+ * @deprecated
+ */
+declare let ActivityTranslateResolve: (() => void) | undefined;
+declare let ActivityDebug: boolean;
+declare var TimerLastArousalProgress: number;
+declare var TimerLastArousalProgressCount: number;
+declare var TimerLastArousalDecay: number;
+/**
  * Debug logging function for activities
  * @param {any[]} args
  */
@@ -10,7 +32,7 @@ declare function ActivityLog(...args: any[]): void;
 declare function ActivityAllowed(): boolean;
 /**
  * Loads the activity dictionary that will be used throughout the game to output messages. Loads from cache first if possible.
- * @return {TextCache} - The activity dictionary
+ * @returns {TextCache} - The activity dictionary
  */
 declare function ActivityDictionaryLoad(): TextCache;
 /**
@@ -88,13 +110,14 @@ declare function ActivityCheckPrerequisites(activity: Activity, acting: Characte
  * @param {ActivityNameItem} needsItem
  * @param {Activity} activity
  * @param {AssetGroup} targetGroup
+ * @param {boolean} useTargetItems
  */
 declare function ActivityGenerateItemActivitiesFromNeed(acting: Character, acted: Character, needsItem: ActivityNameItem, activity: Activity, targetGroup: AssetGroup, useTargetItems?: boolean): ItemActivity[];
 /**
  * Builds the allowed activities on a group given the character's settings.
  * @param {Character} character - The character for which to build the activity dialog options
  * @param {AssetGroupItemName} groupname - The group to check
- * @return {ItemActivity[]} - The list of allowed activities
+ * @returns {ItemActivity[]} - The list of allowed activities
  */
 declare function ActivityAllowedForGroup(character: Character, groupname: AssetGroupItemName): ItemActivity[];
 /**
@@ -102,7 +125,7 @@ declare function ActivityAllowedForGroup(character: Character, groupname: AssetG
  * @param {Character} C - The character to evaluate
  * @param {ActivityName} Activity - The name of the activity
  * @param {AssetGroupItemName} Group - The name of the group
- * @return {boolean} - TRUE if the activity can be done
+ * @returns {boolean} - TRUE if the activity can be done
  */
 declare function ActivityCanBeDone(C: Character, Activity: ActivityName, Group: AssetGroupItemName): boolean;
 /**
@@ -111,10 +134,10 @@ declare function ActivityCanBeDone(C: Character, Activity: ActivityName, Group: 
  * @param {Character} C - The character on which the activity is performed
  * @param {ActivityName | ItemActivity} A - The activity performed
  * @param {AssetGroupItemName} Z - The group/zone name where the activity was performed
- * @param {number} [Count=1] - If the activity is done repeatedly, this defines the number of times, the activity is done.
+ * @param {number} [Count] - If the activity is done repeatedly, this defines the number of times, the activity is done.
  * If you don't want an activity to modify arousal, set this parameter to '0'
  * @param {Asset | null} [Asset] - The asset used to perform the activity
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivityEffect(S: Character, C: Character, A: ActivityName | ItemActivity, Z: AssetGroupItemName, Count?: number, Asset?: Asset | null): void;
 /**
@@ -123,23 +146,23 @@ declare function ActivityEffect(S: Character, C: Character, A: ActivityName | It
  * @param {Character} C - The character on which the activity is performed
  * @param {number} Amount - The base amount of arousal to add
  * @param {AssetGroupItemName} Z - The group/zone name where the activity was performed
- * @param {number} [Count=1] - If the activity is done repeatedly, this defines the number of times, the activity is done.
+ * @param {number} [Count] - If the activity is done repeatedly, this defines the number of times, the activity is done.
  * If you don't want an activity to modify arousal, set this parameter to '0'
  * @param {Asset} [Asset] - The asset used to perform the activity
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivityEffectFlat(S: Character, C: Character, Amount: number, Z: AssetGroupItemName, Count?: number, Asset?: Asset): void;
 /**
  * Syncs the player arousal with everyone in chatroom
  * @param {Character} C - The character for which to sync the arousal data
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivityChatRoomArousalSync(C: Character): void;
 /**
- * Sets the character arousal level and validates the value
+ * Sets the character arousal level. Clamps the new value to 0-100.
  * @param {Character} C - The character for which to set the arousal progress of
  * @param {number} Progress - Progress to set for the character (Ranges from 0 to 100)
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivitySetArousal(C: Character, Progress: number): void;
 /**
@@ -149,25 +172,25 @@ declare function ActivitySetArousal(C: Character, Progress: number): void;
  * @param {AssetGroupItemName | "ActivityOnOther"} Zone - The target zone of the activity
  * @param {number} Progress - Progress to set
  * @param {Asset | null} [Asset] - The asset used to perform the activity
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivitySetArousalTimer(C: Character, Activity: null | Activity, Zone: AssetGroupItemName | "ActivityOnOther", Progress: number, Asset?: Asset | null): void;
 /**
  * Draws the arousal progress bar at the given coordinates for every orgasm timer.
  * @param {number} X - Position on the X axis
  * @param {number} Y - Position on the Y axis
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivityOrgasmProgressBar(X: number, Y: number): void;
 /**
  * Ends the orgasm early if progress is close or progress is sufficient
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivityOrgasmControl(): void;
 /**
  * Increases the player's willpower when resisting an orgasm.
  * @param {Character} C - The character currently resisting
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivityOrgasmWillpowerProgress(C: Character): void;
 /**
@@ -192,7 +215,7 @@ declare function ActivityOrgasmGameGenerate(Progress: number): void;
 /**
  * Triggers an orgasm for the player or an NPC which lasts from 5 to 15 seconds
  * @param {Character} C - Character for which an orgasm was triggered
- * @param {boolean} [Bypass=false] - If true, this will do a ruined orgasm rather than a real one
+ * @param {boolean} [Bypass] - If true, this will do a ruined orgasm rather than a real one
  * @returns {void} - Nothing
  */
 declare function ActivityOrgasmPrepare(C: Character, Bypass?: boolean): void;
@@ -232,8 +255,9 @@ declare function ActivityRunSelf(Source: Character, Target: Character, Activity:
  * @param {Character} character
  * @param {AssetGroup} group
  * @param {Activity} activity
+ * @param {boolean} isLabel
  */
-declare function ActivityBuildChatTag(character: Character, group: AssetGroup, activity: Activity, is_label?: boolean): string;
+declare function ActivityBuildChatTag(character: Character, group: AssetGroup, activity: Activity, isLabel?: boolean): string;
 /**
  * Launches a sexual activity for a character and sends the chatroom message if applicable.
  * @param {Character} actor - Character which is performing the activity
@@ -256,38 +280,55 @@ declare function ActivityRunLogic(actor: Character, acted: Character, targetGrou
  * @param {Character} Source - The character who used the item
  * @param {Character} Target - The character on which the item was used
  * @param {Asset} Asset - Asset used
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ActivityArousalItem(Source: Character, Target: Character, Asset: Asset): void;
 /**
  * Checks if the character is wearing an item tagged with the fetish type name and returns the love factor for it
  * @param {Character} C - The character to validate
  * @param {FetishName} Type - The fetish type name
- * @return {number} - From -2 (hate it) to 2 (adore it) based on the player preferences
+ * @returns {number} - From -2 (hate it) to 2 (adore it) based on the player preferences
  */
 declare function ActivityFetishItemFactor(C: Character, Type: FetishName): number;
 /**
  * Loops in all fetishes for a character and calculates the total fetish factor
  * @param {Character} C - The character to validate
- * @return {number} - The negative/positive number will have negative/positive impact on arousal
+ * @returns {number} - The negative/positive number will have negative/positive impact on arousal
  */
 declare function ActivityFetishFactor(C: Character): number;
 /**
- * @type {string[][]}
- * @deprecated
+ * Highest intensity among vibrating items that still affect progress. -1 when none qualify.
+ * @param {Character} C - The character to check
+ * @returns {number} - The highest intensity factor, or -1
  */
-declare var ActivityDictionary: string[][];
-declare var ActivityOrgasmGameButtonX: number;
-declare var ActivityOrgasmGameButtonY: number;
-declare var ActivityOrgasmGameProgress: number;
-declare var ActivityOrgasmGameDifficulty: number;
-declare var ActivityOrgasmGameResistCount: number;
-declare var ActivityOrgasmGameTimer: number;
-declare var ActivityOrgasmResistLabel: string;
-declare var ActivityOrgasmRuined: boolean;
+declare function ActivityEggFactor(C: Character): number;
 /**
- * @type { (() => void) | undefined }
- * @deprecated
+ * True when an activity progress timer is running and should drive arousal instead of vibrations.
+ * @param {number} progressTimer - The character's progress timer
+ * @returns {boolean}
  */
-declare let ActivityTranslateResolve: (() => void) | undefined;
-declare let ActivityDebug: boolean;
+declare function ActivityHasProgressTimer(progressTimer: number): boolean;
+/**
+ * Applies an egg intensity factor to the vibrator level and, on the matching tick, to arousal progress.
+ * @param {Character} char - The character being stimulated
+ * @param {number} factor - Combined egg, zone, and fetish factor
+ * @returns {void} - Nothing
+ */
+declare function ActivityApplyEggFactor(char: Character, factor: number): void;
+/**
+ * Advances one character's orgasm, activity progress, or vibrating items for this second.
+ * @param {Character} C - The character to update
+ * @returns {void} - Nothing
+ */
+declare function ActivityProgressCharacter(C: Character): void;
+/**
+ * Lowers arousal by 1 when nothing else is already driving it.
+ * @param {Character} C - The character to update
+ * @returns {void} - Nothing
+ */
+declare function ActivityDecayCharacter(C: Character): void;
+/**
+ * Arousal and activity timer tick. Called from the main timer loop.
+ * @returns {void} - Nothing
+ */
+declare function ActivityTimerProcess(): void;
