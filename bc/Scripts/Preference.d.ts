@@ -1,3 +1,82 @@
+/** @type {ChatColorThemeType[]} */
+declare var PreferenceChatColorThemeList: ChatColorThemeType[];
+/** @type {ChatEnterLeaveType[]} */
+declare var PreferenceChatEnterLeaveList: ChatEnterLeaveType[];
+/** @type {ChatMemberNumbersType[]} */
+declare var PreferenceChatMemberNumbersList: ChatMemberNumbersType[];
+/** @type {ChatFontSizeType[]} */
+declare var PreferenceChatFontSizeList: ChatFontSizeType[];
+/** @type {ImmersionSensDepName[]} */
+declare var PreferenceSettingsSensDepList: ImmersionSensDepName[];
+/** @type {LockTimerLimitName[]} */
+declare var PreferenceSettingsLockTimerLimitList: LockTimerLimitName[];
+/** @type {GraphicsVFXName[]} */
+declare var PreferenceSettingsVFXList: GraphicsVFXName[];
+/** @deprecated */
+declare var PreferenceSettingsVFXIndex: number;
+/** @type {GraphicsVFXVibratorName[]} */
+declare var PreferenceSettingsVFXVibratorList: GraphicsVFXVibratorName[];
+/** @deprecated */
+declare var PreferenceSettingsVFXVibratorIndex: number;
+/** @type {GraphicsVFXFilterName[]} */
+declare var PreferenceSettingsVFXFilterList: GraphicsVFXFilterName[];
+/** @deprecated */
+declare var PreferenceSettingsVFXFilterIndex: number;
+/** @type {GraphicsFontName[]} */
+declare var PreferenceGraphicsFontList: GraphicsFontName[];
+/** @type {WebGLPowerPreference[]} */
+declare var PreferenceGraphicsPowerModes: WebGLPowerPreference[];
+/** @deprecated */
+declare var PreferenceGraphicsFontIndex: number;
+/** @deprecated @type {number} */
+declare var PreferenceGraphicsAnimationQualityIndex: number;
+/** @deprecated @type {number} */
+declare var PreferenceGraphicsPowerModeIndex: number;
+declare var PreferenceGraphicsAnimationQualityList: number[];
+declare var PreferenceGraphicsFrameLimit: number[];
+/** @type {GraphicsShowFullscreenButton[]} */
+declare var PreferenceGraphicsFullscreenButtonList: GraphicsShowFullscreenButton[];
+/** @type {ArousalActiveName[]} */
+declare var PreferenceArousalActiveList: ArousalActiveName[];
+declare var PreferenceArousalActiveIndex: number;
+/** @type {ArousalVisibleName[]} */
+declare var PreferenceArousalVisibleList: ArousalVisibleName[];
+declare var PreferenceArousalVisibleIndex: number;
+/** @type {ArousalAffectStutterName[]} */
+declare var PreferenceArousalAffectStutterList: ArousalAffectStutterName[];
+declare var PreferenceArousalAffectStutterIndex: number;
+/**
+ * Initialized by {@link PreferenceSubscreenArousalLoad}
+ * @type {ActivityName[]}
+ */
+declare var PreferenceArousalActivityList: ActivityName[];
+declare var PreferenceArousalActivityIndex: number;
+/**
+ * @type {never}
+ * @deprecated
+ */
+declare var PreferenceArousalActivityFactorSelf: never;
+/**
+ * @type {never}
+ * @deprecated
+ */
+declare var PreferenceArousalActivityFactorOther: never;
+/**
+ * @type {never}
+ * @deprecated
+ */
+declare var PreferenceArousalZoneFactor: never;
+/**
+ * Initialized by {@link PreferenceSubscreenArousalLoad}
+ * @type {FetishName[]}
+ */
+declare var PreferenceArousalFetishList: FetishName[];
+declare var PreferenceArousalFetishIndex: number;
+/**
+ * @type {never}
+ * @deprecated
+ */
+declare var PreferenceArousalFetishFactor: never;
 /**
  * Get the sensory deprivation setting for the player
  * @returns {boolean} - Return true if sensory deprivation is active, false otherwise
@@ -95,9 +174,11 @@ declare function PreferenceSetArousalZone(C: Character, ZoneName: AssetGroupItem
 declare function PreferenceGetZoneOrgasm(C: Character, ZoneName: AssetGroupItemName): boolean;
 /**
  * Checks, if the arousal activity controls must be activated
+ * @param {Character} char - The character to check
+ * @param {ArousalActiveName[]} [modes] - The modes to check
  * @returns {boolean} - Returns true if we must activate the preference controls, false otherwise
  */
-declare function PreferenceArousalIsActive(): boolean;
+declare function PreferenceArousalIsActive(char: Character, modes?: ArousalActiveName[]): boolean;
 /**
  * Initialize and validates the character settings
  * @param {Character} C - The character, whose preferences are initialized
@@ -121,122 +202,39 @@ declare function PreferenceInitPlayer(C: PlayerCharacter, data: Partial<ServerAc
  */
 declare function PreferenceInitNotificationSetting(setting: boolean, audio: NotificationAudioType, defaultAlertType?: NotificationAlertType): NotificationSetting;
 /**
- * Updates all of the validation "keys" based on the currently registered assets, groups, and activities
+ * Namespace with default values for {@link ActivityEnjoyment} properties.
+ * @satisfies {ActivityEnjoyment}
+ * @namespace
  */
-declare function PreferenceArousalUpdateValidation(): void;
+declare var PreferenceActivityEnjoymentDefault: {
+    Name: never;
+    /** @type {ArousalFactor} */
+    Self: ArousalFactor;
+    /** @type {ArousalFactor} */
+    Other: ArousalFactor;
+};
 /**
- * Registers a new extension setting to the preference screen
- * @public
- * @param {PreferenceExtensionsSettingItem} Setting - The extension setting to register
- * @returns {void} - Nothing
+ * Namespace with default values for {@link ArousalFetish} properties.
+ * @satisfies {ArousalFetish}
+ * @namespace
  */
-declare function PreferenceRegisterExtensionSetting(Setting: PreferenceExtensionsSettingItem): void;
+declare var PreferenceArousalFetishDefault: {
+    Name: never;
+    /** @type {ArousalFactor} */
+    Factor: ArousalFactor;
+};
 /**
- * Return a new object with default item permissions
- * @returns {ItemPermissions} - The item permissions
+ * Namespace with default values for {@link ArousalZone} properties.
+ * @satisfies {ArousalZone}
+ * @namespace
  */
-declare function PreferencePermissionGetDefault(): ItemPermissions;
-/** @type {ChatColorThemeType[]} */
-declare var PreferenceChatColorThemeList: ChatColorThemeType[];
-/** @type {ChatEnterLeaveType[]} */
-declare var PreferenceChatEnterLeaveList: ChatEnterLeaveType[];
-/** @type {ChatMemberNumbersType[]} */
-declare var PreferenceChatMemberNumbersList: ChatMemberNumbersType[];
-/** @type {ChatFontSizeType[]} */
-declare var PreferenceChatFontSizeList: ChatFontSizeType[];
-declare var PreferenceSettingsSensitivityList: number[];
-declare var PreferenceSettingsSensitivityIndex: number;
-declare var PreferenceSettingsDeadZoneList: number[];
-declare var PreferenceSettingsDeadZoneIndex: number;
-declare var PreferenceCalibrationStage: number;
-/** @type {ImmersionSensDepName[]} */
-declare var PreferenceSettingsSensDepList: ImmersionSensDepName[];
-/** @type {LockTimerLimitName[]} */
-declare var PreferenceSettingsLockTimerLimitList: LockTimerLimitName[];
-/** @type {GraphicsVFXName[]} */
-declare var PreferenceSettingsVFXList: GraphicsVFXName[];
-/** @deprecated */
-declare var PreferenceSettingsVFXIndex: number;
-/** @type {GraphicsVFXVibratorName[]} */
-declare var PreferenceSettingsVFXVibratorList: GraphicsVFXVibratorName[];
-/** @deprecated */
-declare var PreferenceSettingsVFXVibratorIndex: number;
-/** @type {GraphicsVFXFilterName[]} */
-declare var PreferenceSettingsVFXFilterList: GraphicsVFXFilterName[];
-/** @deprecated */
-declare var PreferenceSettingsVFXFilterIndex: number;
-/** @type {GraphicsFontName[]} */
-declare var PreferenceGraphicsFontList: GraphicsFontName[];
-/** @type {WebGLPowerPreference[]} */
-declare var PreferenceGraphicsPowerModes: WebGLPowerPreference[];
-/** @deprecated */
-declare var PreferenceGraphicsFontIndex: number;
-/** @deprecated @type {number} */
-declare var PreferenceGraphicsAnimationQualityIndex: number;
-/** @deprecated @type {number} */
-declare var PreferenceGraphicsPowerModeIndex: number;
-declare var PreferenceGraphicsAnimationQualityList: number[];
-declare var PreferenceGraphicsFrameLimit: number[];
-/** @type {GraphicsShowFullscreenButton[]} */
-declare var PreferenceGraphicsFullscreenButtonList: GraphicsShowFullscreenButton[];
-/** @type {ArousalActiveName[]} */
-declare var PreferenceArousalActiveList: ArousalActiveName[];
-declare var PreferenceArousalActiveIndex: number;
-/** @type {ArousalVisibleName[]} */
-declare var PreferenceArousalVisibleList: ArousalVisibleName[];
-declare var PreferenceArousalVisibleIndex: number;
-/** @type {ArousalAffectStutterName[]} */
-declare var PreferenceArousalAffectStutterList: ArousalAffectStutterName[];
-declare var PreferenceArousalAffectStutterIndex: number;
-/**
- * Initialized by {@link PreferenceSubscreenArousalLoad}
- * @type {ActivityName[]}
- */
-declare var PreferenceArousalActivityList: ActivityName[];
-declare var PreferenceArousalActivityIndex: number;
-/**
- * @type {never}
- * @deprecated
- */
-declare var PreferenceArousalActivityFactorSelf: never;
-/**
- * @type {never}
- * @deprecated
- */
-declare var PreferenceArousalActivityFactorOther: never;
-/**
- * @type {never}
- * @deprecated
- */
-declare var PreferenceArousalZoneFactor: never;
-/**
- * Initialized by {@link PreferenceSubscreenArousalLoad}
- * @type {FetishName[]}
- */
-declare var PreferenceArousalFetishList: FetishName[];
-declare var PreferenceArousalFetishIndex: number;
-/**
- * @type {never}
- * @deprecated
- */
-declare var PreferenceArousalFetishFactor: never;
-declare namespace PreferenceActivityEnjoymentDefault {
-    let Name: never;
-    let Self: ArousalFactor;
-    let Other: ArousalFactor;
-}
-declare namespace PreferenceArousalFetishDefault {
-    let Name_1: never;
-    export { Name_1 as Name };
-    export let Factor: ArousalFactor;
-}
-declare namespace PreferenceArousalZoneDefault {
-    let Name_2: never;
-    export { Name_2 as Name };
-    let Factor_1: ArousalFactor;
-    export { Factor_1 as Factor };
-    export let Orgasm: boolean;
-}
+declare var PreferenceArousalZoneDefault: {
+    Name: never;
+    /** @type {ArousalFactor} */
+    Factor: ArousalFactor;
+    /** @type {boolean} */
+    Orgasm: boolean;
+};
 /**
  * Which zones are considered erogenous by default
  * @type {AssetGroupName[]}
@@ -248,6 +246,10 @@ declare var PreferenceArousalZoneOrgasmDefault: AssetGroupName[];
  * @namespace
  */
 declare var PreferenceArousalSettingsDefault: Required<ArousalSettingsType>;
+/**
+ * Updates all of the validation "keys" based on the currently registered assets, groups, and activities
+ */
+declare function PreferenceArousalUpdateValidation(): void;
 /**
  * Namespace with functions for validating {@link ArousalSettingsType} properties
  * @type {{ [k in keyof Required<ArousalSettingsType>]: (arg: ArousalSettingsType[k], C: Character) => ArousalSettingsType[k] }}
@@ -302,18 +304,6 @@ declare var PreferenceAudioSettingsDefault: Required<AudioSettingsType>;
  * @namespace
  */
 declare var PreferenceAudioSettingsValidate: { [k in keyof Required<AudioSettingsType>]: (arg: AudioSettingsType[k], C: Character) => AudioSettingsType[k]; };
-/**
- * Namespace with default values for {@link ControllerSettingsType} properties.
- * @type {Required<ControllerSettingsType>}
- * @namespace
- */
-declare var PreferenceControllerSettingsDefault: Required<ControllerSettingsType>;
-/**
- * Namespace with functions for validating {@link ControllerSettingsType} properties
- * @type {{ [k in keyof Required<ControllerSettingsType>]: (arg: ControllerSettingsType[k], C: Character) => ControllerSettingsType[k] }}
- * @namespace
- */
-declare var PreferenceControllerSettingsValidate: { [k in keyof Required<ControllerSettingsType>]: (arg: ControllerSettingsType[k], C: Character) => ControllerSettingsType[k]; };
 /**
  * Namespace with default values for {@link GameplaySettingsType} properties.
  * @type {Required<GameplaySettingsType>}
@@ -398,3 +388,15 @@ declare var PreferenceNotificationSettingsDefault: Required<NotificationSettings
  * @namespace
  */
 declare var PreferenceNotificationSettingsValidate: { [k in keyof Required<NotificationSettingsType>]: (arg: Partial<NotificationSettingsType[k]>, C: Character) => NotificationSettingsType[k]; };
+/**
+ * Registers a new extension setting to the preference screen
+ * @public
+ * @param {PreferenceExtensionsSettingItem} Setting - The extension setting to register
+ * @returns {void} - Nothing
+ */
+declare function PreferenceRegisterExtensionSetting(Setting: PreferenceExtensionsSettingItem): void;
+/**
+ * Return a new object with default item permissions
+ * @returns {ItemPermissions} - The item permissions
+ */
+declare function PreferencePermissionGetDefault(): ItemPermissions;

@@ -1,3 +1,23 @@
+declare var ShibariBackground: string;
+/** @type {NPCCharacter} */
+declare var ShibariTeacher: NPCCharacter;
+/** @type {Item[]} */
+declare var ShibariTeacherAppearance: Item[];
+declare var ShibariAllowTeacherItem: boolean;
+/** @type {NPCCharacter} */
+declare var ShibariStudent: NPCCharacter;
+/** @type {null | Item[]} */
+declare var ShibariPlayerAppearance: null | Item[];
+declare var ShibariSubCommentDone: boolean;
+declare var ShibariDomCommentDone: boolean;
+declare var ShibariSurrenderDone: boolean;
+declare var ShibariSpankDone: boolean;
+/** @type {null | number} */
+declare let ShibariTeacherReleaseTimer: null | number;
+declare var ShibariRescueScenario: string;
+declare var ShibariRescueScenarioList: string[];
+declare var ShibariTrainingPrice: number;
+declare var ShibariTrainingPriceList: number[];
 /**
  * Checks if the player can restrain the Shibari dojo teacher.
  * @returns {boolean} - Returns TRUE if the player is able to restrain the teacher.
@@ -62,6 +82,10 @@ declare function ShibariCanPlayClubCard(): boolean;
  * @returns {void} - Nothing
  */
 declare function ShibariRandomBondage(C: Character, Level: number): void;
+/**
+ * Loads the shibari dojo and its two characters.
+ * @type {ScreenLoadHandler}
+ */
 declare function ShibariLoad(): Promise<void>;
 /**
  * Runs and draws the shibari dojo, with its 3 characters
@@ -131,23 +155,3 @@ declare function ShibariClubCardStart(): void;
  * @returns {SafePromise<void>}
  */
 declare function ShibariClubCardEnd(): SafePromise<void>;
-declare var ShibariBackground: string;
-/** @type {NPCCharacter} */
-declare var ShibariTeacher: NPCCharacter;
-/** @type {Item[]} */
-declare var ShibariTeacherAppearance: Item[];
-declare var ShibariAllowTeacherItem: boolean;
-/** @type {NPCCharacter} */
-declare var ShibariStudent: NPCCharacter;
-/** @type {null | Item[]} */
-declare var ShibariPlayerAppearance: null | Item[];
-declare var ShibariSubCommentDone: boolean;
-declare var ShibariDomCommentDone: boolean;
-declare var ShibariSurrenderDone: boolean;
-declare var ShibariSpankDone: boolean;
-/** @type {null | number} */
-declare let ShibariTeacherReleaseTimer: null | number;
-declare var ShibariRescueScenario: string;
-declare var ShibariRescueScenarioList: string[];
-declare var ShibariTrainingPrice: number;
-declare var ShibariTrainingPriceList: number[];

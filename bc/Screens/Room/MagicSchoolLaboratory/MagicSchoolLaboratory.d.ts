@@ -1,3 +1,12 @@
+declare var MagicSchoolLaboratoryBackground: string;
+/** @type {NPCCharacter} */
+declare var MagicSchoolLaboratoryTeacher: NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var MagicSchoolLaboratoryStudent: null | NPCCharacter;
+declare var MagicSchoolLaboratoryBattleWage: string;
+/** @type {MagicSchoolSpell | undefined} */
+declare var MagicSchoolLaboratoryLastSpell: MagicSchoolSpell | undefined;
+declare var MagicSchoolLaboratorySpellCount: number;
 /**
  * Dresses a character C as a witch, the colors and clothes can changes based on the house
  * @param {Character} C - The character that will wear the clothes
@@ -5,6 +14,10 @@
  * @returns {void} - Nothing
  */
 declare function MagicSchoolLaboratoryPrepareNPC(C: Character, House: "" | "Maiestas" | "Vincula" | "Amplector" | "Corporis"): void;
+/**
+ * Loads the magic school laboratory and the teacher
+ * @type {ScreenLoadHandler}
+ */
 declare function MagicSchoolLaboratoryLoad(): Promise<void>;
 /**
  * Runs the room
@@ -71,9 +84,9 @@ declare function MagicSchoolLaboratoryFromRivalHouse(House: MagicSchoolHouse): b
 declare function MagicSchoolLaboratoryMagicBattleStart(Difficulty: number): void;
 /**
  * When the magic battle practice ends
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function MagicSchoolLaboratoryMagicBattleEnd(): Promise<void>;
+declare function MagicSchoolLaboratoryMagicBattleEnd(): SafePromise<void>;
 /**
  * Generates a random student from the same house as the player (sister)
  * @returns {void} - Nothing
@@ -92,9 +105,9 @@ declare function MagicSchoolLaboratoryFindStudent(): void;
 declare function MagicSchoolLaboratoryBattleStudentStart(Type: "Wage25" | "Honor" | "RainbowWand"): void;
 /**
  * When a student battle ends, we release the winner, change reputation or give some money based on the wage
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function MagicSchoolLaboratoryBattleStudentEnd(): Promise<void>;
+declare function MagicSchoolLaboratoryBattleStudentEnd(): SafePromise<void>;
 /**
  * Sets an emote for the student when there's an activity
  * @param {ExpressionNameMap["Blush"]} Blush
@@ -119,14 +132,16 @@ declare function MagicSchoolLaboratoryTransferToRoom(): void;
 declare function MagicSchoolLaboratoryUngagStudent(): void;
 /**
  * Triggered when the player lost and get ungagged by the student, can affect reputation
+ * @param {number} RepChange
  * @returns {void} - Nothing
  */
-declare function MagicSchoolLaboratoryUngagPlayer(RepChange: any): void;
+declare function MagicSchoolLaboratoryUngagPlayer(RepChange: number): void;
 /**
  * Triggered when the player lost and get untied by the student, can affect reputation
+ * @param {number} RepChange
  * @returns {void} - Nothing
  */
-declare function MagicSchoolLaboratoryReleasePlayer(RepChange: any): void;
+declare function MagicSchoolLaboratoryReleasePlayer(RepChange: number): void;
 /**
  * @param {NPCCharacter} npc
  */
@@ -135,12 +150,13 @@ declare function MagicSchoolLaboratoryGetAllSpellsForNpc(npc: NPCCharacter): Mag
  * @param {NPCCharacter} npc
  * @param {MagicSchoolSpell | undefined} lastSpell
  */
-declare function MagicSchoolLaboratoryApplyRandomSpellEffects(npc: NPCCharacter, lastSpell: MagicSchoolSpell | undefined): "Tickle" | "Tight" | "Hogtie" | "Arousal" | "Fail" | "ReleaseHogtie" | "FlyingHogtie" | "Pain" | "SwitchRope" | "SwitchChain";
+declare function MagicSchoolLaboratoryApplyRandomSpellEffects(npc: NPCCharacter, lastSpell: MagicSchoolSpell | undefined): "Arousal" | "Fail" | "FlyingHogtie" | "Hogtie" | "Pain" | "ReleaseHogtie" | "SwitchChain" | "SwitchRope" | "Tickle" | "Tight" | undefined;
 /**
  * When the player lost a battle and the student tests a spell on her
+ * @param {number} RepChange
  * @returns {void} - Nothing
  */
-declare function MagicSchoolLaboratoryLoserSpell(RepChange: any): void;
+declare function MagicSchoolLaboratoryLoserSpell(RepChange: number): void;
 /**
  * Returns the player in the main hall in her current bondage
  * @returns {void} - Nothing
@@ -153,9 +169,9 @@ declare function MagicSchoolLaboratoryPlayerMainHall(): void;
 declare function MagicSchoolLaboratoryBattleMasterStart(): void;
 /**
  * When the magic battle against the master ends
- * @returns {Promise<void>} - Nothing
+ * @returns {SafePromise<void>} - Nothing
  */
-declare function MagicSchoolLaboratoryBattleMasterEnd(): Promise<void>;
+declare function MagicSchoolLaboratoryBattleMasterEnd(): SafePromise<void>;
 /**
  * When the player learns the master technique from it's house
  * @returns {void} - Nothing
@@ -166,12 +182,3 @@ declare function MagicSchoolLaboratoryLearnMastery(): void;
  * @returns {boolean} - TRUE if it can be waged
  */
 declare function MagicSchoolLaboratoryCanWageWand(): boolean;
-declare var MagicSchoolLaboratoryBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MagicSchoolLaboratoryTeacher: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var MagicSchoolLaboratoryStudent: null | NPCCharacter;
-declare var MagicSchoolLaboratoryBattleWage: string;
-/** @type {MagicSchoolSpell | undefined} */
-declare var MagicSchoolLaboratoryLastSpell: MagicSchoolSpell | undefined;
-declare var MagicSchoolLaboratorySpellCount: number;

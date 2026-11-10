@@ -1,3 +1,8 @@
+declare var CollegeTennisBackground: string;
+/** @type {NPCCharacter} */
+declare var CollegeTennisJennifer: NPCCharacter;
+declare var CollegeTennisJenniferStatus: string;
+declare var CollegeTennisJenniferWillJoinRoom: boolean;
 /**
  * Checks if Jennifer is currently in the given status.
  * @param {string} QueryStatus - Status to query
@@ -9,6 +14,10 @@ declare function CollegeTennisJenniferStatusIs(QueryStatus: string): boolean;
  * @returns {boolean} - Returns TRUE if the player has a private room and an empty spot in it.
  */
 declare function CollegeTennisCanInviteToPrivateRoom(): boolean;
+/**
+ * Loads the tennis screen by generating Jennifer. The player's relationship with her from the bondage college is taken into consideration.
+ * @type {ScreenLoadHandler}
+ */
 declare function CollegeTennisLoad(): Promise<void>;
 /**
  * Runs and draws the tennis screen. Shows the player and Jennifer
@@ -36,8 +45,3 @@ declare function CollegeTennisGameEnd(): SafePromise<void>;
  * @returns {void} - Nothing
  */
 declare function CollegeTennisInviteToPrivateRoom(): void;
-declare var CollegeTennisBackground: string;
-/** @type {NPCCharacter} */
-declare var CollegeTennisJennifer: NPCCharacter;
-declare var CollegeTennisJenniferStatus: string;
-declare var CollegeTennisJenniferWillJoinRoom: boolean;

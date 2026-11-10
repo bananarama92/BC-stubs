@@ -1,3 +1,29 @@
+declare const chineseRegex: RegExp;
+declare const chineseRandomGarbledSound: string[];
+/**
+ * A lookup mapping the gag effect names to their corresponding gag level numbers.
+ * @satisfies {Record<GagEffectName, number>}
+ * @constant
+ */
+declare var SpeechGagLevelLookup: {
+    readonly GagTotal4: 20;
+    readonly GagTotal3: 16;
+    readonly GagTotal2: 12;
+    readonly GagTotal: 8;
+    readonly GagVeryHeavy: 7;
+    readonly GagHeavy: 6;
+    readonly GagMedium: 5;
+    readonly GagNormal: 4;
+    readonly GagEasy: 3;
+    readonly GagLight: 2;
+    readonly GagVeryLight: 1;
+};
+/** @type {SpeechTransformName[]} */
+declare var SpeechTransformAllEffects: SpeechTransformName[];
+/** @type {SpeechTransformName[]} */
+declare var SpeechTransformSenderEffects: SpeechTransformName[];
+/** @type {SpeechTransformName[]} */
+declare var SpeechTransformReceiverEffects: SpeechTransformName[];
 /**
  * Analyzes a phrase to determine if it is a full emote. A full emote is a phrase wrapped in "()"
  * @param {string} D - A phrase
@@ -7,7 +33,7 @@ declare function SpeechFullEmote(D: string): boolean;
 /**
  * Returns the gag level corresponding to the given effect array, or 0 if the effect array contains no gag effects
  * @param {readonly EffectName[]} Effect - The effect to lookup the gag level for
- * @return {number} - The gag level corresponding to the given effects
+ * @returns {number} - The gag level corresponding to the given effects
  */
 declare function SpeechGetEffectGagLevel(Effect: readonly EffectName[]): number;
 /**
@@ -26,6 +52,7 @@ declare function SpeechGetGagLevel(C: Character, AssetGroups: readonly AssetGrou
  * @param {Character} C
  * @param {string} text
  * @param {SpeechTransformName[]} effects
+ * @param {boolean} ignoreOOC
  */
 declare function SpeechTransformProcess(C: Character, text: string, effects: SpeechTransformName[], ignoreOOC?: boolean): {
     effects: SpeechTransformName[];
@@ -75,7 +102,7 @@ declare function isChineseCharacter(character: string): boolean;
  * @param {string} character - The character needs to be garbled.
  * @param {number} gagLevel - Gag level.
  *
- * @return {string} - The character that being garbled.
+ * @returns {string} - The character that being garbled.
  */
 declare function doChineseGarbling(character: string, gagLevel: number): string;
 /**
@@ -87,13 +114,13 @@ declare function isPunctuationOrSpace(character: string): boolean;
 /**
  * Helper method to strip diacritics from characters.
  * @param {string} character - character that needs to be stripped.
- * @param {Number} gagEffect - The current gag effect level.
+ * @param {number} gagEffect - The current gag effect level.
  * @param {boolean} capitalize - Whether to returned character should be capitalized or not
  * @returns {string} - character that being stripped after garbling.
  */
 declare function stripDiacriticsFromCharacter(character: string, gagEffect: number, capitalize: boolean): string;
 /**
- * check if the character is one of the following: áàãâéèêíìîõóòôúùûñç
+ * check if the character is one of the following: áàãâéèêëíìîïõóòôúùûüñç
  * @param {string} character - The character needs to be checked.
  * @returns {boolean} - true if is one of the above, otherwise false.
  */
@@ -193,7 +220,7 @@ declare function SpeechAnonymize(msg: string, characters: readonly Character[]):
  * Gets the cumulative gag level of a character
  * @deprecated - superseded by {@link SpeechTransformGagGarbleIntensity}
  * @param {Character} C - The character, whose assets are used for the check
- * @param {boolean} [NoDeaf=false] - Whether or not deafness affects the dialogue
+ * @param {boolean} [NoDeaf] - Whether or not deafness affects the dialogue
  * @returns {number} - Returns the total gag effect of the character's assets
  */
 declare function SpeechGetTotalGagLevel(C: Character, NoDeaf?: boolean): number;
@@ -206,7 +233,7 @@ declare function SpeechGetTotalGagLevel(C: Character, NoDeaf?: boolean): number;
  * @deprecated - superseded by {@link SpeechTransformProcess}
  * @param {Character} C - The character, whose dialog might need to be altered
  * @param {string} CD - The character's dialog to alter
- * @param {boolean} [NoDeaf=false] - Whether or not deafness affects the dialogue
+ * @param {boolean} [NoDeaf] - Whether or not deafness affects the dialogue
  * @returns {string} - Returns the dialog after speech effects were processed (Garbling, Stuttering, Baby talk)
  */
 declare function SpeechGarble(C: Character, CD: string, NoDeaf?: boolean): string;
@@ -224,7 +251,7 @@ declare function SpeechBabyTalk(C: Character, CD: string): string;
  * @param {number} GagEffect - The gag level of the speech
  * @param {string} CD - The character's dialog to alter
  * @param {boolean} IgnoreOOC
- * @return {string} - Garbled text
+ * @returns {string} - Garbled text
  */
 declare function SpeechGarbleByGagLevel(GagEffect: number, CD: string, IgnoreOOC?: boolean): string;
 /**
@@ -235,24 +262,3 @@ declare function SpeechGarbleByGagLevel(GagEffect: number, CD: string, IgnoreOOC
  * @returns {string} - Returns the dialog after the stuttering factor was applied
  */
 declare function SpeechStutter(C: Character, CD: string): string;
-declare const chineseRegex: RegExp;
-declare const chineseRandomGarbledSound: string[];
-declare namespace SpeechGagLevelLookup {
-    let GagTotal4: 20;
-    let GagTotal3: 16;
-    let GagTotal2: 12;
-    let GagTotal: 8;
-    let GagVeryHeavy: 7;
-    let GagHeavy: 6;
-    let GagMedium: 5;
-    let GagNormal: 4;
-    let GagEasy: 3;
-    let GagLight: 2;
-    let GagVeryLight: 1;
-}
-/** @type {SpeechTransformName[]} */
-declare var SpeechTransformAllEffects: SpeechTransformName[];
-/** @type {SpeechTransformName[]} */
-declare var SpeechTransformSenderEffects: SpeechTransformName[];
-/** @type {SpeechTransformName[]} */
-declare var SpeechTransformReceiverEffects: SpeechTransformName[];

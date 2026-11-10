@@ -1,3 +1,10 @@
+declare var ArcadeBackground: string;
+/** @type {NPCCharacter} */
+declare var ArcadeEmployee: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var ArcadePlayer: NPCCharacter;
+declare var ArcadeDeviousChallenge: boolean;
+declare var ArcadeCannotDoDeviousChallenge: boolean;
 /**
  * Determines whether or not the player is bound and can plead to have their own headset put on them
  * @returns {boolean} - Whether or not the player can ask to have a headset put on
@@ -48,6 +55,10 @@ declare function ArcadeDeviousChallengeAllowed(): boolean;
  * @returns {boolean} - ArcadeDeviousChallenge
  */
 declare function ArcadeDeviousChallengeEnabled(): boolean;
+/**
+ * Loads the Arcade room and initializes the NPCs. This function is called dynamically
+ * @type {ScreenLoadHandler}
+ */
 declare function ArcadeLoad(): Promise<void>;
 /**
  * Run the Arcade room and draw characters. This function is called dynamically at short intervals.
@@ -71,18 +82,11 @@ declare function ArcadeKinkyDungeonStart(PlayerLevel: number): void;
  * @returns {SafePromise<void>}
  */
 declare function ArcadeKinkyDungeonEnd(): SafePromise<void>;
+declare var KinkyDungeonFiles: string[];
+declare var KinkyDungeonIsLoading: boolean;
+declare var KinkyDungeonReady: boolean;
 declare function ArcadeKinkyDungeonStartLoad(): Promise<void>;
 /**
  * @returns {boolean} - False if the dungeon is not ready yet, true otherwise
  */
 declare function ArcadeKinkyDungeonLoad(): boolean;
-declare var ArcadeBackground: string;
-/** @type {NPCCharacter} */
-declare var ArcadeEmployee: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var ArcadePlayer: NPCCharacter;
-declare var ArcadeDeviousChallenge: boolean;
-declare var ArcadeCannotDoDeviousChallenge: boolean;
-declare var KinkyDungeonFiles: string[];
-declare var KinkyDungeonIsLoading: boolean;
-declare var KinkyDungeonReady: boolean;

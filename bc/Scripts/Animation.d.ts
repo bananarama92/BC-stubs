@@ -1,4 +1,24 @@
 /**
+ * Types of dynamic data that can be stored.
+ * @constant
+ * @satisfies {Record<string, AnimationDataTypes>}
+ */
+declare var AnimationDataTypes: {
+    readonly AssetGroup: "AssetGroup";
+    readonly Base: "";
+    readonly Canvas: "DynamicPlayerCanvas";
+    readonly PersistentData: "PersistentData";
+    readonly Rebuild: "Rebuild";
+    readonly RefreshTime: "RefreshTime";
+    readonly RefreshRate: "RefreshRate";
+};
+/**
+ * Where animation data is stored. Animation data is only managed client side, nothing should be synced.
+ * @constant
+ * @type {AnimationPersistentStorage} - The animation data object.
+ */
+declare var AnimationPersistentStorage: AnimationPersistentStorage;
+/**
  * Gets the dynamic data storage name for a given item on a given character.
  * @param {Character} C - Character wearing the animated object
  * @param {Asset} [Asset] - The animated object
@@ -59,18 +79,3 @@ declare function AnimationGenerateTempCanvas(C: Character, A: Asset, W: number, 
  * @returns {void} - Nothing
  */
 declare function AnimationPurge(C: Character, IncludeAll: boolean): void;
-declare namespace AnimationDataTypes {
-    let AssetGroup: "AssetGroup";
-    let Base: "";
-    let Canvas: "DynamicPlayerCanvas";
-    let PersistentData: "PersistentData";
-    let Rebuild: "Rebuild";
-    let RefreshTime: "RefreshTime";
-    let RefreshRate: "RefreshRate";
-}
-/**
- * Where animation data is stored. Animation data is only managed client side, nothing should be synced.
- * @constant
- * @type {AnimationPersistentStorage} - The animation data object.
- */
-declare var AnimationPersistentStorage: AnimationPersistentStorage;

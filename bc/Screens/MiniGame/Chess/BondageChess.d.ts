@@ -1,3 +1,17 @@
+declare var ChessBackground: string;
+/** @type {Character} */
+declare var ChessCharacterWhite: Character;
+/** @type {Character} */
+declare var ChessCharacterBlack: Character;
+declare var ChessEndStatus: string;
+declare var ChessMinorPieceWhite: number;
+declare var ChessMajorPieceWhite: number;
+declare var ChessMinorPieceBlack: number;
+declare var ChessMajorPieceBlack: number;
+/**
+ * Loads the chess mini game and sets the difficulty ratio before serving the first ball
+ * @type {ScreenLoadHandler}
+ */
 declare function ChessLoad(): Promise<void>;
 /**
  * Runs the chess mini game and draws its components on screen
@@ -14,13 +28,3 @@ declare function ChessClick(): void;
  * @returns {"w" | "b"} - "w" for white or "b" for black
  */
 declare function ChessPlayerColor(): "w" | "b";
-declare var ChessBackground: string;
-/** @type {Character} */
-declare var ChessCharacterWhite: Character;
-/** @type {Character} */
-declare var ChessCharacterBlack: Character;
-declare var ChessEndStatus: string;
-declare var ChessMinorPieceWhite: number;
-declare var ChessMajorPieceWhite: number;
-declare var ChessMinorPieceBlack: number;
-declare var ChessMajorPieceBlack: number;

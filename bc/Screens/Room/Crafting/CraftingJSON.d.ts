@@ -1,11 +1,19 @@
-declare namespace CraftingJSON {
-    let _craftListCache: null | {
+/**
+ * Namespace for encoding & decoding crafting inventories to and from JSON
+ */
+declare var CraftingJSON: {
+    /**
+     * A cache of imported crafting items
+     * private
+     * @type {null | { name: string, status: CraftingStatusType, craft: null | CraftingItem }[]}
+     */
+    _craftListCache: null | {
         name: string;
         status: CraftingStatusType;
         craft: null | CraftingItem;
     }[];
     /** Get the event listeners for drag and dropping */
-    function getDragListeners(): {
+    getDragListeners(): {
         dragenter: (this: HTMLElement, ev: DragEvent) => void;
         dragleave: (this: HTMLElement, ev: DragEvent) => void;
         dragstart: (this: HTMLElement, ev: DragEvent) => void;
@@ -16,7 +24,7 @@ declare namespace CraftingJSON {
      * @param {null | Element} radioContainer
      * @param {Map<{ inputNew: HTMLInputElement, inputOld: HTMLInputElement }, boolean>} checkLog
      */
-    function _queueAdvance(fieldset: Element, radioContainer: null | Element, checkLog: Map<{
+    _queueAdvance(fieldset: Element, radioContainer: null | Element, checkLog: Map<{
         inputNew: HTMLInputElement;
         inputOld: HTMLInputElement;
     }, boolean>): void;
@@ -25,37 +33,39 @@ declare namespace CraftingJSON {
      * @param {null | HTMLElement} el
      * @returns {el is HTMLElement}
      */
-    function _isTooltip(el: null | HTMLElement): el is HTMLElement;
-    namespace eventListeners {
-        function focusTooltip(this: HTMLElement): void;
-        function blurTooltip(this: HTMLElement): void;
-        function hoverinTooltip(this: HTMLElement): void;
-        function hoveroutTooltip(this: HTMLElement): void;
-        function dragover(this: HTMLElement, ev: DragEvent): void;
-        function drop(this: HTMLElement, ev: DragEvent): void;
-        function dragend(this: HTMLElement, ev: DragEvent): void;
-        function clickCancel(): void;
-        function clickAccept(this: HTMLElement, ev: Event): void;
-        let changeFile: (this: HTMLInputElement) => Promise<void>;
-        function inputFile(this: HTMLInputElement): void;
-        function clickSelectNew(this: HTMLElement): void;
-        function clickSelectOld(this: HTMLElement): void;
-        function clickError(this: HTMLElement): void;
-        function inputSearch(this: HTMLInputElement): void;
-        function focusSearch(this: HTMLInputElement): void;
-    }
+    _isTooltip(el: null | HTMLElement): el is HTMLElement;
+    /** @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>} */
+    eventListeners: {
+        focusTooltip(this: HTMLElement): void;
+        blurTooltip(this: HTMLElement): void;
+        hoverinTooltip(this: HTMLElement): void;
+        hoveroutTooltip(this: HTMLElement): void;
+        dragover(this: HTMLElement, ev: DragEvent): void;
+        drop(this: HTMLElement, ev: DragEvent): void;
+        dragend(this: HTMLElement, ev: DragEvent): void;
+        clickCancel(): void;
+        clickAccept(this: HTMLElement, ev: Event): void;
+        /** @type {(this: HTMLInputElement) => Promise<void>} */
+        changeFile: (this: HTMLInputElement) => Promise<void>;
+        inputFile(this: HTMLInputElement): void;
+        clickSelectNew(this: HTMLElement): void;
+        clickSelectOld(this: HTMLElement): void;
+        clickError(this: HTMLElement): void;
+        inputSearch(this: HTMLInputElement): void;
+        focusSearch(this: HTMLInputElement): void;
+    };
     /**
      * Encode the passed list of crafting items into a JSON-valid object
      * @param {readonly (null | CraftingItem)[]} crafts - The list of crafting items
      * @returns {CraftingJSON.DataEncoded} The encoded object of JSON-valid crafts
      */
-    function encode(crafts: readonly (null | CraftingItem)[]): CraftingJSON.DataEncoded;
+    encode(crafts: readonly (null | CraftingItem)[]): CraftingJSON.DataEncoded;
     /**
      * Decode the passed stringified object of crafting JSON data
      * @param {string} craftsJSON - The stringified and to-be decoded crafted JSON data
      * @returns {CraftingJSON.ParsingOutput} - The decoded crafted JSON data
      */
-    function decode(craftsJSON: string): CraftingJSON.ParsingOutput;
+    decode(craftsJSON: string): CraftingJSON.ParsingOutput;
     /**
      * Return a single `<label>`-embedded `<input type="radio">` element
      * @param {null | CraftingItem} craft
@@ -63,7 +73,7 @@ declare namespace CraftingJSON {
      * @param {{ name: string, checked: boolean, disabled: boolean, value: string }} options
      * @returns {HTMLElement}
      */
-    function createRadio(craft: null | CraftingItem, tooltipID: string, options: {
+    createRadio(craft: null | CraftingItem, tooltipID: string, options: {
         name: string;
         checked: boolean;
         disabled: boolean;
@@ -74,7 +84,7 @@ declare namespace CraftingJSON {
      * @param {readonly { name: string, status: CraftingStatusType, craft: null | CraftingItem }[]} items
      * @param {Node} tooltipContainer
      */
-    function createRadioGroups(items: readonly {
+    createRadioGroups(items: readonly {
         name: string;
         status: CraftingStatusType;
         craft: null | CraftingItem;
@@ -83,8 +93,8 @@ declare namespace CraftingJSON {
      * Create and return the `<dialog>` and its shadowroot-containing `<div>` parent
      * @param {null | Node} parent The parent node, if any
      */
-    function createDialog(parent?: null | Node): {
+    createDialog(parent?: null | Node): {
         root: HTMLDivElement;
         dialog: HTMLDialogElement;
     };
-}
+};

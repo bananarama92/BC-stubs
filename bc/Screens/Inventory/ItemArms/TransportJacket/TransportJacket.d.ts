@@ -1,5 +1,10 @@
-declare function InventoryItemArmsTransportJacketLoadHook(data: TypedItemData, originalFunction: () => void): void;
-declare function InventoryItemArmsTransportJacketDrawHook(data: TypedItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Load<TypedItemData>} */
+declare function InventoryItemArmsTransportJacketLoadHook(Data: TypedItemData, OriginalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Draw<TypedItemData>} */
+declare function InventoryItemArmsTransportJacketDrawHook(Data: TypedItemData, OriginalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.PublishAction<TypedItemData, any>} */
 declare function InventoryItemArmsTransportJacketPublishActionHook(data: TypedItemData, originalFunction: ((C: Character, item: Item, newOption: any, previousOption: any) => void) | null, C: Character, item: Item, newOption: any, previousOption: any): void;
-declare function InventoryItemArmsTransportJacketExitHook(data: TypedItemData, originalFunction: (() => void) | null): void;
-declare function AssetsItemArmsTransportJacketAfterDraw(drawData: DynamicDrawingData<AnimationPersistentData>): void;
+/** @type {ExtendedItemScriptHookCallbacks.Exit<TypedItemData>} */
+declare function InventoryItemArmsTransportJacketExitHook(Data: TypedItemData, OriginalFunction: (() => void) | null): void;
+/** @type {ExtendedItemCallbacks.AfterDraw} */
+declare function AssetsItemArmsTransportJacketAfterDraw({ C, A, CA, X, Y, L, drawCanvas, drawCanvasBlink, AlphaMasks, Color }: DynamicDrawingData<AnimationPersistentData>): void;

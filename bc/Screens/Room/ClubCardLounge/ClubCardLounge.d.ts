@@ -1,3 +1,10 @@
+declare var ClubCardLoungeBackground: string;
+/** @type {NPCCharacter} */
+declare var ClubCardLoungeTutor: NPCCharacter;
+/**
+ * Loads the club card room and the tutor
+ * @type {ScreenLoadHandler}
+ */
 declare function ClubCardLoungeLoad(): Promise<void>;
 /**
  * Runs and draws the club card  room with the player and tutor
@@ -19,6 +26,3 @@ declare function ClubCardLoungePraticeGameStart(): void;
  * @returns {SafePromise<void>}
  */
 declare function ClubCardLoungePraticeGameEnd(): SafePromise<void>;
-declare var ClubCardLoungeBackground: string;
-/** @type {NPCCharacter} */
-declare var ClubCardLoungeTutor: NPCCharacter;

@@ -1,3 +1,7 @@
+declare const PreferenceSubscreenRestrictionIDs: Readonly<{
+    grid: "restriction-checkbox-grid";
+    hint: "restriction-label-hint";
+}>;
 /**
  * Runs and draw the preference screen, restriction subscreen
  * @returns {void} - Nothing
@@ -13,8 +17,8 @@ declare function PreferenceSubscreenRestrictionRun(): void;
  * @returns {void} - Nothing
  */
 declare function PreferenceSubscreenRestrictionClick(): void;
-declare function PreferenceSubscreenRestrictionResize(load: boolean): void;
-declare const PreferenceSubscreenRestrictionIDs: Readonly<{
-    grid: "restriction-checkbox-grid";
-    hint: "restriction-label-hint";
-}>;
+/**
+ * Handles the click events in the preference screen, restriction sub-screen, propagated from CommonClick()
+ * @type {ScreenResizeHandler}
+ */
+declare function PreferenceSubscreenRestrictionResize(): void;

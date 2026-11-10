@@ -15,6 +15,7 @@ declare function CommonDrawCanvasPrepare(C: Character): void;
  * @returns {string} baseURL - URL pointing to asset art to load
  */
 declare function AssetBaseURL(C: Character, group: AssetGroup, groupName: AssetGroupName, pose: AssetPoseName | PoseType | NullPoseType, layer: AssetLayer, layerType: string, asset: Asset): string;
+type MaskLayersMap = Map<AssetGroupName, TextureAlphaMask[]>;
 /**
  * @typedef { Map<AssetGroupName, TextureAlphaMask[]> } MaskLayersMap
  * @param {Character} C - The character to prepare
@@ -78,6 +79,21 @@ declare function CommonDrawApplyLayerAlphaMasks(C: Character, layer: AssetLayer,
  */
 declare function CommonDrawResolveLayerColor(C: Character, item: Item, layer: AssetLayer, groupName: AssetGroupName, initialColor?: BCColor): BCColor;
 /**
+ * Resolves a layer's transformations (set on the layering screen), combining the item's and the layer's own.
+ * @param {Item} item
+ * @param {AssetLayer} layer
+ * @returns {DrawTransforms}
+ */
+declare function CommonDrawResolveLayerTransforms(item: Item, layer: AssetLayer): DrawTransforms;
+/**
+ * Wraps a canvas drawing callback for the dynamic drawing hooks, so what they draw is moved, rotated and scaled
+ * like the layer's images (as set on the layering screen)
+ * @param {DrawCanvasCallback} drawCanvas
+ * @param {DrawTransforms} transforms - The layer's transformations
+ * @returns {DrawCanvasCallback}
+ */
+declare function CommonDrawWithLayerTransforms(drawCanvas: DrawCanvasCallback, transforms: DrawTransforms): DrawCanvasCallback;
+/**
  * Determines whether the provided color is valid
  * @param {string} Color - The color
  * @param {AssetGroup} AssetGroup - The asset group the color is being used fo
@@ -88,7 +104,7 @@ declare function CommonDrawColorValid(Color: string, AssetGroup: AssetGroup): Co
  * Finds the correct pose to draw for drawable layer for the provided character from the provided list of allowed poses
  * @param {Character} C - The character to check for poses against
  * @param {Partial<Record<AssetPoseCategory, readonly AssetPoseName[]>>} AllowedPoses - The list of permitted poses for the current layer
- * @return {AssetPoseName | NullPoseType} - The name of the pose to draw for the layer, or an empty string if no pose should be drawn
+ * @returns {AssetPoseName | NullPoseType} - The name of the pose to draw for the layer, or an empty string if no pose should be drawn
  */
 declare function CommonDrawFindPose(C: Character, AllowedPoses: Partial<Record<AssetPoseCategory, readonly AssetPoseName[]>>): AssetPoseName | NullPoseType;
 /**
@@ -108,4 +124,3 @@ declare function CommonDrawMarkDrawnAsset(C: Character, src: string | HTMLImageE
  * A helper function that keeps drawn asset on a character in the cache
  */
 declare function CommonDrawWarmDrawnAssets(): void;
-type MaskLayersMap = Map<AssetGroupName, TextureAlphaMask[]>;

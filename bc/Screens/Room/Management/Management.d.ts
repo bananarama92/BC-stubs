@@ -1,3 +1,27 @@
+declare var ManagementBackground: string;
+/** @type {NPCCharacter} */
+declare var ManagementMistress: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var ManagementSub: NPCCharacter;
+declare var ManagementMistressAngryCount: number;
+declare var ManagementMistressReleaseTimer: number;
+/** @type {Item[]} */
+declare var ManagementPlayerAppearance: Item[];
+declare var ManagementMistressAllowPlay: boolean;
+declare var ManagementCanReleaseChastity: boolean;
+declare var ManagementEmpty: boolean;
+/** @type {null | NPCCharacter} */
+declare var ManagementRandomGirl: null | NPCCharacter;
+/** @type {"" | NPCArchetype} */
+declare var ManagementRandomGirlArchetype: "" | NPCArchetype;
+declare var ManagementRandomActivityCount: number;
+declare var ManagementRandomActivity: string;
+declare var ManagementRandomActivityList: string[];
+declare var ManagementRandomActivityCategory: string;
+declare var ManagementRandomActivityCategoryList: string[];
+declare var ManagementRandomTalkCount: number;
+declare var ManagementVisitRoom: boolean;
+declare var ManagementTimer: number;
 /**
  * Checks if the player is helpless (maids disabled) or not.
  * @returns {boolean} - Returns true if the player still has time remaining after asking the maids to stop helping
@@ -292,12 +316,12 @@ declare function ManagementCannotBeClubSlaveLoverLock(): boolean;
 declare function ManagementCannotBeClubSlaveFamilyLock(): boolean;
 /**
  * Checks if the player can complete her contract and is not kneeling
- * @returns  {boolean} - TRUE if both the Player can complete her contract but is not kneeling
+ * @returns {boolean} - TRUE if both the Player can complete her contract but is not kneeling
  */
 declare function ManagementCompleteContract(): boolean;
 /**
  * Checks if the player can complete her contract and is kneeling
- * @returns  {boolean} - TRUE if both the Player can complete her contract and is kneeling
+ * @returns {boolean} - TRUE if both the Player can complete her contract and is kneeling
  */
 declare function ManagementKneelingCompleteContract(): boolean;
 /**
@@ -330,6 +354,10 @@ declare function ManagementNoMistressInPrivateRoom(): boolean;
  * @returns {boolean} - TRUE if any NPC in the private room is chaste.
  */
 declare function ManagementFriendIsChaste(): boolean;
+/**
+ * Loads the club management room, creates the Mistress and sub character
+ * @type {ScreenLoadHandler}
+ */
 declare function ManagementLoad(): Promise<void>;
 /**
  * Run the club management room, draws the player and 2 NPCs (if they are not gone).
@@ -535,27 +563,3 @@ declare function ManagementChangeSlaveCollarType(NewType: string): void;
  * @returns {void} - Nothing.
  */
 declare function ManagementClubSlaveDialog(C: Character): void;
-declare var ManagementBackground: string;
-/** @type {NPCCharacter} */
-declare var ManagementMistress: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var ManagementSub: NPCCharacter;
-declare var ManagementMistressAngryCount: number;
-declare var ManagementMistressReleaseTimer: number;
-/** @type {Item[]} */
-declare var ManagementPlayerAppearance: Item[];
-declare var ManagementMistressAllowPlay: boolean;
-declare var ManagementCanReleaseChastity: boolean;
-declare var ManagementEmpty: boolean;
-/** @type {null | NPCCharacter} */
-declare var ManagementRandomGirl: null | NPCCharacter;
-/** @type {"" | NPCArchetype} */
-declare var ManagementRandomGirlArchetype: "" | NPCArchetype;
-declare var ManagementRandomActivityCount: number;
-declare var ManagementRandomActivity: string;
-declare var ManagementRandomActivityList: string[];
-declare var ManagementRandomActivityCategory: string;
-declare var ManagementRandomActivityCategoryList: string[];
-declare var ManagementRandomTalkCount: number;
-declare var ManagementVisitRoom: boolean;
-declare var ManagementTimer: number;

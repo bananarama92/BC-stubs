@@ -130,5 +130,7 @@
     "WoodFurniture": "Audio/WoodFurniture.mp3",
     "WoodenCuffs": "Audio/WoodenCuffs.mp3",
     "ZipTie": "Audio/ZipTie.mp3",
-    "Zipper1": "Audio/Zipper1.mp3"
+    "Zipper1": "Audio/Zipper1.mp3",
+    "bubbles": "Audio/bubbles.mp3",
+    "pour": "Audio/pour.mp3"
 }

@@ -1,8 +1,37 @@
+/** BC's version */
+declare var GameVersion: string;
+declare const GameVersionFormat: RegExp;
+/** @type {number | null} */
+declare var GameAnimationFrameId: number | null;
+/** @type {Worker | null} */
+declare var GameWorker: Worker | null;
+declare var CommonVersionUpdated: boolean;
+/** @type {TouchList | null} */
+declare var CommonTouchList: TouchList | null;
+/** @type {BrowserCache} */
+declare var BrowserStorageCache: BrowserCache;
 /**
  * Start BC after the webpage has fully loaded
  * @param {boolean} isNode Whether BC is run through the browser or via Node (_i.e._ the testing suite)
  */
 declare function GameStart(isNode?: boolean): Promise<void>;
+/** Promises that resolve upon reaching specific stages of the BC loading and login process. */
+declare const GameReadyState: {
+    /**
+     * Promise that resolves upon fully loading BC (but before logging in).
+     * This promise can safely be accessed starting from the `interactive` document ready state.
+     * @readonly
+     * @type {Promise<void>}
+     */
+    load: Promise<void>;
+    /**
+     * Promise that resolves upon succesfully logging in.
+     * Should not be called directly; use {@link ServerIsLoggedInAsync} instead.
+     * private
+     * @type {undefined | Promise<void>}
+     */
+    login: undefined | Promise<void>;
+};
 declare function GameHandleError(): void;
 /**
  * Periodically called in the background with low frequency, so the game doesn't freeze, even if the user switches to a different tab.
@@ -24,7 +53,9 @@ declare function GameRunBackground(Timestamp: number): void;
  * @param {KeyboardEvent} event
  */
 declare function GameKeyDown(event: KeyboardEvent): boolean | undefined;
+/** @type {KeyboardEventListener} */
 declare function GameKeyUp(event: KeyboardEvent): boolean;
+/** @type {ClipboardEventListener} */
 declare function GamePaste(event: ClipboardEvent): void;
 /**
  * If the user presses the mouse button, we fire the mousedown event for other screens
@@ -43,10 +74,15 @@ declare function GamePointerUp(event: PointerEvent, canvas: HTMLCanvasElement): 
  * @param {TouchEvent} event
  */
 declare function GameTouchEnd(event: TouchEvent): void;
+/**
+ * If the user rolls the mouse wheel, we fire the mousewheel event for other screens
+ * @type {MouseWheelEventListener}
+ */
 declare function GameMouseWheel(event: WheelEvent): void;
 /**
  * If the user moves the mouse mouse, we keep the mouse position for other scripts and fire the mousemove event for other screens
  * @param {PointerEvent} event
+ * @param {boolean} forwardToScreens
  */
 declare function GamePointerMove(event: PointerEvent, forwardToScreens?: boolean): void;
 /**
@@ -64,19 +100,3 @@ declare function GamePointerCancel(event: PointerEvent, canvas: HTMLCanvasElemen
  * @param {PointerEvent} event
  */
 declare function GamePointerOut(event: PointerEvent): void;
-/** BC's version */
-declare var GameVersion: string;
-declare const GameVersionFormat: RegExp;
-/** @type {number | null} */
-declare var GameAnimationFrameId: number | null;
-/** @type {Worker | null} */
-declare var GameWorker: Worker | null;
-declare var CommonVersionUpdated: boolean;
-/** @type {TouchList | null} */
-declare var CommonTouchList: TouchList | null;
-/** @type {BrowserCache} */
-declare var BrowserStorageCache: BrowserCache;
-declare namespace GameReadyState {
-    let load: Promise<void>;
-    let login: undefined | Promise<void>;
-}

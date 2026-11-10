@@ -1,3 +1,9 @@
+/** @type {ICommand[]} */
+declare var Commands: ICommand[];
+/** @readonly */
+declare let CommandsKey: string;
+/** @type {TextCache} */
+declare let CommandText: TextCache;
 /**
  * Loads the commands for the Player
  * @returns {void} - Nothing
@@ -10,7 +16,7 @@ declare function CommandsLoad(): void;
 declare function CommandsTranslate(): void;
 /**
  * Gets all available commands
- * @returns [ICommand[]]
+ * @returns {ICommand[]}
  */
 declare function GetCommands(): ICommand[];
 /**
@@ -47,7 +53,7 @@ declare function CommandHelp(low: string, timeout?: number): void;
  * @param {number} [timeout] - total time to display the help message in ms
  * @param {boolean} [doShowEscapeHint] - if message about message escaping should be shown
  */
-declare function CommandPrintHelpFor(commands: Optional<ICommand, "Action">[], timeout?: number, doShowEscapeHint?: boolean): void;
+declare function CommandPrintHelpFor(commands: Optional<ICommand, 'Action'>[], timeout?: number, doShowEscapeHint?: boolean): void;
 /**
  * Prints out the help for commands
  * @deprecated
@@ -81,9 +87,9 @@ declare function CommandHandleMultipleCandidates(candidates: ICommand[], key: st
  * @param {string[]} parts
  * @param {string} low
  * @param {string} msg
- * @returns
+ * @returns {void}
  */
-declare function CommandHandleSingleCandidate(initialCmd: ICommand, forward: string[], parts: string[], low: string, msg: string): void | HTMLDivElement;
+declare function CommandHandleSingleCandidate(initialCmd: ICommand, forward: string[], parts: string[], low: string, msg: string): void;
 /**
  * Returns the first defined value for a command property, following Reference aliases
  * @template {CommandResolvableKey} K
@@ -119,7 +125,7 @@ declare function CommandHandleSubcommandCompletion(cmd: ICommand, remaining: str
  */
 declare function CommandHandleArgumentCompletion(cmd: ICommand | Subcommand, remaining: string[], parts: string[], options?: {
     setCommand?: string;
-} & Pick<CommandHelpOptions, "command" | "subcommand">): boolean | "complete";
+} & Pick<CommandHelpOptions, "command" | "subcommand">): boolean | 'complete';
 /**
  *
  * @param {string} setCommand
@@ -167,72 +173,66 @@ declare function CommandBuildSuggestionsContext(options: {
     remaining: string[];
     argIndex: number;
 }): CommandSuggestionsContext;
-/** @type {ICommand[]} */
-declare var Commands: ICommand[];
-/** @readonly */
-declare let CommandsKey: string;
-/** @type {TextCache} */
-declare let CommandText: TextCache;
-declare namespace CommandsHelp {
+declare var CommandsHelp: {
     /**
      * private
      * @param {HTMLElement} help
      */
-    function _Publish(help: HTMLElement): void;
+    _Publish(help: HTMLElement): void;
     /**
      * @param {string} id
      */
-    function _BuildDelete(id: string): HTMLButtonElement;
+    _BuildDelete(id: string): HTMLButtonElement;
     /**
      *
      * @param {string} id
      * @param {boolean} expanded
-     * @returns
+     * @returns {HTMLButtonElement}
      */
-    function _BuildToggle(id: string, expanded: boolean): HTMLButtonElement;
+    _BuildToggle(id: string, expanded: boolean): HTMLButtonElement;
     /**
      *
      * @param {ICommand} command
      * @param {string} [translationTag]
      * @returns {string}
      */
-    function _GetDescription(command: ICommand, translationTag?: string): string;
+    _GetDescription(command: ICommand, translationTag?: string): string;
     /**
      * @param {ArgumentDef} arg
      * @param {string | undefined} translationTag
      * @param {"name" | "desc"} type
      * @returns {string}
      */
-    function _GetArgumentTranslated(arg: ArgumentDef, translationTag?: string | undefined, type?: "name" | "desc"): string;
+    _GetArgumentTranslated(arg: ArgumentDef, translationTag?: string | undefined, type?: "name" | "desc"): string;
     /**
-    * @param {ICommand} command
-    * @param {string} setCommand
-    * @param {boolean} singleCommand
-    * @param {Pick<CommandHelpOptions, "remaining" | "command" | "subcommand">} [options]
-    * @returns {HTMLOptionsUnion}
-    */
-    function _BuildCommand(command: ICommand, setCommand: string, singleCommand: boolean, options?: Pick<CommandHelpOptions, "remaining" | "command" | "subcommand">): HTMLOptionsUnion;
+     * @param {ICommand} command
+     * @param {string} setCommand
+     * @param {boolean} singleCommand
+     * @param {Pick<CommandHelpOptions, "remaining" | "command" | "subcommand">} [options]
+     * @returns {HTMLOptionsUnion}
+     */
+    _BuildCommand(command: ICommand, setCommand: string, singleCommand: boolean, options?: Pick<CommandHelpOptions, "remaining" | "command" | "subcommand">): HTMLOptionsUnion;
     /**
      * @param {ICommand[]} commands
      * @param {CommandHelpOptions} [options]
-     * @returns
+     * @returns {HTMLDivElement}
      */
-    function _BuildHelp(commands: ICommand[], { setCommand, remaining, command, subcommand }?: CommandHelpOptions): HTMLDivElement;
+    _BuildHelp(commands: ICommand[], { setCommand, remaining, command, subcommand }?: CommandHelpOptions): HTMLDivElement;
     /**
      * Prints out the help for commands
      * @param {Optional<ICommand, 'Action'>[]} commands - list of commands
      * @param {CommandHelpOptions} [options] - if message about message escaping should be shown
      */
-    function ShowFor(commands: Optional<ICommand, "Action">[], options?: CommandHelpOptions): HTMLDivElement;
+    ShowFor(commands: Optional<ICommand, 'Action'>[], options?: CommandHelpOptions): HTMLDivElement;
     /**
      * Prints out the help for commands with tags that include `low`
      * @param {string} low - lower case search keyword for tags
      * @returns {void} - Nothing
      */
-    function ShowForPartial(low: string): void;
-    function Complete(): void;
-}
-declare namespace CommandsChangelog {
+    ShowForPartial(low: string): void;
+    Complete(): void;
+};
+declare var CommandsChangelog: {
     /**
      * Iterate through the passed changelog element and remove all (redundant) elements outside the `[startID, stopID)` interval.
      * @param {Element} root - The changelog-containing element
@@ -240,7 +240,7 @@ declare namespace CommandsChangelog {
      * @param {string | null} stopID - The ID of the element representing the interval's end.
      * If not provided, use the first element matching the tag name of the `startID` element instead.
      */
-    function _FilterContent(root: Element, startID: string, stopID?: string | null): void;
+    _FilterContent(root: Element, startID: string, stopID?: string | null): void;
     /**
      * Construct a button for all `h1` buttons for deleting the changelog in question.
      * @param {string} id
@@ -248,7 +248,7 @@ declare namespace CommandsChangelog {
      * @param {number} level
      * @returns {HTMLButtonElement}
      */
-    function _GetH1Button(id: string, header: HTMLHeadingElement, level: number): HTMLButtonElement;
+    _GetH1Button(id: string, header: HTMLHeadingElement, level: number): HTMLButtonElement;
     /**
      * Construct a button for all `hn` buttons (with `n > 1`) for collapsing their respective section sibblings.
      * @param {string} id
@@ -256,7 +256,7 @@ declare namespace CommandsChangelog {
      * @param {number} level
      * @returns {HTMLButtonElement}
      */
-    function _GetHNButton(id: string, header: HTMLHeadingElement, level: number): HTMLButtonElement;
+    _GetHNButton(id: string, header: HTMLHeadingElement, level: number): HTMLButtonElement;
     /**
      * Ensure that all elements at the passed header level get a companion button, and ensure they and their respective contents are nested together in a `<section>`.
      * @param {Element} root
@@ -265,96 +265,111 @@ declare namespace CommandsChangelog {
      * @param {number} headerLevel
      * @param {null | string} headerPrefix
      */
-    function _ParseHeader(root: Element, id: string, href: string, headerLevel: number, headerPrefix?: null | string): void;
+    _ParseHeader(root: Element, id: string, href: string, headerLevel: number, headerPrefix?: null | string): void;
     /**
      * Ensure that all `<img>` elements can be clicked, opening their image in a new tab.
      * @param {Element} root
      */
-    function _ParseImg(root: Element): void;
+    _ParseImg(root: Element): void;
     /**
      * Ensure that all `<a>` elements open their links in a new tab.
      * @param {Element} root
      */
-    function _ParseA(root: Element): void;
+    _ParseA(root: Element): void;
     /**
      * Set all translation-sensitive text in the changelog.
      * @param {Element} changelog
      */
-    function _SetTranslationText(changelog: Element): void;
+    _SetTranslationText(changelog: Element): void;
     /**
      * Construct a changelog from the passed stringified HTML (constructed via _e.g._ the [marked](https://www.npmjs.com/package/marked) package).
      *
      * The stringified HTML is expected to have the following structure:
-     * * A single `<h1>` element _may_ be present in order to represent a general changelog title
-     * * Version-specific sections of the changelog _must_ be represented by `<h2>` elements and _may_ contain an arbitrary number of sub-headers
-     * * Headers and their sections _must not_ be grouped together inside an element; an overal flat structure is expected
+     * - A single `<h1>` element _may_ be present in order to represent a general changelog title
+     * - Version-specific sections of the changelog _must_ be represented by `<h2>` elements and _may_ contain an arbitrary number of sub-headers
+     * - Headers and their sections _must not_ be grouped together inside an element; an overal flat structure is expected
      * @param {string} innerHTML - The inner html representing containing a superset of the changelog's final content
-     * @param {Object} [options]
+     * @param {object} [options]
      * @param {null | string} [options.id] - The (root) ID of the to-be created changelog; defaults to `chat-room-changelog`
      * @param {null | string} [options.href] - The URL leading to the (external) changelog; defaults to `./changelog.html`
      * @param {null | string} [options.startID] - The header ID of the first to-be included segment within the changelog; defaults to the latest BC version (`r[0-9]{3}`)
      * @param {null | string} [options.stopID] - The header ID of the final to-be included segment within the changelog; defaults to `options.startID` if unspecified
      * @returns {HTMLDivElement} - The newly created changelog
      */
-    function Parse(innerHTML: string, options?: {
-        id?: string | null | undefined;
-        href?: string | null | undefined;
-        startID?: string | null | undefined;
-        stopID?: string | null | undefined;
+    Parse(innerHTML: string, options?: {
+        id?: null | string;
+        href?: null | string;
+        startID?: null | string;
+        stopID?: null | string;
     }): HTMLDivElement;
     /**
      * Construct a changelog from the passed stringified HTML and publish it to the chat room chatlog.
      *
      * @param {string} innerHTML - The inner html representing containing a superset of the changelog's final content
-     * @param {Object} [options]
+     * @param {object} [options]
      * @param {null | string} [options.id] - The (root) ID of the to-be created changelog; defaults to `chat-room-changelog`
      * @param {null | string} [options.href] - The URL leading to the (external) changelog; defaults to `./changelog.html`
      * @param {null | string} [options.startID] - The header ID of the first to-be included segment within the changelog; defaults to the latest BC version (`r[0-9]{3}`)
      * @param {null | string} [options.stopID] - The header ID of the final to-be included segment within the changelog; defaults to `options.startID` if unspecified
      * @returns {HTMLDivElement} - The newly created changelog
      */
-    function Publish(innerHTML: string, options?: {
-        id?: string | null | undefined;
-        href?: string | null | undefined;
-        startID?: string | null | undefined;
-        stopID?: string | null | undefined;
+    Publish(innerHTML: string, options?: {
+        id?: null | string;
+        href?: null | string;
+        startID?: null | string;
+        stopID?: null | string;
     }): HTMLDivElement;
-}
-declare namespace CommandsModsList {
-    let _RemoteTimeoutMs: number;
-    let _ActiveRemoteRequest: null | CommandsModListRequest;
-    function ShowLocal(): void;
+};
+/**
+ * Namespace for local and remote ModSDK listing commands.
+ * @namespace
+ */
+declare var CommandsModsList: {
+    /**
+     * @readonly
+     * private
+     */
+    _RemoteTimeoutMs: number;
+    /**
+     * @type {null | CommandsModListRequest}
+     * private
+     */
+    _ActiveRemoteRequest: null | CommandsModListRequest;
+    ShowLocal(): void;
     /**
      * @param {ServerChatRoomMessage} data
      * @param {OnlineCharacter} senderCharacter
      */
-    function ProcessHiddenRemote(data: ServerChatRoomMessage, senderCharacter: OnlineCharacter): void;
+    ProcessHiddenRemote(data: ServerChatRoomMessage, senderCharacter: OnlineCharacter): void;
     /** @param {string} argsTrimmed */
-    function StartRemote(argsTrimmed: string): void;
-    function _CancelActiveRemote(): void;
-    function _GetLocalSorted(): ModSDKModInfo[];
-    /** @param {ModSDKModInfo[]} mods @param {Character} char */
-    function _FormatModListForCopy(mods: ModSDKModInfo[], char: Character): string;
+    StartRemote(argsTrimmed: string): void;
+    _CancelActiveRemote(): void;
+    _GetLocalSorted(): ModSDKModInfo[];
+    /**
+     * @param {ModSDKModInfo[]} mods
+     * @param {Character} char
+     */
+    _FormatModListForCopy(mods: ModSDKModInfo[], char: Character): string;
     /**
      * @param {string} id
      * @param {ModSDKModInfo[]} mods
      * @param {OnlineCharacter} char
      */
-    function _BuildCopyButton(id: string, mods: ModSDKModInfo[], char: OnlineCharacter): HTMLButtonElement;
+    _BuildCopyButton(id: string, mods: ModSDKModInfo[], char: OnlineCharacter): HTMLButtonElement;
     /** @param {string} id */
-    function _BuildDeleteButton(id: string): HTMLButtonElement;
+    _BuildDeleteButton(id: string): HTMLButtonElement;
     /** @param {ModSDKModInfo[]} mods */
-    function _BuildList(mods: ModSDKModInfo[]): HTMLUListElement;
-    function _UpdateRemoteProgress(): void;
+    _BuildList(mods: ModSDKModInfo[]): HTMLUListElement;
+    _UpdateRemoteProgress(): void;
     /** @param {Map<number, CommandsModListResult>} results */
-    function _BuildDetailsBody(results: Map<number, CommandsModListResult>): HTMLDivElement;
-    function _FinalizeRemote(): void;
-    function _OnRemoteTimeout(): void;
+    _BuildDetailsBody(results: Map<number, CommandsModListResult>): HTMLDivElement;
+    _FinalizeRemote(): void;
+    _OnRemoteTimeout(): void;
     /** @param {ServerChatRoomMessage} data */
-    function _HandleRemoteQuery(data: ServerChatRoomMessage): void;
+    _HandleRemoteQuery(data: ServerChatRoomMessage): void;
     /**
      * @param {ServerChatRoomMessage} data
      * @param {OnlineCharacter} senderCharacter
      */
-    function _HandleRemoteReply(data: ServerChatRoomMessage, senderCharacter: OnlineCharacter): void;
-}
+    _HandleRemoteReply(data: ServerChatRoomMessage, senderCharacter: OnlineCharacter): void;
+};

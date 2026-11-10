@@ -1,3 +1,12 @@
+declare var DojoStruggleBackground: string;
+declare var DojoStrugglePosition: number;
+declare var DojoStruggleImpulse: number;
+/** @type {number[]} */
+declare var DojoStruggleRope: number[];
+/**
+ * Loads the dojo struggle mini game and prepare the rope walls
+ * @type {ScreenLoadHandler}
+ */
 declare function DojoStruggleLoad(): Promise<void>;
 declare function DojoStruggleReset(): void;
 /**
@@ -15,9 +24,8 @@ declare function DojoStruggleClick(): void;
  * @returns {void} - Nothing
  */
 declare function DojoStruggleMouseDown(): void;
+/**
+ * Handles key presses during the dojo struggle mini game. A space bar is handled just like a click is.  The C cheat key has a little less impulse.
+ * @type {KeyboardEventListener}
+ */
 declare function DojoStruggleKeyDown(event: KeyboardEvent): boolean;
-declare var DojoStruggleBackground: string;
-declare var DojoStrugglePosition: number;
-declare var DojoStruggleImpulse: number;
-/** @type {number[]} */
-declare var DojoStruggleRope: number[];

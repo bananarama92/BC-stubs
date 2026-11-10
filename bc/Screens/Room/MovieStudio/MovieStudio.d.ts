@@ -1,3 +1,26 @@
+declare var MovieStudioBackground: string;
+/** @type {NPCCharacter} */
+declare var MovieStudioDirector: NPCCharacter;
+/** @type {"" | "OpenHouse" | "Interview"} */
+declare var MovieStudioCurrentMovie: "" | "OpenHouse" | "Interview";
+declare var MovieStudioCurrentScene: number;
+/** @type {"" | "Journalist" | "Maid" | "Mistress" | "Wife"} */
+declare var MovieStudioCurrentRole: "" | "Journalist" | "Maid" | "Mistress" | "Wife";
+/** @type {NPCCharacter} */
+declare var MovieStudioActor1: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MovieStudioActor2: NPCCharacter;
+/** @type {number} */
+declare var MovieStudioTimer: number;
+declare var MovieStudioMeter: number;
+declare var MovieStudioDecay: number;
+/** @type {string[]} */
+declare var MovieStudioActivity: string[];
+declare var MovieStudioMoney: number;
+/** @type {Item[]} */
+declare var MovieStudioOriginalClothes: Item[];
+/** @type {"" | "Interview" | "OpenHouse"} */
+declare var MovieStudioDailyMovie: "" | "Interview" | "OpenHouse";
 /**
  * The player can play in a movie if she doesn't have any locked restraints
  * @returns {boolean} - TRUE if the player can play in a movie
@@ -50,6 +73,10 @@ declare function MovieStudioChangeMeter(Factor: number): void;
  * @returns {void} - Nothing
  */
 declare function MovieStudioProcessDecay(): void;
+/**
+ * Loads the Movie Studio introduction room screen and saves the player clothes
+ * @type {ScreenLoadHandler}
+ */
 declare function MovieStudioLoad(): Promise<void>;
 /**
  * Runs and draws the Movie Studio screen
@@ -109,7 +136,7 @@ declare function MovieStudioAlterParameter(Name: "Actor1" | "Actor2", Param: "Do
  * @param {"Domination" | "Affection"} Param - The parameter to get
  * @param {number} FromValue - From that value
  * @param {number} ToValue - To that value
- * @returns {Boolean} - TRUE if between
+ * @returns {boolean} - TRUE if between
  */
 declare function MovieStudioParameterValueBetween(Name: "Actor1" | "Actor2", Param: "Domination" | "Affection", FromValue: number, ToValue: number): boolean;
 /**
@@ -153,26 +180,3 @@ declare function MovieStudioClubCardStart(): void;
  * @returns {SafePromise<void>}
  */
 declare function MovieStudioClubCardEnd(): SafePromise<void>;
-declare var MovieStudioBackground: string;
-/** @type {NPCCharacter} */
-declare var MovieStudioDirector: NPCCharacter;
-/** @type {"" | "OpenHouse" | "Interview"} */
-declare var MovieStudioCurrentMovie: "" | "OpenHouse" | "Interview";
-declare var MovieStudioCurrentScene: number;
-/** @type {"" | "Journalist" | "Maid" | "Mistress" | "Wife"} */
-declare var MovieStudioCurrentRole: "" | "Journalist" | "Maid" | "Mistress" | "Wife";
-/** @type {NPCCharacter} */
-declare var MovieStudioActor1: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var MovieStudioActor2: NPCCharacter;
-/** @type {number} */
-declare var MovieStudioTimer: number;
-declare var MovieStudioMeter: number;
-declare var MovieStudioDecay: number;
-/** @type {string[]} */
-declare var MovieStudioActivity: string[];
-declare var MovieStudioMoney: number;
-/** @type {Item[]} */
-declare var MovieStudioOriginalClothes: Item[];
-/** @type {"" | "Interview" | "OpenHouse"} */
-declare var MovieStudioDailyMovie: "" | "Interview" | "OpenHouse";

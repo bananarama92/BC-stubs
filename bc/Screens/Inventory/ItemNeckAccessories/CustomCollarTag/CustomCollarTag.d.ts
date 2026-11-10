@@ -1,1 +1,2 @@
-declare function AssetsItemNeckAccessoriesCustomCollarTagAfterDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData<AnimationPersistentData>) => void) | null, drawData: DynamicDrawingData<AnimationPersistentData>): void;
+/** @type {ExtendedItemScriptHookCallbacks.AfterDraw<TextItemData>} */
+declare function AssetsItemNeckAccessoriesCustomCollarTagAfterDrawHook(data: TextItemData, originalFunction: ((drawData: DynamicDrawingData<AnimationPersistentData>) => void) | null, { C, A, CA, X, Y, Property, drawCanvas, drawCanvasBlink, AlphaMasks, L, Color }: DynamicDrawingData<AnimationPersistentData>): void;

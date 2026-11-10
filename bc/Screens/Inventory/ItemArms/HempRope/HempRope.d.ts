@@ -1,1 +1,2 @@
-declare function AssetsItemArmsHempRopeBeforeDraw(drawData: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides | undefined;
+/** @type {ExtendedItemCallbacks.BeforeDraw} */
+declare function AssetsItemArmsHempRopeBeforeDraw(data: DynamicDrawingData<AnimationPersistentData>): DynamicBeforeDrawOverrides | undefined;

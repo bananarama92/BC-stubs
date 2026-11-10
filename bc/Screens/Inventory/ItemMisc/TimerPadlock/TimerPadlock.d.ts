@@ -1,4 +1,6 @@
+/** @type {ExtendedItemScriptHookCallbacks.Draw<NoArchItemData>} */
 declare function InventoryItemMiscTimerPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Click<NoArchItemData>} */
 declare function InventoryItemMiscTimerPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
 /**
  *

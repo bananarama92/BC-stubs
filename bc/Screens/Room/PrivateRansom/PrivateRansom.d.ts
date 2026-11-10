@@ -1,8 +1,15 @@
+declare var PrivateRansomBackground: string;
+/** @type {null | NPCCharacter} */
+declare var PrivateRansomCharacter: null | NPCCharacter;
 /**
  * Check if we must start a Pandora ransom for one of the girls in the private room
  * @returns {boolean} - TRUE if a ransom or more was started
  */
 declare function PrivateRansomStart(): boolean;
+/**
+ * Loads the private ransom note screen
+ * @type {ScreenLoadHandler}
+ */
 declare function PrivateRansomLoad(): Promise<void>;
 /**
  * Draws the character and the ransom note
@@ -23,6 +30,3 @@ declare function PrivateRansomTalkSupervisor(): SafePromise<void>;
  * @returns {void} - Nothing.
  */
 declare function PrivateRansomExit(): void;
-declare var PrivateRansomBackground: string;
-/** @type {null | NPCCharacter} */
-declare var PrivateRansomCharacter: null | NPCCharacter;

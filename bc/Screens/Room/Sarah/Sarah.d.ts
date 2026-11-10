@@ -1,3 +1,27 @@
+declare var SarahRoomAvailable: boolean;
+declare var SarahBackground: string;
+/** @type {"" | "Owned" | "Curfew" | "SchoolMate" | "Lover" | "ExLover" | "WillBePunished" | "CameWithPlayer" | "InPrivateRoom"} */
+declare var SarahStatus: "" | "Owned" | "Curfew" | "SchoolMate" | "Lover" | "ExLover" | "WillBePunished" | "CameWithPlayer" | "InPrivateRoom";
+/** @type {"" | "SchoolMate" | "Lover" | "ExLover" | "Owned" | "Curfew" | "Owner" | "ExOwner" | "InPrivateRoom"} */
+declare var AmandaStatus: "" | "SchoolMate" | "Lover" | "ExLover" | "Owned" | "Curfew" | "Owner" | "ExOwner" | "InPrivateRoom";
+declare var SophieStatus: string;
+/** @type {NPCCharacter} */
+declare var Sarah: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var Amanda: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var Sophie: NPCCharacter;
+declare var SarahInside: boolean;
+declare var AmandaInside: boolean;
+declare var SophieInside: boolean;
+declare var SarahUnlockQuest: boolean;
+/** @type {Character[]} */
+declare var SarahCharacter: Character[];
+declare var SophieUpsetCount: number;
+declare var SophieFightDone: boolean;
+declare var SophiePunishmentStage: number;
+declare var SophieOrgasmGameCount: number;
+declare var SophieOrgasmGamePleasure: number;
 /** @param {string} QueryStatus */
 declare function SarahStatusIs(QueryStatus: string): boolean;
 /** @param {string} QueryStatus */
@@ -35,8 +59,12 @@ declare function SarahOrAmandaAreInside(): boolean;
 declare function SarahIsPlayerSlave(): boolean;
 declare function SarahAmandaIsPlayerSlave(): boolean;
 declare function SarahAmandaAndSarahArePlayerSlave(): boolean;
-declare function SarahRoomLabel(): "ExploreClub" | "SearchSarah" | "SarahBedroom";
+declare function SarahRoomLabel(): "ExploreClub" | "SarahBedroom" | "SearchSarah";
 declare function SarahSetStatus(): void;
+/**
+ * Loads the Sarah room
+ * @type {ScreenLoadHandler}
+ */
 declare function SarahLoad(): Promise<void>;
 declare function AmandaLoad(): void;
 declare function SophieLoad(): void;
@@ -65,8 +93,15 @@ declare function SarahUpsetSophie(Offset: number): void;
  * @param {number} domRep
  */
 declare function SarahRestrainedBySophie(phase: number, domRep: number): void;
+/**
+ * When a fight starts between the player and Sophie
+ */
 declare function SarahFightSophie(): void;
-declare function SarahFightSophieEnd(): void;
+/**
+ * When the fight against Sophie ends
+ * @param {boolean} victory - Wether the player won or not
+ */
+declare function SarahFightSophieEnd(victory: boolean): Promise<void>;
 declare function SarahSophiePunishGirls(): void;
 declare function SarahSophieFreeSarahAndLeave(): void;
 declare function SarahSophieFreePlayerAndAmandaTheyLeave(): void;
@@ -78,9 +113,9 @@ declare function SarahKickPlayerOut(): void;
 declare function SarahTransferSophieToRoom(Love: number): void;
 /**
  * When we need to set Sophie intro
- * @param {string | number} DomRep
+ * @param {number} DomRep
  */
-declare function SarahSophieSetPunishmentIntro(DomRep: string | number): void;
+declare function SarahSophieSetPunishmentIntro(DomRep: number): void;
 /**
  * Strips and restrains a character
  * @param {Character} C
@@ -95,9 +130,9 @@ declare function SarahSophieStartBuzz(C: Character, Intensity: string | number):
 /**
  * Sets the Sophie punishment for the player
  * @param {string} EventType
- * @param {string|number} DomRep
+ * @param {number} DomRep
  */
-declare function SarahSophiePunishEvent(EventType: string, DomRep: string | number): void;
+declare function SarahSophiePunishEvent(EventType: string, DomRep: number): void;
 /**
  * When the player plays Sophie Orgasm Game
  * @param {number} Factor
@@ -156,33 +191,9 @@ declare function SarahGiveThirdSlaveItem(C?: NPCCharacter): void;
 declare function SarahGiveFourthSlaveItem(C?: NPCCharacter): void;
 /**
  * Build the orgasm meter for the slaves
- * @param {string|number} Pleasure
- * @param {string|number} Bonus
- * @param {string|number} Intensity
+ * @param {number} Pleasure
+ * @param {number} Bonus
+ * @param {number} Intensity
  */
-declare function SarahSlaveOrgasmBuild(Pleasure: string | number, Bonus: string | number, Intensity: string | number): void;
+declare function SarahSlaveOrgasmBuild(Pleasure: number, Bonus: number, Intensity: number): void;
 declare function SarahSlaveReset(): void;
-declare var SarahRoomAvailable: boolean;
-declare var SarahBackground: string;
-/** @type {"" | "Owned" | "Curfew" | "SchoolMate" | "Lover" | "ExLover" | "WillBePunished" | "CameWithPlayer" | "InPrivateRoom"} */
-declare var SarahStatus: "" | "Owned" | "Curfew" | "SchoolMate" | "Lover" | "ExLover" | "WillBePunished" | "CameWithPlayer" | "InPrivateRoom";
-/** @type {"" | "SchoolMate" | "Lover" | "ExLover" | "Owned" | "Curfew" | "Owner" | "ExOwner" | "InPrivateRoom"} */
-declare var AmandaStatus: "" | "SchoolMate" | "Lover" | "ExLover" | "Owned" | "Curfew" | "Owner" | "ExOwner" | "InPrivateRoom";
-declare var SophieStatus: string;
-/** @type {NPCCharacter} */
-declare var Sarah: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var Amanda: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var Sophie: NPCCharacter;
-declare var SarahInside: boolean;
-declare var AmandaInside: boolean;
-declare var SophieInside: boolean;
-declare var SarahUnlockQuest: boolean;
-/** @type {Character[]} */
-declare var SarahCharacter: Character[];
-declare var SophieUpsetCount: number;
-declare var SophieFightDone: boolean;
-declare var SophiePunishmentStage: number;
-declare var SophieOrgasmGameCount: number;
-declare var SophieOrgasmGamePleasure: number;

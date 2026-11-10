@@ -1,22 +1,36 @@
+declare var OnlineProfileBackground: string;
+declare const OnlineProfileTextDescMaxLen = 10000;
+declare const OnlineProfileTextOwnersNotesMaxLen = 4000;
 /**
- * Setup OnlineProfile UI in a specific mode.
- *
- * @param {"Description" | "OwnersNotes"} mode - Initial display mode.
- * @returns {void}
+ * Leading character used to signal that description is compressed
+ * @readonly
  */
-declare function OnlineProfileStart(mode: "Description" | "OwnersNotes"): void;
+declare const ONLINE_PROFILE_DESCRIPTION_COMPRESSION_MAGIC: string;
+declare const OnlineProfile: {
+    IDs: Readonly<{
+        screen: "online-profile-screen";
+        saveButton: "online-profile-save-button";
+        cancelButton: "online-profile-cancel-button";
+        ownersNotesButton: "online-profile-owners-notes-button";
+        description: "online-profile-description-input";
+        ownersNotes: "online-profile-owners-notes-input";
+    }>;
+    /** @type { "description" | "ownersNotes" } */
+    mode: "description" | "ownersNotes";
+    description: () => string;
+    ownersNotes: () => string;
+    notesAvailable: () => boolean;
+    /**
+     * @param {"description" | "ownersNotes"} mode
+     * @returns {boolean}
+     */
+    canEdit: (mode: "description" | "ownersNotes") => boolean;
+};
 /**
- * Loads the text element based on current viewing/editing mode.
- * @param {HTMLInputElement} element
- * @returns {void}
+ * Loads the online profile screen by creating its input
+ * @type {ScreenLoadHandler}
  */
-declare function OnlineProfileLoadTextArea(element: HTMLInputElement): void;
 declare function OnlineProfileLoad(): Promise<void>;
-/**
- * Handles unloading the online profile screen
- * @returns {void}
- */
-declare function OnlineProfileUnload(): void;
 /**
  * Runs and draws the online profile screen
  * @returns {void} - Nothing
@@ -27,22 +41,35 @@ declare function OnlineProfileRun(): void;
  * @returns {void} - Nothing
  */
 declare function OnlineProfileClick(): void;
+declare function OnlineProfileResize(): void;
 /**
  * Handles exiting while in the online profile screen. It removes the input and saves the description.
  * @param {boolean} [Save] - Whether or not we should save the changes
  * @returns {void} - Nothing
  */
 declare function OnlineProfileExit(Save?: boolean): void;
-/** @type { "Description" | "OwnersNotes" } */
-declare var OnlineProfileMode: "Description" | "OwnersNotes";
-declare var OnlineProfileTextDesc: string;
-declare var OnlineProfileTextOwnersNotes: string;
-declare var OnlineProfileNotesAvailable: boolean;
-declare const OnlineProfileTextDescMaxLen: 10000;
-declare const OnlineProfileTextOwnersNotesMaxLen: 4000;
-declare var OnlineProfileBackground: string;
 /**
- * Leading character used to signal that description is compressed
- * @readonly
+ * Handles unloading the online profile screen
+ * @returns {void}
  */
-declare const ONLINE_PROFILE_DESCRIPTION_COMPRESSION_MAGIC: string;
+declare function OnlineProfileUnload(): void;
+/**
+ * Saves the description to the server
+ * @param {string} description - The description to save
+ * @returns {void}
+ */
+declare function OnlineProfileSaveDescription(description: string): void;
+/**
+ * Sets the mode of the online profile screen.
+ *
+ * @param {"description" | "ownersNotes"} mode - The mode to set.
+ * @returns {void}
+ */
+declare function OnlineProfileSetMode(mode: "description" | "ownersNotes"): void;
+/**
+ * Setup OnlineProfile UI in a specific mode.
+ *
+ * @param {"description" | "ownersNotes"} mode - Initial display mode.
+ * @returns {void}
+ */
+declare function OnlineProfileStart(mode: "description" | "ownersNotes"): void;

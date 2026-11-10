@@ -1,3 +1,23 @@
+declare var MiniGameType: string;
+declare var MiniGameVictory: boolean;
+declare var MiniGamePerfect: boolean;
+/** @type {number} */
+declare var MiniGameDifficulty: number;
+/** @type {string} */
+declare var MiniGameDifficultyMode: string;
+declare var MiniGameDifficultyRatio: number;
+declare var MiniGameAdvancedPayment: number;
+/** @type {(() => void) | null} */
+declare var MiniGameReturnFunction: (() => void) | null;
+declare var MiniGameProgress: number;
+declare var MiniGameTimer: number;
+declare var MiniGameStarted: boolean;
+declare var MiniGameEnded: boolean;
+declare var MiniGameCheatAvailable: boolean;
+declare let KDPatched: boolean;
+/**
+ * @type {ScreenLoadHandler}
+ */
 declare function MiniGameLoad(): Promise<void>;
 /**
  * Starts a given mini game at a set difficulty and keeps
@@ -18,20 +38,3 @@ declare function MiniGameRunning(): boolean;
  * @returns {boolean} - TRUE if C and cheats are allowed
  */
 declare function MiniGameCheatKeyDown(event: KeyboardEvent): boolean;
-declare var MiniGameType: string;
-declare var MiniGameVictory: boolean;
-declare var MiniGamePerfect: boolean;
-/** @type {number} */
-declare var MiniGameDifficulty: number;
-/** @type {string} */
-declare var MiniGameDifficultyMode: string;
-declare var MiniGameDifficultyRatio: number;
-declare var MiniGameAdvancedPayment: number;
-/** @type {string | (() => void) | null} */
-declare var MiniGameReturnFunction: string | (() => void) | null;
-declare var MiniGameProgress: number;
-declare var MiniGameTimer: number;
-declare var MiniGameStarted: boolean;
-declare var MiniGameEnded: boolean;
-declare var MiniGameCheatAvailable: boolean;
-declare let KDPatched: boolean;

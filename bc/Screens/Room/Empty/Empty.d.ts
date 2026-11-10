@@ -1,3 +1,7 @@
+declare var EmptyBackground: string;
+/** @type {Character[]} */
+declare var EmptyCharacter: Character[];
+declare var EmptyCharacterOffset: number;
 /**
  * Checks if the player struggled successfully within the allowed time
  * @returns {boolean} - Returns TRUE if the player managed to struggle out in time
@@ -18,9 +22,21 @@ declare function EmptyStruggleProgress(): boolean;
  * @returns {boolean} - Whether the player is ready to do a bondage training or not.
  */
 declare function EmptySlaveMarketReadyForBondageTraining(): boolean;
+/**
+ * Loads the empty room screen. Does nothing, required for future use and because it is called dynamically when loading the screen.
+ * @type {ScreenLoadHandler}
+ */
 declare function EmptyLoad(): Promise<void>;
-declare function EmptyRun(time: number): void;
-declare function EmptyClick(event: PointerEvent): void;
+/**
+ * Runs and draws the empty room screen, it will place each character inside the room evenly
+ * @type {ScreenRunHandler}
+ */
+declare function EmptyRun(): void;
+/**
+ * Handles clicks in the empty room screen
+ * @type {MouseEventListener}
+ */
+declare function EmptyClick(): void;
 /**
  * Used to return the player to the main hall from the empty room when in the management room
  * @returns {void} - Nothing
@@ -66,7 +82,3 @@ declare function EmptySlaveMarketTrainingProgress(Intensity: number): void;
  * @returns {SafePromise<void>}
  */
 declare function EmptySlaveMarketTrainingEnd(Status: string): SafePromise<void>;
-declare var EmptyBackground: string;
-/** @type {Character[]} */
-declare var EmptyCharacter: Character[];
-declare var EmptyCharacterOffset: number;

@@ -7,6 +7,11 @@ declare namespace MapManager {
 		): ChatRoomMapEffect[][] | undefined;
 	}
 
+	interface ObjectSettingsCodec {
+		write(settingsByTile: Record<number, ChatRoomMapObjectSettings>, writer: BitStringWriter): boolean;
+		read(reader: BitStringReader): Record<number, ChatRoomMapObjectSettings> | undefined;
+	}
+
 	interface MapCodec<T> {
 		write(map: T, writer: BitStringWriter): boolean;
 		read(
@@ -50,3 +55,24 @@ interface MapDataLookupTable {
 }
 
 type MapDataDoodadType = keyof MapDataLookupTable;
+
+/**
+ * Internal type to carry around the tile X,Y into index unpacking
+ */
+type UnpackedIndex<T extends readonly [number, ...unknown[]]> = T extends readonly [number, infer Y, ...infer Rest]
+	? Y extends number ? [number, ...Rest] : T
+	: T;
+
+type MapDataIndexedArgs<args extends readonly unknown[]> = [x: number, y: number, ...args] | [index: number, ...args];
+
+type ChatRoomMapViewObjectModeType = "Tile" | "Object" | "Effect";
+
+type ChatRoomMapViewEditModeType = "" | ChatRoomMapViewObjectModeType | "TileType" | "ObjectType" | "ObjectSettings";
+
+type ChatRoomMapViewTool = {
+	canPaint: () => boolean;
+	paint: (x: number, y: number, range: number, event: PointerEvent) => void;
+	selectionColor: string;
+};
+
+type ChatRoomMapViewToolName = keyof typeof ChatRoomMapViewTools;

@@ -1,3 +1,63 @@
+/** The background of the crafting screen. */
+declare var CraftingBackground: string;
+/**
+ * The active subscreen within the crafting screen:
+ * - `"Slot"`: The main crafting screens wherein the {@link CraftingItem} is selected, created or destroyed.
+ * - `"Name"`: The main menu wherein the crafted item is customized, allowing for the specification of names, descriptions, colors, extended item types, _etc._
+ * - `"Color"`: A dedicated coloring screen for the crafted item.
+ * - `"Extended"`: The extended item menu.
+ * @type {CraftingMode}
+ */
+declare let CraftingMode: CraftingMode;
+/** The index of the selected crafted item within the crafting screen. */
+declare let CraftingSlot: number;
+/**
+ * The currently selected crafted item in the crafting screen.
+ * @type {CraftingItemSelected | null}
+ */
+declare let CraftingSelectedItem: CraftingItemSelected | null;
+/**
+ * The character used for the crafting preview.
+ * @type {Character | null}
+ */
+declare let CraftingPreview: Character | null;
+/** Whether the crafting character preview should be naked or not. */
+declare let CraftingNakedPreview: boolean;
+/** Whether exiting the crafting menu should return you to the chatroom or, otherwise, the main hall. */
+declare let CraftingReturnToChatroom: boolean;
+/**
+ * A record mapping all crafting-valid asset names to a list of matching eligible assets.
+ *
+ * Eligible assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
+ *
+ * The first asset in each list is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
+ * @type {Partial<Record<AssetName, Asset[]>>}
+ */
+declare let CraftingAssets: Partial<Record<AssetName, Asset[]>>;
+/** The separator used between different crafted items when serializing them. */
+declare const CraftingSerializeItemSep = "\u00A7";
+/** The separator used between fields within a single crafted item when serializing them. */
+declare const CraftingSerializeFieldSep = "\u00B6";
+/**
+ * Regexp pattern for sanitizing to-be serialized crafted item string data by finding all
+ * special separator characters (see {@link CraftingSerializeItemSep} and {@link CraftingSerializeFieldSep}).
+ */
+declare const CraftingSerializeSanitize: RegExp;
+/**
+ * Map crafting properties to their respective validation function.
+ * @type {Map<CraftingPropertyType, (asset: Asset) => boolean>}
+ */
+declare const CraftingPropertyMap: Map<CraftingPropertyType, (asset: Asset) => boolean>;
+declare const CraftingEffectsDefaultMaximumStack = 2;
+declare const CraftingEffectsDefaultMaximumEffects = 2;
+/**
+ * A record mapping crafting property names to functions that return a boolean indicating whether the property can increase
+ * @type {Record<CraftingPropertyType, {max?: number, isDisabled?: (craft: CraftingItem | CraftingItemSelected) => boolean}>}
+ */
+declare const CraftingEffectsPrerequisite: Record<CraftingPropertyType, {
+    max?: number;
+    isDisabled?: (craft: CraftingItem | CraftingItemSelected) => boolean;
+}>;
 /**
  * Checks if a {@link CraftingItem["Effects"]} prerequisite is met
  * @param {CraftingItemSelected | CraftingItem} craft
@@ -10,6 +70,116 @@ declare function CraftingCheckEffectsPrerequisite(craft: CraftingItemSelected | 
  */
 declare function CraftingPropertyUpdateButtons(craft: CraftingItemSelected): void;
 /**
+ * An enum with status codes for crafting validation.
+ * @property {2} OK - The validation proceeded without errors
+ * @property {1} ERROR - The validation produced one or more errors that were successfully resolved
+ * @property {0} CRITICAL_ERROR - The validation produced an unrecoverable error
+ * @type {{ OK: 2, ERROR: 1, CRITICAL_ERROR: 0 }}
+ * @satisfies {Record<string, CraftingStatusType>}
+ */
+declare const CraftingStatusType: {
+    OK: 2;
+    ERROR: 1;
+    CRITICAL_ERROR: 0;
+};
+/**
+ * The Names of all locks that can be automatically applied to crafted items.
+ * An empty string implies the absence of a lock.
+ * @type {readonly (AssetLockType | "")[]}
+ */
+declare const CraftingLockList: readonly (AssetLockType | "")[];
+/**
+ * A set of item property names that should never be stored in {@link CraftingItem.ItemProperty}.
+ * @type {Set<keyof ItemProperties>}
+ */
+declare const CraftingPropertyExclude: Set<keyof ItemProperties>;
+declare const CraftingID: {
+    readonly root: "crafting-screen";
+    readonly downloadButton: "crafting-download-button";
+    readonly uploadButton: "crafting-upload-button";
+    readonly acceptButton: "crafting-accept-button";
+    readonly cancelButton: "crafting-cancel-button";
+    readonly exitButton: "crafting-exit-button";
+    readonly leftPanel: "crafting-left-panel";
+    readonly assetButton: "crafting-asset-button";
+    readonly assetPanel: "crafting-asset-panel";
+    readonly assetGrid: "crafting-asset-grid";
+    readonly assetSearch: "crafting-asset-search";
+    readonly assetHeader: "crafting-asset-header";
+    readonly padlockButton: "crafting-padlock-button";
+    readonly padlockPanel: "crafting-padlock-panel";
+    readonly padlockGrid: "crafting-padlock-grid";
+    readonly padlockSearch: "crafting-padlock-search";
+    readonly padlockHeader: "crafting-padlock-header";
+    readonly propertyButton: "crafting-property-button";
+    readonly propertyPanel: "crafting-property-panel";
+    readonly propertyGrid: "crafting-property-grid";
+    readonly propertySearch: "crafting-property-search";
+    readonly propertyHeader: "crafting-property-header";
+    readonly centerPanel: "crafting-center-panel";
+    readonly undressButton: "crafting-undress-button";
+    readonly rightPanel: "crafting-right-panel";
+    readonly nameInput: "crafting-name-input";
+    readonly nameLabel: "crafting-name-label";
+    readonly descriptionInput: "crafting-description-input";
+    readonly descriptionLabel: "crafting-description-label";
+    readonly colorsButton: "crafting-colors-button";
+    readonly colorsInput: "crafting-colors-input";
+    readonly colorsLabel: "crafting-colors-label";
+    readonly layeringInput: "crafting-layering-input";
+    readonly layeringButton: "crafting-layering-button";
+    readonly layeringLabel: "crafting-layering-label";
+    readonly privateCheckbox: "crafting-private-checkbox";
+    readonly privateLabel: "crafting-private-label";
+    readonly extendedButton: "crafting-extended-button";
+    readonly extendedLabel: "crafting-extended-label";
+    readonly tightenButton: "crafting-tighten-button";
+    readonly tightenLabel: "crafting-tighten-label";
+    readonly asciiDescriptionCheckbox: "crafting-ascii-description-checkbox";
+    readonly asciidescriptionLabel: "crafting-ascii-description-label";
+};
+declare var CraftingDescription: {
+    /**
+     * Leading character for marking encoded extended crafted item descriptions.
+     * @readonly
+     */
+    ExtendedDescriptionMarker: "\0";
+    /**
+     * Regex for representing legal UTF16 characters.
+     * Note the exclusion of control characters (except Newline aka `\n`), `§` (`\xA7`) and `¶` (`\xB6`).
+     * @readonly
+     */
+    Pattern: RegExp;
+    /**
+     * Regex for representing legal extended ASCII characters.
+     * Note the exclusion of control characters (except Newline aka `\n`), `§` (`\xA7`) and `¶` (`\xB6`).
+     * @readonly
+     */
+    PatternASCII: RegExp;
+    /**
+     * Decode and return the passed string if it consists of UTF16-encoded UTF8 characters.
+     *
+     * Encoded strings must be marked with a leading {@link CraftingDescription.ExtendedDescriptionMarker}; unencoded strings are returned unmodified.
+     * @param {string} description - The to-be decoded string
+     * @returns {string} - The decoded string
+     */
+    Decode(description: string): string;
+    /**
+     * Decode the passed string and return it as a list of valid {@link Element.append} nodes, converting `\n` characters into `<br>` elements.
+     * @param {string} description - The to-be decoded string
+     * @returns {(string | HTMLElement)[]} - The decoded string as a list of nodes
+     */
+    DecodeToHTML(description: string): (string | HTMLElement)[];
+    /**
+     * Encode the passed crafted item description, extracting all UTF8 characters and encoding up to two of them into a single UTF16 character.
+     *
+     * The first character is marked with {@link CraftingDescription.ExtendedDescriptionMarker}
+     * @param {string} description - The initial length <=398 string of UTF8 characters
+     * @returns {string} - The length <=200 string of UTF16-encoded UTF8 characters
+     */
+    Encode(description: string): string;
+};
+/**
  * Construct a record mapping all crafting-valid asset names to a list of matching eligible assets.
  * Eligible assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
  * @see {@link CraftingAssets}
@@ -20,7 +190,7 @@ declare function CraftingAssetsPopulate(): Record<string, Asset[]>;
  * Returns TRUE if a crafting item has an effect from a list or allows that effect
  * @param {Asset} Item - The item asset to validate
  * @param {EffectName[]} Effect - The list of effects to validate
- * @returns {Boolean} - TRUE if the item has that effect
+ * @returns {boolean} - TRUE if the item has that effect
  */
 declare function CraftingItemHasEffect(Item: Asset, Effect: EffectName[]): boolean;
 declare function CraftingUpdatePropertyButton(): void;
@@ -30,6 +200,88 @@ declare function CraftingUpdatePropertyButton(): void;
  * @returns {void} - Nothing
  */
 declare function CraftingShowScreen(FromChatRoom: boolean): void;
+declare var CraftingEventListeners: {
+    _ClickPrivate(this: HTMLInputElement, ev: Event): void;
+    _InputLayering(this: HTMLInputElement, ev: Event): void;
+    _ChangeName(this: HTMLInputElement, ev: Event): void;
+    _ChangeDescription(this: HTMLTextAreaElement, ev: Event): void;
+    _InputDescription(this: HTMLTextAreaElement | HTMLInputElement, ev: Event): void;
+    _ChangeColor(this: HTMLInputElement, ev: Event): void;
+    _ClickExtended(this: HTMLButtonElement, ev: Event): void;
+    _ClickTighten(this: HTMLButtonElement, ev: Event): void;
+    _ClickLayering(this: HTMLButtonElement, ev: Event): void;
+    _ClickColors(this: HTMLButtonElement, ev: Event): void;
+    _ClickUndress(this: HTMLButtonElement, ev: Event): void;
+    _ClickAccept(this: HTMLButtonElement, ev: Event): void;
+    _ClickExit(this: HTMLButtonElement, ev: Event): void;
+    _ClickUpload(this: HTMLButtonElement, ev: Event): void;
+    _ClickDownload(this: HTMLButtonElement, ev: Event): void;
+    _ClickExpand(this: HTMLButtonElement, ev: Event): void;
+    _ClickProperty(this: HTMLButtonElement, ev: Event): void;
+    _ClickAddProperty(this: HTMLButtonElement, ev: Event): void;
+    _ClickRemoveProperty(this: HTMLButtonElement, ev: Event): void;
+    _ClickPadlock(this: HTMLButtonElement, ev: Event): void;
+    _ClickAsset(this: HTMLButtonElement, ev: Event): void;
+    _ClickRadio(this: HTMLButtonElement, ev: Event): void;
+    /**
+     * private
+     * @this {HTMLInputElement}
+     */
+    _InputSearch: (this: HTMLInputElement) => Promise<void>;
+    /**
+     * private
+     * @type {(this: HTMLInputElement, ev: Event) => Promise<void>}
+     */
+    _InputSearchEffect: (this: HTMLInputElement, ev: Event) => Promise<void>;
+    _ClickAsciiDescription(this: HTMLInputElement, ev: Event): void;
+    _ClickGroup(this: HTMLButtonElement, ev: PointerEvent): void;
+    /**
+     * private
+     * @type {(this: HTMLInputElement, ev: FocusEvent) => Promise<void>}
+     */
+    _FocusSearchAsset: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
+    /**
+     * private
+     * @type {(this: HTMLInputElement, ev: FocusEvent) => Promise<void>}
+     */
+    _FocusSearch: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
+};
+declare var CraftingElements: {
+    /**
+     * private
+     * @param {string} id
+     * @param {string} controls
+     * @param {string} placeholder
+     * @param {"asset" | "lock" | "effect"} type
+     * @returns {HTMLInputElement}
+     */
+    _SearchInput(id: string, controls: string, placeholder: string, type: "asset" | "lock" | "effect"): HTMLInputElement;
+    /**
+     * @type {Map<"ALL" | AssetGroupItemName, readonly HTMLOptionElement[]>}
+     */
+    _SearchCache: Map<"ALL" | AssetGroupItemName, readonly HTMLOptionElement[]>;
+    /**
+     * private
+     * @param {string} id
+     * @param {(this: HTMLButtonElement, ev: Event) => any} onClick
+     * @param {null | Asset} asset
+     * @param {null | Partial<Record<string, string | number | boolean>>} attributes
+     * @param {null | string} label
+     * @param {null | readonly (string | Node)[]} children
+     * @param {boolean} first
+     * @returns {HTMLButtonElement}
+     */
+    _RadioButton(id: string, onClick: (this: HTMLButtonElement, ev: Event) => any, asset: null | Asset, attributes?: null | Partial<Record<string, string | number | boolean>>, label?: null | string, children?: null | readonly (string | Node)[], first?: boolean): HTMLButtonElement;
+    /**
+     * @param {string} id
+     * @param {CraftingPropertyType} property
+     */
+    _PropertyListItem(id: string, property: CraftingPropertyType): HTMLLIElement;
+};
+/**
+ * Loads the club crafting room in slot selection mode, creates a dummy character for previews
+ * @type {ScreenLoadHandler}
+ */
 declare function CraftingLoad(): Promise<void>;
 /**
  * Update the crafting character preview image, applies the item on all possible body parts
@@ -40,9 +292,13 @@ declare function CraftingUpdatePreview(): void;
  * @returns {void} - Nothing
  */
 declare function CraftingRun(): void;
+/** @type {ScreenResizeHandler} */
 declare function CraftingResize(load: boolean): void;
-declare function CraftingKeyDown(event: KeyboardEvent): boolean;
-declare function CraftingPaste(event: ClipboardEvent): void;
+/** @type {KeyboardEventListener} */
+declare function CraftingKeyDown(ev: KeyboardEvent): boolean;
+/** @type {ClipboardEventListener} */
+declare function CraftingPaste(ev: ClipboardEvent): void;
+/** @type {ScreenUnloadHandler} */
 declare function CraftingUnload(): void;
 /**
  * Update {@link CraftingSelectedItem.ItemProperties} with a select few properties from the passed item.
@@ -77,34 +333,46 @@ declare function CraftingSaveServer(): void;
 /**
  * Deserialize a single crafted item from a string in order to parse data received from the server.
  * @param {string} craftString The serialized crafted item
+ * @param {object} [options]
+ * @param {Character} [options.C] The owner if the crafts (if any)
  * @returns {null | CraftingItem} The crafted item or `null` if either its {@link CraftingItem.Item} or {@link CraftingItem.Name} property is invalid
  * @see {@link CraftingDecompressServerData}
  */
-declare function CraftingDeserialize(craftString: string): null | CraftingItem;
+declare function CraftingDeserialize(craftString: string, options?: {
+    C?: Character;
+}): null | CraftingItem;
 /**
  * Deserialize and unpack the crafting data from the server.
  * @param {string | undefined} Data The serialized crafting data or already-decompressed crafting item list
+ * @param {object} [options]
+ * @param {Character} [options.C] The owner of the craft (if any)
  * @returns {(null | CraftingItem)[]}
  */
-declare function CraftingDecompressServerData(Data: string | undefined): (null | CraftingItem)[];
+declare function CraftingDecompressServerData(Data: string | undefined, options?: {
+    C?: Character;
+}): (null | CraftingItem)[];
 /**
  * Loads the server packet and creates the crafting array for the player
  * @param {string | undefined} Packet - The packet or already-decompressed crafting item list
  * @returns {void} - Nothing
  */
 declare function CraftingLoadServer(Packet: string | undefined): void;
+/**
+ * Handles clicks in the crafting room.
+ * @type {MouseEventListener}
+ */
 declare function CraftingClick(event: PointerEvent): void;
 /**
  * Refreshes the preview model with a slight delay so the item color process is done
  * @deprecated
  * @returns {void} - Nothing
- * */
+ */
 declare function CraftingRefreshPreview(): void;
 /**
  * Converts the currently selected item into a crafting item.
  * @param {CraftingItemSelected} item
- * @return {CraftingItem}
- * */
+ * @returns {CraftingItem}
+ */
 declare function CraftingConvertSelectedToItem(item: CraftingItemSelected): CraftingItem;
 /**
  * Convert a crafting item to its selected format.
@@ -138,244 +406,11 @@ declare function CraftingItemListBuild(): Asset[];
  */
 declare function CraftingIsNonPartial(craft: CraftingPartialItem): craft is CraftingItem;
 /**
- * @overload
- * @param {CraftingPartialItem} Craft
- * @param {Asset | null | undefined} asset
- * @param {boolean | undefined} Warn
- * @param {boolean | undefined} checkPlayerInventory
- * @param {true} partial
- * @return {CraftingStatusType}
- */
-declare function CraftingValidate(Craft: CraftingPartialItem, asset: Asset | null | undefined, Warn: boolean | undefined, checkPlayerInventory: boolean | undefined, partial: true): CraftingStatusType;
-/**
- * @overload
- * @param {CraftingItem} Craft
- * @param {Asset | null} [asset]
- * @param {boolean} [Warn]
- * @param {boolean} [checkPlayerInventory]
- * @param {boolean} [partial]
- * @return {CraftingStatusType}
- */
-declare function CraftingValidate(Craft: CraftingItem, asset?: Asset | null | undefined, Warn?: boolean | undefined, checkPlayerInventory?: boolean | undefined, partial?: boolean | undefined): CraftingStatusType;
-/** The background of the crafting screen. */
-declare var CraftingBackground: string;
-/**
- * The active subscreen within the crafting screen:
- * * `"Slot"`: The main crafting screens wherein the {@link CraftingItem} is selected, created or destroyed.
- * * `"Name"`: The main menu wherein the crafted item is customized, allowing for the specification of names, descriptions, colors, extended item types, _etc._
- * * `"Color"`: A dedicated coloring screen for the crafted item.
- * * `"Extended"`: The extended item menu.
- * @type {CraftingMode}
- */
-declare let CraftingMode: CraftingMode;
-/** The index of the selected crafted item within the crafting screen. */
-declare let CraftingSlot: number;
-/**
- * The currently selected crafted item in the crafting screen.
- * @type {CraftingItemSelected | null}
- */
-declare let CraftingSelectedItem: CraftingItemSelected | null;
-/**
- * The character used for the crafting preview.
- * @type {Character | null}
- */
-declare let CraftingPreview: Character | null;
-/** Whether the crafting character preview should be naked or not. */
-declare let CraftingNakedPreview: boolean;
-/** Whether exiting the crafting menu should return you to the chatroom or, otherwise, the main hall. */
-declare let CraftingReturnToChatroom: boolean;
-/**
- * A record mapping all crafting-valid asset names to a list of matching eligible assets.
- *
- * Eligible assets are defined as crafting-valid assets with either a matching {@link Asset.Name} or {@link Asset.CraftGroup}.
- *
- * The first asset in each list is guaranteed to satisfy `Asset.Group.Name === Asset.DynamicGroupName` _if_ any of the list members satisfy this condition.
- * @type {Partial<Record<AssetName, Asset[]>>}
- */
-declare let CraftingAssets: Partial<Record<AssetName, Asset[]>>;
-/** The separator used between different crafted items when serializing them. */
-declare const CraftingSerializeItemSep: "\u00A7";
-/** The separator used between fields within a single crafted item when serializing them. */
-declare const CraftingSerializeFieldSep: "\u00B6";
-/**
- * Regexp pattern for sanitizing to-be serialized crafted item string data by finding all
- * special separator characters (see {@link CraftingSerializeItemSep} and {@link CraftingSerializeFieldSep}).
- */
-declare const CraftingSerializeSanitize: RegExp;
-/**
- * Map crafting properties to their respective validation function.
- * @type {Map<CraftingPropertyType, (asset: Asset) => boolean>}
- */
-declare const CraftingPropertyMap: Map<CraftingPropertyType, (asset: Asset) => boolean>;
-declare const CraftingEffectsDefaultMaximumStack: 2;
-declare const CraftingEffectsDefaultMaximumEffects: 2;
-/**
- * A record mapping crafting property names to functions that return a boolean indicating whether the property can increase
- * @type {Record<CraftingPropertyType, {max?: number, isDisabled?: (craft: CraftingItem | CraftingItemSelected) => boolean}>}
- */
-declare const CraftingEffectsPrerequisite: Record<CraftingPropertyType, {
-    max?: number;
-    isDisabled?: (craft: CraftingItem | CraftingItemSelected) => boolean;
-}>;
-/**
- * An enum with status codes for crafting validation.
- * @property OK - The validation proceeded without errors
- * @property ERROR - The validation produced one or more errors that were successfully resolved
- * @property CRITICAL_ERROR - The validation produced an unrecoverable error
- * @type {{OK: 2, ERROR: 1, CRITICAL_ERROR: 0}}
- */
-declare const CraftingStatusType: {
-    OK: 2;
-    ERROR: 1;
-    CRITICAL_ERROR: 0;
-};
-/**
- * The Names of all locks that can be automatically applied to crafted items.
- * An empty string implies the absence of a lock.
- * @type {readonly (AssetLockType | "")[]}
- */
-declare const CraftingLockList: readonly (AssetLockType | "")[];
-/**
- * A set of item property names that should never be stored in {@link CraftingItem.ItemProperty}.
- * @type {Set<keyof ItemProperties>}
- */
-declare const CraftingPropertyExclude: Set<keyof ItemProperties>;
-declare namespace CraftingID {
-    let root: "crafting-screen";
-    let downloadButton: "crafting-download-button";
-    let uploadButton: "crafting-upload-button";
-    let acceptButton: "crafting-accept-button";
-    let cancelButton: "crafting-cancel-button";
-    let exitButton: "crafting-exit-button";
-    let leftPanel: "crafting-left-panel";
-    let assetButton: "crafting-asset-button";
-    let assetPanel: "crafting-asset-panel";
-    let assetGrid: "crafting-asset-grid";
-    let assetSearch: "crafting-asset-search";
-    let assetHeader: "crafting-asset-header";
-    let padlockButton: "crafting-padlock-button";
-    let padlockPanel: "crafting-padlock-panel";
-    let padlockGrid: "crafting-padlock-grid";
-    let padlockSearch: "crafting-padlock-search";
-    let padlockHeader: "crafting-padlock-header";
-    let propertyButton: "crafting-property-button";
-    let propertyPanel: "crafting-property-panel";
-    let propertyGrid: "crafting-property-grid";
-    let propertySearch: "crafting-property-search";
-    let propertyHeader: "crafting-property-header";
-    let centerPanel: "crafting-center-panel";
-    let undressButton: "crafting-undress-button";
-    let rightPanel: "crafting-right-panel";
-    let nameInput: "crafting-name-input";
-    let nameLabel: "crafting-name-label";
-    let descriptionInput: "crafting-description-input";
-    let descriptionLabel: "crafting-description-label";
-    let colorsButton: "crafting-colors-button";
-    let colorsInput: "crafting-colors-input";
-    let colorsLabel: "crafting-colors-label";
-    let layeringInput: "crafting-layering-input";
-    let layeringButton: "crafting-layering-button";
-    let layeringLabel: "crafting-layering-label";
-    let privateCheckbox: "crafting-private-checkbox";
-    let privateLabel: "crafting-private-label";
-    let extendedButton: "crafting-extended-button";
-    let extendedLabel: "crafting-extended-label";
-    let tightenButton: "crafting-tighten-button";
-    let tightenLabel: "crafting-tighten-label";
-    let asciiDescriptionCheckbox: "crafting-ascii-description-checkbox";
-    let asciidescriptionLabel: "crafting-ascii-description-label";
-}
-declare namespace CraftingDescription {
-    let ExtendedDescriptionMarker: "\0";
-    let Pattern: RegExp;
-    let PatternASCII: RegExp;
-    /**
-     * Decode and return the passed string if it consists of UTF16-encoded UTF8 characters.
-     *
-     * Encoded strings must be marked with a leading {@link CraftingDescription.ExtendedDescriptionMarker}; unencoded strings are returned unmodified.
-     * @param {string} description - The to-be decoded string
-     * @returns {string} - The decoded string
-     */
-    function Decode(description: string): string;
-    /**
-     * Decode the passed string and return it as a list of valid {@link Element.append} nodes, converting `\n` characters into `<br>` elements.
-     * @param {string} description - The to-be decoded string
-     * @returns {(string | HTMLElement)[]} - The decoded string as a list of nodes
-     */
-    function DecodeToHTML(description: string): (string | HTMLElement)[];
-    /**
-     * Encode the passed crafted item description, extracting all UTF8 characters and encoding up to two of them into a single UTF16 character.
-     *
-     * The first character is marked with {@link CraftingDescription.ExtendedDescriptionMarker}
-     * @param {string} description - The initial length <=398 string of UTF8 characters
-     * @returns {string} - The length <=200 string of UTF16-encoded UTF8 characters
-     */
-    function Encode(description: string): string;
-}
-declare namespace CraftingEventListeners {
-    function _ClickPrivate(this: HTMLInputElement, ev: Event): void;
-    function _InputLayering(this: HTMLInputElement, ev: Event): void;
-    function _ChangeName(this: HTMLInputElement, ev: Event): void;
-    function _ChangeDescription(this: HTMLTextAreaElement, ev: Event): void;
-    function _InputDescription(this: HTMLTextAreaElement | HTMLInputElement, ev: Event): void;
-    function _ChangeColor(this: HTMLInputElement, ev: Event): void;
-    function _ClickExtended(this: HTMLButtonElement, ev: Event): void;
-    function _ClickTighten(this: HTMLButtonElement, ev: Event): void;
-    function _ClickLayering(this: HTMLButtonElement, ev: Event): void;
-    function _ClickColors(this: HTMLButtonElement, ev: Event): void;
-    function _ClickUndress(this: HTMLButtonElement, ev: Event): void;
-    function _ClickAccept(this: HTMLButtonElement, ev: Event): void;
-    function _ClickExit(this: HTMLButtonElement, ev: Event): void;
-    function _ClickUpload(this: HTMLButtonElement, ev: Event): void;
-    function _ClickDownload(this: HTMLButtonElement, ev: Event): void;
-    function _ClickExpand(this: HTMLButtonElement, ev: Event): void;
-    function _ClickProperty(this: HTMLButtonElement, ev: Event): void;
-    function _ClickAddProperty(this: HTMLButtonElement, ev: Event): void;
-    function _ClickRemoveProperty(this: HTMLButtonElement, ev: Event): void;
-    function _ClickPadlock(this: HTMLButtonElement, ev: Event): void;
-    function _ClickAsset(this: HTMLButtonElement, ev: Event): void;
-    function _ClickRadio(this: HTMLButtonElement, ev: Event): void;
-    function _InputSearch(this: HTMLInputElement): Promise<void>;
-    let _InputSearchEffect: (this: HTMLInputElement, ev: Event) => Promise<void>;
-    function _ClickAsciiDescription(this: HTMLInputElement, ev: Event): void;
-    function _ClickGroup(this: HTMLButtonElement, ev: PointerEvent): void;
-    let _FocusSearchAsset: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
-    let _FocusSearch: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
-}
-declare namespace CraftingElements {
-    /**
-     * private
-     * @param {string} id
-     * @param {string} controls
-     * @param {string} placeholder
-     * @param {"asset" | "lock" | "effect"} type
-     * @returns {HTMLInputElement}
-     */
-    function _SearchInput(id: string, controls: string, placeholder: string, type: "asset" | "lock" | "effect"): HTMLInputElement;
-    let _SearchCache: Map<"ALL" | AssetGroupItemName, readonly HTMLOptionElement[]>;
-    /**
-     * private
-     * @param {string} id
-     * @param {(this: HTMLButtonElement, ev: Event) => any} onClick
-     * @param {null | Asset} asset
-     * @param {null | Partial<Record<string, string | number | boolean>>} attributes
-     * @param {null | string} label
-     * @param {null | readonly (string | Node)[]} children
-     * @param {null | Asset} asset
-     * @param {boolean} first
-     * @returns {HTMLButtonElement}
-     */
-    function _RadioButton(id: string, onClick: (this: HTMLButtonElement, ev: Event) => any, asset: null | Asset, attributes?: null | Partial<Record<string, string | number | boolean>>, label?: null | string, children?: null | readonly (string | Node)[], first?: boolean): HTMLButtonElement;
-    /**
-     * @param {string} id
-     * @param {CraftingPropertyType} property
-     */
-    function _PropertyListItem(id: string, property: CraftingPropertyType): HTMLLIElement;
-}
-/**
  * A record with tools for validating {@link CraftingItem} properties.
  * @type {Record<keyof CraftingItem, CratingValidationStruct>}
  * @see {@link CratingValidationStruct}
  * @todo Let the Validate/GetDefault functions take the respective attribute rather than the entire {@link CraftingItem}
  */
 declare var CraftingValidationRecord: Record<keyof CraftingItem, CratingValidationStruct>;
+declare function CraftingValidate(Craft: CraftingPartialItem, asset: Asset | null | undefined, Warn: boolean | undefined, checkPlayerInventory: boolean | undefined, partial: true): CraftingStatusType;
+declare function CraftingValidate(Craft: CraftingItem, asset?: Asset | null, Warn?: boolean, checkPlayerInventory?: boolean, partial?: boolean): CraftingStatusType;

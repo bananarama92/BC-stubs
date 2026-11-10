@@ -1,3 +1,72 @@
+/** @type {PlayerCharacter} */
+declare var Player: PlayerCharacter;
+/** @type {ModuleType} */
+declare var CurrentModule: ModuleType;
+/** @type {RoomName} */
+declare var CurrentScreen: RoomName;
+/** @type {Required<ScreenFunctions>} */
+declare var CurrentScreenFunctions: Required<ScreenFunctions>;
+/** @type {Character|NPCCharacter|null} */
+declare var CurrentCharacter: Character | NPCCharacter | null;
+declare var CurrentOnlinePlayers: number;
+/**
+ * A per-screen ratio of how darkened the background must be
+ *
+ * 1 is bright, 0 is pitch black
+ */
+declare var CurrentDarkFactor: number;
+declare var CommonIsMobile: boolean;
+/** @type {Record<string, string[][]>} */
+declare var CommonCSVCache: Record<string, string[][]>;
+declare var CutsceneStage: number;
+declare var CommonPhotoMode: boolean;
+declare const MS_PER_SEC = 1000;
+declare const MS_PER_MIN: number;
+declare const MS_PER_HOUR: number;
+declare const MS_PER_DAY: number;
+declare const MS_PER_WEEK: number;
+declare const MS_PER_YEAR: number;
+/**
+ * An enum encapsulating possible chatroom message substitution tags. Character name substitution tags are interpreted
+ * in chatrooms as follows (assuming the character name is Ben987):
+ * SOURCE_CHAR: "Ben987"
+ * DEST_CHAR: "Ben987's" (if character is not self), "her" (if character is self)
+ * DEST_CHAR_NAME: "Ben987's"
+ * TARGET_CHAR: "Ben987" (if character is not self), "herself" (if character is self)
+ * TARGET_CHAR_NAME: "Ben987"
+ * Additionally, sending the following tags will ensure that asset names in messages are correctly translated by
+ * recipients:
+ * ASSET_NAME: (substituted with the localized name of the asset, if available)
+ * @type {Record<"SOURCE_CHAR"|"DEST_CHAR"|"DEST_CHAR_NAME"|"TARGET_CHAR"|"TARGET_CHAR_NAME"|"ASSET_NAME"|"AUTOMATIC", CommonChatTags>}
+ */
+declare const CommonChatTags: Record<"SOURCE_CHAR" | "DEST_CHAR" | "DEST_CHAR_NAME" | "TARGET_CHAR" | "TARGET_CHAR_NAME" | "ASSET_NAME" | "AUTOMATIC", CommonChatTags>;
+/**
+ * An enum holding values of time units that might be used with their respective label of Interface.csv and seconds
+ * contained in said time unit.
+ */
+declare const TimeUnits: {
+    readonly MINUTES: {
+        readonly label: "Minutes";
+        readonly seconds: 60;
+    };
+    readonly HOURS: {
+        readonly label: "Hours";
+        readonly seconds: 3600;
+    };
+    readonly DAYS: {
+        readonly label: "Days";
+        readonly seconds: 86400;
+    };
+};
+/**
+ * A map of keys to common font stack definitions. Each stack definition is a
+ * two-item array whose first item is an ordered list of fonts, and whose
+ * second item is the generic fallback font family (e.g. sans-serif, serif,
+ * etc.)
+ * @constant
+ * @type {Record<GraphicsFontName, [candidates: string[], fallback: string]>}
+ */
+declare const CommonFontStacks: Record<GraphicsFontName, [candidates: string[], fallback: string]>;
 declare function CommonPrefersReducedMotion(): boolean;
 /**
  * Checks if a variable is a number
@@ -59,9 +128,19 @@ declare function CommonSleep(ms: number): SafePromise<number>;
  *
  * @param {() => boolean} func
  * @param {() => boolean} [cancelFunc]
- * @returns
+ * @returns {Promise<boolean>}
  */
 declare function CommonWaitFor(func: () => boolean, cancelFunc?: () => boolean): Promise<boolean>;
+/**
+ * How many times do we retry a resource fetch.
+ */
+declare const FETCH_MAX_RETRIES = 10;
+/**
+ * How much to wait max between each attempt.
+ */
+declare const FETCH_MAX_RETRY_BACKOFF_TIME = 16;
+declare const FETCH_RETRY_JITTER_MIN = 0.25;
+declare const FETCH_RETRY_JITTER_MAX = 1.75;
 /**
  * @param {number} status
  */
@@ -72,16 +151,20 @@ declare function CommonRequestShouldRetry(status: number): boolean;
 declare function CommonRequestRetryDelay(attempt: number): number;
 /**
  * @param {string | null} value
- * @returns
+ * @returns {number | null}
  */
 declare function CommonRequestParseRetryAfter(value: string | null): number | null;
 /**
  * Fetch a remote resource
  *
- * @param {RequestInfo | URL} request
+ * @param {RequestInfo | URL} reqOrUrl
+ * @param {object} [options]
+ * @param {HeadersInit} [options.headers]
  * @returns {Promise<Response>}
  */
-declare function CommonFetch(request: RequestInfo | URL): Promise<Response>;
+declare function CommonFetch(reqOrUrl: RequestInfo | URL, options?: {
+    headers?: HeadersInit;
+}): Promise<Response>;
 /**
  * AJAX utility to get a file and return its content. By default will retry requests 10 times
  * @param {string} url - Path of the resource to request
@@ -94,11 +177,20 @@ declare function CommonGet(url: string, callback: (this: XMLHttpRequest, xhr: XM
  * @deprecated
  */
 declare function CommonGetRetry(): void;
+/** @type {MouseEventListener} */
 declare function CommonMouseDown(event: PointerEvent): void;
+/** @type {MouseEventListener} */
 declare function CommonMouseUp(event: PointerEvent): void;
+/** @type {MouseEventListener} */
 declare function CommonMouseMove(event: PointerEvent): void;
+/** @type {MouseWheelEventListener} */
 declare function CommonMouseWheel(event: WheelEvent): void;
+/** @type {ScreenResizeHandler} */
 declare function CommonResize(load: boolean): void;
+/**
+ * Catches the clicks on the main screen and forwards it to the current screen click function if it exists, otherwise it sends it to the dialog click function
+ * @type {MouseEventListener}
+ */
 declare function CommonClick(event: PointerEvent): void;
 /**
  * Returns TRUE if a section of the screen is currently touched on a mobile device
@@ -130,22 +222,36 @@ declare function CommonDynamicFunctionParams(FunctionName: string): unknown;
  * @template {keyof WindowFunctions} T
  * @param {T} FunctionName - The name of the global function to call
  * @param {Parameters<Window[T]>} args - zero or more arguments to be passed to the function (optional)
- * @returns {Window[T] extends undefined ? undefined | ReturnType<Window[T]> : ReturnType<Window[T]>} - returns the result of the function call, or undefined if the function name isn't valid
+ * @returns {Window[T] extends undefined ? (undefined | ReturnType<Window[T]>) : ReturnType<Window[T]>} - returns the result of the function call, or undefined if the function name isn't valid
  */
-declare function CommonCallFunctionByName<T extends keyof WindowFunctions>(FunctionName: T, ...args: Parameters<Window[T]>): Window[T] extends undefined ? undefined | ReturnType<Window[T]> : ReturnType<Window[T]>;
+declare function CommonCallFunctionByName<T extends keyof WindowFunctions>(FunctionName: T, ...args: Parameters<Window[T]>): Window[T] extends undefined ? (undefined | ReturnType<Window[T]>) : ReturnType<Window[T]>;
 /**
  * Behaves exactly like CommonCallFunctionByName, but logs a warning if the function name is invalid.
  * @template {keyof WindowFunctions} T
  * @param {T} FunctionName - The name of the global function to call
  * @param {Parameters<Window[T]>} args - zero or more arguments to be passed to the function (optional)
- * @returns {Window[T] extends undefined ? undefined | ReturnType<Window[T]> : ReturnType<Window[T]>} - returns the result of the function call, or undefined if the function name isn't valid
+ * @returns {Window[T] extends undefined ? (undefined | ReturnType<Window[T]>) : ReturnType<Window[T]>} - returns the result of the function call, or undefined if the function name isn't valid
  */
-declare function CommonCallFunctionByNameWarn<T extends keyof WindowFunctions>(FunctionName: T, ...args: Parameters<Window[T]>): Window[T] extends undefined ? undefined | ReturnType<Window[T]> : ReturnType<Window[T]>;
+declare function CommonCallFunctionByNameWarn<T extends keyof WindowFunctions>(FunctionName: T, ...args: Parameters<Window[T]>): Window[T] extends undefined ? (undefined | ReturnType<Window[T]>) : ReturnType<Window[T]>;
 /**
  * Get the current screen
  * @returns {ScreenSpecifier}
  */
 declare function CommonGetScreen(): ScreenSpecifier;
+/**
+ * Whether a screen is currently (async) loading via {@link CommonSetScreen}.
+ *
+ * See {@link ScreenIsLoadingPromise} for a promise-based variant of this variable for async checking.
+ * @type {boolean}
+ */
+declare var ScreenIsLoading: boolean;
+/**
+ * A promise that resolves upon async loading a screen via {@link CommonSetScreen}.
+ *
+ * See {@link ScreenIsLoading} for a promise-based variant of this variable for sync checking.
+ * @type {SafePromise<void>}
+ */
+declare var ScreenIsLoadingPromise: SafePromise<void>;
 /**
  * Sets the current screen and calls the loading script if needed
  * @param {ScreenSpecifier} spec
@@ -165,26 +271,14 @@ declare function CommonSetScreenWrapped(...spec: ScreenSpecifier): SafePromise<v
  * @returns {number} - Date in ms
  */
 declare function CommonTime(): number;
-/**
- * @overload
- * @param {string | undefined} Value
- * @param {{ allowAlpha?: boolean, schema: readonly BCColor[] }} options
- * @returns {Value is BCColor}
- */
 declare function CommonIsColor(Value: string | undefined, options: {
     allowAlpha?: boolean;
     schema: readonly BCColor[];
 }): Value is BCColor;
-/**
- * @overload
- * @param {string | undefined} Value
- * @param {null | { allowAlpha?: boolean, schema?: readonly BCColor[] }} [options]
- * @returns {Value is HexColor}
- */
-declare function CommonIsColor(Value: string | undefined, options?: {
+declare function CommonIsColor(Value: string | undefined, options?: null | {
     allowAlpha?: boolean;
     schema?: readonly BCColor[];
-} | null | undefined): Value is HexColor;
+}): Value is HexColor;
 /**
  * Checks whether an item's color has a valid value that can be interpreted by the drawing
  * functions. Valid values are null, undefined, color strings, and an array containing any of the
@@ -264,13 +358,6 @@ declare function CommonStringShuffle(string: string): string;
  */
 declare function CommonGenerateUniqueID(): string;
 /**
- * Converts an array to a string separated by commas (equivalent of .join(","))
- * @param {readonly unknown[]} Arr - Array to convert to a joined string
- * @returns {string} - String of all the array items joined together
- * @deprecated - use .join(",");
- */
-declare function CommonConvertArrayToString(Arr: readonly unknown[]): string;
-/**
  * Checks whether two item colors are equal. An item color may either be a string or an array of strings.
  * @param {string | readonly string[]} C1 - The first color to check
  * @param {string | readonly string[]} C2 - The second color to check
@@ -280,40 +367,51 @@ declare function CommonColorsEqual(C1: string | readonly string[], C2: string | 
 /**
  * Checks whether two arrays are equal. The arrays are considered equal if they have the same length and contain the same items in the same
  * order, as determined by === comparison
- * @template {readonly *[]} T
+ * @template {readonly unknown[]} T
  * @param {T} a1 - The first array to compare
- * @param {readonly *[]} a2 - The second array to compare
+ * @param {readonly unknown[]} a2 - The second array to compare
  * @param {boolean} [ignoreOrder] - Whether to ignore item order when considering equality
  * @returns {a2 is T} - TRUE if both arrays have the same length and contain the same items in the same order, FALSE otherwise
  */
-declare function CommonArraysEqual<T extends readonly any[]>(a1: T, a2: readonly any[], ignoreOrder?: boolean): a2 is T;
+declare function CommonArraysEqual<T extends readonly unknown[]>(a1: T, a2: readonly unknown[], ignoreOrder?: boolean): a2 is T;
 /**
- * Creates a debounced wrapper for the provided function with the provided wait time. The wrapped function will not be called as long as
- * the debounced function continues to be called. If the debounced function is called, and then not called again within the wait time, the
- * wrapped function will be called.
+ * Creates a debounced wrapper for the provided function with the provided wait time.
+ *
+ * **The wrapped function will not be called as long as the debounced function continues
+ * to be called**. If the debounced function is called, and then not called again within
+ * the wait time, the wrapped function will be called.
+ *
  * @template {any[]} argsT
  * @template retT
+ * @param {number} debounceInterval - The debouncing interval in milliseconds
  * @param {(...args: argsT) => retT} func - The function to debounce
- * @returns {(waitInterval: number, ...args: argsT) => retT} - A debounced version of the provided function
+ * @returns {CommonCancellableFn<argsT, retT>} - A debounced version of the provided function
  */
-declare function CommonDebounce<argsT extends any[], retT>(func: (...args: argsT) => retT): (waitInterval: number, ...args: argsT) => retT;
+declare function CommonDebounce<argsT extends any[], retT>(debounceInterval: number, func: (...args: argsT) => retT): CommonCancellableFn<argsT, retT>;
 /**
- * Creates a throttling wrapper for the provided function with the provided wait time. If the wrapped function has been successfully called
- * within the wait time, further call attempts will be delayed until the wait time has passed.
+ * Creates a throttling wrapper for the provided function with the provided wait time.
+ *
+ * If the wrapped function has been successfully called within the wait time, further call
+ * attempts will be delayed until the wait time has passed.
+ *
  * @template {any[]} argsT
  * @template retT
+ * @param {number} throttleInterval - The throttling interval in milliseconds
  * @param {(...args: argsT) => retT} func - The function to throttle
- * @returns {(waitInterval: number, ...args: argsT) => retT} - A throttled version of the provided function
+ * @returns {CommonCancellableFn<argsT, retT>} - A throttled version of the provided function
  */
-declare function CommonThrottle<argsT extends any[], retT>(func: (...args: argsT) => retT): (waitInterval: number, ...args: argsT) => retT;
+declare function CommonThrottle<argsT extends any[], retT>(throttleInterval: number, func: (...args: argsT) => retT): CommonCancellableFn<argsT, retT>;
 /**
- * Creates a wrapper for a function to limit how often it can be called. The player-defined wait interval setting determines the
- * allowed frequency. Below 100 ms the function will be throttled and above will be debounced.
+ * Creates a wrapper for a function to limit how often it can be called.
+ *
+ * The player-defined wait interval setting determines the allowed frequency. Below 100ms
+ * the function will be throttled and above will be debounced.
+ *
  * @template {any[]} argsT
  * @template retT
  * @param {(...args: argsT) => retT} func - The function to limit calls of
- * @param {number} [minWait=0] - A lower bound for how long the wait interval can be, 0 by default
- * @param {number} [maxWait=1000] - An upper bound for how long the wait interval can be, 1 second by default
+ * @param {number} [minWait] - A lower bound for how long the wait interval can be, 0 by default
+ * @param {number} [maxWait] - An upper bound for how long the wait interval can be, 1 second by default
  * @returns {(...args: argsT) => retT} - A debounced or throttled version of the function
  */
 declare function CommonLimitFunction<argsT extends any[], retT>(func: (...args: argsT) => retT, minWait?: number, maxWait?: number): (...args: argsT) => retT;
@@ -327,6 +425,26 @@ declare function CommonLimitFunction<argsT extends any[], retT>(func: (...args: 
  * @returns {MemoizedFunction<T>} - The result of the memoized function
  */
 declare function CommonMemoize<T extends (...args: any) => any>(func: T, argConvertors?: null | ((arg: any) => string)[]): MemoizedFunction<T>;
+/**
+ * Memoized getter function. Returns a font string specifying the player's
+ * preferred font and the provided size. This is memoized as it is called on
+ * every frame in many cases.
+ * @param {number} size - The font size that should be specified in the
+ * returned font string
+ * @returns {string} - A font string specifying the requested font size and
+ * the player's preferred font stack. For example:
+ * 12px "Courier New", "Courier", monospace
+ */
+declare const CommonGetFont: MemoizedFunction<(size: any) => string>;
+/**
+ * Memoized getter function. Returns a font string specifying the player's
+ * preferred font stack. This is memoized as it is called on every frame in
+ * many cases.
+ * @returns {string} - A font string specifying the player's preferred font
+ * stack. For example:
+ * "Courier New", "Courier", monospace
+ */
+declare const CommonGetFontName: MemoizedFunction<() => string>;
 /**
  * Take a screenshot of specified area in "photo mode" and open the image in a new tab
  * @param {number} Left - Position of the area to capture from the left of the canvas
@@ -397,7 +515,7 @@ declare function CommonPadlockUnlock(C: Character, Item: Item): void;
 declare function CommonNoop(): void;
 /**
  * Redirects the address to HTTPS for all production environments, returns the proper heroku server
- * @returns {String} - Returns the proper server to use in production or test
+ * @returns {string} - Returns the proper server to use in production or test
  */
 declare function CommonGetServer(): string;
 /**
@@ -425,7 +543,7 @@ declare function CommonStringTitlecase(str: string): string;
  * Censors a string or words in that string based on the player preferences
  * @param {string} S - The string to censor
  * @param {Character & { ChatSettings: ChatSettingsType }} C
- * @returns {String} - The censored string
+ * @returns {string} - The censored string
  */
 declare function CommonCensor(S: string, C?: Character & {
     ChatSettings: ChatSettingsType;
@@ -447,8 +565,8 @@ declare function CommonIsCharacter(value: unknown): value is Character | PlayerC
  * @todo JSON serialization will break things like functions, Sets and Maps.
  * @template T
  * @param {T} obj
- * @param {null | ((this: any, key: string, value: any) => any)} [replacer]
  * @param {null | ((this: any, key: string, value: any) => any)} [reviver]
+ * @param {null | ((this: any, key: string, value: any) => any)} [replacer]
  * @returns {T}
  */
 declare function CommonCloneDeep<T>(obj: T, reviver?: null | ((this: any, key: string, value: any) => any), replacer?: null | ((this: any, key: string, value: any) => any)): T;
@@ -490,11 +608,11 @@ declare function CommonIsArray(arg: unknown): arg is readonly unknown[];
 declare function CommonKeys<T extends object>(obj: T): (keyof T)[];
 /**
  * A {@link Object.entries} variant annotated to return respect literal key types
- * @template {{}} T
+ * @template {object} T
  * @param {T} obj A record with string-based keys
  * @returns {[keyof T, T[keyof T]][]} The key/value pairs in the passed record
  */
-declare function CommonEntries<T extends {}>(obj: T): [keyof T, T[keyof T]][];
+declare function CommonEntries<T extends object>(obj: T): [keyof T, T[keyof T]][];
 /**
  * A {@link Array.includes} version annotated to return a type guard.
  * @template T
@@ -551,12 +669,12 @@ declare function CommonOmit<KeyType extends keyof RecordType, RecordType extends
 /**
  * Create a copy of the passed record with all specified keys removed
  * @template {keyof RecordType} KeyType
- * @template {{}} RecordType
+ * @template {object} RecordType
  * @param {RecordType} object - The to-be copied record
  * @param {Iterable<KeyType>} keys - The to-be removed keys from the record
  * @returns {Pick<RecordType, KeyType>}
  */
-declare function CommonPick<KeyType extends keyof RecordType, RecordType extends {}>(object: RecordType, keys: Iterable<KeyType>): Pick<RecordType, KeyType>;
+declare function CommonPick<KeyType extends keyof RecordType, RecordType extends object>(object: RecordType, keys: Iterable<KeyType>): Pick<RecordType, KeyType>;
 /**
  * Iterate through the passed iterable and yield index/value pairs.
  * @template T
@@ -581,14 +699,25 @@ declare function CommonClamp(value: number, min: number, max: number): number;
  *
  * @param {number} value
  * @param {number} divisor
+ * @param {number} [min]
  */
-declare function CommonModulo(value: number, divisor: number): number;
+declare function CommonModulo(value: number, divisor: number, min?: number): number;
+/**
+ * Cycle a value through an array
+ * @template T
+ * @template {NonNullable<T>} R
+ * @param {T} value
+ * @param {R[]} array
+ * @param {1 | -1} dir
+ * @returns {R}
+ */
+declare function CommonCycle<T, R extends NonNullable<T>>(value: T, array: R[], dir: 1 | -1): R;
 /**
  * Returns TRUE if the URL is valid, is from http or https or screens/ or backgrounds/ and has the required extension
  * @param {string} TestURL - The URL to test
  * @param {readonly string[]} Extension - An array containing the valid extensions
  * @returns {boolean}
-*/
+ */
 declare function CommonURLHasExtension(TestURL: string, Extension: readonly string[]): boolean;
 /**
  * Return whether two records are equivalent for all fields as returned by {@link Object.keys}.
@@ -631,6 +760,8 @@ declare function CommonJSONParse(data: string): unknown;
  *
  * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
  * @param {KeyboardEvent} event
+ * @param {boolean} allowArrowKeys
+ * @param {boolean} checkModifiers
  * @returns {"North"|"South"|"West"|"East"|undefined}
  */
 declare function CommonKeyMove(event: KeyboardEvent, allowArrowKeys?: boolean, checkModifiers?: boolean): "North" | "South" | "West" | "East" | undefined;
@@ -693,6 +824,65 @@ declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: 
     reviver?: (this: any, key: string, value: any) => any;
 }): VariableContainer<T1, T2>;
 /**
+ * Namespace with helper functions for validating key presses.
+ * @namespace
+ */
+declare var CommonKey: {
+    /** Bitmask component for the {@link KeyboardEvent.altKey} modifier */
+    readonly ALT: 1;
+    /** Bitmask component for the {@link KeyboardEvent.ctrlKey} modifier */
+    readonly CTRL: 2;
+    /** Bitmask component for the {@link KeyboardEvent.metaKey} modifier */
+    readonly META: 4;
+    /** Bitmask component for the {@link KeyboardEvent.shiftKey} modifier */
+    readonly SHIFT: 8;
+    /**
+     * Check whether the expected key and all its modifiers were pressed
+     * @example
+     * // `Enter` without modifiers
+     * CommonKey(event, "Enter");
+     * // `Enter` with the `Ctrl` and `Shift` modifiers
+     * CommonKey(event, "Enter", CommonKey.SHIFT | CommonKey.CTRL);
+     * @param {KeyboardEvent} event - The keyboard event in question
+     * @param {string} key - The expected key (see {@link KeyboardEvent.prototype.key})
+     * @param {null | number} modifiers - An optional bit mask of all expected modifiers (see examples)
+     * @returns {boolean} - Whether the expected key and all its modifiers were pressed
+     */
+    readonly IsPressed: (event: KeyboardEvent, key: string, modifiers?: null | number) => boolean;
+    /**
+     * Return a bit mask with all modifiers in the passed keyboard event
+     * @param {KeyboardEvent} event - The keyboard event in question
+     * @returns {number} - The bitmask of keyboard modifiers
+     */
+    readonly GetModifiers: (event: KeyboardEvent) => number;
+    /**
+     * A {@link ScreenFunctions.KeyDown} helper function for implementing the navigation key handling of scrollable elements.
+     * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
+     * @param {Element} scrollableElem - The scrollable element
+     * @param {KeyboardEvent} event - The `keydown` event
+     * @param {(scrollableElem: Element) => number} getArrowScrollDistance - A callback for computing the (absolute) scroll distance for up/down arrow key presses
+     * @returns {boolean} - Whether a navigation key was (successfuly pressed)
+     */
+    readonly NavigationKeyDown: (scrollableElem: Element, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: Element) => number) => boolean;
+    /**
+     * A {@link ScreenFunctions.KeyDown} helper function for automatically forwarding key presses to the passed input element.
+     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - The input or textarea element in question
+     * @param {KeyboardEvent} ev - The keydown event
+     * @param {null | { allowCtrlA?: boolean }} options
+     * @returns {boolean} - Whether the keypress was processed
+     */
+    readonly InputKeyDown: (inputElem: HTMLInputElement | HTMLTextAreaElement, ev: KeyboardEvent, options?: null | {
+        allowCtrlA?: boolean;
+    }) => boolean;
+    /**
+     * A {@link ScreenFunctions.Paste} helper function for automatically forwarding paste actions to the passed input element.
+     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - helper function for automatically forwarding paste actions to the passed input element.
+     * @param {ClipboardEvent} ev - The `paste` event
+     * @returns {void}
+     */
+    readonly InputPaste: (inputElem: HTMLInputElement | HTMLTextAreaElement, ev: ClipboardEvent) => void;
+};
+/**
  * Partition the string into separate parts using the given replacer keys, replacing them with replacer values
  * @template T
  * @param {string} string
@@ -701,19 +891,20 @@ declare function CommonVariableContainer<T1, T2 = {}>(defaults: T1, extraVars?: 
  */
 declare function CommonStringPartitionReplace<T>(string: string, replacers: Record<string, T>): (string | T)[];
 /**
+ * Escapes any potential regex syntax characters in a string, and returns a new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
+ * @license MIT
+ * @copyright Copyright (c) 2014-2025 Denis Pushkarev, core-js 3.40.0 - 2025.01.08
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/escape
+ * @see https://github.com/zloirock/core-js/blob/v3.40.0/packages/core-js/modules/esnext.regexp.escape.js
+ * @param S The string to escape.
+ * @returns A new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
+ */
+declare var CommonRegEscape: Function;
+/**
  *
  * @param {RoomName} screen
  */
 declare function CommonScreenName(screen: RoomName): string | undefined;
-/**
- * Generates the path to a translation CSV file for a screen
- *
- * @overload
- * @param {ModuleType} module - The screen's module
- * @param {ScreenName} screen - The screen's name
- * @param {string} group - The text group
- * @returns {string}
- */
 declare function ScreenFileGetTranslation(module: ModuleType, screen: ScreenName, group: string): string;
 /**
  * Generates the path to a CSV Dialog file for a screen
@@ -730,7 +921,7 @@ declare function ScreenFileGetDialog(npcType: string, module?: ModuleType, scree
  * @param {string} file
  * @param {ModuleType} [module]
  * @param {ScreenName | "Game"} [screen]
- * @returns
+ * @returns {string}
  */
 declare function ScreenFileGetPath(file: string, module?: ModuleType, screen?: ScreenName | "Game"): string;
 /**
@@ -868,7 +1059,7 @@ declare function CommonGetDateParts(ms: number, options?: {
  * Build and returns a range
  * @param {number} start If {@link end} is unspecified, then this will be the end of the range, and start will be set to 0
  * @param {number} [end] End value for the range, inclusive
- * @param {number} [step=1]
+ * @param {number} [step]
  * @returns {number[]}
  */
 declare function CommonRange(start: number, end?: number, step?: number): number[];
@@ -909,19 +1100,9 @@ declare function CommonFilterMap<Tinp, Tout>(array: readonly Tinp[], predicateMa
  * @param {number} index
  * @param {string} value
  * @param {string} defaultValue
- * @returns
+ * @returns {string}
  */
 declare function CommonStringSplice(string: string, index: number, value: string, defaultValue: string): string;
-/**
- * Unwraps a thunk into a value
- *
- * @param {Thunk<unknown, unknown[]>} thunk
- * @param {...unknown} args
- * @returns {unknown}
- */
-declare function CommonUnwrapThunk(thunk: Thunk<unknown, unknown[]>, ...args: unknown[]): unknown;
-declare function CommonUnwrapThunk<T>(thunk: Thunk<T>): T;
-declare function CommonUnwrapThunk<T, A extends readonly unknown[]>(thunk: Thunk<T, A>, ...args: A): T;
 /**
  * Catch a promise and make it log
  *
@@ -929,9 +1110,68 @@ declare function CommonUnwrapThunk<T, A extends readonly unknown[]>(thunk: Thunk
  */
 declare function CommonPromiseCatch(p: Promise<any> | undefined): void;
 /**
+ * A class representing the result of a failable operation
+ * @template T
+ * @template {Error} [E=Error]
+ */
+declare class Result<T, E extends Error = Error> {
+    /** @type {T} */
+    value: T;
+    /** @type {E | null} */
+    error: E | null;
+    /**
+     * Create a new Result representing the status of a failable operation
+     * @param {T} value
+     * @param {E | null} [error]
+     */
+    constructor(value: T, error?: E | null);
+    /**
+     * Convert the {@link Result.Error} message into a list of DOM elements as usable by the likes of {@link ElementDOMScreen.setStatus}).
+     *
+     * Always returns an empty list for nullish errors
+     * @param {null | string | Element | readonly (string | Element)[]} customMessage A custom message to be used as prefix
+     * @returns {(string | Element)[]} The list of DOM elements
+     */
+    errorAsDOM(customMessage?: null | string | Element | readonly (string | Element)[]): (string | Element)[];
+    /**
+     * Build a Result for a successful operation
+     * @template T
+     * @param {T} value
+     * @returns {Result<T, never>}
+     */
+    static success<T>(value: T): Result<T, never>;
+    /**
+     * Build a Result for a failed operation
+     * @template {Error} T
+     * @param {T} error
+     * @returns {Result<never, T>}
+     */
+    static failure<T extends Error>(error: T): Result<never, T>;
+    /**
+     * Returns whether the operation was a success
+     */
+    get ok(): boolean;
+    /**
+     * Returns whether the operation was a failure
+     */
+    get err(): boolean;
+    /**
+     * Unwrap the result
+     * This either returns the successful return of the operation, or throws the error it reported
+     */
+    unwrap(): T;
+}
+declare class ClipboardError extends Error {
+    /**
+     * @param {string} message
+     * @param {object} options
+     */
+    constructor(message: string, options?: object);
+}
+/**
  * Read text data from the browser's clipboard.
  *
- * @param {(result: Result<string | null, ClipboardError>) => void} cb}
+ * @param {(result: Result<string | null, ClipboardError>) => void} cb
  */
 declare function CommonClipboardRead(cb: (result: Result<string | null, ClipboardError>) => void): void;
 /**
@@ -972,233 +1212,3 @@ declare function CommonMax<T extends number>(arg0: T, ...args: T[]): T;
  * @returns {T}
  */
 declare function CommonMin<T extends number>(arg0: T, ...args: T[]): T;
-/** @type {PlayerCharacter} */
-declare var Player: PlayerCharacter;
-/** @type {ModuleType} */
-declare var CurrentModule: ModuleType;
-/** @type {RoomName} */
-declare var CurrentScreen: RoomName;
-/** @type {Required<ScreenFunctions>} */
-declare var CurrentScreenFunctions: Required<ScreenFunctions>;
-/** @type {Character|NPCCharacter|null} */
-declare var CurrentCharacter: Character | NPCCharacter | null;
-declare var CurrentOnlinePlayers: number;
-/**
- * A per-screen ratio of how darkened the background must be
- *
- * 1 is bright, 0 is pitch black
- */
-declare var CurrentDarkFactor: number;
-declare var CommonIsMobile: boolean;
-/** @type {Record<string, string[][]>} */
-declare var CommonCSVCache: Record<string, string[][]>;
-declare var CutsceneStage: number;
-declare var CommonPhotoMode: boolean;
-declare const MS_PER_SEC: 1000;
-declare const MS_PER_MIN: number;
-declare const MS_PER_HOUR: number;
-declare const MS_PER_DAY: number;
-declare const MS_PER_WEEK: number;
-declare const MS_PER_YEAR: number;
-/**
- * An enum encapsulating possible chatroom message substitution tags. Character name substitution tags are interpreted
- * in chatrooms as follows (assuming the character name is Ben987):
- * SOURCE_CHAR: "Ben987"
- * DEST_CHAR: "Ben987's" (if character is not self), "her" (if character is self)
- * DEST_CHAR_NAME: "Ben987's"
- * TARGET_CHAR: "Ben987" (if character is not self), "herself" (if character is self)
- * TARGET_CHAR_NAME: "Ben987"
- * Additionally, sending the following tags will ensure that asset names in messages are correctly translated by
- * recipients:
- * ASSET_NAME: (substituted with the localized name of the asset, if available)
- * @type {Record<"SOURCE_CHAR"|"DEST_CHAR"|"DEST_CHAR_NAME"|"TARGET_CHAR"|"TARGET_CHAR_NAME"|"ASSET_NAME"|"AUTOMATIC", CommonChatTags>}
- */
-declare const CommonChatTags: Record<"SOURCE_CHAR" | "DEST_CHAR" | "DEST_CHAR_NAME" | "TARGET_CHAR" | "TARGET_CHAR_NAME" | "ASSET_NAME" | "AUTOMATIC", CommonChatTags>;
-declare namespace TimeUnits {
-    namespace MINUTES {
-        let label: "Minutes";
-        let seconds: 60;
-    }
-    namespace HOURS {
-        let label_1: "Hours";
-        export { label_1 as label };
-        let seconds_1: 3600;
-        export { seconds_1 as seconds };
-    }
-    namespace DAYS {
-        let label_2: "Days";
-        export { label_2 as label };
-        let seconds_2: 86400;
-        export { seconds_2 as seconds };
-    }
-}
-/**
- * A map of keys to common font stack definitions. Each stack definition is a
- * two-item array whose first item is an ordered list of fonts, and whose
- * second item is the generic fallback font family (e.g. sans-serif, serif,
- * etc.)
- * @constant
- * @type {Record<String, [String[], String]>}
- */
-declare const CommonFontStacks: Record<string, [string[], string]>;
-/**
- * How many times do we retry a resource fetch.
- */
-declare const FETCH_MAX_RETRIES: 10;
-/**
- * How much to wait max between each attempt.
- */
-declare const FETCH_MAX_RETRY_BACKOFF_TIME: 16;
-declare const FETCH_RETRY_JITTER_MIN: 0.25;
-declare const FETCH_RETRY_JITTER_MAX: 1.75;
-/**
- * Whether a screen is currently (async) loading via {@link CommonSetScreen}.
- *
- * See {@link ScreenIsLoadingPromise} for a promise-based variant of this variable for async checking.
- * @type {boolean}
- */
-declare var ScreenIsLoading: boolean;
-/**
- * A promise that resolves upon async loading a screen via {@link CommonSetScreen}.
- *
- * See {@link ScreenIsLoading} for a promise-based variant of this variable for sync checking.
- * @type {SafePromise<void>}
- */
-declare var ScreenIsLoadingPromise: SafePromise<void>;
-/**
- * Memoized getter function. Returns a font string specifying the player's
- * preferred font and the provided size. This is memoized as it is called on
- * every frame in many cases.
- * @param {number} size - The font size that should be specified in the
- * returned font string
- * @returns {string} - A font string specifying the requested font size and
- * the player's preferred font stack. For example:
- * 12px "Courier New", "Courier", monospace
- */
-declare const CommonGetFont: MemoizedFunction<(size: any) => string>;
-/**
- * Memoized getter function. Returns a font string specifying the player's
- * preferred font stack. This is memoized as it is called on every frame in
- * many cases.
- * @returns {string} - A font string specifying the player's preferred font
- * stack. For example:
- * "Courier New", "Courier", monospace
- */
-declare const CommonGetFontName: MemoizedFunction<() => string>;
-declare namespace CommonKey {
-    let ALT: 1;
-    let CTRL: 2;
-    let META: 4;
-    let SHIFT: 8;
-    /**
-     * Check whether the expected key and all its modifiers were pressed
-     * @example
-     * // `Enter` without modifiers
-     * CommonKey(event, "Enter");
-     * // `Enter` with the `Ctrl` and `Shift` modifiers
-     * CommonKey(event, "Enter", CommonKey.SHIFT | CommonKey.CTRL);
-     * @param {KeyboardEvent} event - The keyboard event in question
-     * @param {string} key - The expected key (see {@link KeyboardEvent.prototype.key})
-     * @param {null | number} modifiers - An optional bit mask of all expected modifiers (see examples)
-     * @returns {boolean} - Whether the expected key and all its modifiers were pressed
-     */
-    function IsPressed(event: KeyboardEvent, key: string, modifiers?: null | number): boolean;
-    /**
-     * Return a bit mask with all modifiers in the passed keyboard event
-     * @param {KeyboardEvent} event - The keyboard event in question
-     * @returns {number} - The bitmask of keyboard modifiers
-     */
-    function GetModifiers(event: KeyboardEvent): number;
-    /**
-     * A {@link ScreenFunctions.KeyDown} helper function for implementing the navigation key handling of scrollable elements.
-     * These keybinds get documented in {@link KeybindingDefaults.DefaultKeybindings}
-     * @param {Element} scrollableElem - The scrollable element
-     * @param {KeyboardEvent} event - The `keydown` event
-     * @param {(scrollableElem: Element) => number} getArrowScrollDistance - A callback for computing the (absolute) scroll distance for up/down arrow key presses
-     * @returns {boolean} - Whether a navigation key was (successfuly pressed)
-     */
-    function NavigationKeyDown(scrollableElem: Element, event: KeyboardEvent, getArrowScrollDistance: (scrollableElem: Element) => number): boolean;
-    /**
-     * A {@link ScreenFunctions.KeyDown} helper function for automatically forwarding key presses to the passed input element.
-     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - The input or textarea element in question
-     * @param {KeyboardEvent} ev - The keydown event
-     * @param {null | { allowCtrlA?: boolean }} options
-     * @returns {boolean} - Whether the keypress was processed
-     */
-    function InputKeyDown(inputElem: HTMLInputElement | HTMLTextAreaElement, ev: KeyboardEvent, options?: null | {
-        allowCtrlA?: boolean;
-    }): boolean;
-    /**
-     * A {@link ScreenFunctions.Paste} helper function for automatically forwarding paste actions to the passed input element.
-     * @param {HTMLInputElement | HTMLTextAreaElement} inputElem - helper function for automatically forwarding paste actions to the passed input element.
-     * @param {ClipboardEvent} ev - The `paste` event
-     * @returns {void}
-     */
-    function InputPaste(inputElem: HTMLInputElement | HTMLTextAreaElement, ev: ClipboardEvent): void;
-}
-/**
- * Escapes any potential regex syntax characters in a string, and returns a new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
- * @license MIT - Copyright (c) 2014-2025 Denis Pushkarev, core-js 3.40.0 - 2025.01.08
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/escape
- * @see https://github.com/zloirock/core-js/blob/v3.40.0/packages/core-js/modules/esnext.regexp.escape.js
- * @param S The string to escape.
- * @returns A new string that can be safely used as a literal pattern for the {@link RegExp} constructor.
- */
-declare var CommonRegEscape: Function;
-/**
- * A class representing the result of a failable operation
- * @template T
- * @template {Error} [E=Error]
- */
-declare class Result<T, E extends Error = Error> {
-    /**
-     * Build a Result for a successful operation
-     * @template T
-     * @param {T} value
-     * @returns
-     */
-    static success<T_1>(value: T_1): Result<T_1, Error>;
-    /**
-     * Build a Result for a failed operation
-     * @param {Error} error
-     * @returns
-     */
-    static failure(error: Error): Result<null, Error>;
-    /**
-     * Create a new Result representing the status of a failable operation
-     * @param {T} value
-     * @param {E | null} [error]
-     */
-    constructor(value: T, error?: E | null);
-    /** @type {T} */
-    value: T;
-    /** @type {E | null} */
-    error: E | null;
-    /**
-     * Convert the {@link Result.Error} message into a list of DOM elements as usable by the likes of {@link ElementDOMScreen.setStatus}).
-     *
-     * Always returns an empty list for nullish errors
-     * @param {null | string | Element | readonly (string | Element)[]} customMessage A custom message to be used as prefix
-     * @returns {(string | Element)[]} The list of DOM elements
-     */
-    errorAsDOM(customMessage?: null | string | Element | readonly (string | Element)[]): (string | Element)[];
-    /**
-     * Returns whether the operation was a success
-     */
-    get ok(): boolean;
-    /**
-     * Returns whether the operation was a failure
-     */
-    get err(): boolean;
-    /**
-     * Unwrap the result
-     * This either returns the successful return of the operation, or throws the error it reported
-     */
-    unwrap(): T;
-}
-declare class ClipboardError extends Error {
-    /**
-     * @param {string} message
-     */
-    constructor(message: string, options?: {});
-}

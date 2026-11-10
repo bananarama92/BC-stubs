@@ -1,3 +1,22 @@
+declare var AdvancedRuleBackground: string;
+/** @type {null | OnlineCharacter} */
+declare var AdvancedRuleTarget: null | OnlineCharacter;
+/** @type {LogNameAdvanced} */
+declare var AdvancedRuleType: LogNameAdvanced;
+/** @type {string[]} */
+declare var AdvancedRuleOption: string[];
+declare const AdvancedRuleOptionsPerPage = 44;
+declare var AdvancedRulePage: number;
+/**
+ * @type {Set<string>}
+ */
+declare var AdvancedRuleSelection: Set<string>;
+/** @type {AdvancedRuleScreen[]} */
+declare const AdvancedRuleScreens: AdvancedRuleScreen[];
+/**
+ * Loads the advanced rule screen
+ * @type {ScreenLoadHandler}
+ */
 declare function AdvancedRuleLoad(): Promise<void>;
 /**
  * Starts the advanced rule screen and loads it
@@ -21,19 +40,8 @@ declare function AdvancedRuleRun(): void;
  * @returns {void} - Nothing
  */
 declare function AdvancedRuleClick(): void;
-declare function AdvancedRuleExit(): void;
-declare var AdvancedRuleBackground: string;
-/** @type {null | Character | NPCCharacter} */
-declare var AdvancedRuleTarget: null | Character | NPCCharacter;
-/** @type {LogNameAdvanced} */
-declare var AdvancedRuleType: LogNameAdvanced;
-/** @type {string[]} */
-declare var AdvancedRuleOption: string[];
-declare const AdvancedRuleOptionsPerPage: 44;
-declare var AdvancedRulePage: number;
 /**
- * @type {Set<string>}
+ * Handles exiting from the screen, updates the sub rules
+ * @type {ScreenExitHandler}
  */
-declare var AdvancedRuleSelection: Set<string>;
-/** @type {AdvancedRuleScreen[]} */
-declare const AdvancedRuleScreens: AdvancedRuleScreen[];
+declare function AdvancedRuleExit(): void;

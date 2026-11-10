@@ -1,18 +1,22 @@
+declare const InventoryItemMiscPasswordPadlockPasswordRegex: RegExp;
+/** @type {ExtendedItemScriptHookCallbacks.Load<NoArchItemData>} */
 declare function InventoryItemMiscPasswordPadlockLoadHook(data: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Draw<NoArchItemData>} */
 declare function InventoryItemMiscPasswordPadlockDrawHook(data: NoArchItemData, originalFunction: () => void): void;
 /**
  *
  * @param {Character} C
  * @param {Item} item
- * @returns
+ * @returns {void}
  */
 declare function InventoryItemMiscPasswordPadlockDrawControls(C: Character, item: Item): void;
+/** @type {ExtendedItemScriptHookCallbacks.Click<NoArchItemData>} */
 declare function InventoryItemMiscPasswordPadlockClickHook(data: NoArchItemData, originalFunction: () => void): void;
 /**
  *
  * @param {Character} C
  * @param {Item} item
- * @returns
+ * @returns {void}
  */
 declare function InventoryItemMiscPasswordPadlockControlsClick(C: Character, item: Item): void;
 /**
@@ -26,6 +30,7 @@ declare function InventoryItemMiscPasswordPadlockHandleOpenClick(C: Character, i
  * @param {Item} item
  */
 declare function InventoryItemMiscPasswordPadlockHandleFirstSet(C: Character, item: Item): void;
+/** @type {ExtendedItemScriptHookCallbacks.Exit<NoArchItemData>} */
 declare function InventoryItemMiscPasswordPadlockExitHook(data: NoArchItemData, originalFunction: (() => void) | null): void;
 /**
  *
@@ -39,4 +44,3 @@ declare function InventoryItemMiscPasswordPadlockIsSet(item: Item): boolean;
  * @param {Item} item
  */
 declare function InventoryItemMiscPasswordPadlockPublishPasswordChange(C: Character, item: Item): void;
-declare const InventoryItemMiscPasswordPadlockPasswordRegex: RegExp;

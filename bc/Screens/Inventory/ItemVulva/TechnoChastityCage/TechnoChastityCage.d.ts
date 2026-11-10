@@ -1,11 +1,33 @@
-declare function InventoryItemVulvaTechnoChastityCageDrawHook(data: ModularItemData, originalFunction: () => void): void;
-declare function InventoryItemVulvaTechnoChastityCageClickHook(data: ModularItemData, originalFunction: () => void): void;
+/** @type {VoiceTriggerType[]} */
+declare var InventoryItemVulvaTechnoChastityCageVoiceTriggers: VoiceTriggerType[];
+/** @type {string[]} */
+declare var InventoryItemVulvaTechnoChastityCageVoiceTriggerValues: string[];
+/** @type {{EXCITED: "Excited", AROUSED: "Aroused", HORNY: "Horny"}} */
+declare const ItemVulvaChastityCageExcitementLevel: {
+    EXCITED: "Excited";
+    AROUSED: "Aroused";
+    HORNY: "Horny";
+};
+declare const ItemVulvaChastityCageExcitementLevels: ("Aroused" | "Excited" | "Horny")[];
+/** @type {Record<ItemVulvaChastityCageExcitementLevel, number>} */
+declare const ItemVulvaChastityCageExcitementLevelThresholdMap: Record<ItemVulvaChastityCageExcitementLevel, number>;
+/**
+ * @param {ItemVulvaChastityCageExcitementLevel} currentPunishmentMode
+ */
+declare const ItemVulvaTechnoChastityCageGetArousalThreshold: (currentPunishmentMode: ItemVulvaChastityCageExcitementLevel) => number;
+/** @type {ExtendedItemScriptHookCallbacks.Draw<ModularItemData>} */
+declare function InventoryItemVulvaTechnoChastityCageDrawHook(data: ModularItemData, OriginalFunction: () => void): void;
+/**
+ * @type {ExtendedItemScriptHookCallbacks.Click<ModularItemData>}
+ */
+declare function InventoryItemVulvaTechnoChastityCageClickHook(data: ModularItemData, OriginalFunction: () => void): void;
 /**
  * @param {Item} item
  * @param {number} _offset How many pixels down will the UI be shifted
  */
 declare function InventoryItemVulvaChastityCageDrawVoiceControl(item: Item, _offset: number): void;
 declare function InventoryItemVulvaTechnoChastityCageDrawVoiceControlCleanup(): void;
+/** @type {ExtendedItemScriptHookCallbacks.Exit<ModularItemData>} */
 declare function InventoryItemVulvaTechnoChastityCageExitHook(data: ModularItemData, originalFunction: (() => void) | null): void;
 /**
  * @param {Character} C
@@ -21,15 +43,24 @@ declare function InventoryItemVulvaChastityCageVoiceControlClickSet(C: Character
 /**
  * @param {Character} C
  * @param {Item} item
- * @returns
+ * @returns {void}
  */
 declare function InventoryItemVulvaTechnoChastityCageVoicePrevious(C: Character, item: Item): void;
 /**
  * @param {Character} C
  * @param {Item} item
- * @returns
+ * @returns {void}
  */
 declare function InventoryItemVulvaTechnoChastityCageVoiceNext(C: Character, item: Item): void;
+type TechnoChastityCagePersistentData = {
+    NextShrinkTime?: number;
+    LastShrinkWarningTime?: number;
+    ShrinkCooldown?: number;
+} & ModularChastityBeltPersistentData;
+/**
+ * @typedef {{NextShrinkTime?: number, LastShrinkWarningTime?: number, ShrinkCooldown?: number} & ModularChastityBeltPersistentData} TechnoChastityCagePersistentData
+ */
+/** @type {ExtendedItemScriptHookCallbacks.ScriptDraw<ModularItemData, TechnoChastityCagePersistentData>} */
 declare function InventoryItemVulvaChastityCageScriptDrawHook(data: ModularItemData, originalFunction: ((drawData: DynamicScriptCallbackData<TechnoChastityCagePersistentData>) => void) | null, drawData: DynamicScriptCallbackData<TechnoChastityCagePersistentData>): void;
 /**
  * @param {Item} item
@@ -90,25 +121,3 @@ declare function InventoryItemVulvaChastityCageArousalPunishmentResult(item: Ite
  * @param {string} punishmentResult
  */
 declare function InventoryItemVulvaChastityCageArousalPunishmentRun(C: Character, item: Item, itemType: TypeRecord, punishmentResult: string): void;
-/** @type {VoiceTriggerType[]} */
-declare var InventoryItemVulvaTechnoChastityCageVoiceTriggers: VoiceTriggerType[];
-/** @type {string[]} */
-declare var InventoryItemVulvaTechnoChastityCageVoiceTriggerValues: string[];
-/** @type {{EXCITED: "Excited", AROUSED: "Aroused", HORNY: "Horny"}} */
-declare const ItemVulvaChastityCageExcitementLevel: {
-    EXCITED: "Excited";
-    AROUSED: "Aroused";
-    HORNY: "Horny";
-};
-declare const ItemVulvaChastityCageExcitementLevels: ("Horny" | "Excited" | "Aroused")[];
-/** @type {Record<ItemVulvaChastityCageExcitementLevel, number>} */
-declare const ItemVulvaChastityCageExcitementLevelThresholdMap: Record<ItemVulvaChastityCageExcitementLevel, number>;
-/**
- * @param {ItemVulvaChastityCageExcitementLevel} currentPunishmentMode
- */
-declare function ItemVulvaTechnoChastityCageGetArousalThreshold(currentPunishmentMode: ItemVulvaChastityCageExcitementLevel): number;
-type TechnoChastityCagePersistentData = {
-    NextShrinkTime?: number;
-    LastShrinkWarningTime?: number;
-    ShrinkCooldown?: number;
-} & ModularChastityBeltPersistentData;

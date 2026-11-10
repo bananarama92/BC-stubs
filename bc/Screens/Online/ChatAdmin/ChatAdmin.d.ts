@@ -1,3 +1,112 @@
+declare var ChatAdminBackground: string;
+declare var ChatAdminMessage: string;
+/** @deprecated */
+declare var ChatAdminBackgroundIndex: number;
+/** @deprecated */
+declare var ChatAdminPreviewBackgroundMode: boolean;
+/** @type {ServerChatRoomGame[]} */
+declare var ChatAdminGameList: ServerChatRoomGame[];
+/** @type {null | string[]} */
+declare var ChatAdminBackgroundList: null | string[];
+/** @type {ServerChatRoomLanguage} */
+declare var ChatAdminDefaultLanguage: ServerChatRoomLanguage;
+/** @type {ChatRoomAdminSettings | null} */
+declare var ChatAdminData: ChatRoomAdminSettings | null;
+/** @type {"create" | "update" | null} */
+declare var ChatAdminMode: "create" | "update" | null;
+declare const ChatAdminID: Readonly<{
+    screen: "chat-admin-screen";
+    accept: "chat-admin-accept";
+    cancel: "chat-admin-cancel";
+    roomImport: "chat-admin-room-import";
+    roomExport: "chat-admin-room-export";
+    search: "chat-admin-search-button";
+    searchInput: "chat-admin-search";
+    nameInput: "chat-admin-input-name";
+    descriptionInput: "chat-admin-input-description";
+    sizeInput: "chat-admin-input-size";
+    adminListInput: "chat-admin-input-admin-list";
+    whitelistInput: "chat-admin-input-whitelist";
+    banListInput: "chat-admin-input-ban-list";
+    language: "chat-admin-language";
+    backgroundPreview: "chat-admin-background-preview";
+    backgroundView: "chat-admin-background-view";
+    backgroundPrev: "chat-admin-background-prev";
+    backgroundNext: "chat-admin-background-next";
+    backgroundSelect: "chat-admin-background-select";
+    blockCategory: "chat-admin-block-category";
+    game: "chat-admin-game";
+    customization: "chat-admin-customization";
+    map: "chat-admin-map";
+    visibility: "chat-admin-visibility";
+    access: "chat-admin-access";
+}>;
+/**
+ * Loads the given room data and sets up the UI for it
+ * @type {ScreenLoadHandler}
+ */
+declare function ChatAdminLoad(): Promise<void>;
+declare function ChatAdminRun(): void;
+/**
+ * Handles clicks that reach the canvas. Is called from CommonClick()
+ * @returns {void} - Nothing
+ */
+declare function ChatAdminClick(): void;
+/**
+ * Handles the key presses while in the creation screen. When the user presses enter, we create the room.
+ * @type {KeyboardEventListener}
+ */
+declare function ChatAdminKeyDown(event: KeyboardEvent): boolean;
+declare function ChatAdminResize(): void;
+/**
+ * Handles exiting from the editor screen, removes the inputs and resets the state of the variables
+ * @type {ScreenExitHandler}
+ */
+declare function ChatAdminExit(): void;
+/**
+ * Handles unloading the editor screen
+ * @type {ScreenUnloadHandler}
+ */
+declare function ChatAdminUnload(): void;
+declare function ChatAdminImport(): void;
+/**
+ * Point the editor, thumbnail, and preview at a background.
+ * @param {string} name
+ */
+declare function ChatAdminApplyBackground(name: string): void;
+/**
+ * Step through backgrounds in the same order as the background dropdown.
+ * @param {number} delta
+ */
+declare function ChatAdminShiftBackground(delta: number): void;
+/**
+ * Whether the full-screen background preview is open.
+ * @returns {boolean}
+ */
+declare function ChatAdminBackgroundPreviewOpen(): boolean;
+/**
+ * Show or hide the full-screen background preview.
+ * @param {boolean} open
+ */
+declare function ChatAdminSetBackgroundPreview(open: boolean): void;
+/**
+ * Match a visibility or access value to its mode label.
+ * @param {Readonly<Record<string, readonly ServerChatRoomRole[]>>} modes
+ * @param {readonly ServerChatRoomRole[]} roles
+ * @returns {string}
+ */
+declare function ChatAdminModeKey(modes: Readonly<Record<string, readonly ServerChatRoomRole[]>>, roles: readonly ServerChatRoomRole[]): string;
+/**
+ * Title shown in the screen heading when no status message is set.
+ * @returns {string}
+ */
+declare function ChatAdminTitle(): string;
+/**
+ * Store a status message and show it in the screen heading when the editor is open.
+ * @param {string} message
+ */
+declare function ChatAdminSetMessage(message: string): void;
+declare function ChatAdminExport(): void;
 /**
  * Show the room editor screen in creation mode
  */
@@ -22,27 +131,14 @@ declare function ChatAdminStart(mode: "create" | "update", roomData?: ChatRoomSe
  */
 declare function ChatAdminCanEdit(): boolean;
 /**
+ * Handles accepting the room editor
+ */
+declare function ChatAdminCommit(): void;
+/**
  * Return whether the data in the editor can actually be committed
  * @returns {boolean}
  */
 declare function ChatAdminCanCommit(): boolean;
-declare function ChatAdminLoad(): Promise<void>;
-declare function ChatAdminUnload(): void;
-/**
- * Handles drawing the editor screen
- */
-declare function ChatAdminRun(): void;
-/**
- * Handles the click events on the editor screen. Is called from CommonClick()
- * @returns {void} - Nothing
- */
-declare function ChatAdminClick(): void;
-/**
- * Handles accepting the room editor
- */
-declare function ChatAdminCommit(): void;
-declare function ChatAdminKeyDown(event: KeyboardEvent): boolean;
-declare function ChatAdminExit(): void;
 /**
  * Validates whether the given settings is in the correct format for a ChatRoomAdminSettings object
  * @param {unknown} settings - The settings to validate
@@ -81,28 +177,3 @@ declare function ChatEditorCreateRoom(): void;
  * @returns {void} - Nothing
  */
 declare function ChatCreateResponse(data: ServerChatRoomCreateResponse): void;
-declare var ChatAdminBackground: string;
-declare var ChatAdminMessage: string;
-declare var ChatAdminBackgroundIndex: number;
-declare var ChatAdminPreviewBackgroundMode: boolean;
-/** @type {ServerChatRoomGame[]} */
-declare var ChatAdminGameList: ServerChatRoomGame[];
-/**
- * @deprecated
- * @type {ServerChatRoomLanguage[]}
- */
-declare var ChatAdminLanguageList: ServerChatRoomLanguage[];
-/** @type {null | string[]} */
-declare var ChatAdminBackgroundList: null | string[];
-/** @type {ServerChatRoomLanguage} */
-declare var ChatAdminDefaultLanguage: ServerChatRoomLanguage;
-declare var ChatAdminVisibilityModeLabels: ChatRoomVisibilityModeLabel[];
-declare var ChatAdminVisibilityModeValues: ServerChatRoomRole[][];
-declare var ChatAdminVisibilityModeIndex: number;
-declare var ChatAdminAccessModeLabels: ChatRoomAccessModeLabel[];
-declare var ChatAdminAccessModeValues: ServerChatRoomRole[][];
-declare var ChatAdminAccessModeIndex: number;
-/** @type {ChatRoomAdminSettings | null} */
-declare var ChatAdminData: ChatRoomAdminSettings | null;
-/** @type {"create" | "update" | null} */
-declare var ChatAdminMode: "create" | "update" | null;

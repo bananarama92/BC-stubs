@@ -1,1 +1,2 @@
-declare function InventoryItemDevicesWheelFortuneLoadHook(data: NoArchItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Load<NoArchItemData>} */
+declare function InventoryItemDevicesWheelFortuneLoadHook(): void;

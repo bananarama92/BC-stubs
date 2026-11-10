@@ -14,12 +14,13 @@ interface String {
 	replaceAt(index: number, character: string): string;
 }
 
-declare function parseInt(s: string | number, radix?: number): number;
-
 type MemoizedFunction<T extends AnyFunction> = T & {
 	/** Clears the cache of the memoized function */
 	clearCache(): void;
 };
+
+/** All (non-undefined) JS scalar-esque types */
+type ScalarType = null | string | boolean | number;
 
 /**
  * This is a typealias for Promise that indicates to eslint that that kind of promise
@@ -41,7 +42,7 @@ type SafePromise<T> = Promise<T>;
  * Something GLDrawImage/DrawImage can draw: either the URL of an image that goes
  * through the ImageCache, or an already available image source that gets
  * uploaded on the spot.
-*/
+ */
 type DrawSource = string | HTMLImageElement | HTMLCanvasElement | ImageBitmap;
 
 interface GLDrawImageData {
@@ -83,11 +84,6 @@ interface HTMLImageElement {
 interface HTMLElement {
 	setAttribute(qualifiedName: string, value: any): void;
 	removeAttribute(qualifiedName: string): void;
-}
-
-interface GamepadButton {
-	/** Whether the button was pressed the last input event */
-	repeat: boolean;
 }
 
 // Workaround for https://github.com/microsoft/TypeScript/issues/283
@@ -195,9 +191,9 @@ declare namespace ElementButton {
 		tooltipPosition?: "left" | "right" | "top" | "bottom";
 		/**
 		 * The aria accessibility role of the the tooltip; defaults to `description` if a {@link ElementButton.Options.label} is present and `label` otherwise:
-		 * * `label` ([`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)): A compact, 1-line summary of the button
-		 * * `description` ([`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby)): A longer, potentially multi-line, button description
-		 * * `none`: Nothing
+		 * - `label` ([`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)): A compact, 1-line summary of the button
+		 * - `description` ([`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby)): A longer, potentially multi-line, button description
+		 * - `none`: Nothing
 		 */
 		tooltipRole?: "label" | "description" | "none";
 		/** A button label */
@@ -322,6 +318,11 @@ interface CommonGenerateGridParameters {
 type CommonGenerateGridCallback<T> = (item: T, x: number, y: number, width: number, height: number) => boolean;
 
 /**
+ * A debounced or throttled function whose pending invocation can be dropped.
+ */
+type CommonCancellableFn<Args extends readonly unknown[], Ret> = ((this: unknown, ...args: Args) => Ret) & { cancel: () => void };
+
+/**
  * An object for holding arbitrary values with a mechanism to reset them to a default
  */
 type VariableContainer<T1, T2> = T1 & T2 & {
@@ -388,14 +389,14 @@ type DialogMenuButtonType = "Activity" |
 	"Lock" | "LockDisabled" | "LockMenu" |
 	`PickLock${PickLockAvailability}` |
 	"Remote" | "RemoteDisabled" | `RemoteDisabledFor${Exclude<VibratorRemoteAvailability, "Available" | "InvalidItem">}` |
-	"Unlock" | "Use" | "UseDisabled" | "Struggle" | "TightenLoosen"
+	"Unlock" | "Use" | "UseDisabled" | "Struggle" | "TightenLoosen" | "FilterItems" | "FilterItemsExit"
 	;
 
 type AppearanceMenuButtonType = (
 	"Wardrobe" | "WardrobeDisabled" | "Reset" | "WearRandom" | "Random" | "Copy"
 	| "Paste" | "Naked" | "Accept" | "Cancel" | "Character" | "Next" | "Prev" | "Swap"
 	| "Use" | "UseDisabled" | "PermissionMode" | "ColorChange" | "ColorChangeDisabled"
-	| "ColorChangeMulti" | "ColorChangeMultiDisabled"
+	| "ColorChangeMulti" | "ColorChangeMultiDisabled" | "Search" | "Remove"
 );
 
 declare namespace ElementDOMScreen {
@@ -475,9 +476,9 @@ declare namespace DialogMenu {
 	interface MenuButtonValidateData {
 		/**
 		 * The button's validation state:
-		 * * `null`: Validation successful
-		 * * `"hide"`: Validation failure; hide the button
-		 * * `"disabled"`: Validation failure; disable the button but do not hide it
+		 * - `null`: Validation successful
+		 * - `"hide"`: Validation failure; hide the button
+		 * - `"disabled"`: Validation failure; disable the button but do not hide it
 		 */
 		state: null | "hidden" | "disabled";
 		/**
@@ -713,6 +714,54 @@ type AssetPrerequisite =
 	"NoItemFeet" | "NoItemHands" | "NoItemLegs" | "NoMaidTray" | "NoOuterClothes" | "NotChained" | "NotChaste" | "NotKneeling" |
 	"NotLifted" | "NotMasked" | "NotMounted" | "NotProtrudingFromMouth" | "NotSuspended" | "OnBed" |
 	"RemotesAllowed" | "VulvaEmpty"
+;
+
+type AssetPrerequisiteCheck =
+	| ""
+	| `Cannot${AssetPoseName}`
+	| "MustFreeArmsFirst"
+	| "MustFreeFeetFirst"
+	| "MustFreeHandsFirst"
+	| "MustFreeLegsFirst"
+	| "MustStandUpFirst"
+	| "CannotBeUsedWhenMounted"
+	| "RemoveSuspensionForItem"
+	| "RemoveChastityFirst"
+	| "RemoveChainForItem"
+	| "MustCollaredFirst"
+	| "CannotBeSuited"
+	| "CannotHaveWand"
+	| "MustBeOnBed"
+	| "MustBeArmCuffedFirst"
+	| "MustBeFeetCuffedFirst"
+	| "RemoveClothesForItem"
+	| "CannotBeUsedWhileServingDrinks"
+	| "AddItemsToUse"
+	| "MustHaveBreasts"
+	| "MustHaveFlatChest"
+	| "MustHaveVagina"
+	| "MustHavePenis"
+	| "CantHaveErection"
+	| "CantBeLimp"
+	| "MustRemoveChastityCage"
+	| "MustNotHaveForcedErection"
+	| "MustHaveFullPenisAccess"
+	| "UnZipSuitForItem"
+	| "CantCloseOnShaft"
+	| "CannotBeUsedOverGag"
+	| "CannotBeUsedOverMask"
+	| "CannotBeUsedOverHood"
+	| "MustBeUsedOverGag"
+	| "MustFreeVulvaFirst"
+	| "MustFreeClitFirst"
+	| "MustFreeButtFirst"
+	| "RemoveRestraintsFirst"
+	| "RemoveFaceMaskFirst"
+	| "OwnerBlockedRemotes"
+	| "NeedsNippleRings"
+	| "CantAttachMittens"
+	| "NeedsChestHarness"
+	| "NeedsHipHarness"
 ;
 
 type CraftingStatusType = 0 | 1 | 2;
@@ -979,10 +1028,10 @@ interface IChatRoomMessageMetadata {
  *
  * @param data - The chat message to extract from.
  * @param sender - The character that sent the message.
- * @return An object with the following keys:
+ * @returns An object with the following keys:
  *  - `metadata`: an object for the extracted metadata (key/value)
  *  - `substitutions`: an array of [tag, substitutions] to perform on the message.
- * @return null if the extraction has nothing to report.
+ * @returns null if the extraction has nothing to report.
  */
 type ChatRoomMessageExtractor =
 	(data: ServerChatRoomMessage, sender: Character) => { metadata: IChatRoomMessageMetadata, substitutions: CommonSubtituteSubstitution[] } | null;
@@ -1014,7 +1063,7 @@ type ChatRoomMessageExtractor =
  * the message's contents inflight and/or a `skip` property if you'd like
  * to cause a subsequent handler to not be called.
  *
- * @warning Note that the in-flight message is only escaped when it gets
+ * Note that the in-flight message is only escaped when it gets
  * sent to the chat log via ChatRoomMessageDisplay. If you're manipulating
  * that by any other means, make sure to call ChatRoomEscapeEntities on its
  * content to close any injection attacks.
@@ -1102,11 +1151,6 @@ interface AssetGroup {
 	readonly AllowCustomize: boolean;
 	readonly Random?: boolean;
 	readonly ColorSchema: readonly BCColor[];
-	/**
-	 * The first color in the groups {@link ColorSchema}.
-	 * The value is used for padding the {@link Asset.DefaultColor} array if required.
-	 */
-	readonly DefaultColor: BCColor;
 	readonly ParentSize: AssetGroupName | "";
 	readonly ParentColor: AssetGroupName | "";
 	readonly Clothing: boolean;
@@ -1215,8 +1259,7 @@ interface AssetLayer {
 	readonly ParentGroup: ParentGroup.Data;
 	/** An array of objects mapping poses to other poses to determine their draw folder */
 	readonly PoseMapping: Readonly<AssetPoseMapping>;
-	/** The drawing priority of this layer. Inherited from the parent asset/group if not specified in the layer
-	definition. */
+	/** The drawing priority of this layer. Inherited from the parent asset/group if not specified in the layer definition. */
 	readonly Priority: number;
 	readonly InheritColor: AssetGroupName | null;
 	readonly Alpha: readonly Alpha.Data[];
@@ -1236,10 +1279,21 @@ interface AssetLayer {
 	readonly TextureMask?: AssetLayerMaskTexureDefinition;
 	readonly LockLayer: boolean;
 	readonly MirrorExpression?: AssetGroupName;
-	/** The coloring index for this layer */
+	/**
+	 * Preset colors for this layer.
+	 *
+	 * The first entry is the layer's default color. Further entries are reserved for a future extension of
+	 * layer color cycling and palette selection for randomized appearance.
+	 * Colorable layers always have at least one entry, and layers that copy another layer's colors share this list.
+	 * Non-colorable layers get an empty list.
+	 */
+	readonly Color: readonly BCColor[];
+	/** The coloring index for this layer, into {@link Item.Color} and {@link Asset.DefaultColor} */
 	readonly ColorIndex: number;
-	/** Any group-specific alpha masks that should be applied when drawing the layer. Only available on layers that have
-	been created prior to drawing */
+	/**
+	 * Any group-specific alpha masks that should be applied when drawing the layer.
+	 * Only available on layers that have been created prior to drawing
+	 */
 	readonly GroupAlpha?: readonly Alpha.Data[];
 	/**
 	 * A list of {@link TypeRecord} keys for which a single layer expects multiple type-specific .png files.
@@ -1377,7 +1431,9 @@ interface Asset {
 	readonly AllowHideItem?: readonly AssetFullName[];
 	readonly AllowTighten: boolean;
 	/**
-	 * The default color of the item: an array of length {@link Asset.ColorableLayerCount} consisting of {@link AssetGroup.DefaultColor} and/or valid color hex codes.
+	 * The default color of the item.
+	 *
+	 * An array of length {@link Asset.ColorableLayerCount}, containing the first color of each layer's color schema, in {@link AssetLayer.ColorIndex} order.
 	 */
 	readonly DefaultColor: readonly BCColor[];
 	readonly EditOpacity: boolean;
@@ -1416,7 +1472,7 @@ interface Asset {
 	readonly MirrorExpression?: AssetGroupName;
 	readonly FixedPosition: boolean;
 	readonly Layer: readonly AssetLayer[];
-	/** The number of colorable layers. Guaranteed to be >= 1 */
+	/** The number of color slots. `0` when the asset has no colorable layer. */
 	readonly ColorableLayerCount: number;
 	readonly Archetype?: ExtendedArchetype;
 	readonly Attribute: readonly AssetAttribute[];
@@ -1716,7 +1772,7 @@ interface ScreenFunctions {
 	 * @param {PointerEvent} event - The event that triggered this
 	 */
 	MouseDown?: MouseEventListener;
-		/**
+	/**
 	 * Called if the user releases the mouse button or the touchscreen on the canvas
 	 * @param {PointerEvent} event - The event that triggered this
 	 */
@@ -1867,6 +1923,19 @@ type PrivatePunishmentType =
 	| "Asylum"
 	| ""
 ;
+
+type CharacterOnlineStatus =
+	| "Crawl"
+	| "Preference"
+	| "Shop"
+	| "Struggle"
+	| "Talk"
+	| "Wardrobe"
+	| ""
+	| "null"
+	| null
+;
+
 interface Character {
 	/**
 	 * The character's cache slot ID in the Character array
@@ -1895,12 +1964,6 @@ interface Character {
 	 * The character's loaded dialog info
 	 */
 	DialogInfo?: DialogInfo<any>;
-	/**
-	 * A deprecated identifier for online characters
-	 * Only exists on the player, has the same value as their character ID.
-	 * @deprecated
-	 */
-	OnlineID?: string;
 	/** The asset family used by the character */
 	AssetFamily: IAssetFamily;
 	Name: string;
@@ -2021,7 +2084,8 @@ interface Character {
 	/**
 	 * Check whether a character can change its own outfit.
 	 *
-	 * @warning Only usable on Player
+	 * Only usable on Player
+	 *
 	 * @returns {boolean} - TRUE if changing is possible, FALSE otherwise.
 	 */
 	CanChangeOwnClothes: () => boolean;
@@ -2087,8 +2151,8 @@ interface Character {
 	HasHiddenItems: boolean;
 	SavedColors: HSVColor[];
 	/**
-	 * @private
 	 * The cached blind level; use {@link Character.GetBlindLevel} instead.
+	 * @private
 	 */
 	_BlindLevel?: number;
 	GetBlindLevel: (eyesOnly?: boolean) => number;
@@ -2216,7 +2280,7 @@ interface Character {
 	ArousalZoom?: boolean;
 	FixedImage?: string;
 	Rule?: LogRecord[];
-	Status?: string | null;
+	Status?: CharacterOnlineStatus;
 	StatusTimer?: number;
 	Crafting?: (CraftingItem | null)[];
 	LastMapData?: ChatRoomMapData;
@@ -2335,6 +2399,8 @@ interface Character {
 
 type KidnapModeType = "Intro" | "SelectItem" | "SelectMove" | "ShowMove" | "UpperHand" | "SuddenDeath" | "End";
 
+type KidnapActivity = "AddGag" | "RemoveGag" | "AddFeet" | "RemoveFeet" | "AddLegs" | "RemoveLegs" | "Tickle" | "Spank" | "Kiss" | "Fondle";
+
 type PandoraPrisonActivity = "Beat" | "Water" | "Transfer" | "Quickie" | "Strip" | "Chastity" | "Tickle" | "ChangeBondage";
 
 /** Pandora NPCs */
@@ -2378,21 +2444,6 @@ interface ExtensionSettings {
 	[key: string]: any;
 }
 
-interface ControllerSettingsOld {
-	ControllerA: number;
-	ControllerB: number;
-	ControllerX: number;
-	ControllerY: number;
-	ControllerStickUpDown: number;
-	ControllerStickLeftRight: number;
-	ControllerStickRight: number;
-	ControllerStickDown: number;
-	ControllerDPadUp: number;
-	ControllerDPadDown: number;
-	ControllerDPadLeft: number;
-	ControllerDPadRight: number;
-}
-
 type DifficultyLevel =
 	| 0 // Roleplay
 	| 1 // Regular
@@ -2416,7 +2467,7 @@ interface OnlineCharacter extends Character {
 		LastChange?: number;
 	};
 	Rule?: LogRecord[];
-	Status?: string | null;
+	Status?: CharacterOnlineStatus;
 	StatusTimer?: number;
 	LastMapData?: ChatRoomMapData;
 	Crafting: (CraftingItem | null)[];
@@ -2430,7 +2481,6 @@ interface PlayerCharacter extends OnlineCharacter {
 	ChatSettings: ChatSettingsType;
 	VisualSettings: VisualSettingsType;
 	AudioSettings: AudioSettingsType;
-	ControllerSettings: ControllerSettingsType;
 	GameplaySettings: GameplaySettingsType;
 	ImmersionSettings: ImmersionSettingsType;
 	/** The chat room we were previous in. Used for relog room re-creation */
@@ -2464,6 +2514,7 @@ interface PlayerCharacter extends OnlineCharacter {
 	ConfiscatedItems: { Group: AssetGroupName, Name: AssetName }[];
 	ExtensionSettings: ExtensionSettings;
 	ChatSearchSettings: ChatRoomSearchSettings;
+	/** Resolved from the account's {@link MapDoodadRef} list at login. */
 	RecentlyUsedMapElements: ChatRoomMapDoodad[];
 	KeybindingSettings: string;
 }
@@ -2537,17 +2588,6 @@ interface ImmersionSettingsType {
 	 * Whether garbled messages that have a non-garbled variant will be decoded.
 	 */
 	ShowUngarbledMessages: boolean;
-}
-
-type ControllerButton = typeof ControllerButton[keyof typeof ControllerButton];
-type ControllerAxis = typeof ControllerAxis[keyof typeof ControllerAxis];
-
-interface ControllerSettingsType {
-	ControllerActive: boolean;
-	ControllerSensitivity: number;
-	ControllerDeadZone: number;
-	Buttons: Record<ControllerButton, number>;
-	Axis: Record<ControllerAxis, number>;
 }
 
 interface ChatSettingsType {
@@ -2645,7 +2685,7 @@ type InfiltrationPerks = (
 );
 
 interface PlayerCharacter {
-	Infiltration?: InfiltrationType;
+	Infiltration: InfiltrationType;
 }
 
 interface InfiltrationType {
@@ -2653,10 +2693,10 @@ interface InfiltrationType {
 		Minutes: number;
 		Timer?: number;
 		Background: string;
-		Difficulty: number;
+		Difficulty: 0 | 1 | 2 | 3 | 4;
 		FightDone?: boolean;
 	}
-	Perks?: "" | `${number}`;
+	Perks: "" | `${number}`;
 }
 
 /** Kinky Dungeon Player extension */
@@ -2735,11 +2775,16 @@ interface ElementMetaData {
 	icon?: ThumbIcon,
 	/** Whether an options shows up in the UI. Useful for options that are managed programmatically. */
 	hidden?: boolean,
+	/**
+	 * Gets the element's label, instead of looking up the option's dialog key.
+	 * For options named after something that has its own text, such as another asset.
+	 */
+	label?: () => string,
 }
 
 declare namespace ElementMetaData {
 	interface Typed { drawImage: boolean, hidden: boolean, imagePath: null | string }
-	interface Modular { drawImage: boolean, hidden: boolean, imagePath: null | string }
+	interface Modular { drawImage: boolean, hidden: boolean, imagePath: null | string, label?: () => string }
 	interface Vibrating  { drawImage: false, hidden: false, imagePath: null }
 	interface Text {}
 	interface VariableHeight { icon: ThumbIcon }
@@ -2857,10 +2902,10 @@ interface ExtendedItemScriptHookStruct<
 	DataType extends ExtendedItemData<any>,
 	OptionType extends ExtendedItemOption
 > {
-	init: ExtendedItemScriptHookCallbacks.Init<DataType>,
-	load: ExtendedItemScriptHookCallbacks.Load<DataType>,
-	draw: ExtendedItemScriptHookCallbacks.Draw<DataType>,
-	click: ExtendedItemScriptHookCallbacks.Click<DataType>,
+	init: null | ExtendedItemScriptHookCallbacks.Init<DataType>,
+	load: null | ExtendedItemScriptHookCallbacks.Load<DataType>,
+	draw: null | ExtendedItemScriptHookCallbacks.Draw<DataType>,
+	click: null | ExtendedItemScriptHookCallbacks.Click<DataType>,
 	exit: null | ExtendedItemScriptHookCallbacks.Exit<DataType>,
 	validate: null | ExtendedItemScriptHookCallbacks.Validate<DataType, OptionType>,
 	publishAction: null | ExtendedItemScriptHookCallbacks.PublishAction<DataType, OptionType>,
@@ -2970,9 +3015,10 @@ declare namespace ExtendedItemCallbacks {
 	 * @param item The item in question
 	 * @param push Whether to push to changes to the server
 	 * @param refresh Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
+	 * @param log Whether to log `Init()`-initialized property updates to the console
 	 * @returns Whether the items properties were actually updated or not
 	 */
-	type Init = ExtendedItemCallback<[C: Character, item: Item, push: boolean, refresh: boolean], boolean>;
+	type Init = ExtendedItemCallback<[C: Character, item: Item, push: boolean, refresh: boolean, log?: boolean], boolean>;
 	/**
 	 * Callback for extended item `SetOption` functions.
 	 * @param C The character that has the item equipped
@@ -3093,11 +3139,12 @@ declare namespace ExtendedItemScriptHookCallbacks {
 	 * @param item The item in question
 	 * @param push Whether to push to changes to the server
 	 * @param refresh Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
+	 * @param log Whether to log `Init()`-initialized property updates to the console
 	 * @returns Whether the items properties were actually updated or not
 	 */
 	type Init<
 		DataType extends ExtendedItemData<any>
-	> = ExtendedItemScriptHookCallbackNoNull<DataType, [C: Character, item: Item, push: boolean, refresh: boolean], boolean>;
+	> = ExtendedItemScriptHookCallbackNoNull<DataType, [C: Character, item: Item, push: boolean, refresh: boolean, log?: boolean], boolean>;
 	/**
 	 * Callback for extended item `SetOption` functions.
 	 * @param data The items extended item data
@@ -3348,7 +3395,7 @@ interface AssetDefinitionProperties {
 	 *
 	 * @see {@link Asset.CustomBlindBackground}
 	 */
-	CustomBlindBackground?: string | null;
+	CustomBlindBackground?: string;
 
 	/**
 	 * A list of fetishes affected by the item
@@ -3388,12 +3435,6 @@ type VoiceTriggerType =
  * Those are the properties the main game code enforces.
  */
 interface ItemPropertiesBase {
-	/**
-	 * A string (or `null`) denoting the state of an extended item.
-	 * How the type-string translate to concrete properties depends on the Archetype in question.
-	 * @deprecated Superseded by {@link ItemPropertiesBase.TypeRecord}. Old type strings can be convert to records via {@link ExtendedItemTypeToRecord}.
-	 */
-	Type?: null | string;
 	/** A record mapping screen names to option indices. */
 	TypeRecord?: TypeRecord;
 
@@ -3701,7 +3742,7 @@ type PropertiesArray = PropertiesArray.Item & PropertiesArray.Asset & Properties
 
 /**
  * All item/asset/group properties with record-based values.
- * @note This includes a number of somewhat unexpected values as arrays are treated as a record subtype.
+ * This includes a number of somewhat unexpected values as arrays are treated as a record subtype.
  */
 declare namespace PropertiesRecord {
 	/** All {@link ItemProperties} properties with record-based values. */
@@ -3716,7 +3757,8 @@ type PropertiesRecord = PropertiesRecord.Item & PropertiesRecord.Asset & Propert
 
 //#endregion
 
-/** An object containing modular item configuration for an asset. Contains all of the necessary information for the
+/**
+ * An object containing modular item configuration for an asset. Contains all of the necessary information for the
  * item's load, draw & click handlers.
  */
 interface ModularItemData extends ExtendedItemData<ModularItemOption> {
@@ -3760,7 +3802,8 @@ interface ModularItemData extends ExtendedItemData<ModularItemOption> {
 	parentOption: null;
 }
 
-/** A 3-tuple containing data for drawing a button in a modular item screen. A button definition takes the
+/**
+ * A 3-tuple containing data for drawing a button in a modular item screen. A button definition takes the
  * format:
  * ```
  * [moduleOrOption, currentOption, prefix]
@@ -3848,11 +3891,13 @@ interface AppearanceUpdateParameters {
 	sourceMemberNumber: number;
 }
 
+type PartialNull<T> = { [P in keyof T]?: T[P] | null; }
+
 /**
  * A map containing appearance item diffs, keyed according to the item group. Used to compare and validate before/after
  * for appearance items.
  */
-type AppearanceDiffMap = Partial<Record<AssetGroupName, [before: Item, after: Item]>>
+type AppearanceDiffMap = Partial<Record<AssetGroupName, [before: Item | null, after: Item | null]>>;
 
 /**
  * A wrapper object containing the results of a diff resolution. This includes the final item that the diff resolved to
@@ -4186,10 +4231,10 @@ interface GameMagicSchoolFindsAroundParameters {
 /**
  * Online game status values.
  *
- * @property "" - The game is in the setup phase.
- * @property "Running" - The game is currently running.
+ * @member "" - The game is in the setup phase.
+ * @member "Running" - The game is currently running.
  *
- * @fix FIXME: "" should really be renamed Setup
+ * @todo FIXME: "" should really be renamed Setup
  */
 type OnlineGameStatus = "" | "Running";
 
@@ -4321,6 +4366,7 @@ type GGTSTask =
 // #region Audio
 
 type AudioEffectName =
+	| "AdultBabyHarness"
 	| "AirDoorClosing"
 	| "AirDoorOpening"
 	| "Bag"
@@ -4330,102 +4376,102 @@ type AudioEffectName =
 	| "BellMedium"
 	| "BellSmall"
 	| "Belt"
+	| "BondageBouquet"
 	| "BrushHair"
 	| "BrushSpank"
+	| "Bubbles"
 	| "Buckle"
 	| "CageClose"
 	| "CageEquip"
 	| "CageOpen"
 	| "CageStruggle"
 	| "ChainLong"
+	| "ChainShort"
+	| "Cigarette"
 	| "ClothKnot"
 	| "ClothSlip"
-	| "SciFiEffect"
-	| "SciFiPump"
-	| "SciFiConfigure"
-	| "SciFiBeeps"
-	| "ChainShort"
 	| "CuffsMetal"
-	| "EMLevitate"
-	| "EMDisable"
-	| "FanOpen"
-	| "Hallo"
-	| "FuturisticApply"
-	| "HoodedCloak"
-	| "HydraulicLock"
-	| "HydraulicUnlock"
 	| "Deflation"
 	| "DuctTape"
 	| "DuctTapeRoll"
 	| "DuctTapeRollShort"
-	| "Inflation"
-	| "MetalClose"
-	| "MetalCuffs"
-	| "LeatherStretching1"
-	| "LockLarge"
-	| "LockSmall"
-	| "RopeLong"
-	| "RopeShort"
-	| "Shocks"
-	| "SmackCrop"
-	| "Squeak"
-	| "SqueakyToy"
-	| "Whip1"
-	| "Whip2"
-	| "Sybian"
-	| "Unlock"
-	| "VibrationLong1"
-	| "VibrationLong2"
-	| "VibrationShort"
-	| "VibrationEdgeLow"
-	| "VibrationEdgeMedium"
-	| "VibrationEdgeHigh"
-	| "VibrationTeaseLow"
-	| "VibrationTeaseMedium"
-	| "VibrationMaximum"
-	| "VibrationCooldown"
-	| "Vibrator"
-	| "Wand"
-	| "WandBig"
-	| "WoodenCuffs"
-	| "ZipTie"
-	| "SpankSkin"
-	| "WhipCrack"
-	| "LeverShort"
-	| "Zipper1"
-	| "HighChair"
-	| "AdultBabyHarness"
-	| "BondageBouquet"
-	| "Cigarette"
+	| "EMDisable"
+	| "EMLevitate"
+	| "EnemaFixture"
+	| "FanOpen"
 	| "Flogger"
+	| "FuturisticApply"
+	| "Hallo"
+	| "HighChair"
+	| "HoodedCloak"
+	| "HydraulicLock"
+	| "HydraulicUnlock"
+	| "Inflation"
 	| "LeatherCreak"
 	| "LeatherCreakWithMetal"
+	| "LeatherStretching1"
 	| "LeatherStretchingShort"
 	| "LeatherStretchingWithMetal"
+	| "LeverShort"
+	| "LockerClose"
+	| "LockLarge"
+	| "LockSmall"
+	| "MetalClip"
+	| "MetalClose"
+	| "MetalCuffs"
+	| "MetalShut"
+	| "MetalStraps"
+	| "PlaceBowl"
+	| "PlasticRustle"
 	| "PolyesterWoosh1"
 	| "PolyesterWoosh2"
 	| "PolyesterWooshWithMetal1"
 	| "PolyesterWooshWithMetal2"
 	| "PolyesterWooshWithMetal3"
+	| "Pour"
+	| "PutDownPlastic"
+	| "RopeLong"
+	| "RopeShort"
+	| "SciFiBeeps"
+	| "SciFiConfigure"
+	| "SciFiEffect"
+	| "SciFiPump"
+	| "Shocks"
 	| "Slime"
-	| "SofterCageClose"
-	| "LockerClose"
+	| "SmackCrop"
 	| "SoftCloth1"
 	| "SoftCloth2"
 	| "SoftClothWithMetal1"
 	| "SoftClothWithMetal2"
-	| "TightLeatherStretchWithMetalLong"
-	| "TightLeatherStretch"
-	| "PlasticRustle"
-	| "PlaceBowl"
-	| "MetalStraps"
-	| "MetalShut"
-	| "MetalClip"
+	| "SofterCageClose"
 	| "SoftFurniture"
+	| "SpankSkin"
+	| "Squeak"
+	| "SqueakyToy"
+	| "Sybian"
+	| "TightLeatherStretch"
+	| "TightLeatherStretchWithMetalLong"
+	| "Unlock"
+	| "VibrationCooldown"
+	| "VibrationEdgeHigh"
+	| "VibrationEdgeLow"
+	| "VibrationEdgeMedium"
+	| "VibrationLong1"
+	| "VibrationLong2"
+	| "VibrationMaximum"
+	| "VibrationShort"
+	| "VibrationTeaseLow"
+	| "VibrationTeaseMedium"
+	| "Vibrator"
+	| "Wand"
+	| "WandBig"
+	| "Whip1"
+	| "Whip2"
+	| "WhipCrack"
+	| "WoodenCuffs"
 	| "WoodFurniture"
-	| "PutDownPlastic"
-	| "EnemaFixture"
-;
+	| "Zipper1"
+	| "ZipTie";
 
 type AudioSoundEffect = [sound: AudioEffectName, volume: number];
 
@@ -4520,7 +4566,11 @@ type DrawCanvasCallback = (
 	y: number,
 	alphaMasks?: RectTuple[],
 	maskLayers?: TextureAlphaMask[],
+	transforms?: DrawTransforms,
 ) => void;
+
+/** The layering screen's transformations of a layer */
+type DrawTransforms = Required<Pick<DrawOptions, "TranslationX" | "TranslationY" | "ScaleX" | "ScaleY" | "Rotation">>;
 
 /**
  * A callback function used to draw an image to a canvas
@@ -4613,6 +4663,8 @@ interface DynamicDrawingData<T extends AnimationPersistentData = AnimationPersis
 	drawCanvas: DrawCanvasCallback;
 	drawCanvasBlink: DrawCanvasCallback;
 	AlphaMasks: RectTuple[];
+	/** The layer's transformations; {@link drawCanvas} and {@link drawCanvasBlink} already apply them */
+	Transforms: DrawTransforms;
 	PersistentData: () => T;
 }
 
@@ -4645,9 +4697,61 @@ interface DynamicScriptCallbackData<T extends AnimationPersistentData = Animatio
 
 //#region Infiltration/Pandora
 
+interface InfiltrationMissionStateBase {
+	// Mission: InfiltrationMissionType;
+	Difficulty: 0 | 1 | 2 | 3 | 4;
+	Found: boolean;
+	Fail?: boolean;
+}
+
+interface InfiltrationMissionStateRescue extends InfiltrationMissionStateBase {
+	Mission: "Rescue";
+	Target: "NPC";
+	Name: string;
+	PrivateRoom: boolean;
+}
+
+interface InfiltrationMissionStateKidnap extends InfiltrationMissionStateBase {
+	Mission: "Kidnap";
+	Target: "NPC";
+	Name: string;
+	PrivateRoom: boolean;
+}
+
+interface InfiltrationMissionStateRetrieve extends InfiltrationMissionStateBase {
+	Mission: "Retrieve";
+	Target: InfiltrationObjectListType;
+	Name: string;
+}
+
+interface InfiltrationMissionStateCatBurglar extends InfiltrationMissionStateBase {
+	Mission: "CatBurglar";
+}
+
+interface InfiltrationMissionStateReverseMaid extends InfiltrationMissionStateBase {
+	Mission: "ReverseMaid";
+}
+
+interface InfiltrationMissionStateSteal extends InfiltrationMissionStateBase {
+	Mission: "Steal";
+	Target: InfiltrationObjectListType;
+	Name: string;
+}
+
+type InfiltrationMissionStateType =
+	| InfiltrationMissionStateRescue
+	| InfiltrationMissionStateKidnap
+	| InfiltrationMissionStateRetrieve
+	| InfiltrationMissionStateCatBurglar
+	| InfiltrationMissionStateReverseMaid
+	| InfiltrationMissionStateSteal
+;
+
 type InfiltrationMissionType = "Rescue" | "Kidnap" | "Retrieve" | "CatBurglar" | "ReverseMaid" | "Steal";
 
-type InfiltrationTargetType = "NPC" | "USBKey" | "BDSMPainting" | "GoldCollar" | "GeneralLedger" | "SilverVibrator" | "DiamondRing" | "SignedPhoto" | "PandoraPadlockKeys";
+type InfiltrationObjectListType = "USBKey" | "BDSMPainting" | "GoldCollar" | "GeneralLedger" | "SilverVibrator" | "DiamondRing" | "SignedPhoto" | "PandoraPadlockKeys";
+
+type InfiltrationTargetType = "NPC";
 
 interface InfiltrationMissionTarget {
 	Type: InfiltrationTargetType;
@@ -4832,20 +4936,14 @@ interface CraftingItem extends CraftingPartialItem {
 	/** The name of the item; see {@link Asset.Name}. */
 	Item: AssetName;
 	/**
-	 * The type of the crafted item; only relevant for extended items and should be an empty string otherwise.
-	 * @deprecated superseded by {@link CraftingItem.TypeRecord}. Old type strings can be convert to records via {@link ExtendedItemTypeToRecord}.
-	 * @see {@link ItemProperties.Type}
-	 */
-	Type?: string | null;
-	/**
 	 * An integer (or `null`) representing the item layering priority; see {@link ItemProperties.OverridePriority}.
 	 * @deprecated - superseded by {@link CraftingItem.ItemProperty}
 	 */
 	OverridePriority?: null | number;
 	/**
 	 * A record with a select few (optional) extra item properties:
-	 * * {@link ItemProperties.OverridePriority} in either its record or number form.
-	 * * Properties as specified in {@link ExtendedItemData.baselineProperty}
+	 * - {@link ItemProperties.OverridePriority} in either its record or number form.
+	 * - Properties as specified in {@link ExtendedItemData.baselineProperty}
 	 */
 	ItemProperty: ItemProperties | null;
 	/**
@@ -4906,8 +5004,8 @@ interface CraftingItemSelected {
 	TypeRecord: null | TypeRecord;
 	/**
 	 * A record with a select few (optional) extra item properties:
-	 * * {@link ItemProperties.OverridePriority} in either its record or number form.
-	 * * Properties as specified in {@link ExtendedItemData.baselineProperty}
+	 * - {@link ItemProperties.OverridePriority} in either its record or number form.
+	 * - Properties as specified in {@link ExtendedItemData.baselineProperty}
 	 */
 	ItemProperty: ItemProperties;
 	/** Get or set the `OverridePriority` property of {@link CraftingItemSelected.ItemProperty} */
@@ -5060,8 +5158,8 @@ type HexColor = `#${string}`;
 /**
  * A hexadecimal color code or one of BC's more specialized color literals (which an item may or may not support).
  *
- * * `Default`: Use the default color of the .png without modification
- * * `White`/`Black`/`Asian`: Use skin color specific .png files (used by the body)
+ * - `Default`: Use the default color of the .png without modification
+ * - `White`/`Black`/`Asian`: Use skin color specific .png files (used by the body)
  */
 type BCColor = (
 	"Default"
@@ -5328,7 +5426,8 @@ type ChatRoomMapDirectionWithEmptySpace = "" | "West" | "East" | "North" | "Sout
 type ChatRoomMapDirection = "West" | "East" | "North" | "South";
 
 type ChatRoomMapObjectType = (
-	"FloorDecoration"
+	| "EmptySpace"
+	| "FloorDecoration"
 	| "FloorDecorationThemed"
 	| "FloorDecorationParty"
 	| "FloorDecorationCamping"
@@ -5346,6 +5445,8 @@ type ChatRoomMapObjectType = (
 	| "WallPath"
 	| "Bedroom"
 	| "LivingRoom"
+	| "Kitchen"
+	| "Office"
 	| "School"
 	| "ABDL"
 	| "Bathroom"
@@ -5353,14 +5454,22 @@ type ChatRoomMapObjectType = (
 
 type ChatRoomMapTileType = "Floor" | "FloorExterior" | "Wall" | "Water";
 
+/** A map doodad stored on the account, such as `Object:100`. */
+type MapDoodadRef = `${"Tile" | "Object" | "Effect"}:${number}`;
+
 interface ChatRoomMapDoodad {
+	DoodadType?: "Tile" | "Object" | "Effect";
 	Type: string;
 	ID: number;
 	Unique?: boolean;
 	Name?: string;
+	/** On load, this doodad is replaced by another doodad with this id */
+	DeprecatedID?: number;
+	/** Palette image name. Only shown in the editor. */
+	PaletteImage?: string;
 }
 
-/** {@link ChatRoomMapViewIsChatRoomMapPhysicalElement}  */
+/** {@link MapDoodadIsPhysicalElement}  */
 interface ChatRoomMapPhysicalElement extends ChatRoomMapDoodad {
 	Style: string;
 	Rotation?: number;
@@ -5378,25 +5487,63 @@ interface ChatRoomMapPhysicalElement extends ChatRoomMapDoodad {
 	CanPlaceOnFloors?: boolean; // default true
 	CanPlaceOnWalls?: boolean; // ex. Banners
 	CanPlaceInWalls?: boolean; // ex. Doors
+	/** Its picture joins up with the same objects next to it, so admins can't turn or size it */
+	JoinsNeighbors?: boolean;
 }
 
-/** {@link ChatRoomMapViewIsChatRoomMapTile}  */
+/** {@link MapDoodadIsTile}  */
 interface ChatRoomMapTile extends ChatRoomMapPhysicalElement {
 	Type: ChatRoomMapTileType;
 }
 
-/** {@link ChatRoomMapViewIsChatRoomMapObject}  */
+/** {@link MapDoodadIsObject}  */
 interface ChatRoomMapObject extends ChatRoomMapPhysicalElement {
 	Type: ChatRoomMapObjectType;
 	Exit?: boolean;
+	/** The config a cell gets when this object is placed there */
+	DefaultObjectConfig?: ChatRoomMapObjectConfig;
 	AssetGroup?: AssetGroupItemName;
 	AssetName?: AssetName;
 	IsVisible?: () => boolean;
 	BuildImageName?: (X: number, Y: number) => string;
+	/** The color the object is drawn in, the way clothes are colored, opacity included (#RRGGBBAA) */
+	BuildImageColor?: (X: number, Y: number) => HexColor | null;
 	OnClick?: (x: number, y: number) => void;
+	/** Whether admins can make the object a tether point, where leashes can be tied */
+	CanBeTetherPoint?: boolean;
+	/** Whether admins can turn, size and color the object once placed; default true */
+	CanBeCustomized?: boolean;
+	/**
+	 * The layers the object is drawn with, in order, on top of each other.
+	 * Objects that don't list any get a single plain layer when the map data is loaded.
+	 * The plain `<ImageName>.png` is still required for older clients and the object palette.
+	 */
+	Layers?: readonly ChatRoomMapLayer[];
+	/**
+	 * Where admins can put a decal on the object, in pixels of its image: `[left, top, width, height]`.
+	 * The decal is fitted and centered in it, and turns and sizes with the object. Any decal of {@link AssetGetDecals} can go there.
+	 */
+	DecalArea?: RectTuple;
 }
 
-/** {@link ChatRoomMapViewIsChatRoomMapEffect}  */
+/**
+ * A layer of a map object, loaded from `<ImageName>_<Name>.png`, or from the plain `<ImageName>.png` when its name is empty.
+ * Colorable layers must be grayscale images.
+ */
+type ChatRoomMapLayer = {
+	Name: string;
+	IsColorable: true;
+	/** The color of the layer when an admin didn't color it */
+	DefaultColor: HexColor;
+} | {
+	Name: string;
+	IsColorable: false;
+};
+
+/** A layer of a map object that admins can color */
+type ChatRoomMapColorableLayer = Extract<ChatRoomMapLayer, { IsColorable: true }>;
+
+/** {@link MapDoodadIsEffect}  */
 interface ChatRoomMapEffectStaticLighting extends ChatRoomMapDoodad {
 	Type: "StaticLighting";
 	TypeId: 1,
@@ -5406,14 +5553,39 @@ interface ChatRoomMapEffectStaticLighting extends ChatRoomMapDoodad {
 	Color: [r: number, g: number, b: number, a: number];
 }
 
-type ChatRoomMapObjectConfig = ChatRoomMapSignObjectConfig
+type ChatRoomMapObjectConfig = ChatRoomMapSignObjectConfig | ChatRoomMapTeleporterObjectConfig | ChatRoomMapTetherObjectConfig
 
 interface ChatRoomMapSignObjectConfig {
 	Type: "Sign";
 	Text: string;
 }
 
+interface ChatRoomMapTeleporterObjectConfig {
+	Type: "Teleporter";
+	Destination?: ChatRoomMapPos;
+	Color?: HexColor;
+	/** Characters can stand together on the pad and the tiles around it */
+	Shared?: boolean;
+}
 
+/** Makes the object a tether point */
+interface ChatRoomMapTetherObjectConfig {
+	Type: "Tether";
+}
+
+/** A leash tied to a tether point on the map */
+interface ChatRoomMapTether {
+	/** The position of the tether point */
+	Position: ChatRoomMapPos;
+	/** The member who tied the leash */
+	MemberNumber: number;
+}
+
+/** A color format copied from a map object, which can be pasted on other objects with the same ID */
+interface ChatRoomMapColorFormat {
+	ObjectID: number;
+	Colors: NonNullable<ChatRoomMapObjectSettings["Colors"]>;
+}
 
 /**
  * A union of all effect types.
@@ -5552,12 +5724,4 @@ interface LoadedCachedImage<T extends { width: number, height: number }> extends
 	data: T;
 }
 
-declare namespace BrowserCache {
-	interface FetchOptions {
-		/**
-		 * Called if a background revalidation finds a newer version of the resource.
-		 * The response is fresh and unconsumed.
-		 */
-		onUpdate?(response: Response): void;
-	}
-}
+type ScreenCheckCallback = (module: ModuleType, screen: ScreenName) => boolean;

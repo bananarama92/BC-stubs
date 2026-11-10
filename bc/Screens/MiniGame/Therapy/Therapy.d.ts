@@ -1,3 +1,15 @@
+declare var TherapyBackground: string;
+/** @type {null | NPCCharacter | PlayerCharacter} */
+declare var TherapyCharacterLeft: null | NPCCharacter | PlayerCharacter;
+/** @type {null | NPCCharacter} */
+declare var TherapyCharacterRight: null | NPCCharacter;
+declare var TherapyMoves: number[];
+declare var TherapyGenerateMoveTimer: number;
+declare var TherapyStress: number;
+/**
+ * Loads the therapy mini game and sets the difficulty. The game is a little faster on mobile since its easier.
+ * @type {ScreenLoadHandler}
+ */
 declare function TherapyLoad(): Promise<void>;
 /**
  * Runs the therapy mini game.
@@ -25,12 +37,8 @@ declare function TherapyClick(): void;
  * @returns {void} - Nothing
  */
 declare function TherapyMouseDown(): void;
+/**
+ * Handles the key press in the therapy mini game, the C cheat key reduces the patient stress
+ * @type {KeyboardEventListener}
+ */
 declare function TherapyKeyDown(event: KeyboardEvent): boolean;
-declare var TherapyBackground: string;
-/** @type {null | NPCCharacter | PlayerCharacter} */
-declare var TherapyCharacterLeft: null | NPCCharacter | PlayerCharacter;
-/** @type {null | NPCCharacter} */
-declare var TherapyCharacterRight: null | NPCCharacter;
-declare var TherapyMoves: number[];
-declare var TherapyGenerateMoveTimer: number;
-declare var TherapyStress: number;

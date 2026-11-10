@@ -1,13 +1,133 @@
+declare var FriendListBackground: string;
+/** @deprecated @type {number[]} */
+declare var FriendListConfirmDelete: number[];
+/** @type {FriendListReturn<any> | null} */
+declare var FriendListReturn: FriendListReturn<any> | null;
+/** @type {FriendListModes} */
+declare var FriendListMode: FriendListModes;
+declare var FriendListModeIndex: number;
+/** @type {IFriendListBeepLogMessage[]} */
+declare var FriendListBeepLog: IFriendListBeepLogMessage[];
+/** @type {Set<number>} */
+declare let FriendListOnlineFriends: Set<number>;
+/** @type {number} MemberNumber of the player to send beep to */
+declare let FriendListBeepTarget: number;
+/** @type {string | null} */
+declare let FriendListBeepChatKey: string | null;
+declare var FriendListBeepShowRoom: boolean;
+/** @type {FriendListSortingMode} */
+declare let FriendListSortingMode: FriendListSortingMode;
+/** @type {FriendListSortingDirection} */
+declare let FriendListSortingDirection: FriendListSortingDirection;
+/** @type {IntersectionObserver | null} */
+declare let FriendListBeepObserver: IntersectionObserver | null;
+/** @type {number[]} */
+declare let FriendListBeepChatIndices: number[];
+/** @type {BeepMessageReplyTo | null} */
+declare let FriendListBeepReplyTarget: BeepMessageReplyTo | null;
+/** @type {HTMLElement | null} */
+declare let FriendListBeepReactionPickerEl: HTMLElement | null;
+/** Display name of the current beep chat partner (set when chat view opens). */
+declare let FriendListBeepChatInterlocutorName: string;
+declare const FriendListBeepMetadataIndicator = "\uF124";
+/** Server beep messages are capped at this length, including the metadata trailer. */
+declare const FriendListBeepMessageLimit = 1000;
+/**
+ * Resolves once every OnlineFriends query queued via {@link FriendListMarkNotReady} has been applied.
+ * Starts settled so opening a chat with no request does not wait.
+ * @type {{ promise: Promise<void>, resolve: (() => void) | null, pending: number }}
+ */
+declare var FriendListReady: {
+    promise: Promise<void>;
+    resolve: (() => void) | null;
+    pending: number;
+};
+/** @type {Record<string, FriendListActionDefinition>} */
+declare var FriendListActionDefinitions: Record<string, FriendListActionDefinition>;
+/** @satisfies {{ [key in (ServerChatRoomSpace | "Private")]: FriendListIcon }} */
+declare const FriendListIconMapping: {
+    "": {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    M: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    X: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    Asylum: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+    Private: {
+        src: string;
+        tooltipKey: string;
+        sortKey: string;
+    };
+};
+/**
+ * Note that the `Caption` field is only initialized in {@link FriendListLoad}..
+ * @type {Record<FriendListRelationType, { Caption?: string, Icon: string, SortingPriority: number }>}
+ */
+declare const FriendListTypeData: Record<FriendListRelationType, {
+    Caption?: string;
+    Icon: string;
+    SortingPriority: number;
+}>;
+declare const FriendListAutoRefresh: {
+    interval: number;
+    nextRefresh: number;
+};
+declare const FriendListIDs: Readonly<{
+    root: "friend-list-subscreen";
+    navBar: "friend-list-nav-bar";
+    header: "friend-list-header";
+    friendList: "friend-list";
+    friendListTable: "friend-list-table";
+    navButtons: "friend-list-buttons";
+    modeTitle: "friend-list-mode-title";
+    searchInput: "friend-list-search-input";
+    btnAutoRefresh: "friend-list-button-auto-refresh";
+    btnAddFriend: "friend-list-button-add-friend";
+    btnRefresh: "friend-list-button-refresh";
+    btnPrev: "friend-list-button-prev";
+    btnNext: "friend-list-button-next";
+    btnExit: "friend-list-button-exit";
+    btnResetSorting: "friend-list-reset-sorting";
+    beepList: "friend-list-beep-dialog";
+    beepTextArea: "friend-list-beep-textarea";
+    beepInputRow: "friend-list-beep-chat-input-row";
+    beepMessages: "friend-list-beep-chat-log";
+    beepChatWrapper: "friend-list-beep-chat-log-wrapper";
+    beepScrollBtn: "friend-list-beep-scroll-btn";
+    beepUnreadBadge: "friend-list-beep-unread-badge";
+    beepNewMessageDivider: "friend-list-beep-new-message-divider";
+    beepReplyPreview: "friend-list-beep-reply-preview-row";
+}>;
+/** @type {ScreenLoadHandler} */
 declare function FriendListLoad(): Promise<void>;
-declare function FriendListResize(load: boolean): void;
-declare function FriendListRun(time: number): void;
+/** @type {ScreenResizeHandler} */
+declare function FriendListResize(): void;
+/** @type {ScreenRunHandler} */
+declare function FriendListRun(): void;
+/** @type {ScreenDrawHandler} */
 declare function FriendListDraw(): void;
-declare function FriendListClick(event: PointerEvent): void;
+/** @type {MouseEventListener} */
+declare function FriendListClick(): void;
+/** @type {KeyboardEventListener} */
 declare function FriendListKeyDown(event: KeyboardEvent): boolean;
+/** @type {ScreenUnloadHandler} */
 declare function FriendListUnload(): void;
 /**
  * @satisfies {ScreenExitHandler}
- * @return {SafePromise<void>}
+ * @returns {SafePromise<void>}
  */
 declare function FriendListExit(): SafePromise<void>;
 /**
@@ -87,6 +207,10 @@ declare function FriendListBeepLastMessage(messageIndices: number[]): IFriendLis
  * @returns {string}
  */
 declare function FriendListBeepRoomCaption(beep: IFriendListBeepLogMessage): string;
+/** @type {Set<string>} */
+declare var FriendListBeepReactionEmojis: Set<string>;
+/** @type {Record<string, FriendListBeepActionDefinition>} */
+declare var FriendListBeepActionDefinitions: Record<string, FriendListBeepActionDefinition>;
 /**
  * @param {FriendListBeepActionDefinition} action
  * @returns {boolean} Whether the action was registered successfully
@@ -132,6 +256,8 @@ declare function FriendListBeepSnippetFromMessage(formattedText: string, parsed:
 declare function FriendListBeepStartReply(beepIndex: number): void;
 declare function FriendListBeepCancelReply(): void;
 declare function FriendListBeepRenderReplyPreview(): void;
+/** @type {((ev: PointerEvent) => void) | null} */
+declare let FriendListBeepReactionPickerPointerDownListener: ((ev: PointerEvent) => void) | null;
 declare function FriendListBeepDetachReactionPickerDismiss(): void;
 declare function FriendListBeepCloseReactionPicker(): void;
 /**
@@ -362,122 +488,3 @@ declare function FriendListDelete(MemberNumber: number): void;
  * @param {string | undefined} room The room to search for
  */
 declare function FriendListChatSearch(room: string | undefined): Promise<void>;
-declare var FriendListBackground: string;
-/** @deprecated @type {number[]} */
-declare var FriendListConfirmDelete: number[];
-/** @type {FriendListReturn<any> | null} */
-declare var FriendListReturn: FriendListReturn<any> | null;
-/** @type {FriendListModes} */
-declare var FriendListMode: FriendListModes;
-declare var FriendListModeIndex: number;
-/** @type {IFriendListBeepLogMessage[]} */
-declare var FriendListBeepLog: IFriendListBeepLogMessage[];
-/** @type {Set<number>} */
-declare let FriendListOnlineFriends: Set<number>;
-/** @type {number} MemberNumber of the player to send beep to */
-declare let FriendListBeepTarget: number;
-/** @type {string | null} */
-declare let FriendListBeepChatKey: string | null;
-declare var FriendListBeepShowRoom: boolean;
-/** @type {FriendListSortingMode} */
-declare let FriendListSortingMode: FriendListSortingMode;
-/** @type {FriendListSortingDirection} */
-declare let FriendListSortingDirection: FriendListSortingDirection;
-/** @type {IntersectionObserver | null} */
-declare let FriendListBeepObserver: IntersectionObserver | null;
-/** @type {number[]} */
-declare let FriendListBeepChatIndices: number[];
-/** @type {BeepMessageReplyTo | null} */
-declare let FriendListBeepReplyTarget: BeepMessageReplyTo | null;
-/** @type {HTMLElement | null} */
-declare let FriendListBeepReactionPickerEl: HTMLElement | null;
-/** Display name of the current beep chat partner (set when chat view opens). */
-declare let FriendListBeepChatInterlocutorName: string;
-declare const FriendListBeepMetadataIndicator: "\uF124";
-/** Server beep messages are capped at this length, including the metadata trailer. */
-declare const FriendListBeepMessageLimit: 1000;
-/**
- * Resolves once every OnlineFriends query queued via {@link FriendListMarkNotReady} has been applied.
- * Starts settled so opening a chat with no request does not wait.
- * @type {{ promise: Promise<void>, resolve: (() => void) | null, pending: number }}
- */
-declare var FriendListReady: {
-    promise: Promise<void>;
-    resolve: (() => void) | null;
-    pending: number;
-};
-/** @type {Record<string, FriendListActionDefinition>} */
-declare var FriendListActionDefinitions: Record<string, FriendListActionDefinition>;
-/** @satisfies {{ [key in (ServerChatRoomSpace | "Private")]: FriendListIcon }} */
-declare const FriendListIconMapping: {
-    "": {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-    M: {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-    X: {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-    Asylum: {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-    Private: {
-        src: string;
-        tooltipKey: string;
-        sortKey: string;
-    };
-};
-/**
- * Note that the `Caption` field is only initialized in {@link FriendListLoad}..
- * @type {Record<FriendListRelationType, { Caption?: string, Icon: string, SortingPriority: number }>}
- */
-declare const FriendListTypeData: Record<FriendListRelationType, {
-    Caption?: string;
-    Icon: string;
-    SortingPriority: number;
-}>;
-declare namespace FriendListAutoRefresh {
-    let interval: number;
-    let nextRefresh: number;
-}
-declare const FriendListIDs: Readonly<{
-    root: "friend-list-subscreen";
-    navBar: "friend-list-nav-bar";
-    header: "friend-list-header";
-    friendList: "friend-list";
-    friendListTable: "friend-list-table";
-    navButtons: "friend-list-buttons";
-    modeTitle: "friend-list-mode-title";
-    searchInput: "friend-list-search-input";
-    btnAutoRefresh: "friend-list-button-auto-refresh";
-    btnAddFriend: "friend-list-button-add-friend";
-    btnRefresh: "friend-list-button-refresh";
-    btnPrev: "friend-list-button-prev";
-    btnNext: "friend-list-button-next";
-    btnExit: "friend-list-button-exit";
-    btnResetSorting: "friend-list-reset-sorting";
-    beepList: "friend-list-beep-dialog";
-    beepTextArea: "friend-list-beep-textarea";
-    beepInputRow: "friend-list-beep-chat-input-row";
-    beepMessages: "friend-list-beep-chat-log";
-    beepChatWrapper: "friend-list-beep-chat-log-wrapper";
-    beepScrollBtn: "friend-list-beep-scroll-btn";
-    beepUnreadBadge: "friend-list-beep-unread-badge";
-    beepNewMessageDivider: "friend-list-beep-new-message-divider";
-    beepReplyPreview: "friend-list-beep-reply-preview-row";
-}>;
-/** @type {Set<string>} */
-declare var FriendListBeepReactionEmojis: Set<string>;
-/** @type {Record<string, FriendListBeepActionDefinition>} */
-declare var FriendListBeepActionDefinitions: Record<string, FriendListBeepActionDefinition>;
-/** @type {((ev: PointerEvent) => void) | null} */
-declare let FriendListBeepReactionPickerPointerDownListener: ((ev: PointerEvent) => void) | null;

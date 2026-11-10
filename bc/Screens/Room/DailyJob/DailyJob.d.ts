@@ -1,8 +1,30 @@
+declare var DailyJobBackground: string;
+/** @type {null | NPCCharacter} */
+declare var DailyJobOpponent: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppyMistress: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppy1: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppy2: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppy3: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobPuppy4: null | NPCCharacter;
+/** @type {null | NPCCharacter} */
+declare var DailyJobDojoTeacher: null | NPCCharacter;
 /**
  * Triggered when a player is fully restrained from a daily job dialog
  * @returns {void} - Nothing
  */
 declare function DailyJobPlayerFullRestrain(): void;
+type DailyJobPuppyNums = {
+    "0": PlayerCharacter;
+    "1": NPCCharacter;
+    "2": NPCCharacter;
+    "3": NPCCharacter;
+    "4": NPCCharacter;
+};
 /**
  * @typedef {{ "0": PlayerCharacter, "1": NPCCharacter, "2": NPCCharacter, "3": NPCCharacter, "4": NPCCharacter }} DailyJobPuppyNums
  */
@@ -13,6 +35,10 @@ declare function DailyJobPlayerFullRestrain(): void;
  * @returns {DailyJobPuppyNums[Num]} - The generated puppy girl
  */
 declare function DailyJobPuppyLoad<Num extends keyof DailyJobPuppyNums>(GirlNum: Num): DailyJobPuppyNums[Num];
+/**
+ * Loads the daily job room screen characters. This changes based on the current job being performed.
+ * @type {ScreenLoadHandler}
+ */
 declare function DailyJobLoad(): Promise<void>;
 /**
  * Runs and draws the daily job room. Empty as daily jobs are ran from other rooms.
@@ -46,9 +72,10 @@ declare function DailyJobSubSearchIsActive(): boolean;
 declare function DailyJobKidnapStart(): void;
 /**
  * Triggered at the end of the kidnap daily job fight mini-game
+ * @param {boolean} victory - Whether the player won the encounter
  * @returns {SafePromise<void>}
  */
-declare function DailyJobKidnapEnd(): SafePromise<void>;
+declare function DailyJobKidnapEnd(victory: boolean): SafePromise<void>;
 /**
  * Triggered when the kidnap daily job fight mini-game is won. Sends the player back to the main hall.
  * @returns {void} - Nothing
@@ -94,25 +121,3 @@ declare function DailyJobDojoGameStart(): void;
  * @returns {SafePromise<void>}
  */
 declare function DailyJobDojoGameEnd(): SafePromise<void>;
-declare var DailyJobBackground: string;
-/** @type {null | NPCCharacter} */
-declare var DailyJobOpponent: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppyMistress: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppy1: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppy2: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppy3: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobPuppy4: null | NPCCharacter;
-/** @type {null | NPCCharacter} */
-declare var DailyJobDojoTeacher: null | NPCCharacter;
-type DailyJobPuppyNums = {
-    "0": PlayerCharacter;
-    "1": NPCCharacter;
-    "2": NPCCharacter;
-    "3": NPCCharacter;
-    "4": NPCCharacter;
-};

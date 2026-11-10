@@ -1025,7 +1025,8 @@
             "GIBeret": 48,
             "NPCBalloon": 49,
             "FeatheredHeadpiece": 50,
-            "WitchHat": 51
+            "WitchHat": 51,
+            "FrogHat": 52
         }
     },
     "Head": {
@@ -1149,7 +1150,11 @@
             "InflatableDress": 78,
             "SteelBelt": 79,
             "PawPaddedPetsuitArms": 80,
-            "StrappedPetsuitArms": 81
+            "StrappedPetsuitArms": 81,
+            "Handraisedbar": 82,
+            "PetUpperSuit": 83,
+            "RestraintPillow": 84,
+            "SimpleRopeBondage": 85
         }
     },
     "ItemBoots": {
@@ -1332,7 +1337,18 @@
             "LongBag": 76,
             "Stroller": 77,
             "BirdCage": 78,
-            "CardBoardBox": 79
+            "CardBoardBox": 79,
+            "BarStool": 80,
+            "BoxingBag": 81,
+            "GiantJar": 82,
+            "GiantStuffedToy": 83,
+            "GlassJar": 84,
+            "LatexbeltBed": 85,
+            "LegSpreadDisplayStand": 86,
+            "Seizaisu": 87,
+            "ShackledOneBarPrison": 88,
+            "TrashCan": 89,
+            "UnicornStuffedToy": 90
         }
     },
     "ItemEars": {
@@ -1482,7 +1498,12 @@
             "R18Baton": 86,
             "Book": 87,
             "Rattle": 88,
-            "ToyHammer": 89
+            "ToyHammer": 89,
+            "Cat": 90,
+            "Dog": 91,
+            "Panda": 92,
+            "Penguin": 93,
+            "Unicorn": 94
         }
     },
     "ItemHands": {
@@ -1549,7 +1570,8 @@
             "Kigu2Hood": 35,
             "AsylumBlindfold": 36,
             "HypnoticVisor": 37,
-            "CybertechMask": 38
+            "CybertechMask": 38,
+            "PantiesMask": 39
         }
     },
     "ItemHood": {
@@ -1616,7 +1638,8 @@
             "HalloIII": 58,
             "TransparentLatexHood": 59,
             "CybertechMask": 60,
-            "LatexHood": 61
+            "LatexHood": 61,
+            "PantiesMask": 62
         }
     },
     "ItemLegs": {
@@ -1698,7 +1721,13 @@
             "WoodenSign": 38,
             "Plushies": 39,
             "Plushie": 40,
-            "MiniDolls": 41
+            "MiniDolls": 41,
+            "Cat": 42,
+            "Dog": 43,
+            "Panda": 44,
+            "Penguin": 45,
+            "PumpkinPot": 46,
+            "Unicorn": 47
         }
     },
     "ItemMouth": {
@@ -1917,7 +1946,8 @@
             "BishopGag": 99,
             "PumpkinHarnessGag": 100,
             "BallGag2": 101,
-            "PacifierClip": 102
+            "PacifierClip": 102,
+            "ShapedMouthCage": 103
         }
     },
     "ItemMouth3": {
@@ -2022,7 +2052,8 @@
             "BishopGag": 96,
             "PumpkinHarnessGag": 97,
             "BallGag2": 98,
-            "PacifierClip": 99
+            "PacifierClip": 99,
+            "ShapedMouthCage": 100
         }
     },
     "ItemNeck": {
@@ -2227,7 +2258,8 @@
             "FemPelvisHarness": 29,
             "LatexDiaper": 30,
             "UntrainersThin": 31,
-            "WombTattoos": 32
+            "WombTattoos": 32,
+            "FortuneChastityBelt": 33
         }
     },
     "ItemScript": {
@@ -2277,7 +2309,10 @@
             "FullBodyStraps": 35,
             "Movableglasscabinet": 36,
             "RestraintSet": 37,
-            "TentacleSuit": 38
+            "TentacleSuit": 38,
+            "FullBodyLeatherHarness": 39,
+            "ServingTray": 40,
+            "WoodenSign": 41
         }
     },
     "ItemTorso2": {
@@ -2321,7 +2356,10 @@
             "FullBodyStraps": 35,
             "Movableglasscabinet": 36,
             "RestraintSet": 37,
-            "TentacleSuit": 38
+            "TentacleSuit": 38,
+            "FullBodyLeatherHarness": 39,
+            "ServingTray": 40,
+            "WoodenSign": 41
         }
     },
     "ItemVulva": {
@@ -2499,7 +2537,9 @@
             "PlantNecklace": 25,
             "NecklaceRoseBallGag": 26,
             "PearlNecklace2": 27,
-            "TriskelionNecklace": 28
+            "TriskelionNecklace": 28,
+            "InitialLocket": 29,
+            "PhoenixNecklace": 30
         }
     },
     "Nipples": {
@@ -3110,7 +3150,12 @@
             "LMF": 40,
             "VelvetBunny": 41,
             "BFPin": 42,
-            "CTSimplified": 43
+            "CTSimplified": 43,
+            "DisciplineCorner": 44,
+            "FaircloughManor": 45,
+            "MansionValentine": 46,
+            "SADollhouse": 47,
+            "TheOddRoom": 48
         }
     }
 }

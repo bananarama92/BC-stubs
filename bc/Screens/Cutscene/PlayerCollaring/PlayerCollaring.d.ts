@@ -1,3 +1,18 @@
+declare var PlayerCollaringBackground: string;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringMistress: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringMistressLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringMistressRight: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringGirlLeft: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var PlayerCollaringGirlRight: NPCCharacter;
+/**
+ * Loads the Player collaring cutscene by creating the random NPCs and setting the stage
+ * @type {ScreenLoadHandler}
+ */
 declare function PlayerCollaringLoad(): Promise<void>;
 /**
  * Runs and draws the player collaring cutscene
@@ -13,14 +28,3 @@ declare function PlayerCollaringClick(): void;
  * @returns {SafePromise<void>}
  */
 declare function PlayerCollaringReturnToMistress(): SafePromise<void>;
-declare var PlayerCollaringBackground: string;
-/** @type {NPCCharacter} */
-declare var PlayerCollaringMistress: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var PlayerCollaringMistressLeft: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var PlayerCollaringMistressRight: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var PlayerCollaringGirlLeft: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var PlayerCollaringGirlRight: NPCCharacter;

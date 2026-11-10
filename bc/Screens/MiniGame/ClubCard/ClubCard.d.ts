@@ -1,3 +1,157 @@
+declare var ClubCardBackground: string;
+declare var ClubCardColor: string[];
+declare var ClubCardFameTextColor: string;
+declare var ClubCardMoneyTextColor: string;
+/** @type {Character} */
+declare var ClubCardOpponent: Character;
+/** @type {number[]} */
+declare var ClubCardOpponentDeck: number[];
+/** @type {null | ClubCard} */
+declare var ClubCardReward: null | ClubCard;
+/** @type {boolean} */
+declare var ClubCardInspection: boolean;
+/** @type {boolean} */
+declare var ClubCardOptionSelection: boolean;
+/** @type {boolean} */
+declare var ClubCardGameEnded: boolean;
+/**
+ *  The variable allows to capture the mouse hovering over the card from the handler inside the ClubCardRenderCard function.
+ * @type {null | ClubCard}
+ */
+declare var ClubCardHover: null | ClubCard;
+/**
+ * Variable through which the current card selected by the player is rendered as a large card.
+ * @type {null | ClubCard}
+ */
+declare var ClubCardFocus: null | ClubCard;
+/** @type {null | ClubCard} */
+declare var ClubCardFocusAI: null | ClubCard;
+declare var ClubCardTurnIndex: number;
+declare var ClubCardTurnCardPlayed: number;
+declare var ClubCardTurnEndDraw: boolean;
+declare var ClubCardFameGoal: number;
+/** @type {ClubCardPopupType | null} */
+declare var ClubCardPopup: ClubCardPopupType | null;
+/** @type {null | ClubCard} */
+declare var ClubCardSelection: null | ClubCard;
+/** @type {null | ClubCard} */
+declare var ClubCardPending: null | ClubCard;
+/** @type {null | number} */
+declare var ClubCardTierSelection: null | number;
+declare var ClubCardLevelLimit: number[];
+declare var ClubCardLevelCost: number[];
+declare var ClubCardLiabilityLimit: number[];
+/** @type {ClubCardPlayer[]} */
+declare var ClubCardPlayer: ClubCardPlayer[];
+declare var ClubCardOnlinePlayerMemberNumber1: number;
+declare var ClubCardOnlinePlayerMemberNumber2: number;
+/** @type {ClubCardDefaultDecks} */
+declare var ClubCardDefaultSelection: ClubCardDefaultDecks;
+declare var ClubCardUsePrecon: boolean;
+/**
+ * Counter to ensure unique ID incrementation.
+ * It is used globally to prevent ID duplication.
+ */
+declare let ClubCardUniqueIDCounter: number;
+/**
+ * String for a random tier 1 card name. Tier 1 cards have no RequiredLevel or RequiredLevel <= 1
+ * @type {string}
+ */
+declare let ClubCardRandomCardName: string;
+/**
+ * Variable to check if the code associated with animations will work or if it will be disabled.
+ * @type {boolean}
+ */
+declare let ClubCardIsAnimationOn: boolean;
+/**
+ * Stores active card animations, updated each frame in ClubCardUpdateCardAnimations().
+ * @type {ClubCardActiveAnimation[]}
+ */
+declare let ClubCardActiveAnimations: ClubCardActiveAnimation[];
+declare const ClubCardFocusPosition: {
+    x: number;
+    y: number;
+    w: number;
+};
+declare const ClubCardPendingPosition: {
+    x: number;
+    y: number;
+    w: number;
+};
+declare const ClubCardDiscardPosition: {
+    x: number;
+    y: number;
+    w: number;
+};
+declare var ClubCardLogScroll: boolean;
+/**
+ * Storage for all processed and displayed log messages
+ * @type {ClubCardMessage[]}
+ */
+declare let ClubCardLog: ClubCardMessage[];
+/**
+ * Temporary buffer used for rendering messages before final log update
+ * @type {ClubCardMessage[]}
+ */
+declare let ClubCardRenderLog: ClubCardMessage[];
+/**
+ * Message storage to accumulate messages before processing and sending
+ * @type {ClubCardMessage[]}
+ */
+declare let ClubCardMessageStorage: ClubCardMessage[];
+declare const ClubCardMessageType: Readonly<{
+    STARTTURNINFO: "StartTurnInfo";
+    STARTTURNEVENT: "StartTurnEvent";
+    CARDEFFECT: "CardsEffect";
+    KNOTEVENT: "KnotEvent";
+    TURNENDEFFECT: "TurnEndEffect";
+    FAMEMONEYINFO: "FameMoneyInfo";
+    VICTORYINFO: "VictoryInfo";
+    ACTIONSEPARATOR: "ActionSeparator";
+    PREREQUISTITE: "Prerequisite";
+    ACTION: "Actions";
+    SYSTEM: "SystemMessage";
+    PLAYERSMESSAGE: "PlayersMessage";
+    PLAYERSDISCONNECTED: "PlayersDisconnected";
+}>;
+declare const ClubCardImmediateMessageTypes: ("ActionSeparator" | "Actions" | "PlayersDisconnected" | "PlayersMessage" | "Prerequisite" | "SystemMessage")[];
+declare const ClubCardStartTurnType: Readonly<{
+    PLAYCARD: "PlayCard";
+    DRAWENDTURN: "DrawAndEndTurn";
+    BANKRUPT: "Bankrupt";
+    UPGRADELEVEL: "UpgradeLevel";
+    ENDTURN: "EndTurn";
+}>;
+/**
+ * Keys for filling in the function parameters ClubCardMessageAdd
+ * @satisfies {Record<ClubCardPlaceholderKeysType, ClubCardPlaceholderKeysType>}
+ */
+declare const ClubCardPlaceholderKeys: Readonly<{
+    MONEYLABEL: "MONEYLABEL";
+    FAMELABEL: "FAMELABEL";
+    AMOUNT: "AMOUNT";
+    CARDNAME: "CARDNAME";
+    MONEYAMOUNT: "MONEYAMOUNT";
+    FAMEAMOUNT: "FAMEAMOUNT";
+    TURNNUMBER: "TURNNUMBER";
+    PLAYERNAME: "PLAYERNAME";
+}>;
+/** @type {boolean} Variable to check if the start function of the turn has already been called or not. */
+declare let ClubCardIsStartTurn: boolean;
+/**
+ * The card definitions
+ *
+ * The BeforeTurnEnd hooks are run before regular fame and money are calculated and
+ * are a good place to remove cards so they don't add fame/money that turn. Most
+ * cards should prefer this hook instead of AfterTurnEnd (including ones that just
+ * add extra money / fame).
+ *
+ * The AfterTurnEnd hooks run after this, and can be used to adjust the total amount
+ * of money / fame gained that turn.
+ *
+ * @type {ClubCard[]}
+ */
+declare var ClubCardList: ClubCard[];
 /**
  * Returns TRUE if the current game is online
  * @returns {boolean} - Nothing
@@ -33,8 +187,8 @@ declare function ClubCardSendRequestResetGame(): void;
  * Adds a message to the storage for processing later.
  * Sends messages immediately if their type matches the ClubCardImmediateMessageTypes array.
  *
- * @param {string} TextGetKey - Localization key
  * @param {ClubCardMessageType} MessageType - Message type (constant)
+ * @param {string} TextGetKey - Localization key
  * @param {Record<string, any>} placeholders - Dynamic data for text replacement
  * @param {ClubCardPlayer|null} TargetPlayer - The source player
  */
@@ -86,11 +240,11 @@ declare function ClubCardMessagesMergeSteal(stealMoneyMessages: Array<{
  */
 declare function ClubCardMessageGetHTML(message: ClubCardMessage): (string | HTMLElement)[];
 /**
-   * Updated the text by mask, for InnerHTML
-   * The function finds the necessary words from the arrays and adds color labels to them.
-   * @param {String} text -Normal Card Text
-   * @returns {String} -  Updated for InnerHTML Card Text
-   */
+ * Updated the text by mask, for InnerHTML
+ * The function finds the necessary words from the arrays and adds color labels to them.
+ * @param {string} text -Normal Card Text
+ * @returns {string} -  Updated for InnerHTML Card Text
+ */
 declare function ClubCardGetFormatTextForInnerHTML(text: string): string;
 /**
  * Creates a copy of a card from the ClubCardList based on its name.
@@ -123,7 +277,7 @@ declare function ClubCardGenerateUniqueID(cardID: number): string;
  * @param {string|undefined} [options.Button2] - The label of the second button
  * @param {string|undefined} [options.Function1] - The function of the first button
  * @param {string|undefined} [options.Function2] - The function of the second button
- * @param {ClubCard[] | undefined} [options.CardsPool=undefined]
+ * @param {ClubCard[] | undefined} [options.CardsPool]
  * @returns {void} - Nothing
  */
 declare function ClubCardCreatePopup(Mode: ClubCardPopupType["Mode"], options?: {
@@ -154,14 +308,14 @@ declare function ClubCardGetOpponent(CCPlayer?: ClubCardPlayer | null): ClubCard
 /**
  * Gets the opponent of the parameter player or the player that's not on it's turn if null
  * @param {ClubCardPlayer} CCPlayer - The club card player or null
- * @param {Number} turnCounter
+ * @param {number} turnCounter
  * @returns {ClubCard[]} - The opponent
  */
 declare function ClubCardGetCardsPlayedOnTurn(CCPlayer: ClubCardPlayer, turnCounter: number): ClubCard[];
 /**
  * Adds money to the club card player stats
  * @param {ClubCardPlayer} CCPlayer - The club card player
- * @param {Number} Amount - The amount to add
+ * @param {number} Amount - The amount to add
  * @param {null | string} CardName - The card name used for the chat message if needed
  * @returns {void} - Nothing
  */
@@ -169,7 +323,7 @@ declare function ClubCardPlayerAddMoney(CCPlayer: ClubCardPlayer, Amount: number
 /**
  * Adds fame to the club card player stats, can trigger a victory
  * @param {ClubCardPlayer} CCPlayer - The club card player
- * @param {Number} Amount - The amount to add
+ * @param {number} Amount - The amount to add
  * @param {null | string} CardName - The card name used for the chat message if needed
  * @returns {void} - Nothing
  */
@@ -177,8 +331,8 @@ declare function ClubCardPlayerAddFame(CCPlayer: ClubCardPlayer, Amount: number,
 /**
  * Add fame from a player and remove from the other player
  * @param {ClubCardPlayer} CCPlayer - The club card player
- * @param {Number} moneyAmount - The money amount to steal
- * @param {Number} fameAmount - The fame amount to steal
+ * @param {number} moneyAmount - The money amount to steal
+ * @param {number} fameAmount - The fame amount to steal
  * @param {boolean} isStickyFingers - Whether Sticky Fingers effect should be ignored.
  * @returns {{ stolenMoney: number, stolenFame: number }} - The amounts of money and fame stolen.
  */
@@ -283,7 +437,7 @@ declare function ClubCardGroupInDiscardPileCount(CCPlayer: ClubCardPlayer, Group
  * @param {ClubCardPlayer} CCPlayer - The club card player
  * @param {ClubCard} Card - The card object to remove
  * @param {boolean} [DontDiscard] - If the card dont need to go to the discard pile
- * @param {ClubCardMessageType} [MessageType=ClubCardMessageType.PLAYERCARDSLEFT]
+ * @param {ClubCardMessageType} [MessageType]
  * @returns {void} - Nothing
  */
 declare function ClubCardRemoveFromBoard(CCPlayer: ClubCardPlayer, Card: ClubCard, DontDiscard?: boolean, MessageType?: ClubCardMessageType): void;
@@ -317,7 +471,7 @@ declare function ClubCardAddToHand(CCPlayer: ClubCardPlayer, Card: ClubCard): vo
  * Removes several cards from player time events
  * @deprecated
  * @param {ClubCardPlayer} CCPlayer - The club card player
- * @param {readonly String[]} ListOfCardNames - The names of the cards to remove
+ * @param {readonly string[]} ListOfCardNames - The names of the cards to remove
  */
 declare function ClubCardRemoveCardsFromEventByName(CCPlayer: ClubCardPlayer, ListOfCardNames: readonly string[]): void;
 /**
@@ -433,7 +587,7 @@ declare function ClubCardAlvinCondition(CCPlayer: ClubCardPlayer): void;
 /**
  * Handles Tifas effect selection
  * @param {ClubCardPlayer} CCPlayer
- * @param {String} Selection
+ * @param {string} Selection
  * @returns {void} - Nothing
  */
 declare function ClubCardTifaSelection(CCPlayer: ClubCardPlayer, Selection: string): void;
@@ -495,7 +649,7 @@ declare function ClubCardGetReward(): void;
  * @param {ClubCardPlayer} Opponent - The other player
  * @param {boolean} Before - true to run BeforeTurnEnd handlers, false to run AfterEndTurn handlers
  * @returns {void}
-  */
+ */
 declare function ClubCardRunTurnEndHandlers(CCPlayer: ClubCardPlayer, Opponent: ClubCardPlayer, Before: boolean): void;
 /**
  * @param {string} StartType
@@ -520,7 +674,7 @@ declare function ClubCardDefocusCardIfDiscarded(): void;
 declare function ClubCardDefocusCardIfRemoved(): void;
 /**
  * @param {ClubCardPlayer} CCPlayer
- * @returns
+ * @returns {boolean}
  */
 declare function ClubCardCheckVictory(CCPlayer: ClubCardPlayer): boolean;
 /**
@@ -530,13 +684,13 @@ declare function ClubCardEndGameSyncAndMessage(CCPlayer: ClubCardPlayer): void;
 /**
  * Returns the number of cards that can be played in one turn by a player
  * @param {ClubCardPlayer} CCPlayer - The club card player
- * @returns {Number} - The number of cards
+ * @returns {number} - The number of cards
  */
 declare function ClubCardTurnPlayableCardCount(CCPlayer: ClubCardPlayer): number;
 /**
  * Returns the extra time in turns for event over time
  * @param {ClubCardPlayer} CCPlayer - The club card player
- * @returns {Number} - The extra time
+ * @returns {number} - The extra time
  */
 declare function ClubCardExtraTime(CCPlayer: ClubCardPlayer): number;
 /**
@@ -634,7 +788,7 @@ declare function ClubCardBankrupt(): void;
 declare function ClubCardEndGame(Victory: boolean): void;
 /**
  * @param {string} Text
- * @returns
+ * @returns {string}
  */
 declare function ClubCardTextGet(Text: string): string;
 /**
@@ -647,6 +801,10 @@ declare function ClubCardLoadCaption(): void;
  * @returns {void} - Nothing
  */
 declare function ClubCardCommonLoad(): void;
+/**
+ * Loads the club card mini-game: Assigns the opponents and draws the cards
+ * @type {ScreenLoadHandler}
+ */
 declare function ClubCardLoad(): Promise<void>;
 /**
  * Draw the club card player hand on screen, show only sleeves if not controlled by player
@@ -655,7 +813,7 @@ declare function ClubCardLoad(): Promise<void>;
  * @param {number} Y - The Y on screen position
  * @param {number} W - The width of the card
  * @param {string} Image - The buble
- * @returns {Number} - The next bubble Y position
+ * @returns {number} - The next bubble Y position
  */
 declare function ClubCardRenderBubble(Value: number | null, X: number, Y: number, W: number, Image: string): number;
 /**
@@ -709,31 +867,31 @@ declare function ClubCardUpdateCardAnimations(Timestamp: number): void;
  * @param {boolean} keepOriginalHidden - If true, the original card stays hidden after animation.
  * @param {(() => void) | null} [onStart] - Function called before the animation starts.
  * @param {((card: ClubCard) => void)|null} [onComplete] - Function called after the animation completes.
- * @param {number} [duration=200] - Animation duration in milliseconds.
+ * @param {number} [duration] - Animation duration in milliseconds.
  */
 declare function ClubCardMoveCard(card: ClubCard, priority: number, startPosition: ClubCardPosition, endPosition: ClubCardPosition, hideOriginal?: boolean, keepOriginalHidden?: boolean, onStart?: (() => void) | null, onComplete?: ((card: ClubCard) => void) | null, duration?: number): void;
 /**
  * Moves a card to the preview position (original card stays hidden after).
  * @param {ClubCard} card
- * @param {(() => void) | null} [onStart=null]
- * @param {((card: ClubCard) => void) | null} [onComplete=null]
- * @param {number} [duration=150]
+ * @param {(() => void) | null} [onStart]
+ * @param {((card: ClubCard) => void) | null} [onComplete]
+ * @param {number} [duration]
  */
 declare function ClubCardMoveCardToPreview(card: ClubCard, onStart?: (() => void) | null, onComplete?: ((card: ClubCard) => void) | null, duration?: number): void;
 /**
  * Returns a card from preview back to its original position.
  * @param {ClubCard} card
- * @param {(() => void) | null} [onStart=null]
- * @param {((card: ClubCard) => void) | null} [onComplete=null]
- * @param {number} [duration=150]
+ * @param {(() => void) | null} [onStart]
+ * @param {((card: ClubCard) => void) | null} [onComplete]
+ * @param {number} [duration]
  */
 declare function ClubCardReturnCardFromPreview(card: ClubCard, onStart?: (() => void) | null, onComplete?: ((card: ClubCard) => void) | null, duration?: number): void;
 /**
  * Returns a card from pending state back to its original position.
  * @param {ClubCard} card
- * @param {(() => void) | null} [onStart=null]
- * @param {((card: ClubCard) => void) | null} [onComplete=null]
- * @param {number} [duration=150]
+ * @param {(() => void) | null} [onStart]
+ * @param {((card: ClubCard) => void) | null} [onComplete]
+ * @param {number} [duration]
  */
 declare function ClubCardReturnCardFromPending(card: ClubCard, onStart?: (() => void) | null, onComplete?: ((card: ClubCard) => void) | null, duration?: number): void;
 /**
@@ -741,7 +899,7 @@ declare function ClubCardReturnCardFromPending(card: ClubCard, onStart?: (() => 
  * @param {ClubCard} card - The card to be moved.
  * @param {(() => void)|null} [onStart] - A function called before the animation starts.
  * @param {((card: ClubCard) => void)|null} [onComplete] - A function called after the animation completes.
- * @param {number} [duration=150] - The animation duration in milliseconds.
+ * @param {number} [duration] - The animation duration in milliseconds.
  */
 declare function ClubCardMoveCardToPending(card: ClubCard, onStart?: (() => void) | null, onComplete?: ((card: ClubCard) => void) | null, duration?: number): void;
 /**
@@ -752,6 +910,7 @@ declare function ClubCardMoveCardToPending(card: ClubCard, onStart?: (() => void
  * @param {number} W - The width of the card
  * @param {number|null} Sleeve - The sleeve image to draw instead of the card
  * @param {string|null} Source - The source from where it's called
+ * @param {boolean} [isIgnoreIsVisibility]
  * @returns {void} - Nothing
  */
 declare function ClubCardRenderCard(Card: ClubCard, X: number, Y: number, W: number, Sleeve?: number | null, Source?: string | null, isIgnoreIsVisibility?: boolean): void;
@@ -849,7 +1008,7 @@ declare function ClubCardClick(): void;
 declare function ClubCardClickPlayCard(isPending: boolean): void;
 /**
  * Sets the focus card if nothing else was clicked
- * @returns
+ * @returns {void}
  */
 declare function ClubCardClickSetFocusCard(): void;
 /**
@@ -861,164 +1020,8 @@ declare function ClubCardClickResetFocusCard(onComplete?: ((card: ClubCard) => v
  * Cancels the current Pending and Focus cards.
  */
 declare function ClubCardClickResetPendingCard(): void;
+/**
+ * Keyboard event handler for the Club Card game chat
+ * @type {KeyboardEventListener}
+ */
 declare function ClubCardKeyDown(event: KeyboardEvent): boolean;
-declare var ClubCardBackground: string;
-declare var ClubCardColor: string[];
-declare var ClubCardFameTextColor: string;
-declare var ClubCardMoneyTextColor: string;
-/** @type {Character} */
-declare var ClubCardOpponent: Character;
-/** @type {number[]} */
-declare var ClubCardOpponentDeck: number[];
-/** @type {null | ClubCard} */
-declare var ClubCardReward: null | ClubCard;
-/** @type {boolean} */
-declare var ClubCardInspection: boolean;
-/** @type {boolean} */
-declare var ClubCardOptionSelection: boolean;
-/** @type {boolean} */
-declare var ClubCardGameEnded: boolean;
-/**
- *  The variable allows to capture the mouse hovering over the card from the handler inside the ClubCardRenderCard function.
- * @type {null | ClubCard}
- * */
-declare var ClubCardHover: null | ClubCard;
-/**
- * Variable through which the current card selected by the player is rendered as a large card.
- * @type {null | ClubCard}
- * */
-declare var ClubCardFocus: null | ClubCard;
-/** @type {null | ClubCard} */
-declare var ClubCardFocusAI: null | ClubCard;
-declare var ClubCardTurnIndex: number;
-declare var ClubCardTurnCardPlayed: number;
-declare var ClubCardTurnEndDraw: boolean;
-declare var ClubCardFameGoal: number;
-/** @type {ClubCardPopupType | null} */
-declare var ClubCardPopup: ClubCardPopupType | null;
-/** @type {null | ClubCard} */
-declare var ClubCardSelection: null | ClubCard;
-/** @type {null | ClubCard} */
-declare var ClubCardPending: null | ClubCard;
-/** @type {null | number} */
-declare var ClubCardTierSelection: null | number;
-declare var ClubCardLevelLimit: number[];
-declare var ClubCardLevelCost: number[];
-declare var ClubCardLiabilityLimit: number[];
-/** @type {ClubCardPlayer[]} */
-declare var ClubCardPlayer: ClubCardPlayer[];
-declare var ClubCardOnlinePlayerMemberNumber1: number;
-declare var ClubCardOnlinePlayerMemberNumber2: number;
-/** @type {ClubCardDefaultDecks} */
-declare var ClubCardDefaultSelection: ClubCardDefaultDecks;
-declare var ClubCardUsePrecon: boolean;
-/**
- * Counter to ensure unique ID incrementation.
- * It is used globally to prevent ID duplication.
- */
-declare let ClubCardUniqueIDCounter: number;
-/**
- * String for a random tier 1 card name. Tier 1 cards have no RequiredLevel or RequiredLevel <= 1
- * @type {string}
- */
-declare let ClubCardRandomCardName: string;
-/**
- * Variable to check if the code associated with animations will work or if it will be disabled.
- * @type {boolean}
- */
-declare let ClubCardIsAnimationOn: boolean;
-/**
- * Stores active card animations, updated each frame in ClubCardUpdateCardAnimations().
- * @type {ClubCardActiveAnimation[]}
- */
-declare let ClubCardActiveAnimations: ClubCardActiveAnimation[];
-declare namespace ClubCardFocusPosition {
-    let x: number;
-    let y: number;
-    let w: number;
-}
-declare namespace ClubCardPendingPosition {
-    let x_1: number;
-    export { x_1 as x };
-    let y_1: number;
-    export { y_1 as y };
-    let w_1: number;
-    export { w_1 as w };
-}
-declare namespace ClubCardDiscardPosition {
-    let x_2: number;
-    export { x_2 as x };
-    let y_2: number;
-    export { y_2 as y };
-    let w_2: number;
-    export { w_2 as w };
-}
-declare var ClubCardLogScroll: boolean;
-/**
- * Storage for all processed and displayed log messages
- * @type {ClubCardMessage[]}
- */
-declare let ClubCardLog: ClubCardMessage[];
-/**
- * Temporary buffer used for rendering messages before final log update
- * @type {ClubCardMessage[]}
- */
-declare let ClubCardRenderLog: ClubCardMessage[];
-/**
- * Message storage to accumulate messages before processing and sending
- * @type {ClubCardMessage[]}
- */
-declare let ClubCardMessageStorage: ClubCardMessage[];
-declare const ClubCardMessageType: Readonly<{
-    STARTTURNINFO: "StartTurnInfo";
-    STARTTURNEVENT: "StartTurnEvent";
-    CARDEFFECT: "CardsEffect";
-    KNOTEVENT: "KnotEvent";
-    TURNENDEFFECT: "TurnEndEffect";
-    FAMEMONEYINFO: "FameMoneyInfo";
-    VICTORYINFO: "VictoryInfo";
-    ACTIONSEPARATOR: "ActionSeparator";
-    PREREQUISTITE: "Prerequisite";
-    ACTION: "Actions";
-    SYSTEM: "SystemMessage";
-    PLAYERSMESSAGE: "PlayersMessage";
-    PLAYERSDISCONNECTED: "PlayersDisconnected";
-}>;
-declare const ClubCardImmediateMessageTypes: ("Prerequisite" | "SystemMessage" | "PlayersMessage" | "PlayersDisconnected" | "Actions" | "ActionSeparator")[];
-declare const ClubCardStartTurnType: Readonly<{
-    PLAYCARD: "PlayCard";
-    DRAWENDTURN: "DrawAndEndTurn";
-    BANKRUPT: "Bankrupt";
-    UPGRADELEVEL: "UpgradeLevel";
-    ENDTURN: "EndTurn";
-}>;
-/**
- * Keys for filling in the function parameters ClubCardMessageAdd
- * @satisfies {Record<ClubCardPlaceholderKeysType, ClubCardPlaceholderKeysType>}
- */
-declare const ClubCardPlaceholderKeys: Readonly<{
-    MONEYLABEL: "MONEYLABEL";
-    FAMELABEL: "FAMELABEL";
-    AMOUNT: "AMOUNT";
-    CARDNAME: "CARDNAME";
-    MONEYAMOUNT: "MONEYAMOUNT";
-    FAMEAMOUNT: "FAMEAMOUNT";
-    TURNNUMBER: "TURNNUMBER";
-    PLAYERNAME: "PLAYERNAME";
-}>;
-/** @type {boolean} Variable to check if the start function of the turn has already been called or not. */
-declare let ClubCardIsStartTurn: boolean;
-/**
- * The card definitions
- *
- * The BeforeTurnEnd hooks are run before regular fame and money are calculated and
- * are a good place to remove cards so they don't add fame/money that turn. Most
- * cards should prefer this hook instead of AfterTurnEnd (including ones that just
- * add extra money / fame).
- *
- * The AfterTurnEnd hooks run after this, and can be used to adjust the total amount
- * of money / fame gained that turn.
- *
- * @type {ClubCard[]}
- */
-declare var ClubCardList: ClubCard[];

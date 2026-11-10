@@ -1,3 +1,22 @@
+declare var MagicBackground: string;
+/** @type {NPCCharacter} */
+declare var MagicPerformer: NPCCharacter;
+/** @type {Item[]} */
+declare var MagicPerformerAppearance: Item[];
+/** @type {NPCCharacter} */
+declare var MagicAssistant: NPCCharacter;
+/** @type {Item[]} */
+declare var MagicAssistantAppearance: Item[];
+/** @type {Item[]} */
+declare var MagicPlayerAppearance: Item[];
+/** @type {null | string} */
+declare var MagicTrick: null | string;
+declare var MagicTrickList: string[];
+/** @type {AssetGroupName[]} */
+declare var MagicRestraintList: AssetGroupName[];
+declare var MagicTrickCounter: number;
+declare var MagicShowIncome: number;
+declare var MagicShowState: number;
 /**
  * Checks, if the magic show currently has the given state
  * 1 - No Show
@@ -46,8 +65,16 @@ declare function MagicAssistantIsntDressRestrain(): boolean;
  * @returns {boolean} - - Returns true, if the required number of items is reached or exceeded, false otherwise
  */
 declare function MagicRestrainMinItem(C: Character, MinItem: number): boolean;
+/**
+ * Loads the room characters, saves their inventories and starts the show
+ * @type {ScreenLoadHandler}
+ */
 declare function MagicLoad(): Promise<void>;
-declare function MagicRun(time: number): void;
+/**
+ * Runs the magic screen, draws the player, the magician and the assistant as well as all required buttons
+ * @type {ScreenRunHandler}
+ */
+declare function MagicRun(): void;
 /**
  * Handles the click events in the magic screen
  * @returns {void} - Nothing
@@ -170,22 +197,3 @@ declare function MagicRestrainRemove(C: Character): void;
  * @returns {void} - Nothing
  */
 declare function MagicRestrainCopyTransfer(FromC: Character, ToC: Character): void;
-declare var MagicBackground: string;
-/** @type {NPCCharacter} */
-declare var MagicPerformer: NPCCharacter;
-/** @type {Item[]} */
-declare var MagicPerformerAppearance: Item[];
-/** @type {NPCCharacter} */
-declare var MagicAssistant: NPCCharacter;
-/** @type {Item[]} */
-declare var MagicAssistantAppearance: Item[];
-/** @type {Item[]} */
-declare var MagicPlayerAppearance: Item[];
-/** @type {null | string} */
-declare var MagicTrick: null | string;
-declare var MagicTrickList: string[];
-/** @type {AssetGroupName[]} */
-declare var MagicRestraintList: AssetGroupName[];
-declare var MagicTrickCounter: number;
-declare var MagicShowIncome: number;
-declare var MagicShowState: number;

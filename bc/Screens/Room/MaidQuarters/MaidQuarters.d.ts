@@ -1,3 +1,33 @@
+declare var MaidQuartersBackground: string;
+/** @type {null | NPCCharacter} */
+declare var MaidQuartersMaid: null | NPCCharacter;
+/** @type {NPCCharacter} */
+declare var MaidQuartersMaidInitiation: NPCCharacter;
+/** @type {{ Cloth: Item | null, Hat: Item | null, ItemArms: Item | null, ItemLegs: Item | null, ItemFeet: Item | null }} */
+declare var MaidQuartersItemClothPrev: {
+    Cloth: Item | null;
+    Hat: Item | null;
+    ItemArms: Item | null;
+    ItemLegs: Item | null;
+    ItemFeet: Item | null;
+};
+declare var MaidQuartersMaidReleasedPlayer: boolean;
+declare var MaidQuartersSelfBondageMaidDrinksAccepted: boolean;
+declare var MaidQuartersSelfBondageMaidCleaningAccepted: boolean;
+declare var MaidQuartersDominantRep: number;
+/** @type {"" | MaidQuartersMissionType} */
+declare var MaidQuartersCurrentRescue: "" | MaidQuartersMissionType;
+/** @type {MaidQuartersMissionType[]} */
+declare var MaidQuartersRescueList: MaidQuartersMissionType[];
+declare var MaidQuartersRescueStage: string[];
+declare var MaidQuartersCurrentRescueStarted: boolean;
+declare var MaidQuartersCurrentRescueCompleted: boolean;
+declare var MaidQuartersOnlineDrinkStarted: boolean;
+declare var MaidQuartersOnlineDrinkCount: number;
+declare var MaidQuartersOnlineDrinkValue: number;
+/** @type {number[]} */
+declare var MaidQuartersOnlineDrinkCustomer: number[];
+declare var MaidQuartersOnlineDrinkFromOwner: boolean;
 declare function MaidQuartersCanBecomeMaid(): boolean;
 declare function MaidQuartersCannotBecomeMaidYet(): boolean;
 declare function MaidQuartersCanBecomeHeadMaid(): boolean;
@@ -142,11 +172,15 @@ declare function MaidQuartersCanUngagAndMaidsDisabled(): boolean;
  * @returns {boolean} - Returns true, if the player cannot be ungagged by the maids, false otherwise
  */
 declare function MaidQuartersCannotUngagAndMaidsNotDisabled(): boolean;
+/**
+ * Loads the maid quarters. This function is called dynamically, as soon, as the player enters the maid quarters
+ * @type {ScreenLoadHandler}
+ */
 declare function MaidQuartersLoad(): Promise<void>;
 /**
  * Create the greeting Maid.
  *
- * @param {boolean} [newMaid=false] Swap in a new maid
+ * @param {boolean} [newMaid] Swap in a new maid
  */
 declare function MaidQuartersGetMaid(newMaid?: boolean): NPCCharacter;
 /**
@@ -269,9 +303,9 @@ declare function MaidQuartersOnlineDrinkStart(): void;
 /**
  * On online player picks a drink from the plyers tray. She only gets credited, if it was a new customer
  * @param {number} MemberNumber - The member ID of the customer
- * @param {number|string} DrinkValue - The value of the picked drink
+ * @param {number} DrinkValue - The value of the picked drink
  */
-declare function MaidQuartersOnlineDrinkPick(MemberNumber: number, DrinkValue: number | string): void;
+declare function MaidQuartersOnlineDrinkPick(MemberNumber: number, DrinkValue: number): void;
 /**
  * Calculates the player's earnings from the online drink serving.
  * When the maid tray is empty, the player can get paid (40% of drink value + 10$)
@@ -287,33 +321,3 @@ declare function MaidQuartersNotFromOwner(): void;
  * @param {number} minutes
  */
 declare function MaidQuartersSetMaidsDisabled(minutes: number): void;
-declare var MaidQuartersBackground: string;
-/** @type {null | NPCCharacter} */
-declare var MaidQuartersMaid: null | NPCCharacter;
-/** @type {NPCCharacter} */
-declare var MaidQuartersMaidInitiation: NPCCharacter;
-/** @type {{ Cloth: Item | null, Hat: Item | null, ItemArms: Item | null, ItemLegs: Item | null, ItemFeet: Item | null }} */
-declare var MaidQuartersItemClothPrev: {
-    Cloth: Item | null;
-    Hat: Item | null;
-    ItemArms: Item | null;
-    ItemLegs: Item | null;
-    ItemFeet: Item | null;
-};
-declare var MaidQuartersMaidReleasedPlayer: boolean;
-declare var MaidQuartersSelfBondageMaidDrinksAccepted: boolean;
-declare var MaidQuartersSelfBondageMaidCleaningAccepted: boolean;
-declare var MaidQuartersDominantRep: number;
-/** @type {"" | MaidQuartersMissionType} */
-declare var MaidQuartersCurrentRescue: "" | MaidQuartersMissionType;
-/** @type {MaidQuartersMissionType[]} */
-declare var MaidQuartersRescueList: MaidQuartersMissionType[];
-declare var MaidQuartersRescueStage: string[];
-declare var MaidQuartersCurrentRescueStarted: boolean;
-declare var MaidQuartersCurrentRescueCompleted: boolean;
-declare var MaidQuartersOnlineDrinkStarted: boolean;
-declare var MaidQuartersOnlineDrinkCount: number;
-declare var MaidQuartersOnlineDrinkValue: number;
-/** @type {number[]} */
-declare var MaidQuartersOnlineDrinkCustomer: number[];
-declare var MaidQuartersOnlineDrinkFromOwner: boolean;

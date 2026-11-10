@@ -1,8 +1,37 @@
+declare var FuturisticTrainingBeltPermissions: string[];
+declare var FuturisticTrainingBeltSpeechPunishments: string[];
+declare var FuturisticTrainingBeltModes: string[];
+declare var FuturisticTrainingBeltStates: string[];
+/** @type {NonNullable<ItemPropertiesCustom["PublicModeCurrent"]>} */
+declare var FuturisticTrainingBeltSetMode: NonNullable<ItemPropertiesCustom["PublicModeCurrent"]>;
+declare var FuturisticTrainingBeltSpeechCharacterLimit: number;
+declare var FuturisticTrainingBeltRandomEdgeCycle: number;
+declare var FuturisticTrainingBeltRandomTeaseDurationMin: number;
+declare var FuturisticTrainingBeltRandomTeaseDurationMax: number;
+declare var FuturisticTrainingBeltRandomTeaseDurationCooldown: number;
+declare var FuturisticTrainingBeltRandomTeaseChance: number;
+declare var FuturisticTrainingBeltRandomTeaseMaxChance: number;
+declare var FuturisticTrainingBeltRandomDenyChance: number;
+declare var FuturisticTrainingBeltRandomDenyDuration: number;
+declare var FuturisticTrainingBeltRandomOrgasmDurationMin: number;
+declare var FuturisticTrainingBeltRandomOrgasmDurationMax: number;
+declare var FuturisticTrainingBeltRandomOrgasmDurationCooldown: number;
+declare var FuturisticTrainingBeltRandomOrgasmChance: number;
+declare var FuturisticTrainingBeltPunishmentEdgeDuration: number;
+declare var FuturisticTrainingBeltPunishmentVibeDuration: number;
+declare var FuturisticTrainingBeltConfigure: boolean;
+declare var FuturisticTrainingBeltPage: number;
+declare var FuturisticTrainingBeltMaxPage: number;
+/** @type {ExtendedItemScriptHookCallbacks.Load<VibratingItemData>} */
 declare function InventoryItemPelvisFuturisticTrainingBeltLoadHook(data: VibratingItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Draw<VibratingItemData>} */
 declare function InventoryItemPelvisFuturisticTrainingBeltDrawHook(data: VibratingItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Click<VibratingItemData>} */
 declare function InventoryItemPelvisFuturisticTrainingBeltClickHook(data: VibratingItemData, originalFunction: () => void): void;
+/** @type {ExtendedItemScriptHookCallbacks.Exit<VibratingItemData>} */
 declare function InventoryItemPelvisFuturisticTrainingBeltExitHook(data: VibratingItemData, originalFunction: (() => void) | null): void;
-declare function InventoryItemPelvisFuturisticTrainingBeltPublishAction(C: Character, item: Item, newOption: ExtendedItemOption, previousOption: ExtendedItemOption): void;
+/** @type {ExtendedItemCallbacks.PublishAction<ExtendedItemOption>} */
+declare function InventoryItemPelvisFuturisticTrainingBeltPublishAction(C: Character, item: Item, newOption: ExtendedItemOption): void;
 /**
  * Not called.
  * @param {Character} C
@@ -55,34 +84,9 @@ declare function AssetsItemPelvisFuturisticTrainingBeltScriptUpdatePlayer(data: 
  * Handles the vibrator state machine for the belt
  * @param {VibratingItemData} data
  * @param {DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>} drawData
- * @returns
+ * @returns {void}
  */
 declare function AssetsItemPelvisFuturisticTrainingBeltScriptStateMachine(data: VibratingItemData, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;
-declare function AssetsItemPelvisFuturisticTrainingBeltScriptDrawHook(data: VibratingItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;
-declare var FuturisticTrainingBeltPermissions: string[];
-declare var FuturisticTrainingBeltSpeechPunishments: string[];
-declare var FuturisticTrainingBeltModes: string[];
-declare var FuturisticTrainingBeltStates: string[];
-/** @type {NonNullable<ItemPropertiesCustom["PublicModeCurrent"]>} */
-declare var FuturisticTrainingBeltSetMode: NonNullable<ItemPropertiesCustom["PublicModeCurrent"]>;
-declare var FuturisticTrainingBeltSpeechCharacterLimit: number;
-declare var FuturisticTrainingBeltRandomEdgeCycle: number;
-declare var FuturisticTrainingBeltRandomTeaseDurationMin: number;
-declare var FuturisticTrainingBeltRandomTeaseDurationMax: number;
-declare var FuturisticTrainingBeltRandomTeaseDurationCooldown: number;
-declare var FuturisticTrainingBeltRandomTeaseChance: number;
-declare var FuturisticTrainingBeltRandomTeaseMaxChance: number;
-declare var FuturisticTrainingBeltRandomDenyChance: number;
-declare var FuturisticTrainingBeltRandomDenyDuration: number;
-declare var FuturisticTrainingBeltRandomOrgasmDurationMin: number;
-declare var FuturisticTrainingBeltRandomOrgasmDurationMax: number;
-declare var FuturisticTrainingBeltRandomOrgasmDurationCooldown: number;
-declare var FuturisticTrainingBeltRandomOrgasmChance: number;
-declare var FuturisticTrainingBeltPunishmentEdgeDuration: number;
-declare var FuturisticTrainingBeltPunishmentVibeDuration: number;
-declare var FuturisticTrainingBeltConfigure: boolean;
-declare var FuturisticTrainingBeltPage: number;
-declare var FuturisticTrainingBeltMaxPage: number;
 type FuturisticTrainingBeltPersistentData = {
     UpdateTime?: number;
     LastMessageLen?: number;
@@ -91,3 +95,8 @@ type FuturisticTrainingBeltPersistentData = {
     DeviceStateTimer?: number;
     DeviceVibeMode?: VibratorMode;
 } & AnimationPersistentData;
+/**
+ * @typedef {{ UpdateTime?: number, LastMessageLen?: number, CheckTime?: number, DeviceState?: number, DeviceStateTimer?: number, DeviceVibeMode?: VibratorMode } & AnimationPersistentData} FuturisticTrainingBeltPersistentData
+ */
+/** @type {ExtendedItemScriptHookCallbacks.ScriptDraw<VibratingItemData, FuturisticTrainingBeltPersistentData>} */
+declare function AssetsItemPelvisFuturisticTrainingBeltScriptDrawHook(data: VibratingItemData, originalFunction: ((drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>) => void) | null, drawData: DynamicScriptCallbackData<FuturisticTrainingBeltPersistentData>): void;

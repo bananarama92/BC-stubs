@@ -1,3 +1,18 @@
+declare var AsylumEntranceBackground: string;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceKidnapNurse: NPCCharacter;
+/** @type {NPCCharacter} */
+declare var AsylumEntranceEscapedPatient: NPCCharacter;
+declare var AsylumEntranceEscapedPatientWillBribe: boolean;
+declare var AsylumEntranceEscapedPatientWillJoin: boolean;
+/**
+ * Longest asylum commitment accepted on load. The game never commits anyone for
+ *  anywhere near this long; anything further out is treated as corrupt, as
+ *  CellLoad does for long cell timers.
+ */
+declare var AsylumEntranceMaxCommitment: number;
 /**
  * Checks, if the player is able to leave the Asylum
  * @returns {boolean} - Returns true, if the player is able to leave, false otherwise
@@ -48,6 +63,10 @@ declare function AsylumHasForcedGGTSTime(): boolean;
  * @returns {boolean}
  */
 declare function AsylumHasEscaped(): boolean;
+/**
+ * Loads the room and generates the nurse. Is called dynamically
+ * @type {ScreenLoadHandler}
+ */
 declare function AsylumEntranceLoad(): Promise<void>;
 /**
  * // Runs the room (shows the nurse, player, icons and committed time).
@@ -111,9 +130,10 @@ declare function AsylumEntranceStartNurse(): void;
 declare function AsylumEntranceFightNurse(): void;
 /**
  * Resolves the result of the fight against the nurse
+ * @param {boolean} victory - Wether the player won or not
  * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceFightNurseEnd(): SafePromise<void>;
+declare function AsylumEntranceFightNurseEnd(victory: boolean): SafePromise<void>;
 /**
  * Restrains the player in a straitjacket with a custom difficulty
  * @param {string} Pose - The tightness of the straitjacket
@@ -154,10 +174,11 @@ declare function AsylumEntranceNurseCatchEscapedPlayer(): SafePromise<void>;
 declare function AsylumEntranceKidnapNurseFight(): void;
 /**
  * Resolved the fight against the kidnap nurse
- * @param {boolean} Surrender - Wether the player surrendered or not
+ * @param {boolean} victory - Wether the player won or not
+ * @param {boolean} surrender - Wether the player surrendered or not
  * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceKidnapNurseFightOutro(Surrender: boolean): SafePromise<void>;
+declare function AsylumEntranceKidnapNurseFightOutro(victory: boolean, surrender: boolean): SafePromise<void>;
 /**
  * Handles the bribe attempt of the kidnapping nurse
  * @param {number} BribeAmount - The offered bribe amount
@@ -170,6 +191,10 @@ declare function AsylumEntranceKidnapNurseBribe(BribeAmount: number, BribeOdds: 
  * @returns {void} - Nothing
  */
 declare function AsylumEntranceKidnapNurseTransferToRoom(): void;
+/**
+ * When the player leaves the kidnap nurse
+ * @type {ScreenExitHandler}
+ */
 declare function AsylumEntranceKidnapNurseExit(): void;
 /**
  * When the escaped player walks back to the asylum
@@ -193,10 +218,11 @@ declare function AsylumEntranceEscapedPatientMeet(): SafePromise<void>;
 declare function AsylumEntranceEscapedPatientFight(): void;
 /**
  * Resolves the fight against an escaped patient
- * @param {boolean} Surrender - Wether the player surrendered or not
+ * @param {boolean} victory - Wether the player won or not
+ * @param {boolean} surrender - Wether the player surrendered or not
  * @returns {SafePromise<void>}
  */
-declare function AsylumEntranceEscapedPatientFightOutro(Surrender: boolean): SafePromise<void>;
+declare function AsylumEntranceEscapedPatientFightOutro(victory: boolean, surrender: boolean): SafePromise<void>;
 /**
  * Resolves the bribe attempt towards the player by an escaped patient
  * @returns {void} - Nothing
@@ -266,16 +292,3 @@ declare function AsylumEntranceClubCardStart(): void;
  * @returns {SafePromise<void>}
  */
 declare function AsylumEntranceClubCardEnd(): SafePromise<void>;
-declare var AsylumEntranceBackground: string;
-/** @type {NPCCharacter} */
-declare var AsylumEntranceNurse: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var AsylumEntranceKidnapNurse: NPCCharacter;
-/** @type {NPCCharacter} */
-declare var AsylumEntranceEscapedPatient: NPCCharacter;
-declare var AsylumEntranceEscapedPatientWillBribe: boolean;
-declare var AsylumEntranceEscapedPatientWillJoin: boolean;
-/** Longest asylum commitment accepted on load. The game never commits anyone for
- *  anywhere near this long; anything further out is treated as corrupt, as
- *  CellLoad does for long cell timers. */
-declare var AsylumEntranceMaxCommitment: number;

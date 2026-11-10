@@ -1,3 +1,12 @@
+declare var PuppyWalkerBackground: string;
+declare var PuppyWalkerMoves: number[];
+declare var PuppyWalkerMovesTimer: number[];
+declare var PuppyWalkerEscape: number[];
+declare var PuppyWalkerGenerateMoveTimer: number;
+/**
+ * Loads the puppy walker mini game and sets the difficulty, it's a little faster on mobile because it's easier.
+ * @type {ScreenLoadHandler}
+ */
 declare function PuppyWalkerLoad(): Promise<void>;
 /**
  * Draws the puppy girl if she hasn't escaped
@@ -33,8 +42,3 @@ declare function PuppyWalkerClick(): void;
  * @returns {void} - Nothing
  */
 declare function PuppyWalkerMouseDown(): void;
-declare var PuppyWalkerBackground: string;
-declare var PuppyWalkerMoves: number[];
-declare var PuppyWalkerMovesTimer: number[];
-declare var PuppyWalkerEscape: number[];
-declare var PuppyWalkerGenerateMoveTimer: number;

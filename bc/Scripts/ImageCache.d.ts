@@ -1,17 +1,39 @@
 /**
+ * The main BC image cache.
+ *
+ * Each instance stores a caller-chosen payload in memory (ImageBitmap for 2D,
+ * WebGLTextureData for GL) and is backed by the browser Cache API
+ * (bc-images-v1 is the cache name).
+ *
+ * It bypasses the /R\d+/ version slug in the BC urls so that files can be
+ * kept around even if the URL changes every release; only their mtime matters.
+ *
+ * The stored images are also kept on disk: a hit is returned immediately, but
+ * will get revalidated and swapped in in the background; a 304 status keeps the
+ * entry; a 200 replaces it and the in-memory payload is rebuilt.
+ *
+ * When the Cache API isn't available, `browserCache` stays unset and fetches fall
+ * through to CommonFetch as usual.
+ */
+/**
  * What state is the image in.
  *
  * - UNCACHED (initial) -> LOADING
  * - LOADING -> LOADED (final)
  * - LOADING -> FAILED (final)
+ *
+ * @enum {string}
  */
-type CachedImageState = string;
-declare namespace CachedImageState {
-    let UNCACHED: string;
-    let LOADING: string;
-    let LOADED: string;
-    let FAILED: string;
-}
+declare var CachedImageState: {
+    /** Image is known, but not yet cached */
+    UNCACHED: string;
+    /** Image is currently being loaded */
+    LOADING: string;
+    /** Image is available in cache */
+    LOADED: string;
+    /** Image couldn't be cached */
+    FAILED: string;
+};
 /**
  * Cached image data
  * @template {{ width: number, height: number }} T
@@ -21,13 +43,6 @@ declare class CachedImage<T extends {
     height: number;
 }> {
     /**
-     * Create a new cached image.
-     *
-     * @param {ImageCache<T>} cache - The cache holding the image
-     * @param {string} url - The URL for the image to cache
-     */
-    constructor(cache: ImageCache<T>, url: string);
-    /**
      * Only used to inform the cache of loading progress
      * @type {ImageCache<T>}
      * private
@@ -35,8 +50,8 @@ declare class CachedImage<T extends {
     cache: ImageCache<T>;
     /** @type {string} */
     url: string;
-    /** @type {CachedImageState} */
-    state: CachedImageState;
+    /** @type {string} */
+    state: string;
     /**
      * The decoded payload; `null` until decoding completes.
      * @type {T | null}
@@ -52,12 +67,19 @@ declare class CachedImage<T extends {
      */
     _generation: number;
     /**
+     * Create a new cached image.
+     *
+     * @param {ImageCache<T>} cache - The cache holding the image
+     * @param {string} url - The URL for the image to cache
+     */
+    constructor(cache: ImageCache<T>, url: string);
+    /**
      * Load the cached image if it's not already available.
      *
      * Reports its outcome through the state, and never rejects.
-     * @param {undefined | Error} errCause - An error object the be attached as cause for failed fetch responses. Used primarily for extending the traceback
+     * @param {Error} [errCause] - An error object the be attached as cause for failed fetch responses. Used primarily for extending the traceback
      */
-    _load(errCause?: undefined | Error): Promise<void>;
+    _load(errCause?: Error): Promise<void>;
     /**
      * Unload the image from the cache
      */
@@ -76,6 +98,23 @@ declare class CachedImage<T extends {
      * private
      */
     _fetch(generation: number, errCause?: undefined | Error): Promise<Blob>;
+    /**
+     * Does this response carry an image media type?
+     *
+     * @param {Response} response
+     * @returns {boolean}
+     * private
+     */
+    _isImage(response: Response): boolean;
+    /**
+     * Ensure a response carries an image media type.
+     *
+     * @param {Response} response
+     * @param {undefined | Error} [errCause]
+     * @returns {void}
+     * private
+     */
+    _assertImage(response: Response, errCause?: undefined | Error): void;
     /**
      * Decode fetched bytes into the cache's payload.
      *
@@ -137,20 +176,13 @@ declare class CachedImage<T extends {
     get height(): number;
 }
 /**
- * Persistent browser-level Cache store for images.
+ * Persistent browser-level Cache store.
+ *
+ * What it keeps depends only on the URL and the response's caching headers.
+ * Callers decide whether a stored body is one they can use, and delete it
+ * themselves when it is not.
  */
 declare class BrowserCache {
-    /**
-     * Open the named bucket.
-     * @returns {Promise<BrowserCache>}
-     */
-    static open(): Promise<BrowserCache>;
-    /**
-     * @param {Cache} cache
-     * @param {string} name
-     * private
-     */
-    constructor(cache: Cache, name: string);
     /**
      * Name of the Cache bucket. Bump only if what's stored in it
      * changes shape.
@@ -176,6 +208,32 @@ declare class BrowserCache {
      */
     _revalidated: Set<string>;
     /**
+     * Revalidations still in flight, so a second hit can wait on them.
+     * @type {Map<string, Promise<Response | null>>}
+     * private
+     */
+    _revalidating: Map<string, Promise<Response | null>>;
+    /**
+     * Origins this store will keep. Unset means any http(s) URL.
+     * @type {Set<string> | null}
+     * private
+     */
+    _origins: Set<string> | null;
+    /**
+     * @param {Cache} cache
+     * @param {string} name
+     * @param {string[] | undefined} origins
+     * private
+     */
+    constructor(cache: Cache, name: string, origins: string[] | undefined);
+    /**
+     * Open the named bucket.
+     *
+     * @param {string[]} [origins] When set, only these origins are stored. Entries from anywhere else are removed.
+     * @returns {Promise<BrowserCache>}
+     */
+    static open(origins?: string[]): Promise<BrowserCache>;
+    /**
      * Compute the key an image URL is stored under.
      *
      * The R$VERSION directory, query string and fragment are dropped, so that the
@@ -185,6 +243,14 @@ declare class BrowserCache {
      * @returns {string}
      */
     key(url: string): string;
+    /**
+     * Get the cache control directives from a response.
+     *
+     * @param {Response} response
+     * @returns {Map<string, string | null>}
+     * private
+     */
+    _cacheDirectives(response: Response): Map<string, string | null>;
     /**
      * Can this response go in the store?
      *
@@ -213,26 +279,54 @@ declare class BrowserCache {
      */
     _put(key: string, response: Response): Promise<boolean>;
     /**
-     * Check with the server whether a stored image is still current.
+     * The response stored for this URL, if there is one.
      *
-     * Runs at most once per key per session.
+     * @param {string} url
+     * @returns {Promise<Response | undefined>}
+     */
+    match(url: string): Promise<Response | undefined>;
+    /**
+     * Ask the server whether a stored response is still current.
      *
-     * @param {string} key - The cache key of the resource
-     * @param {string} url - The URL to revalidate against
-     * @param {Response} cached - The response we currently hold
-     * @param {BrowserCache.FetchOptions} options
-     * @returns {void}
+     * Runs at most once per key per session. Resolves with the fresh storable
+     * response, or null when the stored one stands.
+     *
+     * @param {string} url
+     * @param {Response} cached
+     * @returns {Promise<Response | null>}
+     */
+    revalidate(url: string, cached: Response): Promise<Response | null>;
+    /**
+     * Keep a response when it is allowed to be stored.
+     *
+     * @param {string} url
+     * @param {Response} response
+     * @returns {Promise<void>}
+     */
+    put(url: string, response: Response): Promise<void>;
+    /**
+     * Remove the stored response for a URL.
+     *
+     * The entry's caching directives are not consulted.
+     *
+     * @param {string} url
+     * @returns {Promise<boolean>} Whether an entry was removed
+     */
+    delete(url: string): Promise<boolean>;
+    /**
+     * Remove one cache key. An in-flight revalidation of that key is left
+     * to finish; forgetting it here would let a second request start.
+     *
+     * @param {string} key
+     * @returns {Promise<boolean>}
      * private
      */
-    _revalidate(key: string, url: string, cached: Response, options: BrowserCache.FetchOptions): void;
+    _remove(key: string): Promise<boolean>;
     /**
-     * Fetch an image, through the persistent store when possible.
-     *
-     * @param {string} url - The URL of the image
-     * @param {BrowserCache.FetchOptions} [options]
-     * @returns {Promise<Response>}
+     * Remove stored entries this store is not allowed to keep.
+     * @returns {Promise<void>}
      */
-    fetch(url: string, options?: BrowserCache.FetchOptions): Promise<Response>;
+    purge(): Promise<void>;
     /**
      * Throw the whole persistent store away and open a fresh bucket.
      * @returns {Promise<boolean>} Whether there was a store to delete
@@ -254,12 +348,6 @@ declare class ImageCache<T extends {
     width: number;
     height: number;
 }> {
-    /**
-     * @param {string} name
-     * @param {BrowserCache | null} browserCache
-     * @param {ImageCache.Options<T>} options How to turn bytes into a payload, and how to free it
-     */
-    constructor(name: string, browserCache: BrowserCache | null, options: ImageCache.Options<T>);
     /** @type {Map<string, CachedImage<T>>} */
     cache: Map<string, CachedImage<T>>;
     name: string;
@@ -273,6 +361,12 @@ declare class ImageCache<T extends {
     _decode: (blob: Blob) => T | Promise<T>;
     /** @type {((data: T) => void) | undefined} */
     _dispose: ((data: T) => void) | undefined;
+    /**
+     * @param {string} name
+     * @param {BrowserCache | null} browserCache
+     * @param {ImageCache.Options<T>} options How to turn bytes into a payload, and how to free it
+     */
+    constructor(name: string, browserCache: BrowserCache | null, options: ImageCache.Options<T>);
     /**
      * Check whether an image is in the cache
      *
@@ -315,6 +409,7 @@ declare class ImageCache<T extends {
     _refreshCharactersForImage(img: CachedImage<T>): void;
     /**
      * Purge all images errored or not used in the last half-purge delay
+     * @param {boolean} force
      */
     purge(force?: boolean): void;
     /**

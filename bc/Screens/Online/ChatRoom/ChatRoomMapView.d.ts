@@ -1,3 +1,105 @@
+declare const ChatRoomMapViewName = "Map";
+declare var ChatRoomMapViewPerceptionRange: number;
+declare var ChatRoomMapViewPerceptionRangeMin: number;
+declare var ChatRoomMapViewPerceptionRangeMax: number;
+/** @type {ChatRoomMapViewEditModeType} */
+declare var ChatRoomMapViewEditMode: ChatRoomMapViewEditModeType;
+declare var ChatRoomMapViewEditPath: string;
+declare var ChatRoomMapViewLastSearch: string;
+/** @type {"" | ChatRoomMapTileType | ChatRoomMapObjectType} */
+declare var ChatRoomMapViewEditSubMode: "" | ChatRoomMapTileType | ChatRoomMapObjectType;
+/** Currently dragging the mouse with an active tool */
+declare var ChatRoomMapViewEditStarted: boolean;
+/** @type {ChatRoomMapViewToolName | ""} */
+declare var ChatRoomMapViewActiveTool: ChatRoomMapViewToolName | "";
+/** @type {null | ChatRoomMapDoodad} */
+declare var ChatRoomMapViewEditObject: null | ChatRoomMapDoodad;
+/**
+ * @type {number[]}
+ * @deprecated Use {@link ChatRoomMapViewPixelToTileCoordinates} and {@link ChatRoomMapViewEditRange}
+ */
+declare var ChatRoomMapViewEditSelection: number[];
+declare var ChatRoomMapViewEditRange: number;
+declare var ChatRoomMapViewMaxEditRange: number;
+/**
+ * @type {ServerChatRoomMapData[]}
+ * @deprecated Handled internally by {@link MapManager}.
+ */
+declare var ChatRoomMapViewEditBackup: ServerChatRoomMapData[];
+/** @type {null | number} */
+declare var ChatRoomMapViewUpdatePlayerNext: null | number;
+/** @type {null | number} */
+declare var ChatRoomMapViewUpdateLastMapDataNext: null | number;
+/** @type {null | OnlineCharacter} */
+declare var ChatRoomMapViewFocusedCharacter: null | OnlineCharacter;
+declare var ChatRoomMapViewFocusedCharacterX: number;
+declare var ChatRoomMapViewFocusedCharacterY: number;
+declare var ChatRoomMapViewSuperPowersActive: boolean;
+declare var ChatRoomMapViewBaseMovementSpeed: number;
+/** @type {null | ChatRoomMapMovement} */
+declare var ChatRoomMapViewMovement: null | ChatRoomMapMovement;
+/** @type {ChatRoomMapType[]} */
+declare var ChatRoomMapViewTypeList: ChatRoomMapType[];
+declare var ChatRoomMapViewUpdatePlayerTime: number;
+declare const ChatRoomMapViewWhisperRange = 1;
+declare const ChatRoomMapViewInteractionRange = 1;
+/** How far a leashed character can go from where her leash is held, in tiles */
+declare const ChatRoomMapViewLeashRange = 2;
+declare const ChatRoomMapViewRemoteRange: number;
+declare const ChatRoomMapSignTextMaxLength = 150;
+declare var ChatRoomMapViewEditorMaxRecentElements: number;
+declare var ChatRoomMapViewSplitPosition: number;
+declare var ChatRoomMapViewSplitPositionMax: number;
+declare var ChatRoomMapViewSplitPositionMin: number;
+/**
+ * @type {boolean[]}
+ * @deprecated Use {@link MapManager.Map.isTileVisible()}
+ */
+declare var ChatRoomMapViewVisibilityMask: boolean[];
+/**
+ * @type {boolean[]}
+ * @deprecated Use {@link MapManager.Map.isTileHearable()}
+ */
+declare var ChatRoomMapViewAudibilityMask: boolean[];
+/** @type {Uint16Array | null} */
+declare var ChatRoomMapViewTileFog: Uint16Array | null;
+/** @type {Uint16Array | null} */
+declare var ChatRoomMapViewObjectFog: Uint16Array | null;
+declare var ChatRoomMapViewKeysPressed: {
+    North: boolean;
+    South: boolean;
+    West: boolean;
+    East: boolean;
+};
+declare var ChatRoomMapViewStartOfKeyPress: number;
+/** @type {Map<number, OnlineCharacter[]>} */
+declare var ChatRoomMapViewCharacterMap: Map<number, OnlineCharacter[]>;
+/** @type {{ C: OnlineCharacter, rect: RectTuple, charX: number, charY: number }[]} */
+declare var ChatRoomMapViewNameTags: {
+    C: OnlineCharacter;
+    rect: RectTuple;
+    charX: number;
+    charY: number;
+}[];
+/** TRUE while an admin picks where the selected teleport pad sends to */
+declare var ChatRoomMapViewTeleportPadPicking: boolean;
+/** @type {null | number} - The teleport pad whose menu is open */
+declare var ChatRoomMapViewTeleportPadIndex: null | number;
+/** @type {null | { indexes: number[], color: HexColor }} - The teleport pads shown in the color being picked for them */
+declare var ChatRoomMapViewTeleportPadPreview: null | {
+    indexes: number[];
+    color: HexColor;
+};
+/** TRUE while the color picker is open over the chat log */
+declare var ChatRoomMapViewColorPicker: boolean;
+/** @type {Map<string, HTMLCanvasElement>} - Map object images already colorized, by image and color */
+declare var ChatRoomMapViewColoredImages: Map<string, HTMLCanvasElement>;
+/** @type {null | HTMLElement} */
+declare var ChatRoomMapViewDialogMenu: null | HTMLElement;
+/** @type {HTMLElement} */
+declare var ChatRoomMapViewPanel: HTMLElement;
+/** @type {HTMLElement} */
+declare var ChatRoomMapViewPanelContainer: HTMLElement;
 /**
  * Returns TRUE if the player is an admin and activated her super powers on the map
  * @returns {boolean} - TRUE if super powers are active
@@ -13,6 +115,11 @@ declare function ChatRoomMapViewBlur(): void;
  * @returns {ServerChatRoomMapData}
  */
 declare function ChatRoomMapViewInitialize(mode: ChatRoomMapType): ServerChatRoomMapData;
+/**
+ * Sets the width of the chat room map
+ * @param {number} width
+ */
+declare function ChatRoomMapViewSetSplitPosition(width: number): void;
 /**
  * Initializes the character's map data to its default blank state
  * @param {Character} C - The character to be initialized
@@ -41,31 +148,62 @@ declare function ChatRoomMapViewLeave(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewActivate(): void;
-declare function ChatRoomMapViewCreateUI(): void;
+/** @type {ScreenResizeHandler} */
+declare function ChatRoomMapViewResize(): void;
+declare function ChatRoomMapViewCreateEditorUI(): void;
+declare function ChatRoomMapViewCreateMapMovementButtons(): void;
+declare function ChatRoomMapViewUpdateMovementButtons(): void;
 declare function ChatRoomMapViewCreateDialogMenu(): void;
 /**
  * @param {string} title
- * @param {HTMLElement} content
+ * @param {HTMLElement} [content]
  * @param {HTMLElement} [footer]
  */
-declare function ChatRoomMapViewShowDialogMenu(title: string, content: HTMLElement, footer?: HTMLElement): void;
+declare function ChatRoomMapViewShowDialogMenu(title: string, content?: HTMLElement, footer?: HTMLElement): void;
 declare function ChatRoomMapViewHideDialogMenu(): void;
+/**
+ * Closes the dialog from its close button
+ * @returns {void}
+ */
+declare function ChatRoomMapViewCloseDialogMenu(): void;
+/**
+ * Gets the display name of a map object
+ * @param {ChatRoomMapObject} object
+ * @returns {string}
+ */
+declare function ChatRoomMapViewGetObjectDisplayName(object: ChatRoomMapObject): string;
 declare function ChatRoomMapViewShowEditor(): void;
 /**
+ * Switches the editor palette mode.
  *
+ * Changing mode or submode clears the selected doodad.
+ * A tool that can no longer paint is cleared too.
+ * @param {ChatRoomMapViewEditModeType} mode
+ * @param {"" | ChatRoomMapTileType | ChatRoomMapObjectType} subMode
+ */
+declare function ChatRoomMapViewEditorSetMode(mode: ChatRoomMapViewEditModeType, subMode: "" | ChatRoomMapTileType | ChatRoomMapObjectType): void;
+/**
  * @param {ChatRoomMapDoodad} item
  * @param {MapDataDoodadType} type
- * @param {boolean} updateRecent
- * @returns
+ * @param {boolean} [updateRecent]
+ * @deprecated Use {@link ChatRoomMapViewEditorSetSelection} instead
+ * @returns {void}
  */
 declare function ChatRoomMapViewSetSelection(item: ChatRoomMapDoodad, type: MapDataDoodadType, updateRecent?: boolean): void;
+/**
+ * @param {ChatRoomMapDoodad} item
+ * @param {MapDataDoodadType} type
+ * @param {boolean} [updateRecent]
+ * @returns {void}
+ */
+declare function ChatRoomMapViewEditorSetSelection(item: ChatRoomMapDoodad, type: MapDataDoodadType, updateRecent?: boolean): void;
 /**
  * Refreshes the UI
  * @param {boolean} [selectionOnly]
  * @param {string} [search]
  */
 declare function ChatRoomMapViewReloadEditorPanel(selectionOnly?: boolean, search?: string): void;
-declare function ChatRoomMapViewGetButtons(): HTMLButtonElement[];
+declare function ChatRoomMapViewGetButtons(): HTMLElement[];
 /**
  * Creates a category button
  * @param {(this: HTMLButtonElement, ev: PointerEvent) => void} callback
@@ -83,30 +221,35 @@ declare function ChatRoomMapViewGetItems(search?: string): Element[];
  * Typecheck for {@link ChatRoomMapEffect}
  * @param {ChatRoomMapDoodad} element - The element to check
  * @returns {element is ChatRoomMapEffect}
+ * @deprecated Use {@link MapDoodadIsEffect}
  */
 declare function ChatRoomMapViewIsChatRoomMapEffect(element: ChatRoomMapDoodad): element is ChatRoomMapEffect;
 /**
  * Typecheck for {@link ChatRoomMapPhysicalElement}
  * @param {ChatRoomMapDoodad} element - The element to check
  * @returns {element is ChatRoomMapPhysicalElement}
+ * @deprecated Use {@link MapDoodadIsPhysicalElement}
  */
 declare function ChatRoomMapViewIsChatRoomMapPhysicalElement(element: ChatRoomMapDoodad): element is ChatRoomMapPhysicalElement;
 /**
  * Typecheck for {@link ChatRoomMapObject}
  * @param {ChatRoomMapDoodad} element - The element to check
  * @returns {element is ChatRoomMapObject}
+ * @deprecated Use {@link MapDoodadIsObject}
  */
 declare function ChatRoomMapViewIsChatRoomMapObject(element: ChatRoomMapDoodad): element is ChatRoomMapObject;
 /**
  * Typecheck for {@link ChatRoomMapTile}
  * @param {ChatRoomMapDoodad} element - The element to check
  * @returns {element is ChatRoomMapTile}
+ * @deprecated Use {@link MapDoodadIsTile}
  */
 declare function ChatRoomMapViewIsChatRoomMapTile(element: ChatRoomMapDoodad): element is ChatRoomMapTile;
 /**
  * Creates an item for the chat room map view
  * @param {ChatRoomMapDoodad} item - The map element to create
  * @param {boolean} [updateRecent]
+ * @param {boolean} [readOnly]
  * @returns {Element} - The created item
  */
 declare function ChatRoomMapViewCreateMapElementItem(item: ChatRoomMapDoodad, updateRecent?: boolean, readOnly?: boolean): Element;
@@ -116,7 +259,13 @@ declare function ChatRoomMapViewGetSelection(): Element[];
  * @returns {Element[]}
  */
 declare function ChatRoomMapViewGetRecentItems(): Element[];
-declare function ChatRoomMapViewResize(load: boolean): void;
+/**
+ * Opens the color picker over the chat log, or closes it if it's open. The chat input is disabled while it's open,
+ * and closing it drops the teleport pad color preview.
+ * @param {ColorPickerInitOptions} [options] - The color picker options, used when opening it
+ * @returns {void}
+ */
+declare function ChatRoomMapViewColorPickerToggle(options?: ColorPickerInitOptions): void;
 /**
  * Deactivates the chat room map
  * @returns {void} - Nothing
@@ -128,6 +277,7 @@ declare function ChatRoomMapViewDestroyElements(): void;
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
 declare function ChatRoomMapViewIsActive(): boolean;
+/** @type {ScreenRunHandler} */
 declare function ChatRoomMapViewRun(time: number): void;
 /**
  * Returns TRUE if the player can leave from the map
@@ -229,7 +379,7 @@ declare function ChatRoomMapViewIsWall(x: number, y: number): boolean;
  * @param {function(number, number): boolean} Condition - Function that returns true if the position is connected
  * @returns {{ North: boolean, South: boolean, East: boolean, West: boolean }} - The connectivity status
  */
-declare function ChatRoomMapViewGetConnectivityDirections(X: number, Y: number, Condition: (arg0: number, arg1: number) => boolean): {
+declare function ChatRoomMapViewGetConnectivityDirections(X: number, Y: number, Condition: Function): {
     North: boolean;
     South: boolean;
     East: boolean;
@@ -251,6 +401,18 @@ declare function ChatRoomMapViewGetTileAtPos(x: number, y: number): ChatRoomMapT
  * @deprecated since August 2026, use {@link MapManager.Map.getObject}
  */
 declare function ChatRoomMapViewGetObjectAtPos(x: number, y: number): ChatRoomMapObject | null;
+/**
+ * True when the player cannot stand on this object right now.
+ * @param {ChatRoomMapObject} object
+ * @returns {boolean}
+ */
+declare function ChatRoomMapViewObjectBlocksStanding(object: ChatRoomMapObject): boolean;
+/**
+ * Draws a red X over a cell the player cannot stand on.
+ * @param {Rect} rect
+ * @returns {void}
+ */
+declare function ChatRoomMapViewDrawObstacleMark(rect: Rect): void;
 /**
  * Returns TRUE if a given position cannot be entered
  * @param {number} X - The X position on the map
@@ -297,14 +459,23 @@ declare function ChatRoomMapViewCollision(): void;
  * Find the first {@link ChatRoomCharacter} members at the specified X & Y position
  * @param {number} X - The X position on the screen
  * @param {number} Y - The Y position on the screen
- * @returns {null | Character} A character at the specified X & Y position or, if none can be found, `null`
+ * @returns {null | OnlineCharacter} A character at the specified X & Y position or, if none can be found, `null`
  */
-declare function ChatRoomMapViewGetCharacterAtPos(X: number, Y: number): null | Character;
+declare function ChatRoomMapViewGetCharacterAtPos(X: number, Y: number): null | OnlineCharacter;
 /**
  * Returns a object that contains the entry flag's position with x and y parameters or null if no entry flag is set
  * @returns {ChatRoomMapPos|null}
  */
 declare function ChatRoomMapViewGetEntryFlagPosition(): ChatRoomMapPos | null;
+/**
+ * Gets the image of an object drawn with its layers, the colorable ones tinted.
+ * Colorizing reads every pixel, so the composed images are cached.
+ * @param {ChatRoomMapObject} obj - The object to draw
+ * @param {string} imageName - The image name, as returned by the object's `BuildImageName`
+ * @param {readonly HexColor[]} colors - One color per colorable layer
+ * @returns {string | HTMLCanvasElement} - The composed image, or the plain image URL while the layers are not available
+ */
+declare function ChatRoomMapViewGetColoredObjectImage(obj: ChatRoomMapObject, imageName: string, colors: readonly HexColor[]): string | HTMLCanvasElement;
 /**
  * Draw the map grid and character on screen
  * @param {number} Left - The X position on the screen
@@ -336,9 +507,10 @@ declare function ChatRoomMapViewUpdatePlayerFlag(UpdateTimeOffset?: number): voi
  *
  * @returns {void} - Nothing
  */
-declare function ChatRoomMapViewScheduleMapUpdate(): void;
+declare var ChatRoomMapViewScheduleMapUpdate: CommonCancellableFn<[], void>;
 /**
  * Updates the room data if needed
+ * @deprecated Use {@link ChatRoomMapViewScheduleMapUpdate}
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewUpdateRoomSync(): void;
@@ -359,6 +531,26 @@ declare function ChatRoomMapViewSyncMapData(data: ServerMapDataResponse): void;
  */
 declare function ChatRoomMapViewUpdateLastMapDataSync(): void;
 /**
+ * Characters can stand together on a shared object (teleport pads), where a teleport pad sends to,
+ * and on the tiles right around them, so a group arriving at once can always walk off
+ * @param {number} X - The X position on the map
+ * @param {number} Y - The Y position on the map
+ * @returns {boolean} - TRUE if more than one character can stand on that tile
+ */
+declare function ChatRoomMapViewTileIsShared(X: number, Y: number): boolean;
+/**
+ * Gets a map object image colorized the way clothes are, it's only colorized once and then reused
+ * @param {string} url - The image
+ * @param {HexColor} color - The color
+ * @returns {DrawSource} - The colorized image, or the image itself while it's still loading
+ */
+declare function ChatRoomMapViewGetColoredImage(url: string, color: HexColor): DrawSource;
+/**
+ * Sends the player from the teleport pad she's standing on to where it points, if she can stand there
+ * @returns {boolean} - TRUE if the player was teleported
+ */
+declare function ChatRoomMapViewTeleportPad(): boolean;
+/**
  * Processes the character movement when the timer has expired
  * @returns {void} - Nothing
  */
@@ -368,6 +560,114 @@ declare function ChatRoomMapViewMovementProcess(): void;
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewLeash(): void;
+/**
+ * Pulls the player back within leash range of where her leash is held
+ * @param {ChatRoomMapPos} anchor - Where the leash is held: its holder, or the tether point it's tied to
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewPullWithinLeashRange(anchor: ChatRoomMapPos): void;
+/**
+ * Checks if there's a tether point at a position of the current map
+ * @param {ChatRoomMapPos} pos
+ * @returns {boolean}
+ */
+declare function ChatRoomMapViewIsTetherPoint(pos: ChatRoomMapPos): boolean;
+/**
+ * Checks if a character is within reach of a position
+ * @param {Character} C
+ * @param {ChatRoomMapPos} pos
+ * @returns {boolean}
+ */
+declare function ChatRoomMapViewIsWithinReach(C: Character, pos: ChatRoomMapPos): boolean;
+/**
+ * Checks if the player can tie a character's leash to a tether point; works on herself too
+ * @param {Character} C
+ * @param {ChatRoomMapPos} pos - The tether point
+ * @returns {boolean}
+ */
+declare function ChatRoomMapViewCanTetherTie(C: Character, pos: ChatRoomMapPos): boolean;
+/**
+ * Checks if the player can untie a character's leash from its tether point:
+ * her own leash if she could tie it herself or one she tied, within reach of the tether point, or anyone else's as a room admin
+ * @param {Character} C
+ * @returns {boolean}
+ */
+declare function ChatRoomMapViewCanTetherUntie(C: Character): boolean;
+/**
+ * Shows the menu of a tether point: admins choose if it is one, and anyone within reach ties leashes to it or unties them
+ * @param {number} x
+ * @param {number} y
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewShowTetherPointMenu(x: number, y: number): void;
+/**
+ * Asks a character's client to tie her leash to a tether point, or to untie it
+ * @param {Character} C - The character whose leash is tied or untied
+ * @param {ChatRoomMapTether | null} tether - The tether, or `null` to untie the leash
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewSendTetherRequest(C: Character, tether: ChatRoomMapTether | null): void;
+/**
+ * Ties the player's leash to a tether point, or unties it, from another character's hidden message
+ * @param {OnlineCharacter} sender
+ * @param {ServerChatRoomMessage} data
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewTetherHiddenMessage(sender: OnlineCharacter, data: ServerChatRoomMessage): void;
+/**
+ * Ties the player's leash to a tether point, or unties it, as a character asked, and tells the room who did it
+ * @param {Character} C - The character who ties or unties the leash
+ * @param {ChatRoomMapTether | null} tether - The tether, or `null` to untie the leash
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewAcceptTether(C: Character, tether: ChatRoomMapTether | null): void;
+/**
+ * Ties the player's leash to a tether point, or unties it, and tells the room with her map data.
+ * A leash tied to a tether point isn't held by anyone.
+ * @param {ChatRoomMapTether | null} tether - The tether, or `null` to untie the leash
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewSetTether(tether: ChatRoomMapTether | null): void;
+/**
+ * Checks if the player's leash can still be tied where it is: the room still has a map,
+ * the object is still a tether point and she can still be leashed by whoever tied it.
+ * Works in any view: the map is read again from the room data when the map view isn't showing it.
+ * @param {ChatRoomMapTether} tether
+ * @returns {boolean}
+ */
+declare function ChatRoomMapViewTetherIsValid(tether: ChatRoomMapTether): boolean;
+/**
+ * Checks if someone who could untie the player's leash is in the room with her: whoever tied it or a room admin.
+ * Like a locked room, a tether point doesn't hold anyone with nobody around to let her go.
+ * @param {ChatRoomMapTether} tether
+ * @returns {boolean}
+ */
+declare function ChatRoomMapViewTetherHasKeeper(tether: ChatRoomMapTether): boolean;
+/**
+ * Checks if the player's leash is tied to a tether point that holds her: it's still valid and someone who could untie it is in the room
+ * @returns {boolean}
+ */
+declare function ChatRoomMapViewTetherHolds(): boolean;
+/**
+ * Unties the player's leash from a tether point that doesn't hold her anymore,
+ * telling the room when it slips off because nobody who could untie it is left
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewTetherRelease(): void;
+/**
+ * Keeps the player within leash range of the tether point her leash is tied to,
+ * and unties it when the tether point doesn't hold her anymore
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewTether(): void;
+/**
+ * Draws the leashes tied to tether points, from the characters to the tether points
+ * @param {(pos: ChatRoomMapPos) => [x: number, y: number]} toScreen - Gets the screen position of a tile's top left corner
+ * @param {number} tileWidth
+ * @param {number} tileHeight
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewDrawTethers(toScreen: (pos: ChatRoomMapPos) => [x: number, y: number], tileWidth: number, tileHeight: number): void;
 /**
  * Draws the map and characters of the chat room map on the left side of the screen
  * @returns {void} - Nothing
@@ -387,10 +687,10 @@ declare function ChatRoomMapViewDrawUi(): void;
 declare function ChatRoomMapViewChangeKey(target: Character, keys: ("gold" | "silver" | "bronze")[], give: boolean): void;
 /**
  * Change a key from a character from a hidden message - reciver
- * @param {Character} sender
+ * @param {OnlineCharacter} sender
  * @param {ServerChatRoomMessage} data
  */
-declare function ChatRoomMapViewChangeKeyHiddenMessage(sender: Character, data: ServerChatRoomMessage): void;
+declare function ChatRoomMapViewChangeKeyHiddenMessage(sender: OnlineCharacter, data: ServerChatRoomMessage): void;
 /**
  * Teleport a character to a specific tile
  * @param {Character} target
@@ -399,10 +699,10 @@ declare function ChatRoomMapViewChangeKeyHiddenMessage(sender: Character, data: 
 declare function ChatRoomMapViewTeleport(target: Character, position: ChatRoomMapPos): void;
 /**
  * Teleport a character to a specific tile from a hidden message
- * @param {Character} sender
+ * @param {OnlineCharacter} sender
  * @param {ServerChatRoomMessage} data
  */
-declare function ChatRoomMapViewTeleportHiddenMessage(sender: Character, data: ServerChatRoomMessage): void;
+declare function ChatRoomMapViewTeleportHiddenMessage(sender: OnlineCharacter, data: ServerChatRoomMessage): void;
 /**
  * Check if a tile on the map can be entered by a player, and return the number of milliseconds required to reach it
  * @param {number} X - The X position on the map
@@ -418,11 +718,24 @@ declare function ChatRoomMapViewCanEnterTile(X: number, Y: number): number;
  */
 declare function ChatRoomMapViewMove(D: ChatRoomMapDirection, Force?: boolean): void;
 /**
+ * Sets the map view movement
+ * @param {ChatRoomMapMovement | null} movement
+ */
+declare function ChatRoomMapViewSetMapViewMovement(movement: ChatRoomMapMovement | null): void;
+/**
  * Undoes the changes made to the map, from the latest backup in the stack
  * @returns {void} - Nothing
  */
 declare function ChatRoomMapViewUndo(): void;
+/**
+ * Handles keyboard keys in the chat room map screen
+ * @type {KeyboardEventListener}
+ */
 declare function ChatRoomMapViewKeyDown(event: KeyboardEvent): boolean;
+/**
+ * Handles keyboard up keys in the chat room map screen
+ * @type {KeyboardEventListener}
+ */
 declare function ChatRoomMapViewKeyUp(event: KeyboardEvent): boolean;
 /**
  * Handles clicks the chatroom screen view.
@@ -436,13 +749,24 @@ declare function ChatRoomMapViewSetSelectedTile(pos: {
     X: number;
     Y: number;
 } | undefined): void;
+/**
+ * Shows admins the sliders turning and sizing the object placed on a tile, its colors if it has color layers, and its decal if it can take one
+ * @param {ChatRoomMapPos} pos
+ * @param {number} objectId
+ * @returns {void}
+ */
+declare function ChatRoomMapViewShowObjectSettings(pos: ChatRoomMapPos, objectId: number): void;
+/**
+ * Mouse down event is used to draw on screen and handle the tiles buttons
+ * @type {MouseEventListener}
+ */
 declare function ChatRoomMapViewMouseDown(event: PointerEvent): void;
 /**
  *
- * @param {ChatRoomData | null} data
- * @returns {data is ChatRoomData & { MapData: { Objects: string, Tiles: string }}}
+ * @param {ServerChatRoomData | null} data
+ * @returns {data is ServerChatRoomData & { MapData: { Objects: string, Tiles: string }}}
  */
-declare function validMapData(data: (ServerChatRoomData | null) | null): data is (ServerChatRoomData | null) & {
+declare function validMapData(data: ServerChatRoomData | null): data is ServerChatRoomData & {
     MapData: {
         Objects: string;
         Tiles: string;
@@ -458,9 +782,47 @@ declare function ChatRoomMapViewPixelToTileCoordinates(pixelX: number, pixelY: n
     X: number;
     Y: number;
 } | null;
+/**
+ * Mouse move event is used to draw on screen
+ * @type {MouseEventListener}
+ */
 declare function ChatRoomMapViewMouseMove(event: PointerEvent): void;
-declare function ChatRoomMapViewMouseUp(event: PointerEvent): void;
-declare function ChatRoomMapViewMouseWheel(event: WheelEvent): void;
+/**
+ * The tool currently painting, if one is selected.
+ * @returns {ChatRoomMapViewTool | null}
+ */
+declare function ChatRoomMapViewGetActiveTool(): ChatRoomMapViewTool | null;
+/**
+ * Selects the paint tool and updates its button, if that button is on screen.
+ * @param {ChatRoomMapViewToolName | ""} tool
+ */
+declare function ChatRoomMapViewSetActiveTool(tool: ChatRoomMapViewToolName | ""): void;
+/**
+ * The map editing tools.
+ * @satisfies {Record<string, ChatRoomMapViewTool>}
+ */
+declare const ChatRoomMapViewTools: {
+    Brush: {
+        selectionColor: string;
+        canPaint: () => boolean;
+        paint: (x: number, y: number, range: number, _event: PointerEvent) => void;
+    };
+    Eraser: {
+        selectionColor: string;
+        canPaint: () => boolean;
+        paint: (x: number, y: number, range: number, event: PointerEvent) => void;
+    };
+};
+/**
+ * Mouse up event is used to stop drawing
+ * @type {MouseEventListener}
+ */
+declare function ChatRoomMapViewMouseUp(): void;
+/**
+ * Mouse wheel event is used to zoom the map
+ * @type {MouseWheelEventListener}
+ */
+declare function ChatRoomMapViewMouseWheel(Event: WheelEvent): void;
 /**
  * Copies the current map in the clipboard.  Called from the chat field command "mapcopy"
  * @returns {void} - Nothing
@@ -479,79 +841,3 @@ declare function ChatRoomMapViewPaste(Param: string): void;
  * @returns {string}
  */
 declare function RgbaArrayToHTMLColor(rgba: [number, number, number, number]): string;
-declare const ChatRoomMapViewName: "Map";
-declare var ChatRoomMapViewPerceptionRange: number;
-declare var ChatRoomMapViewPerceptionRangeMin: number;
-declare var ChatRoomMapViewPerceptionRangeMax: number;
-/** @type {"" |  "Tile" | "Object" | "TileType" | "ObjectType" | "Effect"} */
-declare var ChatRoomMapViewEditMode: "" | "Tile" | "Object" | "TileType" | "ObjectType" | "Effect";
-declare var ChatRoomMapViewEditPath: string;
-declare var ChatRoomMapViewLastSearch: string;
-/** @type {"" | ChatRoomMapTileType | ChatRoomMapObjectType} */
-declare var ChatRoomMapViewEditSubMode: "" | ChatRoomMapTileType | ChatRoomMapObjectType;
-declare var ChatRoomMapViewEditStarted: boolean;
-/** @type {null | ChatRoomMapDoodad} */
-declare var ChatRoomMapViewEditObject: null | ChatRoomMapDoodad;
-/**
- * @type {number[]}
- * @deprecated Use {@link ChatRoomMapViewPixelToTileCoordinates} and {@link ChatRoomMapViewEditRange}
- */
-declare var ChatRoomMapViewEditSelection: number[];
-declare var ChatRoomMapViewEditRange: number;
-declare var ChatRoomMapViewMaxEditRange: number;
-/**
- * @type {ServerChatRoomMapData[]}
- * @deprecated Handled internally by {@link MapManager}.
- */
-declare var ChatRoomMapViewEditBackup: ServerChatRoomMapData[];
-/** @type {null | number} */
-declare var ChatRoomMapViewUpdateRoomNext: null | number;
-/** @type {null | number} */
-declare var ChatRoomMapViewUpdatePlayerNext: null | number;
-/** @type {null | number} */
-declare var ChatRoomMapViewUpdateLastMapDataNext: null | number;
-/** @type {null | Character} */
-declare var ChatRoomMapViewFocusedCharacter: null | Character;
-declare var ChatRoomMapViewFocusedCharacterX: number;
-declare var ChatRoomMapViewFocusedCharacterY: number;
-declare var ChatRoomMapViewSuperPowersActive: boolean;
-declare var ChatRoomMapViewBaseMovementSpeed: number;
-/** @type {null | ChatRoomMapMovement} */
-declare var ChatRoomMapViewMovement: null | ChatRoomMapMovement;
-/** @type {ChatRoomMapType[]} */
-declare var ChatRoomMapViewTypeList: ChatRoomMapType[];
-declare var ChatRoomMapViewUpdatePlayerTime: number;
-declare const ChatRoomMapViewWhisperRange: 1;
-declare const ChatRoomMapViewInteractionRange: 1;
-declare const ChatRoomMapViewRemoteRange: number;
-declare const ChatRoomMapSignTextMaxLength: 150;
-/** @type {boolean[]}
- * @deprecated Use {@link MapManager.Map.isTileVisible()}
-*/
-declare var ChatRoomMapViewVisibilityMask: boolean[];
-/**
- * @type {boolean[]}
- * @deprecated Use {@link MapManager.Map.isTileHearable()}
- */
-declare var ChatRoomMapViewAudibilityMask: boolean[];
-/** @type {Uint16Array | null} */
-declare var ChatRoomMapViewTileFog: Uint16Array | null;
-/** @type {Uint16Array | null} */
-declare var ChatRoomMapViewObjectFog: Uint16Array | null;
-declare namespace ChatRoomMapViewKeysPressed {
-    let North: boolean;
-    let South: boolean;
-    let West: boolean;
-    let East: boolean;
-}
-declare var ChatRoomMapViewStartOfKeyPress: number;
-/** @type {Map<number, Character>} */
-declare var ChatRoomMapViewCharacterMap: Map<number, Character>;
-/** @type {null | HTMLElement} */
-declare var ChatRoomMapViewDialogMenu: null | HTMLElement;
-/** @type {HTMLElement} */
-declare var ChatRoomMapViewPanel: HTMLElement;
-/** @type {HTMLElement} */
-declare var ChatRoomMapViewPanelContainer: HTMLElement;
-/** @type {null | number} */
-declare var ChatRoomMapViewSelectedObjectIndex: null | number;

@@ -1,7 +1,10 @@
+declare var FuturisticChastityBeltShockCooldownOrgasm: number;
+/** @type {AssetGroupItemName[]} */
+declare var InventoryItemPelvisFuturisticChastityBeltTamperZones: AssetGroupItemName[];
 /**
  * @param {Item} Item
  */
-declare function InventoryFuturisticChastityBeltCheckPunish(Item: Item): "" | "Struggle" | "Orgasm" | "StruggleOther";
+declare function InventoryFuturisticChastityBeltCheckPunish(Item: Item): "" | "Orgasm" | "Struggle" | "StruggleOther";
 /**
  * @param {DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>} data
  */
@@ -15,11 +18,12 @@ declare function AssetsItemPelvisFuturisticChastityBeltScriptUpdatePlayer(data: 
  * @param {boolean} [NoShock]
  */
 declare function AssetsItemPelvisFuturisticChastityBeltScriptTrigger(C: Character, Item: Item, ShockType: string, ReplacementWord?: string, NoShock?: boolean): void;
-declare function AssetsItemPelvisFuturisticChastityBeltScriptDraw(drawData: DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>): void;
-declare var FuturisticChastityBeltShockCooldownOrgasm: number;
-/** @type {AssetGroupItemName[]} */
-declare var InventoryItemPelvisFuturisticChastityBeltTamperZones: AssetGroupItemName[];
 type FuturisticChastityBeltPersistentData = {
     UpdateTime?: number;
     LastMessageLen?: number;
 } & AnimationPersistentData;
+/**
+ * @typedef {{ UpdateTime?: number, LastMessageLen?: number } & AnimationPersistentData} FuturisticChastityBeltPersistentData
+ */
+/** @type {ExtendedItemCallbacks.ScriptDraw<FuturisticChastityBeltPersistentData>} */
+declare function AssetsItemPelvisFuturisticChastityBeltScriptDraw(data: DynamicScriptCallbackData<FuturisticChastityBeltPersistentData>): void;

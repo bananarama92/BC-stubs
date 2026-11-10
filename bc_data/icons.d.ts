@@ -312,12 +312,6 @@ export type IconsType = {
 	 */
 	readonly ColorSelect: "Icons/ColorSelect.png";
 	/**
-	 * ![Controller](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Controller.png)
-	 * 
-	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Controller.png|BondageProjects/Bondage-College}
-	 */
-	readonly Controller: "Icons/Controller.png";
-	/**
 	 * ![Copy](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Copy.svg)
 	 * 
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Copy.svg|BondageProjects/Bondage-College}
@@ -449,6 +443,12 @@ export type IconsType = {
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/EditTile.png|BondageProjects/Bondage-College}
 	 */
 	readonly EditTile: "Icons/EditTile.png";
+	/**
+	 * ![Eraser](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Eraser.svg)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Eraser.svg|BondageProjects/Bondage-College}
+	 */
+	readonly Eraser: "Icons/Eraser.svg";
 	/**
 	 * ![Escape](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Escape.png)
 	 * 
@@ -876,6 +876,12 @@ export type IconsType = {
 	 */
 	readonly Paste: "Icons/Paste.svg";
 	/**
+	 * ![Pause](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Pause.svg)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Pause.svg|BondageProjects/Bondage-College}
+	 */
+	readonly Pause: "Icons/Pause.svg";
+	/**
 	 * ![PermissionMode](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/PermissionMode.png)
 	 * 
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/PermissionMode.png|BondageProjects/Bondage-College}
@@ -899,6 +905,12 @@ export type IconsType = {
 	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Platform.png|BondageProjects/Bondage-College}
 	 */
 	readonly Platform: "Icons/Platform.png";
+	/**
+	 * ![Play](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Play.svg)
+	 * 
+	 * @see {@link https://gitgud.io/BondageProjects/Bondage-College/-/blob/master/BondageClub/Icons/Play.svg|BondageProjects/Bondage-College}
+	 */
+	readonly Play: "Icons/Play.svg";
 	/**
 	 * ![Player](https://gitgud.io/BondageProjects/Bondage-College/-/raw/master/BondageClub/Icons/Player.png)
 	 * 

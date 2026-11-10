@@ -1,3 +1,13 @@
+declare var MaidCleaningBackground: string;
+/** @type {{ X: number, Y: number, T: number }[]} */
+declare var MaidCleaningSpots: {
+    X: number;
+    Y: number;
+    T: number;
+}[];
+declare var MaidCleaningPlayerX: number;
+declare var MaidCleaningPlayerY: number;
+declare var MaidCleaningSpotSize: number;
 /**
  * Generates all the spots to clean for the main cleaning minigame
  * @param {number} MaxSpot - Maximum amount of spots to generate
@@ -9,6 +19,10 @@ declare function MaidCleaningGenerateSpots(MaxSpot: number): void;
  * @returns {void} - Nothing
  */
 declare function MaidCleaningDrawSpots(): void;
+/**
+ * Loads the maid cleaning mini game. It will select a random background and generate spots based on the difficulty
+ * @type {ScreenLoadHandler}
+ */
 declare function MaidCleaningLoad(): Promise<void>;
 /**
  * Runs the maid cleaning mini game
@@ -26,18 +40,12 @@ declare function MaidCleaningEnd(Victory: boolean): void;
  * @returns {void} - Nothing
  */
 declare function MaidCleaningDoMove(): void;
+/**
+ * The player can use the C key to cheat and add 10 extra seconds to win the game
+ * @type {KeyboardEventListener}
+ */
 declare function MaidCleaningKeyDown(event: KeyboardEvent): boolean;
 /**
  * Handles clicks during the maid cleaning minigame. On mobile, we need to move the player on a click.
  */
 declare function MaidCleaningClick(): void;
-declare var MaidCleaningBackground: string;
-/** @type {{ X: number, Y: number, T: number }[]} */
-declare var MaidCleaningSpots: {
-    X: number;
-    Y: number;
-    T: number;
-}[];
-declare var MaidCleaningPlayerX: number;
-declare var MaidCleaningPlayerY: number;
-declare var MaidCleaningSpotSize: number;

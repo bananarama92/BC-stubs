@@ -1,4 +1,28 @@
 /**
+ * Callback to be executed upon exiting the color picker subscreen.
+ * @type {null | ItemColorExitListener}
+ */
+declare let ColorPickerExitCallback: null | ItemColorExitListener;
+/**
+ * The input callback to be executed upon color or opacity changes.
+ * This callback should be responsible for propagating the updated element state to external variables (_e.g._ {@link ItemColorState}).
+ * @type {null | ColorPickerInitOptions["onInput"]}
+ */
+declare let ColorPickerInputCallback: null | ColorPickerInitOptions["onInput"];
+/**
+ * The default saved custom colors (see {@link GetDefaultSavedColors})
+ * @type {HSVColor[]}
+ */
+declare var DefaultSavedColors: HSVColor[];
+/** The number of colors a player is allowed to save (see {@link DefaultSavedColors} and {@link PlayerCharacter.SavedColors}) */
+declare const ColorPickerNumSaved = 18;
+/**
+ * Parameters to be passed to {@link ColorPickerLoad}.
+ * Do _not_ modify directly; use {@link ColorPickerInit} instead.
+ * @type {null | Readonly<ColorPickerInitOptions>}
+ */
+declare let ColorPickerInitOptions: null | Readonly<ColorPickerInitOptions>;
+/**
  * Gets the coordinates of the current event on the canvas
  * @deprecated
  * @param {MouseEvent|TouchEvent} Event - The touch/mouse event
@@ -10,7 +34,7 @@ declare function ColorPickerGetCoordinates(Event: MouseEvent | TouchEvent): {
 };
 /**
  * Hide the color picker from the canvas.
- * @return {void} - Nothing
+ * @returns {void} - Nothing
  */
 declare function ColorPickerHide(): void;
 /**
@@ -40,84 +64,83 @@ declare function ColorPickerCSSToHSV(Color: HexColor, DefaultHSV?: HSVColor): HS
  */
 declare function ColorPickerHSVToCSS(HSV: HSVColor): HexColor;
 /**
+ * Translates a CSS hex color into the uppercase `#RRGGBB` and `[0, 1]` opacity used by the color picker.
+ * `#RGB` is expanded. `#RRGGBBAA` keeps its alpha byte; shorter hex is fully opaque.
+ * @param {string | undefined} color
+ * @returns {null | { color: HexColor, opacity: number }} `null` when `color` is not a hex color
+ */
+declare function ColorPickerCSSToColor(color: string | undefined): null | {
+    color: HexColor;
+    opacity: number;
+};
+/**
+ * Translates a color-picker color and `[0, 1]` opacity back into a CSS hex color.
+ * Fully opaque colors omit the alpha byte.
+ * @param {string} color
+ * @param {number} opacity
+ * @returns {null | HexColor} `null` when `color` is not a hex color or `opacity` is not a finite number
+ */
+declare function ColorPickerColorToCSS(color: string, opacity: number): null | HexColor;
+/**
  * Returns the array of default colors for the list of favorite colors.
  * @returns {HSVColor[]} - Array of default colors
  */
 declare function GetDefaultSavedColors(): HSVColor[];
-/**
- * Call {@link ColorPickerLoad} with the passed parameters and perform a resize.
- * @param {null | ColorPickerInitOptions} options - The load parameters
- * @returns {Promise<HTMLElement>} - The root element of the color picker subscreen
- */
-declare function ColorPickerInit(options?: null | ColorPickerInitOptions): Promise<HTMLElement>;
-declare function ColorPickerLoad(): Promise<void>;
-/**
- * Reload and refresh the color picker based on the current item color data.
- * @param {null | ColorPickerInitOptions} options
- * @returns {null | HTMLElement} The paseed root element
- */
-declare function ColorPickerReload(options?: null | ColorPickerInitOptions): null | HTMLElement;
-declare function ColorPickerResize(load: boolean): void;
-declare function ColorPickerUnload(): void;
-/**
- * @param {boolean} [forceExit=false]
- * @satisfies {ScreenExitHandler}
- */
-declare function ColorPickerExit(forceExit?: boolean): void;
-/**
- * Callback to be executed upon exiting the color picker subscreen.
- * @type {null | ItemColorExitListener}
- */
-declare let ColorPickerExitCallback: null | ItemColorExitListener;
-/**
- * The input callback to be executed upon color or opacity changes.
- * This callback should be responsible for propagating the updated element state to external variables (_e.g._ {@link ItemColorState}).
- * @type {null | ColorPickerInitOptions["onInput"]}
- */
-declare let ColorPickerInputCallback: null | ColorPickerInitOptions["onInput"];
-/**
- * The default saved custom colors (see {@link GetDefaultSavedColors})
- * @type {HSVColor[]}
- */
-declare var DefaultSavedColors: HSVColor[];
-/** The number of colors a player is allowed to save (see {@link DefaultSavedColors} and {@link PlayerCharacter.SavedColors}) */
-declare const ColorPickerNumSaved: 18;
-/**
- * Parameters to be passed to {@link ColorPickerLoad}.
- * Do _not_ modify directly; use {@link ColorPickerInit} instead.
- * @type {null | Readonly<ColorPickerInitOptions>}
- */
-declare let ColorPickerInitOptions: null | Readonly<ColorPickerInitOptions>;
-declare namespace ColorPicker {
-    let ids: Readonly<{
+/** Namespace for constructing and managing color pickers */
+declare var ColorPicker: {
+    /**
+     * Element IDs for the {@link ColorPicker} namespace.
+     * @readonly
+     */
+    ids: Readonly<{
         root: "color-picker";
     }>;
-    let defaultShape: Readonly<RectTuple>;
-    let _shapes: WeakMap<Element, Readonly<RectTuple>>;
-    namespace eventListeners {
-        function inputColor(this: HTMLInputElement | HTMLColorTintElement, ev: Event): void;
-        function focusColor(this: HTMLInputElement, ev: FocusEvent): void;
-        function blurColor(this: HTMLInputElement | HTMLColorTintElement, ev: FocusEvent): void;
-        function inputFieldset(this: HTMLFieldSetElement, ev: Event): void;
-        function changeRadio(this: HTMLInputElement, ev: Event): void;
-        function pointerupRadio(this: HTMLInputElement, ev: PointerEvent): void;
-        function keydownRadio(this: HTMLInputElement, ev: KeyboardEvent): void;
-        function clickSaveColor(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickExit(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickReset(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickCopy(this: HTMLButtonElement, ev: PointerEvent): void;
-        function clickPaste(this: HTMLButtonElement, ev: PointerEvent): void;
-        function focusoutFieldset(this: HTMLFieldSetElement, ev: FocusEvent): void;
-        function clickComboBox(this: HTMLButtonElement, ev: PointerEvent): void;
-        function focusComboLabel(this: HTMLElement, ev: FocusEvent): void;
-    }
+    /**
+     * The default shape of the color picker screen
+     * @readonly
+     * @type {Readonly<RectTuple>}
+     */
+    defaultShape: Readonly<RectTuple>;
+    /**
+     * A weakmap mapping color picker root elements to their respective {@link ScreenResizeHandler} shape
+     * @readonly
+     * private
+     * @type {WeakMap<Element, Readonly<RectTuple>>}
+     */
+    _shapes: WeakMap<Element, Readonly<RectTuple>>;
+    /**
+     * @readonly
+     * @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>}
+     */
+    eventListeners: {
+        inputColor(this: HTMLInputElement | HTMLColorTintElement, ev: Event): void;
+        focusColor(this: HTMLInputElement, ev: FocusEvent): void;
+        blurColor(this: HTMLInputElement | HTMLColorTintElement, ev: FocusEvent): void;
+        inputFieldset(this: HTMLFieldSetElement, ev: Event): void;
+        changeRadio(this: HTMLInputElement, ev: Event): void;
+        pointerupRadio(this: HTMLInputElement, ev: PointerEvent): void;
+        keydownRadio(this: HTMLInputElement, ev: KeyboardEvent): void;
+        clickSaveColor(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickExit(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickReset(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickCopy(this: HTMLButtonElement, ev: PointerEvent): void;
+        clickPaste(this: HTMLButtonElement, ev: PointerEvent): void;
+        /**
+         * The default input listener responsible for coupling any slider input changes to the states of `ColorPicker...` variables.
+         * @type {ColorPickerInitOptions["onInput"]}
+         */
+        inputItemColor(elem: any, ev: any): void;
+        focusoutFieldset(this: HTMLFieldSetElement, ev: FocusEvent): void;
+        clickComboBox(this: HTMLButtonElement, ev: PointerEvent): void;
+        focusComboLabel(this: HTMLElement, ev: FocusEvent): void;
+    };
     /**
      * Unpack and validate the {@link HTMLFieldSetElement.elements} of the passed `fieldset[name='color-picker']` element.
      * private
      * @param {HTMLFieldSetElement} fieldset
      * @param {null | { checkValidity?: boolean }} options
      */
-    function _unpackColorPickerFieldset(fieldset: HTMLFieldSetElement, options?: null | {
+    _unpackColorPickerFieldset(fieldset: HTMLFieldSetElement, options?: null | {
         checkValidity?: boolean;
     }): {
         hue: HTMLInputElement;
@@ -133,7 +156,7 @@ declare namespace ColorPicker {
      * @param {readonly { value: string, label: string }[]} optionList
      * @returns {HTMLElement}
      */
-    function _getDropdownWidget(id: null | string, optionList: readonly {
+    _getDropdownWidget(id: null | string, optionList: readonly {
         value: string;
         label: string;
     }[]): HTMLElement;
@@ -143,16 +166,16 @@ declare namespace ColorPicker {
      * @param {null | Pick<ColorPickerInitOptions, "colorState" | "onInput">} options
      * @returns {HTMLFieldSetElement} - The newly created color picker fieldset containing all interactive sliders and such
      */
-    function create(id: null | string, options?: null | Pick<ColorPickerInitOptions, "colorState" | "onInput">): HTMLFieldSetElement;
+    create(id: null | string, options?: null | Pick<ColorPickerInitOptions, "colorState" | "onInput">): HTMLFieldSetElement;
     /**
      * {@link ColorPicker.setColor} helper for parsing color values (be it stringified or as HSV)
      * private
      * @param {Pick<ColorPickerColorInput, "colorString" | "hsv">} value
-     * @param {HTMLInputElement} outputInput
-     * @param {null | number} opacity
+     * @param {null | HTMLInputElement} outputInput - Current text input, used when `value` carries neither a string nor an HSV color
+     * @param {null | number} opacity - Opacity byte in `[0, 255]`. `255` and `null` leave the color without an alpha byte
      * @returns {{ hsv: null | HSVColor, output: string }}
      */
-    function _setColorParseColor(value: Pick<ColorPickerColorInput, "colorString" | "hsv">, outputInput: HTMLInputElement, opacity: null | number): {
+    _setColorParseColor(value: Pick<ColorPickerColorInput, "colorString" | "hsv">, outputInput: null | HTMLInputElement, opacity: null | number): {
         hsv: null | HSVColor;
         output: string;
     };
@@ -160,11 +183,11 @@ declare namespace ColorPicker {
      * {@link ColorPicker.setColor} helper for parsing opacity values
      * private
      * @param {Pick<ColorPickerColorInput, "opacity" | "colorString">} value
-     * @param {HTMLInputElement} opacityInput
+     * @param {null | HTMLInputElement} [opacityInput] - Slider whose min, max, and disabled state clamp the result. Omitted, the byte is clamped to `[0, 255]`
      * @param {null | { overrideEditOpacity?: boolean }} options
      * @returns {null | number}
      */
-    function _setColorParseOpacity(value: Pick<ColorPickerColorInput, "opacity" | "colorString">, opacityInput: HTMLInputElement, options?: null | {
+    _setColorParseOpacity(value: Pick<ColorPickerColorInput, "opacity" | "colorString">, opacityInput?: null | HTMLInputElement, options?: null | {
         overrideEditOpacity?: boolean;
     }): null | number;
     /**
@@ -173,7 +196,7 @@ declare namespace ColorPicker {
      * @param {ColorPickerColorInput} value - The passed color (be it as string or HSV object) and opacity
      * @param {null | { overrideEditOpacity?: boolean, dispatch?: boolean }} options
      */
-    function setColor(root: ElementHelp.ElementOrId, value: ColorPickerColorInput, options?: null | {
+    setColor(root: ElementHelp.ElementOrId, value: ColorPickerColorInput, options?: null | {
         overrideEditOpacity?: boolean;
         dispatch?: boolean;
     }): void;
@@ -182,12 +205,35 @@ declare namespace ColorPicker {
      * @param {ElementHelp.ElementOrId} root - The color picker screen or its ID
      * @returns {null | ItemColorExitState}
      */
-    function getColor(root: ElementHelp.ElementOrId): null | ItemColorExitState;
+    getColor(root: ElementHelp.ElementOrId): null | ItemColorExitState;
     /**
      * Toggle the `disabled` state of the passed color picker using {@link Element.toggleAttribute}-like semantics.
      * @param {ElementHelp.ElementOrId} root - The color picker screen or its ID
      * @param {null | boolean} force - Toggle the `disabled` attributes if unspecified or, if a boolean is passed, force the provided value
      * @returns {boolean} - The new `disabled` state
      */
-    function toggleDisabled(root: ElementHelp.ElementOrId, force?: null | boolean): boolean;
-}
+    toggleDisabled(root: ElementHelp.ElementOrId, force?: null | boolean): boolean;
+};
+/**
+ * Call {@link ColorPickerLoad} with the passed parameters and perform a resize.
+ * @param {null | ColorPickerInitOptions} options - The load parameters
+ * @returns {Promise<HTMLElement>} - The root element of the color picker subscreen
+ */
+declare function ColorPickerInit(options?: null | ColorPickerInitOptions): Promise<HTMLElement>;
+/** @type {ScreenLoadHandler} */
+declare function ColorPickerLoad(): Promise<void>;
+/**
+ * Reload and refresh the color picker based on the current item color data.
+ * @param {null | ColorPickerInitOptions} options
+ * @returns {null | HTMLElement} The paseed root element
+ */
+declare function ColorPickerReload(options?: null | ColorPickerInitOptions): null | HTMLElement;
+/** @type {ScreenResizeHandler} */
+declare function ColorPickerResize(): void;
+/** @type {ScreenUnloadHandler} */
+declare function ColorPickerUnload(): void;
+/**
+ * @param {boolean} [forceExit]
+ * @satisfies {ScreenExitHandler}
+ */
+declare function ColorPickerExit(forceExit?: boolean): void;

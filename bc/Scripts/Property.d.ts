@@ -1,18 +1,39 @@
 /**
+ * Property.js
+ * -----------
+ * A module with common helper functions for the handling of specific {@link ItemProperties} properties.
+ * Note that more generic extended item functions should be confined to `ExtendedItem.js`.
+ */
+/**
+ * A Map that maps input element IDs to their original value is defined in, _.e.g_, {@link PropertyOpacityLoad}.
+ * Used as fallback in case an invalid opacity value is encountered when exiting.
+ * @type {Map<string, any>}
+ */
+declare const PropertyOriginalValue: Map<string, any>;
+/**
  * Construct an item-specific ID for a properties input element (_e.g._ an opacity slider).
  * @param {string} Name - The name of the input element
  * @param {Item | null} Item - The item for whom the ID should be constructed; defaults to {@link DialogFocusItem}
  * @returns {string} - The ID of the property
  */
 declare function PropertyGetID(Name: string, Item?: Item | null): string;
-declare function PropertyOpacityInit(data: ExtendedItemData<any>, originalFunction: (C: Character, item: Item, push: boolean, refresh: boolean) => boolean, C: Character, item: Item, push: boolean, refresh: boolean): boolean;
+/**
+ * Throttled callback for opacity slider changes
+ * @param {Character} C - The character being modified
+ * @param {Item} item - The item being modified
+ * @param {number} Opacity - The new opacity to set on the item
+ * @returns {void} - Nothing
+ */
+declare const PropertyOpacityChange: (C: any, Item: any, Opacity: any) => void;
+/** @type {ExtendedItemScriptHookCallbacks.Init<ExtendedItemData<any>>} */
+declare function PropertyOpacityInit({ asset }: ExtendedItemData<any>, originalFunction: (C: Character, item: Item, push: boolean, refresh: boolean, log?: boolean | undefined) => boolean, C: Character, item: Item, push?: boolean, refresh?: boolean): boolean;
 /**
  * Load function for items with opacity sliders. Constructs the opacity slider.
  * @param {ExtendedItemData<any>} Data - The items extended item data
  * @param {() => void} OriginalFunction - The function that is normally called when an archetypical item reaches this point (if any).
  * @param {ThumbIcon} thumbIcon The icon to use for the range input's "thumb" (handle).
  * @returns {HTMLInputElement} - The new or pre-existing range input element of the opacity slider
- * @satisfies {ExtendedItemScriptHookCallbacks.Load<any>}
+ * @satisfies {ExtendedItemScriptHookCallbacks.Load<ExtendedItemData<any>>}
  */
 declare function PropertyOpacityLoad({ asset, dialogPrefix }: ExtendedItemData<any>, OriginalFunction: () => void, thumbIcon?: ThumbIcon): HTMLInputElement;
 /**
@@ -23,7 +44,7 @@ declare function PropertyOpacityLoad({ asset, dialogPrefix }: ExtendedItemData<a
  * @param {number} YOffset - An offset for all text and slider Y coordinates
  * @param {TextKeysInterface} LabelKeyword - The keyword of the opacity label
  * @returns {void} Nothing
- * @satisfies {ExtendedItemScriptHookCallbacks.Draw<any>}
+ * @satisfies {ExtendedItemScriptHookCallbacks.Draw<ExtendedItemData<any>>}
  */
 declare function PropertyOpacityDraw(Data: ExtendedItemData<any>, OriginalFunction: () => void, XOffset?: number, YOffset?: number, LabelKeyword?: TextKeysInterface): void;
 /**
@@ -32,7 +53,7 @@ declare function PropertyOpacityDraw(Data: ExtendedItemData<any>, OriginalFuncti
  * @param {null | (() => void)} OriginalFunction - The function that is normally called when an archetypical item reaches this point (if any).
  * @param {boolean} Refresh - Whether character parameters and the respective item should be refreshed or not
  * @returns {boolean} Whether the opacity was updated or not
- * @satisfies {ExtendedItemScriptHookCallbacks.Exit<any>}
+ * @satisfies {ExtendedItemScriptHookCallbacks.Exit<ExtendedItemData<any>>}
  */
 declare function PropertyOpacityExit({ asset }: ExtendedItemData<any>, OriginalFunction: null | (() => void), Refresh?: boolean): boolean;
 /**
@@ -42,6 +63,24 @@ declare function PropertyOpacityExit({ asset }: ExtendedItemData<any>, OriginalF
  * @param {boolean} Automatic - Whether the shock was triggered automatically or otherwise manually
  */
 declare function PropertyShockPublishAction(C: Character, Item: Item, Automatic?: boolean): void;
+/**
+ * A set of group names whose auto-punishment has successfully been handled by {@link PropertyAutoPunishDetectSpeech}.
+ * If a group name is absent from the set then it's eligible for action-based punishment triggers.
+ * The initial set is populated by {@link AssetLoadAll} after all asset groups are defined.
+ * @type {Set<AssetGroupName>}
+ */
+declare let PropertyAutoPunishHandled: Set<AssetGroupName>;
+/**
+ * A set with the names of all activities as performed by the player.
+ * Functions as a cache for {@link PropertyPunishActivityCheck} and can be automatically emptied out by the latter.
+ * @type {Set<ActivityName>}
+ */
+declare let PropertyPunishActivityCache: Set<ActivityName>;
+/**
+ * A list of keywords that can trigger automatic punishment when included in `/me`- or `*`-based messages
+ * @type {readonly string[]}
+ */
+declare const PropertyAutoPunishKeywords: readonly string[];
 /**
  * Check if a given message warants automatic punishment given the provided sensitivety level
  * @param {0 | 1 | 2 | 3} Sensitivity - The auto-punishment sensitivety
@@ -66,7 +105,6 @@ declare function PropertyAutoPunishDetectSpeech(Item: Item, LastMessageLen?: num
 declare function PropertyPunishActivityCheck(name?: null | ActivityName | readonly ActivityName[], clearCache?: boolean): boolean;
 /**
  * Assign a property on an {@link ItemProperties} record via dynamic key.
- * Used by {@link PropertyUnion} and {@link PropertyDifference} where keys are only known at runtime.
  * @template {ItemProperties} T
  * @template {keyof T} K
  * @param {T} output
@@ -76,6 +114,7 @@ declare function PropertyPunishActivityCheck(name?: null | ActivityName | readon
 declare function PropertyAssign<T extends ItemProperties, K extends keyof T>(output: T, key: K, value: T[K]): void;
 /**
  * Merge all passed item properties into the passed output, merging (and shallow copying) arrays if necessary.
+ * @deprecated Use {@link ItemPropertiesUnion} instead
  * @param {ItemProperties} output - The to be updated properties
  * @param {readonly ItemProperties[]} args - The additional item properties to be merged into the output
  * @returns {ItemProperties} - The passed output modified inplace
@@ -83,6 +122,7 @@ declare function PropertyAssign<T extends ItemProperties, K extends keyof T>(out
 declare function PropertyUnion(output: ItemProperties, ...args: readonly ItemProperties[]): ItemProperties;
 /**
  * Remove all passed item properties from the passed output, removing (and shallow copying) array entries if necessary.
+ * @deprecated Use {@link ItemPropertiesDifference} instead
  * @param {ItemProperties} output - The to-be updated properties
  * @param {readonly ItemProperties[]} args - The additional item properties to be removed from the output
  * @returns {ItemProperties} - The passed output modified inplace
@@ -95,51 +135,17 @@ declare function PropertyDifference(output: ItemProperties, ...args: readonly It
  */
 declare function PropertyTypeRecordToStrings(typeRecord: TypeRecord): string[];
 /**
- * Property.js
- * -----------
- * A module with common helper functions for the handling of specific {@link ItemProperties} properties.
- * Note that more generic extended item functions should be confined to `ExtendedItem.js`.
+ * @namespace
+ * Namespace with helper functions for managing {@link ItemProperties["DrawingLeft"]}/{@link ItemProperties["DrawignTop"]} data.
  */
-/**
- * A Map that maps input element IDs to their original value is defined in, _.e.g_, {@link PropertyOpacityLoad}.
- * Used as fallback in case an invalid opacity value is encountered when exiting.
- * @type {Map<string, any>}
- */
-declare const PropertyOriginalValue: Map<string, any>;
-/**
- * Throttled callback for opacity slider changes
- * @param {Character} C - The character being modified
- * @param {Item} item - The item being modified
- * @param {number} Opacity - The new opacity to set on the item
- * @returns {void} - Nothing
- */
-declare const PropertyOpacityChange: (C: any, Item: any, Opacity: any) => void;
-/**
- * A set of group names whose auto-punishment has successfully been handled by {@link PropertyAutoPunishDetectSpeech}.
- * If a group name is absent from the set then it's eligible for action-based punishment triggers.
- * The initial set is populated by {@link AssetLoadAll} after all asset groups are defined.
- * @type {Set<AssetGroupName>}
- */
-declare let PropertyAutoPunishHandled: Set<AssetGroupName>;
-/**
- * A set with the names of all activities as performed by the player.
- * Functions as a cache for {@link PropertyPunishActivityCheck} and can be automatically emptied out by the latter.
- * @type {Set<ActivityName>}
- */
-declare let PropertyPunishActivityCache: Set<ActivityName>;
-/**
- * A list of keywords that can trigger automatic punishment when included in `/me`- or `*`-based messages
- * @type {readonly string[]}
- */
-declare const PropertyAutoPunishKeywords: readonly string[];
-declare namespace PropertyLayerOrigin {
+declare var PropertyLayerOrigin: {
     /**
      * Resolve the `Left/Top` data for the specified item, including any {@link ItemProperties}-based corrections.
      * @param {Item} item
      * @param {"DrawingTop" | "DrawingLeft"} fieldName
      * @returns {Partial<Record<LayerName, Mutable<TopLeft.Data>>>}
      */
-    function resolveItem(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
+    resolveItem(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
     /**
      * Resolve the `Left/Top` data for the specified layer, including any {@link ItemProperties}-based corrections.
      * @param {AssetLayer} layer
@@ -147,15 +153,15 @@ declare namespace PropertyLayerOrigin {
      * @param {null | ItemProperties} properties
      * @returns {Mutable<TopLeft.Data>}
      */
-    function resolveLayer(layer: AssetLayer, fieldName: "DrawingTop" | "DrawingLeft", properties?: null | ItemProperties): Mutable<TopLeft.Data>;
+    resolveLayer(layer: AssetLayer, fieldName: "DrawingTop" | "DrawingLeft", properties?: null | ItemProperties): Mutable<TopLeft.Data>;
     /**
      * Get the item's original `Left/Top` data as determined by its layer- and extended item data; any user-made alterations are removed.
      * @param {Item} item
      * @param {"DrawingTop" | "DrawingLeft"} fieldName
      * @returns {Partial<Record<LayerName, Mutable<TopLeft.Data>>>}
      */
-    function getOriginal(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
-}
+    getOriginal(item: Item, fieldName: "DrawingTop" | "DrawingLeft"): Partial<Record<LayerName, Mutable<TopLeft.Data>>>;
+};
 /**
  * @template {keyof ItemProperties} T
  * @implements {ItemProperty.EntryNullable<T>}
@@ -168,80 +174,10 @@ declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemP
      */
     static readonly _entries: Map<keyof ItemProperties, PropertyDataEntry<any>>;
     /**
-     * Construct a new entry via shallow copying and renaming an existing one.
-     *
-     * Note that both new- and old-entries _must_ have the same property- and metadata types.
-     * @template {keyof ItemProperties} T
-     * @param {keyof ItemProperties} fromName The old property name of the to-be copied entry object
-     * @param {T} toName The new property name
-     * @param {ItemProperty.Entry<T>} [override] Override specific entries from the copied data
-     * @returns {PropertyDataEntry<T>} The newly copied entry
-     */
-    static copyFrom<T_1 extends keyof ItemProperties>(fromName: keyof ItemProperties, toName: T_1, override?: ItemProperty.Entry<T_1>): PropertyDataEntry<T_1>;
-    /**
-     * Character code offset for excluding ASCII control characters.
      * @readonly
+     * @type {Required<ItemProperty.PropertyMetaData>[T]}
      */
-    static readonly ASCIIControlOffset: 32;
-    /**
-     * Compress a number into the `uint16` range from `float64`.
-     * @param {number} value
-     * @param {1 | 0.01} [floatResolution]
-     * @returns {number}
-     */
-    static compressNumber(value: number, floatResolution?: 1 | 0.01): number;
-    /**
-     * Decompress a number from the `uint16` range into `float64`.
-     * @param {number} value
-     * @param {1 | 0.01} [floatResolution]
-     * @returns {number}
-     */
-    static decompressNumber(value: number, floatResolution?: 1 | 0.01): number;
-    /**
-     * Comparison function for set-like arrays
-     * @satisfies {ItemProperty.Compare<any>}
-     * @template {string | boolean | number} T
-     * @param {readonly T[]} value1
-     * @param {readonly NoInfer<T>[]} value2
-     * @returns {boolean}
-     */
-    static compareSetLikeArrays<T_1 extends string | boolean | number>(value1: readonly T_1[], value2: readonly NoInfer<T_1>[]): boolean;
-    /**
-     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
-     * @satisfies {ItemProperty.Union<any>}
-     * @template {string | boolean | number} T
-     * @param {readonly (readonly T[])[]} values
-     * @returns {T[]}
-     */
-    static unionSetLikeArrays<T_1 extends string | boolean | number>(values: readonly (readonly T_1[])[]): T_1[];
-    /**
-     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
-     * @satisfies {ItemProperty.Compare<any>}
-     * @template {Readonly<Record<string, undefined | null | string | boolean | number>>} T
-     * @param {T} value1
-     * @param {Readonly<Record<string, undefined | null | string | boolean | number>>} value2
-     * @returns {value2 is T}
-     */
-    static compareShallowObjects<T_1 extends Readonly<Record<string, undefined | null | string | boolean | number>>>(value1: T_1, value2: Readonly<Record<string, undefined | null | string | boolean | number>>): value2 is T_1;
-    /**
-     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
-     * @satisfies {ItemProperty.Union<any>}
-     * @template {Record<string, undefined | null | string | boolean | number>} T
-     * @param {readonly Readonly<T>[]} values
-     * @returns {T}
-     */
-    static unionShallowObjects<T_1 extends Record<string, undefined | null | string | boolean | number>>(values: readonly Readonly<T_1>[]): T_1;
-    /**
-     * @param {T} name
-     * @param {ItemProperty.PropertyMetaData[T]} metaData
-     * @param {Omit<ItemProperty.Entry<T>, "metaData">} functions
-     */
-    constructor(name: T, metaData: ItemProperty.PropertyMetaData[T], functions: Omit<ItemProperty.Entry<T>, "metaData">);
-    /**
-     * @readonly
-     * @type {NonNullable<ItemProperty.PropertyMetaData[T]>}
-     */
-    readonly metaData: NonNullable<ItemProperty.PropertyMetaData[T]>;
+    readonly metaData: Required<ItemProperty.PropertyMetaData>[T];
     /**
      * @readonly
      * @type {T}
@@ -274,14 +210,20 @@ declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemP
     _compare: undefined | ItemProperty.Compare<T>;
     /**
      * private
-     * @type {undefined | ItemProperty.Validate<T>}
+     * @type {ItemProperty.Validate<T>}
      */
-    _validate: undefined | ItemProperty.Validate<T>;
+    _validate: ItemProperty.Validate<T>;
     /**
      * private
      * @type {undefined | ItemProperty.IsSubset<T>}
      */
     _isSubset: undefined | ItemProperty.IsSubset<T>;
+    /**
+     * @param {T} name
+     * @param {ItemProperty.PropertyMetaData[T]} metaData
+     * @param {Omit<ItemProperty.Entry<T>, "metaData">} functions
+     */
+    constructor(name: T, metaData: ItemProperty.PropertyMetaData[T], functions: Omit<ItemProperty.Entry<T>, "metaData">);
     /**
      * Compress the passed item property
      * @param {ItemProperties[T]} property The item property value
@@ -300,7 +242,7 @@ declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemP
     /**
      * Property union function.
      *
-     * By default, properties follow a "first non-nullish entry wins" approach if no property-specific merge function is available.
+     * By default, properties follow a "first non-nullish entry wins" approach if no property-specific union function is available.
      * @param {readonly ItemProperties[T][]} properties The to-be merged property values
      * @param {ItemProperty.DataBundle} itemData The item data
      * @returns {undefined | ItemProperties[T]} The merged property
@@ -338,16 +280,32 @@ declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemP
      */
     validate(prop: ItemProperties[T], itemData: ItemProperty.DataBundle, defaults?: ItemProperties[T]): ItemProperty.ValidationOutput<ItemProperties[T]>;
     /**
+     * Construct a new entry via shallow copying and renaming an existing one.
+     *
+     * Note that both new- and old-entries _must_ have the same property- and metadata types.
+     * @template {keyof ItemProperties} T
+     * @param {keyof ItemProperties} fromName The old property name of the to-be copied entry object
+     * @param {T} toName The new property name
+     * @param {Partial<ItemProperty.Entry<T>>} [override] Override specific entries from the copied data
+     * @returns {PropertyDataEntry<T>} The newly copied entry
+     */
+    static copyFrom<T extends keyof ItemProperties>(fromName: keyof ItemProperties, toName: T, override?: Partial<ItemProperty.Entry<T>>): PropertyDataEntry<T>;
+    /**
+     * Character code offset for excluding ASCII control characters.
+     * @readonly
+     */
+    static readonly ASCIIControlOffset: 32;
+    /**
      * Compress an object with layer-specific numeric entries into a string.
      *
      * The string is of length `<= Asset.Layer.length`,
      * with the character code of each substring mapping to their layer-specific numeric entry per `charCodeCallback`.
      *
      * The utilized UTF16 character code ranges (_i.e._ `uint16`) are as following:
-     * * `[0, 31]` reserved; ASCII control character range. The `0` code is used for padding
-     * * `[32, 2**15 - 1]` positive number range
-     * * `[2**15, 2**15 + 31]` reserved; mirroring the (offsetted) ASCII control character range
-     * * `[2**15 + 32, 2**16 - 1]` negative number range; offset and represented by their absolute value
+     * - `[0, 31]` reserved; ASCII control character range. The `0` code is used for padding
+     * - `[32, 2**15 - 1]` positive number range
+     * - `[2**15, 2**15 + 31]` reserved; mirroring the (offsetted) ASCII control character range
+     * - `[2**15 + 32, 2**16 - 1]` negative number range; offset and represented by their absolute value
      *
      * Floating point values (defined per {@link PropertyDataEntry.metaData.stepSize}) are represented with a decimal resolution of 0.01,
      * _i.e._ multiplied by 100 and rounded to the nearest integer.
@@ -367,114 +325,354 @@ declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemP
      * @returns {undefined | Partial<Record<LayerName | "", number>>} The decompressed entries
      */
     decompressNumberRecord(value: string, asset: Asset): undefined | Partial<Record<LayerName | "", number>>;
+    /**
+     * Compress a number into the `uint16` range from `float64`.
+     * @param {number} value
+     * @param {1 | 0.01} [floatResolution]
+     * @returns {number}
+     */
+    static compressNumber(value: number, floatResolution?: 1 | 0.01): number;
+    /**
+     * Decompress a number from the `uint16` range into `float64`.
+     * @param {number} value
+     * @param {1 | 0.01} [floatResolution]
+     * @returns {number}
+     */
+    static decompressNumber(value: number, floatResolution?: 1 | 0.01): number;
+    /**
+     * Comparison function for set-like arrays
+     * @satisfies {ItemProperty.Compare<keyof ItemProperties>}
+     * @template {string | boolean | number} T
+     * @param {readonly T[]} value1
+     * @param {readonly NoInfer<T>[]} value2
+     * @returns {boolean}
+     */
+    static compareSetLikeArrays<T extends string | boolean | number>(value1: readonly T[], value2: readonly NoInfer<T>[]): boolean;
+    /**
+     * Subset checking function for set-like arrays
+     * @satisfies {ItemProperty.IsSubset<any>}
+     * @template {string | boolean | number} T
+     * @param {readonly T[]} subArray
+     * @param {readonly NoInfer<T>[]} superArray
+     * @returns {boolean}
+     */
+    static isSubsetSetLikeArrays<T extends string | boolean | number>(subArray: readonly T[], superArray: readonly NoInfer<T>[]): boolean;
+    /**
+     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
+     * @satisfies {ItemProperty.Union<keyof ItemProperties>}
+     * @template {string | boolean | number} T
+     * @param {readonly (readonly T[])[]} values
+     * @returns {T[]}
+     */
+    static unionSetLikeArrays<T extends string | boolean | number>(values: readonly (readonly T[])[]): T[];
+    /**
+     * Return the difference between the passed set-like arrays (unordered and unique elements)
+     * @satisfies {ItemProperty.Difference<any>}
+     * @template {string | boolean | number} T
+     * @param {readonly [p0: readonly T[], ...pN: readonly (readonly T[])[]]} values
+     * @returns {undefined | T[]}
+     */
+    static differenceSetLikeArrays<T extends string | boolean | number>(values: readonly [p0: readonly T[], ...pN: readonly (readonly T[])[]]): undefined | T[];
+    /**
+     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
+     * @satisfies {ItemProperty.Compare<keyof ItemProperties>}
+     * @template {Readonly<Record<string, undefined | null | string | boolean | number>>} T
+     * @param {T} value1
+     * @param {Readonly<Record<string, undefined | null | string | boolean | number>>} value2
+     * @returns {value2 is T}
+     */
+    static compareShallowObjects<T extends Readonly<Record<string, undefined | null | string | boolean | number>>>(value1: T, value2: Readonly<Record<string, undefined | null | string | boolean | number>>): value2 is T;
+    /**
+     * Comparison function for simple objects with scalar values (numbers, strings, etc.)
+     * @satisfies {ItemProperty.Union<keyof ItemProperties>}
+     * @template {Record<string, undefined | null | string | boolean | number>} T
+     * @param {readonly Readonly<T>[]} values
+     * @returns {T}
+     */
+    static unionShallowObjects<T extends Record<string, undefined | null | string | boolean | number>>(values: readonly Readonly<T>[]): T;
+    /**
+     * Return the difference between the passed (shallow) objects
+     * @satisfies {ItemProperty.Difference<any>}
+     * @template {Record<string, undefined | string | boolean | number>} T
+     * @param {readonly [p0: Readonly<T>, ...pN: readonly Readonly<T>[]]} values
+     * @returns {undefined | T}
+     */
+    static differenceShallowObjects<T extends Record<string, undefined | string | boolean | number>>(values: readonly [p0: Readonly<T>, ...pN: readonly Readonly<T>[]]): undefined | T;
+    /**
+     * Validate a scalar value w.r.t. to a reference set of all legal values (see {@link PropertyDataEntry.metaData["valueSet"]}).
+     * @overload
+     * @param {ItemProperty.Extract2<T, ScalarType>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, ScalarType> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a scalar value w.r.t. to a reference set of all legal values. Reference values are explicitly passed in the metadata.
+     * @template {ScalarType} T2
+     * @overload
+     * @param {T2} value
+     * @param {undefined | NoInfer<T2>} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2>}
+     */
+    /**
+     * @param {ScalarType} value The to-be validated value
+     * @param {Required<ItemProperties>[T]} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<ScalarType>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<ScalarType | Required<ItemProperties>[T]>} The validation output
+     */
+    validateAsSetMember(value: ItemProperty.Extract2<T, ScalarType>, defaults?: Required<ItemProperties>[T], metaData?: undefined): ItemProperty.ValidationOutput<ItemProperty.Extract2<T, ScalarType> | Required<ItemProperties>[T]>;
+    /**
+     * Validate a scalar value w.r.t. to a reference set of all legal values (see {@link PropertyDataEntry.metaData["valueSet"]}).
+     * @overload
+     * @param {ItemProperty.Extract2<T, ScalarType>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, ScalarType> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a scalar value w.r.t. to a reference set of all legal values. Reference values are explicitly passed in the metadata.
+     * @template {ScalarType} T2
+     * @overload
+     * @param {T2} value
+     * @param {undefined | NoInfer<T2>} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2>}
+     */
+    /**
+     * @param {ScalarType} value The to-be validated value
+     * @param {Required<ItemProperties>[T]} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<ScalarType>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<ScalarType | Required<ItemProperties>[T]>} The validation output
+     */
+    validateAsSetMember<T2 extends ScalarType>(value: T2, defaults: undefined | NoInfer<T2>, metaData: ItemProperty.MetaData2<NoInfer<T2>>): ItemProperty.ValidationOutput<T2>;
+    /**
+     * Validate a list of scalar values w.r.t. to a reference set of all legal values (see {@link PropertyDataEntry.metaData["valueSet"]})
+     * @overload
+     * @param {ItemProperty.Extract2<T, ScalarType[]>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, ScalarType[]> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a list of scalar values w.r.t. to a reference set of all legal values. Reference values are explicitly passed in the metadata.
+     * @template {ScalarType} T2
+     * @overload
+     * @param {T2[]} value
+     * @param {undefined | NoInfer<T2[]>} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2[]>}
+     */
+    /**
+     * @param {ScalarType[]} value The to-be validated value
+     * @param {any} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<ScalarType>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<ScalarType[] | Required<ItemProperties>[T]>} The validation output
+     */
+    validateAsLiteralSet(value: ItemProperty.Extract2<T, ScalarType[]>, defaults?: Required<ItemProperties>[T], metaData?: undefined): ItemProperty.ValidationOutput<ItemProperty.Extract2<T, ScalarType[]> | Required<ItemProperties>[T]>;
+    /**
+     * Validate a list of scalar values w.r.t. to a reference set of all legal values (see {@link PropertyDataEntry.metaData["valueSet"]})
+     * @overload
+     * @param {ItemProperty.Extract2<T, ScalarType[]>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, ScalarType[]> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a list of scalar values w.r.t. to a reference set of all legal values. Reference values are explicitly passed in the metadata.
+     * @template {ScalarType} T2
+     * @overload
+     * @param {T2[]} value
+     * @param {undefined | NoInfer<T2[]>} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2[]>}
+     */
+    /**
+     * @param {ScalarType[]} value The to-be validated value
+     * @param {any} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<ScalarType>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<ScalarType[] | Required<ItemProperties>[T]>} The validation output
+     */
+    validateAsLiteralSet<T2 extends ScalarType>(value: T2[], defaults: undefined | NoInfer<T2[]>, metaData: ItemProperty.MetaData2<NoInfer<T2>>): ItemProperty.ValidationOutput<T2[]>;
+    /**
+     * Validate a number
+     * @overload
+     * @param {ItemProperty.Extract2<T, number>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, number> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a number with explicitly passed metadata
+     * @template {number} T2
+     * @template [T3=T2]
+     * @overload
+     * @param {T2} value
+     * @param {undefined | T3} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>}
+     */
+    /**
+     * @param {number} value The to-be validated value
+     * @param {Required<ItemProperties>[T]} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<number>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<number | Required<ItemProperties>[T]>} The validation output
+     */
+    validateNumber(value: ItemProperty.Extract2<T, number>, defaults?: Required<ItemProperties>[T], metaData?: undefined): ItemProperty.ValidationOutput<ItemProperty.Extract2<T, number> | Required<ItemProperties>[T]>;
+    /**
+     * Validate a number
+     * @overload
+     * @param {ItemProperty.Extract2<T, number>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, number> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a number with explicitly passed metadata
+     * @template {number} T2
+     * @template [T3=T2]
+     * @overload
+     * @param {T2} value
+     * @param {undefined | T3} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>}
+     */
+    /**
+     * @param {number} value The to-be validated value
+     * @param {Required<ItemProperties>[T]} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<number>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<number | Required<ItemProperties>[T]>} The validation output
+     */
+    validateNumber<T2 extends number, T3 = T2>(value: T2, defaults: undefined | T3, metaData: ItemProperty.MetaData2<NoInfer<T2>>): ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>;
+    /**
+     * Validate a string
+     * @overload
+     * @param {ItemProperty.Extract2<T, string>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, string> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a string with explicitly passed metadata
+     * @template {string} T2
+     * @template [T3=T2]
+     * @overload
+     * @param {T2} value
+     * @param {undefined | T3} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>}
+     */
+    /**
+     * @param {string} value The to-be validated value
+     * @param {Required<ItemProperties>[T]} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<string>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<string | Required<ItemProperties>[T]>} The validation output
+     */
+    validateString(value: ItemProperty.Extract2<T, string>, defaults?: Required<ItemProperties>[T], metaData?: undefined): ItemProperty.ValidationOutput<ItemProperty.Extract2<T, string> | Required<ItemProperties>[T]>;
+    /**
+     * Validate a string
+     * @overload
+     * @param {ItemProperty.Extract2<T, string>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, string> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a string with explicitly passed metadata
+     * @template {string} T2
+     * @template [T3=T2]
+     * @overload
+     * @param {T2} value
+     * @param {undefined | T3} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>}
+     */
+    /**
+     * @param {string} value The to-be validated value
+     * @param {Required<ItemProperties>[T]} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<string>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<string | Required<ItemProperties>[T]>} The validation output
+     */
+    validateString<T2 extends string, T3 = T2>(value: T2, defaults: undefined | T3, metaData: ItemProperty.MetaData2<NoInfer<T2>>): ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>;
+    /**
+     * Validate a boolean
+     * @overload
+     * @param {ItemProperty.Extract2<T, boolean>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, boolean> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a boolean with explicitly passed metadata
+     * @template {boolean} T2
+     * @template [T3=T2]
+     * @overload
+     * @param {T2} value
+     * @param {undefined | T3} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>}
+     */
+    /**
+     * @param {boolean} value The to-be validated value
+     * @param {Required<ItemProperties>[T]} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<boolean>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<boolean | Required<ItemProperties>[T]>} The validation output
+     */
+    validateBoolean(value: ItemProperty.Extract2<T, boolean>, defaults?: Required<ItemProperties>[T], metaData?: undefined): ItemProperty.ValidationOutput<ItemProperty.Extract2<T, boolean> | Required<ItemProperties>[T]>;
+    /**
+     * Validate a boolean
+     * @overload
+     * @param {ItemProperty.Extract2<T, boolean>} value
+     * @param {Required<ItemProperties>[T]} [defaults]
+     * @param {undefined} [metaData]
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, boolean> | Required<ItemProperties>[T]>}
+     */
+    /**
+     * Validate a boolean with explicitly passed metadata
+     * @template {boolean} T2
+     * @template [T3=T2]
+     * @overload
+     * @param {T2} value
+     * @param {undefined | T3} defaults
+     * @param {ItemProperty.MetaData2<NoInfer<T2>>} metaData
+     * @returns {ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>}
+     */
+    /**
+     * @param {boolean} value The to-be validated value
+     * @param {Required<ItemProperties>[T]} [defaults] The fallback value in case the validation fails
+     * @param {ItemProperty.MetaData2<boolean>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<boolean | Required<ItemProperties>[T]>} The validation output
+     */
+    validateBoolean<T2 extends boolean, T3 = T2>(value: T2, defaults: undefined | T3, metaData: ItemProperty.MetaData2<NoInfer<T2>>): ItemProperty.ValidationOutput<T2 | Exclude<T3, undefined>>;
+    /**
+     * @template {{ type: "boolean", value: boolean } | { type: "number", value: number } | { type: "string", value: string }} T2
+     * @param {{ type: T2["type"], value: ItemProperty.Extract2<T, T2["value"][]> }} value
+     * @param {readonly NoInfer<T2["value"]>[]} [defaults]
+     * @param {ItemProperty.MetaData2<T2["value"]>} [metaData] Custom property metadata; defaults to {@link PropertyDataEntry.metaData}
+     * @returns {ItemProperty.ValidationOutput<ItemProperty.Extract2<T, T2["value"][]>>}
+     */
+    validateSetLikeArray<T2 extends {
+        type: "boolean";
+        value: boolean;
+    } | {
+        type: "number";
+        value: number;
+    } | {
+        type: "string";
+        value: string;
+    }>(value: {
+        type: T2["type"];
+        value: ItemProperty.Extract2<T, T2["value"][]>;
+    }, defaults?: readonly NoInfer<T2["value"]>[], metaData?: ItemProperty.MetaData2<T2["value"]>): ItemProperty.ValidationOutput<ItemProperty.Extract2<T, T2["value"][]>>;
 }
-declare namespace PropertyData {
-    let AccessMode: undefined;
-    let AllowActivePose: undefined;
-    let AllowActivity: undefined;
-    let AllowActivityOn: undefined;
-    let ArousalLvl: undefined;
-    let Attribute: undefined;
-    let AutoPunish: undefined;
-    let AutoPunishUndoTime: undefined;
-    let AutoPunishUndoTimeSetting: undefined;
-    let BlinkState: PropertyDataEntry<"BlinkState">;
-    let Block: PropertyDataEntry<"Block">;
-    let BlockRemotes: PropertyDataEntry<"BlockRemotes">;
-    let CombinationNumber: undefined;
-    let CustomBlindBackground: undefined;
-    let DefaultColor: undefined;
-    let Difficulty: undefined;
-    let Door: undefined;
-    let DrawingLeft: undefined;
-    let DrawingTop: undefined;
-    let Effect: PropertyDataEntry<"Effect">;
-    let EnableRandomInput: undefined;
-    let Expression: undefined;
-    let Fetish: undefined;
-    let HeartRate: PropertyDataEntry<"HeartRate">;
-    let HeightModifier: undefined;
-    let Hide: PropertyDataEntry<"Hide">;
-    let HideItem: PropertyDataEntry<"HideItem">;
-    let HideItemExclude: undefined;
-    let Hint: undefined;
-    let InflateLevel: undefined;
-    let InsertedBeads: undefined;
-    let Intensity: undefined;
-    let IsLeashed: PropertyDataEntry<"IsLeashed">;
-    let Iterations: undefined;
-    let LastShrinkWarningTime: undefined;
-    let LayerRotation: PropertyDataEntry<"LayerRotation">;
-    let LayerScaleX: PropertyDataEntry<"LayerScaleX">;
-    let LayerScaleY: PropertyDataEntry<"LayerScaleY">;
-    let LayerTranslationX: PropertyDataEntry<"LayerTranslationX">;
-    let LayerTranslationY: PropertyDataEntry<"LayerTranslationY">;
-    let LockButt: undefined;
-    let LockMemberName: undefined;
-    let LockMemberNumber: undefined;
-    let LockMessage: undefined;
-    let LockPickSeed: undefined;
-    let LockSet: undefined;
-    let LockedBy: undefined;
-    let MemberNumberList: PropertyDataEntry<"MemberNumberList">;
-    let MemberNumberListKeys: undefined;
-    let Mode: undefined;
-    let NextShockTime: undefined;
-    let NextShrinkTime: undefined;
-    let Opacity: undefined;
-    let OpenPermission: undefined;
-    let OpenPermissionArm: undefined;
-    let OpenPermissionChastity: undefined;
-    let OpenPermissionLeg: undefined;
-    let OrgasmCount: undefined;
-    let OriginalSetting: undefined;
-    let OverrideHeight: undefined;
-    let OverridePriority: PropertyDataEntry<"OverridePriority">;
-    let Padding: undefined;
-    let Password: undefined;
-    let PortalLinkCode: undefined;
-    let PublicModeCurrent: undefined;
-    let PublicModePermission: undefined;
-    let PunishActivity: undefined;
-    let PunishOrgasm: undefined;
-    let PunishProhibitedSpeech: undefined;
-    let PunishProhibitedSpeechWords: undefined;
-    let PunishRequiredSpeech: undefined;
-    let PunishRequiredSpeechWord: undefined;
-    let PunishSpeech: undefined;
-    let PunishStandup: undefined;
-    let PunishStruggle: undefined;
-    let PunishStruggleOther: undefined;
-    let RemoveItem: undefined;
-    let RemoveOnUnlock: undefined;
-    let RemoveTimer: undefined;
-    let Revert: undefined;
-    let Rotation: undefined;
-    let RuinedOrgasmCount: undefined;
-    let ScaleX: undefined;
-    let ScaleY: undefined;
-    let SelfUnlock: undefined;
-    let SetPose: undefined;
-    let ShockLevel: undefined;
-    let ShowShrinkText: undefined;
-    let ShowText: undefined;
-    let ShowTimer: undefined;
-    let ShrinkCooldown: undefined;
-    let State: undefined;
-    let SuctionLevel: undefined;
-    let TargetAngle: undefined;
-    let Text: undefined;
-    let Text2: undefined;
-    let Text3: undefined;
-    let Texts: undefined;
-    let TimeSinceLastOrgasm: PropertyDataEntry<"TimeSinceLastOrgasm">;
-    let TimeWorn: PropertyDataEntry<"TimeWorn">;
-    let Tint: undefined;
-    let TranslationX: undefined;
-    let TranslationY: undefined;
-    let TriggerCount: undefined;
-    let TriggerValues: undefined;
-    let Type: undefined;
-    let TypeRecord: PropertyDataEntry<"TypeRecord">;
-    let UnHide: PropertyDataEntry<"UnHide">;
-}
+/**
+ * Preset item property functions for set-like arrays consisting of literal members
+ * private
+ * @type {Omit<ItemProperty.Entry<any>, "metaData">}
+ */
+declare var _PropertyDataArraysDefaults: Omit<ItemProperty.Entry<any>, "metaData">;
+/**
+ * Item property specific metadata and utility functions (compression, validation, merging, _etc._)
+ * @type {{ [k in keyof ItemProperties]: PropertyDataEntry<k> }}
+ */
+declare var PropertyData: { [k in keyof ItemProperties]: PropertyDataEntry<k>; };

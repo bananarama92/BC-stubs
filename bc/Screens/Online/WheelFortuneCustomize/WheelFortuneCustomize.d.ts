@@ -1,6 +1,21 @@
+declare var WheelFortuneCustomizeBackground: string;
+declare var WheelFortuneCustomizeOffset: number;
+declare var WheelFortuneCustomizeList: string;
+/**
+ * Loads the lucky wheel customization screen
+ * @type {ScreenLoadHandler}
+ */
 declare function WheelFortuneCustomizeLoad(): Promise<void>;
-declare function WheelFortuneCustomizeRun(time: number): void;
-declare function WheelFortuneCustomizeClick(event: PointerEvent): void;
+/**
+ * Draws the lucky wheel customization screen
+ * @type {ScreenRunHandler}
+ */
+declare function WheelFortuneCustomizeRun(): void;
+/**
+ * Handles the click events.  Called from CommonClick()
+ * @type {MouseEventListener}
+ */
+declare function WheelFortuneCustomizeClick(): void;
 /**
  * Handles exiting from the screen, updates the lucky wheel in the online shared settings
  * @param {boolean} Save - Whether to push the updated selection to the server
@@ -8,6 +23,3 @@ declare function WheelFortuneCustomizeClick(event: PointerEvent): void;
  * @satisfies {ScreenExitHandler}
  */
 declare function WheelFortuneCustomizeExit(Save?: boolean): void;
-declare var WheelFortuneCustomizeBackground: string;
-declare var WheelFortuneCustomizeOffset: number;
-declare var WheelFortuneCustomizeList: string;
