@@ -235,18 +235,26 @@ declare function ServerAppearanceLoadFromBundle(C: Character, AssetFamily: IAsse
  * @param {IAssetFamily} assetFamily - The asset family of the appearance
  * @param {readonly Item[]} appearance - The current appearance to compare against
  * @param {AppearanceBundle} bundle - The new appearance bundle
+ * @param {object} [options]
+ * @param {Character} [options.C] The owner of the appearance bundle (if any)
  * @returns {AppearanceDiffMap} - An appearance diff map representing the changes that have been made to the character's
  * appearance
  */
-declare function ServerBuildAppearanceDiff(assetFamily: IAssetFamily, appearance: readonly Item[], bundle: AppearanceBundle): AppearanceDiffMap;
+declare function ServerBuildAppearanceDiff(assetFamily: IAssetFamily, appearance: readonly Item[], bundle: AppearanceBundle, options?: {
+    C?: Character;
+}): AppearanceDiffMap;
 /**
  * Maps a bundled appearance item, as stored on the server and used for appearance update messages, into a full
  * appearance item, as used by the game client
  * @param {IAssetFamily} assetFamily - The asset family of the appearance item
  * @param {ItemBundle | ServerCharacterItemUpdate} itemBundle - The bundled appearance item
+ * @param {object} [options]
+ * @param {Character} [options.C] - The owner of the item bundle (if any)
  * @returns {null | Item} - A full appearance item representation of the provided bundled appearance item
  */
-declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, itemBundle: ItemBundle | ServerCharacterItemUpdate): null | Item;
+declare function ServerBundledItemToAppearanceItem(assetFamily: IAssetFamily, itemBundle: ItemBundle | ServerCharacterItemUpdate, options?: {
+    C?: Character;
+}): null | Item;
 /**
  * Convert an item into a (JSON-safe) item bundle
  * @param {Item} item The to-be converted item

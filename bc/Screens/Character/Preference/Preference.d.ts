@@ -35,7 +35,7 @@ declare function PreferenceOpenSubscreen(subscreen: PreferenceSubscreenName, pag
 declare const PreferenceIDs: Readonly<{
     subscreen: "preference-subscreen";
     exit: "preference-exit";
-    title: "preference-subscreen-hgroup";
+    title: "preference-subscreen-h1";
 }>;
 /**
  * Loads the preference screen. This function is called dynamically, when the character enters the preference screen

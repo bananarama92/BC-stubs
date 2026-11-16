@@ -324,9 +324,10 @@ declare function WardrobeReorderModeSet(newMode?: WardrobeReorderType | null): v
  * Set a wardrobe character name, sync it with server
  * @param {number} W - The number of the wardrobe slot to save
  * @param {string} Name - The name of the wardrobe slot
- * @param {boolean} [Push] -If set to true, the changes are pushed to the server
+ * @param {boolean} [Push] - If set to true, the changes are pushed to the server
+ * @returns {boolean} - Whether the rename was performed
  */
-declare function WardrobeSetCharacterName(W: number, Name: string, Push?: boolean): void;
+declare function WardrobeSetCharacterName(W: number, Name: string, Push?: boolean): boolean;
 /**
  * Reduces a given asset to the attributes needed for the wardrobe
  * @param {Item} A - The asset that should be reduced
@@ -523,9 +524,10 @@ declare function WardrobeChangePage(): void;
 declare function WardrobeDeleteSelectedOutfit(): void;
 /**
  * @param {boolean} [push]
+ * @param {boolean} [showToast]
  * @returns {boolean}
  */
-declare function WardrobeRenameSelectedOutfit(push?: boolean): boolean;
+declare function WardrobeRenameSelectedOutfit(push?: boolean, showToast?: boolean): boolean;
 /**
  * Apply a wardrobe slot onto the current character.
  * @param {number} slot

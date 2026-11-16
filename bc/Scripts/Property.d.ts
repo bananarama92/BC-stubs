@@ -393,11 +393,11 @@ declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemP
     /**
      * Return the difference between the passed (shallow) objects
      * @satisfies {ItemProperty.Difference<any>}
-     * @template {Record<string, undefined | string | boolean | number>} T
+     * @template {Partial<Record<string, ScalarType>>} T
      * @param {readonly [p0: Readonly<T>, ...pN: readonly Readonly<T>[]]} values
      * @returns {undefined | T}
      */
-    static differenceShallowObjects<T extends Record<string, undefined | string | boolean | number>>(values: readonly [p0: Readonly<T>, ...pN: readonly Readonly<T>[]]): undefined | T;
+    static differenceShallowObjects<T extends Partial<Record<string, ScalarType>>>(values: readonly [p0: Readonly<T>, ...pN: readonly Readonly<T>[]]): undefined | T;
     /**
      * Validate a scalar value w.r.t. to a reference set of all legal values (see {@link PropertyDataEntry.metaData["valueSet"]}).
      * @overload

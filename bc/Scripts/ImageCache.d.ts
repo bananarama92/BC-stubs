@@ -286,6 +286,19 @@ declare class BrowserCache {
      */
     match(url: string): Promise<Response | undefined>;
     /**
+     * The ETags to offer when asking whether a stored response is current.
+     *
+     * Apache's mod_deflate appends `-gzip` to the ETag of a compressed response, but
+     * matches a request's ETag against the bare one, so a stored tag never matches
+     * itself and the server answers with the whole file every time. Offering both
+     * forms gets a 304 from those servers without inventing a tag.
+     *
+     * @param {string} etag
+     * @returns {string}
+     * private
+     */
+    _etagCandidates(etag: string): string;
+    /**
      * Ask the server whether a stored response is still current.
      *
      * Runs at most once per key per session. Resolves with the fresh storable

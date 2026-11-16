@@ -20,6 +20,14 @@ declare var ChatRoomMapViewEditObject: null | ChatRoomMapDoodad;
  */
 declare var ChatRoomMapViewEditSelection: number[];
 declare var ChatRoomMapViewEditRange: number;
+/**
+ * Leashes the player asked others' clients to tie or untie, by member number, until their map data shows it done
+ * @type {Map<number, { tie: boolean, time: number }>}
+ */
+declare var ChatRoomMapViewTetherRequests: Map<number, {
+    tie: boolean;
+    time: number;
+}>;
 declare var ChatRoomMapViewMaxEditRange: number;
 /**
  * @type {ServerChatRoomMapData[]}
@@ -51,6 +59,10 @@ declare var ChatRoomMapViewEditorMaxRecentElements: number;
 declare var ChatRoomMapViewSplitPosition: number;
 declare var ChatRoomMapViewSplitPositionMax: number;
 declare var ChatRoomMapViewSplitPositionMin: number;
+/** The narrowest the map color picker gets while still fitting its header buttons */
+declare var ChatRoomMapViewColorPickerMinWidth: number;
+/** @type {null | number} - The split position before the color picker widened the chat, restored when it closes */
+declare var ChatRoomMapViewColorPickerSplitRestore: null | number;
 /**
  * @type {boolean[]}
  * @deprecated Use {@link MapManager.Map.isTileVisible()}
@@ -115,6 +127,14 @@ declare function ChatRoomMapViewBlur(): void;
  * @returns {ServerChatRoomMapData}
  */
 declare function ChatRoomMapViewInitialize(mode: ChatRoomMapType): ServerChatRoomMapData;
+/**
+ * The shape of the map color picker, following the chat column. The width is clamped so the header buttons
+ * always fit and the tint square (as tall as it is wide) never outgrows the panel.
+ * @returns {RectTuple}
+ */
+declare function ChatRoomMapViewColorPickerShape(): RectTuple;
+/** Applies the current shapes of the map color picker and of the backdrop hiding the chat behind it, if the picker is open */
+declare function ChatRoomMapViewColorPickerSyncShape(): void;
 /**
  * Sets the width of the chat room map
  * @param {number} width
@@ -594,7 +614,7 @@ declare function ChatRoomMapViewCanTetherTie(C: Character, pos: ChatRoomMapPos):
  */
 declare function ChatRoomMapViewCanTetherUntie(C: Character): boolean;
 /**
- * Shows the menu of a tether point: admins choose if it is one, and anyone within reach ties leashes to it or unties them
+ * Shows the user menu of a tether point: anyone within reach ties leashes to it or unties them
  * @param {number} x
  * @param {number} y
  * @returns {void} - Nothing
@@ -602,11 +622,18 @@ declare function ChatRoomMapViewCanTetherUntie(C: Character): boolean;
 declare function ChatRoomMapViewShowTetherPointMenu(x: number, y: number): void;
 /**
  * Asks a character's client to tie her leash to a tether point, or to untie it
- * @param {Character} C - The character whose leash is tied or untied
+ * @param {OnlineCharacter} C - The character whose leash is tied or untied
  * @param {ChatRoomMapTether | null} tether - The tether, or `null` to untie the leash
  * @returns {void} - Nothing
  */
-declare function ChatRoomMapViewSendTetherRequest(C: Character, tether: ChatRoomMapTether | null): void;
+declare function ChatRoomMapViewSendTetherRequest(C: OnlineCharacter, tether: ChatRoomMapTether | null): void;
+/**
+ * Tells the room the player tied or untied a character's leash, once that character's map data shows it done.
+ * Their client only changes it if they allow it, so a refused request never gets announced.
+ * @param {OnlineCharacter} C - The character whose map data just changed
+ * @returns {void} - Nothing
+ */
+declare function ChatRoomMapViewTetherAnnounce(C: OnlineCharacter): void;
 /**
  * Ties the player's leash to a tether point, or unties it, from another character's hidden message
  * @param {OnlineCharacter} sender
@@ -615,7 +642,8 @@ declare function ChatRoomMapViewSendTetherRequest(C: Character, tether: ChatRoom
  */
 declare function ChatRoomMapViewTetherHiddenMessage(sender: OnlineCharacter, data: ServerChatRoomMessage): void;
 /**
- * Ties the player's leash to a tether point, or unties it, as a character asked, and tells the room who did it
+ * Ties the player's leash to a tether point, or unties it, as a character asked.
+ * When it's her own doing she tells the room; when someone else did it, they tell it (see {@link ChatRoomMapViewTetherAnnounce}).
  * @param {Character} C - The character who ties or unties the leash
  * @param {ChatRoomMapTether | null} tether - The tether, or `null` to untie the leash
  * @returns {void} - Nothing
@@ -750,7 +778,14 @@ declare function ChatRoomMapViewSetSelectedTile(pos: {
     Y: number;
 } | undefined): void;
 /**
- * Shows admins the sliders turning and sizing the object placed on a tile, its colors if it has color layers, and its decal if it can take one
+ * Builds the rotation, size, color and decal controls for an object on a tile
+ * @param {ChatRoomMapPos} pos
+ * @param {ChatRoomMapObject} object
+ * @returns {HTMLElement | null}
+ */
+declare function ChatRoomMapViewCreateObjectSettingsControls(pos: ChatRoomMapPos, object: ChatRoomMapObject): HTMLElement | null;
+/**
+ * Shows admins the sliders turning and sizing the object placed on a tile, its colors if it has color layers, its decal if it can take one, and the tether toggle when the object can be a tether point
  * @param {ChatRoomMapPos} pos
  * @param {number} objectId
  * @returns {void}
