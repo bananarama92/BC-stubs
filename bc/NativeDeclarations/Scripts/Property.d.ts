@@ -90,8 +90,14 @@ declare namespace ItemProperty {
 	type MetaDataTemplate = { [k in keyof ItemProperties]: MetaData<k> };
 
 
-	/** Item property specific metadata keys */
+	/**
+	 * Item property specific metadata keys.
+	 *
+	 * Add an entry here if you certain metadata entries to be declared as non-optional for a given property.
+	 */
 	interface PropertyMetaData extends MetaDataTemplate {
+		Block: Mandatory<MetaData<"Block">, "valueSet">;
+		Hide: Mandatory<MetaData<"Hide">, "valueSet">;
 		LayerScaleX: Mandatory<MetaData<"LayerScaleX">, "min" | "max" | "defaultNumber" | "isInteger">;
 		LayerScaleY: Mandatory<MetaData<"LayerScaleY">, "min" | "max" | "defaultNumber" | "isInteger">;
 		LayerTranslationX: Mandatory<MetaData<"LayerTranslationX">, "min" | "max"  | "defaultNumber">;

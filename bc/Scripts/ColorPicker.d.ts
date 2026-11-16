@@ -201,6 +201,15 @@ declare var ColorPicker: {
         dispatch?: boolean;
     }): void;
     /**
+     * private
+     * @type {WeakMap<Element, Readonly<Pick<ItemColorStateType, "initialColors" | "initialOpacity">>>}
+     * Object for storing the initial color & opacity state of each color picker `.screen`.
+     * Need this as the DOM inputs can store up two values (`value` and `defaultValue`), but lacks an easy way of storing a third one (the initial value).
+     *
+     * Only really relevant when the picker is not backed by {@link ItemColorState}.
+     */
+    _initialStates: WeakMap<Element, Readonly<Pick<ItemColorStateType, "initialColors" | "initialOpacity">>>;
+    /**
      * Get the color and opacity of the passed color picker screen
      * @param {ElementHelp.ElementOrId} root - The color picker screen or its ID
      * @returns {null | ItemColorExitState}
@@ -225,9 +234,9 @@ declare function ColorPickerLoad(): Promise<void>;
 /**
  * Reload and refresh the color picker based on the current item color data.
  * @param {null | ColorPickerInitOptions} options
- * @returns {null | HTMLElement} The paseed root element
+ * @returns {null | Element} The passed element or, if a child of the screen, its `.screen` root
  */
-declare function ColorPickerReload(options?: null | ColorPickerInitOptions): null | HTMLElement;
+declare function ColorPickerReload(options?: null | ColorPickerInitOptions): null | Element;
 /** @type {ScreenResizeHandler} */
 declare function ColorPickerResize(): void;
 /** @type {ScreenUnloadHandler} */

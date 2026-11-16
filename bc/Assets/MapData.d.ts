@@ -74,7 +74,7 @@ declare function ChatRoomMapViewCreateOnClickSignLogic(name: string): ChatRoomMa
  */
 declare const AssetsMapDataTeleportPadColors: readonly HexColor[];
 /**
- * Opens the menu of an object that can be a tether point: admins make it one, and leashes are tied to it there
+ * Opens the user menu of an object that is already a tether point (tie / untie). Admins configure tether in Object Settings.
  * @param {number} x - The X position of the object
  * @param {number} y - The Y position of the object
  * @returns {void} - Nothing

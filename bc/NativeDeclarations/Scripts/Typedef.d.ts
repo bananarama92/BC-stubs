@@ -3237,7 +3237,7 @@ interface ExtendedItemData<OptionType extends ExtendedItemOption> {
 	 * To-be initialized properties independent of the selected item module(s).
 	 * Relevant if there are properties that are (near) exclusively managed by {@link ExtendedItemData.scriptHooks} functions.
 	 */
-	baselineProperty: PropertiesNoArray.Item | null;
+	baselineProperty: PropertiesNoArray.Item;
 	/** The extended item option of the super screen that this archetype was initialized from (if any) */
 	parentOption: null | ExtendedItemOption;
 	/** An interface with element-specific drawing data for a given screen. */
@@ -4073,7 +4073,7 @@ interface NoArchItemData extends ExtendedItemData<NoArchItemOption> {
 	archetype: "noarch";
 	scriptHooks: ExtendedItemScriptHookStruct<NoArchItemData, NoArchItemOption>;
 	chatSetting: "default";
-	baselineProperty: null | ItemProperties;
+	baselineProperty: ItemProperties;
 	drawData: ExtendedItemDrawData<ElementMetaData.NoArch>;
 	dialogPrefix: {
 		/** The dialog key for the item's load text (usually a prompt to select the type) */

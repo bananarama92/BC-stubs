@@ -51,7 +51,8 @@ declare var AppearanceItem: {
     fromName(groupName: AssetGroupName, assetName: AssetName, options?: null | Item.Options): null | Item;
 };
 /**
- * Dummy character for {@link ItemPropertiesDecompress} validation
+ * Dummy character for {@link ItemPropertiesDecompress} validation.
+ * Serves as fallback for when no explicit character is provided.
  * @type {null | Character}
  */
 declare let ItemPropertiesDummy: null | Character;
@@ -88,18 +89,28 @@ declare function ItemPropertiesCompress(item: Item, options?: {
  * By default, properties follow a "first non-nullish entry wins" approach if no property-specific merge function is available.
  * @param {readonly ItemProperties[]} propertyList The list of to-be merged property objects
  * @param {Asset} asset The asset
- * @param {ItemProperties} [output] The object in which the merged properties will be stored and returned
+ * @param {object} [options]
+ * @param {ItemProperties} [options.output] The object in which the merged properties will be stored and returned
+ * @param {Iterable<keyof ItemProperties>} [options.omit] Properties to be ignored during the differencing process
  * @returns {ItemProperties}
  */
-declare function ItemPropertiesUnion(propertyList: readonly ItemProperties[], asset: Asset, output?: ItemProperties): ItemProperties;
+declare function ItemPropertiesUnion(propertyList: readonly ItemProperties[], asset: Asset, options?: {
+    output?: ItemProperties;
+    omit?: Iterable<keyof ItemProperties>;
+}): ItemProperties;
 /**
  * Subtract the passed item properties from each other into a single property set.
  * @param {readonly ItemProperties[]} propertyList The list of to-be differenced property objects
  * @param {Asset} asset The asset
- * @param {ItemProperties} [output] The object in which the differenced properties will be stored and returned
+ * @param {object} [options]
+ * @param {ItemProperties} [options.output] The object in which the differenced properties will be stored and returned
+ * @param {Iterable<keyof ItemProperties>} [options.omit] Properties to be ignored during the differencing process
  * @returns {ItemProperties}
  */
-declare function ItemPropertiesDifference(propertyList: readonly ItemProperties[], asset: Asset, output?: ItemProperties): ItemProperties;
+declare function ItemPropertiesDifference(propertyList: readonly ItemProperties[], asset: Asset, options?: {
+    output?: ItemProperties;
+    omit?: Iterable<keyof ItemProperties>;
+}): ItemProperties;
 /** @satisfies {Record<ItemProperty.ValidationStatus, number>} */
 declare const ItemPropertiesValidationStatus: {
     readonly ok: 0;
@@ -107,21 +118,30 @@ declare const ItemPropertiesValidationStatus: {
     readonly criticalError: 2;
 };
 /**
- * @param {ItemProperties} properties
+ * Validate the passed properties and return a validated shallow copy in the output
+ * @param {ItemProperties} properties The to-be validated properties
  * @param {Asset} asset The asset
  * @param {object} [options]
  * @param {Character} [options.C] The character wearing/intended to wear the item
  * @param {readonly (keyof ItemProperties)[]} [options.ignoreErrors] Exclude specific property outputs from affecting the final error status
+ * @param {Iterable<keyof ItemProperties>} [options.omit] Properties to be ignored during the validation process
  * @returns {ItemProperty.ValidationMultiOutput}
  */
 declare function ItemPropertiesValidate(properties: ItemProperties, asset: Asset, options?: {
     C?: Character;
     ignoreErrors?: readonly (keyof ItemProperties)[];
+    omit?: Iterable<keyof ItemProperties>;
 }): ItemProperty.ValidationMultiOutput;
 declare function ItemPropertiesMergeValidationOutputs<T1 extends {
     [key: string]: unknown;
-}>(outputs: { readonly [k in keyof T1]?: ItemProperty.ValidationOutput<T1[k]>; }): ItemProperty.ValidationOutput<T1>;
-declare function ItemPropertiesMergeValidationOutputs<T2>(outputs: readonly ItemProperty.ValidationOutput<T2>[]): ItemProperty.ValidationOutput<T2[]>;
+}>(outputs: { readonly [k in keyof T1]?: ItemProperty.ValidationOutput<T1[k]>; }, options?: {
+    partial?: boolean;
+    partialFields?: Iterable<keyof T1>;
+}): ItemProperty.ValidationOutput<T1>;
+declare function ItemPropertiesMergeValidationOutputs<T2>(outputs: readonly ItemProperty.ValidationOutput<T2>[], options?: {
+    partial?: boolean;
+    partialFields?: Iterable<`${number}`>;
+}): ItemProperty.ValidationOutput<T2[]>;
 /**
  * Check whether all properties between the passed objects are equivalent
  * @param {ItemProperties} properties1 The first property set
@@ -132,11 +152,13 @@ declare function ItemPropertiesMergeValidationOutputs<T2>(outputs: readonly Item
  * The returned set will contain up to 1 entry otherwise. Defaults to `false`.
  * @param {boolean} [options.eqOrSubset] Whether to check whether the properties are either equivalent or form a (deep)
  * subset of each other (see {@link ItemPropertiesIsSubset}). Defaults to `false`.
+ * @param {Iterable<keyof ItemProperties>} [options.omit] Properties to be ignored during the comparison process
  * @returns {{ result: boolean, nonEquivalencies: Set<keyof ItemProperties> }}
  */
 declare function ItemPropertiesCompare(properties1: ItemProperties, properties2: ItemProperties, asset: Asset, options?: {
     gatherNonEquivalancies?: boolean;
     eqOrSubset?: boolean;
+    omit?: Iterable<keyof ItemProperties>;
 }): {
     result: boolean;
     nonEquivalencies: Set<keyof ItemProperties>;
@@ -149,10 +171,12 @@ declare function ItemPropertiesCompare(properties1: ItemProperties, properties2:
  * @param {object} [options]
  * @param {boolean} [options.gatherNonEquivalancies] Whether to gather and return the names of all non-equivalent properties.
  * The returned set will contain up to 1 entry otherwise. Defaults to `false`.
+ * @param {Iterable<keyof ItemProperties>} [options.omit] Properties to be ignored during the comparison process
  * @returns {{ result: boolean, nonEquivalencies: Set<keyof ItemProperties> }}
  */
 declare function ItemPropertiesIsSubset(subProperties: ItemProperties, superProperties: ItemProperties, asset: Asset, options?: {
     gatherNonEquivalancies?: boolean;
+    omit?: Iterable<keyof ItemProperties>;
 }): {
     result: boolean;
     nonEquivalencies: Set<keyof ItemProperties>;
