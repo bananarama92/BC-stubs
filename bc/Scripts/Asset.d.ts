@@ -279,7 +279,6 @@ declare function AssetLoadDescription(Family: IAssetFamily): Promise<void>;
  * @param {ExtendedItemMainConfig} ExtendedConfig
  */
 declare function AssetLoad(Groups: readonly AssetGroupDefinition[], Family: IAssetFamily, ExtendedConfig: ExtendedItemMainConfig): void;
-/** Reset and load all the assets */
 declare function AssetLoadAll(): void;
 /**
  * Gets a specific asset by family/group/name

@@ -26,7 +26,13 @@ type DailyJobPuppyNums = {
     "4": NPCCharacter;
 };
 /**
- * @typedef {{ "0": PlayerCharacter, "1": NPCCharacter, "2": NPCCharacter, "3": NPCCharacter, "4": NPCCharacter }} DailyJobPuppyNums
+ * @typedef {{
+ *  "0": PlayerCharacter;
+ *  "1": NPCCharacter;
+ *  "2": NPCCharacter;
+ *  "3": NPCCharacter;
+ *  "4": NPCCharacter;
+ * }} DailyJobPuppyNums
  */
 /**
  * Loads a puppy girl and fully restrain her

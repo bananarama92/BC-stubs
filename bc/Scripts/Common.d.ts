@@ -2,8 +2,8 @@
 declare var Player: PlayerCharacter;
 /** @type {ModuleType} */
 declare var CurrentModule: ModuleType;
-/** @type {RoomName} */
-declare var CurrentScreen: RoomName;
+/** @type {ScreenName} */
+declare var CurrentScreen: ScreenName;
 /** @type {Required<ScreenFunctions>} */
 declare var CurrentScreenFunctions: Required<ScreenFunctions>;
 /** @type {Character|NPCCharacter|null} */
@@ -738,13 +738,11 @@ declare function CommonObjectEqual<T>(rec1: T, rec2: unknown): rec2 is T;
 declare function CommonObjectIsSubset<T>(subRec: unknown, superRec: T): subRec is Partial<T>;
 /**
  * Returns the object with keys and values reversed
- * @template {{ [key: string | number | symbol]: string | number | symbol }} T
+ * @template {Record<string | number | symbol, string | number | symbol>} T
  * @param {T} obj
  * @returns {{ [k in keyof T as T[k]]: k }}
  */
-declare function CommonObjectFlip<T extends {
-    [key: string | number | symbol]: string | number | symbol;
-}>(obj: T): { [k in keyof T as T[k]]: k; };
+declare function CommonObjectFlip<T extends Record<string | number | symbol, string | number | symbol>>(obj: T): { [k in keyof T as T[k]]: k; };
 /**
  * Parse the passed stringified JSON data and catch any exceptions.
  * Exceptions will cause the function to return `undefined`.

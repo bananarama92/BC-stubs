@@ -17,6 +17,6 @@ type FullscreenHost = Element & {
  * @namespace
  */
 declare var Fullscreen: {
-    Init(): void;
-    UpdateButton(): void;
+    Init: () => void;
+    UpdateButton: () => void;
 };

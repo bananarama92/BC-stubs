@@ -120,14 +120,19 @@ def copy_ts_declarations(bc_root: pathlib.Path):
 ts_stdout_pattern = re.compile(r"(?P<file>[^\(]+)\((?P<lineno>[0-9]+),(?P<colno>[0-9]+)\): error (?P<errcode>[^\:]+):(?P<message>.+)")
 
 
-def _parse_ts_stdout_line(line: str, root_url: str) -> tuple[str | None, str]:
+def _parse_ts_stdout_line(line: str, root_url: str) -> tuple[str | None, str, str, str]:
     match = ts_stdout_pattern.match(line)
     if match is None:
-        return (None, line)
+        return (None, line, "", "")
 
     dct = match.groupdict()
     url = f"{root_url}/{dct["file"]}#L{dct["lineno"]}"
-    return (dct["file"], f"[{dct["errcode"]}]({url}):{dct["message"]}")
+    return (
+        dct["file"],
+        f"({{lineno}},{{colno}}) [{dct["errcode"]}]({url}):{dct["message"]}",
+        dct["lineno"],
+        dct["colno"],
+    )
 
 
 def _key_sorter(items: tuple[str | None, object]):
@@ -137,22 +142,27 @@ def _key_sorter(items: tuple[str | None, object]):
 
 
 def _parse_ts_stdout(lines: Iterable[str], root_url: str) -> Iterator[str]:
-    dct: dict[str | None, list[str]] = collections.defaultdict(list)
+    dct: dict[str | None, list[tuple[str, str, str]]] = collections.defaultdict(list)
     for i in lines:
         i = i.replace("'", "`").strip()
         if not i:
             continue
-        (key, value) = _parse_ts_stdout_line(i, root_url)
-        dct[key].append(value)
+        (key, value, lineno, colno) = _parse_ts_stdout_line(i, root_url)
+        dct[key].append((value, lineno, colno))
 
+    fancy_space = "\u2002"  # En Space
     for (k, v) in sorted(dct.items(), key=_key_sorter):
         if k is None:
-            continue
+            k = "Misc"
         yield "> <details open>\n"
         yield f"> <summary><h3>{k}</h3></summary>\n"
         yield ">\n"
-        for i in v:
-            yield f"> * {i}\n"
+
+        lineno_padding = max((len(lineno) for (_, lineno, _) in v), default=0)
+        colno_padding = max((len(colno) for (_, _, colno) in v), default=0)
+        for (text, lineno, colno) in v:
+            text = text.format(lineno=lineno.rjust(lineno_padding, fancy_space), colno=colno.rjust(colno_padding, fancy_space))
+            yield f"> * {text}\n"
         yield "> </details>\n"
 
 
@@ -167,9 +177,9 @@ def _ts_log_callback(log: logging.Logger, exc: BaseException, root_url: str, com
         log.info(exc.output)
         log.warning(f"{summary_prefix}{str(exc.returncode)!r}{msg}")
         if comment_path is not None:
-            with open(comment_path, "w", encoding="utf8") as f:
+            with open(comment_path, "a", encoding="utf8") as f:
                 f.write("> [!WARNING]\n")
-                f.write("> <details>\n")
+                f.write("> <details open>\n")
                 f.write(f"> <summary><b>{summary_prefix}<code>{exc.returncode}</code>{msg}</b></summary>\n")
                 f.write(">\n")
                 for i in _parse_ts_stdout(output.split("\n"), root_url):
@@ -199,7 +209,7 @@ def generate_ts_declarations(
         logger.info(output)
         logger.info("::notice::No errors encountered while running Typescript")
         if comment_path is not None:
-            with open(comment_path, "w", encoding="utf8") as f:
+            with open(comment_path, "a", encoding="utf8") as f:
                 f.write("> [!NOTE]")
                 f.write("> No errors encountered while running Typescript")
 

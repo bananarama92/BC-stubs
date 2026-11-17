@@ -8,7 +8,6 @@ declare var CraftingSlots: {
     _observers: Map<"scroll", IntersectionObserver>;
     /**
      * @readonly
-     * @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>}
      */
     eventListeners: {
         clickExit(this: HTMLButtonElement, ev: PointerEvent): void;

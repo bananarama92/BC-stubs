@@ -1501,7 +1501,6 @@ declare class _DialogSelfMenu<ModeType extends DialogSelfMenuName = DialogSelfMe
  * @extends {_DialogSelfMenu<ModeType, ExpressionPair>}
  */
 declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends _DialogSelfMenu<ModeType, ExpressionPair> {
-    /** @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>} */
     eventListeners: {
         _ClickButton(this: HTMLButtonElement, ev: PointerEvent): null | string;
         _ClickDisabledButton(this: HTMLButtonElement, ev: PointerEvent): null | string;

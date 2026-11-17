@@ -34,23 +34,22 @@ declare var CraftingJSON: {
      * @returns {el is HTMLElement}
      */
     _isTooltip(el: null | HTMLElement): el is HTMLElement;
-    /** @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>} */
     eventListeners: {
-        focusTooltip(this: HTMLElement): void;
-        blurTooltip(this: HTMLElement): void;
-        hoverinTooltip(this: HTMLElement): void;
-        hoveroutTooltip(this: HTMLElement): void;
+        focusTooltip(this: HTMLElement, ev: FocusEvent): void;
+        blurTooltip(this: HTMLElement, ev: FocusEvent): void;
+        hoverinTooltip(this: HTMLElement, ev: MouseEvent): void;
+        hoveroutTooltip(this: HTMLElement, ev: MouseEvent): void;
         dragover(this: HTMLElement, ev: DragEvent): void;
         drop(this: HTMLElement, ev: DragEvent): void;
         dragend(this: HTMLElement, ev: DragEvent): void;
-        clickCancel(): void;
-        clickAccept(this: HTMLElement, ev: Event): void;
+        clickCancel(this: HTMLElement, ev: PointerEvent): void;
+        clickAccept(this: HTMLElement, ev: PointerEvent): void;
         /** @type {(this: HTMLInputElement) => Promise<void>} */
         changeFile: (this: HTMLInputElement) => Promise<void>;
         inputFile(this: HTMLInputElement): void;
-        clickSelectNew(this: HTMLElement): void;
-        clickSelectOld(this: HTMLElement): void;
-        clickError(this: HTMLElement): void;
+        clickSelectNew(this: HTMLElement, ev: PointerEvent): void;
+        clickSelectOld(this: HTMLElement, ev: PointerEvent): void;
+        clickError(this: HTMLElement, ev: PointerEvent): void;
         inputSearch(this: HTMLInputElement): void;
         focusSearch(this: HTMLInputElement): void;
     };

@@ -50,12 +50,10 @@ declare var DrawCanvasPosition: RectTuple;
  * @satisfies {Record<string, DrawingResizeMode>}
  */
 declare var DrawingResizeMode: {
-    readonly Fill: 1;
-    readonly FillOriginalRatio: 2;
-    readonly ShowFullOriginalRatio: 3;
+    Fill: 1;
+    FillOriginalRatio: 2;
+    ShowFullOriginalRatio: 3;
 };
-type DrawingResizeMode = 1 | 2 | 3;
-/** @typedef {1 | 2 | 3} DrawingResizeMode */
 /**
  * A cache of the texture masks used to draw the character
  * @type {Map<string, HTMLCanvasElement>}

@@ -1,9 +1,9 @@
 /**
- * Manages the display and lifecycle of toast notifications.
- * Maintains a queue of toasts to display and limits the number of
- * concurrently visible toasts.
+ * See {@link ToastManager}
+ * private
  */
-declare var ToastManager: {
+declare class _ToastManager {
+    #private;
     /**
      * Queue of toast options waiting to be displayed.
      * @type {Required<Toasts.Options>[]}
@@ -76,51 +76,10 @@ declare var ToastManager: {
      * @returns {void}
      */
     dismissByCategory(category: string): void;
-    /**
-     * Enqueues a new toast to be displayed with the given options.
-     * Fills in any missing option fields with default values, then
-     * attempts to process the queue to show toasts if slots are available.
-     *
-     * private
-     * @param {Toasts.Options} options - Configuration for the toast.
-     * @returns {void}
-     */
-    _show(options: Toasts.Options): void;
-    /**
-     * Internal method that iterates through the queue and displays any toast
-     * if the active count is not currently at max capacity. Removes displayed toasts
-     * from the queue and updates the active count.
-     *
-     * private
-     * @returns {void}
-     */
-    _process(): void;
-    /**
-     * Builds the toast element, hooks up animations, buttons, and timers,
-     * and tracks its lifetime until Void kidnaps it.
-     *
-     * private
-     * @param {Required<Toasts.Options>} _ - Fully resolved options for the toast to display.
-     * @returns {void}
-     */
-    _display(_: Required<Toasts.Options>): void;
-    /**
-     * Retrieves an existing container element for toasts, or creates a new one if none exists.
-     *
-     * private
-     * @returns {HTMLDivElement} The container <div> element.
-     */
-    _getOrCreateContainer(): HTMLDivElement;
-    /**
-     * Animates the <progress> element from 0 to its max value over the specified duration.
-     * Calls onFinish when the progress reaches its maximum. Returns a function that can
-     * be called to stop the animation prematurely.
-     *
-     * private
-     * @param {HTMLProgressElement} progress - The <progress> element to animate.
-     * @param {() => void | undefined} onFinish - Callback invoked when the animation completes.
-     * @param {number} durationMs - Total time in milliseconds for the progress to fill.
-     * @returns {() => void} Function to call to cancel the progress animation timer.
-     */
-    _animateProgress(progress: HTMLProgressElement, onFinish: () => void | undefined, durationMs: number): () => void;
-};
+}
+/**
+ * Manages the display and lifecycle of toast notifications.
+ * Maintains a queue of toasts to display and limits the number of
+ * concurrently visible toasts.
+ */
+declare var ToastManager: _ToastManager;

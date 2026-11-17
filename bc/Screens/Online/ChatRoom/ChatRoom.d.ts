@@ -113,7 +113,7 @@ declare var ChatRoomLeashPlayer: number | null;
  */
 declare var ChatRoomJoinLeash: never;
 declare var ChatRoomCustomized: boolean;
-/** @satisfies {Record<"Never" | "DisabledByDefault" | "EnabledByDefault" | "Always", ChatRoomCustomizationType>} */
+/** @satisfies {Record<string, ChatRoomCustomizationType>} */
 declare const ChatRoomCustomization: Readonly<{
     Never: 0;
     DisabledByDefault: 1;
@@ -122,14 +122,9 @@ declare const ChatRoomCustomization: Readonly<{
 }>;
 /**
  * The list of chat room views
- * @satisfies {Record<string, ChatRoomView>}
+ * @type {Record<string, ChatRoomView>}
  */
-declare var ChatRoomViews: {
-    /** @type {ChatRoomView} */
-    Character: ChatRoomView;
-    /** @type {ChatRoomView} */
-    Map: ChatRoomView;
-};
+declare var ChatRoomViews: Record<string, ChatRoomView>;
 /**
  * The active chat room view
  * @type {ChatRoomView | null}
@@ -241,10 +236,10 @@ declare function ChatRoomRefreshActiveView(): void;
 declare function ChatRoomActivateView(viewName: "Character" | "Map"): void;
 /**
  * Indicates if the chat room view with the passed name is active or not
- * @param {"Character" | "Map"} viewName - The name of the view to check
+ * @param {keyof typeof ChatRoomViews} viewName - The name of the view to check
  * @returns {boolean} - TRUE if the chat room character view is active, false if not
  */
-declare function ChatRoomIsViewActive(viewName: "Character" | "Map"): boolean;
+declare function ChatRoomIsViewActive(viewName: keyof typeof ChatRoomViews): boolean;
 /**
  * Checks if the player can add the current character to her whitelist.
  * @returns {boolean} - TRUE if the current character is not in the player's whitelist nor blacklist.
@@ -748,7 +743,7 @@ declare function ChatRoomSetTarget(MemberNumber: number): void;
 declare function ChatRoomTarget(): void;
 /**
  * Updates the account to set the last chat room
- * @param {ServerChatRoomData|null} room - room to set it to. null to reset.
+ * @param {ServerChatRoomData | null} room - room to set it to. null to reset.
  * @returns {void} - Nothing
  */
 declare function ChatRoomSetLastChatRoom(room: ServerChatRoomData | null): void;
@@ -1393,9 +1388,9 @@ declare function ChatRoomAddCharacterToChatRoom(newCharacter: OnlineCharacter, n
 /**
  * Handles the reception of the complete room data from the server.
  * @param {unknown} obj - Room object containing the updated chatroom data.
- * @returns {obj is ServerChatRoomData} - Returns true if the passed properties are valid and false if they're invalid.
+ * @returns {obj is ChatRoomSettings} - Returns true if the passed properties are valid and false if they're invalid.
  */
-declare function ChatRoomValidateProperties(obj: unknown): obj is ServerChatRoomData;
+declare function ChatRoomValidateProperties(obj: unknown): obj is ChatRoomSettings;
 /**
  * Handles the reception of the data for a room we've just entered.
  *

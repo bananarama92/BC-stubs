@@ -20,8 +20,11 @@ declare const ServerScriptMessage: string;
 declare const ServerScriptWarningStyle: string;
 /** Loads the server by attaching the socket events and their respective callbacks */
 declare function ServerInit(): void;
-/** @readonly */
-declare var ServerAccountUpdate: {
+/**
+ * See {@link ServerAccountUpdate}
+ * private
+ */
+declare class _AccountUpdater {
     /**
      * private
      * @type {Map<keyof ServerAccountUpdateRequest, unknown>}
@@ -37,6 +40,7 @@ declare var ServerAccountUpdate: {
      * @type {number}
      */
     Start: number;
+    constructor();
     /** Clears queue and sync with server  */
     SyncToServer(): void;
     /**
@@ -45,7 +49,9 @@ declare var ServerAccountUpdate: {
      * @param {boolean} [Force] - force immediate sync to server
      */
     QueueData(Data: ServerAccountUpdateRequest, Force?: boolean): void;
-};
+}
+/** @readonly */
+declare var ServerAccountUpdate: _AccountUpdater;
 /**
  * Sets the connection status of the server and updates the login page message
  * @param {boolean} connected - whether or not the websocket connection to the server has been established successfully

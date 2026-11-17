@@ -99,10 +99,10 @@ declare function MagicSchoolLaboratoryBuildSister(): void;
 declare function MagicSchoolLaboratoryFindStudent(): void;
 /**
  * When a fight begins between the player and a student
- * @param {"Wage25" | "Honor" | "RainbowWand"} Type - The type of battle to do (Normal, Wage or Honor)
+ * @param {"Wage25" | "Honor" | "RainbowWand" | "Normal"} Type - The type of battle to do (Normal, Wage or Honor)
  * @returns {void} - Nothing
  */
-declare function MagicSchoolLaboratoryBattleStudentStart(Type: "Wage25" | "Honor" | "RainbowWand"): void;
+declare function MagicSchoolLaboratoryBattleStudentStart(Type: "Wage25" | "Honor" | "RainbowWand" | "Normal"): void;
 /**
  * When a student battle ends, we release the winner, change reputation or give some money based on the wage
  * @returns {SafePromise<void>} - Nothing

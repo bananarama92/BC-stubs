@@ -198,28 +198,24 @@ declare const DynamicDrawFontMeasurements: Record<string, {
  * @satisfies {Record<string, DynamicDrawTextDirection>}
  */
 declare const DynamicDrawTextDirection: {
-    readonly CLOCKWISE: 1;
-    readonly ANTICLOCKWISE: -1;
+    CLOCKWISE: 1;
+    ANTICLOCKWISE: -1;
 };
-type DynamicDrawTextDirection = 1 | -1;
-/** @typedef {1 | -1} DynamicDrawTextDirection */
 /**
  * An enum encapsulating the possible curve directions of circular text. Can be "SMILEY" (bottom of text on the outer arc) or "FROWNY"
  * (bottom of text on the inner arc).
  * @satisfies {Record<string, DynamicDrawTextCurve>}
  */
 declare const DynamicDrawTextCurve: {
-    readonly SMILEY: -1;
-    readonly FROWNY: 1;
+    SMILEY: -1;
+    FROWNY: 1;
 };
-type DynamicDrawTextCurve = 1 | -1;
-/** @typedef {1 | -1} DynamicDrawTextCurve */
 /**
  * An enum encapsulating the available drawing effects that can be applied to dynamic text.
  * @satisfies {Record<string, DynamicDrawTextEffect>}
  */
 declare const DynamicDrawTextEffect: {
-    readonly BURN: "burn";
+    BURN: "burn";
 };
 /**
  * The default options that are used for dynamic text drawing.

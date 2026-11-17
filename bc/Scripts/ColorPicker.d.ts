@@ -110,7 +110,6 @@ declare var ColorPicker: {
     _shapes: WeakMap<Element, Readonly<RectTuple>>;
     /**
      * @readonly
-     * @satisfies {Record<string, (this: HTMLElement, ev: Event) => any>}
      */
     eventListeners: {
         inputColor(this: HTMLInputElement | HTMLColorTintElement, ev: Event): void;
