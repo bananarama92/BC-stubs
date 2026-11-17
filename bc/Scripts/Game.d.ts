@@ -27,7 +27,7 @@ declare const GameReadyState: {
     /**
      * Promise that resolves upon succesfully logging in.
      * Should not be called directly; use {@link ServerIsLoggedInAsync} instead.
-     * private
+     * @private
      * @type {undefined | Promise<void>}
      */
     login: undefined | Promise<void>;

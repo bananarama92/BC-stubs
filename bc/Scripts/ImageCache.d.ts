@@ -45,9 +45,9 @@ declare class CachedImage<T extends {
     /**
      * Only used to inform the cache of loading progress
      * @type {ImageCache<T>}
-     * private
+     * @private
      */
-    cache: ImageCache<T>;
+    private cache;
     /** @type {string} */
     url: string;
     /** @type {CachedImageState} */
@@ -63,9 +63,9 @@ declare class CachedImage<T extends {
      * Bumped on every unload so that in-flight asynchronous work knows its
      * result is no longer wanted.
      * @type {number}
-     * private
+     * @private
      */
-    _generation: number;
+    private _generation;
     /**
      * Create a new cached image.
      *
@@ -86,35 +86,35 @@ declare class CachedImage<T extends {
     unload(): void;
     /**
      * Release the stored payload, if any.
-     * private
+     * @private
      */
-    _dispose(): void;
+    private _dispose;
     /**
      * Fetch the raw bytes of the image.
      *
      * @param {number} generation - The generation the fetch belongs to
      * @param {undefined | Error} errCause - An error object the be attached as cause for failed fetch responses. Used primarily for extending the traceback
      * @returns {Promise<Blob>}
-     * private
+     * @private
      */
-    _fetch(generation: number, errCause?: undefined | Error): Promise<Blob>;
+    private _fetch;
     /**
      * Does this response carry an image media type?
      *
      * @param {Response} response
      * @returns {boolean}
-     * private
+     * @private
      */
-    _isImage(response: Response): boolean;
+    private _isImage;
     /**
      * Ensure a response carries an image media type.
      *
      * @param {Response} response
      * @param {undefined | Error} [errCause]
      * @returns {void}
-     * private
+     * @private
      */
-    _assertImage(response: Response, errCause?: undefined | Error): void;
+    private _assertImage;
     /**
      * Decode fetched bytes into the cache's payload.
      *
@@ -124,9 +124,9 @@ declare class CachedImage<T extends {
      * @param {Blob} blob - The image bytes
      * @param {number} generation - The generation the decode belongs to
      * @returns {Promise<T | null>}
-     * private
+     * @private
      */
-    _decode(blob: Blob, generation: number): Promise<T | null>;
+    private _decode;
     /**
      * Swap in a newer version of the image found by a background revalidation.
      *
@@ -136,9 +136,9 @@ declare class CachedImage<T extends {
      * @param {number} generation - The generation of the load that got updated
      * @param {Response} response - The fresh response
      * @returns {Promise<void>}
-     * private
+     * @private
      */
-    _update(generation: number, response: Response): Promise<void>;
+    private _update;
     /**
      * Is the image an asset image?
      * @returns {boolean}
@@ -198,34 +198,34 @@ declare class BrowserCache {
      * Matches the release directory at the start of a resource path, e.g. the
      * `/R123/` in `/R123/Game/Assets/...`.
      * @type {RegExp}
-     * private
+     * @private
      */
-    _releasePattern: RegExp;
+    private _releasePattern;
     /**
      * Keys that have been revalidated this session.
      * @type {Set<string>}
-     * private
+     * @private
      */
-    _revalidated: Set<string>;
+    private _revalidated;
     /**
      * Revalidations still in flight, so a second hit can wait on them.
      * @type {Map<string, Promise<Response | null>>}
-     * private
+     * @private
      */
-    _revalidating: Map<string, Promise<Response | null>>;
+    private _revalidating;
     /**
      * Origins this store will keep. Unset means any http(s) URL.
      * @type {Set<string> | null}
-     * private
+     * @private
      */
-    _origins: Set<string> | null;
+    private _origins;
     /**
      * @param {Cache} cache
      * @param {string} name
      * @param {string[] | undefined} origins
-     * private
+     * @private
      */
-    constructor(cache: Cache, name: string, origins: string[] | undefined);
+    private constructor();
     /**
      * Open the named bucket.
      *
@@ -248,9 +248,9 @@ declare class BrowserCache {
      *
      * @param {Response} response
      * @returns {Map<string, string | null>}
-     * private
+     * @private
      */
-    _cacheDirectives(response: Response): Map<string, string | null>;
+    private _cacheDirectives;
     /**
      * Can this response go in the store?
      *
@@ -259,25 +259,25 @@ declare class BrowserCache {
      *
      * @param {Response} response
      * @returns {boolean}
-     * private
+     * @private
      */
-    _isStorable(response: Response): boolean;
+    private _isStorable;
     /**
      * Check if a given URL can be cached.
      * @param {string} url
      * @returns {boolean}
-     * private
+     * @private
      */
-    _isCacheable(url: string): boolean;
+    private _isCacheable;
     /**
      * Store a response into the cache.
      *
      * @param {string} key The cache key of the resource
      * @param {Response} response - The response to store.
      * @returns {Promise<boolean>} Whether the response was stored.
-     * private
+     * @private
      */
-    _put(key: string, response: Response): Promise<boolean>;
+    private _put;
     /**
      * The response stored for this URL, if there is one.
      *
@@ -295,9 +295,9 @@ declare class BrowserCache {
      *
      * @param {string} etag
      * @returns {string}
-     * private
+     * @private
      */
-    _etagCandidates(etag: string): string;
+    private _etagCandidates;
     /**
      * Ask the server whether a stored response is still current.
      *
@@ -332,9 +332,9 @@ declare class BrowserCache {
      *
      * @param {string} key
      * @returns {Promise<boolean>}
-     * private
+     * @private
      */
-    _remove(key: string): Promise<boolean>;
+    private _remove;
     /**
      * Remove stored entries this store is not allowed to keep.
      * @returns {Promise<void>}

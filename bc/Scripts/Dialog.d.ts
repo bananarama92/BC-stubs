@@ -953,10 +953,10 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
     readonly clickStatusCallbacks: Record<string, DialogMenu<string, ClickedObj>["GetClickStatus"]>;
     /**
      * See {@link DialogMenu.shape}
-     * private
+     * @private
      * @type {null | RectTuple}
      */
-    _shape: null | RectTuple;
+    private _shape;
     /**
      * Get or set the position & shape of the current subscreen as defined by the root element.
      *
@@ -990,25 +990,25 @@ declare class DialogMenu<ModeType extends string = string, ClickedObj = any, Pro
     /**
      * A set with the numeric IDs of to-be run reloads.
      * See {@link DialogMenu.Reload}
-     * private
+     * @private
      * @readonly
      * @type {Set<number>}
      */
-    readonly _reloadQueue: Set<number>;
+    private readonly _reloadQueue;
     /**
      * The highest reload ID currently in use.
      * See {@link DialogMenu.Reload}
-     * private
+     * @private
      * @type {number}
      */
-    _reloadHighestID: number;
+    private _reloadHighestID;
     /**
      * Promise object for queuing reloads, ensuring that they are run consecutively rather than concurrently if multiple calls are invoked (near) simultaneously.
      * See {@link DialogMenu.Reload}
-     * private
+     * @private
      * @type {Promise<boolean>}
      */
-    _reloadPromise: Promise<boolean>;
+    private _reloadPromise;
     /**
      * @param {ModeType} mode The name of the mode associated with this instance
      */
@@ -1543,10 +1543,10 @@ declare class _DialogExpressionMenu<ModeType extends DialogSelfMenuName> extends
     };
     /**
      * See {@link _DialogExpressionMenu.facialExpressions}
-     * private
+     * @private
      * @type {null | Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>}
      */
-    _facialExpressions: null | Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>;
+    private _facialExpressions;
     /**
      * Get an object with all UI-configurable expression group names mapped to their respective expressions.
      * @type {Readonly<Partial<Record<ExpressionGroupName, readonly (null | ExpressionName)[]>>>}
@@ -1601,10 +1601,10 @@ declare class _DialogPoseMenu<ModeType extends DialogSelfMenuName> extends _Dial
     };
     /**
      * See {@link poses}
-     * private
+     * @private
      * @type {null | Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>}
      */
-    _poses: null | Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>;
+    private _poses;
     /**
      * An object mapping all (potentially) button-valid pose categories to their respective poses.
      * @type {Readonly<Partial<Record<AssetPoseCategory, readonly Pose[]>>>}
@@ -1641,10 +1641,10 @@ declare class _DialogSavedExpressionsMenu<ModeType extends DialogSelfMenuName> e
     clickStatusCallbacks: DialogMenu<ModeType, number>["clickStatusCallbacks"];
     /**
      * See {@link expressionPreviews}
-     * private
+     * @private
      * @type {null | (null | Character)[]}
      */
-    _expressionPreviews: null | (null | Character)[];
+    private _expressionPreviews;
     /**
      * @type {readonly (null | Character)[]}
      */

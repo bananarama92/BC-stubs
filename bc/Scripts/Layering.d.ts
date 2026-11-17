@@ -88,7 +88,7 @@ declare var Layering: {
     Readonly: boolean;
     /**
      * Whether the layering screen is readonly or not
-     * private
+     * @private
      * @see {@link Layering.Readonly}
      * @type {boolean}
      */
@@ -116,7 +116,7 @@ declare var Layering: {
      * Return whether the layering sub screen has currently been initialized (be it either active or unloaded)
      * @returns {this is typeof this & Pick<Required<typeof this>, "Character" | "Display" | "Item">}
      */
-    IsActive(): this is Pick<Required<typeof Layering>, "Character" | "Display" | "Item">;
+    IsActive(): this is typeof this & Pick<Required<typeof this>, "Character" | "Display" | "Item">;
     /**
      * The default (rectangular) shape and inter-button gap of the layering screen
      * @readonly
@@ -144,7 +144,7 @@ declare var Layering: {
      * Screen-specific callbacks that will be executed after calling {@link Layering.Exit}.
      *
      * Used as helpers for setting up the next screen.
-     * private
+     * @private
      * @readonly
      * @type {((screen: string, C: Character, item: Item) => void)[]}
      * @see {@link Layering.RegisterExitCallbacks}
@@ -152,79 +152,79 @@ declare var Layering: {
     _ExitCallbacks: ((screen: string, C: Character, item: Item) => void)[];
     /**
      * Initialize the object-based variant of {@link AssetLayerOverridePriority}
-     * private
+     * @private
      */
     _InitOverridePriorityObject(): void;
     /**
-     * private
+     * @private
      * @param {LayerName | AssetName} name - The name of the layer
      * @param {number} priority - The stringified layer priority
      * @param {string} defaultPriority - The stringified default priority of the layer
      */
     _ApplyLayerPriority(name: LayerName | AssetName, priority: number, defaultPriority: string): void;
     /**
-     * private
+     * @private
      * @param {number} priority - The layer priority
      * @param {string} defaultPriority - The stringified default priority of the layer
      */
     _ApplyAssetPriority(priority: number, defaultPriority: string): void;
     /**
      * Event listener for `input` events involving layer priorities
-     * private
+     * @private
      * @param {Event} event
      */
     _LayerInputListener(event: Event): void;
     /**
      * Event listener for `input` events involving asset priorities
-     * private
+     * @private
      * @param {Event} event
      */
     _AssetInputListener(event: Event): void;
     /**
      * A limited version of {@link CharacterRefresh}
-     * private
+     * @private
      */
     _CharacterRefresh: (C: Character, Push?: boolean | undefined, RefreshDialog?: boolean | undefined) => void;
     /**
      * Event listener for `click` events of the reset button
      * @this {HTMLButtonElement}
      * @param {Event} _event
-     * private
+     * @private
      */
     _ResetClickListener(this: HTMLButtonElement, _event: Event): void;
     /**
      * Event listener for `click` events of the show hidden layers button
      * @this {HTMLButtonElement}
      * @param {Event} _event
-     * private
+     * @private
      */
     _ShowLayersClickListener(this: HTMLButtonElement, _event: Event): void;
     /**
      * Update the background colors of the `number`-based input elements, the color change depending on whether one is changing an asset- or layer-specific priority.
-     * private
+     * @private
      * @param {"layer-priority" | "asset-priority"} activeType
      */
     _UpdateInputColors(activeType: "layer-priority" | "asset-priority"): void;
     /**
      * Cache for layering inputs to avoid DOM lookups
-     * private
+     * @private
      * @type {Record<string, HTMLInputElement[]>}
      */
     _inputCache: Record<string, HTMLInputElement[]>;
     /**
      * Updates the input validation limits for all relevant inputs based on the current combined values.
-     * private
+     * @private
      */
     _UpdateLimits(): void;
     /**
      * Insert soft hyphens between all upper- and lower cased letters, signaling them as valid word break points.
-     * private
+     * @private
      * @param {string} txt
      * @returns {string}
      */
     _TextInsertBreakpoints(txt: string): string;
     /**
-     * private
+     * @private
      * @param {"Scale" | "Rotation" | "Translation"} propType
      * @param {("ScaleX" | "ScaleY" |"Rotation" | "TranslationX" | "TranslationY")[]} properties
      * @param {number} min
@@ -237,7 +237,7 @@ declare var Layering: {
      */
     _CreateTabContent(propType: "Scale" | "Rotation" | "Translation", properties: ("ScaleX" | "ScaleY" | "Rotation" | "TranslationX" | "TranslationY")[], min: number, max: number, step: number, defaultValue: number, isShowingHiddenLayers: boolean, constraints?: Record<string, [min: number, max: number]>): Element[];
     /**
-     * private
+     * @private
      * @param {AssetLayer} layer
      * @param {"Rotation" | "Scale" | "Translation"} propType
      * @param {("ScaleX" | "ScaleY" |"Rotation" | "TranslationX" | "TranslationY")[]} properties
@@ -294,19 +294,19 @@ declare var Layering: {
         }[];
     };
     /**
-     * private
+     * @private
      * @param {AssetGroup} group
      * @returns {boolean}
      */
     _IsBlacklisted(group: AssetGroup): boolean;
     /**
-     * private
+     * @private
      * @param {AssetGroup} group
      * @returns {boolean}
      */
     _IsPussy(group: AssetGroup): boolean;
     /**
-     * private
+     * @private
      * @param {"priority" | "translation" | "scale" | "rotate"} tabKey
      * @returns {Element[]}
      */
@@ -314,12 +314,12 @@ declare var Layering: {
     /**
      * Helper to build priority fieldset to avoid repetition
      * @param {boolean} isShowingHiddenLayers
-     * private
+     * @private
      */
     _BuildLayerPriorityFieldset(isShowingHiddenLayers: boolean): HTMLFieldSetElement;
     /**
      * Group all layers by their {@link AssetLayer.CopyLayerColor} properties
-     * private
+     * @private
      * @param {readonly AssetLayer[]} layers
      * @returns {Record<"" | LayerName, AssetLayer[]>}
      */
@@ -328,14 +328,14 @@ declare var Layering: {
      * Return the default item property values for those specified in {@link Layering.PropertyNames}.
      *
      * Values are generally undefined, with the extended item options of certain items overwriting them.
-     * private
+     * @private
      * @returns {ItemProperties}
      */
     _GetDefaults(): ItemProperties;
     /**
      * Update all input elements and buttons with the passed {@link Layering.Readonly} status.
      * @param {boolean} isReadonly
-     * private
+     * @private
      */
     _ApplyReadonly(isReadonly: boolean): void;
     /**
@@ -351,7 +351,7 @@ declare var Layering: {
     Init(item: Item, character: Character, display?: null | Partial<LayeringDisplay>, reload?: boolean, readonly?: boolean): Promise<HTMLDivElement>;
     /**
      * Apply translation to the layering screen
-     * private
+     * @private
      */
     _ApplyTranslations(): void;
     Load(): Promise<void>;

@@ -169,10 +169,10 @@ declare var PropertyLayerOrigin: {
 declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemProperty.EntryNullable<T> {
     /**
      * @readonly
-     * private
+     * @private
      * @type {Map<keyof ItemProperties, PropertyDataEntry<any>>}
      */
-    static readonly _entries: Map<keyof ItemProperties, PropertyDataEntry<any>>;
+    private static readonly _entries;
     /**
      * @readonly
      * @type {Required<ItemProperty.PropertyMetaData>[T]}
@@ -184,40 +184,40 @@ declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemP
      */
     readonly name: T;
     /**
-     * private
+     * @private
      * @type {undefined | ItemProperty.Compress<T>}
      */
-    _compress: undefined | ItemProperty.Compress<T>;
+    private _compress;
     /**
-     * private
+     * @private
      * @type {undefined | ItemProperty.Decompress<T>}
      */
-    _decompress: undefined | ItemProperty.Decompress<T>;
+    private _decompress;
     /**
-     * private
+     * @private
      * @type {undefined | ItemProperty.Union<T>}
      */
-    _union: undefined | ItemProperty.Union<T>;
+    private _union;
     /**
-     * private
+     * @private
      * @type {undefined | ItemProperty.Difference<T>}
      */
-    _difference: undefined | ItemProperty.Difference<T>;
+    private _difference;
     /**
-     * private
+     * @private
      * @type {undefined | ItemProperty.Compare<T>}
      */
-    _compare: undefined | ItemProperty.Compare<T>;
+    private _compare;
     /**
-     * private
+     * @private
      * @type {ItemProperty.Validate<T>}
      */
-    _validate: ItemProperty.Validate<T>;
+    private _validate;
     /**
-     * private
+     * @private
      * @type {undefined | ItemProperty.IsSubset<T>}
      */
-    _isSubset: undefined | ItemProperty.IsSubset<T>;
+    private _isSubset;
     /**
      * @param {T} name
      * @param {ItemProperty.PropertyMetaData[T]} metaData
@@ -667,7 +667,7 @@ declare class PropertyDataEntry<T extends keyof ItemProperties> implements ItemP
 }
 /**
  * Preset item property functions for set-like arrays consisting of literal members
- * private
+ * @private
  * @type {Omit<ItemProperty.Entry<any>, "metaData">}
  */
 declare var _PropertyDataArraysDefaults: Omit<ItemProperty.Entry<any>, "metaData">;

@@ -67,28 +67,6 @@ def namespace_function_sanitize(bc_root: pathlib.Path) -> None:
                 f_out.write(text_out)
 
 
-@logger.log_group("Removing JSDoc '@private' and '@protected' tags")
-def remove_private_protected(bc_root: pathlib.Path) -> None:
-    """
-    Get rid of JSDoc @private/@protected comments as TS lacks support for those in anonymous classes because... reasons?
-
-    Xref https://github.com/microsoft/TypeScript/issues/30355
-    """
-    file_iter = itertools.chain.from_iterable(
-        [os.path.join(dir_path, i) for i in files if (i.endswith(".js") or i.endswith(".ts"))]
-        for dir in DIRECTORY_INCLUDE
-        for (dir_path, _, files) in os.walk(bc_root / dir)
-    )
-
-    for path in file_iter:
-        with open(path, "r", encoding="utf8") as f_inp:
-            text_inp = f_inp.read()
-        if ("@protected" in text_inp or "@private" in text_inp):
-            with open(path, "w", encoding="utf8", newline="\n") as f_out:
-                logger.info(f"JSDoc tag sanitizing {path!r}")
-                f_out.write(text_inp.replace("@protected", "protected").replace("@private", "private"))
-
-
 def _get_d_ts_iter(root: pathlib.Path) -> Generator[tuple[pathlib.Path, str], None, None]:
     """Iterate over the passed directory and yield pairs of (relative) directories and `.d.ts` files."""
     for (_dir, _, files) in os.walk(root):
@@ -262,7 +240,6 @@ def build(
     copy_ts_declarations(bc_root)
 
     # TS-related fixups
-    remove_private_protected(bc_root)
     namespace_function_sanitize(bc_root)
 
     # Run TS
