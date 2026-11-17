@@ -22,24 +22,24 @@ declare const ServerScriptWarningStyle: string;
 declare function ServerInit(): void;
 /**
  * See {@link ServerAccountUpdate}
- * private
+ * @private
  */
 declare class _AccountUpdater {
     /**
-     * private
+     * @private
      * @type {Map<keyof ServerAccountUpdateRequest, unknown>}
      */
-    Queue: Map<keyof ServerAccountUpdateRequest, unknown>;
+    private Queue;
     /**
-     * private
+     * @private
      * @type {null | ReturnType<typeof setTimeout>}
      */
-    Timeout: null | ReturnType<typeof setTimeout>;
+    private Timeout;
     /**
-     * private
+     * @private
      * @type {number}
      */
-    Start: number;
+    private Start;
     constructor();
     /** Clears queue and sync with server  */
     SyncToServer(): void;
@@ -60,7 +60,7 @@ declare var ServerAccountUpdate: _AccountUpdater;
 declare function ServerSetConnected(connected: boolean, errorMessage?: string): void;
 /**
  * Use the {@link ServerIsLoggedIn} function instead.
- * private
+ * @private
  * @type {boolean}
  */
 declare let ServerIsLoggedIn_: boolean;

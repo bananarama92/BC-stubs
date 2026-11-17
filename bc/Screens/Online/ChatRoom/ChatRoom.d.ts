@@ -578,19 +578,19 @@ declare var ChatRoomSep: {
     ActiveElem: null | HTMLDivElement;
     /**
      * Click event listener for collapsing one or more chat room separators
-     * private
+     * @private
      * @type {(this: HTMLButtonElement, event: PointerEvent) => Promise<void>}
      */
     _ClickCollapse: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
     /**
      * Click event listener for scrolling towards chat room seperator
-     * private
+     * @private
      * @type {(this: HTMLButtonElement, event: PointerEvent) => Promise<void>}
      */
     _ClickScrollUp: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
     /**
      * Return a {@link HTMLElement.InnerHTML} representation of the passed button's room name
-     * private
+     * @private
      * @param {HTMLButtonElement} button
      * @returns {(string | HTMLElement)[]}
      */

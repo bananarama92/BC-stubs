@@ -2,8 +2,8 @@
 declare var Player: PlayerCharacter;
 /** @type {ModuleType} */
 declare var CurrentModule: ModuleType;
-/** @type {RoomName} */
-declare var CurrentScreen: RoomName;
+/** @type {ScreenName} */
+declare var CurrentScreen: ScreenName;
 /** @type {Required<ScreenFunctions>} */
 declare var CurrentScreenFunctions: Required<ScreenFunctions>;
 /** @type {Character|NPCCharacter|null} */
@@ -261,7 +261,7 @@ declare function CommonSetScreen(...spec: ScreenSpecifier): SafePromise<void>;
 /**
  * Screen setting implementation.
  * Do not use; use {@link CommonSetScreen} instead.
- * private
+ * @private
  * @param {ScreenSpecifier} spec
  * @returns {SafePromise<void>} - Nothing
  */

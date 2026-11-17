@@ -224,31 +224,31 @@ declare var CraftingEventListeners: {
     _ClickAsset(this: HTMLButtonElement, ev: Event): void;
     _ClickRadio(this: HTMLButtonElement, ev: Event): void;
     /**
-     * private
+     * @private
      * @this {HTMLInputElement}
      */
     _InputSearch: (this: HTMLInputElement) => Promise<void>;
     /**
-     * private
+     * @private
      * @type {(this: HTMLInputElement, ev: Event) => Promise<void>}
      */
     _InputSearchEffect: (this: HTMLInputElement, ev: Event) => Promise<void>;
     _ClickAsciiDescription(this: HTMLInputElement, ev: Event): void;
     _ClickGroup(this: HTMLButtonElement, ev: PointerEvent): void;
     /**
-     * private
+     * @private
      * @type {(this: HTMLInputElement, ev: FocusEvent) => Promise<void>}
      */
     _FocusSearchAsset: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
     /**
-     * private
+     * @private
      * @type {(this: HTMLInputElement, ev: FocusEvent) => Promise<void>}
      */
     _FocusSearch: (this: HTMLInputElement, ev: FocusEvent) => Promise<void>;
 };
 declare var CraftingElements: {
     /**
-     * private
+     * @private
      * @param {string} id
      * @param {string} controls
      * @param {string} placeholder
@@ -261,7 +261,7 @@ declare var CraftingElements: {
      */
     _SearchCache: Map<"ALL" | AssetGroupItemName, readonly HTMLOptionElement[]>;
     /**
-     * private
+     * @private
      * @param {string} id
      * @param {(this: HTMLButtonElement, ev: Event) => any} onClick
      * @param {null | Asset} asset

@@ -1,7 +1,7 @@
 /** Namespace for managing the various crafting `Slots`-related modes */
 declare var CraftingSlots: {
     /**
-     * private
+     * @private
      * @readonly
      * @type {Map<"scroll", IntersectionObserver>}
      */
@@ -50,7 +50,7 @@ declare var CraftingSlots: {
      * Construct click listeners for the crafting slot buttons in the `Delete` & `Reorder` modes.
      *
      * See {@link CraftingSlots.eventListeners.clickSlot} for the `Slot`.
-     * private
+     * @private
      * @param {CraftingSlotModes} mode
      */
     _getMultiSelectListeners(mode: CraftingSlotModes): {
@@ -59,7 +59,7 @@ declare var CraftingSlots: {
     };
     /**
      * Check wether an element is fully vissible within its parent
-     * private
+     * @private
      * @param {Element} el
      * @param {Element} parent
      * @returns {boolean}
@@ -67,7 +67,7 @@ declare var CraftingSlots: {
     _isElementVisible(el: Element, parent: Element): boolean;
     /**
      * Construct a single crafting slot `<section>` header or, if it already exists, clear if of existing slot buttons
-     * private
+     * @private
      * @param {number} pageIndex - The (0-based) index of the item page as represented by the `<section>`
      * @param {{ craftsPerPage: number, nCrafts: number }} options
      * @returns {{ section: HTMLElement, list: HTMLUListElement }} The section and the button list embedded therein
@@ -81,7 +81,7 @@ declare var CraftingSlots: {
     };
     /**
      * Construct all the various crafting slot `<section>`s, each representing a single "page".
-     * private
+     * @private
      * @param {CraftingSlotModes} mode
      * @param {null | { craftsPerPage?: number }} options
      * @returns {{ sections: HTMLElement[], modeArgs: CraftingSlotsMode.Args[] }}
@@ -93,14 +93,14 @@ declare var CraftingSlots: {
         modeArgs: CraftingSlotsMode.Args[];
     };
     /**
-     * private
+     * @private
      * @param {CraftingSlotModes} mode
      * @param {readonly CraftingSlotsMode.Args[]} modeArgs
      */
     _applyModeData(mode: CraftingSlotModes, modeArgs: readonly CraftingSlotsMode.Args[]): void;
     /**
      * Use {@link CraftingModeSet} instead.
-     * private
+     * @private
      * @param {CraftingSlotModes} mode
      */
     _changeMode(mode: CraftingSlotModes): void;
