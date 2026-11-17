@@ -90,6 +90,15 @@ jobs:
 
       - name: Generate .d.ts
         run: |
+          GAME_VERSION=$(bc_tools.get_bc_version Bondage-College/BondageClub/Scripts/Game.js)
+          echo "GAME_VERSION=$GAME_VERSION" >> $GITHUB_ENV
+
+          echo "BC Version: \`$GAME_VERSION\`" >> output.txt
+          echo "Repo: $REPO_NAME" >> output.txt
+          echo "Branch: \`$REPO_BRANCH\`" >> output.txt
+          echo "Commit: \`$BC_HASH\`" >> output.txt
+          echo "" >> output.txt
+
           bc_tools.build Bondage-College/BondageClub node_modules/typescript $REPO_NAME $BC_HASH output.txt
           case "${{ github.event_name }}" in
             "pull_request")
@@ -109,7 +118,6 @@ jobs:
 
       - name: Push artifacts
         run: |
-          BC_VERSION=$(bc_tools.get_bc_version Bondage-College/BondageClub/Scripts/Game.js)
           rm -rf Bondage-College
 
           git config --local user.name "github-actions[bot]"
@@ -124,5 +132,5 @@ jobs:
           git add bc_data/audio.json
           git add bc_data/audio.d.ts
           git status
-          git commit --allow-empty -m "CI: Update stub files: $BC_VERSION" -m "BC Version: $BC_VERSION" -m "Repo: $REPO_NAME" -m "Branch: \`$REPO_BRANCH\`" -m "Commit: \`$BC_HASH\`"
+          git commit --allow-empty -m "CI: Update declaration files: $GAME_VERSION" -m "BC Version: $GAME_VERSION" -m "Repo: $REPO_NAME" -m "Branch: \`$REPO_BRANCH\`" -m "Commit: \`$BC_HASH\`"
           git push
