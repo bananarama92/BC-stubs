@@ -396,10 +396,10 @@ declare function ChatRoomMapViewIsWall(x: number, y: number): boolean;
  * Checks for connectivity in 4 directions based on a provided validation function
  * @param {number} X - The X position on the map
  * @param {number} Y - The Y position on the map
- * @param {function(number, number): boolean} Condition - Function that returns true if the position is connected
+ * @param {(tX: number, tY: number) => boolean} Condition - Function that returns true if the position is connected
  * @returns {{ North: boolean, South: boolean, East: boolean, West: boolean }} - The connectivity status
  */
-declare function ChatRoomMapViewGetConnectivityDirections(X: number, Y: number, Condition: Function): {
+declare function ChatRoomMapViewGetConnectivityDirections(X: number, Y: number, Condition: (tX: number, tY: number) => boolean): {
     North: boolean;
     South: boolean;
     East: boolean;

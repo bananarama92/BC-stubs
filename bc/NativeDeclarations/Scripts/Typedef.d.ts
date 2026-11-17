@@ -1326,7 +1326,7 @@ interface ResolvedTintDefinition extends TintDefinition {
 
 interface ExpressionTriggerBase<GroupName extends ExpressionGroupName> {
 	Group: GroupName;
-	Name: null | ExpressionNameMap[GroupName];
+	Name: ExpressionNameMap[GroupName];
 	Timer: number;
 }
 type ExpressionTriggerMap<T> = T extends ExpressionGroupName ? ExpressionTriggerBase<T> : never;
@@ -4686,6 +4686,9 @@ interface DynamicBeforeDrawOverrides {
 }
 
 type DynamicDrawTextEffect = "burn";
+type DrawingResizeMode = 1 | 2 | 3;
+type DynamicDrawTextDirection = -1 | 1;
+type DynamicDrawTextCurve = -1 | 1;
 
 interface DynamicScriptCallbackData<T extends AnimationPersistentData = AnimationPersistentData> {
 	C: Character;
@@ -5231,6 +5234,8 @@ type LogNameAdvanced =
 	| `BlockItemGroup`
 ;
 
+type LogNPCNames = "Amanda" | "Sarah" | "Sidney" | "Jennifer" | "AmandaSarah" | "SarahIntro" | "Julia" | "Yuki" | "Mildred";
+
 /** An interface mapping {@link LogRecord.Group} types to valid {@link LogRecord.Name} types */
 interface LogNameType {
 	Arcade: "DeviousChallenge",
@@ -5704,6 +5709,8 @@ declare namespace Item {
 		property?: Readonly<ItemProperties>;
 	}
 }
+
+type CachedImageState = 'uncached' | 'loading' | 'loaded' | 'failed';
 
 declare namespace ImageCache {
 	/**

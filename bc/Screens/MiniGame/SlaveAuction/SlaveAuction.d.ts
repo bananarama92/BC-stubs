@@ -35,6 +35,5 @@ declare function SlaveAuctionClick(): void;
 /**
  * Handles the key press in the slave auction mini game, the C cheat key removes $50 from the current bid in progress
  * @type {KeyboardEventListener}
- * @returns {void} - Nothing
  */
 declare function SlaveAuctionKeyDown(event: KeyboardEvent): boolean;

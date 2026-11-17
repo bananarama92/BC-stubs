@@ -16,7 +16,6 @@ declare function OnlneGameDictionaryLoad(): void;
 /**
  * @param {string} CachePath
  * @deprecated
- * @returns {void}
  */
 declare function OnlineGameTranslate(CachePath: string): void;
 /**

@@ -147,9 +147,9 @@ declare function ModularItemDrawModule(module: ModularItemModule, data: ModularI
 /**
  * Generates a click function for a modular item's module selection screen
  * @param {ModularItemData} data - The modular item's data
- * @returns {function(): void} - A click handler for the modular item's module selection screen
+ * @returns {() => void} - A click handler for the modular item's module selection screen
  */
-declare function ModularItemCreateClickBaseFunction(data: ModularItemData): Function;
+declare function ModularItemCreateClickBaseFunction(data: ModularItemData): () => void;
 /**
  * A generic click handler for a module's screen
  * @param {ModularItemModule} module - The module whose screen we are currently in
@@ -162,13 +162,13 @@ declare function ModularItemClickModule(module: ModularItemModule, data: Modular
  * in the future.
  * @param {ModularItemData} data
  * @param {ExtendedItemDrawData<ElementMetaData.Modular>} drawData
- * @param {function(): void} exitCallback - A callback to be called when the exit button has been clicked
- * @param {function(number): boolean} itemCallback - A callback to be called when an item has been clicked
- * @param {function(number): void} paginateCallback - A callback to be called when a pagination button has been clicked
+ * @param {() => void} exitCallback - A callback to be called when the exit button has been clicked
+ * @param {(buttonIndex: number) => boolean} itemCallback - A callback to be called when an item has been clicked
+ * @param {(paginateDirection: -1 | 1) => void} paginateCallback - A callback to be called when a pagination button has been clicked
  * @param {number} pageNumber - The currently shown page
  * @returns {void} - Nothing
  */
-declare function ModularItemClickCommon(data: ModularItemData, { paginate, elementData, itemsPerPage }: ExtendedItemDrawData<ElementMetaData.Modular>, exitCallback: Function, itemCallback: Function, paginateCallback: Function, pageNumber: number): void;
+declare function ModularItemClickCommon(data: ModularItemData, { paginate, elementData, itemsPerPage }: ExtendedItemDrawData<ElementMetaData.Modular>, exitCallback: () => void, itemCallback: (buttonIndex: number) => boolean, paginateCallback: (paginateDirection: -1 | 1) => void, pageNumber: number): void;
 /**
  * Handles page changing for modules
  * @param {string} moduleName - The name of the module whose page should be modified

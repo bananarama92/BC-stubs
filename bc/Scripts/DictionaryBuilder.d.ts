@@ -65,10 +65,10 @@ declare class DictionaryBuilder {
     group(tag: string, groupName: AssetGroupName): this;
     /**
      * Adds a dictionary entry which identifies the focused group - the group that was acted upon to generate the message, if applicable.
-     * @param {AssetGroupItemName} groupName - The name of the focus group
+     * @param {AssetGroupName} groupName - The name of the focus group
      * @returns {this}
      */
-    focusGroup(groupName: AssetGroupItemName): this;
+    focusGroup(groupName: AssetGroupName): this;
     /**
      * Adds a dictionary entry which identifies an asset - usually the asset being changed, but the tag can be customized.
      * @param {Asset} asset - The asset in question

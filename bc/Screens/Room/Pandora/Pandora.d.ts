@@ -94,7 +94,7 @@ declare function PandoraDrawData(Y: number): void;
 declare function PandoraRun(): void;
 /**
  * Enters a new mode for the Pandora screen, such as rest or search mode
- * @param {""|"Search"|"Rest"|"Paint"} NewMode
+ * @param {"" | "Search" | "Rest" | "Paint"} NewMode
  * @returns {void} - Nothing
  */
 declare function PandoraSetMode(NewMode: "" | "Search" | "Rest" | "Paint"): void;

@@ -198,7 +198,7 @@ declare var Shop2: {
      * @param {number} w
      * @param {number} h
      * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
-     * @satisfies {ScreenDrawHandler}
+     * @extends {ScreenDrawHandler}
      * private
      */
     _AssetElementDraw(x: number, y: number, w: number, h: number, assetIndex: number): void;
@@ -206,7 +206,7 @@ declare var Shop2: {
      * Click function for a single item in the shop
      * @param {PointerEvent} event
      * @param {number} assetIndex - The assets index within {@link Shop2Vars.CurrentAssets}
-     * @satisfies {MouseEventListener}
+     * @extends {MouseEventListener}
      * private
      */
     _AssetElementClick(event: PointerEvent, assetIndex: number): void;

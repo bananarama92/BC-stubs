@@ -22,17 +22,17 @@
  * - LOADING -> LOADED (final)
  * - LOADING -> FAILED (final)
  *
- * @enum {string}
+ * @satisfies {Record<string, CachedImageState>}
  */
 declare var CachedImageState: {
     /** Image is known, but not yet cached */
-    UNCACHED: string;
+    UNCACHED: "uncached";
     /** Image is currently being loaded */
-    LOADING: string;
+    LOADING: "loading";
     /** Image is available in cache */
-    LOADED: string;
+    LOADED: "loaded";
     /** Image couldn't be cached */
-    FAILED: string;
+    FAILED: "failed";
 };
 /**
  * Cached image data
@@ -50,8 +50,8 @@ declare class CachedImage<T extends {
     cache: ImageCache<T>;
     /** @type {string} */
     url: string;
-    /** @type {string} */
-    state: string;
+    /** @type {CachedImageState} */
+    state: CachedImageState;
     /**
      * The decoded payload; `null` until decoding completes.
      * @type {T | null}

@@ -32,8 +32,12 @@ declare const ChatAdminRoomCustomizationIDs: Readonly<{
     previewImage: "room-custom-preview-image";
     previewFilter: "room-custom-preview-filter";
 }>;
-/** @type {Readonly<Record<number, "fill" | "cover" | "contain">>} */
-declare const ChatAdminRoomCustomizationSizeFit: Readonly<Record<number, "fill" | "cover" | "contain">>;
+/** @satisfies {Readonly<Record<DrawingResizeMode, "fill" | "cover" | "contain">>} */
+declare const ChatAdminRoomCustomizationSizeFit: {
+    1: "fill";
+    2: "cover";
+    3: "contain";
+};
 /**
  * Loads the chat Admin Custom screen properties and creates the inputs
  * @type {ScreenLoadHandler}

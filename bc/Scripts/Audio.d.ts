@@ -60,10 +60,10 @@ declare function AudioShouldSilenceSound(IsPlayerInvolved?: boolean): boolean;
  * @param {ServerChatRoomMessage} data - Data received
  * @param {Character} sender
  * @param {string} msg
- * @param {IChatRoomMessageMetadata} metadata
+ * @param {IChatRoomMessageMetadata} [metadata]
  * @returns {boolean}
  */
-declare function AudioPlaySoundForChatMessage(data: ServerChatRoomMessage, sender: Character, msg: string, metadata: IChatRoomMessageMetadata): boolean;
+declare function AudioPlaySoundForChatMessage(data: ServerChatRoomMessage, sender: Character, msg: string, metadata?: IChatRoomMessageMetadata): boolean;
 /**
  * Low-level function to play a sound effect.
  * @param {AudioSoundEffect|string|null} soundEffect
