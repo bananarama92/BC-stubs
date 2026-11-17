@@ -116,7 +116,7 @@ declare var Layering: {
      * Return whether the layering sub screen has currently been initialized (be it either active or unloaded)
      * @returns {this is typeof this & Pick<Required<typeof this>, "Character" | "Display" | "Item">}
      */
-    IsActive(): this is typeof this & Pick<Required<typeof this>, "Character" | "Display" | "Item">;
+    IsActive(): this is Pick<Required<typeof Layering>, "Character" | "Display" | "Item">;
     /**
      * The default (rectangular) shape and inter-button gap of the layering screen
      * @readonly
