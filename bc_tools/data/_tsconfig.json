@@ -3,7 +3,8 @@
   "exclude": [
     "Screens/MiniGame/KinkyDungeon",
     "Scripts/MessagesPatch.d.ts",
-    "Scripts/DeclarationsExpensive.d.ts"
+    "Scripts/DeclarationsExpensive.d.ts",
+    "Scripts/Testing.js"
   ],
   "compilerOptions": {
     "allowJs": true,
