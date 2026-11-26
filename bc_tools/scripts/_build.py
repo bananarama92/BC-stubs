@@ -10,6 +10,7 @@ import re
 import pprint
 import logging
 import collections
+import json
 
 from collections.abc import Generator, Iterable, Iterator
 
@@ -81,7 +82,7 @@ def _get_d_ts_iter(root: pathlib.Path) -> Generator[tuple[pathlib.Path, str], No
 @logger.log_group("Copy pre-existing typescript files")
 def copy_ts_declarations(bc_root: pathlib.Path):
     """Copy `tsconfig.json` and all pre-existing BC `*.d.ts` files."""
-    src = paths.tsconfig
+    src = paths.tsconfig_declarations
     target = bc_root / "tsconfig.json"
     logger.info(f"Coppying {os.fspath(src)!r} to {os.fspath(target)!r}")
     shutil.copy2(src, bc_root / "tsconfig.json")
@@ -144,18 +145,20 @@ def _parse_ts_stdout(lines: Iterable[str], root_url: str) -> Iterator[str]:
         yield "> </details>\n"
 
 
-def _ts_log_callback(log: logging.Logger, exc: BaseException, root_url: str, comment_path: None | pathlib.Path) -> None:
+def _ts_log_callback(log: logging.Logger, exc: BaseException, root_url: str, comment_path: None | pathlib.Path, stage: tuple[str, str]) -> None:
     """Log `tsc` errors to the stdout."""
     if (isinstance(exc, subprocess.CalledProcessError) and isinstance(exc.output, str)):
         pattern = re.compile("Found \\d+ errors")
         output = re.sub(r"\033\[\d+m\S+\033\[0m", "", exc.output)
         msg = next((f": {i.strip()}" for i in output.split("\n") if re.search(pattern, i) is not None), "")
-        summary_prefix = "Error encountered while running Typescript with exit status "
+        summary_prefix = f"Error encountered while {stage[0]} Typescript declarations with exit status "
 
         log.info(exc.output)
         log.warning(f"{summary_prefix}{str(exc.returncode)!r}{msg}")
         if comment_path is not None:
             with open(comment_path, "a", encoding="utf8") as f:
+                f.write(f"<h3>Declaration {stage[1]}</h3>\n")
+                f.write("\n")
                 f.write("> [!WARNING]\n")
                 f.write("> <details open>\n")
                 f.write(f"> <summary><b>{summary_prefix}<code>{exc.returncode}</code>{msg}</b></summary>\n")
@@ -163,19 +166,21 @@ def _ts_log_callback(log: logging.Logger, exc: BaseException, root_url: str, com
                 for i in _parse_ts_stdout(output.split("\n"), root_url):
                     f.write(i)
                 f.write("> </details>\n")
+                f.write("\n")
 
 
 def generate_ts_declarations(
     bc_root: pathlib.Path,
     ts_root: pathlib.Path,
     root_url: str,
+    stage: tuple[str, str, str],
     comment_path: None | pathlib.Path = None,
 ):
     """Generate all BC Typescript declaration files."""
     with logger.log_group(
-        "Generate Typescript declarations",
+        f"{stage[0]} Typescript declarations",
         suppress_error=subprocess.CalledProcessError,
-        error_callback=lambda log, exc: _ts_log_callback(log, exc, root_url, comment_path),
+        error_callback=lambda log, exc: _ts_log_callback(log, exc, root_url, comment_path, stage[1:3]),
     ):
         output = subprocess.check_output(
             f"npx -p {os.path.abspath(ts_root)} tsc",
@@ -185,11 +190,31 @@ def generate_ts_declarations(
             encoding="utf8",
         )
         logger.info(output)
-        logger.info("::notice::No errors encountered while running Typescript")
+        logger.info(f"::notice::No errors encountered while {stage[1]} Typescript declarations")
         if comment_path is not None:
             with open(comment_path, "a", encoding="utf8") as f:
-                f.write("> [!NOTE]")
-                f.write("> No errors encountered while running Typescript")
+                f.write(f"<h2>Declaration {stage[2]}</h2>")
+                f.write("\n")
+                f.write("> [!NOTE]\n")
+                f.write(f"> No errors encountered while while {stage[1]} Typescript declarations\n")
+                f.write("\n")
+
+
+def verify_ts_declarations(
+    bc_root: pathlib.Path,
+    ts_root: pathlib.Path,
+    root_url: str,
+    comment_path: None | pathlib.Path = None,
+):
+    """Verify all generated declaration files."""
+    with open(paths.tsconfig_declarations, "r", encoding="utf8") as f:
+        tsconfig = json.load(f)
+        try:
+            out_dir: pathlib.Path = bc_root / tsconfig.get("compilerOptions", {}).get("outDir", "")
+        except AttributeError:
+            out_dir = bc_root
+    shutil.copy2(paths.tsconfig_typecheck, out_dir / "tsconfig.json")
+    generate_ts_declarations(out_dir, ts_root, root_url, ("Verify", "verifying", "verification"), comment_path)
 
 
 @logger.log_group("Preparing directories")
@@ -243,7 +268,8 @@ def build(
     namespace_function_sanitize(bc_root)
 
     # Run TS
-    generate_ts_declarations(bc_root, ts_root, root_url, comment_output)
+    generate_ts_declarations(bc_root, ts_root, root_url, ("Generate", "generating", "generation"), comment_output)
+    verify_ts_declarations(bc_root, ts_root, root_url, comment_output)
 
 
 @entry_point
@@ -252,9 +278,9 @@ def main():
     parser = argparse.ArgumentParser(usage="bc_tools.build /BondageClub /node_modules/typescript", description=__doc__)
     parser.add_argument("bc_root", help="Path to BC")
     parser.add_argument("typescript_root", help="Path to typescript (e.g. 'node_modules/typescript')")
-    parser.add_argument("root_url", help="Root URL to the BC repo", default=None)
-    parser.add_argument("commit_hash", help="Root URL to the BC repo", default=None)
-    parser.add_argument("comment_output", help="Path to the .md file for creating a Github bot comment", default=None)
+    parser.add_argument("--root_url", help="Root URL to the BC repo", default=None)
+    parser.add_argument("--commit_hash", help="Commit hash", default=None)
+    parser.add_argument("--comment_output", help="Path to the .md file for creating a Github bot comment", default=None)
     args = parser.parse_args()
     build(args.bc_root, args.typescript_root, args.root_url, args.commit_hash, args.comment_output)
 

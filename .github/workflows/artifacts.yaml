@@ -93,13 +93,15 @@ jobs:
           GAME_VERSION=$(bc_tools.get_bc_version Bondage-College/BondageClub/Scripts/Game.js)
           echo "GAME_VERSION=$GAME_VERSION" >> $GITHUB_ENV
 
+          echo "<h2>Metadata</h2>" >> output.txt
+          echo "" >> output.txt
           echo "BC Version: \`$GAME_VERSION\`" >> output.txt
           echo "Repo: $REPO_NAME" >> output.txt
           echo "Branch: \`$REPO_BRANCH\`" >> output.txt
           echo "Commit: \`$BC_HASH\`" >> output.txt
           echo "" >> output.txt
 
-          bc_tools.build Bondage-College/BondageClub node_modules/typescript $REPO_NAME $BC_HASH output.txt
+          bc_tools.build Bondage-College/BondageClub node_modules/typescript --root_url="$REPO_NAME" --commit_hash="$BC_HASH" --comment_output=output.txt
           case "${{ github.event_name }}" in
             "pull_request")
               gh pr comment ${{ github.event.number }} --edit-last --create-if-none --body-file output.txt

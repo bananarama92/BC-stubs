@@ -1,0 +1,8 @@
+{
+  "include": ["**/*"],
+  "compilerOptions": {
+    "pretty": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+  }
+}
