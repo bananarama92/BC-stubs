@@ -175,7 +175,7 @@ declare function CommandBuildSuggestionsContext(options: {
 }): CommandSuggestionsContext;
 declare var CommandsHelp: {
     /**
-     * private
+     * @private
      * @param {HTMLElement} help
      */
     _Publish(help: HTMLElement): void;
@@ -327,12 +327,12 @@ declare var CommandsChangelog: {
 declare var CommandsModsList: {
     /**
      * @readonly
-     * private
+     * @private
      */
     _RemoteTimeoutMs: number;
     /**
      * @type {null | CommandsModListRequest}
-     * private
+     * @private
      */
     _ActiveRemoteRequest: null | CommandsModListRequest;
     ShowLocal(): void;

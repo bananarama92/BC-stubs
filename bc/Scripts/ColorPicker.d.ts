@@ -104,7 +104,7 @@ declare var ColorPicker: {
     /**
      * A weakmap mapping color picker root elements to their respective {@link ScreenResizeHandler} shape
      * @readonly
-     * private
+     * @private
      * @type {WeakMap<Element, Readonly<RectTuple>>}
      */
     _shapes: WeakMap<Element, Readonly<RectTuple>>;
@@ -135,7 +135,7 @@ declare var ColorPicker: {
     };
     /**
      * Unpack and validate the {@link HTMLFieldSetElement.elements} of the passed `fieldset[name='color-picker']` element.
-     * private
+     * @private
      * @param {HTMLFieldSetElement} fieldset
      * @param {null | { checkValidity?: boolean }} options
      */
@@ -168,7 +168,7 @@ declare var ColorPicker: {
     create(id: null | string, options?: null | Pick<ColorPickerInitOptions, "colorState" | "onInput">): HTMLFieldSetElement;
     /**
      * {@link ColorPicker.setColor} helper for parsing color values (be it stringified or as HSV)
-     * private
+     * @private
      * @param {Pick<ColorPickerColorInput, "colorString" | "hsv">} value
      * @param {null | HTMLInputElement} outputInput - Current text input, used when `value` carries neither a string nor an HSV color
      * @param {null | number} opacity - Opacity byte in `[0, 255]`. `255` and `null` leave the color without an alpha byte
@@ -180,7 +180,7 @@ declare var ColorPicker: {
     };
     /**
      * {@link ColorPicker.setColor} helper for parsing opacity values
-     * private
+     * @private
      * @param {Pick<ColorPickerColorInput, "opacity" | "colorString">} value
      * @param {null | HTMLInputElement} [opacityInput] - Slider whose min, max, and disabled state clamp the result. Omitted, the byte is clamped to `[0, 255]`
      * @param {null | { overrideEditOpacity?: boolean }} options
@@ -200,7 +200,7 @@ declare var ColorPicker: {
         dispatch?: boolean;
     }): void;
     /**
-     * private
+     * @private
      * @type {WeakMap<Element, Readonly<Pick<ItemColorStateType, "initialColors" | "initialOpacity">>>}
      * Object for storing the initial color & opacity state of each color picker `.screen`.
      * Need this as the DOM inputs can store up two values (`value` and `defaultValue`), but lacks an easy way of storing a third one (the initial value).

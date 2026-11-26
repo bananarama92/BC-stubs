@@ -188,6 +188,11 @@ declare function CommonMouseWheel(event: WheelEvent): void;
 /** @type {ScreenResizeHandler} */
 declare function CommonResize(load: boolean): void;
 /**
+ * Forwards a canvas right-click to the current screen.
+ * @param {PointerEvent} event
+ */
+declare function CommonRightClick(event: PointerEvent): void;
+/**
  * Catches the clicks on the main screen and forwards it to the current screen click function if it exists, otherwise it sends it to the dialog click function
  * @type {MouseEventListener}
  */
@@ -261,7 +266,7 @@ declare function CommonSetScreen(...spec: ScreenSpecifier): SafePromise<void>;
 /**
  * Screen setting implementation.
  * Do not use; use {@link CommonSetScreen} instead.
- * private
+ * @private
  * @param {ScreenSpecifier} spec
  * @returns {SafePromise<void>} - Nothing
  */
@@ -283,13 +288,13 @@ declare function CommonIsColor(Value: string | undefined, options?: null | {
  * Checks whether an item's color has a valid value that can be interpreted by the drawing
  * functions. Valid values are null, undefined, color strings, and an array containing any of the
  * aforementioned types.
- * @param {null | ItemColor} [color] - The Color value to check
+ * @param {null | Readonly<ItemColor>} [color] - The Color value to check
  * @param {null | { schema?: readonly BCColor[] }} [options]
- * @returns {color is (null | undefined | ItemColor)} - Returns TRUE if the color is a valid item color
+ * @returns {color is (null | undefined | Readonly<ItemColor>)} - Returns TRUE if the color is a valid item color
  */
-declare function CommonColorIsValid(color?: null | ItemColor, options?: null | {
+declare function CommonColorIsValid(color?: null | Readonly<ItemColor>, options?: null | {
     schema?: readonly BCColor[];
-}): color is (null | undefined | ItemColor);
+}): color is (null | undefined | Readonly<ItemColor>);
 /**
  * Remove the (potential present) alpha component of the passed color hex code, turning the likes of `RRGGBB(AA)` into `RRGGBB`.
  * @param {HexColor} color The color hex code
@@ -539,6 +544,18 @@ declare function CommonArrayJoinPretty(strings: string[]): string;
  * @returns {string}
  */
 declare function CommonStringTitlecase(str: string): string;
+/**
+ * Sets the browser tab title.
+ * Uses the player nickname when set, otherwise the player name.
+ * @param {object} [options] - The options object
+ * @param {string} [options.prefix] - Text before the player name
+ * @param {string} [options.suffix] - Text after the player name
+ * @returns {void}
+ */
+declare function CommonSetDocumentTitle({ prefix, suffix }?: {
+    prefix?: string;
+    suffix?: string;
+}): void;
 /**
  * Censors a string or words in that string based on the player preferences
  * @param {string} S - The string to censor
@@ -1113,18 +1130,18 @@ declare function CommonPromiseCatch(p: Promise<any> | undefined): void;
  * @template {Error} [E=Error]
  */
 declare class Result<T, E extends Error = Error> {
-    /** @type {T} */
-    value: T;
+    /** @type {T | null} */
+    value: T | null;
     /** @type {E | null} */
     error: E | null;
     /**
      * Create a new Result representing the status of a failable operation
-     * @param {T} value
+     * @param {T | null} value
      * @param {E | null} [error]
      */
-    constructor(value: T, error?: E | null);
+    constructor(value: T | null, error?: E | null);
     /**
-     * Convert the {@link Result.Error} message into a list of DOM elements as usable by the likes of {@link ElementDOMScreen.setStatus}).
+     * Convert the {@link Result.error} message into a list of DOM elements as usable by the likes of {@link ElementDOMScreen.setStatus}).
      *
      * Always returns an empty list for nullish errors
      * @param {null | string | Element | readonly (string | Element)[]} customMessage A custom message to be used as prefix
@@ -1135,50 +1152,58 @@ declare class Result<T, E extends Error = Error> {
      * Build a Result for a successful operation
      * @template T
      * @param {T} value
-     * @returns {Result<T, never>}
+     * @returns {OkResult<T, never>}
      */
-    static success<T>(value: T): Result<T, never>;
+    static success<T>(value: T): OkResult<T, never>;
     /**
      * Build a Result for a failed operation
      * @template {Error} T
      * @param {T} error
-     * @returns {Result<never, T>}
+     * @returns {ErrResult<never, T>}
      */
-    static failure<T extends Error>(error: T): Result<never, T>;
+    static failure<T extends Error>(error: T): ErrResult<never, T>;
     /**
      * Returns whether the operation was a success
+     *
+     * When this is true, `value` is available and `error` is null.
+     * @returns {this is OkResult<T, E>}
      */
-    get ok(): boolean;
+    ok(): this is OkResult<T, E>;
     /**
      * Returns whether the operation was a failure
+     *
+     * When this is true, `error` is available and `value` is null.
+     * @returns {this is ErrResult<T, E>}
      */
-    get err(): boolean;
+    err(): this is ErrResult<T, E>;
     /**
      * Unwrap the result
      * This either returns the successful return of the operation, or throws the error it reported
+     * @this {ResultOf<T, E>}
+     * @returns {T}
      */
-    unwrap(): T;
+    unwrap(this: ResultOf<T, E>): T;
 }
 declare class ClipboardError extends Error {
     /**
      * @param {string} message
-     * @param {object} options
+     * @param {ErrorOptions} options
      */
-    constructor(message: string, options?: object);
+    constructor(message: string, options?: ErrorOptions);
 }
 /**
  * Read text data from the browser's clipboard.
  *
- * @param {(result: Result<string | null, ClipboardError>) => void} cb
+ * @param {(result: ResultOf<string, ClipboardError>) => void} cb
  */
-declare function CommonClipboardRead(cb: (result: Result<string | null, ClipboardError>) => void): void;
+declare function CommonClipboardRead(cb: (result: ResultOf<string, ClipboardError>) => void): void;
 /**
  * Write text data to the browser's clipboard.
  *
  * @param {string} data
- * @param {undefined | ((result: Result<null, ClipboardError>) => void)} [cb]
+ * @param {undefined | ((result: ResultOf<null, ClipboardError>) => void)} [cb]
  */
-declare function CommonClipboardWrite(data: string, cb?: undefined | ((result: Result<null, ClipboardError>) => void)): void;
+declare function CommonClipboardWrite(data: string, cb?: undefined | ((result: ResultOf<null, ClipboardError>) => void)): void;
 /**
  * A more type-safe version of {@link Object.assign}, demanding a type match of the target- and source object(s) instead of producing an intersection
  * @template {{}} T
@@ -1210,3 +1235,11 @@ declare function CommonMax<T extends number>(arg0: T, ...args: T[]): T;
  * @returns {T}
  */
 declare function CommonMin<T extends number>(arg0: T, ...args: T[]): T;
+/**
+ * Construct a new array of the specified length and fill it with the passed values.
+ * @template {undefined | ScalarType} T
+ * @param {number} length The length of the array
+ * @param {T} fillValue The _scalar_ fill value if the array
+ * @returns {T[]} The new array
+ */
+declare function CommonFillNewArray<T extends undefined | ScalarType>(length: number, fillValue: T): T[];

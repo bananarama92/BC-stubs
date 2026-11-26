@@ -7,7 +7,7 @@
  * @returns {ChatRoomMapObject["BuildImageName"]}
  */
 declare function ChatRoomMapViewCreateAnimation(baseName: string, frames: number, duration?: number, reverse?: boolean): ChatRoomMapObject["BuildImageName"];
-/** All kitchen counter variants join each other into runs and corners */
+/** Kitchen counters join each other and the tall cabinet into runs and corners */
 declare const AssetsMapDataKitchenCounterIDs: number[];
 /**
  * Creates a function that picks the kitchen counter piece matching the neighboring kitchen counters

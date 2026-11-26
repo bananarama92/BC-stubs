@@ -513,7 +513,7 @@ declare var DrawSkipVFX: {
     /**
      * The list of registered callbacks; see {@link DrawSkipVFX.evaluate}.
      * @readonly
-     * private
+     * @private
      * @type {ScreenCheckCallback[]}
      */
     _list: ScreenCheckCallback[];

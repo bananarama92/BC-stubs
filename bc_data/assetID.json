@@ -25,7 +25,8 @@
             "FacePaint": 5,
             "FaceCrests": 6,
             "BabyPowderDust": 7,
-            "NavelBar1": 8
+            "NavelBar1": 8,
+            "LowerBodyScars": 9
         }
     },
     "BodyUpper": {
@@ -317,7 +318,8 @@
             "SchoolBag": 47,
             "ChainBelt": 48,
             "ForeheadJewelry": 49,
-            "TriskelionNecklace": 50
+            "TriskelionNecklace": 50,
+            "EyeGlow": 51
         }
     },
     "ClothLower": {
@@ -488,7 +490,8 @@
             "UndershadowedBlurred": 9,
             "UndershadowedSolid": 10,
             "Wings": 11,
-            "Running": 12
+            "Running": 12,
+            "EyeGlow": 13
         }
     },
     "FacialHair": {
@@ -566,7 +569,8 @@
             "Monocle": 19,
             "ShutterSunshades": 20,
             "VintageSunglasses": 21,
-            "FaceCrests": 22
+            "FaceCrests": 22,
+            "EyeGlow": 23
         }
     },
     "Gloves": {
@@ -654,7 +658,8 @@
             "BlackCatEarsMirror": 56,
             "DaggerRibbon": 57,
             "TongqianHairpin": 58,
-            "ForeheadJewelry": 59
+            "ForeheadJewelry": 59,
+            "MothAntenna": 60
         }
     },
     "HairAccessory2": {
@@ -703,7 +708,8 @@
             "CustomizableFluffyEars1": 40,
             "CustomizableFluffyEars2": 41,
             "CustomizableFluffyEars3": 42,
-            "ForeheadJewelry": 43
+            "ForeheadJewelry": 43,
+            "MothAntenna": 44
         }
     },
     "HairAccessory3": {
@@ -720,7 +726,8 @@
             "Ribbons3": 8,
             "Ribbons4": 9,
             "WeddingVeil1": 10,
-            "ForeheadJewelry": 11
+            "ForeheadJewelry": 11,
+            "MothAntenna": 12
         }
     },
     "HairBack": {
@@ -842,7 +849,12 @@
             "HairBack83": 113,
             "HairBack84": 114,
             "HairBack61b": 115,
-            "HairBack85": 116
+            "HairBack85": 116,
+            "BraidedVikingRealistic": 117,
+            "EmberSweep": 118,
+            "HairBack86": 119,
+            "HairBack86b": 120,
+            "HairBack87": 121
         }
     },
     "HairFront": {
@@ -962,7 +974,9 @@
             "HairFront64b": 111,
             "HairFront75": 112,
             "HairFront76a": 113,
-            "HairFront76b": 114
+            "HairFront76b": 114,
+            "BraidedVikingRealistic": 115,
+            "EmberSweep": 116
         }
     },
     "Hands": {
@@ -1026,7 +1040,9 @@
             "NPCBalloon": 49,
             "FeatheredHeadpiece": 50,
             "WitchHat": 51,
-            "FrogHat": 52
+            "FrogHat": 52,
+            "MothAntenna": 53,
+            "Sallet": 54
         }
     },
     "Head": {
@@ -1252,7 +1268,8 @@
             "WolfTail2": 38,
             "WolfTail3": 39,
             "FuckPlug": 40,
-            "FoxTail": 41
+            "FoxTail": 41,
+            "RotatingAnalBeads": 42
         }
     },
     "ItemDevices": {
@@ -2110,7 +2127,9 @@
             "MCuffCollar": 48,
             "SSpikedCollar": 49,
             "SteampunkCollar": 50,
-            "RibbonCollar": 51
+            "RibbonCollar": 51,
+            "PaddedChoker": 52,
+            "RestrictCollar": 53
         }
     },
     "ItemNeckAccessories": {
@@ -2495,7 +2514,9 @@
             "KirugumiMask": 36,
             "CybertechMask": 37,
             "FeatheredHeadpiece": 38,
-            "ForeheadJewelry": 39
+            "ForeheadJewelry": 39,
+            "EyeGlow": 40,
+            "Sallet": 41
         }
     },
     "Mouth": {
@@ -2913,7 +2934,8 @@
             "LargeBushyTail": 29,
             "DragonsTail": 30,
             "FoxTailStrap": 31,
-            "KitsuneTailStraps": 32
+            "KitsuneTailStraps": 32,
+            "CableTail": 33
         }
     },
     "Wings": {
@@ -2935,7 +2957,8 @@
             "SeraphWings": 13,
             "Wing1": 14,
             "BotEnergyWings": 15,
-            "Spider": 16
+            "Spider": 16,
+            "MothWings": 17
         }
     },
     "AnkletLeft": {
@@ -3008,7 +3031,8 @@
             "FaceWritings": 2,
             "Splatters": 3,
             "FacePaint": 4,
-            "FaceCrests": 5
+            "FaceCrests": 5,
+            "EyeGlow": 6
         }
     },
     "BodyStyle": {
@@ -3155,7 +3179,8 @@
             "FaircloughManor": 45,
             "MansionValentine": 46,
             "SADollhouse": 47,
-            "TheOddRoom": 48
+            "TheOddRoom": 48,
+            "ACF": 49
         }
     }
 }

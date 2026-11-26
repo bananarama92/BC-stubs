@@ -402,7 +402,7 @@ declare function ElementCreateSearchInput(id: string | null, dataCallback: (sear
  */
 declare var ElementButton: {
     /**
-     * private
+     * @private
      * @readonly
      */
     _TooltipPositions: Readonly<{
@@ -412,7 +412,7 @@ declare var ElementButton: {
         bottom: "button-tooltip-bottom";
     }>;
     /**
-     * private
+     * @private
      * @readonly
      */
     _LabelPositions: Readonly<{
@@ -452,7 +452,7 @@ declare var ElementButton: {
     _KeyDownRadio(this: HTMLElement, ev: KeyboardEvent): void;
     _ClickCheckbox(this: HTMLButtonElement, ev: Event): void;
     /**
-     * private
+     * @private
      * @param {string} id
      * @param {string} [img]
      * @param {null | string} [imgColor]
@@ -461,7 +461,7 @@ declare var ElementButton: {
      */
     _ParseImage(id: string, img?: string, imgColor?: null | string, options?: Omit<HTMLOptions<"img" | "div">, "tag">): HTMLImageElement | HTMLDivElement | null;
     /**
-     * private
+     * @private
      * @param {string} id
      * @param {ElementButton.StaticNode} [label]
      * @param {"top" | "center" | "bottom" | "left" | "right"} [position]
@@ -480,7 +480,7 @@ declare var ElementButton: {
         tooltip: [HTMLSpanElement, HTMLElement];
     };
     /**
-     * private
+     * @private
      * @param {string} id
      * @param {"left" | "right" | "top" | "bottom"} [position]
      * @param {readonly (null | undefined | string | Node | HTMLOptions<any>)[]} [children]
@@ -565,12 +565,12 @@ declare var ElementButton: {
  */
 declare var ElementMenu: {
     /**
-     * private
+     * @private
      * @type {WeakMap<Element, MutationObserver>}
      */
     _observers: WeakMap<Element, MutationObserver>;
     /**
-     * private
+     * @private
      * @satisfies {MutationCallback}
      * @param {readonly { addedNodes: (readonly Node[]) | NodeList, target: Node }[]} mutationList
      */
@@ -809,13 +809,13 @@ declare var ElementDOMScreen: {
     /**
      * A weakmap mapping `[role='status']` elements to their respective {@link setTimeout} IDs.
      * See {@link ElementDOMScreen.SetStatus}
-     * private
+     * @private
      * @type {WeakMap<Element, number>}
      */
     _statusIDMap: WeakMap<Element, number>;
     /**
      * Timer handler for {@link ElementDOMScreen.SetStatus}
-     * private
+     * @private
      * @satisfies {TimerHandler}
      * @param {Element} headingElem The screen's `h1` element
      * @param {Element} statusElem The screen's `[role='status']` element
@@ -848,7 +848,7 @@ declare var ElementInput: {
     /**
      * DOM tag for each supported control.
      * Textarea is the only non-input; extend {@link ElementInput.TagFor} when that changes.
-     * private
+     * @private
      * @type {Readonly<{ [T in ElementInput.KnownType]: ElementInput.TagFor<T> }>}
      */
     _tags: Readonly<{ [T in ElementInput.KnownType]: ElementInput.TagFor<T>; }>;
@@ -942,7 +942,7 @@ declare var ElementSearchQuery: {
      */
     clear<T extends Element>(elements: (readonly T[]) | NodeListOf<T>): T[];
     /**
-     * private
+     * @private
      * @param {string} textContent
      * @param {RegExp} pattern
      * @param {ElementSearchQuery.Options} options
@@ -962,10 +962,10 @@ declare class HTMLColorTintElement extends HTMLElement {
     /** @type {null | ElementInternals} */
     internals_: null | ElementInternals;
     /**
-     * private
+     * @private
      * @type {null | string}
      */
-    _pressedOldValue: null | string;
+    private _pressedOldValue;
     constructor();
     connectedCallback(): void;
     /**
@@ -1027,10 +1027,10 @@ declare class HTMLColorTintElement extends HTMLElement {
      */
     defaultValue: string;
     /**
-     * private
+     * @private
      * @type {Readonly<HSVColor>}
      */
-    _value: Readonly<HSVColor>;
+    private _value;
     /**
      * Get or set the color {@link value} via an object with [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV) color values.
      * All HSV values are expected to be normalized to the `[0, 1]` range.
@@ -1056,20 +1056,17 @@ declare class HTMLColorTintElement extends HTMLElement {
     set name(value: string);
     /**
      * Set the position the knob
-     * private
+     * @private
      * @param {number} left - The relative left position on a scale of 0-100
      * @param {number} top - The relative top position on a scale of 0-100
      */
-    _setKnobPosition(left: number, top: number): void;
+    private _setKnobPosition;
     /**
      * Get the position the knob
-     * private
+     * @private
      * @returns {{ left: number, top: number }} - The position of the knob on a scale of 0-100
      */
-    _getKnobPosition(): {
-        left: number;
-        top: number;
-    };
+    private _getKnobPosition;
 }
 /**
  * Sets an element's text content, skipping the write when it already matches.

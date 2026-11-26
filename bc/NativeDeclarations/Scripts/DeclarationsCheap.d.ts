@@ -22,6 +22,7 @@ type ScreenFunctionsSymbols = Prettify<(
 	& { [key in `${RoomName}KeyUp`]?: KeyboardEventListener }
 	& { [key in `${RoomName}Paste`]?: ClipboardEventListener }
 	& { [key in `${RoomName}Exit`]?: ScreenExitHandler }
+	& { [key in `${RoomName}RightClick`]?: MouseEventListener }
 
 	// Extended item functions (dynamically generated and assigned to `Window`)
 	& { [key in `Inventory${string}Init`]?: ExtendedItemCallbacks.Init }

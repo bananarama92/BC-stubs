@@ -1,6 +1,6 @@
 /**
  * See {@link ToastManager}
- * private
+ * @private
  */
 declare class _ToastManager {
     #private;

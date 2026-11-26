@@ -22,24 +22,24 @@ declare const ServerScriptWarningStyle: string;
 declare function ServerInit(): void;
 /**
  * See {@link ServerAccountUpdate}
- * private
+ * @private
  */
 declare class _AccountUpdater {
     /**
-     * private
+     * @private
      * @type {Map<keyof ServerAccountUpdateRequest, unknown>}
      */
-    Queue: Map<keyof ServerAccountUpdateRequest, unknown>;
+    private Queue;
     /**
-     * private
+     * @private
      * @type {null | ReturnType<typeof setTimeout>}
      */
-    Timeout: null | ReturnType<typeof setTimeout>;
+    private Timeout;
     /**
-     * private
+     * @private
      * @type {number}
      */
-    Start: number;
+    private Start;
     constructor();
     /** Clears queue and sync with server  */
     SyncToServer(): void;
@@ -60,7 +60,7 @@ declare var ServerAccountUpdate: _AccountUpdater;
 declare function ServerSetConnected(connected: boolean, errorMessage?: string): void;
 /**
  * Use the {@link ServerIsLoggedIn} function instead.
- * private
+ * @private
  * @type {boolean}
  */
 declare let ServerIsLoggedIn_: boolean;
@@ -602,7 +602,7 @@ declare var ServerAccountDataSyncedValidate: {
      * @returns {ChatRoomSearchSettings}
      */
     ChatSearchSettings: (arg: Partial<ChatRoomSearchSettings> | undefined, C: Character) => ChatRoomSearchSettings;
-    WardrobeCharacterNames: (arg: Partial<string[] | undefined>, C: Character) => any[];
+    WardrobeCharacterNames: (arg: Partial<string[] | undefined>, C: Character) => string[];
     RecentlyUsedMapElements: (arg: Partial<(`Effect:${number}` | `Object:${number}` | `Tile:${number}`)[] | undefined>, C: Character) => ChatRoomMapDoodad[];
     /**
      * @param {Partial<InfiltrationType> | undefined} arg
@@ -721,17 +721,17 @@ declare let ServerRoomSearchLastQuery: ServerChatRoomSearchRequest | null;
  * Perform a search query against the server
  * @param {string} queryString
  * @param {Omit<ServerChatRoomSearchRequest, "Query">} options
- * @returns {Promise<Result<ServerChatRoomSearchResultResponse, ServerError>>}
+ * @returns {Promise<ResultOf<ServerChatRoomSearchResultResponse, ServerError>>}
  */
-declare function ServerRoomSearch(queryString: string, options: Omit<ServerChatRoomSearchRequest, "Query">): Promise<Result<ServerChatRoomSearchResultResponse, ServerError>>;
+declare function ServerRoomSearch(queryString: string, options: Omit<ServerChatRoomSearchRequest, "Query">): Promise<ResultOf<ServerChatRoomSearchResultResponse, ServerError>>;
 declare let ServerRoomJoinLastQuery: string;
 declare let ServerRoomJoinLastQueryTime: number;
 /**
  * Perform a join query against the server
  * @param {string} roomName
- * @returns {Promise<Result<string, ServerError>>}
+ * @returns {Promise<ResultOf<string, ServerError>>}
  */
-declare function ServerRoomJoin(roomName: string): Promise<Result<string, ServerError>>;
+declare function ServerRoomJoin(roomName: string): Promise<ResultOf<string, ServerError>>;
 /**
  * Update the player's friend- and submissive-related arrays based on the inc
  * @param {ServerFriendInfo[]} data An array of data, we receive from the server

@@ -778,6 +778,11 @@ declare function ChatRoomMapViewSetSelectedTile(pos: {
     Y: number;
 } | undefined): void;
 /**
+ * Handles right-clicks in the chatroom map view.
+ * @param {PointerEvent} event
+ */
+declare function ChatRoomMapViewRightClick(event: PointerEvent): void;
+/**
  * Builds the rotation, size, color and decal controls for an object on a tile
  * @param {ChatRoomMapPos} pos
  * @param {ChatRoomMapObject} object

@@ -27,7 +27,7 @@ declare const GameReadyState: {
     /**
      * Promise that resolves upon succesfully logging in.
      * Should not be called directly; use {@link ServerIsLoggedInAsync} instead.
-     * private
+     * @private
      * @type {undefined | Promise<void>}
      */
     login: undefined | Promise<void>;
@@ -57,6 +57,8 @@ declare function GameKeyDown(event: KeyboardEvent): boolean | undefined;
 declare function GameKeyUp(event: KeyboardEvent): boolean;
 /** @type {ClipboardEventListener} */
 declare function GamePaste(event: ClipboardEvent): void;
+/** Clicks before this timestamp are ignored because a touch gesture just opened the contextual menu. */
+declare var GameSuppressClickUntil: number;
 /**
  * If the user presses the mouse button, we fire the mousedown event for other screens
  * @param {PointerEvent} event
@@ -70,7 +72,7 @@ declare function GamePointerDown(event: PointerEvent, canvas: HTMLCanvasElement)
  */
 declare function GamePointerUp(event: PointerEvent, canvas: HTMLCanvasElement): void;
 /**
- * If the user stops touching the screen (mobile only), we fire the mouseup event for other screens
+ * Tracks active touches, and ignores the click that follows a contextual-menu gesture.
  * @param {TouchEvent} event
  */
 declare function GameTouchEnd(event: TouchEvent): void;

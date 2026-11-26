@@ -135,7 +135,7 @@ declare var InventoryPrerequisiteConflicts: {
      */
     GagPriorities: Partial<Record<AssetGroupName, number>>;
     /**
-     * private
+     * @private
      * @template {keyof PropertiesArray} T
      * @param {T} fieldName
      * @param {Character} C - The character on which we check for prerequisites
@@ -303,7 +303,7 @@ declare function InventoryRandomExtend(C: Character, GroupName: AssetGroupName, 
 declare function InventoryGetRandom(C: Character, GroupName: AssetGroupName | undefined, AllowedAssets?: readonly Asset[], IgnorePrerequisites?: boolean): Asset | null;
 /**
  * See {@link InventoryRemove}
- * private
+ * @private
  * @param {Character} C
  * @param {Set<number>} outputIndices
  * @param {Item[]} outputItems

@@ -149,9 +149,9 @@ declare function PlatformLoad(): Promise<void>;
  * @param {Platform.Character} C - The character to evaluate
  * @param {Platform.AnimationName} Pose - The pose we want
  * @param {boolean | null} [Cycle] - TRUE if we must use the animation cycle
- * @returns {Platform.AnimationSpec} - An object with the image, width & height to draw
+ * @returns {Platform.AnimationSpec | undefined} - An object with the image, width & height to draw
  */
-declare function PlatformGetAnim(C: Platform.Character, Pose: Platform.AnimationName, Cycle?: boolean | null): Platform.AnimationSpec;
+declare function PlatformGetAnim(C: Platform.Character, Pose: Platform.AnimationName, Cycle?: boolean | null): Platform.AnimationSpec | undefined;
 /**
  * Returns TRUE if the current action for a character is ActionName
  * @param {Platform.Character} C - The character to validate
@@ -231,11 +231,11 @@ declare function PlatformHitBoxClash(Source: Platform.Character, Target: Platfor
 /**
  * Plays a sound effect if needed
  * @param {Platform.SoundCategory} Category - The sound effect category
- * @param {Platform.SoundEffect | Platform.SoundEffect[]} Sound - The sound or array of sound to play
+ * @param {Platform.SoundEffect | Platform.SoundEffect[] | undefined} Sound - The sound or array of sound to play
  * @param {number} Factor - The volume factor to apply
  * @returns {void} - Nothing
  */
-declare function PlatformSoundEffect(Category: Platform.SoundCategory, Sound: Platform.SoundEffect | Platform.SoundEffect[], Factor?: number): void;
+declare function PlatformSoundEffect(Category: Platform.SoundCategory, Sound: Platform.SoundEffect | Platform.SoundEffect[] | undefined, Factor?: number): void;
 /**
  * Checks if the character action can attack someone else
  * @param {Platform.Character} Source - The character doing the action
@@ -451,6 +451,6 @@ declare function PlatformHasPerk(C: Platform.Character, Perk: Platform.PerkName)
 declare function PlatformCooldownActive(Name: Platform.EffectType | Platform.AnimationName): boolean;
 /**
  * Sets Bondage Brawl in standalone mode, not requiring any login from BC
- * @returns {void} - Nothing
+ * @returns {Promise<void>} - Nothing
  */
-declare function PlatformRunStandalone(): void;
+declare function PlatformRunStandalone(): Promise<void>;
