@@ -4,7 +4,7 @@
 declare var CraftingJSON: {
     /**
      * A cache of imported crafting items
-     * private
+     * @private
      * @type {null | { name: string, status: CraftingStatusType, craft: null | CraftingItem }[]}
      */
     _craftListCache: null | {
@@ -19,7 +19,7 @@ declare var CraftingJSON: {
         dragstart: (this: HTMLElement, ev: DragEvent) => void;
     };
     /**
-     * private
+     * @private
      * @param {Element} fieldset
      * @param {null | Element} radioContainer
      * @param {Map<{ inputNew: HTMLInputElement, inputOld: HTMLInputElement }, boolean>} checkLog
@@ -29,7 +29,7 @@ declare var CraftingJSON: {
         inputOld: HTMLInputElement;
     }, boolean>): void;
     /**
-     * private
+     * @private
      * @param {null | HTMLElement} el
      * @returns {el is HTMLElement}
      */

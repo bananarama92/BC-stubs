@@ -75,8 +75,9 @@ declare function VibratorModeRegister(asset: Asset, config: VibratingItemConfig,
  * @param {VibratingItemOption} previousOption - The previously applied extended item option
  * @param {boolean} [push] - Whether or not appearance updates should be persisted (only applies if the character is the
  * player) - defaults to false.
+ * @param {boolean} refresh - Whether to refresh the character. This should generally be `true`, with custom script hooks being a potential exception.
  */
-declare function VibratorModeSetOption(data: VibratingItemData, C: Character, item: Item, newOption: VibratingItemOption, previousOption: VibratingItemOption, push?: boolean): void;
+declare function VibratorModeSetOption(data: VibratingItemData, C: Character, item: Item, newOption: VibratingItemOption, previousOption: VibratingItemOption, push?: boolean, refresh?: boolean): void;
 /**
  * Set the baseline intensity and effects of the given advanced vibrator mode
  * @param {Item} item

@@ -36,6 +36,23 @@ type ScalarType = null | string | boolean | number;
  */
 type SafePromise<T> = Promise<T>;
 
+/**
+ * A successful {@link Result}. `value` is available and `error` is null.
+ */
+type OkResult<T, E extends Error = Error> = Result<T, E> & { value: T, error: null };
+
+/**
+ * A failed {@link Result}. `error` is available and `value` is null.
+ */
+type ErrResult<T, E extends Error = Error> = Result<T, E> & { value: null, error: E };
+
+/**
+ * A {@link Result} that has either succeeded or failed.
+ *
+ * `ok()` and `err()` narrow `value` and `error` from either outcome.
+ */
+type ResultOf<T, E extends Error = Error> = OkResult<T, E> | ErrResult<T, E>;
+
 // GL shim
 
 /**
@@ -1761,7 +1778,6 @@ type ScreenResizeHandler = (load: boolean) => void;
 type ScreenExitHandler = VoidHandler;
 
 interface ScreenFunctions {
-	// Required
 	/**
 	 * Called each frame
 	 * @param {number} time - The current time for frame
@@ -1792,8 +1808,12 @@ interface ScreenFunctions {
 	 * @param {PointerEvent} event - The event that triggered this
 	 */
 	Click: MouseEventListener;
+	/**
+	 * Called on a canvas right-click
+	 * @param {PointerEvent} event - The event that triggered this
+	 */
+	RightClick?: MouseEventListener;
 
-	// Optional
 	/** Called when screen is loaded using `CommonSetScreen` */
 	Load?: ScreenLoadHandler
 	/** Called when this screen is being replaced */
@@ -2562,6 +2582,8 @@ interface GraphicsSettingsType {
 	CenterChatrooms: boolean;
 	AllowBlur: boolean;
 	ShowFPS: boolean;
+	/** Show the player nickname or name in the browser tab title */
+	ShowNameInTitle: boolean;
 	ShowFullscreenButton: GraphicsShowFullscreenButton;
 	/** 0 means unlimited */
 	MaxFPS: number;
@@ -3237,7 +3259,9 @@ interface ExtendedItemData<OptionType extends ExtendedItemOption> {
 	 * To-be initialized properties independent of the selected item module(s).
 	 * Relevant if there are properties that are (near) exclusively managed by {@link ExtendedItemData.scriptHooks} functions.
 	 */
-	baselineProperty: PropertiesNoArray.Item;
+	// FIXME (maybe?): Ban these summation-based numbers as there's no way of knowing what is and isn't already included in their pre-existing sum,
+	// meaning they are at great risk of double counting for successive ExtendedItemInit() calls
+	baselineProperty: Omit<PropertiesNoArray.Item, "Difficulty" | "HeightModifier">;
 	/** The extended item option of the super screen that this archetype was initialized from (if any) */
 	parentOption: null | ExtendedItemOption;
 	/** An interface with element-specific drawing data for a given screen. */
@@ -5420,6 +5444,7 @@ interface ChatRoomView extends Pick<ScreenFunctions,"Resize" | "Run" | "MouseDow
 	Draw: () => void;
 	DrawUi: () => void;
 	RoomUpdated?: () => void;
+	RightClick?: (event: PointerEvent) => void;
 	CanStartWhisper?: (C: Character) => boolean;
 	CanLeave?: () => boolean;
 	Screenshot: () => void;
@@ -5462,73 +5487,74 @@ type ChatRoomMapTileType = "Floor" | "FloorExterior" | "Wall" | "Water";
 /** A map doodad stored on the account, such as `Object:100`. */
 type MapDoodadRef = `${"Tile" | "Object" | "Effect"}:${number}`;
 
+// Treat all doodad objects as (immutable) singletons
 interface ChatRoomMapDoodad {
-	DoodadType?: "Tile" | "Object" | "Effect";
-	Type: string;
-	ID: number;
-	Unique?: boolean;
-	Name?: string;
+	readonly DoodadType?: "Tile" | "Object" | "Effect";
+	readonly Type: string;
+	readonly ID: number;
+	readonly Unique?: boolean;
+	readonly Name?: string;
 	/** On load, this doodad is replaced by another doodad with this id */
-	DeprecatedID?: number;
+	readonly DeprecatedID?: number;
 	/** Palette image name. Only shown in the editor. */
-	PaletteImage?: string;
+	readonly PaletteImage?: string;
 }
 
 /** {@link MapDoodadIsPhysicalElement}  */
 interface ChatRoomMapPhysicalElement extends ChatRoomMapDoodad {
-	Style: string;
-	Rotation?: number;
-	TransparencyCutoutHeight?: number;
-	Transparency?: number;
-	OccupiedStyle?: "WoodOpen" | "MetalOpen" | "RoyalDoorOpen" | "SteelDoorOpen" | "GrayDoorOpen" | "BrownDoorOpen";
-	CanEnter?: (direction: ChatRoomMapDirectionWithEmptySpace) => boolean;
-	OnEnter?: () => void;
-	BlockVision?: boolean;
-	BlockHearing?: boolean;
-	Top?: number;
-	Left?: number;
-	Width?: number;
-	Height?: number;
-	CanPlaceOnFloors?: boolean; // default true
-	CanPlaceOnWalls?: boolean; // ex. Banners
-	CanPlaceInWalls?: boolean; // ex. Doors
+	readonly Style: string;
+	readonly Rotation?: number;
+	readonly TransparencyCutoutHeight?: number;
+	readonly Transparency?: number;
+	readonly OccupiedStyle?: "WoodOpen" | "MetalOpen" | "RoyalDoorOpen" | "SteelDoorOpen" | "GrayDoorOpen" | "BrownDoorOpen";
+	readonly CanEnter?: (direction: ChatRoomMapDirectionWithEmptySpace) => boolean;
+	readonly OnEnter?: () => void;
+	readonly BlockVision?: boolean;
+	readonly BlockHearing?: boolean;
+	readonly Top?: number;
+	readonly Left?: number;
+	readonly Width?: number;
+	readonly Height?: number;
+	readonly CanPlaceOnFloors?: boolean; // default true
+	readonly CanPlaceOnWalls?: boolean; // ex. Banners
+	readonly CanPlaceInWalls?: boolean; // ex. Doors
 	/** Its picture joins up with the same objects next to it, so admins can't turn or size it */
-	JoinsNeighbors?: boolean;
+	readonly JoinsNeighbors?: boolean;
 }
 
 /** {@link MapDoodadIsTile}  */
 interface ChatRoomMapTile extends ChatRoomMapPhysicalElement {
-	Type: ChatRoomMapTileType;
+	readonly Type: ChatRoomMapTileType;
 }
 
 /** {@link MapDoodadIsObject}  */
 interface ChatRoomMapObject extends ChatRoomMapPhysicalElement {
-	Type: ChatRoomMapObjectType;
-	Exit?: boolean;
+	readonly Type: ChatRoomMapObjectType;
+	readonly Exit?: boolean;
 	/** The config a cell gets when this object is placed there */
-	DefaultObjectConfig?: ChatRoomMapObjectConfig;
-	AssetGroup?: AssetGroupItemName;
-	AssetName?: AssetName;
-	IsVisible?: () => boolean;
-	BuildImageName?: (X: number, Y: number) => string;
+	readonly DefaultObjectConfig?: ChatRoomMapObjectConfig;
+	readonly AssetGroup?: AssetGroupItemName;
+	readonly AssetName?: AssetName;
+	readonly IsVisible?: () => boolean;
+	readonly BuildImageName?: (X: number, Y: number) => string;
 	/** The color the object is drawn in, the way clothes are colored, opacity included (#RRGGBBAA) */
-	BuildImageColor?: (X: number, Y: number) => HexColor | null;
-	OnClick?: (x: number, y: number) => void;
+	readonly BuildImageColor?: (X: number, Y: number) => HexColor | null;
+	readonly OnClick?: (x: number, y: number) => void;
 	/** Whether admins can make the object a tether point, where leashes can be tied */
-	CanBeTetherPoint?: boolean;
+	readonly CanBeTetherPoint?: boolean;
 	/** Whether admins can turn, size and color the object once placed; default true */
-	CanBeCustomized?: boolean;
+	readonly CanBeCustomized?: boolean;
 	/**
 	 * The layers the object is drawn with, in order, on top of each other.
 	 * Objects that don't list any get a single plain layer when the map data is loaded.
 	 * The plain `<ImageName>.png` is still required for older clients and the object palette.
 	 */
-	Layers?: readonly ChatRoomMapLayer[];
+	readonly Layers?: readonly ChatRoomMapLayer[];
 	/**
 	 * Where admins can put a decal on the object, in pixels of its image: `[left, top, width, height]`.
 	 * The decal is fitted and centered in it, and turns and sizes with the object. Any decal of {@link AssetGetDecals} can go there.
 	 */
-	DecalArea?: RectTuple;
+	readonly DecalArea?: RectTuple;
 }
 
 /**
@@ -5550,12 +5576,12 @@ type ChatRoomMapColorableLayer = Extract<ChatRoomMapLayer, { IsColorable: true }
 
 /** {@link MapDoodadIsEffect}  */
 interface ChatRoomMapEffectStaticLighting extends ChatRoomMapDoodad {
-	Type: "StaticLighting";
-	TypeId: 1,
+	readonly Type: "StaticLighting";
+	readonly TypeId: 1,
 	/**
 	 * R [0; 255], G [0; 255], B [0; 255], A [0.0; 1.0]
 	 */
-	Color: [r: number, g: number, b: number, a: number];
+	readonly Color: [r: number, g: number, b: number, a: number];
 }
 
 type ChatRoomMapObjectConfig = ChatRoomMapSignObjectConfig | ChatRoomMapTeleporterObjectConfig | ChatRoomMapTetherObjectConfig

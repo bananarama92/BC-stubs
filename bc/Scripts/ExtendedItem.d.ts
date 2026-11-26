@@ -377,9 +377,10 @@ declare function ExtendedItemBuildChatMessageDictionary<OptionType extends Exten
  * Generally used for getting a chat prefix for extended item buttons with custom functionality.
  * @param {string} Name - The name of the pseudo-type
  * @param {ExtendedItemData<any>} Data - The extended item data
+ * @param {Character} C
  * @returns {string} The dialogue prefix for the custom chatroom messages
  */
-declare function ExtendedItemCustomChatPrefix(Name: string, Data: ExtendedItemData<any>): string;
+declare function ExtendedItemCustomChatPrefix(Name: string, Data: ExtendedItemData<any>, C: Character): string;
 /**
  * Gather and return all subscreen properties of the passed option.
  * @param {Item} item - The item in question

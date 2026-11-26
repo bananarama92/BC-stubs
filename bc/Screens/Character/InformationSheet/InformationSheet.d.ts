@@ -27,12 +27,14 @@ declare const InformationSheetLoverStages: {
 };
 /**
  * Skill rows whose modifier can expire while the sheet is open.
- * @type {{ type: SkillType, value: HTMLElement, modifier: HTMLElement }[]}
+ * @type {{ type: SkillType, value: HTMLElement, modifier: HTMLElement, row: HTMLElement, tooltip: () => string }[]}
  */
 declare let InformationSheetSkillWatches: {
     type: SkillType;
     value: HTMLElement;
     modifier: HTMLElement;
+    row: HTMLElement;
+    tooltip: () => string;
 }[];
 /** @type {number} */
 declare let InformationSheetSkillRefreshAt: number;
@@ -102,9 +104,9 @@ declare function InformationSheetIdentitySection(C: Character): HTMLElement;
  * @param {string} value
  * @param {string | null} [valueClass]
  * @param {boolean} [copy]
- * @returns {[HTMLElement, HTMLElement]}
+ * @returns {HTMLElement}
  */
-declare function InformationSheetFact(key: string, value: string, valueClass?: string | null, copy?: boolean): [HTMLElement, HTMLElement];
+declare function InformationSheetFact(key: string, value: string, valueClass?: string | null, copy?: boolean): HTMLElement;
 /**
  * Copies the value on press.
  * @param {string} text
@@ -130,20 +132,26 @@ declare function InformationSheetDuration(label: string, start: number, classLis
 declare function InformationSheetTimestampTooltip(start: number): string;
 /**
  * @param {HTMLElement} host
- * @param {string} text
+ * @param {Thunk<string>} text
  */
-declare function InformationSheetHover(host: HTMLElement, text: string): void;
+declare function InformationSheetHover(host: HTMLElement, text: Thunk<string>): void;
 /**
  * @param {HTMLElement} anchor
  * @param {string} text
  */
 declare function InformationSheetShowTooltip(anchor: HTMLElement, text: string): void;
+/**
+ * Keeps an open tooltip in place while its text changes.
+ * @param {HTMLElement} anchor
+ * @param {string} text
+ */
+declare function InformationSheetRefreshTooltip(anchor: HTMLElement, text: string): void;
 declare function InformationSheetHideTooltip(): void;
 /**
  * @param {Character} C
- * @returns {HTMLElement}
+ * @returns {HTMLElement | null}
  */
-declare function InformationSheetOwnership(C: Character): HTMLElement;
+declare function InformationSheetOwnership(C: Character): HTMLElement | null;
 /**
  * @param {string} titleKey
  * @param {readonly HTMLElement[]} entries
@@ -217,10 +225,17 @@ declare function InformationSheetSkillPips(level: number, progress: number, rati
 declare function InformationSheetSkillValue(C: PlayerCharacter, type: SkillType): string;
 /**
  * @param {number} modifier
- * @param {number} duration
  * @returns {string}
  */
-declare function InformationSheetModifierText(modifier: number, duration: number): string;
+declare function InformationSheetModifierText(modifier: number): string;
+/**
+ * Ratio text, with the modifier duration on the following line when both exist.
+ * @param {PlayerCharacter} C
+ * @param {SkillType} type
+ * @param {number} ratio
+ * @returns {string}
+ */
+declare function InformationSheetSkillTooltip(C: PlayerCharacter, type: SkillType, ratio: number): string;
 /**
  * @param {PlayerCharacter} C
  */

@@ -283,8 +283,9 @@ declare function AppearanceLoad(): Promise<void>;
 declare function AppearanceEnterSearchMode(C: Character): void;
 /**
  * Exit from the search mode
+ * @param {Character} C - The character the appearance is being set for
  */
-declare function AppearanceExitSearchMode(): void;
+declare function AppearanceExitSearchMode(C: Character): void;
 /**
  * Build the buttons in the top menu
  * @returns {void} - Nothing

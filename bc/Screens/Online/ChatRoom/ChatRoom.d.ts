@@ -242,44 +242,52 @@ declare function ChatRoomActivateView(viewName: "Character" | "Map"): void;
 declare function ChatRoomIsViewActive(viewName: keyof typeof ChatRoomViews): boolean;
 /**
  * Checks if the player can add the current character to her whitelist.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is not in the player's whitelist nor blacklist.
  */
-declare function ChatRoomCanAddWhiteList(): boolean;
+declare function ChatRoomCanAddWhiteList(C?: Character | null): boolean;
 /**
  * Checks if the player can add the current character to her blacklist.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is not in the player's whitelist nor blacklist.
  */
-declare function ChatRoomCanAddBlackList(): boolean;
+declare function ChatRoomCanAddBlackList(C?: Character | null): boolean;
 /**
  * Checks if the player can remove the current character from her whitelist.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is in the player's whitelist, but not her blacklist.
  */
-declare function ChatRoomCanRemoveWhiteList(): boolean;
+declare function ChatRoomCanRemoveWhiteList(C?: Character | null): boolean;
 /**
  * Checks if the player can remove the current character from her blacklist.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is in the player's blacklist, but not her whitelist.
  */
-declare function ChatRoomCanRemoveBlackList(): boolean;
+declare function ChatRoomCanRemoveBlackList(C?: Character | null): boolean;
 /**
  * Checks if the player can add the current character to her friendlist
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is not in the player's friendlist yet.
  */
-declare function ChatRoomCanAddFriend(): boolean;
+declare function ChatRoomCanAddFriend(C?: Character | null): boolean;
 /**
  * Checks if the player can remove the current character from her friendlist.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is in the player's friendlist.
  */
-declare function ChatRoomCanRemoveFriend(): boolean;
+declare function ChatRoomCanRemoveFriend(C?: Character | null): boolean;
 /**
  * Checks if the player can add the current character to her ghostlist
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is not in the player's ghostlist yet.
  */
-declare function ChatRoomCanAddGhost(): boolean;
+declare function ChatRoomCanAddGhost(C?: Character | null): boolean;
 /**
  * Checks if the player can remove the current character from her ghostlist.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is in the player's ghostlist.
  */
-declare function ChatRoomCanRemoveGhost(): boolean;
+declare function ChatRoomCanRemoveGhost(C?: Character | null): boolean;
 /**
  * Checks if the player can change the current character's clothes
  * @returns {boolean} - TRUE if the player can change the character's clothes and is allowed to.
@@ -364,6 +372,12 @@ declare function ChatRoomCurrentCharacterIsWhitelisted(): boolean;
  * @returns {boolean} - TRUE if the player is in focus mode
  */
 declare function ChatRoomPlayerIsInDrawFocus(): boolean;
+/**
+ * Checks if the character is in the player's focuslist (/focus).
+ * @param {Character} C - The character to check
+ * @returns {boolean} - TRUE if the character is in the player's focuslist.
+ */
+declare function ChatRoomCharacterIsInFocusList(C: Character): boolean;
 /**
  * Checks if the current character is in the player's focuslist (/focus).
  * @returns {boolean} - TRUE if the current character is in the player's focuslist.
@@ -462,9 +476,10 @@ declare function ChatRoomGiveHighSecurityKeysAll(): void;
 declare function ChatRoomCanGiveLockpicks(): boolean;
 /**
  * Checks if the player can help the current character by giving her lockpicks
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the player can interact and is allowed to interact with the current character.
  */
-declare function ChatRoomCanAssistStruggle(): boolean;
+declare function ChatRoomCanAssistStruggle(C?: Character | null): boolean;
 /**
  * Checks if the character options menu is available.
  * @returns {boolean} - Whether or not the player can interact with the target character
@@ -494,16 +509,18 @@ declare function ChatRoomStopWhisper(): void;
  * Checks if the target character can be helped back on her feet. This is different than CurrentCharacter.CanKneel()
  * because it listens for the current active pose and removes certain checks that are not required for someone else to
  * help a person kneel down.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - Whether or not the target character can stand
  */
-declare function ChatRoomCanAssistStand(): boolean;
+declare function ChatRoomCanAssistStand(C?: Character | null): boolean;
 /**
  * Checks if the target character can be helped down on her knees. This is different than CurrentCharacter.CanKneel()
  * because it listens for the current active pose and removes certain checks that are not required for someone else to
  * help a person kneel down.
- * @returns {boolean} - Whether or not the target character can stand
+ * @param {Character | null} [C] - The character to check
+ * @returns {boolean} - Whether or not the target character can kneel
  */
-declare function ChatRoomCanAssistKneel(): boolean;
+declare function ChatRoomCanAssistKneel(C?: Character | null): boolean;
 /**
  * Checks if the player character is kneeling and can stand up.
  * Will return true if there are any available transitions from {@link PoseAllKneeling} to {@link PoseAllStanding}.
@@ -520,24 +537,28 @@ declare function ChatRoomCanAttemptStand(): boolean;
 declare function ChatRoomCanAttemptKneel(): boolean;
 /**
  * Checks if the player can stop the current character from leaving.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the current character is slowed down and can be interacted with.
  */
-declare function ChatRoomCanStopSlowPlayer(): boolean;
+declare function ChatRoomCanStopSlowPlayer(C?: Character | null): boolean;
 /**
  * Checks if the player can interrupt another character from struggling.
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the player can do it
  */
-declare function ChatRoomCanInterruptOnlineStruggle(): boolean;
+declare function ChatRoomCanInterruptOnlineStruggle(C?: Character | null): boolean;
 /**
  * Checks if the player can grab the targeted player's leash
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the player can interact and is allowed to interact with the current character.
  */
-declare function ChatRoomCanHoldLeash(): boolean;
+declare function ChatRoomCanHoldLeash(C?: Character | null): boolean;
 /**
  * Checks if the player can let go of the targeted player's leash
+ * @param {Character | null} [C] - The character to check
  * @returns {boolean} - TRUE if the player can interact and is allowed to interact with the current character.
  */
-declare function ChatRoomCanStopHoldLeash(): boolean;
+declare function ChatRoomCanStopHoldLeash(C?: Character | null): boolean;
 /**
  * Checks if the given character is a valid leash target for the player
  * @param {Character} C - The character to search
@@ -578,19 +599,19 @@ declare var ChatRoomSep: {
     ActiveElem: null | HTMLDivElement;
     /**
      * Click event listener for collapsing one or more chat room separators
-     * private
+     * @private
      * @type {(this: HTMLButtonElement, event: PointerEvent) => Promise<void>}
      */
     _ClickCollapse: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
     /**
      * Click event listener for scrolling towards chat room seperator
-     * private
+     * @private
      * @type {(this: HTMLButtonElement, event: PointerEvent) => Promise<void>}
      */
     _ClickScrollUp: (this: HTMLButtonElement, event: PointerEvent) => Promise<void>;
     /**
      * Return a {@link HTMLElement.InnerHTML} representation of the passed button's room name
-     * private
+     * @private
      * @param {HTMLButtonElement} button
      * @returns {(string | HTMLElement)[]}
      */
@@ -935,6 +956,21 @@ declare function ChatRoomMouseWheel(event: WheelEvent): void;
  * @type {MouseEventListener}
  */
 declare function ChatRoomClick(event: PointerEvent): void;
+/**
+ * Copy a chat message's text to the clipboard.
+ * @param {HTMLElement | null} messageElement
+ */
+declare function ChatRoomCopyMessageText(messageElement: HTMLElement | null): void;
+/**
+ * Right-click on a message in the chat log.
+ * @param {PointerEvent} event
+ */
+declare function ChatRoomMessageRightClick(event: PointerEvent): void;
+/**
+ * Handles right-clicks in the chatroom screen.
+ * @type {MouseEventListener}
+ */
+declare function ChatRoomRightClick(event: PointerEvent): void;
 /**
  * The handler for the "Kneel" top menu button
  */
@@ -1478,9 +1514,10 @@ declare function DialogCallMaids(): SafePromise<void>;
 /**
  * Triggered when the player assists another player to struggle out, the bonus is evasion / 2 + 1, with penalties if
  * the player is restrained.
+ * @param {Character | null} [C] - The character to struggle assist
  * @returns {void} - Nothing.
  */
-declare function ChatRoomStruggleAssist(): void;
+declare function ChatRoomStruggleAssist(C?: Character | null): void;
 /**
  * Triggered when the player assists another player to by giving lockpicks
  * @returns {void} - Nothing.
@@ -1488,9 +1525,10 @@ declare function ChatRoomStruggleAssist(): void;
 declare function ChatRoomGiveLockpicks(): void;
 /**
  * Triggered when the player grabs another player's leash
+ * @param {Character | null} [C] - The character to hold the leash
  * @returns {void} - Nothing.
  */
-declare function ChatRoomHoldLeash(): void;
+declare function ChatRoomHoldLeash(C?: Character | null): void;
 /**
  * Handle the reply to a leash being held
  * @param {OnlineCharacter} SenderCharacter
@@ -1498,9 +1536,10 @@ declare function ChatRoomHoldLeash(): void;
 declare function ChatRoomDoHoldLeash(SenderCharacter: OnlineCharacter): void;
 /**
  * Triggered when the player lets go of another player's leash
+ * @param {Character | null} [C] - The character to stop holding the leash
  * @returns {void} - Nothing.
  */
-declare function ChatRoomStopHoldLeash(): void;
+declare function ChatRoomStopHoldLeash(C?: Character | null): void;
 /**
  * Handle breaking off a leash
  * @param {null | Exclude<ServerChatRoomJoinResponse, "JoinedRoom"> | "RoomBlocked" | "GhostList" | "TempHidden" | "Timeout"} event
@@ -1528,19 +1567,22 @@ declare function ChatRoomDoPingLeashedPlayers(SenderCharacter: Character): void;
 declare function ChatRoomDoRemoveLeash(SenderCharacter: OnlineCharacter): void;
 /**
  * Triggered when a character makes another character kneel/stand.
+ * @param {Character | null} [C] - The character to kneel/stand
  * @returns {void} - Nothing
  */
-declare function ChatRoomKneelStandAssist(): void;
+declare function ChatRoomKneelStandAssist(C?: Character | null): void;
 /**
  * Triggered when a character stops another character from leaving.
+ * @param {Character | null} [C] - The character to stop leaving
  * @returns {void} - Nothing
  */
-declare function ChatRoomStopLeave(): void;
+declare function ChatRoomStopLeave(C?: Character | null): void;
 /**
  * Triggered when a character interrupt online struggles on another character.
+ * @param {Character | null} [C] - The character to interrupt online struggles
  * @returns {void} - Nothing
  */
-declare function ChatRoomOnlineStruggleInterrupt(): void;
+declare function ChatRoomOnlineStruggleInterrupt(C?: Character | null): void;
 /**
  * Sends an administrative command to the server for the chat room from the character dialog.
  * @param {"Move"|"Kick"|"Ban"} ActionType - Type of action performed.
@@ -1550,11 +1592,11 @@ declare function ChatRoomOnlineStruggleInterrupt(): void;
 declare function ChatRoomAdminAction(ActionType: "Move" | "Kick" | "Ban", Publish?: boolean | string): void;
 /**
  * Sends an administrative command to the server from the chat text field.
- * @param {"Ban"|"Unban"|"Kick"|"Promote"|"Demote"|"Whitelist"|"Unwhitelist"} ActionType - Type of action performed.
- * @param {string} Argument - Target number of the action.
+ * @param {"Ban"|"Unban"|"Kick"|"Promote"|"Demote"|"Whitelist"|"Unwhitelist"|"Move"} ActionType - Type of action performed.
+ * @param {string | number | Character} Argument - Target number of the action.
  * @returns {void} - Nothing
  */
-declare function ChatRoomAdminChatAction(ActionType: "Ban" | "Unban" | "Kick" | "Promote" | "Demote" | "Whitelist" | "Unwhitelist", Argument: string): void;
+declare function ChatRoomAdminChatAction(ActionType: "Ban" | "Unban" | "Kick" | "Promote" | "Demote" | "Whitelist" | "Unwhitelist" | "Move", Argument: string | number | Character): void;
 /**
  * Gets the player's current time as a string.
  * @returns {string} - The player's current local time as a string.

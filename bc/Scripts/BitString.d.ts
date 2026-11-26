@@ -229,9 +229,9 @@ declare class BitStringWriter {
     /**
      * The current buffer: an array of 16-bit unsigned integers representing the bit stream this class writes to.
      * @type {number[]}
-     * private
+     * @private
      */
-    _buffer: number[];
+    private _buffer;
     /**
      * The amount of free bits in the last char of the {@link BitStringWriter._buffer}.
      *
@@ -243,9 +243,9 @@ declare class BitStringWriter {
      * back to {@link _BitStringHelperInternal.CHAR_BITS}.
      *
      * @type {number}
-     * private
+     * @private
      */
-    _freeBitsLastChar: number;
+    private _freeBitsLastChar;
     /**
      * Creates a new and empty `BitStringWriter`.
      */
@@ -324,9 +324,9 @@ declare class BitStringWriter {
      * Writes an unsigned value without bit-width checks.
      * @param {number} value
      * @param {number} bits
-     * private
+     * @private
      */
-    _writeUnsignedValueNoChecks(value: number, bits: number): void;
+    private _writeUnsignedValueNoChecks;
     /**
      * Writes `value`, a `bits`-wide integer, to the free space in the last character being written.
      *
@@ -334,18 +334,18 @@ declare class BitStringWriter {
      *
      * @param {number} value
      * @param {number} bits
-     * private
+     * @private
      */
-    _addBitsToBufferLastChar(value: number, bits: number): void;
+    private _addBitsToBufferLastChar;
     /**
      * Adds a full `CHAR_BIT`-wide value to the buffer.
      *
      * The last char of the buffer must NOT contain any free bits.
      *
      * @param {number} value
-     * private
+     * @private
      */
-    _pushFullCharToBuffer(value: number): void;
+    private _pushFullCharToBuffer;
     /**
      * A specialized version of {@link BitStringWriter._addBitsToBufferLastChar}.
      * Instead of modifying the last char, it pushes a new one and writes {@link value}
@@ -355,15 +355,15 @@ declare class BitStringWriter {
      *
      * @param {number} value
      * @param {number} bits
-     * private
+     * @private
      */
-    _pushPartCharToBuffer(value: number, bits: number): void;
+    private _pushPartCharToBuffer;
     /**
      * An efficient way to add a single bit to the buffer.
      * @param {number} value
-     * private
+     * @private
      */
-    _writeBitNoChecks(value: number): void;
+    private _writeBitNoChecks;
 }
 /**
  * The reader class. It is responsible for reading packed integers from a BitString.
@@ -372,9 +372,9 @@ declare class BitStringReader {
     /**
      * The current buffer, representing the input bit stream.
      * @type {string}
-     * private
+     * @private
      */
-    _buffer: string;
+    private _buffer;
     /**
      * The index of the current char in the {@link BitStringReader._buffer}.
      *
@@ -382,15 +382,15 @@ declare class BitStringReader {
      * bit position in the input bit stream.
      *
      * @type {number}
-     * private
+     * @private
      */
-    _charPos: number;
+    private _charPos;
     /**
      * The amount of bits read from the current char. Always inside `[0; CHAR_BITS - 1]`.
      * @type {number}
-     * private
+     * @private
      */
-    _bitPosLastChar: number;
+    private _bitPosLastChar;
     /**
      * Initialize the reader with a string obtained from calling
      * {@link BitStringWriter.toBitString} or similar methods.
@@ -510,9 +510,9 @@ declare class BitStringReader {
      *
      * @param {number} bits
      * @returns {number}
-     * private
+     * @private
      */
-    _readBitsLastChar(bits: number): number;
+    private _readBitsLastChar;
     /**
      * Reads a full {@link _BitStringHelperInternal.CHAR_BITS}-bits unsigned integer
      * from the current char, and advances to the next one.
@@ -520,17 +520,17 @@ declare class BitStringReader {
      * Must only be called when {@link BitStringReader._bitPosLastChar} === 0.
      *
      * @returns {number}
-     * private
+     * @private
      */
-    _readFullChar(): number;
+    private _readFullChar;
     /**
      * A faster way of reading a single bit.
      *
      * @returns {0 | 1 | undefined} 0, 1, or `undefined`, the latter indicating
      * there is no more data to read.
-     * private
+     * @private
      */
-    _tryReadBitFast(): 0 | 1 | undefined;
+    private _tryReadBitFast;
     /**
      * Advances the current bit position in the buffer.
      *
@@ -540,13 +540,13 @@ declare class BitStringReader {
      * of {@link BitStringReader._buffer}, which indicates that there is no more data to read.
      *
      * @param {number} bits how many bits to advance.
-     * private
+     * @private
      */
-    _advanceBits(bits: number): void;
+    private _advanceBits;
     /**
      * @returns {number} the amount of bits available for reading in the current char.
      * Always > 0, even if {@link BitStringReader.overflown} is `true`.
-     * private
+     * @private
      */
-    get _unreadBitsLastChar(): number;
+    private get _unreadBitsLastChar();
 }

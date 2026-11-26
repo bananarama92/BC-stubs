@@ -34,6 +34,11 @@ declare function ChatRoomCharacterViewRun(): void;
  * @type {MouseEventListener}
  */
 declare function ChatRoomCharacterViewClick(event: PointerEvent): void;
+/**
+ * Handles right-clicks in the chatroom character view.
+ * @param {PointerEvent} event
+ */
+declare function ChatRoomCharacterViewRightClick(event: PointerEvent): void;
 /** @type {KeyboardEventListener} */
 declare function ChatRoomCharacterViewKeyDown(event: KeyboardEvent): boolean;
 /**
